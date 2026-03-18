@@ -1,0 +1,179 @@
+@using Aiursoft.OllamaGateway.Entities
+@model Aiursoft.OllamaGateway.Models.VirtualModelsViewModels.CreateViewModel
+
+<div class="container-fluid p-0">
+    <div class="row mb-3">
+        <div class="col-auto">
+            <h1 class="h3 mb-3">@Localizer["Chat Playground"]</h1>
+        </div>
+        <div class="col-auto ms-auto d-flex align-items-center">
+            <label class="me-2 fw-bold">@Localizer["Switch Model:"]</label>
+            <select class="form-select form-select-sm" style="width: auto;" onchange="window.location.href='?id=' + this.value">
+                @foreach (var m in (List<VirtualModel>)ViewData["AllModels"]!)
+                {
+                    <option value="@m.Id" selected="@(m.Id == (int)ViewData["ModelId"]! ? "selected" : null)">@m.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="card flex-fill w-100" style="height: calc(100vh - 250px);">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <div>
+                <h5 class="card-title mb-0">@Localizer["Chatting with"] <strong>@Model.Name</strong></h5>
+                <small class="text-muted">@Localizer["Provider Model:"] @Model.UnderlyingModel</small>
+            </div>
+            <button class="btn btn-sm btn-outline-secondary" id="btnClearChat">@Localizer["Clear Session"]</button>
+        </div>
+        <div class="card-body d-flex flex-column p-0">
+            <div id="chatMessages" class="flex-grow-1 overflow-auto p-3" style="background-color: #f8f9fa;">
+                <div class="text-center text-muted my-5" id="welcomeMessage">
+                    <i class="align-middle me-2" data-lucide="sparkles" style="width: 48px; height: 48px; color: #ffc107;"></i>
+                    <p class="mt-2">@Localizer["Hello! Send a message to start testing your virtual model configuration."]</p>
+                </div>
+            </div>
+            
+            <div class="p-3 border-top bg-white">
+                <form id="chatForm" class="input-group">
+                    <input type="text" id="userInput" class="form-control" placeholder="@Localizer["Ask anything..."]" autocomplete="off" required>
+                    <button class="btn btn-primary" type="submit" id="btnSend">
+                        <i class="align-middle" data-lucide="send"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .message {
+        margin-bottom: 1rem;
+        max-width: 85%;
+        padding: 0.75rem 1rem;
+        border-radius: 1rem;
+        position: relative;
+        word-wrap: break-word;
+    }
+    .message-user {
+        background-color: #3b7ddd;
+        color: white;
+        align-self: flex-end;
+        margin-left: auto;
+        border-bottom-right-radius: 0.25rem;
+    }
+    .message-assistant {
+        background-color: #ffffff;
+        color: #212529;
+        align-self: flex-start;
+        border-bottom-left-radius: 0.25rem;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    }
+    #chatMessages {
+        display: flex;
+        flex-direction: column;
+    }
+</style>
+
+@* ReSharper disable once Razor.SectionNotResolved *@
+@section scripts {
+    <script>
+        const chatMessages = document.getElementById('chatMessages');
+        const chatForm = document.getElementById('chatForm');
+        const userInput = document.getElementById('userInput');
+        const btnSend = document.getElementById('btnSend');
+        const btnClearChat = document.getElementById('btnClearChat');
+        
+        let history = [];
+
+        function appendMessage(role, content) {
+            const welcome = document.getElementById('welcomeMessage');
+            if (welcome) welcome.remove();
+
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message message-${role}`;
+            msgDiv.innerText = content;
+            chatMessages.appendChild(msgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            return msgDiv;
+        }
+
+        btnClearChat.addEventListener('click', () => {
+            chatMessages.innerHTML = `
+                <div class="text-center text-muted my-5" id="welcomeMessage">
+                    <i class="align-middle me-2" data-lucide="sparkles" style="width: 48px; height: 48px; color: #ffc107;"></i>
+                    <p class="mt-2">@Localizer["Session cleared. Send a new message to start over."]</p>
+                </div>`;
+            history = [];
+        });
+
+        chatForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const message = userInput.value.trim();
+            if (!message) return;
+
+            userInput.value = '';
+            userInput.disabled = true;
+            btnSend.disabled = true;
+
+            appendMessage('user', message);
+            history.push({ role: 'user', content: message });
+
+            const assistantMsgDiv = appendMessage('assistant', '...');
+            let assistantFullContent = '';
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model: '@Model.Name',
+                        messages: history,
+                        stream: true
+                    })
+                });
+
+                if (!response.ok) throw new Error(await response.text());
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                assistantMsgDiv.innerText = '';
+                let lineBuffer = '';
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    lineBuffer += decoder.decode(value, { stream: true });
+                    const lines = lineBuffer.split('\n');
+                    
+                    // Keep the last partial line in the buffer
+                    lineBuffer = lines.pop() || '';
+                    
+                    for (const line of lines) {
+                        if (!line.trim()) continue;
+                        try {
+                            const data = JSON.parse(line);
+                            if (data.message && data.message.content) {
+                                assistantFullContent += data.message.content;
+                                assistantMsgDiv.innerText = assistantFullContent;
+                                chatMessages.scrollTop = chatMessages.scrollHeight;
+                            }
+                        } catch (e) {
+                            console.error("Partial JSON or error:", line, e);
+                        }
+                    }
+                }
+                
+                history.push({ role: 'assistant', content: assistantFullContent });
+
+            } catch (error) {
+                assistantMsgDiv.classList.add('text-danger');
+                assistantMsgDiv.innerText = "Error: " + error.message;
+            } finally {
+                userInput.disabled = false;
+                btnSend.disabled = false;
+                userInput.focus();
+            }
+        });
+    </script>
+}

@@ -1,0 +1,94 @@
+@model Aiursoft.OllamaGateway.Models.VirtualModelsViewModels.CreateViewModel
+
+<div class="container-fluid p-0">
+    <div class="row mb-3">
+        <div class="col-auto">
+            <h1 class="h3 mb-3">@Localizer["Edit Virtual Model"]</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">@Localizer["Model Details and Overrides"]</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit" asp-route-id="@ViewData["Id"]" method="post">
+                        <input type="hidden" asp-for="Type" />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Name" class="form-label">@Localizer["Virtual Model Name"]</label>
+                                <input asp-for="Name" class="form-control" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="UnderlyingModel" class="form-label">@Localizer["Underlying Model"]</label>
+                                <select asp-for="UnderlyingModel" class="form-select">
+                                    <option value="">@Localizer["-- Select Underlying Model --"]</option>
+                                    @foreach (var m in Model.AvailableUnderlyingModels)
+                                    {
+                                        <option value="@m">@m</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="UnderlyingModel" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <h6 class="card-subtitle mb-2 text-muted">@Localizer["Optional Overrides"]</h6>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Thinking" class="form-label">@Localizer["Thinking Mode"]</label>
+                                <select asp-for="Thinking" class="form-select">
+                                    <option value="">@Localizer["Default"]</option>
+                                    <option value="true">@Localizer["Enabled"]</option>
+                                    <option value="false">@Localizer["Disabled"]</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Temperature" class="form-label">@Localizer["Temperature"]</label>
+                                <input asp-for="Temperature" class="form-control" type="number" step="0.1" min="0" max="2" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="NumCtx" class="form-label">@Localizer["Context Length (num_ctx)"]</label>
+                                <input asp-for="NumCtx" class="form-control" type="number" />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="TopP" class="form-label">@Localizer["Top P"]</label>
+                                <input asp-for="TopP" class="form-control" type="number" step="0.1" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="TopK" class="form-label">@Localizer["Top K"]</label>
+                                <input asp-for="TopK" class="form-control" type="number" />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="RepeatPenalty" class="form-label">@Localizer["Repeat Penalty"]</label>
+                                <input asp-for="RepeatPenalty" class="form-control" type="number" step="0.1" />
+                            </div>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input asp-for="UseRawOutput" class="form-check-input" type="checkbox" />
+                            <label asp-for="UseRawOutput" class="form-check-label">@Localizer["Use Raw Output"]</label>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a asp-action="Index" class="btn btn-outline-secondary me-md-2">@Localizer["Back to List"]</a>
+                            <button type="submit" class="btn btn-primary">@Localizer["Save Changes"]</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

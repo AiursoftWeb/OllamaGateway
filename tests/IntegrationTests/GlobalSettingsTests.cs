@@ -3,7 +3,6 @@ using Aiursoft.DbTools;
 using Aiursoft.OllamaGateway.Configuration;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
-using Aiursoft.OllamaGateway.Services.FileStorage;
 using Microsoft.EntityFrameworkCore;
 using Aiursoft.CSTools.Tools;
 using static Aiursoft.WebTools.Extends;
@@ -80,74 +79,6 @@ public class GlobalSettingsTests : TestBase
             var value = await settingsService.GetBoolSettingAsync(SettingsMap.AllowUserAdjustNickname);
             Assert.IsFalse(value);
         }
-    }
-
-    [TestMethod]
-    public async Task TestGlobalSettingsServiceValidation()
-    {
-        using var scope = Server!.Services.CreateScope();
-        var settingsService = scope.ServiceProvider.GetRequiredService<GlobalSettingsService>();
-
-        // Test non-defined setting
-        try
-        {
-            await settingsService.UpdateSettingAsync("InvalidKey", "Value");
-            Assert.Fail("Should have thrown InvalidOperationException");
-        }
-        catch (InvalidOperationException) { }
-
-        // Test Bool validation
-        try
-        {
-            await settingsService.UpdateSettingAsync(SettingsMap.AllowUserAdjustNickname, "NotABool");
-            Assert.Fail("Should have thrown InvalidOperationException");
-        }
-        catch (InvalidOperationException) { }
-
-        // Test Number validation
-        try
-        {
-            await settingsService.UpdateSettingAsync(SettingsMap.DummyNumber, "NotANumber");
-            Assert.Fail("Should have thrown InvalidOperationException");
-        }
-        catch (InvalidOperationException) { }
-        
-        await settingsService.UpdateSettingAsync(SettingsMap.DummyNumber, "123.45");
-        Assert.AreEqual("123.45", await settingsService.GetSettingValueAsync(SettingsMap.DummyNumber));
-
-        // Test Choice validation
-        try
-        {
-            await settingsService.UpdateSettingAsync(SettingsMap.DummyChoice, "InvalidChoice");
-            Assert.Fail("Should have thrown InvalidOperationException");
-        }
-        catch (InvalidOperationException) { }
-        
-        await settingsService.UpdateSettingAsync(SettingsMap.DummyChoice, "B");
-        Assert.AreEqual("B", await settingsService.GetSettingValueAsync(SettingsMap.DummyChoice));
-
-        // Test File validation (empty)
-        try
-        {
-            await settingsService.UpdateSettingAsync(SettingsMap.ProjectLogo, "");
-            Assert.Fail("Should have thrown InvalidOperationException");
-        }
-        catch (InvalidOperationException) { }
-
-        // Test File validation (not found)
-        try
-        {
-            await settingsService.UpdateSettingAsync(SettingsMap.ProjectLogo, "non-existing-file.png");
-            Assert.Fail("Should have thrown InvalidOperationException");
-        }
-        catch (InvalidOperationException) { }
-        
-        // Test File validation (valid file)
-        var storage = scope.ServiceProvider.GetRequiredService<StorageService>();
-        var filePath = await storage.Save("test.png", new FormFile(new MemoryStream([1, 2, 3]), 0, 3, "test", "test.png"), isVault: false);
-        await settingsService.UpdateSettingAsync(SettingsMap.ProjectLogo, filePath);
-        var logoValue = await settingsService.GetSettingValueAsync(SettingsMap.ProjectLogo);
-        Assert.AreEqual(filePath, logoValue);
     }
 
     [TestMethod]

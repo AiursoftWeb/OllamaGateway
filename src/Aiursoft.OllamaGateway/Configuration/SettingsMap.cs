@@ -10,8 +10,10 @@ public class SettingsMap
     public const string ProjectLogo = "ProjectLogo";
     public const string AllowUserAdjustNickname = "Allow_User_Adjust_Nickname";
     public const string Icp = "Icp";
-    public const string DummyNumber = "DummyNumber";
-    public const string DummyChoice = "DummyChoice";
+    public const string DefaultChatModel = "DefaultChatModel";
+    public const string DefaultEmbeddingModel = "DefaultEmbeddingModel";
+    public const string RequestTimeoutInMinutes = "RequestTimeoutInMinutes";
+    public const string AllowAnonymousApiCall = "AllowAnonymousApiCall";
 
     public class FakeLocalizer
     {
@@ -75,24 +77,35 @@ public class SettingsMap
         },
         new GlobalSettingDefinition
         {
-            Key = DummyNumber,
-            Name = Localizer["Dummy Number"],
-            Description = Localizer["A dummy number for testing."],
-            Type = SettingType.Number,
-            DefaultValue = "0"
+            Key = DefaultChatModel,
+            Name = Localizer["Default Chat Model"],
+            Description = Localizer["The default virtual model to use for chat requests when no model is specified."],
+            Type = SettingType.Text,
+            DefaultValue = "llama3.2"
         },
         new GlobalSettingDefinition
         {
-            Key = DummyChoice,
-            Name = Localizer["Dummy Choice"],
-            Description = Localizer["A dummy choice for testing."],
-            Type = SettingType.Choice,
-            DefaultValue = "A",
-            ChoiceOptions = new Dictionary<string, string>
-            {
-                { "A", "Option A" },
-                { "B", "Option B" }
-            }
+            Key = DefaultEmbeddingModel,
+            Name = Localizer["Default Embedding Model"],
+            Description = Localizer["The default virtual model to use for embedding requests when no model is specified."],
+            Type = SettingType.Text,
+            DefaultValue = "nomic-embed-text"
+        },
+        new GlobalSettingDefinition
+        {
+            Key = RequestTimeoutInMinutes,
+            Name = Localizer["Request Timeout (Minutes)"],
+            Description = Localizer["The maximum time in minutes to wait for a response from the underlying Ollama server."],
+            Type = SettingType.Number,
+            DefaultValue = "10"
+        },
+        new GlobalSettingDefinition
+        {
+            Key = AllowAnonymousApiCall,
+            Name = Localizer["Allow Anonymous API Call"],
+            Description = Localizer["Allow anyone to call the API without a Bearer token or authentication."],
+            Type = SettingType.Bool,
+            DefaultValue = "False"
         }
     };
 }

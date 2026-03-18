@@ -1,0 +1,34 @@
+@model Aiursoft.OllamaGateway.Models.ApiKeysViewModels.CreateViewModel
+
+<div class="container-fluid p-0">
+    <div class="row mb-3">
+        <div class="col-auto">
+            <h1 class="h3 mb-3">@Localizer["Create New API Key"]</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">@Localizer["New Key Details"]</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label">@Localizer["Friendly Name"]</label>
+                            <input asp-for="Name" class="form-control" placeholder="@Localizer["e.g. My Laptop, Development"]" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                            <div class="form-text">@Localizer["A name to help you identify where this key is used."]</div>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">@Localizer["Generate Key"]</button>
+                            <a asp-action="Index" class="btn btn-outline-secondary">@Localizer["Cancel"]</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -14,15 +14,18 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.Diagnostics.CodeAnalysis;
 
+using Aiursoft.OllamaGateway.Models.Configuration;
+
 namespace Aiursoft.OllamaGateway;
 
 [ExcludeFromCodeCoverage]
 public class Startup : IWebStartup
 {
-    public void ConfigureServices(IConfiguration configuration, IWebHostEnvironment environment, IServiceCollection services)
+    public virtual void ConfigureServices(IConfiguration configuration, IWebHostEnvironment environment, IServiceCollection services)
     {
         // AppSettings.
         services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
+        services.Configure<ClickhouseOptions>(configuration.GetSection("Clickhouse"));
 
         // Relational database
         var (connectionString, dbType, allowCache) = configuration.GetDbSettings();
@@ -62,7 +65,7 @@ public class Startup : IWebStartup
             .AddDataAnnotationsLocalization();
     }
 
-    public void Configure(WebApplication app)
+    public virtual void Configure(WebApplication app)
     {
         app.UseExceptionHandler("/Error/Code500");
         app.UseStatusCodePagesWithReExecute("/Error/Code{0}");

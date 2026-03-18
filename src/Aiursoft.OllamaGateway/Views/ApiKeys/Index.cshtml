@@ -1,0 +1,65 @@
+@model Aiursoft.OllamaGateway.Models.ApiKeysViewModels.IndexViewModel
+
+<div class="container-fluid p-0">
+    <div class="row mb-3">
+        <div class="col-auto">
+            <h1 class="h3 mb-3">@Localizer["Your API Keys"]</h1>
+        </div>
+        <div class="col-auto ms-auto text-end">
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="align-middle me-1" data-lucide="plus"></i>
+                @Localizer["Create New Key"]
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">@Localizer["Manage your API keys for accessing Ollama Gateway"]</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>@Localizer["Name"]</th>
+                        <th>@Localizer["Key"]</th>
+                        <th>@Localizer["Created At"]</th>
+                        <th>@Localizer["Last Used"]</th>
+                        <th>@Localizer["Actions"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.ApiKeys.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">
+                                @Localizer["You don't have any API keys yet."]
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var key in Model.ApiKeys)
+                        {
+                            <tr>
+                                <td>@key.Name</td>
+                                <td>
+                                    <code>@key.Key</code>
+                                </td>
+                                <td>@key.CreatedAt.ToLocalTime().ToString("g")</td>
+                                <td>@(key.LastUsed?.ToLocalTime().ToString("g") ?? Localizer["Never"].Value)</td>
+                                <td>
+                                    <form asp-action="Delete" asp-route-id="@key.Id" method="post" onsubmit="return confirm('@Localizer["Are you sure you want to delete this API key?"]');">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            <i class="align-middle" data-lucide="trash-2"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

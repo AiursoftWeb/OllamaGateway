@@ -13,6 +13,7 @@
     <PackageReference Include="Aiursoft.DbTools.Switchable" Version="10.0.16" />
     <PackageReference Include="Aiursoft.Scanner" Version="10.0.5" />
     <PackageReference Include="Aiursoft.UiStack" Version="10.0.7" />
+    <PackageReference Include="ClickHouse.Client" Version="7.14.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="10.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="10.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="10.0.5" />
@@ -26,5 +27,6 @@
     <ProjectReference Include="..\Aiursoft.OllamaGateway.InMemory\Aiursoft.OllamaGateway.InMemory.csproj" />
     <ProjectReference Include="..\Aiursoft.OllamaGateway.MySql\Aiursoft.OllamaGateway.MySql.csproj" />
     <ProjectReference Include="..\Aiursoft.OllamaGateway.Sqlite\Aiursoft.OllamaGateway.Sqlite.csproj" />
+    <ProjectReference Include="..\..\..\GptClient\src\Aiursoft.GptClient\Aiursoft.GptClient.csproj" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,106 @@
+@model Aiursoft.OllamaGateway.Models.OllamaProvidersViewModels.CreateViewModel
+
+<div class="container-fluid p-0">
+    <div class="row mb-3">
+        <div class="col-auto">
+            <h1 class="h3 mb-3">@Localizer["Add New Ollama Provider"]</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-lg-5">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">@Localizer["Provider Details"]</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create" method="post" id="create-provider-form">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label">@Localizer["Provider Name"]</label>
+                            <input asp-for="Name" class="form-control" placeholder="@Localizer["e.g. My Local Ollama"]" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="BaseUrl" class="form-label">@Localizer["Base URL"]</label>
+                            <div class="input-group">
+                                <input asp-for="BaseUrl" id="baseUrlInput" class="form-control" placeholder="http://localhost:11434" />
+                                <button class="btn btn-outline-secondary" type="button" id="btnTestConnection">
+                                    <span id="testSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                    <span id="testText">@Localizer["Test Connection"]</span>
+                                </button>
+                            </div>
+                            <span asp-validation-for="BaseUrl" class="text-danger"></span>
+                            <div class="form-text">@Localizer["The URL where Ollama is listening."]</div>
+                        </div>
+
+                        <div id="testResult" class="alert d-none mb-3"></div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary" id="btnSubmit">@Localizer["Add Provider"]</button>
+                            <a asp-action="Index" class="btn btn-outline-secondary">@Localizer["Cancel"]</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* ReSharper disable once Razor.SectionNotResolved *@
+@section scripts {
+    <script>
+        document.getElementById('btnTestConnection').addEventListener('click', async function() {
+            const baseUrl = document.getElementById('baseUrlInput').value;
+            const btn = this;
+            const spinner = document.getElementById('testSpinner');
+            const text = document.getElementById('testText');
+            const resultDiv = document.getElementById('testResult');
+            const submitBtn = document.getElementById('btnSubmit');
+
+            if (!baseUrl) {
+                alert('Please enter a URL first.');
+                return;
+            }
+
+            // UI Loading state
+            btn.disabled = true;
+            spinner.classList.remove('d-none');
+            text.innerText = 'Testing...';
+            resultDiv.classList.add('d-none');
+            resultDiv.classList.remove('alert-success', 'alert-danger');
+
+            try {
+                const response = await fetch('@Url.Action("Test")', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                    },
+                    body: JSON.stringify(baseUrl)
+                });
+
+                const data = await response.json();
+
+                resultDiv.classList.remove('d-none');
+                if (data.success) {
+                    resultDiv.classList.add('alert-success');
+                    let modelsText = data.models.length > 0 ? data.models.join(', ') : 'None';
+                    resultDiv.innerHTML = `<strong>Success!</strong> Successfully connected to Ollama. <br/> <strong>Models found:</strong> ${modelsText}`;
+                    submitBtn.disabled = false;
+                } else {
+                    resultDiv.classList.add('alert-danger');
+                    resultDiv.innerText = data.message;
+                }
+            } catch (error) {
+                resultDiv.classList.remove('d-none');
+                resultDiv.classList.add('alert-danger');
+                resultDiv.innerText = 'Network error or invalid request.';
+            } finally {
+                btn.disabled = false;
+                spinner.classList.add('d-none');
+                text.innerText = 'Test Connection';
+            }
+        });
+    </script>
+}

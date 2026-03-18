@@ -16,4 +16,6 @@ public class User : IdentityUser
     [MaxLength(150)] [MinLength(2)] public string AvatarRelativePath { get; set; } = DefaultAvatarPath;
 
     public DateTime CreationTime { get; init; } = DateTime.UtcNow;
+
+    public List<ApiKey> ApiKeys { get; set; } = [];
 }

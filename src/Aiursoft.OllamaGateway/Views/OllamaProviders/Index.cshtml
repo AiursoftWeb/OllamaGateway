@@ -1,0 +1,61 @@
+@model Aiursoft.OllamaGateway.Models.OllamaProvidersViewModels.IndexViewModel
+
+<div class="container-fluid p-0">
+    <div class="row mb-3">
+        <div class="col-auto">
+            <h1 class="h3 mb-3">@Localizer["Ollama Providers"]</h1>
+        </div>
+        <div class="col-auto ms-auto text-end">
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="align-middle me-1" data-lucide="plus"></i>
+                @Localizer["Add New Provider"]
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">@Localizer["Manage underlying Ollama servers"]</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>@Localizer["Name"]</th>
+                        <th>@Localizer["Base URL"]</th>
+                        <th>@Localizer["Created"]</th>
+                        <th>@Localizer["Actions"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Providers.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center text-muted py-4">
+                                @Localizer["No providers defined yet."]
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var p in Model.Providers)
+                        {
+                            <tr>
+                                <td><strong>@p.Name</strong></td>
+                                <td><code>@p.BaseUrl</code></td>
+                                <td>@p.CreatedAt.ToLocalTime()</td>
+                                <td>
+                                    <form asp-action="Delete" asp-route-id="@p.Id" method="post" onsubmit="return confirm('@Localizer["Are you sure you want to delete this provider? All linked virtual models will also be deleted."]世');">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            <i class="align-middle" data-lucide="trash-2"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

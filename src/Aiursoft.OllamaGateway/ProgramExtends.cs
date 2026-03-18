@@ -61,7 +61,7 @@ public static class ProgramExtends
         var logger = services.GetRequiredService<ILogger<Program>>();
         
         var settingsService = services.GetRequiredService<GlobalSettingsService>();
-        await settingsService.SeedSettingsAsync();
+        await settingsService.InitializeSettingsAsync();
 
         var shouldSeed = await ShouldSeedAsync(db);
         if (!shouldSeed)

@@ -1,0 +1,85 @@
+@model Aiursoft.OllamaGateway.Models.UnderlyingModelsViewModels.IndexViewModel
+
+<div class="container-fluid p-0">
+    <div class="row mb-3">
+        <div class="col-auto">
+            <h1 class="h3 mb-3">@Localizer["Physical Models"]</h1>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">@Localizer["All physical models available across all providers"]</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>@Localizer["Name"]</th>
+                        <th>@Localizer["Provider"]</th>
+                        <th>@Localizer["Status"]</th>
+                        <th>@Localizer["Size"]</th>
+                        <th>@Localizer["Usage"]</th>
+                        <th>@Localizer["Modified"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Models.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center text-muted py-4">
+                                @Localizer["No physical models found. Check your providers connection."]
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var m in Model.Models)
+                        {
+                            <tr>
+                                <td>
+                                    <strong>@m.RawModel.Name</strong>
+                                    <br />
+                                    <small class="text-muted" style="font-size: 0.7rem;">@m.RawModel.Digest.Substring(0, Math.Min(12, m.RawModel.Digest.Length))...</small>
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary">@m.Provider.Name</span>
+                                    <br />
+                                    <small class="text-muted">@m.Provider.BaseUrl</small>
+                                </td>
+                                <td>
+                                    @if (m.IsRunning)
+                                    {
+                                        <span class="badge bg-success">
+                                            <i class="align-middle me-1" data-lucide="play" style="width: 14px; height: 14px;"></i>
+                                            @Localizer["Running"]
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-light text-dark">@Localizer["Idle"]</span>
+                                    }
+                                </td>
+                                <td>@(Math.Round(m.RawModel.Size / 1024.0 / 1024.0 / 1024.0, 2)) GB</td>
+                                <td>
+                                    @if (m.UsedByVirtualModels.Any())
+                                    {
+                                        @foreach (var vm in m.UsedByVirtualModels)
+                                        {
+                                            <span class="badge bg-subtle-primary text-primary border border-primary-subtle me-1">@vm.Name</span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted small">@Localizer["Not used"]</span>
+                                    }
+                                </td>
+                                <td>@m.RawModel.ModifiedAt.ToLocalTime().ToString("g")</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

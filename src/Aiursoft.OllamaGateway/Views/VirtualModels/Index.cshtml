@@ -1,0 +1,96 @@
+@using Aiursoft.OllamaGateway.Entities
+@model Aiursoft.OllamaGateway.Models.VirtualModelsViewModels.IndexViewModel
+
+<div class="container-fluid p-0">
+    <div class="row mb-3">
+        <div class="col-auto">
+            <h1 class="h3 mb-3">@Model.PageTitle</h1>
+        </div>
+        <div class="col-auto ms-auto text-end">
+            <div class="btn-group">
+                <a asp-action="Create" asp-route-type="@(Model.PageTitle!.Contains("Chat") ? ModelType.Chat : ModelType.Embedding)" class="btn btn-primary">
+                    <i class="align-middle me-1" data-lucide="plus"></i>
+                    @Localizer["New Model"]
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">@Localizer["Manage virtual models that proxy to underlying Ollama models"]</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>@Localizer["Name"]</th>
+                        <th>@Localizer["Provider"]</th>
+                        <th>@Localizer["Underlying"]</th>
+                        <th>@Localizer["Overrides"]</th>
+                        <th>@Localizer["Created"]</th>
+                        <th>@Localizer["Actions"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Models.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center text-muted py-4">
+                                @Localizer["No models defined yet."]
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var m in Model.Models)
+                        {
+                            <tr>
+                                <td><strong>@m.Name</strong></td>
+                                <td>@m.Provider?.Name</td>
+                                <td>
+                                    <code>@m.UnderlyingModel</code>
+                                    @if (Model.ModelWarnings.TryGetValue(m.Id, out var warning))
+                                    {
+                                        <div class="mt-1">
+                                            <span class="badge bg-danger">
+                                                <i class="align-middle me-1" data-lucide="alert-circle" style="width: 14px; height: 14px;"></i>
+                                                @warning
+                                            </span>
+                                        </div>
+                                    }
+                                </td>
+                                <td>
+                                    <small class="text-muted">
+                                        @if (m.Thinking.HasValue) { <span>Think: @m.Thinking.Value </span> }
+                                        @if (m.NumCtx.HasValue) { <span>Ctx: @m.NumCtx.Value </span> }
+                                        @if (m.Temperature.HasValue) { <span>Temp: @m.Temperature.Value </span> }
+                                    </small>
+                                </td>
+                                <td>@m.CreatedAt.ToShortDateString()</td>
+                                <td>
+                                    <div class="btn-group">
+                                        @if (m.Type == ModelType.Chat)
+                                        {
+                                            <a asp-action="Chat" asp-route-id="@m.Id" class="btn btn-sm btn-outline-success" title="@Localizer["Chat"]">
+                                                <i class="align-middle" data-lucide="message-circle"></i>
+                                            </a>
+                                        }
+                                        <a asp-action="Edit" asp-route-id="@m.Id" class="btn btn-sm btn-outline-primary" title="@Localizer["Edit"]">
+                                            <i class="align-middle" data-lucide="edit"></i>
+                                        </a>
+                                        <form asp-action="Delete" asp-route-id="@m.Id" method="post" onsubmit="return confirm('@Localizer["Are you sure?"]');" style="display:inline;">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                <i class="align-middle" data-lucide="trash-2"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

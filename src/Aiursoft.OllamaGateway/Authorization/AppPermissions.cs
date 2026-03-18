@@ -66,7 +66,22 @@ public class AppPermissions
                 localizer["Allows viewing the background job dashboard and managing jobs."]),
             new(AppPermissionNames.CanManageGlobalSettings,
                 localizer["Manage Global Settings"],
-                localizer["Allows viewing and modifying global application settings."])
+                localizer["Allows viewing and modifying global application settings."]),
+            new(AppPermissionNames.CanManageApiKeys,
+                localizer["Manage API Keys"],
+                localizer["Allows viewing and managing API keys for the current user."]),
+            new(AppPermissionNames.CanManageModels,
+                localizer["Manage Virtual Models"],
+                localizer["Allows viewing and managing virtual models that override underlying Ollama models."]),
+            new(AppPermissionNames.CanManageProviders,
+                localizer["Manage Providers"],
+                localizer["Allows managing the underlying Ollama model providers/servers."]),
+            new(AppPermissionNames.CanChatWithVirtualModels,
+                localizer["Chat With Virtual Models"],
+                localizer["Allows chatting with virtual models through the gateway UI or API."]),
+            new(AppPermissionNames.CanChatWithUnderlyingModels,
+                localizer["Chat With Underlying Models"],
+                localizer["Allows chatting with real/underlying Ollama models directly through the gateway."])
         ];
         return allPermission;
     }

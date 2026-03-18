@@ -1,0 +1,177 @@
+@model Aiursoft.OllamaGateway.Models.VirtualModelsViewModels.CreateViewModel
+
+<div class="container-fluid p-0">
+    <div class="row mb-3">
+        <div class="col-auto">
+            <h1 class="h3 mb-3">@Model.PageTitle</h1>
+        </div>
+        <div class="col-auto ms-auto">
+            <span class="badge bg-info">@Localizer["Underlying:"] @Model.UnderlyingModel</span>
+        </div>
+    </div>
+
+    <div class="card flex-fill w-100" style="height: calc(100vh - 250px);">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0">@Localizer["Conversation"]</h5>
+            <button class="btn btn-sm btn-outline-secondary" id="btnClearChat">@Localizer["Clear Chat"]</button>
+        </div>
+        <div class="card-body d-flex flex-column p-0">
+            <div id="chatMessages" class="flex-grow-1 overflow-auto p-3" style="background-color: #f8f9fa;">
+                @* Messages will appear here *@
+                <div class="text-center text-muted my-5">
+                    <i class="align-middle me-2" data-lucide="message-circle" style="width: 48px; height: 48px;"></i>
+                    <p class="mt-2">@Localizer["Start a conversation with"] @Model.Name</p>
+                </div>
+            </div>
+            
+            <div class="p-3 border-top bg-white">
+                <form id="chatForm" class="input-group">
+                    <input type="text" id="userInput" class="form-control" placeholder="@Localizer["Type your message here..."]" autocomplete="off" required>
+                    <button class="btn btn-primary" type="submit" id="btnSend">
+                        <i class="align-middle" data-lucide="send"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .message {
+        margin-bottom: 1rem;
+        max-width: 85%;
+        padding: 0.75rem 1rem;
+        border-radius: 1rem;
+        position: relative;
+    }
+    .message-user {
+        background-color: #007bff;
+        color: white;
+        align-self: flex-end;
+        margin-left: auto;
+        border-bottom-right-radius: 0.25rem;
+    }
+    .message-assistant {
+        background-color: #e9ecef;
+        color: #212529;
+        align-self: flex-start;
+        border-bottom-left-radius: 0.25rem;
+    }
+    #chatMessages {
+        display: flex;
+        flex-direction: column;
+    }
+    .typing-indicator::after {
+        content: '...';
+        animation: blink 1s infinite;
+    }
+    @@keyframes blink {
+        0% { opacity: 0; }
+        50% { opacity: 1; }
+        100% { opacity: 0; }
+    }
+</style>
+
+@* ReSharper disable once Razor.SectionNotResolved *@
+@section scripts {
+    <script>
+        const chatMessages = document.getElementById('chatMessages');
+        const chatForm = document.getElementById('chatForm');
+        const userInput = document.getElementById('userInput');
+        const btnSend = document.getElementById('btnSend');
+        const btnClearChat = document.getElementById('btnClearChat');
+        
+        let history = [];
+
+        function appendMessage(role, content, isStreaming = false) {
+            // Remove empty state if present
+            const emptyState = chatMessages.querySelector('.text-center.text-muted');
+            if (emptyState) emptyState.remove();
+
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message message-${role}`;
+            if (isStreaming) msgDiv.classList.add('streaming-current');
+            
+            msgDiv.innerText = content;
+            chatMessages.appendChild(msgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            return msgDiv;
+        }
+
+        btnClearChat.addEventListener('click', () => {
+            chatMessages.innerHTML = '';
+            history = [];
+        });
+
+        chatForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const message = userInput.value.trim();
+            if (!message) return;
+
+            userInput.value = '';
+            userInput.disabled = true;
+            btnSend.disabled = true;
+
+            appendMessage('user', message);
+            history.push({ role: 'user', content: message });
+
+            const assistantMsgDiv = appendMessage('assistant', '', true);
+            let assistantFullContent = '';
+
+            try {
+                // Call the proxy API directly
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: '@Model.Name',
+                        messages: history,
+                        stream: true
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(await response.text());
+                }
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    const chunk = decoder.decode(value, { stream: true });
+                    const lines = chunk.split('\n');
+                    
+                    for (const line of lines) {
+                        if (!line.trim()) continue;
+                        try {
+                            const data = JSON.parse(line);
+                            if (data.message && data.message.content) {
+                                assistantFullContent += data.message.content;
+                                assistantMsgDiv.innerText = assistantFullContent;
+                                chatMessages.scrollTop = chatMessages.scrollHeight;
+                            }
+                        } catch (e) {
+                            console.error("Failed to parse chunk", e);
+                        }
+                    }
+                }
+                
+                history.push({ role: 'assistant', content: assistantFullContent });
+
+            } catch (error) {
+                assistantMsgDiv.classList.add('text-danger');
+                assistantMsgDiv.innerText = "Error: " + error.message;
+            } finally {
+                userInput.disabled = false;
+                btnSend.disabled = false;
+                assistantMsgDiv.classList.remove('streaming-current');
+                userInput.focus();
+            }
+        });
+    </script>
+}

@@ -18,4 +18,8 @@ public class AppSettings
     /// Automatically assign the user to this role when they log in.
     /// </summary>
     public string? DefaultRole { get; init; } = string.Empty;
+
+    public string UnderlyingOllamaUrl { get; init; } = "http://localhost:11434";
+
+    public string DefaultModel { get; init; } = "llama3.2";
 }

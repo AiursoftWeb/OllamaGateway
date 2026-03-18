@@ -26,4 +26,11 @@ public static class AppPermissionNames
     public const string CanRebootThisApp = nameof(CanRebootThisApp);
     public const string CanViewBackgroundJobs = nameof(CanViewBackgroundJobs);
     public const string CanManageGlobalSettings = nameof(CanManageGlobalSettings);
+
+    // Ollama Gateway Management
+    public const string CanManageApiKeys = nameof(CanManageApiKeys);
+    public const string CanManageModels = nameof(CanManageModels);
+    public const string CanManageProviders = nameof(CanManageProviders);
+    public const string CanChatWithVirtualModels = nameof(CanChatWithVirtualModels);
+    public const string CanChatWithUnderlyingModels = nameof(CanChatWithUnderlyingModels);
 }

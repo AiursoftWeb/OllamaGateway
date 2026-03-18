@@ -9,11 +9,15 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 
+using Aiursoft.OllamaGateway.Authorization.ApiKey;
+
 namespace Aiursoft.OllamaGateway.Services.Authentication;
 
 [ExcludeFromCodeCoverage]
 public static class AuthenticationExtensions
 {
+    public const string ApiKeyScheme = "ApiKey";
+
     public static IServiceCollection AddTemplateAuth(
         this IServiceCollection services,
         IConfiguration configuration)
@@ -50,6 +54,8 @@ public static class AuthenticationExtensions
             options.DefaultScheme = IdentityConstants.ApplicationScheme;
             options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
         });
+
+        authBuilder.AddScheme<ApiKeyAuthenticationOptions, ApiKeyAuthenticationHandler>(ApiKeyScheme, _ => { });
 
         services.ConfigureApplicationCookie(options =>
         {

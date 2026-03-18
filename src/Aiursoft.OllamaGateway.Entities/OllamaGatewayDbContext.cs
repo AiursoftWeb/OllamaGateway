@@ -10,6 +10,9 @@ namespace Aiursoft.OllamaGateway.Entities;
 public abstract class TemplateDbContext(DbContextOptions options) : IdentityDbContext<User>(options), ICanMigrate
 {
     public DbSet<GlobalSetting> GlobalSettings => Set<GlobalSetting>();
+    public DbSet<ApiKey> ApiKeys => Set<ApiKey>();
+    public DbSet<VirtualModel> VirtualModels => Set<VirtualModel>();
+    public DbSet<OllamaProvider> OllamaProviders => Set<OllamaProvider>();
 
     public virtual  Task MigrateAsync(CancellationToken cancellationToken) =>
         Database.MigrateAsync(cancellationToken);
