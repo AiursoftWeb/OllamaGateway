@@ -220,7 +220,7 @@ public class OllamaGatewayTests : TestBase
             await db.SaveChangesAsync();
             db.VirtualModels.Add(new VirtualModel 
             { 
-                Name = "ChatModel", 
+                Name = "chat-model:latest", 
                 UnderlyingModel = "llama3.2", 
                 ProviderId = provider.Id,
                 Type = ModelType.Chat
@@ -235,6 +235,6 @@ public class OllamaGatewayTests : TestBase
         
         Assert.Contains("Chat Playground", html);
         Assert.Contains("Chatting with", html);
-        Assert.Contains("ChatModel", html);
+        Assert.Contains("chat-model:latest", html);
     }
 }

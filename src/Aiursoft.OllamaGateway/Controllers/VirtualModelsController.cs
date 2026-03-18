@@ -142,10 +142,10 @@ public class VirtualModelsController(
             return this.StackView(model);
         }
 
-        // Validate name format: lowercase, numbers, dots, hyphens, underscores and colon for tag
-        if (!System.Text.RegularExpressions.Regex.IsMatch(model.Name, @"^[a-z0-9\.\-_]+(:[a-zA-Z0-9\.\-_]+)?$"))
+        // Validate name format: lowercase, numbers, dots, hyphens, underscores and strictly one colon for tag
+        if (!System.Text.RegularExpressions.Regex.IsMatch(model.Name, @"^[a-z0-9\.\-_]+:[a-zA-Z0-9\.\-_]+$"))
         {
-            ModelState.AddModelError(nameof(model.Name), "The name must be lowercase and follow the pattern 'name:tag' (tag is optional). Only alphanumeric, dots, hyphens and underscores are allowed.");
+            ModelState.AddModelError(nameof(model.Name), "The name must be lowercase and follow the pattern 'name:tag'. Only alphanumeric, dots, hyphens and underscores are allowed with exactly one colon.");
             model.AvailableProviders = await dbContext.OllamaProviders.ToListAsync();
             var provider = model.AvailableProviders.FirstOrDefault(p => p.Id == model.ProviderId);
             if (provider != null)
@@ -227,9 +227,9 @@ public class VirtualModelsController(
             return this.StackView(model);
         }
 
-        if (!System.Text.RegularExpressions.Regex.IsMatch(model.Name, @"^[a-z0-9\.\-_]+(:[a-zA-Z0-9\.\-_]+)?$"))
+        if (!System.Text.RegularExpressions.Regex.IsMatch(model.Name, @"^[a-z0-9\.\-_]+:[a-zA-Z0-9\.\-_]+$"))
         {
-            ModelState.AddModelError(nameof(model.Name), "The name must be lowercase and follow the pattern 'name:tag' (tag is optional). Only alphanumeric, dots, hyphens and underscores are allowed.");
+            ModelState.AddModelError(nameof(model.Name), "The name must be lowercase and follow the pattern 'name:tag'. Only alphanumeric, dots, hyphens and underscores are allowed with exactly one colon.");
             model.AvailableProviders = await dbContext.OllamaProviders.ToListAsync();
             var provider = model.AvailableProviders.FirstOrDefault(p => p.Id == model.ProviderId);
             if (provider != null)
