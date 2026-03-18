@@ -21,31 +21,66 @@
             <table class="table table-hover mb-0">
                 <thead>
                     <tr>
+                        <th>@Localizer["Status"]</th>
                         <th>@Localizer["Name"]</th>
                         <th>@Localizer["Base URL"]</th>
+                        <th>@Localizer["Running Models"]</th>
                         <th>@Localizer["Created"]</th>
                         <th>@Localizer["Actions"]</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @if (Model.Providers.Count == 0)
+                    @if (Model.ProviderStatuses.Count == 0)
                     {
                         <tr>
-                            <td colspan="4" class="text-center text-muted py-4">
+                            <td colspan="6" class="text-center text-muted py-4">
                                 @Localizer["No providers defined yet."]
                             </td>
                         </tr>
                     }
                     else
                     {
-                        @foreach (var p in Model.Providers)
+                        @foreach (var p in Model.ProviderStatuses)
                         {
                             <tr>
-                                <td><strong>@p.Name</strong></td>
-                                <td><code>@p.BaseUrl</code></td>
-                                <td>@p.CreatedAt.ToLocalTime()</td>
                                 <td>
-                                    <form asp-action="Delete" asp-route-id="@p.Id" method="post" onsubmit="return confirm('@Localizer["Are you sure you want to delete this provider? All linked virtual models will also be deleted."]世');">
+                                    @if (p.IsAlive)
+                                    {
+                                        <span class="badge bg-success">@Localizer["Alive"]</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">@Localizer["Offline"]</span>
+                                    }
+                                </td>
+                                <td><strong>@p.Provider.Name</strong></td>
+                                <td><code>@p.Provider.BaseUrl</code></td>
+                                <td>
+                                    @if (p.IsAlive && p.RunningModels != null && p.RunningModels.Any())
+                                    {
+                                        <ul class="list-unstyled mb-0">
+                                            @foreach (var m in p.RunningModels)
+                                            {
+                                                <li>
+                                                    <strong>@m.Name</strong>
+                                                    <span class="badge bg-secondary ms-1">@(m.SizeVram > 0 ? "GPU" : "CPU")</span>
+                                                    <span class="badge bg-info ms-1">@Localizer["Ctx"]: @(m.ContextLength ?? 0)</span>
+                                                </li>
+                                            }
+                                        </ul>
+                                    }
+                                    else if (p.IsAlive)
+                                    {
+                                        <span class="text-muted">@Localizer["No models running"]</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">@Localizer["N/A"]</span>
+                                    }
+                                </td>
+                                <td>@p.Provider.CreatedAt.ToLocalTime().ToString("g")</td>
+                                <td>
+                                    <form asp-action="Delete" asp-route-id="@p.Provider.Id" method="post" onsubmit="return confirm('@Localizer["Are you sure you want to delete this provider? All linked virtual models will also be deleted."]');">
                                         <button type="submit" class="btn btn-sm btn-outline-danger">
                                             <i class="align-middle" data-lucide="trash-2"></i>
                                         </button>

@@ -29,9 +29,21 @@ public class OllamaProvidersController(
             .OrderByDescending(p => p.CreatedAt)
             .ToListAsync();
 
+        var statuses = new List<ProviderStatus>();
+        foreach (var p in providers)
+        {
+            var runningModels = await ollamaService.GetRunningModelsAsync(p.BaseUrl, TimeSpan.FromSeconds(3));
+            statuses.Add(new ProviderStatus
+            {
+                Provider = p,
+                IsAlive = runningModels != null,
+                RunningModels = runningModels
+            });
+        }
+
         var viewModel = new IndexViewModel
         {
-            Providers = providers
+            ProviderStatuses = statuses
         };
         return this.StackView(viewModel);
     }

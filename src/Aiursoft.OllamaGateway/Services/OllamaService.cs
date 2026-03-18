@@ -38,13 +38,13 @@ public class OllamaService(
         }
     }
 
-    public virtual async Task<List<OllamaRunningModel>?> GetRunningModelsAsync(string baseUrl)
+    public virtual async Task<List<OllamaRunningModel>?> GetRunningModelsAsync(string baseUrl, TimeSpan? overrideTimeout = null)
     {
         try
         {
             var url = baseUrl.TrimEnd('/') + "/api/ps";
             using var client = httpClientFactory.CreateClient();
-            client.Timeout = await globalSettingsService.GetRequestTimeoutAsync();
+            client.Timeout = overrideTimeout ?? await globalSettingsService.GetRequestTimeoutAsync();
             var response = await client.GetAsync(url);
             if (!response.IsSuccessStatusCode) return null;
 
