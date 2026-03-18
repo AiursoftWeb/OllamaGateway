@@ -14,6 +14,7 @@ public class SettingsMap
     public const string DefaultEmbeddingModel = "DefaultEmbeddingModel";
     public const string RequestTimeoutInMinutes = "RequestTimeoutInMinutes";
     public const string AllowAnonymousApiCall = "AllowAnonymousApiCall";
+    public const string KeepAliveJobIntervalMinutes = "KeepAliveJobIntervalMinutes";
 
     public class FakeLocalizer
     {
@@ -31,6 +32,14 @@ public class SettingsMap
             Description = Localizer["The name of the project displayed in the frontend."],
             Type = SettingType.Text,
             DefaultValue = "Aiursoft Template"
+        },
+        new GlobalSettingDefinition
+        {
+            Key = KeepAliveJobIntervalMinutes,
+            Name = Localizer["Keep Alive Job Interval (Minutes)"],
+            Description = Localizer["The interval in minutes to ping the loaded models to keep them in memory."],
+            Type = SettingType.Number,
+            DefaultValue = "5"
         },
         new GlobalSettingDefinition
         {

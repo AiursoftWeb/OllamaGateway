@@ -20,6 +20,7 @@
                         <th>@Localizer["Status"]</th>
                         <th>@Localizer["Size"]</th>
                         <th>@Localizer["Usage"]</th>
+                        <th>@Localizer["Total Calls"]</th>
                         <th>@Localizer["Modified"]</th>
                     </tr>
                 </thead>
@@ -27,7 +28,7 @@
                     @if (Model.Models.Count == 0)
                     {
                         <tr>
-                            <td colspan="6" class="text-center text-muted py-4">
+                            <td colspan="7" class="text-center text-muted py-4">
                                 @Localizer["No physical models found. Check your providers connection."]
                             </td>
                         </tr>
@@ -74,6 +75,7 @@
                                         <span class="text-muted small">@Localizer["Not used"]</span>
                                     }
                                 </td>
+                                <td>@m.TotalCalls</td>
                                 <td>@m.RawModel.ModifiedAt.ToLocalTime().ToString("g")</td>
                             </tr>
                         }

@@ -21,7 +21,8 @@ public class ProxyController(
     ClickhouseDbContext clickhouseDbContext,
     OllamaService ollamaService,
     GlobalSettingsService globalSettingsService,
-    ILogger<ProxyController> logger) : ControllerBase
+    ILogger<ProxyController> logger,
+    MemoryUsageTracker memoryUsageTracker) : ControllerBase
 {
     private static readonly HashSet<string> HeaderBlacklist = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -90,6 +91,14 @@ public class ProxyController(
             }
 
             var underlyingUrl = virtualModel.Provider.BaseUrl.TrimEnd('/');
+            
+            var apiKeyIdClaim = User.FindFirst("ApiKeyId");
+            if (apiKeyIdClaim != null && int.TryParse(apiKeyIdClaim.Value, out var apiKeyId))
+            {
+                memoryUsageTracker.TrackApiKeyUsage(apiKeyId);
+            }
+            memoryUsageTracker.TrackUnderlyingModelUsage(virtualModel.Provider.Id, virtualModel.UnderlyingModel);
+            
             log.Model = virtualModel.Name;
             log.ConversationMessageCount = input.Messages.Count;
             log.LastQuestion = input.Messages.LastOrDefault()?.Content ?? string.Empty;
@@ -211,6 +220,14 @@ public class ProxyController(
         }
 
         var underlyingUrl = virtualModel.Provider.BaseUrl.TrimEnd('/');
+        
+        var apiKeyIdClaim = User.FindFirst("ApiKeyId");
+        if (apiKeyIdClaim != null && int.TryParse(apiKeyIdClaim.Value, out var apiKeyId))
+        {
+            memoryUsageTracker.TrackApiKeyUsage(apiKeyId);
+        }
+        memoryUsageTracker.TrackUnderlyingModelUsage(virtualModel.Provider.Id, virtualModel.UnderlyingModel);
+        
         input.model = virtualModel.UnderlyingModel;
 
         using var client = httpClientFactory.CreateClient();

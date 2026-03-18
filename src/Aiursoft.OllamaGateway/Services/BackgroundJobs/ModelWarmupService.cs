@@ -1,3 +1,4 @@
+using Aiursoft.OllamaGateway.Configuration;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services.Authentication;
 using Microsoft.EntityFrameworkCore;
@@ -35,8 +36,24 @@ public class ModelWarmupService : BackgroundService
                 _logger.LogError(ex, "An error occurred while warming up models.");
             }
 
-            // Wait 5 minutes before next cycle
-            await Task.Delay(TimeSpan.FromMinutes(5), stoppingToken);
+            int intervalMinutes = 5;
+            try
+            {
+                using var scope = _serviceProvider.CreateScope();
+                var globalSettings = scope.ServiceProvider.GetRequiredService<GlobalSettingsService>();
+                var intervalStr = await globalSettings.GetSettingValueAsync(SettingsMap.KeepAliveJobIntervalMinutes);
+                if (int.TryParse(intervalStr, out var parsedInterval) && parsedInterval > 0)
+                {
+                    intervalMinutes = parsedInterval;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Failed to get KeepAliveJobIntervalMinutes setting. Using default 5 minutes.");
+            }
+
+            // Wait interval before next cycle
+            await Task.Delay(TimeSpan.FromMinutes(intervalMinutes), stoppingToken);
         }
 
         _logger.LogInformation("Model Warmup Service is stopping.");

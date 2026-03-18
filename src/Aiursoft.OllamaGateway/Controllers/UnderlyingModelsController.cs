@@ -12,7 +12,8 @@ namespace Aiursoft.OllamaGateway.Controllers;
 [Authorize(Policy = AppPermissionNames.CanManageProviders)]
 public class UnderlyingModelsController(
     TemplateDbContext dbContext,
-    OllamaService ollamaService) : Controller
+    OllamaService ollamaService,
+    MemoryUsageTracker memoryUsageTracker) : Controller
 {
     [RenderInNavBar(
         NavGroupName = "Ollama Gateway",
@@ -43,6 +44,7 @@ public class UnderlyingModelsController(
                         Provider = provider,
                         RawModel = raw,
                         IsRunning = runningModels?.Any(r => r.Name == raw.Name) ?? false,
+                        TotalCalls = memoryUsageTracker.GetUnderlyingModelStats(provider.Id, raw.Name),
                         UsedByVirtualModels = virtualModels
                             .Where(v => v.ProviderId == provider.Id && v.UnderlyingModel == raw.Name)
                             .ToList()

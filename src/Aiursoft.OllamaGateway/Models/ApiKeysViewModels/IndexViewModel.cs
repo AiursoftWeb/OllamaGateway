@@ -11,4 +11,6 @@ public class IndexViewModel : UiStackLayoutViewModel
     }
 
     public required List<ApiKey> ApiKeys { get; set; }
+    public Dictionary<int, DateTime?> LastUsedTimes { get; set; } = new();
+    public Dictionary<int, long> TotalCalls { get; set; } = new();
 }

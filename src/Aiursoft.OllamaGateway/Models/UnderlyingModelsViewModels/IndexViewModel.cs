@@ -9,6 +9,7 @@ public class UnderlyingModelInfo
     public required OllamaProvider Provider { get; set; }
     public required OllamaService.OllamaModel RawModel { get; set; }
     public bool IsRunning { get; set; }
+    public long TotalCalls { get; set; }
     public List<VirtualModel> UsedByVirtualModels { get; set; } = new();
 }
 

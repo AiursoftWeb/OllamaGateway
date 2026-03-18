@@ -25,6 +25,7 @@
                         <th>@Localizer["Key"]</th>
                         <th>@Localizer["Created At"]</th>
                         <th>@Localizer["Last Used"]</th>
+                        <th>@Localizer["Total Calls"]</th>
                         <th>@Localizer["Actions"]</th>
                     </tr>
                 </thead>
@@ -32,7 +33,7 @@
                     @if (Model.ApiKeys.Count == 0)
                     {
                         <tr>
-                            <td colspan="5" class="text-center text-muted py-4">
+                            <td colspan="6" class="text-center text-muted py-4">
                                 @Localizer["You don't have any API keys yet."]
                             </td>
                         </tr>
@@ -47,7 +48,8 @@
                                     <code>@key.Key</code>
                                 </td>
                                 <td>@key.CreatedAt.ToLocalTime().ToString("g")</td>
-                                <td>@(key.LastUsed?.ToLocalTime().ToString("g") ?? Localizer["Never"].Value)</td>
+                                <td>@(Model.LastUsedTimes[key.Id]?.ToLocalTime().ToString("g") ?? Localizer["Never"].Value)</td>
+                                <td>@Model.TotalCalls[key.Id]</td>
                                 <td>
                                     <form asp-action="Delete" asp-route-id="@key.Id" method="post" onsubmit="return confirm('@Localizer["Are you sure you want to delete this API key?"]');">
                                         <button type="submit" class="btn btn-sm btn-outline-danger">

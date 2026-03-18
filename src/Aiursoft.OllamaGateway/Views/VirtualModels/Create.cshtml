@@ -1,4 +1,5 @@
 @model Aiursoft.OllamaGateway.Models.VirtualModelsViewModels.CreateViewModel
+@inject Aiursoft.OllamaGateway.Services.GlobalSettingsService GlobalSettingsService
 
 <div class="container-fluid p-0">
     <div class="row mb-3">
@@ -94,7 +95,7 @@
 
                         <div class="mb-3 form-check">
                             <input asp-for="KeepAlive" class="form-check-input" type="checkbox" />
-                            <label asp-for="KeepAlive" class="form-check-label">@Localizer["Keep model loaded in memory (ping every 5 minutes)"]</label>
+                            <label asp-for="KeepAlive" class="form-check-label">@Localizer["Keep model loaded in memory"] (ping every @(await GlobalSettingsService.GetIntSettingAsync(Aiursoft.OllamaGateway.Configuration.SettingsMap.KeepAliveJobIntervalMinutes)) minutes)</label>
                         </div>
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">

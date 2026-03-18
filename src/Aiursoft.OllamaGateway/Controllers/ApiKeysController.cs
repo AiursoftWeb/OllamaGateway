@@ -13,7 +13,8 @@ namespace Aiursoft.OllamaGateway.Controllers;
 [Authorize(Policy = AppPermissionNames.CanManageApiKeys)]
 public class ApiKeysController(
     TemplateDbContext dbContext,
-    UserManager<User> userManager) : Controller
+    UserManager<User> userManager,
+    MemoryUsageTracker memoryUsageTracker) : Controller
 {
     [RenderInNavBar(
         NavGroupName = "Settings",
@@ -36,6 +37,14 @@ public class ApiKeysController(
         {
             ApiKeys = keys
         };
+        
+        foreach (var key in keys)
+        {
+            var stats = memoryUsageTracker.GetApiKeyStats(key.Id);
+            model.LastUsedTimes[key.Id] = stats.LastUsed;
+            model.TotalCalls[key.Id] = stats.TotalCalls;
+        }
+        
         return this.StackView(model);
     }
 
