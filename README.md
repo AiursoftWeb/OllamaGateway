@@ -7,25 +7,11 @@
 [![Website](https://img.shields.io/website?url=https%3A%2F%2FollamaGateway.aiursoft.com)](https://ollamaGateway.aiursoft.com)
 [![Docker](https://img.shields.io/docker/pulls/aiursoft/ollamaGateway.svg)](https://hub.docker.com/r/aiursoft/ollamaGateway)
 
-OllamaGateway is a sample project.
+OllamaGateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, and virtual model management—your secure, private AI gateway.
 
 ![screenshot](./screenshot.png)
 
 Default user name is `admin@default.com` and default password is `admin123`.
-
-## Projects using Aiursoft OllamaGateway
-
-* [Stathub](https://gitlab.aiursoft.com/aiursoft/stathub)
-* [MarkToHtml](https://gitlab.aiursoft.com/aiursoft/marktohtml)
-* [MusicTools](https://gitlab.aiursoft.com/aiursoft/musictools)
-* [AnduinOS Home](https://gitlab.aiursoft.com/anduin/AnduinOS-Home)
-* [Manhours](https://gitlab.aiursoft.com/aiursoft/manhours)
-* [Tracer](https://gitlab.aiursoft.com/aiursoft/tracer)
-* [Warp](https://gitlab.aiursoft.com/aiursoft/warp)
-* [AiurDrive](https://gitlab.aiursoft.com/aiursoft/aiurdrive)
-* [EmployeeCenter](https://gitlab.aiursoft.com/aiursoft/employeecenter)
-* [GitMirrorServer](https://gitlab.aiursoft.com/aiursoft/gitmirrorserver)
-* [CppRunner](https://gitlab.aiursoft.com/aiursoft/cpprunner)
 
 ## Try
 
@@ -70,8 +56,8 @@ First, install Docker [here](https://docs.docker.com/get-docker/).
 Then run the following commands in a Linux shell:
 
 ```bash
-image=aiursoft/ollamaGateway
-appName=ollamaGateway
+image=aiursoft/ollamagateway
+appName=ollamagateway
 sudo docker pull $image
 sudo docker run -d --name $appName --restart unless-stopped -p 5000:5000 -v /var/www/$appName:/data $image
 ```
@@ -82,7 +68,7 @@ The docker image has the following context:
 
 | Properties  | Value                           |
 |-------------|---------------------------------|
-| Image       | aiursoft/ollamaGateway               |
+| Image       | aiursoft/ollamagateway          |
 | Ports       | 5000                            |
 | Binary path | /app                            |
 | Data path   | /data                           |
