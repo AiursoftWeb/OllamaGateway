@@ -3,7 +3,9 @@ using System.Text;
 using Aiursoft.GptClient.Abstractions;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
+using Aiursoft.OllamaGateway.Services.Authentication;
 using Aiursoft.OllamaGateway.Services.Clickhouse;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +14,7 @@ using Newtonsoft.Json;
 namespace Aiursoft.OllamaGateway.Controllers;
 
 [Route("api")]
+[AllowAnonymous]
 public class ProxyController(
     TemplateDbContext dbContext,
     IHttpClientFactory httpClientFactory,
@@ -27,13 +30,22 @@ public class ProxyController(
 
     private async Task<bool> IsAuthorizedAsync()
     {
-        // 1. Check if authenticated (either by Identity cookie or API Key)
+        // 1. If already authenticated by cookie or other middleware
         if (User.Identity?.IsAuthenticated == true)
         {
             return true;
         }
 
-        // 2. Check global setting for anonymous access
+        // 2. Manually trigger ApiKey authentication because [AllowAnonymous] bypasses the automatic challenge
+        var result = await HttpContext.AuthenticateAsync(AuthenticationExtensions.ApiKeyScheme);
+        if (result.Succeeded)
+        {
+            // Update the User property so subsequent code can access claims
+            HttpContext.User = result.Principal;
+            return true;
+        }
+
+        // 3. Check global setting for anonymous access
         return await globalSettingsService.GetAllowAnonymousApiCallAsync();
     }
 
@@ -82,7 +94,6 @@ public class ProxyController(
             log.ConversationMessageCount = input.Messages.Count;
             log.LastQuestion = input.Messages.LastOrDefault()?.Content ?? string.Empty;
 
-            // Apply overrides
             input.Model = virtualModel.UnderlyingModel;
             if (virtualModel.Thinking.HasValue) input.Thinking = virtualModel.Thinking;
             
