@@ -51,6 +51,7 @@ public class Startup : IWebStartup
         // Background job queue
         services.AddSingleton<Services.BackgroundJobs.BackgroundJobQueue>();
         services.AddHostedService<Services.BackgroundJobs.QueueWorkerService>();
+        services.AddHostedService<Services.BackgroundJobs.ModelWarmupService>();
 
         // Controllers and localization
         services.AddControllersWithViews()

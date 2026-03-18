@@ -34,7 +34,12 @@
             </div>
             
             <div class="p-3 border-top bg-white">
+                <div id="imagePreviewContainer" class="mb-2 d-none"></div>
                 <form id="chatForm" class="input-group">
+                    <button class="btn btn-outline-secondary" type="button" id="btnUploadImage">
+                        <i class="align-middle" data-lucide="plus"></i>
+                    </button>
+                    <input type="file" id="imageInput" accept="image/*" class="d-none">
                     <input type="text" id="userInput" class="form-control" placeholder="@Localizer["Ask anything..."]" autocomplete="off" required>
                     <button class="btn btn-primary" type="submit" id="btnSend">
                         <i class="align-middle" data-lucide="send"></i>
@@ -82,20 +87,121 @@
         const userInput = document.getElementById('userInput');
         const btnSend = document.getElementById('btnSend');
         const btnClearChat = document.getElementById('btnClearChat');
+        const btnUploadImage = document.getElementById('btnUploadImage');
+        const imageInput = document.getElementById('imageInput');
+        const imagePreviewContainer = document.getElementById('imagePreviewContainer');
         
         let history = [];
+        let pendingImages = [];
 
-        function appendMessage(role, content) {
+        function appendMessage(role, content, images = []) {
             const welcome = document.getElementById('welcomeMessage');
             if (welcome) welcome.remove();
 
             const msgDiv = document.createElement('div');
             msgDiv.className = `message message-${role}`;
             msgDiv.innerText = content;
+
+            if (images && images.length > 0) {
+                const imgContainer = document.createElement('div');
+                imgContainer.className = 'mt-2';
+                images.forEach(imgBase64 => {
+                    const img = document.createElement('img');
+                    img.src = `data:image/jpeg;base64,${imgBase64}`;
+                    img.className = 'img-thumbnail me-2 mb-2';
+                    img.style.maxHeight = '150px';
+                    imgContainer.appendChild(img);
+                });
+                msgDiv.appendChild(imgContainer);
+            }
+
             chatMessages.appendChild(msgDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
             return msgDiv;
         }
+
+        function renderPreviews() {
+            imagePreviewContainer.innerHTML = '';
+            if (pendingImages.length > 0) {
+                imagePreviewContainer.classList.remove('d-none');
+                pendingImages.forEach((imgBase64, index) => {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'position-relative d-inline-block me-2 mb-2';
+                    
+                    const img = document.createElement('img');
+                    img.src = `data:image/jpeg;base64,${imgBase64}`;
+                    img.className = 'img-thumbnail';
+                    img.style.maxHeight = '100px';
+                    
+                    const removeBtn = document.createElement('button');
+                    removeBtn.className = 'btn btn-sm btn-danger position-absolute p-0 d-flex align-items-center justify-content-center';
+                    removeBtn.style.top = '-5px';
+                    removeBtn.style.right = '-5px';
+                    removeBtn.style.width = '20px';
+                    removeBtn.style.height = '20px';
+                    removeBtn.style.borderRadius = '50%';
+                    removeBtn.innerHTML = '&times;';
+                    removeBtn.type = 'button';
+                    removeBtn.onclick = () => {
+                        pendingImages.splice(index, 1);
+                        renderPreviews();
+                        updateRequired();
+                    };
+                    
+                    wrapper.appendChild(img);
+                    wrapper.appendChild(removeBtn);
+                    imagePreviewContainer.appendChild(wrapper);
+                });
+            } else {
+                imagePreviewContainer.classList.add('d-none');
+            }
+        }
+
+        function addImageToPreview(base64Str) {
+            pendingImages.push(base64Str);
+            renderPreviews();
+            updateRequired();
+        }
+
+        function updateRequired() {
+            if (pendingImages.length > 0) {
+                userInput.removeAttribute('required');
+            } else {
+                userInput.setAttribute('required', 'required');
+            }
+        }
+
+        function processFile(file) {
+            if (!file || !file.type.startsWith('image/')) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const base64 = e.target.result.split(',')[1];
+                addImageToPreview(base64);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        btnUploadImage.addEventListener('click', () => {
+            imageInput.click();
+        });
+
+        imageInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                processFile(e.target.files[0]);
+                e.target.value = ''; 
+            }
+        });
+
+        userInput.addEventListener('paste', (e) => {
+            const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+            for (let index in items) {
+                const item = items[index];
+                if (item.kind === 'file' && item.type.startsWith('image/')) {
+                    const file = item.getAsFile();
+                    processFile(file);
+                }
+            }
+        });
 
         btnClearChat.addEventListener('click', () => {
             chatMessages.innerHTML = `
@@ -104,19 +210,33 @@
                     <p class="mt-2">@Localizer["Session cleared. Send a new message to start over."]</p>
                 </div>`;
             history = [];
+            pendingImages = [];
+            renderPreviews();
+            updateRequired();
         });
 
         chatForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             const message = userInput.value.trim();
-            if (!message) return;
+            if (!message && pendingImages.length === 0) return;
 
             userInput.value = '';
             userInput.disabled = true;
             btnSend.disabled = true;
+            btnUploadImage.disabled = true;
 
-            appendMessage('user', message);
-            history.push({ role: 'user', content: message });
+            const imagesToSend = [...pendingImages];
+            pendingImages = [];
+            renderPreviews();
+            updateRequired();
+
+            appendMessage('user', message, imagesToSend);
+            
+            const msgObj = { role: 'user', content: message };
+            if (imagesToSend.length > 0) {
+                msgObj.images = imagesToSend;
+            }
+            history.push(msgObj);
 
             const assistantMsgDiv = appendMessage('assistant', '...');
             let assistantFullContent = '';
@@ -172,6 +292,7 @@
             } finally {
                 userInput.disabled = false;
                 btnSend.disabled = false;
+                btnUploadImage.disabled = false;
                 userInput.focus();
             }
         });

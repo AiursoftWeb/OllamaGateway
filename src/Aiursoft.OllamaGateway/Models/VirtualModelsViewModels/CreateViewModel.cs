@@ -40,6 +40,8 @@ public class CreateViewModel : UiStackLayoutViewModel
 
     public bool UseRawOutput { get; set; }
     
+    public bool KeepAlive { get; set; }
+    
     public List<string> AvailableUnderlyingModels { get; set; } = new();
 
     public List<OllamaProvider> AvailableProviders { get; set; } = new();

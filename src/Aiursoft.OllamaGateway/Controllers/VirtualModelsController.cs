@@ -168,7 +168,8 @@ public class VirtualModelsController(
             TopK = model.TopK,
             NumPredict = model.NumPredict,
             RepeatPenalty = model.RepeatPenalty,
-            UseRawOutput = model.UseRawOutput
+            UseRawOutput = model.UseRawOutput,
+            KeepAlive = model.KeepAlive
         };
 
         dbContext.VirtualModels.Add(virtualModel);
@@ -204,6 +205,7 @@ public class VirtualModelsController(
             NumPredict = virtualModel.NumPredict,
             RepeatPenalty = virtualModel.RepeatPenalty,
             UseRawOutput = virtualModel.UseRawOutput,
+            KeepAlive = virtualModel.KeepAlive,
             AvailableUnderlyingModels = underlyingModels,
             AvailableProviders = providers
         };
@@ -258,6 +260,7 @@ public class VirtualModelsController(
         virtualModel.NumPredict = model.NumPredict;
         virtualModel.RepeatPenalty = model.RepeatPenalty;
         virtualModel.UseRawOutput = model.UseRawOutput;
+        virtualModel.KeepAlive = model.KeepAlive;
 
         await dbContext.SaveChangesAsync();
 

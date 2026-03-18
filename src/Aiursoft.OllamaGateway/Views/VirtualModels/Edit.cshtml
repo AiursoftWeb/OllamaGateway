@@ -83,6 +83,11 @@
                             <label asp-for="UseRawOutput" class="form-check-label">@Localizer["Use Raw Output"]</label>
                         </div>
 
+                        <div class="mb-3 form-check">
+                            <input asp-for="KeepAlive" class="form-check-input" type="checkbox" />
+                            <label asp-for="KeepAlive" class="form-check-label">@Localizer["Keep model loaded in memory (ping every 5 minutes)"]</label>
+                        </div>
+
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <a asp-action="Index" class="btn btn-outline-secondary me-md-2">@Localizer["Back to List"]</a>
                             <button type="submit" class="btn btn-primary">@Localizer["Save Changes"]</button>

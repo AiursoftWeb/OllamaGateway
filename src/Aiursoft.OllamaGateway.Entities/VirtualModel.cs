@@ -42,5 +42,7 @@ public class VirtualModel
 
     public bool UseRawOutput { get; set; }
 
+    public bool KeepAlive { get; set; }
+
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }
