@@ -1,0 +1,111 @@
+@using Aiursoft.OllamaGateway.Entities
+@model Aiursoft.OllamaGateway.Models.VirtualModelsViewModels.CreateViewModel
+
+<div class="container-fluid p-0">
+    <div class="row mb-3">
+        <div class="col-auto">
+            <h1 class="h3 mb-3">@Localizer["Embedding Lab"]</h1>
+        </div>
+        <div class="col-auto ms-auto d-flex align-items-center">
+            <label class="me-2 fw-bold">@Localizer["Switch Model:"]</label>
+            <select class="form-select form-select-sm" style="width: auto;" onchange="window.location.href='?id=' + this.value">
+                @foreach (var m in (List<VirtualModel>)ViewData["AllModels"]!)
+                {
+                    <option value="@m.Id" selected="@(m.Id == (int)ViewData["ModelId"]! ? "selected" : null)">@m.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">@Localizer["Generate Embeddings with"] <strong>@Model.Name</strong></h5>
+            <small class="text-muted">@Localizer["Provider Model:"] @Model.UnderlyingModel</small>
+        </div>
+        <div class="card-body">
+            <form id="embedForm">
+                <div class="mb-3">
+                    <label class="form-label">@Localizer["Input Text"]</label>
+                    <textarea id="inputText" class="form-control" rows="4" placeholder="@Localizer["Enter text to generate embeddings..."]" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" id="btnGenerate">
+                    <i class="align-middle me-1" data-lucide="zap"></i>
+                    @Localizer["Generate Vector"]
+                </button>
+            </form>
+
+            <div id="resultContainer" class="mt-4 d-none">
+                <h6>@Localizer["Result Vector (Truncated for display)"]</h6>
+                <div class="bg-light p-3 rounded" style="max-height: 300px; overflow-y: auto;">
+                    <code id="resultVectors" style="word-break: break-all;"></code>
+                </div>
+                <div class="mt-2 text-muted small" id="resultMeta"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        const embedForm = document.getElementById('embedForm');
+        const inputText = document.getElementById('inputText');
+        const btnGenerate = document.getElementById('btnGenerate');
+        const resultContainer = document.getElementById('resultContainer');
+        const resultVectors = document.getElementById('resultVectors');
+        const resultMeta = document.getElementById('resultMeta');
+
+        embedForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const text = inputText.value.trim();
+            if (!text) return;
+
+            btnGenerate.disabled = true;
+            btnGenerate.innerHTML = '<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>@Localizer["Generating..."]';
+            resultContainer.classList.add('d-none');
+            resultVectors.innerText = '';
+            resultMeta.innerText = '';
+            
+            try {
+                const startTime = performance.now();
+                const response = await fetch('/api/embed', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model: '@Model.Name',
+                        input: text
+                    })
+                });
+
+                if (!response.ok) throw new Error(await response.text());
+
+                const data = await response.json();
+                const endTime = performance.now();
+                const duration = (endTime - startTime).toFixed(2);
+
+                if (data.embeddings && data.embeddings.length > 0) {
+                    const embed = data.embeddings[0];
+                    const fullJson = JSON.stringify(embed);
+                    const maxLength = 2000;
+                    
+                    if (fullJson.length > maxLength) {
+                        resultVectors.innerText = fullJson.substring(0, maxLength) + '\n\n... (truncated for display, total vector length: ' + embed.length + ')';
+                    } else {
+                        resultVectors.innerText = fullJson;
+                    }
+                    
+                    resultMeta.innerText = `Dimensions: ${embed.length} | Generated in ${duration}ms`;
+                    resultContainer.classList.remove('d-none');
+                } else {
+                    resultVectors.innerText = "@Localizer["No embeddings returned."]";
+                    resultContainer.classList.remove('d-none');
+                }
+            } catch (error) {
+                resultVectors.innerText = "@Localizer["Error: "]" + error.message;
+                resultContainer.classList.remove('d-none');
+            } finally {
+                btnGenerate.disabled = false;
+                btnGenerate.innerHTML = '<i class="align-middle me-1" data-lucide="zap"></i>@Localizer["Generate Vector"]';
+            }
+        });
+    </script>
+}
