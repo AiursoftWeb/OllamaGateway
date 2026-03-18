@@ -1,282 +1,109 @@
-<div class="text-center mt-5">
-    <h1 class="display-4">@Localizer["Hello World!"]</h1>
-    <p>@Localizer["This is a template project, where we start the voyager..."]</p>
-</div>
+@model Aiursoft.OllamaGateway.Models.DashboardViewModels.IndexViewModel
 
-<div class="container-fluid p-5">
+<div class="container-fluid p-0">
+    @* === Row 0: Header === *@
     <div class="row mb-2 mb-xl-3">
         <div class="col-auto d-none d-sm-block">
-            <h3>@Localizer["Welcome"]</h3>
+            <h3>@Localizer["Dashboard"]</h3>
         </div>
-
         <div class="col-auto ms-auto text-end mt-n1">
-            <a href="https://template-docs.aiursoft.com/en/Tutorial/before.html" class="btn btn-primary me-2 shadow-sm" target="_blank">
-                <i class="align-middle" data-lucide="rocket"></i> @Localizer["Start a new project"]
+            <a href="/swagger/index.html" class="btn btn-outline-primary shadow-sm" target="_blank">
+                <i class="align-middle" data-lucide="book"></i> @Localizer["Try the API"]
             </a>
-            <a href="https://template-docs.aiursoft.com/" class="btn btn-outline-primary shadow-sm" target="_blank">
-                <i class="align-middle" data-lucide="book"></i> @Localizer["Read the document"]
+            <a href="javascript:location.reload()" class="btn btn-primary shadow-sm ms-1">
+                <i class="align-middle" data-lucide="refresh-cw"></i>
             </a>
         </div>
     </div>
 
+    @* === Row 1: Summary Cards === *@
     <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">@Localizer["Why use the Aiursoft Template?"]</h5>
-                    <p class="mb-0 text-muted mt-2">@Localizer["A modern, feature-rich, and highly extensible foundation for your next web application."]</p>
+        <div class="col-12 col-sm-6 col-xxl-3 d-flex">
+            <div class="card flex-fill">
+                <div class="card-body py-4">
+                    <div class="d-flex align-items-start">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-2">@Model.TotalVirtualModels</h3>
+                            <p class="mb-2">@Localizer["Virtual Models"]</p>
+                            <div class="mb-0">
+                                <span class="badge badge-subtle-info me-2">
+                                    @Model.ChatModelsCount @Localizer["Chat"]
+                                </span>
+                                <span class="text-muted">@Model.EmbeddingModelsCount @Localizer["Embedding"]</span>
+                            </div>
+                        </div>
+                        <div class="d-inline-block ms-3">
+                            <div class="stat">
+                                <i class="align-middle text-primary" data-lucide="cpu"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-12 col-md-6 col-lg-4 d-flex">
-                            <div class="d-flex align-items-start py-3">
-                                <div class="d-inline-block me-3">
-                                    <div class="stat">
-                                        <i class="align-middle" data-lucide="database"></i>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="mt-0">@Localizer["Multiple Database Provider Support"]</h5>
-                                    <p>@Localizer["Easily switch between database providers, including SQLite, MySQL, SQL Server, and an in-memory database for testing."]</p>
-                                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-xxl-3 d-flex">
+            <div class="card flex-fill">
+                <div class="card-body py-4">
+                    <div class="d-flex align-items-start">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-2">@Model.TotalOllamaProviders</h3>
+                            <p class="mb-2">@Localizer["Providers"]</p>
+                            <div class="mb-0">
+                                <span class="badge badge-subtle-success me-2">
+                                    @Model.TotalOllamaProviders @Localizer["Active"]
+                                </span>
+                                <span class="text-muted">@Localizer["Upstream nodes"]</span>
                             </div>
                         </div>
-
-                        <div class="col-12 col-md-6 col-lg-4 d-flex">
-                            <div class="d-flex align-items-start py-3">
-                                <div class="d-inline-block me-3">
-                                    <div class="stat">
-                                        <i class="align-middle" data-lucide="key-round"></i>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="mt-0">@Localizer["OpenID Connect Integration"]</h5>
-                                    <p>@Localizer["Seamlessly integrate with any OpenID Connect provider, with automatic role synchronization."]</p>
-                                </div>
+                        <div class="d-inline-block ms-3">
+                            <div class="stat">
+                                <i class="align-middle text-success" data-lucide="server"></i>
                             </div>
                         </div>
-
-                        <div class="col-12 col-md-6 col-lg-4 d-flex">
-                            <div class="d-flex align-items-start py-3">
-                                <div class="d-inline-block me-3">
-                                    <div class="stat">
-                                        <i class="align-middle" data-lucide="shield-check"></i>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="mt-0">@Localizer["RBAC Authorization"]</h5>
-                                    <p>@Localizer["A built-in Role-Based Access Control (RBAC) system for fine-grained permission management."]</p>
-                                </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-xxl-3 d-flex">
+            <div class="card flex-fill">
+                <div class="card-body py-4">
+                    <div class="d-flex align-items-start">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-2">@Model.TotalApiKeys</h3>
+                            <p class="mb-2">@Localizer["API Keys"]</p>
+                            <div class="mb-0">
+                                <span class="badge badge-subtle-warning me-2">
+                                    @Model.TotalApiKeys @Localizer["Total"]
+                                </span>
+                                <span class="text-muted">@Localizer["Issued keys for access"]</span>
                             </div>
                         </div>
-
-                        <div class="col-12 col-md-6 col-lg-4 d-flex">
-                            <div class="d-flex align-items-start py-3">
-                                <div class="d-inline-block me-3">
-                                    <div class="stat">
-                                        <i class="align-middle" data-lucide="navigation"></i>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="mt-0">@Localizer["Dynamic Navigation Bar"]</h5>
-                                    <p>@Localizer["The navigation bar automatically adjusts based on user roles and permissions."]</p>
-                                </div>
+                        <div class="d-inline-block ms-3">
+                            <div class="stat">
+                                <i class="align-middle text-warning" data-lucide="key"></i>
                             </div>
                         </div>
-
-                        <div class="col-12 col-md-6 col-lg-4 d-flex">
-                            <div class="d-flex align-items-start py-3">
-                                <div class="d-inline-block me-3">
-                                    <div class="stat">
-                                        <i class="align-middle" data-lucide="check-circle-2"></i>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="mt-0">@Localizer["Consistency Validation"]</h5>
-                                    <p>@Localizer["Models are validated on both client and server sides based on data annotations."]</p>
-                                </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-xxl-3 d-flex">
+            <div class="card flex-fill">
+                <div class="card-body py-4">
+                    <div class="d-flex align-items-start">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-2">@Model.TotalUsers</h3>
+                            <p class="mb-2">@Localizer["Users"]</p>
+                            <div class="mb-0">
+                                <span class="badge badge-subtle-primary me-2">
+                                    @Model.ActiveUsers @Localizer["Active"]
+                                </span>
+                                <span class="text-muted">@Localizer["In the last 30 days"]</span>
                             </div>
                         </div>
-
-                        <div class="col-12 col-md-6 col-lg-4 d-flex">
-                            <div class="d-flex align-items-start py-3">
-                                <div class="d-inline-block me-3">
-                                    <div class="stat">
-                                        <i class="align-middle" data-lucide="languages"></i>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="mt-0">@Localizer["AI-Powered Translations"]</h5>
-                                    <p>@Localizer["Automatic, AI-driven translation into 28 languages."]</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6 col-lg-4 d-flex">
-                            <div class="d-flex align-items-start py-3">
-                                <div class="d-inline-block me-3">
-                                    <div class="stat">
-                                        <i class="align-middle" data-lucide="book-open-text"></i>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="mt-0">@Localizer["Comprehensive Documentation"]</h5>
-                                    <p>@Localizer["Includes extensive documentation and practical examples to get you started quickly."]</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6 col-lg-4 d-flex">
-                            <div class="d-flex align-items-start py-3">
-                                <div class="d-inline-block me-3">
-                                    <div class="stat">
-                                        <i class="align-middle" data-lucide="user-cog"></i>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="mt-0">@Localizer["Built-in User Management"]</h5>
-                                    <p>@Localizer["A complete solution for user authentication and profile management."]</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6 col-lg-4 d-flex">
-                            <div class="d-flex align-items-start py-3">
-                                <div class="d-inline-block me-3">
-                                    <div class="stat">
-                                        <i class="align-middle" data-lucide="zap"></i>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="mt-0">@Localizer["Automatic Dependency Injection"]</h5>
-                                    <p>@Localizer["All dependencies are automatically registered and always available via constructor injection."]</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6 col-lg-4 d-flex">
-                            <div class="d-flex align-items-start py-3">
-                                <div class="d-inline-block me-3">
-                                    <div class="stat">
-                                        <i class="align-middle" data-lucide="folder-archive"></i>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="mt-0">@Localizer["Integrated File Management"]</h5>
-                                    <p>@Localizer["Features a built-in file management system with automatic avatar compression and privacy protection."]</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6 col-lg-4 d-flex">
-                            <div class="d-flex align-items-start py-3">
-                                <div class="d-inline-block me-3">
-                                    <div class="stat">
-                                        <i class="align-middle" data-lucide="airplay"></i>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="mt-0">@Localizer["Responsive Design"]</h5>
-                                    <p>@Localizer["A fully responsive layout that looks great on both desktop and mobile devices."]</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6 col-lg-4 d-flex">
-                            <div class="d-flex align-items-start py-3">
-                                <div class="d-inline-block me-3">
-                                    <div class="stat">
-                                        <i class="align-middle" data-lucide="moon"></i>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="mt-0">@Localizer["Automatic Dark Mode"]</h5>
-                                    <p>@Localizer["Smart dark mode that adapts to the user's system settings."]</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6 col-lg-4 d-flex">
-                            <div class="d-flex align-items-start py-3">
-                                <div class="d-inline-block me-3">
-                                    <div class="stat">
-                                        <i class="align-middle" data-lucide="ship"></i>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="mt-0">@Localizer["Dockerized for Easy Deployment"]</h5>
-                                    <p>@Localizer["Comes with Docker support for simplified and consistent deployments."]</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6 col-lg-4 d-flex">
-                            <div class="d-flex align-items-start py-3">
-                                <div class="d-inline-block me-3">
-                                    <div class="stat">
-                                        <i class="align-middle" data-lucide="test-tube-2"></i>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="mt-0">@Localizer["Robust Integration Testing"]</h5>
-                                    <p>@Localizer["Effortlessly write integration tests using in-memory databases, temporary file systems, built-in mocking, and real-world HTTP request simulation."]</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6 col-lg-4 d-flex">
-                            <div class="d-flex align-items-start py-3">
-                                <div class="d-inline-block me-3">
-                                    <div class="stat">
-                                        <i class="align-middle" data-lucide="globe"></i>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="mt-0">@Localizer["Automatic Time Zone Handling"]</h5>
-                                    <p>@Localizer["Develop exclusively in UTC while the system automatically converts and displays dates in the user's local time zone."]</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6 col-lg-4 d-flex">
-                            <div class="d-flex align-items-start py-3">
-                                <div class="d-inline-block me-3">
-                                    <div class="stat">
-                                        <i class="align-middle" data-lucide="cpu"></i>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="mt-0">@Localizer["Background Job Processing"]</h5>
-                                    <p>@Localizer["\"Fire-and-forget\" support for long-running tasks (like emails or AI), featuring a GUI for queue management, parallel processing, and cancellation."]</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6 col-lg-4 d-flex">
-                            <div class="d-flex align-items-start py-3">
-                                <div class="d-inline-block me-3">
-                                    <div class="stat">
-                                        <i class="align-middle" data-lucide="calendar-clock"></i>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="mt-0">@Localizer["Scheduled Task Management"]</h5>
-                                    <p>@Localizer["Handle recurring jobs like cleanup and synchronization with a comprehensive GUI for monitoring execution history and logs."]</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6 col-lg-4 d-flex">
-                            <div class="d-flex align-items-start py-3">
-                                <div class="d-inline-block me-3">
-                                    <div class="stat">
-                                        <i class="align-middle" data-lucide="settings-2"></i>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="mt-0">@Localizer["Smart Configuration Overrides"]</h5>
-                                    <p>@Localizer["Supports both environment variables and database-backed settings, with automatic priority given to environment variables for seamless overrides."]</p>
-                                </div>
+                        <div class="d-inline-block ms-3">
+                            <div class="stat">
+                                <i class="align-middle text-danger" data-lucide="users"></i>
                             </div>
                         </div>
                     </div>
@@ -285,4 +112,501 @@
         </div>
     </div>
 
+    @* === Row 2: Charts & Stats === *@
+    <div class="row">
+        <div class="col-12 col-md-6 col-xxl-3 d-flex">
+            <div class="card flex-fill w-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">@Localizer["Virtual Models Distribution"]</h5>
+                </div>
+                <div class="card-body d-flex">
+                    <div class="align-self-center w-100">
+                        <div class="py-3">
+                            <div class="chart chart-sm">
+                                <canvas id="chartModelTypes"></canvas>
+                            </div>
+                        </div>
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>@Localizer["Type"]</th>
+                                    <th class="text-end">@Localizer["Count"]</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    var modelTypes = new[]
+                                    {
+                                        (Localizer["Chat"].Value, Model.ChatModelsCount, "primary"),
+                                        (Localizer["Embedding"].Value, Model.EmbeddingModelsCount, "success")
+                                    };
+                                    foreach (var (name, count, color) in modelTypes)
+                                    {
+                                        <tr>
+                                            <td><i class="fas fa-square-full text-@color"></i> @name</td>
+                                            <td class="text-end">@count</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-xxl-3 d-flex">
+            <div class="card flex-fill w-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">@Localizer["Models By Provider"]</h5>
+                </div>
+                <div class="card-body d-flex">
+                    <div class="align-self-center w-100">
+                        <div class="py-3">
+                            <div class="chart chart-sm">
+                                <canvas id="chartProviderModels"></canvas>
+                            </div>
+                        </div>
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>@Localizer["Provider"]</th>
+                                    <th class="text-end">@Localizer["Model Count"]</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.ProviderStats.Any())
+                                {
+                                    var colors = new[] { "primary", "warning", "success", "danger", "info", "secondary" };
+                                    int colorIndex = 0;
+                                    foreach (var provider in Model.ProviderStats)
+                                    {
+                                        var badgeColor = colors[colorIndex % colors.Length];
+                                        <tr>
+                                            <td><i class="fas fa-square-full text-@badgeColor"></i> @provider.Name</td>
+                                            <td class="text-end">@provider.ModelCount</td>
+                                        </tr>
+                                        colorIndex++;
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="2" class="text-center text-muted">@Localizer["No providers yet"]</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-xxl-3 d-flex">
+            <div class="card flex-fill w-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">@Localizer["Top Underlying Models"]</h5>
+                </div>
+                <div class="card-body d-flex">
+                    <div class="align-self-center w-100">
+                        <div class="py-3">
+                            <div class="chart chart-sm">
+                                <canvas id="chartTopModels"></canvas>
+                            </div>
+                        </div>
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>@Localizer["Model Name"]</th>
+                                    <th class="text-end">@Localizer["Usage Count"]</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.TopModels.Any())
+                                {
+                                    foreach (var m in Model.TopModels)
+                                    {
+                                        <tr>
+                                            <td><i class="fas fa-microchip text-primary"></i> @m.ModelName</td>
+                                            <td class="text-end">@m.UsageCount</td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="2" class="text-center text-muted">@Localizer["No stats yet"]</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-xxl-3 d-flex">
+            <div class="card flex-fill w-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">@Localizer["Top API Keys By Usage"]</h5>
+                </div>
+                <div class="card-body d-flex">
+                    <div class="align-self-center w-100">
+                        <div class="py-3">
+                            <div class="chart chart-sm">
+                                <canvas id="chartTopApiKeys"></canvas>
+                            </div>
+                        </div>
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>@Localizer["API Key"]</th>
+                                    <th class="text-end">@Localizer["Usage Count"]</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.TopApiKeys.Any())
+                                {
+                                    foreach (var key in Model.TopApiKeys)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <i class="fas fa-key text-warning"></i> @key.Name
+                                            </td>
+                                            <td class="text-end">@key.UsageCount</td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="2" class="text-center text-muted">@Localizer["No stats yet"]</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* === Row 3: Content Overview, System Status, Recent Users === *@
+    <div class="row">
+        <div class="col-12 col-lg-4 d-flex">
+            <div class="card flex-fill w-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">@Localizer["Gateway Overview"]</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-0">
+                        <div class="col-6">
+                            <div class="p-3 border-bottom border-end">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-shrink-0">
+                                        <i class="text-danger" data-lucide="users" style="width:20px;height:20px;"></i>
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h4 class="mb-0">@Model.TotalUsers</h4>
+                                        <small class="text-muted">@Localizer["Users"]</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-3 border-bottom">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-shrink-0">
+                                        <i class="text-primary" data-lucide="user-check" style="width:20px;height:20px;"></i>
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h4 class="mb-0">@Model.ActiveUsers</h4>
+                                        <small class="text-muted">@Localizer["Active Users"]</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-3 border-bottom border-end">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-shrink-0">
+                                        <i class="text-success" data-lucide="server" style="width:20px;height:20px;"></i>
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h4 class="mb-0">@Model.TotalOllamaProviders</h4>
+                                        <small class="text-muted">@Localizer["Providers"]</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-3 border-bottom">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-shrink-0">
+                                        <i class="text-warning" data-lucide="key" style="width:20px;height:20px;"></i>
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h4 class="mb-0">@Model.TotalApiKeys</h4>
+                                        <small class="text-muted">@Localizer["API Keys"]</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-3 border-end">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-shrink-0">
+                                        <i class="text-info" data-lucide="message-square" style="width:20px;height:20px;"></i>
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h4 class="mb-0">@Model.ChatModelsCount</h4>
+                                        <small class="text-muted">@Localizer["Chat Models"]</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-shrink-0">
+                                        <i class="text-success" data-lucide="file-text" style="width:20px;height:20px;"></i>
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h4 class="mb-0">@Model.EmbeddingModelsCount</h4>
+                                        <small class="text-muted">@Localizer["Embeddings"]</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-4 d-flex">
+            <div class="card flex-fill w-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">@Localizer["System Status"]</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex align-items-start mb-4 mt-2">
+                        <div class="flex-shrink-0">
+                            <div class="bg-success-subtle rounded-circle d-flex align-items-center justify-content-center" style="width:48px;height:48px;">
+                                <i data-lucide="check-circle" style="width:24px;height:24px;" class="text-success"></i>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 ms-3 mt-1">
+                            <strong class="fs-4">@Localizer["Gateway Operational"]</strong>
+                            <div class="text-muted mt-1">@Localizer["All systems functional and routing metrics are healthy"]</div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="d-flex align-items-start mt-4">
+                        <div class="flex-shrink-0">
+                            <div class="bg-primary-subtle rounded-circle d-flex align-items-center justify-content-center" style="width:48px;height:48px;">
+                                <i data-lucide="zap" style="width:24px;height:24px;" class="text-primary"></i>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 ms-3 mt-1">
+                            <strong class="fs-4">@Localizer["High Performance"]</strong>
+                            <div class="text-muted mt-1">@Localizer["Ollama fast routing enabled with memory caching active"]</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-4 d-flex">
+            <div class="card flex-fill w-100">
+                <div class="card-header">
+                    <div class="card-actions float-end">
+                        <a href="/Users/Index" class="btn btn-sm btn-outline-primary">@Localizer["View All"]</a>
+                    </div>
+                    <h5 class="card-title mb-0">@Localizer["Recent Users"]</h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.RecentUsers.Any())
+                    {
+                        @foreach (var user in Model.RecentUsers)
+                        {
+                            <div class="d-flex align-items-start mb-3">
+                                <div class="flex-shrink-0">
+                                    <div class="bg-body-tertiary rounded-circle d-flex align-items-center justify-content-center" style="width:36px;height:36px;">
+                                        <i data-lucide="user" style="width:18px;height:18px;" class="text-primary"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <strong>@user.Email</strong>
+                                    <div class="text-muted small">@user.CreationTime.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="text-center text-muted py-4">
+                            <i data-lucide="users" class="d-block mx-auto mb-2" style="width:32px;height:32px;"></i>
+                            @Localizer["No users yet"]
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+@* === Chart.js Scripts === *@
+<script src="/node_modules/chart.js/dist/chart.umd.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // --- Model Types Doughnut ---
+        var ctxTypes = document.getElementById("chartModelTypes");
+        if (ctxTypes) {
+            new Chart(ctxTypes, {
+                type: "doughnut",
+                data: {
+                    labels: [
+                        "@Localizer["Chat"]",
+                        "@Localizer["Embedding"]"
+                    ],
+                    datasets: [{
+                        data: [
+                            @Model.ChatModelsCount,
+                            @Model.EmbeddingModelsCount
+                        ],
+                        backgroundColor: [
+                            "rgba(59, 125, 221, 0.85)", // primary
+                            "rgba(40, 167, 69, 0.85)"   // success
+                        ],
+                        borderWidth: 3,
+                        borderColor: "#fff"
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: "65%",
+                    plugins: {
+                        legend: {
+                            position: "bottom",
+                            labels: { padding: 16, usePointStyle: true, pointStyle: "circle" }
+                        }
+                    }
+                }
+            });
+        }
+
+        // --- Provider Models Pie ---
+        var ctxProvider = document.getElementById("chartProviderModels");
+        if (ctxProvider) {
+            var pLabels = [@Html.Raw(string.Join(",", Model.ProviderStats.Select(p => $"'{p.Name.Replace("'", "\\'")}'")))];
+            var pData = [@string.Join(",", Model.ProviderStats.Select(p => p.ModelCount))];
+            
+            if (pLabels.length === 0) { pLabels = ["No Data"]; pData = [1]; }
+            
+            new Chart(ctxProvider, {
+                type: "pie",
+                data: {
+                    labels: pLabels,
+                    datasets: [{
+                        data: pData,
+                        backgroundColor: [
+                            "rgba(59, 125, 221, 0.85)", // primary
+                            "rgba(255, 193, 7, 0.85)",  // warning
+                            "rgba(40, 167, 69, 0.85)",  // success
+                            "rgba(220, 53, 69, 0.85)",  // danger
+                            "rgba(23, 162, 184, 0.85)", // info
+                            "rgba(108, 117, 125, 0.85)" // secondary
+                        ],
+                        borderWidth: 2,
+                        borderColor: "#fff"
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: "bottom",
+                            labels: { padding: 16, usePointStyle: true, pointStyle: "circle" }
+                        }
+                    }
+                }
+            });
+        }
+
+        // --- Top Models Bar ---
+        var ctxTopM = document.getElementById("chartTopModels");
+        if (ctxTopM) {
+            var mLabels = [@Html.Raw(string.Join(",", Model.TopModels.Select(t => $"'{t.ModelName}'")))];
+            var mData = [@string.Join(",", Model.TopModels.Select(t => t.UsageCount))];
+            
+            new Chart(ctxTopM, {
+                type: "bar",
+                data: {
+                    labels: mLabels,
+                    datasets: [{
+                        label: "@Localizer["Usage Count"]",
+                        data: mData,
+                        backgroundColor: "rgba(59, 125, 221, 0.85)",
+                        borderColor: "rgba(59, 125, 221, 0.85)",
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        barPercentage: 0.5,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y', // Horizontal
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            ticks: { stepSize: 1 }
+                        }
+                    }
+                }
+            });
+        }
+
+        // --- Top API Keys Bar ---
+        var ctxTopK = document.getElementById("chartTopApiKeys");
+        if (ctxTopK) {
+            var kLabels = [@Html.Raw(string.Join(",", Model.TopApiKeys.Select(t => $"'{t.Name}'")))];
+            var kData = [@string.Join(",", Model.TopApiKeys.Select(t => t.UsageCount))];
+            
+            new Chart(ctxTopK, {
+                type: "bar",
+                data: {
+                    labels: kLabels,
+                    datasets: [{
+                        label: "@Localizer["Usage Count"]",
+                        data: kData,
+                        backgroundColor: "rgba(255, 193, 7, 0.85)",
+                        borderColor: "rgba(255, 193, 7, 0.85)",
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        barPercentage: 0.5,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y', // Horizontal
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            ticks: { stepSize: 1 }
+                        }
+                    }
+                }
+            });
+        }
+    });
+</script>

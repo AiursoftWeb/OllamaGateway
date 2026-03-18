@@ -1,6 +1,5 @@
 using Aiursoft.OllamaGateway.Configuration;
 using Aiursoft.OllamaGateway.Entities;
-using Aiursoft.OllamaGateway.Services.Authentication;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.OllamaGateway.Services.BackgroundJobs;

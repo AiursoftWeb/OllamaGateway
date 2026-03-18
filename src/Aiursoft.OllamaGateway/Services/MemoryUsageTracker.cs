@@ -29,6 +29,11 @@ public class MemoryUsageTracker : ISingletonDependency
         return (null, 0);
     }
 
+    public IDictionary<int, (DateTime LastUsed, long TotalCalls)> GetAllApiKeyStats()
+    {
+        return _apiKeyStats;
+    }
+
     public void TrackUnderlyingModelUsage(int providerId, string modelName)
     {
         var key = $"{providerId}_{modelName}";
@@ -47,5 +52,10 @@ public class MemoryUsageTracker : ISingletonDependency
             return stats;
         }
         return 0;
+    }
+
+    public IDictionary<string, long> GetAllUnderlyingModelStats()
+    {
+        return _underlyingModelStats;
     }
 }
