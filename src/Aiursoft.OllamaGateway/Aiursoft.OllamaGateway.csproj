@@ -22,11 +22,11 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
+    <PackageReference Include="Aiursoft.GptClient" Version="10.0.12" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Aiursoft.OllamaGateway.InMemory\Aiursoft.OllamaGateway.InMemory.csproj" />
     <ProjectReference Include="..\Aiursoft.OllamaGateway.MySql\Aiursoft.OllamaGateway.MySql.csproj" />
     <ProjectReference Include="..\Aiursoft.OllamaGateway.Sqlite\Aiursoft.OllamaGateway.Sqlite.csproj" />
-    <ProjectReference Include="..\..\..\GptClient\src\Aiursoft.GptClient\Aiursoft.GptClient.csproj" />
   </ItemGroup>
 </Project>
