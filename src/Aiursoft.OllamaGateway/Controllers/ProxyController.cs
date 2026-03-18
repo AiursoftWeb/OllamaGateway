@@ -95,7 +95,7 @@ public class ProxyController(
             log.LastQuestion = input.Messages.LastOrDefault()?.Content ?? string.Empty;
 
             input.Model = virtualModel.UnderlyingModel;
-            if (virtualModel.Thinking.HasValue) input.Thinking = virtualModel.Thinking;
+            if (virtualModel.Thinking.HasValue) input.Think = virtualModel.Thinking.Value;
             
             input.Options ??= new OllamaRequestOptions();
             if (virtualModel.NumCtx.HasValue) input.Options.NumCtx = virtualModel.NumCtx;

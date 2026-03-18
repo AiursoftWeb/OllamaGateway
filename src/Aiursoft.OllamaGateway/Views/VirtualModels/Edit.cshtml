@@ -16,6 +16,7 @@
                 <div class="card-body">
                     <form asp-action="Edit" asp-route-id="@ViewData["Id"]" method="post">
                         <input type="hidden" asp-for="Type" />
+                        <input type="hidden" asp-for="ProviderId" />
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         
                         <div class="row">
