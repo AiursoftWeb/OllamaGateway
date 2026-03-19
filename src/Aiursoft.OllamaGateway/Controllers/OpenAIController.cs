@@ -121,6 +121,10 @@ public class OpenAIController : ControllerBase
                 ["stream"] = isStream
             };
 
+            // 【补丁 A：透传工具定义】Ollama 原生支持这部分的 OpenAI 格式
+            if (clientJson["tools"] != null) ollamaRequest["tools"] = clientJson["tools"]!.DeepClone();
+            if (clientJson["tool_choice"] != null) ollamaRequest["tool_choice"] = clientJson["tool_choice"]!.DeepClone();
+
             if (messagesArray != null)
             {
                 var translatedMessages = new JsonArray();
@@ -130,9 +134,8 @@ public class OpenAIController : ControllerBase
                     var newMsg = new JsonObject();
                     newMsg["role"] = msgNode["role"]?.ToString();
 
+                    // 处理多模态/复杂数组 Content
                     var contentNode = msgNode["content"];
-                    
-                    // 【核心逻辑】：应对高级客户端（如 Opencode/Cursor）的 Content 数组结构
                     if (contentNode is JsonArray contentArray)
                     {
                         var textBuilder = new StringBuilder();
@@ -143,7 +146,6 @@ public class OpenAIController : ControllerBase
                             var type = item?["type"]?.ToString();
                             if (type == "text")
                             {
-                                // 把所有散落的 text 块强行拼装成一个连续的字符串
                                 textBuilder.Append((string?)item?["text"]);
                             }
                             else if (type == "image_url")
@@ -151,25 +153,50 @@ public class OpenAIController : ControllerBase
                                 var url = item?["image_url"]?["url"]?.ToString();
                                 if (!string.IsNullOrWhiteSpace(url))
                                 {
-                                    // 提取纯 Base64 图片数据
                                     var base64Data = url.Contains(',') ? url.Split(',')[1] : url;
                                     imagesArray.Add(base64Data);
                                 }
                             }
                         }
-                        
-                        // 无论客户端切了多少块，Ollama 这里只看到一个完美的字符串
                         newMsg["content"] = textBuilder.ToString();
-                        
-                        if (imagesArray.Count > 0)
-                        {
-                            newMsg["images"] = imagesArray;
-                        }
+                        if (imagesArray.Count > 0) newMsg["images"] = imagesArray;
                     }
                     else
                     {
-                        // 应对普通客户端的纯文本请求
                         newMsg["content"] = contentNode?.ToString() ?? string.Empty;
+                    }
+
+                    // 【补丁 B：翻译历史记录中的工具调用】OpenAI 字符串 -> Ollama 对象
+                    var tcs = msgNode["tool_calls"]?.AsArray();
+                    if (tcs != null && tcs.Count > 0)
+                    {
+                        var ollamaTcs = new JsonArray();
+                        foreach (var tc in tcs)
+                        {
+                            var oTc = new JsonObject();
+                            var funcNode = tc?["function"];
+                            if (funcNode != null)
+                            {
+                                var oFunc = new JsonObject();
+                                oFunc["name"] = funcNode["name"]?.ToString();
+                                
+                                var argsStr = funcNode["arguments"]?.ToString();
+                                if (!string.IsNullOrWhiteSpace(argsStr))
+                                {
+                                    try { oFunc["arguments"] = JsonNode.Parse(argsStr); }
+                                    catch { oFunc["arguments"] = new JsonObject(); }
+                                }
+                                oTc["function"] = oFunc;
+                            }
+                            ollamaTcs.Add(oTc);
+                        }
+                        newMsg["tool_calls"] = ollamaTcs;
+                    }
+
+                    // 保留 tool_call_id，Ollama 虽不用但透传更安全
+                    if (msgNode["tool_call_id"] != null)
+                    {
+                        newMsg["tool_call_id"] = msgNode["tool_call_id"]?.ToString();
                     }
 
                     translatedMessages.Add(newMsg);
@@ -178,30 +205,21 @@ public class OpenAIController : ControllerBase
                 ollamaRequest["messages"] = translatedMessages;
             }
 
-            // 核心翻译：将 OpenAI 的扁平参数和网关的覆盖参数，统一打包进 Ollama 的 options 中
             var options = new JsonObject();
-            
-            // 先读取客户端可能传来的参数进行兜底
             if (clientJson["temperature"] != null) options["temperature"] = clientJson["temperature"]!.DeepClone();
             if (clientJson["top_p"] != null) options["top_p"] = clientJson["top_p"]!.DeepClone();
             if (clientJson["max_tokens"] != null) options["num_predict"] = clientJson["max_tokens"]!.DeepClone();
 
-            // 强行注入网关的覆盖参数（最高优先级，彻底解决 Context 失控问题）
             if (virtualModel.Temperature.HasValue) options["temperature"] = virtualModel.Temperature.Value;
             if (virtualModel.TopP.HasValue) options["top_p"] = virtualModel.TopP.Value;
             if (virtualModel.NumPredict.HasValue) options["num_predict"] = virtualModel.NumPredict.Value;
             if (virtualModel.NumCtx.HasValue) options["num_ctx"] = virtualModel.NumCtx.Value;
 
-            if (options.Count > 0)
-            {
-                ollamaRequest["options"] = options;
-            }
-
-            // 注入思考开关
+            if (options.Count > 0) ollamaRequest["options"] = options;
             if (virtualModel.Thinking.HasValue) ollamaRequest["think"] = virtualModel.Thinking.Value;
 
             // =========================================================================================
-            // 2. 发起底层请求：注意！此时目标是 /api/chat，不再是 /v1/chat/completions
+            // 2. 发起底层请求
             // =========================================================================================
             using var client = _httpClientFactory.CreateClient();
             client.Timeout = await _globalSettingsService.GetRequestTimeoutAsync();
@@ -211,14 +229,13 @@ public class OpenAIController : ControllerBase
                 Content = new StringContent(ollamaRequest.ToJsonString(), Encoding.UTF8, "application/json")
             };
 
-            _logger.LogInformation("[{TraceId}] Translating & Proxying OpenAI chat request for model {Model} to {UnderlyingUrl}/api/chat", HttpContext.TraceIdentifier, virtualModel.Name, underlyingUrl);
+            _logger.LogInformation("[{TraceId}] Translating & Proxying OpenAI chat request to {UnderlyingUrl}/api/chat", HttpContext.TraceIdentifier, underlyingUrl);
             using var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, HttpContext.RequestAborted);
 
             Response.StatusCode = (int)response.StatusCode;
             _logContext.Log.StatusCode = Response.StatusCode;
             _logContext.Log.Success = response.IsSuccessStatusCode;
 
-            // 如果上游报错，直接把错误文本透传，不再强行翻译
             if (!response.IsSuccessStatusCode)
             {
                 var errContent = await response.Content.ReadAsStringAsync(HttpContext.RequestAborted);
@@ -229,16 +246,15 @@ public class OpenAIController : ControllerBase
             }
 
             await using var responseStream = await response.Content.ReadAsStreamAsync(HttpContext.RequestAborted);
-
             var chatId = "chatcmpl-" + Guid.NewGuid().ToString("N").Substring(0, 12);
             var created = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 
             // =========================================================================================
-            // 3. 响应翻译阶段 (Streaming)：Ollama NDJSON -> OpenAI SSE Chunk
+            // 3. 响应翻译阶段 (Streaming)
             // =========================================================================================
             if (isStream)
             {
-                Response.ContentType = "text/event-stream"; // 强制接管 Content-Type
+                Response.ContentType = "text/event-stream";
                 
                 var answerBuilder = new StringBuilder();
                 var thinkBuilder = new StringBuilder();
@@ -263,7 +279,6 @@ public class OpenAIController : ControllerBase
                         if (!string.IsNullOrEmpty(content)) answerBuilder.Append(content);
                         if (!string.IsNullOrEmpty(reasoning)) thinkBuilder.Append(reasoning);
 
-                        // 实时构造 OpenAI 格式的微型 Chunk
                         var openAiChunk = new JsonObject
                         {
                             ["id"] = chatId,
@@ -285,10 +300,32 @@ public class OpenAIController : ControllerBase
                         if (!string.IsNullOrEmpty(content)) delta["content"] = content;
                         if (!string.IsNullOrEmpty(reasoning)) delta["reasoning_content"] = reasoning;
 
-                        // 如果这一行既没有文本也没有完成标记，跳过以节省带宽
+                        // 【补丁 C：翻译模型下发的工具调用指令】Ollama 对象 -> OpenAI 字符串
+                        var toolCalls = ollamaChunk["message"]?["tool_calls"]?.AsArray();
+                        if (toolCalls != null && toolCalls.Count > 0)
+                        {
+                            var openAiToolCalls = new JsonArray();
+                            for (int i = 0; i < toolCalls.Count; i++)
+                            {
+                                var tc = toolCalls[i];
+                                openAiToolCalls.Add(new JsonObject
+                                {
+                                    ["index"] = i,
+                                    ["id"] = "call_" + Guid.NewGuid().ToString("N").Substring(0, 8),
+                                    ["type"] = "function",
+                                    ["function"] = new JsonObject
+                                    {
+                                        ["name"] = tc?["function"]?["name"]?.ToString(),
+                                        ["arguments"] = tc?["function"]?["arguments"]?.ToJsonString() ?? "{}"
+                                    }
+                                });
+                            }
+                            delta["tool_calls"] = openAiToolCalls;
+                        }
+
+                        // 如果这一行真的是空包（没有文本、没有思考、没有工具、也没有结束标志），则跳过
                         if (delta.Count == 0 && !isDone) continue;
 
-                        // 最后一个结束块
                         if (isDone)
                         {
                             openAiChunk["choices"]![0]!["finish_reason"] = "stop";
@@ -303,32 +340,29 @@ public class OpenAIController : ControllerBase
                                     ["completion_tokens"] = cTokens,
                                     ["total_tokens"] = pTokens + cTokens
                                 };
-
                                 _logContext.Log.PromptTokens = (int)pTokens;
                                 _logContext.Log.CompletionTokens = (int)cTokens;
                                 _logContext.Log.TotalTokens = (int)(pTokens + cTokens);
                             }
                         }
 
-                        // 转换为严格的 SSE 格式发送
                         await Response.WriteAsync($"data: {openAiChunk.ToJsonString()}\n\n", HttpContext.RequestAborted);
                         await Response.Body.FlushAsync(HttpContext.RequestAborted);
 
-                        // 流结束标志
                         if (isDone)
                         {
                             await Response.WriteAsync("data: [DONE]\n\n", HttpContext.RequestAborted);
                             await Response.Body.FlushAsync(HttpContext.RequestAborted);
                         }
                     }
-                    catch { /* 忽略无法解析的脏数据行 */ }
+                    catch { /* 忽略脏数据 */ }
                 }
 
                 _logContext.Log.Answer = answerBuilder.ToString();
                 _logContext.Log.Thinking = thinkBuilder.ToString();
             }
             // =========================================================================================
-            // 4. 响应翻译阶段 (Non-Streaming)：Ollama JSON -> OpenAI JSON
+            // 4. 响应翻译阶段 (Non-Streaming)
             // =========================================================================================
             else
             {
@@ -354,7 +388,6 @@ public class OpenAIController : ControllerBase
                         _logContext.Log.CompletionTokens = (int)cTokens;
                         _logContext.Log.TotalTokens = (int)(pTokens + cTokens);
 
-                        // 构建一个完美的 OpenAI 非流式响应体
                         var openAiResponse = new JsonObject
                         {
                             ["id"] = chatId,
@@ -387,13 +420,34 @@ public class OpenAIController : ControllerBase
                             openAiResponse["choices"]![0]!["message"]!["reasoning_content"] = reasoning;
                         }
 
-                        Response.ContentType = "application/json"; // 强制接管 Content-Type
+                        // 【补丁 D：翻译非流式模型下发的工具调用指令】
+                        var toolCalls = ollamaResponse["message"]?["tool_calls"]?.AsArray();
+                        if (toolCalls != null && toolCalls.Count > 0)
+                        {
+                            var openAiToolCalls = new JsonArray();
+                            for (int i = 0; i < toolCalls.Count; i++)
+                            {
+                                var tc = toolCalls[i];
+                                openAiToolCalls.Add(new JsonObject
+                                {
+                                    ["id"] = "call_" + Guid.NewGuid().ToString("N").Substring(0, 8),
+                                    ["type"] = "function",
+                                    ["function"] = new JsonObject
+                                    {
+                                        ["name"] = tc?["function"]?["name"]?.ToString(),
+                                        ["arguments"] = tc?["function"]?["arguments"]?.ToJsonString() ?? "{}"
+                                    }
+                                });
+                            }
+                            openAiResponse["choices"]![0]!["message"]!["tool_calls"] = openAiToolCalls;
+                        }
+
+                        Response.ContentType = "application/json";
                         await Response.WriteAsync(openAiResponse.ToJsonString(), HttpContext.RequestAborted);
                     }
                 }
                 catch
                 {
-                    // 解析失败兜底，原样返回
                     ms.Seek(0, SeekOrigin.Begin);
                     using var sReader = new StreamReader(ms, Encoding.UTF8, false, 1024, true);
                     var rawErr = await sReader.ReadToEndAsync(HttpContext.RequestAborted);

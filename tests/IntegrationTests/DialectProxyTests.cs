@@ -717,6 +717,101 @@ public class DialectProxyTests : TestBase
     }
 
     [TestMethod]
+    public async Task OpenAI_ToolCallHistory_ArgumentsParsed()
+    {
+        // 1. Arrange: Send a message with a tool call history (OpenAI-style string arguments)
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            var body = """{"model":"llama3.2","message":{"role":"assistant","content":"Done."}, "done":true}""";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body, Encoding.UTF8, "application/json")
+            });
+        };
+
+        var payload = $$"""
+        {
+            "model": "{{VirtualModelName}}",
+            "messages": [
+                {
+                    "role": "assistant",
+                    "content": null,
+                    "tool_calls": [
+                        {
+                            "id": "call_123",
+                            "type": "function",
+                            "function": {
+                                "name": "get_weather",
+                                "arguments": "{\"location\":\"London\"}"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "stream": false
+        }
+        """;
+
+        // 2. Act
+        await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
+
+        // 3. Assert: Upstream should receive arguments as a REAL JSON OBJECT (Ollama format)
+        Assert.IsNotNull(MockUpstreamState.LastRequestBody);
+        var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody);
+        var toolCall = upstreamBody?["messages"]?[0]?["tool_calls"]?[0];
+        
+        Assert.AreEqual("get_weather", toolCall?["function"]?["name"]?.ToString());
+        var args = toolCall?["function"]?["arguments"];
+        Assert.IsInstanceOfType(args, typeof(JsonObject)); // Is NOT a string!
+        Assert.AreEqual("London", args?["location"]?.ToString());
+    }
+
+    [TestMethod]
+    public async Task OpenAI_Response_ToolCallsStringified()
+    {
+        // 1. Arrange: Upstream returns an Ollama-style tool call (Object arguments)
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            var body = """
+            {
+                "model": "llama3.2",
+                "message": {
+                    "role": "assistant",
+                    "content": "",
+                    "tool_calls": [
+                        {
+                            "function": {
+                                "name": "run_command",
+                                "arguments": { "command": "ls -la" }
+                            }
+                        }
+                    ]
+                },
+                "done": true
+            }
+            """;
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body, Encoding.UTF8, "application/json")
+            });
+        };
+
+        var payload = $$"""{"model": "{{VirtualModelName}}", "messages": [{"role": "user", "content": "list files"}], "stream": false}""";
+
+        // 2. Act
+        var response = await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
+        var responseBody = await response.Content.ReadAsStringAsync();
+
+        // 3. Assert: Gateway should return OpenAI-style tool calls (STRING arguments)
+        var json = JsonNode.Parse(responseBody);
+        var toolCall = json?["choices"]?[0]?["message"]?["tool_calls"]?[0];
+        
+        Assert.AreEqual("run_command", toolCall?["function"]?["name"]?.ToString());
+        var args = toolCall?["function"]?["arguments"]?.ToString();
+        Assert.AreEqual("{\"command\":\"ls -la\"}", args);
+    }
+
+    [TestMethod]
     public async Task OpenAI_ThinkingOverride_Injected()
     {
         // Arrange: Update the model to have thinking and context size enabled
