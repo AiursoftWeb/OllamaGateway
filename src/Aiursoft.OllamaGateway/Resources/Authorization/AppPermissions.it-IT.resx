@@ -27,6 +27,15 @@
   <data name="Allows assigning or removing roles for any user." xml:space="preserve">
     <value>Consente di assegnare o rimuovere ruoli per qualsiasi utente.</value>
   </data>
+  <data name="Allows chatting with real/underlying Ollama models directly through the gateway." xml:space="preserve">
+    <value>Consente di chattare con i modelli Ollama reali/sottostanti direttamente tramite il gateway.</value>
+  </data>
+  <data name="Allows chatting with virtual models through the gateway UI or API." xml:space="preserve">
+    <value>Consente di chattare con modelli virtuali tramite l&apos;interfaccia UI o l&apos;API del gateway.</value>
+  </data>
+  <data name="Allows managing the underlying Ollama model providers/servers." xml:space="preserve">
+    <value>Consente la gestione dei fornitori/server sottostanti dei modelli Ollama.</value>
+  </data>
   <data name="Allows modification of role names and their assigned permissions." xml:space="preserve">
     <value>Consente la modifica dei nomi dei ruoli e dei permessi assegnati.</value>
   </data>
@@ -38,6 +47,12 @@
   </data>
   <data name="Allows the permanent deletion of user accounts." xml:space="preserve">
     <value>Consente l&apos;eliminazione permanente degli account utente.</value>
+  </data>
+  <data name="Allows viewing and managing API keys for the current user." xml:space="preserve">
+    <value>Consente di visualizzare e gestire le chiavi API per l&apos;utente corrente.</value>
+  </data>
+  <data name="Allows viewing and managing virtual models that override underlying Ollama models." xml:space="preserve">
+    <value>Consente la visualizzazione e la gestione di modelli virtuali che sostituiscono i modelli Ollama sottostanti.</value>
   </data>
   <data name="Allows viewing and modifying global application settings." xml:space="preserve">
     <value>Consente di visualizzare e modificare le impostazioni globali dell&apos;applicazione.</value>
@@ -60,6 +75,12 @@
   <data name="Assign Roles to Users" xml:space="preserve">
     <value>Assegna Ruoli agli Utenti</value>
   </data>
+  <data name="Chat With Underlying Models" xml:space="preserve">
+    <value>Chat con Modelli Sottostanti</value>
+  </data>
+  <data name="Chat With Virtual Models" xml:space="preserve">
+    <value>Chatta con Modelli Virtuali</value>
+  </data>
   <data name="Delete Roles" xml:space="preserve">
     <value>Elimina Ruoli</value>
   </data>
@@ -81,8 +102,17 @@
   <data name="Grants permission to restart the application instance. May cause availability interruptions but all settings and cache will be reloaded." xml:space="preserve">
     <value>Concede il permesso di riavviare l&apos;istanza dell&apos;applicazione. Potrebbe causare interruzioni della disponibilità, ma tutte le impostazioni e la cache verranno ricaricate.</value>
   </data>
+  <data name="Manage API Keys" xml:space="preserve">
+    <value>Gestisci Chiavi API</value>
+  </data>
   <data name="Manage Global Settings" xml:space="preserve">
     <value>Gestisci Impostazioni Globali</value>
+  </data>
+  <data name="Manage Providers" xml:space="preserve">
+    <value>Gestisci Provider</value>
+  </data>
+  <data name="Manage Virtual Models" xml:space="preserve">
+    <value>Gestisci Modelli Virtuali</value>
   </data>
   <data name="Read Permissions" xml:space="preserve">
     <value>Leggere Permessi</value>

@@ -27,6 +27,12 @@
   <data name="A dummy number for testing." xml:space="preserve">
     <value>Ett dummynummer för testning.</value>
   </data>
+  <data name="Allow Anonymous API Call" xml:space="preserve">
+    <value>Tillåt anonyma API-anrop</value>
+  </data>
+  <data name="Allow anyone to call the API without a Bearer token or authentication." xml:space="preserve">
+    <value>Tillåt vem som helst att anropa API:et utan en Bearer-token eller autentisering.</value>
+  </data>
   <data name="Allow User Adjust Nickname" xml:space="preserve">
     <value>Tillåt Användare Ändra Smeknamn</value>
   </data>
@@ -39,6 +45,12 @@
   <data name="Brand Name" xml:space="preserve">
     <value>Varumärke</value>
   </data>
+  <data name="Default Chat Model" xml:space="preserve">
+    <value>Standard chattmodell</value>
+  </data>
+  <data name="Default Embedding Model" xml:space="preserve">
+    <value>Standardmodell för inbäddning</value>
+  </data>
   <data name="Dummy Choice" xml:space="preserve">
     <value>Dummyval</value>
   </data>
@@ -48,20 +60,38 @@
   <data name="ICP Number" xml:space="preserve">
     <value>ICP-nummer</value>
   </data>
+  <data name="Keep Alive Job Interval (Minutes)" xml:space="preserve">
+    <value>Intervall för Keep Alive-jobb (minuter)</value>
+  </data>
   <data name="Project Logo" xml:space="preserve">
     <value>Projektlogotyp</value>
   </data>
   <data name="Project Name" xml:space="preserve">
     <value>Projektnamn</value>
   </data>
+  <data name="Request Timeout (Minutes)" xml:space="preserve">
+    <value>Förfråganstidsgräns (minuter)</value>
+  </data>
   <data name="The brand name displayed in the footer." xml:space="preserve">
     <value>Det varumärke som visas i sidfoten.</value>
+  </data>
+  <data name="The default virtual model to use for chat requests when no model is specified." xml:space="preserve">
+    <value>Den förinställda virtuella modell som ska användas för chattförfrågningar när ingen modell specificeras.</value>
+  </data>
+  <data name="The default virtual model to use for embedding requests when no model is specified." xml:space="preserve">
+    <value>Den virtuella modell som används som standard för inbäddningsförfrågningar när ingen modell specificeras.</value>
   </data>
   <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
     <value>ICP-licensnummer för användare i Kina. Lämna tomt för att dölja.</value>
   </data>
+  <data name="The interval in minutes to ping the loaded models to keep them in memory." xml:space="preserve">
+    <value>Intervall i minuter för att pinga de laddade modellerna för att hålla dem i minnet.</value>
+  </data>
   <data name="The logo of the project displayed in the navbar and footer. Support jpg, png, svg." xml:space="preserve">
     <value>Logotypen för projektet som visas i navigeringsfältet och sidfoten. Stöd för jpg, png, svg.</value>
+  </data>
+  <data name="The maximum time in minutes to wait for a response from the underlying Ollama server." xml:space="preserve">
+    <value>Den maximala tiden i minuter att vänta på ett svar från den underliggande Ollama-servern.</value>
   </data>
   <data name="The name of the project displayed in the frontend." xml:space="preserve">
     <value>Projektets namn som visas i frontend</value>

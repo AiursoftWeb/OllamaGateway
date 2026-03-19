@@ -27,6 +27,12 @@
   <data name="A dummy number for testing." xml:space="preserve">
     <value>테스트용 가짜 번호입니다.</value>
   </data>
+  <data name="Allow Anonymous API Call" xml:space="preserve">
+    <value>익명 API 호출 허용</value>
+  </data>
+  <data name="Allow anyone to call the API without a Bearer token or authentication." xml:space="preserve">
+    <value>Bearer 토큰이나 인증 없이 누구나 API 를 호출할 수 있도록 허용합니다.</value>
+  </data>
   <data name="Allow User Adjust Nickname" xml:space="preserve">
     <value>사용자 닉네임 조정 허용</value>
   </data>
@@ -39,6 +45,12 @@
   <data name="Brand Name" xml:space="preserve">
     <value>브랜드 이름</value>
   </data>
+  <data name="Default Chat Model" xml:space="preserve">
+    <value>기본 채팅 모델</value>
+  </data>
+  <data name="Default Embedding Model" xml:space="preserve">
+    <value>기본 임베딩 모델</value>
+  </data>
   <data name="Dummy Choice" xml:space="preserve">
     <value>임의 선택</value>
   </data>
@@ -48,20 +60,38 @@
   <data name="ICP Number" xml:space="preserve">
     <value>ICP 번호</value>
   </data>
+  <data name="Keep Alive Job Interval (Minutes)" xml:space="preserve">
+    <value>연결 유지 작업 간격 (분)</value>
+  </data>
   <data name="Project Logo" xml:space="preserve">
     <value>프로젝트 로고</value>
   </data>
   <data name="Project Name" xml:space="preserve">
     <value>프로젝트 이름</value>
   </data>
+  <data name="Request Timeout (Minutes)" xml:space="preserve">
+    <value>요청 시간 제한 (분)</value>
+  </data>
   <data name="The brand name displayed in the footer." xml:space="preserve">
     <value>푸터에 표시되는 브랜드 이름</value>
+  </data>
+  <data name="The default virtual model to use for chat requests when no model is specified." xml:space="preserve">
+    <value>모델이 지정되지 않은 경우 채팅 요청에 사용할 기본 가상 모델입니다.</value>
+  </data>
+  <data name="The default virtual model to use for embedding requests when no model is specified." xml:space="preserve">
+    <value>모델이 지정되지 않은 경우 임베딩 요청에 사용할 기본 가상 모델입니다.</value>
   </data>
   <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
     <value>중국 대륙 사용자를 위한 ICP 라이선스 번호. 비워두면 숨깁니다.</value>
   </data>
+  <data name="The interval in minutes to ping the loaded models to keep them in memory." xml:space="preserve">
+    <value>로드된 모델을 메모리에 유지하기 위해 핑을 보내는 분 단위 간격입니다.</value>
+  </data>
   <data name="The logo of the project displayed in the navbar and footer. Support jpg, png, svg." xml:space="preserve">
     <value>네비게이션 바와 푸터에 표시되는 프로젝트의 로고입니다. jpg, png, svg 형식을 지원합니다.</value>
+  </data>
+  <data name="The maximum time in minutes to wait for a response from the underlying Ollama server." xml:space="preserve">
+    <value>하위 Ollama 서버에서 응답을 기다리는 최대 시간 (분).</value>
   </data>
   <data name="The name of the project displayed in the frontend." xml:space="preserve">
     <value>프론트엔드에 표시되는 프로젝트 이름</value>

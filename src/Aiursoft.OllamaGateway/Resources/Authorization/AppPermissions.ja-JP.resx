@@ -27,6 +27,15 @@
   <data name="Allows assigning or removing roles for any user." xml:space="preserve">
     <value>任意のユーザーに対してロールの割り当てまたは削除を許可します。</value>
   </data>
+  <data name="Allows chatting with real/underlying Ollama models directly through the gateway." xml:space="preserve">
+    <value>ゲートウェイを介して、実際の/基盤となる Ollama モデルと直接チャットできます。</value>
+  </data>
+  <data name="Allows chatting with virtual models through the gateway UI or API." xml:space="preserve">
+    <value>ゲートウェイUIまたはAPIを介して仮想モデルとのチャットを許可します。</value>
+  </data>
+  <data name="Allows managing the underlying Ollama model providers/servers." xml:space="preserve">
+    <value>基盤となる Ollama モデルプロバイダー/サーバーの管理を許可します。</value>
+  </data>
   <data name="Allows modification of role names and their assigned permissions." xml:space="preserve">
     <value>ロール名とその割り当てられた権限の変更を許可します。</value>
   </data>
@@ -38,6 +47,12 @@
   </data>
   <data name="Allows the permanent deletion of user accounts." xml:space="preserve">
     <value>ユーザーアカウントの完全削除を許可します。</value>
+  </data>
+  <data name="Allows viewing and managing API keys for the current user." xml:space="preserve">
+    <value>現在のユーザーの API キーの表示と管理を許可します。</value>
+  </data>
+  <data name="Allows viewing and managing virtual models that override underlying Ollama models." xml:space="preserve">
+    <value>基盤となる Ollama モデルをオーバーライドする仮想モデルの表示と管理を許可します。</value>
   </data>
   <data name="Allows viewing and modifying global application settings." xml:space="preserve">
     <value>グローバルなアプリケーション設定の表示および編集を許可します。</value>
@@ -60,6 +75,12 @@
   <data name="Assign Roles to Users" xml:space="preserve">
     <value>ユーザーへのロール割り当て</value>
   </data>
+  <data name="Chat With Underlying Models" xml:space="preserve">
+    <value>基盤モデルとのチャット</value>
+  </data>
+  <data name="Chat With Virtual Models" xml:space="preserve">
+    <value>バーチャルモデルとのチャット</value>
+  </data>
   <data name="Delete Roles" xml:space="preserve">
     <value>ロールの削除</value>
   </data>
@@ -81,8 +102,17 @@
   <data name="Grants permission to restart the application instance. May cause availability interruptions but all settings and cache will be reloaded." xml:space="preserve">
     <value>アプリケーションインスタンスの再起動を許可します。可用性の中断を引き起こす可能性がありますが、すべての設定とキャッシュは再読み込みされます。</value>
   </data>
+  <data name="Manage API Keys" xml:space="preserve">
+    <value>API キーの管理</value>
+  </data>
   <data name="Manage Global Settings" xml:space="preserve">
     <value>グローバル設定の管理</value>
+  </data>
+  <data name="Manage Providers" xml:space="preserve">
+    <value>プロバイダーの管理</value>
+  </data>
+  <data name="Manage Virtual Models" xml:space="preserve">
+    <value>仮想モデルの管理</value>
   </data>
   <data name="Read Permissions" xml:space="preserve">
     <value>権限の閲覧</value>
