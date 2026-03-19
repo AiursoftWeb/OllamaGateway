@@ -1,0 +1,59 @@
+@model Aiursoft.OllamaGateway.Models.ApiKeysViewModels.UsageViewModel
+
+<div class="container-fluid p-0">
+    <div class="row mb-3">
+        <div class="col-auto">
+            <h1 class="h3 mb-3">@Localizer["API Key Usage Guide"]</h1>
+        </div>
+        <div class="col-auto ms-auto text-end">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="align-middle me-1" data-lucide="arrow-left"></i>
+                @Localizer["Back to List"]
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">@Localizer["Using API Key"]: <strong>@Model.ApiKeyName</strong></h5>
+        </div>
+        <div class="card-body">
+            <p>@Localizer["You can use this API key to access the Ollama Gateway API. The base URL is:"] <code>@Model.BaseUrl</code></p>
+
+            <h4 class="mt-4">@Localizer["1. Chat Completion"]</h4>
+            <p>@Localizer["To ask a question, use the following curl command:"]</p>
+            <div class="position-relative">
+                <pre class="bg-dark text-light p-3 rounded"><code>curl @(Model.BaseUrl)/api/chat \
+  -H "Authorization: Bearer @Model.ApiKey" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "@Model.DefaultChatModel",
+    "messages": [
+      {
+        "role": "user",
+        "content": "why is the sky blue?"
+      }
+    ],
+    "stream": false
+  }'</code></pre>
+            </div>
+
+            <h4 class="mt-4">@Localizer["2. Embedding"]</h4>
+            <p>@Localizer["To generate embeddings for a text, use the following curl command:"]</p>
+            <div class="position-relative">
+                <pre class="bg-dark text-light p-3 rounded"><code>curl @(Model.BaseUrl)/api/embed \
+  -H "Authorization: Bearer @Model.ApiKey" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "@Model.DefaultEmbeddingModel",
+    "input": "why is the sky blue?"
+  }'</code></pre>
+            </div>
+            
+            <p class="text-muted mt-4">
+                <i data-lucide="info" class="me-1"></i>
+                @Localizer["Note: Replace '@Model.DefaultChatModel' or '@Model.DefaultEmbeddingModel' with other available models if needed."]
+            </p>
+        </div>
+    </div>
+</div>

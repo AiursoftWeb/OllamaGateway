@@ -204,6 +204,20 @@ public class OllamaGatewayTests : TestBase
         var indexResponse = await Http.GetAsync("/ApiKeys");
         var html = await indexResponse.Content.ReadAsStringAsync();
         Assert.Contains("My Laptop", html);
+
+        // 3. Verify Usage page
+        var db = GetService<TemplateDbContext>();
+        var key = await db.ApiKeys.OrderByDescending(k => k.Id).FirstAsync();
+        var usageResponse = await Http.GetAsync($"/ApiKeys/Usage/{key.Id}");
+        usageResponse.EnsureSuccessStatusCode();
+        var usageHtml = await usageResponse.Content.ReadAsStringAsync();
+        Assert.Contains("API Key Usage Guide", usageHtml);
+        Assert.Contains("My Laptop", usageHtml);
+        Assert.Contains(key.Key, usageHtml);
+        Assert.Contains("curl", usageHtml);
+        Assert.Contains("/api/chat", usageHtml);
+        Assert.Contains("/api/embed", usageHtml);
+        Assert.Contains("why is the sky blue?", usageHtml);
     }
 
     [TestMethod]

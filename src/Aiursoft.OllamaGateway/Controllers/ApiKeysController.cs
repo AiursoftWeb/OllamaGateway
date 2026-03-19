@@ -14,7 +14,8 @@ namespace Aiursoft.OllamaGateway.Controllers;
 public class ApiKeysController(
     TemplateDbContext dbContext,
     UserManager<User> userManager,
-    MemoryUsageTracker memoryUsageTracker) : Controller
+    MemoryUsageTracker memoryUsageTracker,
+    GlobalSettingsService globalSettingsService) : Controller
 {
     [RenderInNavBar(
         NavGroupName = "Settings",
@@ -45,6 +46,30 @@ public class ApiKeysController(
             model.TotalCalls[key.Id] = stats.TotalCalls;
         }
         
+        return this.StackView(model);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Usage(int id)
+    {
+        var user = await userManager.GetUserAsync(User);
+        var key = await dbContext.ApiKeys
+            .FirstOrDefaultAsync(k => k.Id == id && k.UserId == user!.Id);
+
+        if (key == null)
+        {
+            return NotFound();
+        }
+
+        var model = new UsageViewModel
+        {
+            ApiKey = key.Key,
+            ApiKeyName = key.Name,
+            BaseUrl = $"{Request.Scheme}://{Request.Host}",
+            DefaultChatModel = await globalSettingsService.GetDefaultChatModelAsync(),
+            DefaultEmbeddingModel = await globalSettingsService.GetDefaultEmbeddingModelAsync()
+        };
+
         return this.StackView(model);
     }
 
