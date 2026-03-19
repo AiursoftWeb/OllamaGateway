@@ -97,6 +97,8 @@ public class ViewModelArgsInjector(
         _ = localizer["Underlying Models"];
         _ = localizer["Virtual Model Settings"];
         _ = localizer["Virtual Models"];
+    
+        _ = localizer["API Key Usage Guide"];
     }
 
     public void InjectSimple(
