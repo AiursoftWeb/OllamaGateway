@@ -146,7 +146,11 @@ public class OpenAIController : ControllerBase
                             var type = item?["type"]?.ToString();
                             if (type == "text")
                             {
-                                textBuilder.Append((string?)item?["text"]);
+                                var textVal = item?["text"]?.ToString();
+                                if (!string.IsNullOrEmpty(textVal))
+                                {
+                                    textBuilder.Append(textVal);
+                                }
                             }
                             else if (type == "image_url")
                             {

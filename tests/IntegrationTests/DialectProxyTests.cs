@@ -763,7 +763,7 @@ public class DialectProxyTests : TestBase
         Assert.AreEqual("get_weather", toolCall?["function"]?["name"]?.ToString());
         var args = toolCall?["function"]?["arguments"];
         Assert.IsInstanceOfType(args, typeof(JsonObject)); // Is NOT a string!
-        Assert.AreEqual("London", args?["location"]?.ToString());
+        Assert.AreEqual("London", args["location"]?.ToString());
     }
 
     [TestMethod]
