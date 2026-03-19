@@ -27,6 +27,12 @@
   <data name="A dummy number for testing." xml:space="preserve">
     <value>Псевдонімне число для тестування.</value>
   </data>
+  <data name="Allow Anonymous API Call" xml:space="preserve">
+    <value>Дозволити анонімні виклики API</value>
+  </data>
+  <data name="Allow anyone to call the API without a Bearer token or authentication." xml:space="preserve">
+    <value>Дозволити будь-кому викликати API без токена Bearer або автентифікації.</value>
+  </data>
   <data name="Allow User Adjust Nickname" xml:space="preserve">
     <value>Дозволити користувачеві змінювати прізвисько</value>
   </data>
@@ -39,6 +45,12 @@
   <data name="Brand Name" xml:space="preserve">
     <value>Назва бренду</value>
   </data>
+  <data name="Default Chat Model" xml:space="preserve">
+    <value>Модель чату за замовчуванням</value>
+  </data>
+  <data name="Default Embedding Model" xml:space="preserve">
+    <value>Модель векторизації за замовчуванням</value>
+  </data>
   <data name="Dummy Choice" xml:space="preserve">
     <value>Спростована вибірка</value>
   </data>
@@ -48,20 +60,38 @@
   <data name="ICP Number" xml:space="preserve">
     <value>Номер ICP</value>
   </data>
+  <data name="Keep Alive Job Interval (Minutes)" xml:space="preserve">
+    <value>Інтервал завдання утримання активності (хвилини)</value>
+  </data>
   <data name="Project Logo" xml:space="preserve">
     <value>Логотип проекту</value>
   </data>
   <data name="Project Name" xml:space="preserve">
     <value>Назва проекту</value>
   </data>
+  <data name="Request Timeout (Minutes)" xml:space="preserve">
+    <value>Тайм-аут запиту (хв)</value>
+  </data>
   <data name="The brand name displayed in the footer." xml:space="preserve">
     <value>Назва бренду, що відображається в підвалі.</value>
+  </data>
+  <data name="The default virtual model to use for chat requests when no model is specified." xml:space="preserve">
+    <value>Модель за замовчуванням для обробки запитів чату, якщо інша модель не вказана.</value>
+  </data>
+  <data name="The default virtual model to use for embedding requests when no model is specified." xml:space="preserve">
+    <value>Модель за замовчуванням для запитів на вбудовування, якщо модель не вказано.</value>
   </data>
   <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
     <value>Номер ліцензії ICP для користувачів материкового Китаю. Залиште порожнім, щоб приховати.</value>
   </data>
+  <data name="The interval in minutes to ping the loaded models to keep them in memory." xml:space="preserve">
+    <value>Інтервал у хвилинах для відправки ping завантаженим моделям, щоб утримувати їх у пам&apos;яті.</value>
+  </data>
   <data name="The logo of the project displayed in the navbar and footer. Support jpg, png, svg." xml:space="preserve">
     <value>Логотип проекту, який відображається в навбарі та футері. Підтримується jpg, png, svg.</value>
+  </data>
+  <data name="The maximum time in minutes to wait for a response from the underlying Ollama server." xml:space="preserve">
+    <value>Максимальний час у хвилинах очікування відповіді від базового сервера Ollama.</value>
   </data>
   <data name="The name of the project displayed in the frontend." xml:space="preserve">
     <value>Назва проекту, що відображається на фронтенді.</value>

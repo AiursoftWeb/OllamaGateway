@@ -27,6 +27,12 @@
   <data name="A dummy number for testing." xml:space="preserve">
     <value>Ένας εικονικός αριθμός για δοκιμές.</value>
   </data>
+  <data name="Allow Anonymous API Call" xml:space="preserve">
+    <value>Επιτρέπουν Αnonυμες Κλήσεις API</value>
+  </data>
+  <data name="Allow anyone to call the API without a Bearer token or authentication." xml:space="preserve">
+    <value>Επιτρέψτε σε οποιονδήποτε να καλεί την API χωρίς token Bearer ή πιστοποίηση.</value>
+  </data>
   <data name="Allow User Adjust Nickname" xml:space="preserve">
     <value>Επιτρέψτε στον Χρήστη να Τροποποιήσει το Παρασκήνιο Όνομα</value>
   </data>
@@ -39,6 +45,12 @@
   <data name="Brand Name" xml:space="preserve">
     <value>Όνομα Εταιρείας</value>
   </data>
+  <data name="Default Chat Model" xml:space="preserve">
+    <value>Προεπιλεγμένο Μοντέλο Συνομιλίας</value>
+  </data>
+  <data name="Default Embedding Model" xml:space="preserve">
+    <value>Προεπιλεγμένο Μοντέλο Ενσωμάτωσης</value>
+  </data>
   <data name="Dummy Choice" xml:space="preserve">
     <value>Προσχέδιο Επιλογής</value>
   </data>
@@ -48,20 +60,38 @@
   <data name="ICP Number" xml:space="preserve">
     <value>Αριθμός ΕΙΠ</value>
   </data>
+  <data name="Keep Alive Job Interval (Minutes)" xml:space="preserve">
+    <value>Διαστήμα Εργασίας Διατήρησης Ζωντανότητας (Λεπτά)</value>
+  </data>
   <data name="Project Logo" xml:space="preserve">
     <value>Λογότυπο Έργου</value>
   </data>
   <data name="Project Name" xml:space="preserve">
     <value>Όνομα Έργου</value>
   </data>
+  <data name="Request Timeout (Minutes)" xml:space="preserve">
+    <value>Χρόνος Προσδοκίας Αίτησης (Λεπτά)</value>
+  </data>
   <data name="The brand name displayed in the footer." xml:space="preserve">
     <value>Το όνομα της εταιρείας που εμφανίζεται στον ποδόσκαλο.</value>
+  </data>
+  <data name="The default virtual model to use for chat requests when no model is specified." xml:space="preserve">
+    <value>Το προεπιλεγμένο εικονικό μοντέλο που θα χρησιμοποιηθεί για αιτήματα συνομιλίας όταν δεν έχει καθοριστεί κάποιο μοντέλο.</value>
+  </data>
+  <data name="The default virtual model to use for embedding requests when no model is specified." xml:space="preserve">
+    <value>Το προεπιλεγμένο εικονικό μοντέλο που θα χρησιμοποιείται για αιτήματα ενσωμάτωσης όταν δεν ορίζεται κάποιο μοντέλο.</value>
   </data>
   <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
     <value>Ο αριθμός άδειας ICP για χρήστες της κυρίως Κίνας. Αφήστε κενό για να κρυφτεί.</value>
   </data>
+  <data name="The interval in minutes to ping the loaded models to keep them in memory." xml:space="preserve">
+    <value>Το διάστημα σε λεπτά για την αποστολή ping στα φορτωμένα μοντέλα ώστε να παραμείνουν στη μνήμη.</value>
+  </data>
   <data name="The logo of the project displayed in the navbar and footer. Support jpg, png, svg." xml:space="preserve">
     <value>Το λογότυπο του έργου που εμφανίζεται στην ναβιγατόρια και τον ποδοσκαλο. Υποστήριξη jpg, png, svg.</value>
+  </data>
+  <data name="The maximum time in minutes to wait for a response from the underlying Ollama server." xml:space="preserve">
+    <value>Ο μέγιστος χρόνος αναμονής σε λεπτά για μια απάντηση από τον υποκείμενο διακομιστή Ollama.</value>
   </data>
   <data name="The name of the project displayed in the frontend." xml:space="preserve">
     <value>Το όνομα του έργου που εμφανίζεται στον προβολέα</value>

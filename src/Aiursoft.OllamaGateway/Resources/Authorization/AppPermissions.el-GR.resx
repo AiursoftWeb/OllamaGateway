@@ -27,6 +27,15 @@
   <data name="Allows assigning or removing roles for any user." xml:space="preserve">
     <value>Επιτρέπει την ανάθεση ή την κατάργηση ρόλων για οποιονδήποτε χρήστη.</value>
   </data>
+  <data name="Allows chatting with real/underlying Ollama models directly through the gateway." xml:space="preserve">
+    <value>Επιτρέπει συνομιλία με πραγματικά/υποκείμενα μοντέλα Ollama απευθείας μέσω της πύλης.</value>
+  </data>
+  <data name="Allows chatting with virtual models through the gateway UI or API." xml:space="preserve">
+    <value>Επιτρέπει την επικοινωνία με εικονικά μοντέλα μέσω του UI ή του API της πύλης.</value>
+  </data>
+  <data name="Allows managing the underlying Ollama model providers/servers." xml:space="preserve">
+    <value>Επιτρέπει τη διαχείριση των υποκείμενων προμηθευτών/διακομιστών μοντέλων Ollama.</value>
+  </data>
   <data name="Allows modification of role names and their assigned permissions." xml:space="preserve">
     <value>Επιτρέπει την τροποποίηση των ονομάτων ρόλων και των αντιστοιχισμένων δικαιωμάτων πρόσβασης.</value>
   </data>
@@ -38,6 +47,12 @@
   </data>
   <data name="Allows the permanent deletion of user accounts." xml:space="preserve">
     <value>Επιτρέπει τη μόνιμη διαγραφή των λογαριασμών χρηστών.</value>
+  </data>
+  <data name="Allows viewing and managing API keys for the current user." xml:space="preserve">
+    <value>Επιτρέπει την προβολή και τη διαχείριση των κλειδιών API για τον τρέχοντα χρήστη.</value>
+  </data>
+  <data name="Allows viewing and managing virtual models that override underlying Ollama models." xml:space="preserve">
+    <value>Επιτρέπει την προβολή και τη διαχείριση εικονικών μοντέλων που αντικαθιστούν τα υποκείμενα μοντέλα Ollama.</value>
   </data>
   <data name="Allows viewing and modifying global application settings." xml:space="preserve">
     <value>Επιτρέπει την προβολή και την τροποποίηση των γενικών ρυθμίσεων της εφαρμογής.</value>
@@ -60,6 +75,12 @@
   <data name="Assign Roles to Users" xml:space="preserve">
     <value>Ανάθεση Ρόλων σε Χρήστες</value>
   </data>
+  <data name="Chat With Underlying Models" xml:space="preserve">
+    <value>Συζήτηση με τα Υποκείμενα Μοντέλα</value>
+  </data>
+  <data name="Chat With Virtual Models" xml:space="preserve">
+    <value>Συζήτηση με εικονικά μοντέλα</value>
+  </data>
   <data name="Delete Roles" xml:space="preserve">
     <value>Διαγραφή Ρόλων</value>
   </data>
@@ -81,8 +102,17 @@
   <data name="Grants permission to restart the application instance. May cause availability interruptions but all settings and cache will be reloaded." xml:space="preserve">
     <value>Παρέχει άδεια για επανεκκίνηση της εφαρμογής. Μπορεί να προκαλέσει διακοπές στη διαθεσιμότητα, αλλά όλες οι ρυθμίσεις και η προσωρινή μνήμη θα φορτωθούν εκ νέου.</value>
   </data>
+  <data name="Manage API Keys" xml:space="preserve">
+    <value>Διαχείριση Κλειδιών API</value>
+  </data>
   <data name="Manage Global Settings" xml:space="preserve">
     <value>Διαχείριση Γενικών Ρυθμίσεων</value>
+  </data>
+  <data name="Manage Providers" xml:space="preserve">
+    <value>Διαχείριση Πάροχων</value>
+  </data>
+  <data name="Manage Virtual Models" xml:space="preserve">
+    <value>Διαχείριση Εικονικών Μοντέλων</value>
   </data>
   <data name="Read Permissions" xml:space="preserve">
     <value>Διαβάστε Δικαιώματα</value>

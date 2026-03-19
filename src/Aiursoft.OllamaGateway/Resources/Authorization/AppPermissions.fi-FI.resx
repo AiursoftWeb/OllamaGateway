@@ -27,6 +27,15 @@
   <data name="Allows assigning or removing roles for any user." xml:space="preserve">
     <value>Mahdollistaa roolien määrittämisen tai poistamisen mille tahansa käyttäjälle.</value>
   </data>
+  <data name="Allows chatting with real/underlying Ollama models directly through the gateway." xml:space="preserve">
+    <value>Sallii keskustelun suoraan portin kautta todellisten/alustavien Ollama-mallien kanssa.</value>
+  </data>
+  <data name="Allows chatting with virtual models through the gateway UI or API." xml:space="preserve">
+    <value>Sallii keskustelun virtuaalimallien kanssa portin käyttöliittymän tai API:n kautta.</value>
+  </data>
+  <data name="Allows managing the underlying Ollama model providers/servers." xml:space="preserve">
+    <value>Sallii Ollama-mallien tarjoajien/palvelimien hallinnan.</value>
+  </data>
   <data name="Allows modification of role names and their assigned permissions." xml:space="preserve">
     <value>Sallii roolien nimien ja niihin liitettyjen käyttöoikeuksien muokkaamisen.</value>
   </data>
@@ -38,6 +47,12 @@
   </data>
   <data name="Allows the permanent deletion of user accounts." xml:space="preserve">
     <value>Sallii käyttäjätilien pysyvän poistamisen.</value>
+  </data>
+  <data name="Allows viewing and managing API keys for the current user." xml:space="preserve">
+    <value>Sallii nykyisen käyttäjän API-avainten tarkastelemisen ja hallinnan.</value>
+  </data>
+  <data name="Allows viewing and managing virtual models that override underlying Ollama models." xml:space="preserve">
+    <value>Sallii virtuaalimallien näyttämisen ja hallinnan, jotka korvaavat perus-Ollama-mallit.</value>
   </data>
   <data name="Allows viewing and modifying global application settings." xml:space="preserve">
     <value>Salli näytön ja muokkaus yleiset sovelluksen asetukset.</value>
@@ -60,6 +75,12 @@
   <data name="Assign Roles to Users" xml:space="preserve">
     <value>Anna roolit käyttäjille</value>
   </data>
+  <data name="Chat With Underlying Models" xml:space="preserve">
+    <value>Chat With Underlying Models</value>
+  </data>
+  <data name="Chat With Virtual Models" xml:space="preserve">
+    <value>Keskustele virtuaalimallien kanssa</value>
+  </data>
   <data name="Delete Roles" xml:space="preserve">
     <value>Poista roolit</value>
   </data>
@@ -81,8 +102,17 @@
   <data name="Grants permission to restart the application instance. May cause availability interruptions but all settings and cache will be reloaded." xml:space="preserve">
     <value>Antaa luvan sovelluksen uudelleenkäynnistämiseen. Saattaa aiheuttaa käyttökatkoksia, mutta kaikki asetukset ja välimuisti ladataan uudelleen.</value>
   </data>
+  <data name="Manage API Keys" xml:space="preserve">
+    <value>Hallinnoi API-avaimia</value>
+  </data>
   <data name="Manage Global Settings" xml:space="preserve">
     <value>Hallinnoi yleisiä asetuksia</value>
+  </data>
+  <data name="Manage Providers" xml:space="preserve">
+    <value>Hallinnoi tarjoajia</value>
+  </data>
+  <data name="Manage Virtual Models" xml:space="preserve">
+    <value>Hallinnoi virtuaalimalleja</value>
   </data>
   <data name="Read Permissions" xml:space="preserve">
     <value>Lue käyttöoikeudet</value>

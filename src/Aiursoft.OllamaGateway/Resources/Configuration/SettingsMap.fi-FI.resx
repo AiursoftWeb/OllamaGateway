@@ -27,6 +27,12 @@
   <data name="A dummy number for testing." xml:space="preserve">
     <value>Väliaikainen luku testaamista varten.</value>
   </data>
+  <data name="Allow Anonymous API Call" xml:space="preserve">
+    <value>Salli nimettömät API-kutsut</value>
+  </data>
+  <data name="Allow anyone to call the API without a Bearer token or authentication." xml:space="preserve">
+    <value>Salli kenen tahansa kutsua API:a ilman Bearer-tunnusta tai todennusta.</value>
+  </data>
   <data name="Allow User Adjust Nickname" xml:space="preserve">
     <value>Salli käyttäjän muokata nimimerkkiä</value>
   </data>
@@ -39,6 +45,12 @@
   <data name="Brand Name" xml:space="preserve">
     <value>Brändin nimi</value>
   </data>
+  <data name="Default Chat Model" xml:space="preserve">
+    <value>Oletusarvoinen chat-malli</value>
+  </data>
+  <data name="Default Embedding Model" xml:space="preserve">
+    <value>Oletusupotusmalli</value>
+  </data>
   <data name="Dummy Choice" xml:space="preserve">
     <value>Väliaikainen valinta</value>
   </data>
@@ -48,20 +60,38 @@
   <data name="ICP Number" xml:space="preserve">
     <value>ICP-numero</value>
   </data>
+  <data name="Keep Alive Job Interval (Minutes)" xml:space="preserve">
+    <value>Aktiivisuuden ylläpitotehtävän väli (minuutteina)</value>
+  </data>
   <data name="Project Logo" xml:space="preserve">
     <value>Projektin logo</value>
   </data>
   <data name="Project Name" xml:space="preserve">
     <value>Projektin nimi</value>
   </data>
+  <data name="Request Timeout (Minutes)" xml:space="preserve">
+    <value>Pyyntöajan ylitys (minuutteina)</value>
+  </data>
   <data name="The brand name displayed in the footer." xml:space="preserve">
     <value>Brändin nimi, joka näytetään alatunnisteessa.</value>
+  </data>
+  <data name="The default virtual model to use for chat requests when no model is specified." xml:space="preserve">
+    <value>Oletusarvoinen virtuaalimalli, jota käytetään keskustelupyynnöissä, jos mallia ei ole määritetty.</value>
+  </data>
+  <data name="The default virtual model to use for embedding requests when no model is specified." xml:space="preserve">
+    <value>Oletusarvoinen virtuaalimalli, jota käytetään upotuspyynnöissä, jos mallia ei ole määritetty.</value>
   </data>
   <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
     <value>ICP-lisenssinumero Kiinan päävaltakunnan käyttäjille. Jätä tyhjäksi piilottaaksesi.</value>
   </data>
+  <data name="The interval in minutes to ping the loaded models to keep them in memory." xml:space="preserve">
+    <value>Minuutteina mitattu väliaika ladattujen mallien muistissa pitämiseen tarkoitettuun ping-kehotukseen.</value>
+  </data>
   <data name="The logo of the project displayed in the navbar and footer. Support jpg, png, svg." xml:space="preserve">
     <value>Projektin logo näytetään navigointipalkissa ja alatunnisteessa. Tuki jpg, png, svg.</value>
+  </data>
+  <data name="The maximum time in minutes to wait for a response from the underlying Ollama server." xml:space="preserve">
+    <value>Maksimiaika minuutteina, jonka aikana odotetaan vastausta alustavasta Ollama-palvelimesta.</value>
   </data>
   <data name="The name of the project displayed in the frontend." xml:space="preserve">
     <value>Projektin nimi, joka näytetään käyttöliittymässä.</value>
