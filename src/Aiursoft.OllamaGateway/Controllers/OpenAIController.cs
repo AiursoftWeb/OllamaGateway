@@ -144,7 +144,7 @@ public class OpenAIController : ControllerBase
                             if (type == "text")
                             {
                                 // 把所有散落的 text 块强行拼装成一个连续的字符串
-                                textBuilder.Append(item?["text"]?.ToString());
+                                textBuilder.Append((string?)item?["text"]);
                             }
                             else if (type == "image_url")
                             {
