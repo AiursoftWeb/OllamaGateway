@@ -178,6 +178,9 @@ public class OpenAIController : ControllerBase
                         foreach (var tc in tcs)
                         {
                             var oTc = new JsonObject();
+                            if (tc?["id"] != null) oTc["id"] = tc["id"]!.DeepClone();
+                            if (tc?["type"] != null) oTc["type"] = tc["type"]!.DeepClone();
+
                             var funcNode = tc?["function"];
                             if (funcNode != null)
                             {
@@ -263,6 +266,7 @@ public class OpenAIController : ControllerBase
                 var answerBuilder = new StringBuilder();
                 var thinkBuilder = new StringBuilder();
                 bool isFirstChunk = true;
+                bool streamHasToolCalls = false;
                 using var reader = new StreamReader(responseStream);
                 string? line;
                 
@@ -314,6 +318,7 @@ public class OpenAIController : ControllerBase
                         var toolCalls = ollamaChunk["message"]?["tool_calls"]?.AsArray();
                         if (toolCalls != null && toolCalls.Count > 0)
                         {
+                            streamHasToolCalls = true;
                             var openAiToolCalls = new JsonArray();
                             for (int i = 0; i < toolCalls.Count; i++)
                             {
@@ -338,8 +343,7 @@ public class OpenAIController : ControllerBase
 
                         if (isDone)
                         {
-                            var hasToolCalls = toolCalls != null && toolCalls.Count > 0;
-                            openAiChunk["choices"]![0]!["finish_reason"] = hasToolCalls ? "tool_calls" : "stop";
+                            openAiChunk["choices"]![0]!["finish_reason"] = streamHasToolCalls ? "tool_calls" : "stop";
 
                             var pTokens = ollamaChunk["prompt_eval_count"]?.GetValue<long>() ?? 0;
                             var cTokens = ollamaChunk["eval_count"]?.GetValue<long>() ?? 0;

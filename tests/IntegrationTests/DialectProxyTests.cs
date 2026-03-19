@@ -761,6 +761,8 @@ public class DialectProxyTests : TestBase
         var toolCall = upstreamBody?["messages"]?[0]?["tool_calls"]?[0];
         
         Assert.AreEqual("get_weather", toolCall?["function"]?["name"]?.ToString());
+        Assert.AreEqual("call_123", toolCall?["id"]?.ToString());
+        Assert.AreEqual("function", toolCall?["type"]?.ToString());
         var args = toolCall?["function"]?["arguments"];
         Assert.IsInstanceOfType(args, typeof(JsonObject)); // Is NOT a string!
         Assert.AreEqual("London", args["location"]?.ToString());
@@ -840,10 +842,12 @@ public class DialectProxyTests : TestBase
     [TestMethod]
     public async Task OpenAI_Streaming_ToolCalls_HasCorrectFinishReason()
     {
-        // 1. Arrange
+        // 1. Arrange: Two chunks. First chunk has tool calls. Second chunk is empty and says "done: true".
         MockUpstreamState.Handler = (_, _) =>
         {
-            var ndjson = """{"model":"llama3.2","message":{"role":"assistant","content":"","tool_calls":[{"function":{"name":"test","arguments":{}}}]},"done":true}""" + "\n";
+            var ndjson = 
+                """{"model":"llama3.2","message":{"role":"assistant","content":"","tool_calls":[{"function":{"name":"test","arguments":{}}}]},"done":false}""" + "\n" +
+                """{"model":"llama3.2","done":true}""" + "\n";
             return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(ndjson, Encoding.UTF8, "application/x-ndjson")
@@ -855,9 +859,9 @@ public class DialectProxyTests : TestBase
         var response = await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
         var body = await response.Content.ReadAsStringAsync();
 
-        // 3. Assert: Final chunk should have finish_reason: tool_calls
+        // 3. Assert: Final chunk should STILL have finish_reason: tool_calls (persistent flag fix)
         var lines = body.Split('\n').Where(l => l.StartsWith("data: ") && l != "data: [DONE]").ToList();
-        Assert.IsTrue(lines.Any());
+        Assert.AreEqual(2, lines.Count);
         var lastChunk = JsonNode.Parse(lines.Last()[6..]);
         Assert.AreEqual("tool_calls", lastChunk?["choices"]?[0]?["finish_reason"]?.ToString());
     }
