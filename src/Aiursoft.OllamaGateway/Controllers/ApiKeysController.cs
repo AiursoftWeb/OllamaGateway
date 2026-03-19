@@ -36,7 +36,8 @@ public class ApiKeysController(
 
         var model = new IndexViewModel
         {
-            ApiKeys = keys
+            ApiKeys = keys,
+            NewKey = TempData["NewKey"] as string
         };
         
         foreach (var key in keys)
@@ -63,7 +64,7 @@ public class ApiKeysController(
 
         var model = new UsageViewModel
         {
-            ApiKey = key.Key,
+            ApiKey = key.Key[..4] + "...",
             ApiKeyName = key.Name,
             BaseUrl = $"{Request.Scheme}://{Request.Host}",
             DefaultChatModel = await globalSettingsService.GetDefaultChatModelAsync(),
@@ -89,16 +90,18 @@ public class ApiKeysController(
         }
 
         var user = await userManager.GetUserAsync(User);
+        var keyStr = Guid.NewGuid().ToString("N");
         var key = new ApiKey
         {
             Name = model.Name,
-            Key = Guid.NewGuid().ToString("N"),
+            Key = keyStr,
             UserId = user!.Id
         };
 
         dbContext.ApiKeys.Add(key);
         await dbContext.SaveChangesAsync();
 
+        TempData["NewKey"] = keyStr;
         return RedirectToAction(nameof(Index));
     }
 

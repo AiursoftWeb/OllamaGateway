@@ -200,20 +200,27 @@ public class OllamaGatewayTests : TestBase
         });
         AssertRedirect(createResponse, "/ApiKeys", exact: false);
 
-        // 2. Verify key exists
+        // 2. Verify key exists and is shown ONCE
         var indexResponse = await Http.GetAsync("/ApiKeys");
         var html = await indexResponse.Content.ReadAsStringAsync();
         Assert.Contains("My Laptop", html);
-
-        // 3. Verify Usage page
         var db = GetService<TemplateDbContext>();
         var key = await db.ApiKeys.OrderByDescending(k => k.Id).FirstAsync();
+        Assert.Contains(key.Key, html); // Shown once from TempData
+        
+        var secondIndexResponse = await Http.GetAsync("/ApiKeys");
+        var secondHtml = await secondIndexResponse.Content.ReadAsStringAsync();
+        Assert.IsFalse(secondHtml.Contains(key.Key)); // Gone after refresh
+        Assert.Contains(key.Key[..4] + "...", secondHtml); // Masked instead
+
+        // 3. Verify Usage page
         var usageResponse = await Http.GetAsync($"/ApiKeys/Usage/{key.Id}");
         usageResponse.EnsureSuccessStatusCode();
         var usageHtml = await usageResponse.Content.ReadAsStringAsync();
         Assert.Contains("API Key Usage Guide", usageHtml);
         Assert.Contains("My Laptop", usageHtml);
-        Assert.Contains(key.Key, usageHtml);
+        Assert.IsFalse(usageHtml.Contains(key.Key)); // Must be masked
+        Assert.Contains(key.Key[..4] + "...", usageHtml); // Masked key
         Assert.Contains("curl", usageHtml);
         Assert.Contains("/api/chat", usageHtml);
         Assert.Contains("/api/embed", usageHtml);

@@ -13,6 +13,21 @@
         </div>
     </div>
 
+    @if (!string.IsNullOrEmpty(Model.NewKey))
+    {
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <div class="alert-message">
+                <h4 class="alert-heading">@Localizer["API Key Created!"]</h4>
+                <p>@Localizer["Please copy your new API key now. You won't be able to see it again!"]</p>
+                <hr>
+                <p class="mb-0">
+                    <code>@Model.NewKey</code>
+                </p>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
     <div class="card">
         <div class="card-header">
             <h5 class="card-title mb-0">@Localizer["Manage your API keys for accessing Ollama Gateway"]</h5>
@@ -45,7 +60,7 @@
                             <tr>
                                 <td>@key.Name</td>
                                 <td>
-                                    <code>@key.Key</code>
+                                    <code>@key.Key[..4]...</code>
                                 </td>
                                 <td>@key.CreatedAt.ToLocalTime().ToString("g")</td>
                                 <td>@(Model.LastUsedTimes[key.Id]?.ToLocalTime().ToString("g") ?? Localizer["Never"].Value)</td>
