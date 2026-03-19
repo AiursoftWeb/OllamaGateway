@@ -27,6 +27,15 @@
   <data name="Allows assigning or removing roles for any user." xml:space="preserve">
     <value>किसी भी उपयोगकर्ता को भूमिकाएँ सौंपने या हटाने की अनुमति देता है।</value>
   </data>
+  <data name="Allows chatting with real/underlying Ollama models directly through the gateway." xml:space="preserve">
+    <value>गेटवे के माध्यम से सीधे वास्तविक/मूल Ollama मॉडल के साथ चैट करने की अनुमति देता है।</value>
+  </data>
+  <data name="Allows chatting with virtual models through the gateway UI or API." xml:space="preserve">
+    <value>गेटवे UI या API के माध्यम से वर्चुअल मॉडल्स के साथ चैट करने की अनुमति देता है।</value>
+  </data>
+  <data name="Allows managing the underlying Ollama model providers/servers." xml:space="preserve">
+    <value>निहित Ollama मॉडल प्रदाताओं/सर्वरों का प्रबंधन करने की अनुमति देता है।</value>
+  </data>
   <data name="Allows modification of role names and their assigned permissions." xml:space="preserve">
     <value>रोल नामों और उनके सौंपे गए अनुमतियों में संशोधन की अनुमति देता है।</value>
   </data>
@@ -38,6 +47,12 @@
   </data>
   <data name="Allows the permanent deletion of user accounts." xml:space="preserve">
     <value>उपयोगकर्ता खातों को स्थायी रूप से हटाने की अनुमति देता है।</value>
+  </data>
+  <data name="Allows viewing and managing API keys for the current user." xml:space="preserve">
+    <value>वर्तमान उपयोगकर्ता के लिए API कुंजियों को देखने और प्रबंधित करने की अनुमति देता है।</value>
+  </data>
+  <data name="Allows viewing and managing virtual models that override underlying Ollama models." xml:space="preserve">
+    <value>निम्नलिखित Ollama मॉडल को ओवरराइड करने वाले वर्चुअल मॉडल को देखने और प्रबंधित करने की अनुमति देता है।</value>
   </data>
   <data name="Allows viewing and modifying global application settings." xml:space="preserve">
     <value>सभी अनुप्रयोग सेटिंग्स को देखने और संशोधित करने की अनुमति देता है।</value>
@@ -60,6 +75,12 @@
   <data name="Assign Roles to Users" xml:space="preserve">
     <value>उपयोगकर्ताओं को भूमिकाएँ नियत करें</value>
   </data>
+  <data name="Chat With Underlying Models" xml:space="preserve">
+    <value>मूल मॉडल के साथ चैट करें</value>
+  </data>
+  <data name="Chat With Virtual Models" xml:space="preserve">
+    <value>वर्चुअल मॉडल के साथ चैट करें</value>
+  </data>
   <data name="Delete Roles" xml:space="preserve">
     <value>भूमिकाएँ हटाएँ</value>
   </data>
@@ -81,8 +102,17 @@
   <data name="Grants permission to restart the application instance. May cause availability interruptions but all settings and cache will be reloaded." xml:space="preserve">
     <value>एप्लिकेशन इंस्टेंस को पुनरारंभ करने की अनुमति प्रदान करता है। इससे उपलब्धता में व्यवधान हो सकता है, लेकिन सभी सेटिंग्स और कैश पुनः लोड हो जाएंगे।</value>
   </data>
+  <data name="Manage API Keys" xml:space="preserve">
+    <value>API कुंजियों का प्रबंधन करें</value>
+  </data>
   <data name="Manage Global Settings" xml:space="preserve">
     <value>ग्लोबल सेटिंग्स प्रबंधित करें</value>
+  </data>
+  <data name="Manage Providers" xml:space="preserve">
+    <value>प्रदाताओं का प्रबंधन करें</value>
+  </data>
+  <data name="Manage Virtual Models" xml:space="preserve">
+    <value>वर्चुअल मॉडल प्रबंधित करें</value>
   </data>
   <data name="Read Permissions" xml:space="preserve">
     <value>अनुमतियाँ पढ़ें</value>

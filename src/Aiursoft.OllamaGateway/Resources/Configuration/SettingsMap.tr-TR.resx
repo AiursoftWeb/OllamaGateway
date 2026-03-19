@@ -27,6 +27,12 @@
   <data name="A dummy number for testing." xml:space="preserve">
     <value>Test amaçlı bir sahte sayı.</value>
   </data>
+  <data name="Allow Anonymous API Call" xml:space="preserve">
+    <value>Anonim API Çağrısına İzin Ver</value>
+  </data>
+  <data name="Allow anyone to call the API without a Bearer token or authentication." xml:space="preserve">
+    <value>Bearer jetonu veya kimlik doğrulama olmadan herkesin API&apos;yi çağırmasına izin verin.</value>
+  </data>
   <data name="Allow User Adjust Nickname" xml:space="preserve">
     <value>Kullanıcı Adını Ayarlamaya İzin Ver</value>
   </data>
@@ -39,6 +45,12 @@
   <data name="Brand Name" xml:space="preserve">
     <value>Marka Adı</value>
   </data>
+  <data name="Default Chat Model" xml:space="preserve">
+    <value>Varsayılan Sohbet Modeli</value>
+  </data>
+  <data name="Default Embedding Model" xml:space="preserve">
+    <value>Varsayılan Gömme Modeli</value>
+  </data>
   <data name="Dummy Choice" xml:space="preserve">
     <value>Yanlış Seçim</value>
   </data>
@@ -48,20 +60,38 @@
   <data name="ICP Number" xml:space="preserve">
     <value>ICP Numarası</value>
   </data>
+  <data name="Keep Alive Job Interval (Minutes)" xml:space="preserve">
+    <value>Aktif Tutma Görevi Aralığı (Dakika)</value>
+  </data>
   <data name="Project Logo" xml:space="preserve">
     <value>Proje Logosu</value>
   </data>
   <data name="Project Name" xml:space="preserve">
     <value>Proje Adı</value>
   </data>
+  <data name="Request Timeout (Minutes)" xml:space="preserve">
+    <value>İstek Zaman Aşımı (Dakika)</value>
+  </data>
   <data name="The brand name displayed in the footer." xml:space="preserve">
     <value>Footer&apos;da gösterilen marka adı.</value>
+  </data>
+  <data name="The default virtual model to use for chat requests when no model is specified." xml:space="preserve">
+    <value>Hiçbir model belirtilmediğinde sohbet istekleri için kullanılacak varsayılan sanal model.</value>
+  </data>
+  <data name="The default virtual model to use for embedding requests when no model is specified." xml:space="preserve">
+    <value>Hiçbir model belirtilmediğinde gömme istekleri için kullanılacak varsayılan sanal model.</value>
   </data>
   <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
     <value>Çin ana karasında kullanıcılar için ICP lisans numarası. Gizlemek için boş bırakın.</value>
   </data>
+  <data name="The interval in minutes to ping the loaded models to keep them in memory." xml:space="preserve">
+    <value>Yüklü modellerin bellekte tutulması için yapılan ping işleminin dakika cinsinden aralığı.</value>
+  </data>
   <data name="The logo of the project displayed in the navbar and footer. Support jpg, png, svg." xml:space="preserve">
     <value>Projenin logosu navbar ve footer&apos;da gösterilir. jpg, png, svg desteklenir.</value>
+  </data>
+  <data name="The maximum time in minutes to wait for a response from the underlying Ollama server." xml:space="preserve">
+    <value>Altta yatan Ollama sunucusundan bir yanıt için beklenmesi gereken maksimum süre (dakika cinsinden).</value>
   </data>
   <data name="The name of the project displayed in the frontend." xml:space="preserve">
     <value>Frontende görüntülenen proje adı.</value>

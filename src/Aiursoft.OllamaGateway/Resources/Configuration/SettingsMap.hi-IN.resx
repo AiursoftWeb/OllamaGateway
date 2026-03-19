@@ -27,6 +27,12 @@
   <data name="A dummy number for testing." xml:space="preserve">
     <value>परीक्षण के लिए एक डमी संख्या।</value>
   </data>
+  <data name="Allow Anonymous API Call" xml:space="preserve">
+    <value>अज्ञात API कॉल की अनुमति दें</value>
+  </data>
+  <data name="Allow anyone to call the API without a Bearer token or authentication." xml:space="preserve">
+    <value>किसी को भी Bearer टोकन या प्रमाणीकरण के बिना API कॉल करने की अनुमति दें।</value>
+  </data>
   <data name="Allow User Adjust Nickname" xml:space="preserve">
     <value>उपयोगकर्ता नाम समायोजित करने की अनुमति दें</value>
   </data>
@@ -39,6 +45,12 @@
   <data name="Brand Name" xml:space="preserve">
     <value>ब्रांड नाम</value>
   </data>
+  <data name="Default Chat Model" xml:space="preserve">
+    <value>मूल चैट मॉडल</value>
+  </data>
+  <data name="Default Embedding Model" xml:space="preserve">
+    <value>डिफ़ॉल्ट एम्बेडिंग मॉडल</value>
+  </data>
   <data name="Dummy Choice" xml:space="preserve">
     <value>डमी चयन</value>
   </data>
@@ -48,20 +60,38 @@
   <data name="ICP Number" xml:space="preserve">
     <value>ICP संख्या</value>
   </data>
+  <data name="Keep Alive Job Interval (Minutes)" xml:space="preserve">
+    <value>लively रखने का कार्य अंतराल (मिनट)</value>
+  </data>
   <data name="Project Logo" xml:space="preserve">
     <value>प्रोजेक्ट लोगो</value>
   </data>
   <data name="Project Name" xml:space="preserve">
     <value>प्रोजेक्ट नाम</value>
   </data>
+  <data name="Request Timeout (Minutes)" xml:space="preserve">
+    <value>अनुरोध समय समाप्त (मिनट)</value>
+  </data>
   <data name="The brand name displayed in the footer." xml:space="preserve">
     <value>फुटर में दिखाई देने वाला ब्रांड नाम</value>
+  </data>
+  <data name="The default virtual model to use for chat requests when no model is specified." xml:space="preserve">
+    <value>जब कोई मॉडल निर्दिष्ट नहीं किया जाता है तो चैट अनुरोधों के लिए उपयोग करने के लिए डिफ़ॉल्ट वर्चुअल मॉडल।</value>
+  </data>
+  <data name="The default virtual model to use for embedding requests when no model is specified." xml:space="preserve">
+    <value>जब कोई मॉडल निर्दिष्ट नहीं किया जाता है, तो एम्बेडिंग अनुरोधों के लिए उपयोग करने के लिए डिफ़ॉल्ट वर्चुअल मॉडल।</value>
   </data>
   <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
     <value>चीन मुख्यभूमि के उपयोगकर्ताओं के लिए ICP लाइसेंस संख्या। छिपाने के लिए खाली छोड़ दें।</value>
   </data>
+  <data name="The interval in minutes to ping the loaded models to keep them in memory." xml:space="preserve">
+    <value>मॉडल को मेमोरी में बनाए रखने के लिए लोड किए गए मॉडल को पिंग करने के लिए मिनटों में अंतराल।</value>
+  </data>
   <data name="The logo of the project displayed in the navbar and footer. Support jpg, png, svg." xml:space="preserve">
     <value>प्रोजेक्ट का लोगो नेवबार और फुटर में प्रदर्शित किया जाता है। jpg, png, svg समर्थित हैं।</value>
+  </data>
+  <data name="The maximum time in minutes to wait for a response from the underlying Ollama server." xml:space="preserve">
+    <value>निम्नलिखित Ollama सर्वर से प्रतिक्रिया के लिए मिनटों में अधिकतम प्रतीक्षा समय।</value>
   </data>
   <data name="The name of the project displayed in the frontend." xml:space="preserve">
     <value>फ्रंटएंड में प्रदर्शित प्रोजेक्ट का नाम।</value>

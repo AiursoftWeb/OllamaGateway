@@ -27,6 +27,12 @@
   <data name="A dummy number for testing." xml:space="preserve">
     <value>Sebuah angka contoh untuk pengujian.</value>
   </data>
+  <data name="Allow Anonymous API Call" xml:space="preserve">
+    <value>Izinkan Panggilan API Anonim</value>
+  </data>
+  <data name="Allow anyone to call the API without a Bearer token or authentication." xml:space="preserve">
+    <value>Izinkan siapa saja untuk memanggil API tanpa token Bearer atau autentikasi.</value>
+  </data>
   <data name="Allow User Adjust Nickname" xml:space="preserve">
     <value>Izinkan Pengguna Mengatur Nama Panggilan</value>
   </data>
@@ -39,6 +45,12 @@
   <data name="Brand Name" xml:space="preserve">
     <value>Nama Merek</value>
   </data>
+  <data name="Default Chat Model" xml:space="preserve">
+    <value>Model Obrolan Default</value>
+  </data>
+  <data name="Default Embedding Model" xml:space="preserve">
+    <value>Model Embedding Default</value>
+  </data>
   <data name="Dummy Choice" xml:space="preserve">
     <value>Pilihan Contoh</value>
   </data>
@@ -48,20 +60,38 @@
   <data name="ICP Number" xml:space="preserve">
     <value>Nomor ICP</value>
   </data>
+  <data name="Keep Alive Job Interval (Minutes)" xml:space="preserve">
+    <value>Interval Pekerjaan Tetap Hidup (Menit)</value>
+  </data>
   <data name="Project Logo" xml:space="preserve">
     <value>Logo Proyek</value>
   </data>
   <data name="Project Name" xml:space="preserve">
     <value>Nama Proyek</value>
   </data>
+  <data name="Request Timeout (Minutes)" xml:space="preserve">
+    <value>Batas Waktu Permintaan (Menit)</value>
+  </data>
   <data name="The brand name displayed in the footer." xml:space="preserve">
     <value>Nama merek yang ditampilkan di bagian footer.</value>
+  </data>
+  <data name="The default virtual model to use for chat requests when no model is specified." xml:space="preserve">
+    <value>Model virtual default yang akan digunakan untuk permintaan obrolan ketika tidak ada model yang ditentukan.</value>
+  </data>
+  <data name="The default virtual model to use for embedding requests when no model is specified." xml:space="preserve">
+    <value>Model virtual default yang digunakan untuk permintaan embedding ketika tidak ada model yang ditentukan.</value>
   </data>
   <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
     <value>Nomor izin ICP untuk pengguna daratan Tiongkok. Biarkan kosong untuk menyembunyikan.</value>
   </data>
+  <data name="The interval in minutes to ping the loaded models to keep them in memory." xml:space="preserve">
+    <value>Interval dalam menit untuk melakukan ping pada model yang dimuat agar tetap berada di memori.</value>
+  </data>
   <data name="The logo of the project displayed in the navbar and footer. Support jpg, png, svg." xml:space="preserve">
     <value>Logo proyek yang ditampilkan di navbar dan footer. Mendukung jpg, png, svg.</value>
+  </data>
+  <data name="The maximum time in minutes to wait for a response from the underlying Ollama server." xml:space="preserve">
+    <value>Waktu maksimum dalam menit untuk menunggu respons dari server Ollama yang mendasarinya.</value>
   </data>
   <data name="The name of the project displayed in the frontend." xml:space="preserve">
     <value>Nama proyek yang ditampilkan di antarmuka pengguna depan</value>

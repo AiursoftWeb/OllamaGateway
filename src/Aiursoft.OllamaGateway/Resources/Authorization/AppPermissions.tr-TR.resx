@@ -27,6 +27,15 @@
   <data name="Allows assigning or removing roles for any user." xml:space="preserve">
     <value>Herhangi bir kullanıcıya rol atanmasına veya kaldırılmasına izin verir.</value>
   </data>
+  <data name="Allows chatting with real/underlying Ollama models directly through the gateway." xml:space="preserve">
+    <value>Ağ geçidi üzerinden gerçek/altta yatan Ollama modelleriyle doğrudan sohbet etmeye izin verir.</value>
+  </data>
+  <data name="Allows chatting with virtual models through the gateway UI or API." xml:space="preserve">
+    <value>Sanal modellerle gateway UI veya API üzerinden sohbet etmeye izin verir.</value>
+  </data>
+  <data name="Allows managing the underlying Ollama model providers/servers." xml:space="preserve">
+    <value>Altta yatan Ollama model sağlayıcılarını/sunucularını yönetmeye izin verir.</value>
+  </data>
   <data name="Allows modification of role names and their assigned permissions." xml:space="preserve">
     <value>Rol isimlerinin ve atanmış izinlerin değiştirilmesine izin verir.</value>
   </data>
@@ -38,6 +47,12 @@
   </data>
   <data name="Allows the permanent deletion of user accounts." xml:space="preserve">
     <value>Kullanıcı hesaplarının kalıcı olarak silinmesine izin verir.</value>
+  </data>
+  <data name="Allows viewing and managing API keys for the current user." xml:space="preserve">
+    <value>Mevcut kullanıcının API anahtarlarını görüntülemeye ve yönetmeye izin verir.</value>
+  </data>
+  <data name="Allows viewing and managing virtual models that override underlying Ollama models." xml:space="preserve">
+    <value>Altta yatan Ollama modellerini geçersiz kılan sanal modellerin görüntülenmesine ve yönetilmesine olanak tanır.</value>
   </data>
   <data name="Allows viewing and modifying global application settings." xml:space="preserve">
     <value>Genel uygulama ayarlarını görüntüleme ve değiştirme izni verir.</value>
@@ -60,6 +75,12 @@
   <data name="Assign Roles to Users" xml:space="preserve">
     <value>Kullanıcılara Rol Atama</value>
   </data>
+  <data name="Chat With Underlying Models" xml:space="preserve">
+    <value>Altta Yatan Modellerle Sohbet Et</value>
+  </data>
+  <data name="Chat With Virtual Models" xml:space="preserve">
+    <value>Sanal Modellerle Sohbet Et</value>
+  </data>
   <data name="Delete Roles" xml:space="preserve">
     <value>Rolleri Sil</value>
   </data>
@@ -81,8 +102,17 @@
   <data name="Grants permission to restart the application instance. May cause availability interruptions but all settings and cache will be reloaded." xml:space="preserve">
     <value>Uygulama örneğini yeniden başlatma iznini verir. Kullanılabilirlik kesintilerine neden olabilir ancak tüm ayarlar ve önbellek yeniden yüklenecektir.</value>
   </data>
+  <data name="Manage API Keys" xml:space="preserve">
+    <value>API Anahtarlarını Yönet</value>
+  </data>
   <data name="Manage Global Settings" xml:space="preserve">
     <value>Genel Ayarları Yönet</value>
+  </data>
+  <data name="Manage Providers" xml:space="preserve">
+    <value>Sağlayıcıları Yönet</value>
+  </data>
+  <data name="Manage Virtual Models" xml:space="preserve">
+    <value>Sanal Modelleri Yönet</value>
   </data>
   <data name="Read Permissions" xml:space="preserve">
     <value>İzinleri Oku</value>
