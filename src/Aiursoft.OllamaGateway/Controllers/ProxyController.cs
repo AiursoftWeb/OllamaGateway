@@ -123,22 +123,15 @@ public class ProxyController(
                 Content = new StringContent(json, Encoding.UTF8, "application/json")
             };
 
+            logger.LogInformation("[{TraceId}] Proxying chat request for model {Model} to {UnderlyingUrl}", HttpContext.TraceIdentifier, virtualModel.Name, underlyingUrl);
             using var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, HttpContext.RequestAborted);
             
             Response.StatusCode = (int)response.StatusCode;
-            foreach (var header in response.Headers)
-            {
-                if (!HeaderBlacklist.Contains(header.Key))
-                    Response.Headers[header.Key] = header.Value.ToArray();
-            }
-            foreach (var header in response.Content.Headers)
-            {
-                if (!HeaderBlacklist.Contains(header.Key))
-                    Response.Headers[header.Key] = header.Value.ToArray();
-            }
+            CopyHeaders(response);
 
             log.StatusCode = Response.StatusCode;
             log.Success = response.IsSuccessStatusCode;
+            logger.LogInformation("[{TraceId}] Received response from upstream: {StatusCode} for chat request for model {Model}", HttpContext.TraceIdentifier, (int)response.StatusCode, virtualModel.Name);
 
             await using var responseStream = await response.Content.ReadAsStreamAsync(HttpContext.RequestAborted);
             
@@ -167,7 +160,7 @@ public class ProxyController(
         }
         catch (OperationCanceledException)
         {
-            logger.LogWarning("Request to Ollama was canceled by the client or timed out.");
+            logger.LogWarning("Chat request to Ollama was canceled by the client or timed out.");
             log.Success = false;
         }
         catch (Exception ex)
@@ -202,45 +195,121 @@ public class ProxyController(
             return;
         }
 
-        string modelName = input.model;
-        if (string.IsNullOrWhiteSpace(modelName))
+        if (input == null)
         {
-            modelName = await globalSettingsService.GetDefaultEmbeddingModelAsync();
-        }
-
-        var virtualModel = await dbContext.VirtualModels
-            .Include(m => m.Provider)
-            .FirstOrDefaultAsync(m => m.Name == modelName && m.Type == ModelType.Embedding);
-
-        if (virtualModel == null || virtualModel.Provider == null)
-        {
-            Response.StatusCode = 404;
-            await Response.WriteAsync($"Embedding model '{modelName}' not found in gateway or has no provider.");
+            Response.StatusCode = 400;
+            await Response.WriteAsync("Request body is empty or invalid JSON.");
             return;
         }
 
-        var underlyingUrl = virtualModel.Provider.BaseUrl.TrimEnd('/');
-        
-        var apiKeyIdClaim = User.FindFirst("ApiKeyId");
-        if (apiKeyIdClaim != null && int.TryParse(apiKeyIdClaim.Value, out var apiKeyId))
+        var sw = Stopwatch.StartNew();
+        var log = new RequestLog
         {
-            memoryUsageTracker.TrackApiKeyUsage(apiKeyId);
-        }
-        memoryUsageTracker.TrackUnderlyingModelUsage(virtualModel.Provider.Id, virtualModel.UnderlyingModel);
-        
-        input.model = virtualModel.UnderlyingModel;
-
-        using var client = httpClientFactory.CreateClient();
-        client.Timeout = await globalSettingsService.GetRequestTimeoutAsync();
-        var json = JsonConvert.SerializeObject(input);
-        var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/embed")
-        {
-            Content = new StringContent(json, Encoding.UTF8, "application/json")
+            IP = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "Unknown",
+            Method = Request.Method,
+            Path = Request.Path,
+            UserAgent = Request.Headers.UserAgent.ToString(),
+            TraceId = HttpContext.TraceIdentifier,
+            RequestTime = DateTime.UtcNow,
+            UserId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "Anonymous",
+            ApiKeyName = User.FindFirst("ApiKeyName")?.Value ?? (User.Identity?.IsAuthenticated == true ? "Web Session" : "Anonymous")
         };
 
-        using var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, HttpContext.RequestAborted);
-        Response.StatusCode = (int)response.StatusCode;
-        await response.Content.CopyToAsync(Response.Body);
+        try
+        {
+            string modelName = input.model;
+            if (string.IsNullOrWhiteSpace(modelName))
+            {
+                modelName = await globalSettingsService.GetDefaultEmbeddingModelAsync();
+            }
+
+            var virtualModel = await dbContext.VirtualModels
+                .Include(m => m.Provider)
+                .FirstOrDefaultAsync(m => m.Name == modelName && m.Type == ModelType.Embedding);
+
+            if (virtualModel == null || virtualModel.Provider == null)
+            {
+                Response.StatusCode = 404;
+                await Response.WriteAsync($"Embedding model '{modelName}' not found in gateway or has no provider.");
+                return;
+            }
+
+            var underlyingUrl = virtualModel.Provider.BaseUrl.TrimEnd('/');
+            
+            var apiKeyIdClaim = User.FindFirst("ApiKeyId");
+            if (apiKeyIdClaim != null && int.TryParse(apiKeyIdClaim.Value, out var apiKeyId))
+            {
+                memoryUsageTracker.TrackApiKeyUsage(apiKeyId);
+            }
+            memoryUsageTracker.TrackUnderlyingModelUsage(virtualModel.Provider.Id, virtualModel.UnderlyingModel);
+            
+            log.Model = virtualModel.Name;
+            log.ConversationMessageCount = 1;
+            log.LastQuestion = input.input?.ToString() ?? input.prompt?.ToString() ?? string.Empty;
+
+            input.model = virtualModel.UnderlyingModel;
+
+            using var client = httpClientFactory.CreateClient();
+            client.Timeout = await globalSettingsService.GetRequestTimeoutAsync();
+            
+            var json = JsonConvert.SerializeObject(input);
+            var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/embed")
+            {
+                Content = new StringContent(json, Encoding.UTF8, "application/json")
+            };
+
+            logger.LogInformation("[{TraceId}] Proxying embedding request for model {Model} to {UnderlyingUrl}", HttpContext.TraceIdentifier, virtualModel.Name, underlyingUrl);
+            using var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, HttpContext.RequestAborted);
+            
+            Response.StatusCode = (int)response.StatusCode;
+            CopyHeaders(response);
+
+            log.StatusCode = Response.StatusCode;
+            log.Success = response.IsSuccessStatusCode;
+            logger.LogInformation("[{TraceId}] Received response from upstream: {StatusCode} for embedding request for model {Model}", HttpContext.TraceIdentifier, (int)response.StatusCode, virtualModel.Name);
+
+            await response.Content.CopyToAsync(Response.Body, HttpContext.RequestAborted);
+        }
+        catch (OperationCanceledException)
+        {
+            logger.LogWarning("Embedding request to Ollama was canceled by the client or timed out.");
+            log.Success = false;
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error in ProxyController.Embed");
+            log.Success = false;
+            if (!Response.HasStarted)
+            {
+                Response.StatusCode = 500;
+                await Response.WriteAsync("Internal Server Error in Gateway.");
+            }
+        }
+        finally
+        {
+            sw.Stop();
+            log.Duration = sw.Elapsed.TotalMilliseconds;
+            if (clickhouseDbContext.Enabled && clickhouseDbContext.RequestLogs != null)
+            {
+                clickhouseDbContext.RequestLogs.Add(log);
+                await clickhouseDbContext.SaveChangesAsync();
+            }
+        }
+    }
+
+    private void CopyHeaders(HttpResponseMessage response)
+    {
+        foreach (var header in response.Headers)
+        {
+            if (!HeaderBlacklist.Contains(header.Key))
+                Response.Headers[header.Key] = header.Value.ToArray();
+        }
+
+        foreach (var header in response.Content.Headers)
+        {
+            if (!HeaderBlacklist.Contains(header.Key))
+                Response.Headers[header.Key] = header.Value.ToArray();
+        }
     }
 
     [HttpGet("tags")]
