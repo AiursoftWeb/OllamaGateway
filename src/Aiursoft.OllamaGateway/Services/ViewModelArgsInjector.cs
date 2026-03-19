@@ -79,6 +79,24 @@ public class ViewModelArgsInjector(
         _ = localizer["Not Found"];
         _ = localizer["Permission Details"];
         _ = localizer["Register"];
+    
+        _ = localizer["API Keys"];
+        _ = localizer["Chat"];
+        _ = localizer["Chat Models"];
+        _ = localizer["Chat Playground"];
+        _ = localizer["Create API Key"];
+        _ = localizer["Create Ollama Provider"];
+        _ = localizer["Embedding Lab"];
+        _ = localizer["Embedding Models"];
+        _ = localizer["Gateway"];
+        _ = localizer["Ollama Gateway"];
+        _ = localizer["Ollama Providers"];
+        _ = localizer["Physical Models"];
+        _ = localizer["Playground"];
+        _ = localizer["Providers"];
+        _ = localizer["Underlying Models"];
+        _ = localizer["Virtual Model Settings"];
+        _ = localizer["Virtual Models"];
     }
 
     public void InjectSimple(

@@ -27,6 +27,12 @@
   <data name="A dummy number for testing." xml:space="preserve">
     <value>測試用的虛擬數字。</value>
   </data>
+  <data name="Allow Anonymous API Call" xml:space="preserve">
+    <value>允許匿名 API 呼叫</value>
+  </data>
+  <data name="Allow anyone to call the API without a Bearer token or authentication." xml:space="preserve">
+    <value>允許任何人無需 Bearer token 或驗證即可呼叫 API。</value>
+  </data>
   <data name="Allow User Adjust Nickname" xml:space="preserve">
     <value>允許使用者修改暱稱</value>
   </data>
@@ -39,6 +45,12 @@
   <data name="Brand Name" xml:space="preserve">
     <value>品牌名稱</value>
   </data>
+  <data name="Default Chat Model" xml:space="preserve">
+    <value>預設聊天模型</value>
+  </data>
+  <data name="Default Embedding Model" xml:space="preserve">
+    <value>預設嵌入模型</value>
+  </data>
   <data name="Dummy Choice" xml:space="preserve">
     <value>測試選項</value>
   </data>
@@ -48,20 +60,38 @@
   <data name="ICP Number" xml:space="preserve">
     <value>ICP編號</value>
   </data>
+  <data name="Keep Alive Job Interval (Minutes)" xml:space="preserve">
+    <value>保持運作任務間隔（分鐘）</value>
+  </data>
   <data name="Project Logo" xml:space="preserve">
     <value>專案標誌</value>
   </data>
   <data name="Project Name" xml:space="preserve">
     <value>專案名稱</value>
   </data>
+  <data name="Request Timeout (Minutes)" xml:space="preserve">
+    <value>請求逾時（分鐘）</value>
+  </data>
   <data name="The brand name displayed in the footer." xml:space="preserve">
     <value>頁尾顯示的品牌名稱</value>
+  </data>
+  <data name="The default virtual model to use for chat requests when no model is specified." xml:space="preserve">
+    <value>當未指定模型時，用於聊天請求的預設虛擬模型。</value>
+  </data>
+  <data name="The default virtual model to use for embedding requests when no model is specified." xml:space="preserve">
+    <value>當未指定模型時，用於嵌入請求的預設虛擬模型。</value>
   </data>
   <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
     <value>適用於中國大陸使用者的 ICP 備案號碼。留空則隱藏。</value>
   </data>
+  <data name="The interval in minutes to ping the loaded models to keep them in memory." xml:space="preserve">
+    <value>以分鐘為單位向已載入的模型發送 Ping 請求，以將其保留在記憶體中的間隔。</value>
+  </data>
   <data name="The logo of the project displayed in the navbar and footer. Support jpg, png, svg." xml:space="preserve">
     <value>專案的標誌顯示於導覽列與頁尾。支援 jpg、png、svg 格式。</value>
+  </data>
+  <data name="The maximum time in minutes to wait for a response from the underlying Ollama server." xml:space="preserve">
+    <value>等待底層 Ollama 伺服器回應的最長時間（分鐘）。</value>
   </data>
   <data name="The name of the project displayed in the frontend." xml:space="preserve">
     <value>專案在前端顯示的名稱。</value>

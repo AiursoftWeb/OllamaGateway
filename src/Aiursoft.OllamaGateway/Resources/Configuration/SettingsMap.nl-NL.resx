@@ -27,6 +27,12 @@
   <data name="A dummy number for testing." xml:space="preserve">
     <value>Een dummygetal voor testdoeleinden.</value>
   </data>
+  <data name="Allow Anonymous API Call" xml:space="preserve">
+    <value>Sta anonieme API-oproepen toe</value>
+  </data>
+  <data name="Allow anyone to call the API without a Bearer token or authentication." xml:space="preserve">
+    <value>Stel iedereen in staat de API aan te roepen zonder een Bearer-token of authenticatie.</value>
+  </data>
   <data name="Allow User Adjust Nickname" xml:space="preserve">
     <value>Gebruiker toestaan om bijnaam aan te passen</value>
   </data>
@@ -39,6 +45,12 @@
   <data name="Brand Name" xml:space="preserve">
     <value>Merkenaam</value>
   </data>
+  <data name="Default Chat Model" xml:space="preserve">
+    <value>Standaard chatmodel</value>
+  </data>
+  <data name="Default Embedding Model" xml:space="preserve">
+    <value>Standaard embeddingmodel</value>
+  </data>
   <data name="Dummy Choice" xml:space="preserve">
     <value>Standaard Keuze</value>
   </data>
@@ -48,20 +60,38 @@
   <data name="ICP Number" xml:space="preserve">
     <value>ICP-nummer</value>
   </data>
+  <data name="Keep Alive Job Interval (Minutes)" xml:space="preserve">
+    <value>Interval voor Keep Alive-taak (minuten)</value>
+  </data>
   <data name="Project Logo" xml:space="preserve">
     <value>Projectlogo</value>
   </data>
   <data name="Project Name" xml:space="preserve">
     <value>Projectnaam</value>
   </data>
+  <data name="Request Timeout (Minutes)" xml:space="preserve">
+    <value>Time-outverzoek (minuten)</value>
+  </data>
   <data name="The brand name displayed in the footer." xml:space="preserve">
     <value>De merknaam die wordt weergegeven in de voettekst.</value>
+  </data>
+  <data name="The default virtual model to use for chat requests when no model is specified." xml:space="preserve">
+    <value>Het standaard virtuele model dat moet worden gebruikt voor chatverzoeken als er geen model is opgegeven.</value>
+  </data>
+  <data name="The default virtual model to use for embedding requests when no model is specified." xml:space="preserve">
+    <value>Het standaard virtuele model dat moet worden gebruikt voor embedding-verzoeken als er geen model is opgegeven.</value>
   </data>
   <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
     <value>Het ICP-licentienummer voor gebruikers uit het Chinese vasteland. Leeg laten om te verbergen.</value>
   </data>
+  <data name="The interval in minutes to ping the loaded models to keep them in memory." xml:space="preserve">
+    <value>Het interval in minuten om de geladen modellen te pingen om ze in het geheugen te houden.</value>
+  </data>
   <data name="The logo of the project displayed in the navbar and footer. Support jpg, png, svg." xml:space="preserve">
     <value>Het logo van het project dat wordt weergegeven in de navigatiebalk en voettekst. Ondersteunt jpg, png, svg.</value>
+  </data>
+  <data name="The maximum time in minutes to wait for a response from the underlying Ollama server." xml:space="preserve">
+    <value>De maximale wachttijd in minuten voor een antwoord van de onderliggende Ollama-server.</value>
   </data>
   <data name="The name of the project displayed in the frontend." xml:space="preserve">
     <value>De naam van het project dat wordt weergegeven in de frontend.</value>
