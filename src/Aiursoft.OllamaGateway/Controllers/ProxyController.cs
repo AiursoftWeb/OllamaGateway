@@ -1,15 +1,14 @@
-using System.Diagnostics;
 using System.Text;
 using Aiursoft.GptClient.Abstractions;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
 using Aiursoft.OllamaGateway.Services.Authentication;
-using Aiursoft.OllamaGateway.Services.Clickhouse;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Aiursoft.OllamaGateway.Models;
 
 namespace Aiursoft.OllamaGateway.Controllers;
 
@@ -18,7 +17,7 @@ namespace Aiursoft.OllamaGateway.Controllers;
 public class ProxyController(
     TemplateDbContext dbContext,
     IHttpClientFactory httpClientFactory,
-    Aiursoft.OllamaGateway.Models.RequestLogContext logContext,
+    RequestLogContext logContext,
     OllamaService ollamaService,
     GlobalSettingsService globalSettingsService,
     ILogger<ProxyController> logger,

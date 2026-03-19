@@ -48,7 +48,7 @@ public class Startup : IWebStartup
         services.AddHttpClient();
         services.AddAssemblyDependencies(typeof(Startup).Assembly);
         services.AddSingleton<NavigationState<Startup>>();
-        services.AddScoped<Aiursoft.OllamaGateway.Models.RequestLogContext>();
+        services.AddScoped<Models.RequestLogContext>();
 
         // Background job queue
         services.AddSingleton<Services.BackgroundJobs.BackgroundJobQueue>();
