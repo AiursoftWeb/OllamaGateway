@@ -21,10 +21,7 @@ public class OpenAIController : ControllerBase
     private readonly ILogger<OpenAIController> _logger;
     private readonly MemoryUsageTracker _memoryUsageTracker;
 
-    private static readonly HashSet<string> HeaderBlacklist = new(StringComparer.OrdinalIgnoreCase)
-    {
-        "Transfer-Encoding", "Content-Length", "Connection", "Keep-Alive", "Upgrade", "Host", "Accept-Ranges"
-    };
+
 
     public OpenAIController(
         TemplateDbContext dbContext,
@@ -56,20 +53,7 @@ public class OpenAIController : ControllerBase
         return await _globalSettingsService.GetAllowAnonymousApiCallAsync();
     }
 
-    private void CopyHeaders(HttpResponseMessage response)
-    {
-        foreach (var header in response.Headers)
-        {
-            if (!HeaderBlacklist.Contains(header.Key))
-                Response.Headers[header.Key] = header.Value.ToArray();
-        }
 
-        foreach (var header in response.Content.Headers)
-        {
-            if (!HeaderBlacklist.Contains(header.Key))
-                Response.Headers[header.Key] = header.Value.ToArray();
-        }
-    }
 
     [HttpPost("/v1/chat/completions")]
     public async Task Chat()
@@ -87,17 +71,17 @@ public class OpenAIController : ControllerBase
         try
         {
             var bodyStr = await new StreamReader(Request.Body).ReadToEndAsync();
-            var jsonNode = JsonNode.Parse(bodyStr)?.AsObject();
-            if (jsonNode == null)
+            var clientJson = JsonNode.Parse(bodyStr)?.AsObject();
+            if (clientJson == null)
             {
                 Response.StatusCode = 400;
                 await Response.WriteAsync("Invalid JSON body.");
                 return;
             }
 
-            var inputModelVal = jsonNode["model"]?.ToString() ?? string.Empty;
-            var modelToUse = string.IsNullOrWhiteSpace(inputModelVal) 
-                ? await _globalSettingsService.GetDefaultChatModelAsync() 
+            var inputModelVal = clientJson["model"]?.ToString() ?? string.Empty;
+            var modelToUse = string.IsNullOrWhiteSpace(inputModelVal)
+                ? await _globalSettingsService.GetDefaultChatModelAsync()
                 : inputModelVal;
 
             var virtualModel = await _dbContext.VirtualModels
@@ -112,163 +96,254 @@ public class OpenAIController : ControllerBase
             }
 
             var underlyingUrl = virtualModel.Provider.BaseUrl.TrimEnd('/');
-            
+
             var apiKeyIdClaim = User.FindFirst("ApiKeyId");
             if (apiKeyIdClaim != null && int.TryParse(apiKeyIdClaim.Value, out var apiKeyId))
             {
                 _memoryUsageTracker.TrackApiKeyUsage(apiKeyId);
             }
             _memoryUsageTracker.TrackUnderlyingModelUsage(virtualModel.Provider.Id, virtualModel.UnderlyingModel);
-            
+
             _logContext.Log.Model = virtualModel.Name;
-            
-            var messagesArray = jsonNode["messages"]?.AsArray();
+
+            var messagesArray = clientJson["messages"]?.AsArray();
             _logContext.Log.ConversationMessageCount = messagesArray?.Count ?? 0;
             _logContext.Log.LastQuestion = messagesArray?.LastOrDefault()?["content"]?.ToString() ?? string.Empty;
 
-            jsonNode["model"] = virtualModel.UnderlyingModel;
-            
-            // Inject overrides dynamically into OpenCV payload root structure
-            if (virtualModel.Temperature.HasValue) jsonNode["temperature"] = virtualModel.Temperature.Value;
-            if (virtualModel.TopP.HasValue) jsonNode["top_p"] = virtualModel.TopP.Value;
-            if (virtualModel.NumPredict.HasValue) jsonNode["max_tokens"] = virtualModel.NumPredict.Value; 
-            if (virtualModel.NumCtx.HasValue)
-            {
-                var options = jsonNode["options"] ??= new JsonObject();
-                options["num_ctx"] = virtualModel.NumCtx.Value;
-            }
-            if (virtualModel.Thinking.HasValue) jsonNode["think"] = virtualModel.Thinking.Value;
+            var isStream = clientJson["stream"]?.GetValue<bool>() ?? false;
 
-            using var client = _httpClientFactory.CreateClient();
-            client.Timeout = await _globalSettingsService.GetRequestTimeoutAsync();
-            
-            var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/v1/chat/completions")
+            // =========================================================================================
+            // 1. 请求翻译阶段：OpenAI 格式 -> Ollama Native 格式
+            // =========================================================================================
+            var ollamaRequest = new JsonObject
             {
-                Content = new StringContent(jsonNode.ToJsonString(), Encoding.UTF8, "application/json")
+                ["model"] = virtualModel.UnderlyingModel,
+                ["stream"] = isStream
             };
 
-            _logger.LogInformation("[{TraceId}] Proxying OpenAI chat request for model {Model} to {UnderlyingUrl}", HttpContext.TraceIdentifier, virtualModel.Name, underlyingUrl);
-            using var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, HttpContext.RequestAborted);
-            
-            Response.StatusCode = (int)response.StatusCode;
-            CopyHeaders(response);
+            if (messagesArray != null)
+            {
+                ollamaRequest["messages"] = messagesArray.DeepClone();
+            }
 
+            // 核心翻译：将 OpenAI 的扁平参数和网关的覆盖参数，统一打包进 Ollama 的 options 中
+            var options = new JsonObject();
+            
+            // 先读取客户端可能传来的参数进行兜底
+            if (clientJson["temperature"] != null) options["temperature"] = clientJson["temperature"]!.DeepClone();
+            if (clientJson["top_p"] != null) options["top_p"] = clientJson["top_p"]!.DeepClone();
+            if (clientJson["max_tokens"] != null) options["num_predict"] = clientJson["max_tokens"]!.DeepClone();
+
+            // 强行注入网关的覆盖参数（最高优先级，彻底解决 Context 失控问题）
+            if (virtualModel.Temperature.HasValue) options["temperature"] = virtualModel.Temperature.Value;
+            if (virtualModel.TopP.HasValue) options["top_p"] = virtualModel.TopP.Value;
+            if (virtualModel.NumPredict.HasValue) options["num_predict"] = virtualModel.NumPredict.Value;
+            if (virtualModel.NumCtx.HasValue) options["num_ctx"] = virtualModel.NumCtx.Value;
+
+            if (options.Count > 0)
+            {
+                ollamaRequest["options"] = options;
+            }
+
+            // 注入思考开关
+            if (virtualModel.Thinking.HasValue) ollamaRequest["think"] = virtualModel.Thinking.Value;
+
+            // =========================================================================================
+            // 2. 发起底层请求：注意！此时目标是 /api/chat，不再是 /v1/chat/completions
+            // =========================================================================================
+            using var client = _httpClientFactory.CreateClient();
+            client.Timeout = await _globalSettingsService.GetRequestTimeoutAsync();
+
+            var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/chat")
+            {
+                Content = new StringContent(ollamaRequest.ToJsonString(), Encoding.UTF8, "application/json")
+            };
+
+            _logger.LogInformation("[{TraceId}] Translating & Proxying OpenAI chat request for model {Model} to {UnderlyingUrl}/api/chat", HttpContext.TraceIdentifier, virtualModel.Name, underlyingUrl);
+            using var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, HttpContext.RequestAborted);
+
+            Response.StatusCode = (int)response.StatusCode;
             _logContext.Log.StatusCode = Response.StatusCode;
             _logContext.Log.Success = response.IsSuccessStatusCode;
-            
-            var isStream = false;
-            if (jsonNode["stream"] != null && bool.TryParse(jsonNode["stream"]?.ToString(), out var parsedStream))
-                isStream = parsedStream;
+
+            // 如果上游报错，直接把错误文本透传，不再强行翻译
+            if (!response.IsSuccessStatusCode)
+            {
+                var errContent = await response.Content.ReadAsStringAsync(HttpContext.RequestAborted);
+                _logContext.Log.Answer = errContent;
+                Response.ContentType = "application/json";
+                await Response.WriteAsync(errContent, HttpContext.RequestAborted);
+                return;
+            }
 
             await using var responseStream = await response.Content.ReadAsStreamAsync(HttpContext.RequestAborted);
-            
-            if (isStream && response.IsSuccessStatusCode)
+
+            var chatId = "chatcmpl-" + Guid.NewGuid().ToString("N").Substring(0, 12);
+            var created = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
+            // =========================================================================================
+            // 3. 响应翻译阶段 (Streaming)：Ollama NDJSON -> OpenAI SSE Chunk
+            // =========================================================================================
+            if (isStream)
             {
+                Response.ContentType = "text/event-stream"; // 强制接管 Content-Type
+                
                 var answerBuilder = new StringBuilder();
                 var thinkBuilder = new StringBuilder();
                 using var reader = new StreamReader(responseStream);
                 string? line;
+                
                 while ((line = await reader.ReadLineAsync(HttpContext.RequestAborted)) != null)
                 {
-                    if (line.StartsWith("data: ") && line != "data: [DONE]")
+                    if (string.IsNullOrWhiteSpace(line)) continue;
+
+                    try
                     {
-                        try
+                        var ollamaChunk = JsonNode.Parse(line);
+                        if (ollamaChunk == null) continue;
+
+                        var content = ollamaChunk["message"]?["content"]?.ToString() ?? string.Empty;
+                        var reasoning = ollamaChunk["message"]?["think"]?.ToString() ?? string.Empty;
+                        var isDone = ollamaChunk["done"]?.GetValue<bool>() ?? false;
+
+                        if (!string.IsNullOrEmpty(content)) answerBuilder.Append(content);
+                        if (!string.IsNullOrEmpty(reasoning)) thinkBuilder.Append(reasoning);
+
+                        // 实时构造 OpenAI 格式的微型 Chunk
+                        var openAiChunk = new JsonObject
                         {
-                            var jsonStr = line.Substring(6);
-                            var chunkNode = JsonNode.Parse(jsonStr);
-                            if (chunkNode != null)
+                            ["id"] = chatId,
+                            ["object"] = "chat.completion.chunk",
+                            ["created"] = created,
+                            ["model"] = virtualModel.Name,
+                            ["choices"] = new JsonArray
                             {
-                                // Mask the physical model name with the virtual one
-                                chunkNode["model"] = virtualModel.Name;
-
-                                // Extract audit values
-                                var content = chunkNode["choices"]?[0]?["delta"]?["content"]?.ToString();
-                                if (!string.IsNullOrEmpty(content)) answerBuilder.Append(content);
-
-                                var reasoningContent = chunkNode["choices"]?[0]?["delta"]?["reasoning_content"]?.ToString();
-                                if (string.IsNullOrEmpty(reasoningContent)) 
+                                new JsonObject
                                 {
-                                    reasoningContent = chunkNode["choices"]?[0]?["delta"]?["think"]?.ToString(); 
+                                    ["index"] = 0,
+                                    ["delta"] = new JsonObject(),
+                                    ["finish_reason"] = null
                                 }
-                                if (!string.IsNullOrEmpty(reasoningContent)) thinkBuilder.Append(reasoningContent);
+                            }
+                        };
 
-                                var usageNode = chunkNode["usage"];
-                                if (usageNode != null)
+                        var delta = openAiChunk["choices"]![0]!["delta"]!.AsObject();
+                        if (!string.IsNullOrEmpty(content)) delta["content"] = content;
+                        if (!string.IsNullOrEmpty(reasoning)) delta["reasoning_content"] = reasoning;
+
+                        // 如果这一行既没有文本也没有完成标记，跳过以节省带宽
+                        if (delta.Count == 0 && !isDone) continue;
+
+                        // 最后一个结束块
+                        if (isDone)
+                        {
+                            openAiChunk["choices"]![0]!["finish_reason"] = "stop";
+
+                            var pTokens = ollamaChunk["prompt_eval_count"]?.GetValue<long>() ?? 0;
+                            var cTokens = ollamaChunk["eval_count"]?.GetValue<long>() ?? 0;
+                            if (pTokens > 0 || cTokens > 0)
+                            {
+                                openAiChunk["usage"] = new JsonObject
                                 {
-                                    if (int.TryParse(usageNode["prompt_tokens"]?.ToString(), out var pTokens)) _logContext.Log.PromptTokens = pTokens;
-                                    if (int.TryParse(usageNode["completion_tokens"]?.ToString(), out var cTokens)) _logContext.Log.CompletionTokens = cTokens;
-                                    _logContext.Log.TotalTokens = _logContext.Log.PromptTokens + _logContext.Log.CompletionTokens;
-                                }
+                                    ["prompt_tokens"] = pTokens,
+                                    ["completion_tokens"] = cTokens,
+                                    ["total_tokens"] = pTokens + cTokens
+                                };
 
-                                // Serialize modified JSON, prepend prefix, and send
-                                var modifiedLine = $"data: {chunkNode.ToJsonString()}";
-                                await Response.WriteAsync(modifiedLine + "\n", HttpContext.RequestAborted);
-                                await Response.Body.FlushAsync(HttpContext.RequestAborted);
-                                continue;
+                                _logContext.Log.PromptTokens = (int)pTokens;
+                                _logContext.Log.CompletionTokens = (int)cTokens;
+                                _logContext.Log.TotalTokens = (int)(pTokens + cTokens);
                             }
                         }
-                        catch { /* Fallback to raw output on parse failure */ }
-                    }
 
-                    // Fallback: empty lines, [DONE], or parse failures are forwarded as-is
-                    await Response.WriteAsync(line + "\n", HttpContext.RequestAborted);
-                    await Response.Body.FlushAsync(HttpContext.RequestAborted);
+                        // 转换为严格的 SSE 格式发送
+                        await Response.WriteAsync($"data: {openAiChunk.ToJsonString()}\n\n", HttpContext.RequestAborted);
+                        await Response.Body.FlushAsync(HttpContext.RequestAborted);
+
+                        // 流结束标志
+                        if (isDone)
+                        {
+                            await Response.WriteAsync("data: [DONE]\n\n", HttpContext.RequestAborted);
+                            await Response.Body.FlushAsync(HttpContext.RequestAborted);
+                        }
+                    }
+                    catch { /* 忽略无法解析的脏数据行 */ }
                 }
-                
+
                 _logContext.Log.Answer = answerBuilder.ToString();
                 _logContext.Log.Thinking = thinkBuilder.ToString();
             }
+            // =========================================================================================
+            // 4. 响应翻译阶段 (Non-Streaming)：Ollama JSON -> OpenAI JSON
+            // =========================================================================================
             else
             {
                 using var ms = new MemoryStream();
                 await responseStream.CopyToAsync(ms, HttpContext.RequestAborted);
                 ms.Seek(0, SeekOrigin.Begin);
-                
-                var contentReplaced = false;
-                try 
+
+                try
                 {
-                    var resultNode = await JsonNode.ParseAsync(ms, cancellationToken: HttpContext.RequestAborted);
-                    if (resultNode != null)
+                    var ollamaResponse = await JsonNode.ParseAsync(ms, cancellationToken: HttpContext.RequestAborted);
+                    if (ollamaResponse != null)
                     {
-                        // Mask model name
-                        resultNode["model"] = virtualModel.Name;
+                        var content = ollamaResponse["message"]?["content"]?.ToString() ?? string.Empty;
+                        var reasoning = ollamaResponse["message"]?["think"]?.ToString() ?? string.Empty;
+                        var pTokens = ollamaResponse["prompt_eval_count"]?.GetValue<long>() ?? 0;
+                        var cTokens = ollamaResponse["eval_count"]?.GetValue<long>() ?? 0;
 
-                        _logContext.Log.Answer = resultNode["choices"]?[0]?["message"]?["content"]?.ToString() ?? string.Empty;
-                        
-                        var reasoning = resultNode["choices"]?[0]?["message"]?["reasoning_content"]?.ToString();
-                        if (string.IsNullOrEmpty(reasoning)) 
+                        _logContext.Log.Answer = content;
+                        _logContext.Log.Thinking = reasoning;
+                        _logContext.Log.PromptTokens = (int)pTokens;
+                        _logContext.Log.CompletionTokens = (int)cTokens;
+                        _logContext.Log.TotalTokens = (int)(pTokens + cTokens);
+
+                        // 构建一个完美的 OpenAI 非流式响应体
+                        var openAiResponse = new JsonObject
                         {
-                            reasoning = resultNode["choices"]?[0]?["message"]?["think"]?.ToString();
-                        }
-                        _logContext.Log.Thinking = reasoning ?? string.Empty;
+                            ["id"] = chatId,
+                            ["object"] = "chat.completion",
+                            ["created"] = created,
+                            ["model"] = virtualModel.Name,
+                            ["choices"] = new JsonArray
+                            {
+                                new JsonObject
+                                {
+                                    ["index"] = 0,
+                                    ["message"] = new JsonObject
+                                    {
+                                        ["role"] = "assistant",
+                                        ["content"] = content
+                                    },
+                                    ["finish_reason"] = "stop"
+                                }
+                            },
+                            ["usage"] = new JsonObject
+                            {
+                                ["prompt_tokens"] = pTokens,
+                                ["completion_tokens"] = cTokens,
+                                ["total_tokens"] = pTokens + cTokens
+                            }
+                        };
 
-                        var usageNode = resultNode["usage"];
-                        if (usageNode != null)
+                        if (!string.IsNullOrEmpty(reasoning))
                         {
-                            if (int.TryParse(usageNode["prompt_tokens"]?.ToString(), out var pTokens)) _logContext.Log.PromptTokens = pTokens;
-                            if (int.TryParse(usageNode["completion_tokens"]?.ToString(), out var cTokens)) _logContext.Log.CompletionTokens = cTokens;
-                            _logContext.Log.TotalTokens = _logContext.Log.PromptTokens + _logContext.Log.CompletionTokens;
+                            openAiResponse["choices"]![0]!["message"]!["reasoning_content"] = reasoning;
                         }
 
-                        // Write the modified JSON to the response
-                        await Response.WriteAsync(resultNode.ToJsonString(), HttpContext.RequestAborted);
-                        contentReplaced = true;
+                        Response.ContentType = "application/json"; // 强制接管 Content-Type
+                        await Response.WriteAsync(openAiResponse.ToJsonString(), HttpContext.RequestAborted);
                     }
                 }
-                catch { /* ignored */ }
-
-                // Only fallback to raw stream if parsing failed or upstream error
-                if (!contentReplaced)
+                catch
                 {
-                    if (!response.IsSuccessStatusCode && string.IsNullOrWhiteSpace(_logContext.Log.Answer))
-                    {
-                        ms.Seek(0, SeekOrigin.Begin);
-                        using var sReader = new StreamReader(ms, Encoding.UTF8, false, 1024, true);
-                        _logContext.Log.Answer = await sReader.ReadToEndAsync(HttpContext.RequestAborted);
-                    }
-
+                    // 解析失败兜底，原样返回
                     ms.Seek(0, SeekOrigin.Begin);
-                    await ms.CopyToAsync(Response.Body, HttpContext.RequestAborted);
+                    using var sReader = new StreamReader(ms, Encoding.UTF8, false, 1024, true);
+                    var rawErr = await sReader.ReadToEndAsync(HttpContext.RequestAborted);
+                    _logContext.Log.Answer = rawErr;
+                    Response.ContentType = "application/json";
+                    await Response.WriteAsync(rawErr, HttpContext.RequestAborted);
                 }
             }
         }
@@ -307,15 +382,15 @@ public class OpenAIController : ControllerBase
         try
         {
             var bodyStr = await new StreamReader(Request.Body).ReadToEndAsync();
-            var jsonNode = JsonNode.Parse(bodyStr)?.AsObject();
-            if (jsonNode == null)
+            var clientJson = JsonNode.Parse(bodyStr)?.AsObject();
+            if (clientJson == null)
             {
                 Response.StatusCode = 400;
                 await Response.WriteAsync("Invalid JSON body.");
                 return;
             }
 
-            var inputModelVal = jsonNode["model"]?.ToString() ?? string.Empty;
+            var inputModelVal = clientJson["model"]?.ToString() ?? string.Empty;
             var modelName = string.IsNullOrWhiteSpace(inputModelVal)
                 ? await _globalSettingsService.GetDefaultEmbeddingModelAsync()
                 : inputModelVal;
@@ -342,24 +417,29 @@ public class OpenAIController : ControllerBase
             
             _logContext.Log.Model = virtualModel.Name;
             _logContext.Log.ConversationMessageCount = 1;
-            _logContext.Log.LastQuestion = jsonNode["input"]?.ToString() ?? string.Empty;
+            _logContext.Log.LastQuestion = clientJson["input"]?.ToString() ?? string.Empty;
 
-            jsonNode["model"] = virtualModel.UnderlyingModel;
+            // =========================================================================================
+            // 1. 请求翻译阶段：OpenAI 格式 (/v1/embeddings) -> Ollama Native 格式 (/api/embed)
+            // =========================================================================================
+            var ollamaRequest = new JsonObject
+            {
+                ["model"] = virtualModel.UnderlyingModel,
+                ["input"] = clientJson["input"]!.DeepClone()
+            };
 
             using var client = _httpClientFactory.CreateClient();
             client.Timeout = await _globalSettingsService.GetRequestTimeoutAsync();
             
-            var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/v1/embeddings")
+            var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/embed")
             {
-                Content = new StringContent(jsonNode.ToJsonString(), Encoding.UTF8, "application/json")
+                Content = new StringContent(ollamaRequest.ToJsonString(), Encoding.UTF8, "application/json")
             };
 
-            _logger.LogInformation("[{TraceId}] Proxying OpenAI embedding request for model {Model} to {UnderlyingUrl}", HttpContext.TraceIdentifier, virtualModel.Name, underlyingUrl);
+            _logger.LogInformation("[{TraceId}] Translating & Proxying OpenAI embedding request for model {Model} to {UnderlyingUrl}/api/embed", HttpContext.TraceIdentifier, virtualModel.Name, underlyingUrl);
             using var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, HttpContext.RequestAborted);
             
             Response.StatusCode = (int)response.StatusCode;
-            CopyHeaders(response);
-
             _logContext.Log.StatusCode = Response.StatusCode;
             _logContext.Log.Success = response.IsSuccessStatusCode;
 
@@ -367,29 +447,62 @@ public class OpenAIController : ControllerBase
             {
                 var content = await response.Content.ReadAsStringAsync(HttpContext.RequestAborted);
                 _logContext.Log.Answer = content;
+                Response.ContentType = "application/json";
                 await Response.WriteAsync(content, HttpContext.RequestAborted);
+                return;
             }
-            else
+
+            // =========================================================================================
+            // 2. 响应翻译阶段 (Non-Streaming)：Ollama JSON -> OpenAI JSON
+            // =========================================================================================
+            var responseContent = await response.Content.ReadAsStringAsync(HttpContext.RequestAborted);
+            try
             {
-                var responseContent = await response.Content.ReadAsStringAsync(HttpContext.RequestAborted);
-                try
+                var ollamaResponse = JsonNode.Parse(responseContent);
+                if (ollamaResponse != null)
                 {
-                    var resultNode = JsonNode.Parse(responseContent);
-                    if (resultNode != null)
+                    var embeddings = ollamaResponse["embeddings"]?.AsArray();
+                    var openAiData = new JsonArray();
+                    if (embeddings != null)
                     {
-                        // Mask physical model name
-                        resultNode["model"] = virtualModel.Name;
-                        await Response.WriteAsync(resultNode.ToJsonString(), HttpContext.RequestAborted);
+                        for (int i = 0; i < embeddings.Count; i++)
+                        {
+                            openAiData.Add(new JsonObject
+                            {
+                                ["object"] = "embedding",
+                                ["index"] = i,
+                                ["embedding"] = embeddings[i]!.DeepClone()
+                            });
+                        }
                     }
-                    else
+
+                    var pTokens = ollamaResponse["prompt_eval_count"]?.GetValue<long>() ?? 0;
+                    _logContext.Log.PromptTokens = (int)pTokens;
+                    _logContext.Log.TotalTokens = (int)pTokens;
+
+                    var openAiResponse = new JsonObject
                     {
-                        await Response.WriteAsync(responseContent, HttpContext.RequestAborted);
-                    }
+                        ["object"] = "list",
+                        ["data"] = openAiData,
+                        ["model"] = virtualModel.Name,
+                        ["usage"] = new JsonObject
+                        {
+                            ["prompt_tokens"] = pTokens,
+                            ["total_tokens"] = pTokens
+                        }
+                    };
+
+                    Response.ContentType = "application/json"; // 强制接管 Content-Type
+                    await Response.WriteAsync(openAiResponse.ToJsonString(), HttpContext.RequestAborted);
                 }
-                catch
+                else
                 {
                     await Response.WriteAsync(responseContent, HttpContext.RequestAborted);
                 }
+            }
+            catch
+            {
+                await Response.WriteAsync(responseContent, HttpContext.RequestAborted);
             }
         }
         catch (OperationCanceledException ex)

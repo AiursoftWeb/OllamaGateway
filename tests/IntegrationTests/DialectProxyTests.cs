@@ -111,21 +111,18 @@ public class DialectProxyTests : TestBase
     [TestMethod]
     public async Task OpenAI_NonStreaming_ReturnsCorrectFormat()
     {
-        // Arrange: mock upstream returns a standard OpenAI non-streaming response
+        // Arrange: mock upstream returns a standard Ollama native non-streaming response
         MockUpstreamState.Handler = (_, _) =>
         {
             var body = """
             {
-                "id": "chatcmpl-mock123",
-                "object": "chat.completion",
-                "created": 1700000000,
                 "model": "llama3.2",
-                "choices": [{
-                    "index": 0,
-                    "message": { "role": "assistant", "content": "Hello from the mock!" },
-                    "finish_reason": "stop"
-                }],
-                "usage": { "prompt_tokens": 15, "completion_tokens": 7, "total_tokens": 22 }
+                "created_at": "2024-01-01T00:00:00Z",
+                "message": { "role": "assistant", "content": "Hello from the mock!" },
+                "done": true,
+                "total_duration": 5000000000,
+                "prompt_eval_count": 15,
+                "eval_count": 7
             }
             """;
             return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
@@ -149,28 +146,27 @@ public class DialectProxyTests : TestBase
         Assert.AreEqual("Hello from the mock!", json["choices"]?[0]?["message"]?["content"]?.ToString());
         Assert.AreEqual(22, json["usage"]?["total_tokens"]?.GetValue<int>());
 
-        // Assert: upstream received the PHYSICAL model name, not the virtual one
+        // Assert: upstream received the PHYSICAL model name and the request was translated to /api/chat
         Assert.IsNotNull(MockUpstreamState.LastRequestBody);
         var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody);
         Assert.AreEqual(PhysicalModelName, upstreamBody?["model"]?.ToString());
+        Assert.IsTrue(MockUpstreamState.LastRequest?.RequestUri?.AbsolutePath.EndsWith("/api/chat") ?? false);
     }
 
     [TestMethod]
     public async Task OpenAI_Streaming_ReturnsValidSSE()
     {
-        // Arrange: mock upstream returns SSE stream
+        // Arrange: mock upstream returns NDJSON stream (Ollama native format)
         MockUpstreamState.Handler = (_, _) =>
         {
-            var ssePayload =
-                "data: {\"id\":\"chatcmpl-001\",\"object\":\"chat.completion.chunk\",\"choices\":[{\"index\":0,\"delta\":{\"role\":\"assistant\",\"content\":\"\"},\"finish_reason\":null}]}\n\n" +
-                "data: {\"id\":\"chatcmpl-001\",\"object\":\"chat.completion.chunk\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"Hello\"},\"finish_reason\":null}]}\n\n" +
-                "data: {\"id\":\"chatcmpl-001\",\"object\":\"chat.completion.chunk\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\" World\"},\"finish_reason\":null}]}\n\n" +
-                "data: {\"id\":\"chatcmpl-001\",\"object\":\"chat.completion.chunk\",\"choices\":[{\"index\":0,\"delta\":{},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":10,\"completion_tokens\":5,\"total_tokens\":15}}\n\n" +
-                "data: [DONE]\n\n";
+            var ndjson =
+                """{"model":"llama3.2","message":{"role":"assistant","content":"Hello"},"done":false}""" + "\n" +
+                """{"model":"llama3.2","message":{"role":"assistant","content":" World"},"done":false}""" + "\n" +
+                """{"model":"llama3.2","message":{"role":"assistant","content":""},"done":true,"prompt_eval_count":10,"eval_count":5}""" + "\n";
 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(ssePayload, Encoding.UTF8, "text/event-stream")
+                Content = new StringContent(ndjson, Encoding.UTF8, "application/x-ndjson")
             };
             return Task.FromResult(response);
         };
@@ -210,12 +206,12 @@ public class DialectProxyTests : TestBase
     }
 
     [TestMethod]
-    public async Task OpenAI_ParameterInjection_TemperatureAndMaxTokens()
+    public async Task OpenAI_ParameterInjection_TemperatureAndNumPredict()
     {
         // Arrange: mock upstream returns simple OK
         MockUpstreamState.Handler = (_, _) =>
         {
-            var body = """{"id":"x","object":"chat.completion","choices":[{"index":0,"message":{"role":"assistant","content":"ok"},"finish_reason":"stop"}],"usage":{"prompt_tokens":1,"completion_tokens":1,"total_tokens":2}}""";
+            var body = """{"model":"llama3.2","message":{"role":"assistant","content":"ok"},"done":true,"prompt_eval_count":1,"eval_count":1}""";
             return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(body, Encoding.UTF8, "application/json")
@@ -226,25 +222,26 @@ public class DialectProxyTests : TestBase
         var payload = $$"""{"model":"{{VirtualModelName}}","messages":[{"role":"user","content":"test"}],"stream":false}""";
         await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
 
-        // Assert: upstream payload has injected temperature (0.42) and max_tokens (512)
+        // Assert: upstream payload has injected temperature (0.42) and num_predict (512) inside options
         Assert.IsNotNull(MockUpstreamState.LastRequestBody);
         var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody);
         Assert.IsNotNull(upstreamBody);
 
-        // Temperature injected at root level (OpenAI format, NOT inside options)
-        var tempVal = upstreamBody["temperature"]?.GetValue<double>() ?? 0;
+        var options = upstreamBody["options"];
+        Assert.IsNotNull(options, "Ollama native format must have 'options' object");
+        var tempVal = options["temperature"]?.GetValue<double>() ?? 0;
         Assert.IsTrue(Math.Abs(tempVal - 0.42) < 0.01, $"Expected temperature 0.42, was {tempVal}");
-        // NumPredict mapped to max_tokens at root level (OpenAI format)
-        Assert.AreEqual(512, upstreamBody["max_tokens"]?.GetValue<int>());
+        // NumPredict mapped to num_predict in options
+        Assert.AreEqual(512, options["num_predict"]?.GetValue<int>());
     }
 
     [TestMethod]
-    public async Task OpenAI_UpstreamForwardsToV1Path()
+    public async Task OpenAI_UpstreamForwardsToApiChat()
     {
         // Arrange
         MockUpstreamState.Handler = (_, _) =>
         {
-            var body = """{"id":"x","object":"chat.completion","choices":[{"index":0,"message":{"role":"assistant","content":"ok"},"finish_reason":"stop"}],"usage":{"prompt_tokens":1,"completion_tokens":1,"total_tokens":2}}""";
+            var body = """{"model":"llama3.2","message":{"role":"assistant","content":"ok"},"done":true,"prompt_eval_count":1,"eval_count":1}""";
             return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(body, Encoding.UTF8, "application/json")
@@ -255,11 +252,11 @@ public class DialectProxyTests : TestBase
         var payload = $$"""{"model":"{{VirtualModelName}}","messages":[{"role":"user","content":"hello"}],"stream":false}""";
         await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
 
-        // Assert: the upstream request was sent to the /v1/chat/completions path (NOT /api/chat)
+        // Assert: the upstream request was sent to the /api/chat path (NOT /v1/chat/completions)
         Assert.IsNotNull(MockUpstreamState.LastRequest);
         var upstreamUri = MockUpstreamState.LastRequest.RequestUri?.ToString();
-        Assert.IsTrue(upstreamUri!.Contains("/v1/chat/completions"),
-            $"Expected upstream path to contain '/v1/chat/completions', but was: {upstreamUri}");
+        Assert.IsTrue(upstreamUri!.Contains("/api/chat"),
+            $"Expected upstream path to contain '/api/chat', but was: {upstreamUri}");
     }
 
     [TestMethod]
@@ -288,12 +285,12 @@ public class DialectProxyTests : TestBase
     }
 
     [TestMethod]
-    public async Task OpenAI_EmbeddingsEndpoint_ForwardsToV1()
+    public async Task OpenAI_EmbeddingsEndpoint_ForwardsToApiEmbed()
     {
         // Arrange
         MockUpstreamState.Handler = (_, _) =>
         {
-            var body = """{"object":"list","data":[{"object":"embedding","index":0,"embedding":[0.1,0.2,0.3]}],"model":"nomic-embed-text","usage":{"prompt_tokens":5,"total_tokens":5}}""";
+            var body = """{"model":"nomic-embed-text","embeddings":[[0.1,0.2,0.3]],"prompt_eval_count":5}""";
             return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(body, Encoding.UTF8, "application/json")
@@ -306,14 +303,16 @@ public class DialectProxyTests : TestBase
 
         // Assert
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        Assert.IsTrue(MockUpstreamState.LastRequest!.RequestUri!.ToString().Contains("/v1/embeddings"));
+        Assert.IsTrue(MockUpstreamState.LastRequest!.RequestUri!.ToString().Contains("/api/embed"));
 
         var content = await response.Content.ReadAsStringAsync();
         var json = JsonNode.Parse(content);
         Assert.AreEqual(EmbeddingModelName, json?["model"]?.ToString());
+        Assert.AreEqual("list", json?["object"]?.ToString());
 
         var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody!);
         Assert.AreEqual(PhysicalEmbeddingModel, upstreamBody?["model"]?.ToString());
+        Assert.IsNotNull(upstreamBody?["input"]);
     }
 
     // ========================================================================
@@ -543,17 +542,15 @@ public class DialectProxyTests : TestBase
     }
 
     [TestMethod]
-    public async Task Gateway_ProtocolIsolation_NoDialectCrosstalk()
+    public async Task Gateway_ProtocolIsolation_BothForwardToApiChat()
     {
-        // This test verifies that OpenAI requests go to /v1/ upstream and Ollama requests go to /api/
+        // Both OpenAI and Ollama dialects now translate to /api/chat upstream
         var requestPaths = new List<string>();
 
         MockUpstreamState.Handler = (req, _) =>
         {
             requestPaths.Add(req.RequestUri?.PathAndQuery ?? "");
-            var body = req.RequestUri!.PathAndQuery.Contains("/v1/")
-                ? """{"id":"x","object":"chat.completion","choices":[{"index":0,"message":{"role":"assistant","content":"openai"},"finish_reason":"stop"}],"usage":{"prompt_tokens":1,"completion_tokens":1,"total_tokens":2}}"""
-                : """{"model":"llama3.2","message":{"role":"assistant","content":"ollama"},"done":true,"prompt_eval_count":1,"eval_count":1}""";
+            var body = """{"model":"llama3.2","message":{"role":"assistant","content":"ok"},"done":true,"prompt_eval_count":1,"eval_count":1}""";
             return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(body, Encoding.UTF8, "application/json")
@@ -568,27 +565,25 @@ public class DialectProxyTests : TestBase
         var ollamaPayload = $$"""{"model":"{{VirtualModelName}}","messages":[{"role":"user","content":"hi"}],"stream":false}""";
         await Http.SendAsync(AuthedPost("/api/chat", ollamaPayload));
 
-        // Assert: one went to /v1/ and the other to /api/
+        // Assert: both went to /api/chat
         Assert.AreEqual(2, requestPaths.Count);
-        Assert.IsTrue(requestPaths[0].Contains("/v1/chat/completions"), $"First request should go to /v1/, was: {requestPaths[0]}");
-        Assert.IsTrue(requestPaths[1].Contains("/api/chat"), $"Second request should go to /api/, was: {requestPaths[1]}");
+        Assert.IsTrue(requestPaths[0].Contains("/api/chat"), $"First request should go to /api/chat, was: {requestPaths[0]}");
+        Assert.IsTrue(requestPaths[1].Contains("/api/chat"), $"Second request should go to /api/chat, was: {requestPaths[1]}");
     }
 
     [TestMethod]
     public async Task OpenAI_Streaming_ReasoningContent_Captured()
     {
-        // Arrange
+        // Arrange: Upstream returns Ollama NDJSON with 'think' field
         MockUpstreamState.Handler = (_, _) =>
         {
-            var sse = new[]
-            {
-                """data: {"id":"1","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"reasoning_content":"Thinking..."},"finish_reason":null}]}""",
-                """data: {"id":"2","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"content":"Hello!"},"finish_reason":"stop"}]}""",
-                "data: [DONE]"
-            };
+            var ndjson =
+                """{"model":"llama3.2","message":{"role":"assistant","content":"","think":"Thinking..."},"done":false}""" + "\n" +
+                """{"model":"llama3.2","message":{"role":"assistant","content":"Hello!"},"done":true,"prompt_eval_count":10,"eval_count":5}""" + "\n";
+            
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(string.Join("\n\n", sse) + "\n\n", Encoding.UTF8, "text/event-stream")
+                Content = new StringContent(ndjson, Encoding.UTF8, "application/x-ndjson")
             };
             return Task.FromResult(response);
         };
@@ -598,7 +593,7 @@ public class DialectProxyTests : TestBase
         var response = await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
         var body = await response.Content.ReadAsStringAsync();
 
-        // Assert: 1. Model name is masked in response chunks. 2. Reasoning content is preserved.
+        // Assert: 1. Model name is masked in response chunks. 2. Reasoning content is translated to reasoning_content.
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         var lines = body.Split('\n').Where(l => l.StartsWith("data: ") && l != "data: [DONE]");
         foreach (var line in lines)
@@ -606,15 +601,8 @@ public class DialectProxyTests : TestBase
             var chunk = JsonNode.Parse(line[6..]);
             Assert.AreEqual(VirtualModelName, chunk?["model"]?.ToString());
         }
-        Assert.IsTrue(body.Contains("reasoning_content"), "Response must preserve reasoning_content");
-        Assert.IsTrue(body.Contains("Thinking..."), "Response must preserve thinking content");
-
-        // Assert: 3. Upstream request received the 'think' parameter if we mock it in Seed (Wait, I should check Seed)
-        // In CreateServer, we seeded VirtualModel with Temperature=0.42 and NumPredict=512, but didn't set Thinking.
-        // Let's check the last request.
-        var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody ?? "{}");
-        Assert.IsNotNull(upstreamBody);
-        // It won't have 'think' yet because Thinking.HasValue was false in the seeded model.
+        Assert.IsTrue(body.Contains("reasoning_content"), "Response must contain translated reasoning_content");
+        Assert.IsTrue(body.Contains("Thinking..."), "Response must contain thinking content");
     }
 
     [TestMethod]
@@ -644,7 +632,10 @@ public class DialectProxyTests : TestBase
         var payload = $$"""{"model":"{{VirtualModelName}}","messages":[{"role":"user","content":"hi"}],"stream":false}""";
         await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
 
-        // Assert: Upstream request should now contain "think": true and "options.num_ctx"
+        // Assert: 1. Target URL should be /api/chat (due to protocol translation)
+        Assert.IsTrue(MockUpstreamState.LastRequest?.RequestUri?.AbsolutePath.EndsWith("/api/chat") ?? false, "Request should be translated to /api/chat");
+
+        // Assert: 2. Upstream request should now contain "think": true and "options.num_ctx"
         var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody ?? "{}");
         Assert.AreEqual(true, upstreamBody?["think"]?.GetValue<bool>());
         Assert.AreEqual(4096, upstreamBody?["options"]?["num_ctx"]?.GetValue<int>());
