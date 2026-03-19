@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Aiursoft.DbTools;
 using Aiursoft.OllamaGateway.Entities;
+using Aiursoft.OllamaGateway.Extensions;
 using static Aiursoft.WebTools.Extends;
 
 namespace Aiursoft.OllamaGateway;
@@ -13,6 +14,7 @@ public abstract class Program
         var app = await AppAsync<Startup>(args);
         await app.UpdateDbAsync<TemplateDbContext>();
         await app.SeedAsync();
+        await app.InitClickhouseAsync();
         await app.CopyAvatarFileAsync();
         await app.RunAsync();
     }

@@ -32,6 +32,7 @@ public class ClickhouseDbContext : IAsyncDisposable, IDisposable, IScopedDepende
             log.Model,
             log.Success ? 1 : 0,
             log.Duration,
+            log.Thinking,
             log.Answer,
             log.RequestTime,
             log.Method,
@@ -39,6 +40,9 @@ public class ClickhouseDbContext : IAsyncDisposable, IDisposable, IScopedDepende
             log.StatusCode,
             log.UserAgent,
             log.TraceId,
+            log.PromptTokens,
+            log.CompletionTokens,
+            log.TotalTokens,
             log.UserId,
             log.ApiKeyName
         });

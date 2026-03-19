@@ -18,7 +18,7 @@ namespace Aiursoft.OllamaGateway.Controllers;
 public class ProxyController(
     TemplateDbContext dbContext,
     IHttpClientFactory httpClientFactory,
-    ClickhouseDbContext clickhouseDbContext,
+    Aiursoft.OllamaGateway.Models.RequestLogContext logContext,
     OllamaService ollamaService,
     GlobalSettingsService globalSettingsService,
     ILogger<ProxyController> logger,
@@ -60,18 +60,8 @@ public class ProxyController(
             return;
         }
 
-        var sw = Stopwatch.StartNew();
-        var log = new RequestLog
-        {
-            IP = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "Unknown",
-            Method = Request.Method,
-            Path = Request.Path,
-            UserAgent = Request.Headers.UserAgent.ToString(),
-            TraceId = HttpContext.TraceIdentifier,
-            RequestTime = DateTime.UtcNow,
-            UserId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "Anonymous",
-            ApiKeyName = User.FindFirst("ApiKeyName")?.Value ?? (User.Identity?.IsAuthenticated == true ? "Web Session" : "Anonymous")
-        };
+        logContext.Log.UserId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "Anonymous";
+        logContext.Log.ApiKeyName = User.FindFirst("ApiKeyName")?.Value ?? (User.Identity?.IsAuthenticated == true ? "Web Session" : "Anonymous");
 
         try
         {
@@ -99,9 +89,9 @@ public class ProxyController(
             }
             memoryUsageTracker.TrackUnderlyingModelUsage(virtualModel.Provider.Id, virtualModel.UnderlyingModel);
             
-            log.Model = virtualModel.Name;
-            log.ConversationMessageCount = input.Messages.Count;
-            log.LastQuestion = input.Messages.LastOrDefault()?.Content ?? string.Empty;
+            logContext.Log.Model = virtualModel.Name;
+            logContext.Log.ConversationMessageCount = input.Messages.Count;
+            logContext.Log.LastQuestion = input.Messages.LastOrDefault()?.Content ?? string.Empty;
 
             input.Model = virtualModel.UnderlyingModel;
             if (virtualModel.Thinking.HasValue) input.Think = virtualModel.Thinking.Value;
@@ -129,15 +119,15 @@ public class ProxyController(
             Response.StatusCode = (int)response.StatusCode;
             CopyHeaders(response);
 
-            log.StatusCode = Response.StatusCode;
-            log.Success = response.IsSuccessStatusCode;
+            logContext.Log.StatusCode = Response.StatusCode;
+            logContext.Log.Success = response.IsSuccessStatusCode;
             logger.LogInformation("[{TraceId}] Received response from upstream: {StatusCode} for chat request for model {Model}", HttpContext.TraceIdentifier, (int)response.StatusCode, virtualModel.Name);
 
             await using var responseStream = await response.Content.ReadAsStreamAsync(HttpContext.RequestAborted);
             
             if (input.Stream == true && response.IsSuccessStatusCode)
             {
-                log.Answer = "[Streaming Response]";
+                logContext.Log.Answer = "[Streaming Response]";
                 await responseStream.CopyToAsync(Response.Body, HttpContext.RequestAborted);
             }
             else
@@ -150,7 +140,11 @@ public class ProxyController(
                 try 
                 {
                     var result = JsonConvert.DeserializeObject<dynamic>(content);
-                    log.Answer = result?.message?.content ?? string.Empty;
+                    logContext.Log.Answer = result?.message?.content ?? string.Empty;
+                    logContext.Log.Thinking = result?.message?.think ?? string.Empty;
+                    logContext.Log.PromptTokens = (int)(result?.prompt_eval_count ?? 0);
+                    logContext.Log.CompletionTokens = (int)(result?.eval_count ?? 0);
+                    logContext.Log.TotalTokens = logContext.Log.PromptTokens + logContext.Log.CompletionTokens;
                 }
                 catch { /* ignored */ }
 
@@ -161,26 +155,16 @@ public class ProxyController(
         catch (OperationCanceledException)
         {
             logger.LogWarning("Chat request to Ollama was canceled by the client or timed out.");
-            log.Success = false;
+            logContext.Log.Success = false;
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "Error in ProxyController.Chat");
-            log.Success = false;
+            logContext.Log.Success = false;
             if (!Response.HasStarted)
             {
                 Response.StatusCode = 500;
                 await Response.WriteAsync("Internal Server Error in Gateway.");
-            }
-        }
-        finally
-        {
-            sw.Stop();
-            log.Duration = sw.Elapsed.TotalMilliseconds;
-            if (clickhouseDbContext.Enabled && clickhouseDbContext.RequestLogs != null)
-            {
-                clickhouseDbContext.RequestLogs.Add(log);
-                await clickhouseDbContext.SaveChangesAsync();
             }
         }
     }
@@ -202,18 +186,8 @@ public class ProxyController(
             return;
         }
 
-        var sw = Stopwatch.StartNew();
-        var log = new RequestLog
-        {
-            IP = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "Unknown",
-            Method = Request.Method,
-            Path = Request.Path,
-            UserAgent = Request.Headers.UserAgent.ToString(),
-            TraceId = HttpContext.TraceIdentifier,
-            RequestTime = DateTime.UtcNow,
-            UserId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "Anonymous",
-            ApiKeyName = User.FindFirst("ApiKeyName")?.Value ?? (User.Identity?.IsAuthenticated == true ? "Web Session" : "Anonymous")
-        };
+        logContext.Log.UserId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "Anonymous";
+        logContext.Log.ApiKeyName = User.FindFirst("ApiKeyName")?.Value ?? (User.Identity?.IsAuthenticated == true ? "Web Session" : "Anonymous");
 
         try
         {
@@ -243,9 +217,9 @@ public class ProxyController(
             }
             memoryUsageTracker.TrackUnderlyingModelUsage(virtualModel.Provider.Id, virtualModel.UnderlyingModel);
             
-            log.Model = virtualModel.Name;
-            log.ConversationMessageCount = 1;
-            log.LastQuestion = input.input?.ToString() ?? input.prompt?.ToString() ?? string.Empty;
+            logContext.Log.Model = virtualModel.Name;
+            logContext.Log.ConversationMessageCount = 1;
+            logContext.Log.LastQuestion = input.input?.ToString() ?? input.prompt?.ToString() ?? string.Empty;
 
             input.model = virtualModel.UnderlyingModel;
 
@@ -264,8 +238,8 @@ public class ProxyController(
             Response.StatusCode = (int)response.StatusCode;
             CopyHeaders(response);
 
-            log.StatusCode = Response.StatusCode;
-            log.Success = response.IsSuccessStatusCode;
+            logContext.Log.StatusCode = Response.StatusCode;
+            logContext.Log.Success = response.IsSuccessStatusCode;
             logger.LogInformation("[{TraceId}] Received response from upstream: {StatusCode} for embedding request for model {Model}", HttpContext.TraceIdentifier, (int)response.StatusCode, virtualModel.Name);
 
             await response.Content.CopyToAsync(Response.Body, HttpContext.RequestAborted);
@@ -273,26 +247,16 @@ public class ProxyController(
         catch (OperationCanceledException)
         {
             logger.LogWarning("Embedding request to Ollama was canceled by the client or timed out.");
-            log.Success = false;
+            logContext.Log.Success = false;
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "Error in ProxyController.Embed");
-            log.Success = false;
+            logContext.Log.Success = false;
             if (!Response.HasStarted)
             {
                 Response.StatusCode = 500;
                 await Response.WriteAsync("Internal Server Error in Gateway.");
-            }
-        }
-        finally
-        {
-            sw.Stop();
-            log.Duration = sw.Elapsed.TotalMilliseconds;
-            if (clickhouseDbContext.Enabled && clickhouseDbContext.RequestLogs != null)
-            {
-                clickhouseDbContext.RequestLogs.Add(log);
-                await clickhouseDbContext.SaveChangesAsync();
             }
         }
     }
