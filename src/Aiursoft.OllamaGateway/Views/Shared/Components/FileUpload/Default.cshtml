@@ -35,65 +35,85 @@
         htmlAttributes: new { style = "width:0;height:0;padding:0;border:none;" });
 }
 
-<input
-    form="fakeForm"
-    type="file"
-    id="@fileInputId"
-    class="dropify"
-    data-show-remove="false"
-    @Html.Raw(extensionAttributes) />
-<div id="@progressId" class="progress mb-3 mt-3 d-none">
-    <div id="@progressbarId" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"></div>
+<div class="uploader-container">
+    <input
+        form="fakeForm"
+        type="file"
+        id="@fileInputId"
+        class="dropify"
+        data-show-remove="false"
+        @Html.Raw(extensionAttributes) />
+    <div id="@progressId" class="progress mb-3 mt-3 d-none">
+        <div id="@progressbarId" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"></div>
+    </div>
+    @hiddenInputTag
+
+    <div class="loc-data" hidden
+         data-file-input-id="@fileInputId"
+         data-progress-id="@progressId"
+         data-progressbar-id="@progressbarId"
+         data-max-size-in-mb="@Model.MaxSizeInMb"
+         data-allowed-extensions="@Model.AllowedExtensions"
+         data-upload-endpoint="@Model.UploadEndpoint"
+         data-field-name="@fieldName"
+         data-msg-default="@Localizer["Drag and drop a file here or click"]"
+         data-msg-replace="@Localizer["Drag and drop or click to replace"]"
+         data-msg-remove="@Localizer["Remove"]"
+         data-msg-error="@Localizer["Ooops, something wrong happended."]"
+         data-err-file-size="@Localizer["The file size is too big ({{ value }} max)."]"
+         data-err-min-width="@Localizer["The image width is too small ({{ value }}px min)."]"
+         data-err-max-width="@Localizer["The image width is too big ({{ value }}px max)."]"
+         data-err-min-height="@Localizer["The image height is too small ({{ value }}px min)."]"
+         data-err-max-height="@Localizer["The image height is too big ({{ value }}px max)."]"
+         data-err-image-format="@Localizer["The image format is not allowed ({{ value }} only)."]"
+         data-err-file-extension="@Localizer["The file is not allowed ({{ value }} only)."]">
+    </div>
+
+    <script>
+        (async () => {
+            const { default: Uploader } = await import("/scripts/uploader.js");
+            const currentScript = document.currentScript;
+            const container = currentScript.closest('.uploader-container');
+            const locData = container.querySelector('.loc-data');
+            
+            window.addEventListener('load', function () {
+                const fileInputId = locData.getAttribute('data-file-input-id');
+                const progressId = locData.getAttribute('data-progress-id');
+                const progressbarId = locData.getAttribute('data-progressbar-id');
+                const fieldName = locData.getAttribute('data-field-name');
+
+                const fileInput = $(`#${fileInputId}`);
+                const progress = $(`#${progressId}`);
+                const progressbar = $(`#${progressbarId}`);
+                const addressInput = $(`[name="${fieldName}"]`);
+
+                new Uploader({
+                    fileInput: fileInput,
+                    progress: progress,
+                    progressbar: progressbar,
+                    addressInput: addressInput,
+
+                    sizeInMb: parseInt(locData.getAttribute('data-max-size-in-mb')),
+                    validExtensions: (locData.getAttribute('data-allowed-extensions') || '').split(' ').filter(Boolean),
+                    uploadUrl: locData.getAttribute('data-upload-endpoint')
+                }).init({
+                    messages: {
+                        'default': locData.getAttribute('data-msg-default'),
+                        'replace': locData.getAttribute('data-msg-replace'),
+                        'remove':  locData.getAttribute('data-msg-remove'),
+                        'error':   locData.getAttribute('data-msg-error')
+                    },
+                    error: {
+                        'fileSize': locData.getAttribute('data-err-file-size'),
+                        'minWidth': locData.getAttribute('data-err-min-width'),
+                        'maxWidth': locData.getAttribute('data-err-max-width'),
+                        'minHeight': locData.getAttribute('data-err-min-height'),
+                        'maxHeight': locData.getAttribute('data-err-max-height'),
+                        'imageFormat': locData.getAttribute('data-err-image-format'),
+                        'fileExtension': locData.getAttribute('data-err-file-extension')
+                    }
+                });
+            });
+        })();
+    </script>
 </div>
-@hiddenInputTag
-
-<script type="module">
-    import Uploader from "/scripts/uploader.js";
-    window.addEventListener('load', function () {
-
-        const fileInput = $(`#@fileInputId`);
-        const progress = $(`#@progressId`);
-        const progressbar = $(`#@progressbarId`);
-
-        const addressInput = $(`[name="@fieldName"]`);
-
-        new Uploader({
-            fileInput: fileInput,
-            progress: progress,
-            progressbar: progressbar,
-            addressInput: addressInput,
-
-            sizeInMb: @Model.MaxSizeInMb,
-            validExtensions: ('@Model.AllowedExtensions' || '').split(' ').filter(Boolean),
-            uploadUrl: '@Model.UploadEndpoint'
-        }).init({
-            messages: {
-                'default': @Json.Serialize(Localizer["Drag and drop a file here or click"].Value),
-                'replace': @Json.Serialize(Localizer["Drag and drop or click to replace"].Value),
-                'remove':  @Json.Serialize(Localizer["Remove"].Value),
-                'error':   @Json.Serialize(Localizer["Ooops, something wrong happended."].Value)
-            },
-            error: {
-                'fileSize': @Json.Serialize(Localizer["The file size is too big ({{ value }} max)."].Value),
-                'minWidth': @Json.Serialize(Localizer["The image width is too small ({{ value }}px min)."].Value),
-                'maxWidth': @Json.Serialize(Localizer["The image width is too big ({{ value }}px max)."].Value),
-                'minHeight': @Json.Serialize(Localizer["The image height is too small ({{ value }}px min)."].Value),
-                'maxHeight': @Json.Serialize(Localizer["The image height is too big ({{ value }}px max)."].Value),
-                'imageFormat': @Json.Serialize(Localizer["The image format is not allowed ({{ value }} only)."].Value),
-                'fileExtension': @Json.Serialize(Localizer["The file is not allowed ({{ value }} only)."].Value),
-            }
-        });
-    })
-</script>
-
-@* @Localizer["Drag and drop a file here or click"] *@
-@* @Localizer["Drag and drop or click to replace"] *@
-@* @Localizer["Remove"] *@
-@* @Localizer["Ooops, something wrong happended."] *@
-@* @Localizer["The file size is too big ({{ value }} max)."] *@
-@* @Localizer["The image width is too small ({{ value }}px min)."] *@
-@* @Localizer["The image width is too big ({{ value }}px max)."] *@
-@* @Localizer["The image height is too small ({{ value }}px min)."] *@
-@* @Localizer["The image height is too big ({{ value }}px max)."] *@
-@* @Localizer["The image format is not allowed ({{ value }} only)."] *@
-@* @Localizer["The file is not allowed ({{ value }} only)."] *@

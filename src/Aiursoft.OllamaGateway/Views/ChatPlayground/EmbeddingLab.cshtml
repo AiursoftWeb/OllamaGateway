@@ -45,9 +45,25 @@
     </div>
 </div>
 
+<div id="loc-data" hidden>
+    <span data-key="generating">@Localizer["Generating..."]</span>
+    <span data-key="no-embeddings">@Localizer["No embeddings returned."]</span>
+    <span data-key="error-prefix">@Localizer["Error: "]</span>
+    <span data-key="generate-vector">@Localizer["Generate Vector"]</span>
+    <span data-key="dimensions">@Localizer["Dimensions:"]</span>
+    <span data-key="generated-in">@Localizer["Generated in"]</span>
+    <span data-key="ms">@Localizer["ms"]</span>
+    <span data-key="truncated">@Localizer["... (truncated for display, total vector length: {0})"]</span>
+</div>
+
 @* ReSharper disable once Razor.SectionNotResolved *@
 @section scripts {
     <script>
+        function getLocalizedText(key, defaultText) {
+            const el = document.querySelector(`#loc-data span[data-key="${key}"]`);
+            return el ? el.innerText : defaultText;
+        }
+
         const embedForm = document.getElementById('embedForm');
         const inputText = document.getElementById('inputText');
         const btnGenerate = document.getElementById('btnGenerate');
@@ -61,7 +77,7 @@
             if (!text) return;
 
             btnGenerate.disabled = true;
-            btnGenerate.innerHTML = '<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>@Localizer["Generating..."]';
+            btnGenerate.innerHTML = `<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>${getLocalizedText('generating', 'Generating...')}`;
             resultContainer.classList.add('d-none');
             resultVectors.innerText = '';
             resultMeta.innerText = '';
@@ -89,23 +105,23 @@
                     const maxLength = 2000;
                     
                     if (fullJson.length > maxLength) {
-                        resultVectors.innerText = fullJson.substring(0, maxLength) + '\n\n... (truncated for display, total vector length: ' + embed.length + ')';
+                        resultVectors.innerText = fullJson.substring(0, maxLength) + '\n\n' + getLocalizedText('truncated', '... (truncated for display, total vector length: {0})').replace('{0}', embed.length);
                     } else {
                         resultVectors.innerText = fullJson;
                     }
                     
-                    resultMeta.innerText = `Dimensions: ${embed.length} | Generated in ${duration}ms`;
+                    resultMeta.innerText = `${getLocalizedText('dimensions', 'Dimensions:')} ${embed.length} | ${getLocalizedText('generated-in', 'Generated in')} ${duration}${getLocalizedText('ms', 'ms')}`;
                     resultContainer.classList.remove('d-none');
                 } else {
-                    resultVectors.innerText = "@Localizer["No embeddings returned."]";
+                    resultVectors.innerText = getLocalizedText('no-embeddings', 'No embeddings returned.');
                     resultContainer.classList.remove('d-none');
                 }
             } catch (error) {
-                resultVectors.innerText = "@Localizer["Error: "]" + error.message;
+                resultVectors.innerText = getLocalizedText('error-prefix', 'Error: ') + error.message;
                 resultContainer.classList.remove('d-none');
             } finally {
                 btnGenerate.disabled = false;
-                btnGenerate.innerHTML = '<i class="align-middle me-1" data-lucide="zap"></i>@Localizer["Generate Vector"]';
+                btnGenerate.innerHTML = `<i class="align-middle me-1" data-lucide="zap"></i>${getLocalizedText('generate-vector', 'Generate Vector')}`;
             }
         });
     </script>

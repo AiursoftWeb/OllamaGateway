@@ -79,9 +79,19 @@
     }
 </style>
 
+<div id="loc-data" hidden>
+    <span data-key="session-cleared">@Localizer["Session cleared. Send a new message to start over."]</span>
+    <span data-key="error-prefix">@Localizer["Error: "]</span>
+</div>
+
 @* ReSharper disable once Razor.SectionNotResolved *@
 @section scripts {
     <script>
+        function getLocalizedText(key, defaultText) {
+            const el = document.querySelector(`#loc-data span[data-key="${key}"]`);
+            return el ? el.innerText : defaultText;
+        }
+
         const chatMessages = document.getElementById('chatMessages');
         const chatForm = document.getElementById('chatForm');
         const userInput = document.getElementById('userInput');
@@ -207,7 +217,7 @@
             chatMessages.innerHTML = `
                 <div class="text-center text-muted my-5" id="welcomeMessage">
                     <i class="align-middle me-2" data-lucide="sparkles" style="width: 48px; height: 48px; color: #ffc107;"></i>
-                    <p class="mt-2">@Localizer["Session cleared. Send a new message to start over."]</p>
+                    <p class="mt-2">${getLocalizedText('session-cleared', 'Session cleared. Send a new message to start over.')}</p>
                 </div>`;
             history = [];
             pendingImages = [];
@@ -288,7 +298,7 @@
 
             } catch (error) {
                 assistantMsgDiv.classList.add('text-danger');
-                assistantMsgDiv.innerText = "Error: " + error.message;
+                assistantMsgDiv.innerText = getLocalizedText('error-prefix', 'Error: ') + error.message;
             } finally {
                 userInput.disabled = false;
                 btnSend.disabled = false;

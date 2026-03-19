@@ -455,10 +455,28 @@
     </div>
 </div>
 
+<div id="chart-data" hidden
+     data-chat-count="@Model.ChatModelsCount"
+     data-embedding-count="@Model.EmbeddingModelsCount"
+     data-chat-label="@Localizer["Chat"]"
+     data-embedding-label="@Localizer["Embedding"]"
+     data-usage-count-label="@Localizer["Usage Count"]"
+     data-provider-labels='@Json.Serialize(Model.ProviderStats.Select(p => p.Name))'
+     data-provider-data='@Json.Serialize(Model.ProviderStats.Select(p => p.ModelCount))'
+     data-top-models-labels='@Json.Serialize(Model.TopModels.Select(t => t.ModelName))'
+     data-top-models-data='@Json.Serialize(Model.TopModels.Select(t => t.UsageCount))'
+     data-top-api-keys-labels='@Json.Serialize(Model.TopApiKeys.Select(t => t.Name))'
+     data-top-api-keys-data='@Json.Serialize(Model.TopApiKeys.Select(t => t.UsageCount))'>
+</div>
+
 @* === Chart.js Scripts === *@
 <script src="/node_modules/chart.js/dist/chart.umd.min.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
+        const chartDataEl = document.getElementById('chart-data');
+        const getAttr = (name) => chartDataEl.getAttribute(name);
+        const getJsonAttr = (name) => JSON.parse(chartDataEl.getAttribute(name));
+
         // --- Model Types Doughnut ---
         var ctxTypes = document.getElementById("chartModelTypes");
         if (ctxTypes) {
@@ -466,13 +484,13 @@
                 type: "doughnut",
                 data: {
                     labels: [
-                        "@Localizer["Chat"]",
-                        "@Localizer["Embedding"]"
+                        getAttr('data-chat-label'),
+                        getAttr('data-embedding-label')
                     ],
                     datasets: [{
                         data: [
-                            @Model.ChatModelsCount,
-                            @Model.EmbeddingModelsCount
+                            parseInt(getAttr('data-chat-count')),
+                            parseInt(getAttr('data-embedding-count'))
                         ],
                         backgroundColor: [
                             "rgba(59, 125, 221, 0.85)", // primary
@@ -499,11 +517,11 @@
         // --- Provider Models Pie ---
         var ctxProvider = document.getElementById("chartProviderModels");
         if (ctxProvider) {
-            var pLabels = [@Html.Raw(string.Join(",", Model.ProviderStats.Select(p => $"'{p.Name.Replace("'", "\\'")}'")))];
-            var pData = [@string.Join(",", Model.ProviderStats.Select(p => p.ModelCount))];
-            
+            var pLabels = getJsonAttr('data-provider-labels');
+            var pData = getJsonAttr('data-provider-data');
+
             if (pLabels.length === 0) { pLabels = ["No Data"]; pData = [1]; }
-            
+
             new Chart(ctxProvider, {
                 type: "pie",
                 data: {
@@ -538,15 +556,15 @@
         // --- Top Models Bar ---
         var ctxTopM = document.getElementById("chartTopModels");
         if (ctxTopM) {
-            var mLabels = [@Html.Raw(string.Join(",", Model.TopModels.Select(t => $"'{t.ModelName}'")))];
-            var mData = [@string.Join(",", Model.TopModels.Select(t => t.UsageCount))];
-            
+            var mLabels = getJsonAttr('data-top-models-labels');
+            var mData = getJsonAttr('data-top-models-data');
+
             new Chart(ctxTopM, {
                 type: "bar",
                 data: {
                     labels: mLabels,
                     datasets: [{
-                        label: "@Localizer["Usage Count"]",
+                        label: getAttr('data-usage-count-label'),
                         data: mData,
                         backgroundColor: "rgba(59, 125, 221, 0.85)",
                         borderColor: "rgba(59, 125, 221, 0.85)",
@@ -575,15 +593,15 @@
         // --- Top API Keys Bar ---
         var ctxTopK = document.getElementById("chartTopApiKeys");
         if (ctxTopK) {
-            var kLabels = [@Html.Raw(string.Join(",", Model.TopApiKeys.Select(t => $"'{t.Name}'")))];
-            var kData = [@string.Join(",", Model.TopApiKeys.Select(t => t.UsageCount))];
-            
+            var kLabels = getJsonAttr('data-top-api-keys-labels');
+            var kData = getJsonAttr('data-top-api-keys-data');
+
             new Chart(ctxTopK, {
                 type: "bar",
                 data: {
                     labels: kLabels,
                     datasets: [{
-                        label: "@Localizer["Usage Count"]",
+                        label: getAttr('data-usage-count-label'),
                         data: kData,
                         backgroundColor: "rgba(255, 193, 7, 0.85)",
                         borderColor: "rgba(255, 193, 7, 0.85)",

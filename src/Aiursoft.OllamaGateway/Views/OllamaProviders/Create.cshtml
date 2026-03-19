@@ -47,9 +47,24 @@
     </div>
 </div>
 
+<div id="loc-data" hidden>
+    <span data-key="please-enter-url">@Localizer["Please enter a URL first."]</span>
+    <span data-key="testing">@Localizer["Testing..."]</span>
+    <span data-key="success">@Localizer["Success!"]</span>
+    <span data-key="successfully-connected">@Localizer["Successfully connected to Ollama."]</span>
+    <span data-key="models-found">@Localizer["Models found:"]</span>
+    <span data-key="network-error">@Localizer["Network error or invalid request."]</span>
+    <span data-key="test-connection">@Localizer["Test Connection"]</span>
+</div>
+
 @* ReSharper disable once Razor.SectionNotResolved *@
 @section scripts {
     <script>
+        function getLocalizedText(key, defaultText) {
+            const el = document.querySelector(`#loc-data span[data-key="${key}"]`);
+            return el ? el.innerText : defaultText;
+        }
+
         document.getElementById('btnTestConnection').addEventListener('click', async function() {
             const baseUrl = document.getElementById('baseUrlInput').value;
             const btn = this;
@@ -59,14 +74,14 @@
             const submitBtn = document.getElementById('btnSubmit');
 
             if (!baseUrl) {
-                alert('Please enter a URL first.');
+                alert(getLocalizedText('please-enter-url', 'Please enter a URL first.'));
                 return;
             }
 
             // UI Loading state
             btn.disabled = true;
             spinner.classList.remove('d-none');
-            text.innerText = 'Testing...';
+            text.innerText = getLocalizedText('testing', 'Testing...');
             resultDiv.classList.add('d-none');
             resultDiv.classList.remove('alert-success', 'alert-danger');
 
@@ -86,7 +101,7 @@
                 if (data.success) {
                     resultDiv.classList.add('alert-success');
                     let modelsText = data.models.length > 0 ? data.models.join(', ') : 'None';
-                    resultDiv.innerHTML = `<strong>Success!</strong> Successfully connected to Ollama. <br/> <strong>Models found:</strong> ${modelsText}`;
+                    resultDiv.innerHTML = `<strong>${getLocalizedText('success', 'Success!')}</strong> ${getLocalizedText('successfully-connected', 'Successfully connected to Ollama.')} <br/> <strong>${getLocalizedText('models-found', 'Models found:')}</strong> ${modelsText}`;
                     submitBtn.disabled = false;
                 } else {
                     resultDiv.classList.add('alert-danger');
@@ -95,11 +110,11 @@
             } catch (error) {
                 resultDiv.classList.remove('d-none');
                 resultDiv.classList.add('alert-danger');
-                resultDiv.innerText = 'Network error or invalid request.';
+                resultDiv.innerText = getLocalizedText('network-error', 'Network error or invalid request.');
             } finally {
                 btn.disabled = false;
                 spinner.classList.add('d-none');
-                text.innerText = 'Test Connection';
+                text.innerText = getLocalizedText('test-connection', 'Test Connection');
             }
         });
     </script>
