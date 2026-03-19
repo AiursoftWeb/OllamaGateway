@@ -141,10 +141,11 @@ public class DialectProxyTests : TestBase
         // Assert: HTTP 200
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 
-        // Assert: response body is valid OpenAI format
+        // Assert: response body is valid OpenAI format and masks physical model
         var content = await response.Content.ReadAsStringAsync();
         var json = JsonNode.Parse(content);
         Assert.IsNotNull(json);
+        Assert.AreEqual(VirtualModelName, json["model"]?.ToString());
         Assert.AreEqual("Hello from the mock!", json["choices"]?[0]?["message"]?["content"]?.ToString());
         Assert.AreEqual(22, json["usage"]?["total_tokens"]?.GetValue<int>());
 
@@ -196,6 +197,7 @@ public class DialectProxyTests : TestBase
             if (line.StartsWith("data: ") && line != "data: [DONE]")
             {
                 var chunk = JsonNode.Parse(line[6..]);
+                Assert.AreEqual(VirtualModelName, chunk?["model"]?.ToString());
                 var delta = chunk?["choices"]?[0]?["delta"]?["content"]?.ToString();
                 if (!string.IsNullOrEmpty(delta))
                 {
@@ -306,6 +308,10 @@ public class DialectProxyTests : TestBase
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         Assert.IsTrue(MockUpstreamState.LastRequest!.RequestUri!.ToString().Contains("/v1/embeddings"));
 
+        var content = await response.Content.ReadAsStringAsync();
+        var json = JsonNode.Parse(content);
+        Assert.AreEqual(EmbeddingModelName, json?["model"]?.ToString());
+
         var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody!);
         Assert.AreEqual(PhysicalEmbeddingModel, upstreamBody?["model"]?.ToString());
     }
@@ -346,6 +352,7 @@ public class DialectProxyTests : TestBase
         var content = await response.Content.ReadAsStringAsync();
         var json = JsonNode.Parse(content);
         Assert.IsNotNull(json);
+        Assert.AreEqual(VirtualModelName, json["model"]?.ToString());
         Assert.AreEqual("Native Ollama response!", json["message"]?["content"]?.ToString());
         Assert.AreEqual(true, json["done"]?.GetValue<bool>());
     }
@@ -384,6 +391,7 @@ public class DialectProxyTests : TestBase
         foreach (var line in lines)
         {
             var chunk = JsonNode.Parse(line);
+            Assert.AreEqual(VirtualModelName, chunk?["model"]?.ToString());
             var content = chunk?["message"]?["content"]?.ToString();
             if (!string.IsNullOrEmpty(content)) answer.Append(content);
             if (chunk?["done"]?.GetValue<bool>() == true) foundDone = true;

@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json.Nodes;
 using Aiursoft.GptClient.Abstractions;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
@@ -133,39 +134,49 @@ public class ProxyController(
                 string? line;
                 while ((line = await reader.ReadLineAsync(HttpContext.RequestAborted)) != null)
                 {
-                    // Forward each line immediately to maintain streaming UX
-                    await Response.WriteAsync(line + "\n", HttpContext.RequestAborted);
-                    await Response.Body.FlushAsync(HttpContext.RequestAborted);
-
                     if (string.IsNullOrWhiteSpace(line)) continue;
 
                     try
                     {
-                        var chunkNode = JsonConvert.DeserializeObject<dynamic>(line);
-                        if (chunkNode == null) continue;
-
-                        string? contentStr = chunkNode.message?.content?.ToString();
-                        if (!string.IsNullOrEmpty(contentStr))
+                        var chunkNode = JsonNode.Parse(line);
+                        if (chunkNode != null)
                         {
-                            answerBuilder.Append(contentStr);
-                        }
+                            // Mask the physical model name with the virtual one
+                            chunkNode["model"] = virtualModel.Name;
 
-                        string? thinkStr = chunkNode.message?.think?.ToString();
-                        if (!string.IsNullOrEmpty(thinkStr))
-                        {
-                            thinkBuilder.Append(thinkStr);
-                        }
+                            // Serialize modified JSON, prepend prefix, and send
+                            var modifiedLine = chunkNode.ToJsonString();
+                            await Response.WriteAsync(modifiedLine + "\n", HttpContext.RequestAborted);
+                            await Response.Body.FlushAsync(HttpContext.RequestAborted);
 
-                        // The final chunk (done: true) carries token counts
-                        bool isDone = chunkNode.done == true;
-                        if (isDone)
-                        {
-                            logContext.Log.PromptTokens = (int)(chunkNode.prompt_eval_count ?? 0);
-                            logContext.Log.CompletionTokens = (int)(chunkNode.eval_count ?? 0);
-                            logContext.Log.TotalTokens = logContext.Log.PromptTokens + logContext.Log.CompletionTokens;
+                            // Extract audit values
+                            string? contentStr = chunkNode["message"]?["content"]?.ToString();
+                            if (!string.IsNullOrEmpty(contentStr))
+                            {
+                                answerBuilder.Append(contentStr);
+                            }
+
+                            string? thinkStr = chunkNode["message"]?["think"]?.ToString();
+                            if (!string.IsNullOrEmpty(thinkStr))
+                            {
+                                thinkBuilder.Append(thinkStr);
+                            }
+
+                            // The final chunk (done: true) carries token counts
+                            bool isDone = chunkNode["done"]?.GetValue<bool>() == true;
+                            if (isDone)
+                            {
+                                logContext.Log.PromptTokens = (int)(chunkNode["prompt_eval_count"]?.GetValue<long>() ?? 0);
+                                logContext.Log.CompletionTokens = (int)(chunkNode["eval_count"]?.GetValue<long>() ?? 0);
+                                logContext.Log.TotalTokens = logContext.Log.PromptTokens + logContext.Log.CompletionTokens;
+                            }
+                            continue;
                         }
                     }
-                    catch { /* Ignore parse errors on partial/malformed chunks */ }
+                    catch { /* Fallback to raw output on parse failure */ }
+                    
+                    await Response.WriteAsync(line + "\n", HttpContext.RequestAborted);
+                    await Response.Body.FlushAsync(HttpContext.RequestAborted);
                 }
 
                 logContext.Log.Answer = answerBuilder.ToString();
@@ -177,27 +188,41 @@ public class ProxyController(
                 await responseStream.CopyToAsync(ms, HttpContext.RequestAborted);
                 ms.Seek(0, SeekOrigin.Begin);
                 
+                var contentReplaced = false;
                 try 
                 {
-                    var content = await new StreamReader(ms, Encoding.UTF8, false, 1024, true).ReadToEndAsync(HttpContext.RequestAborted);
-                    var result = JsonConvert.DeserializeObject<dynamic>(content);
-                    logContext.Log.Answer = result?.message?.content ?? string.Empty;
-                    logContext.Log.Thinking = result?.message?.think ?? string.Empty;
-                    logContext.Log.PromptTokens = (int)(result?.prompt_eval_count ?? 0);
-                    logContext.Log.CompletionTokens = (int)(result?.eval_count ?? 0);
-                    logContext.Log.TotalTokens = logContext.Log.PromptTokens + logContext.Log.CompletionTokens;
+                    var resultNode = await JsonNode.ParseAsync(ms, cancellationToken: HttpContext.RequestAborted);
+                    if (resultNode != null)
+                    {
+                        // Mask model name
+                        resultNode["model"] = virtualModel.Name;
+
+                        logContext.Log.Answer = resultNode["message"]?["content"]?.ToString() ?? string.Empty;
+                        logContext.Log.Thinking = resultNode["message"]?["think"]?.ToString() ?? string.Empty;
+                        logContext.Log.PromptTokens = (int)(resultNode["prompt_eval_count"]?.GetValue<long>() ?? 0);
+                        logContext.Log.CompletionTokens = (int)(resultNode["eval_count"]?.GetValue<long>() ?? 0);
+                        logContext.Log.TotalTokens = logContext.Log.PromptTokens + logContext.Log.CompletionTokens;
+
+                        // Write the modified JSON to the response
+                        var modifiedContent = resultNode.ToJsonString();
+                        await Response.WriteAsync(modifiedContent, HttpContext.RequestAborted);
+                        contentReplaced = true;
+                    }
                 }
                 catch { /* ignored */ }
 
-                if (!response.IsSuccessStatusCode && string.IsNullOrWhiteSpace(logContext.Log.Answer))
+                if (!contentReplaced)
                 {
+                    if (!response.IsSuccessStatusCode && string.IsNullOrWhiteSpace(logContext.Log.Answer))
+                    {
+                        ms.Seek(0, SeekOrigin.Begin);
+                        using var sReader = new StreamReader(ms, Encoding.UTF8, false, 1024, true);
+                        logContext.Log.Answer = await sReader.ReadToEndAsync(HttpContext.RequestAborted);
+                    }
+                    
                     ms.Seek(0, SeekOrigin.Begin);
-                    using var sReader = new StreamReader(ms, Encoding.UTF8, false, 1024, true);
-                    logContext.Log.Answer = await sReader.ReadToEndAsync(HttpContext.RequestAborted);
+                    await ms.CopyToAsync(Response.Body, HttpContext.RequestAborted);
                 }
-
-                ms.Seek(0, SeekOrigin.Begin);
-                await ms.CopyToAsync(Response.Body, HttpContext.RequestAborted);
             }
         }
         catch (OperationCanceledException ex)
@@ -300,7 +325,12 @@ public class ProxyController(
             }
             else
             {
-                await response.Content.CopyToAsync(Response.Body, HttpContext.RequestAborted);
+                var resultNode = await JsonNode.ParseAsync(await response.Content.ReadAsStreamAsync(HttpContext.RequestAborted), cancellationToken: HttpContext.RequestAborted);
+                if (resultNode != null)
+                {
+                    resultNode["model"] = virtualModel.Name;
+                    await Response.WriteAsync(resultNode.ToJsonString(), HttpContext.RequestAborted);
+                }
             }
         }
         catch (OperationCanceledException ex)

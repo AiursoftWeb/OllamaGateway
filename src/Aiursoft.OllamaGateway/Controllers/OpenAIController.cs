@@ -163,11 +163,6 @@ public class OpenAIController : ControllerBase
                 string? line;
                 while ((line = await reader.ReadLineAsync(HttpContext.RequestAborted)) != null)
                 {
-
-                    // Immediately flush to client to maintain true streaming
-                    await Response.WriteAsync(line + "\n", HttpContext.RequestAborted);
-                    await Response.Body.FlushAsync(HttpContext.RequestAborted);
-
                     if (line.StartsWith("data: ") && line != "data: [DONE]")
                     {
                         try
@@ -176,11 +171,12 @@ public class OpenAIController : ControllerBase
                             var chunkNode = JsonNode.Parse(jsonStr);
                             if (chunkNode != null)
                             {
+                                // Mask the physical model name with the virtual one
+                                chunkNode["model"] = virtualModel.Name;
+
+                                // Extract audit values
                                 var content = chunkNode["choices"]?[0]?["delta"]?["content"]?.ToString();
-                                if (!string.IsNullOrEmpty(content))
-                                {
-                                    answerBuilder.Append(content);
-                                }
+                                if (!string.IsNullOrEmpty(content)) answerBuilder.Append(content);
 
                                 var usageNode = chunkNode["usage"];
                                 if (usageNode != null)
@@ -189,10 +185,20 @@ public class OpenAIController : ControllerBase
                                     if (int.TryParse(usageNode["completion_tokens"]?.ToString(), out var cTokens)) _logContext.Log.CompletionTokens = cTokens;
                                     _logContext.Log.TotalTokens = _logContext.Log.PromptTokens + _logContext.Log.CompletionTokens;
                                 }
+
+                                // Serialize modified JSON, prepend prefix, and send
+                                var modifiedLine = $"data: {chunkNode.ToJsonString()}";
+                                await Response.WriteAsync(modifiedLine + "\n", HttpContext.RequestAborted);
+                                await Response.Body.FlushAsync(HttpContext.RequestAborted);
+                                continue;
                             }
                         }
-                        catch { /* Ignore parse errors on partial/malformed chunks */ }
+                        catch { /* Fallback to raw output on parse failure */ }
                     }
+
+                    // Fallback: empty lines, [DONE], or parse failures are forwarded as-is
+                    await Response.WriteAsync(line + "\n", HttpContext.RequestAborted);
+                    await Response.Body.FlushAsync(HttpContext.RequestAborted);
                 }
                 
                 _logContext.Log.Answer = answerBuilder.ToString();
@@ -203,29 +209,44 @@ public class OpenAIController : ControllerBase
                 await responseStream.CopyToAsync(ms, HttpContext.RequestAborted);
                 ms.Seek(0, SeekOrigin.Begin);
                 
+                var contentReplaced = false;
                 try 
                 {
                     var resultNode = await JsonNode.ParseAsync(ms, cancellationToken: HttpContext.RequestAborted);
-                    _logContext.Log.Answer = resultNode?["choices"]?[0]?["message"]?["content"]?.ToString() ?? string.Empty;
-                    var usageNode = resultNode?["usage"];
-                    if (usageNode != null)
+                    if (resultNode != null)
                     {
-                        if (int.TryParse(usageNode["prompt_tokens"]?.ToString(), out var pTokens)) _logContext.Log.PromptTokens = pTokens;
-                        if (int.TryParse(usageNode["completion_tokens"]?.ToString(), out var cTokens)) _logContext.Log.CompletionTokens = cTokens;
-                        _logContext.Log.TotalTokens = _logContext.Log.PromptTokens + _logContext.Log.CompletionTokens;
+                        // Mask model name
+                        resultNode["model"] = virtualModel.Name;
+
+                        _logContext.Log.Answer = resultNode["choices"]?[0]?["message"]?["content"]?.ToString() ?? string.Empty;
+                        var usageNode = resultNode["usage"];
+                        if (usageNode != null)
+                        {
+                            if (int.TryParse(usageNode["prompt_tokens"]?.ToString(), out var pTokens)) _logContext.Log.PromptTokens = pTokens;
+                            if (int.TryParse(usageNode["completion_tokens"]?.ToString(), out var cTokens)) _logContext.Log.CompletionTokens = cTokens;
+                            _logContext.Log.TotalTokens = _logContext.Log.PromptTokens + _logContext.Log.CompletionTokens;
+                        }
+
+                        // Write the modified JSON to the response
+                        await Response.WriteAsync(resultNode.ToJsonString(), HttpContext.RequestAborted);
+                        contentReplaced = true;
                     }
                 }
                 catch { /* ignored */ }
 
-                if (!response.IsSuccessStatusCode && string.IsNullOrWhiteSpace(_logContext.Log.Answer))
+                // Only fallback to raw stream if parsing failed or upstream error
+                if (!contentReplaced)
                 {
-                    ms.Seek(0, SeekOrigin.Begin);
-                    using var sReader = new StreamReader(ms, Encoding.UTF8, false, 1024, true);
-                    _logContext.Log.Answer = await sReader.ReadToEndAsync(HttpContext.RequestAborted);
-                }
+                    if (!response.IsSuccessStatusCode && string.IsNullOrWhiteSpace(_logContext.Log.Answer))
+                    {
+                        ms.Seek(0, SeekOrigin.Begin);
+                        using var sReader = new StreamReader(ms, Encoding.UTF8, false, 1024, true);
+                        _logContext.Log.Answer = await sReader.ReadToEndAsync(HttpContext.RequestAborted);
+                    }
 
-                ms.Seek(0, SeekOrigin.Begin);
-                await ms.CopyToAsync(Response.Body, HttpContext.RequestAborted);
+                    ms.Seek(0, SeekOrigin.Begin);
+                    await ms.CopyToAsync(Response.Body, HttpContext.RequestAborted);
+                }
             }
         }
         catch (OperationCanceledException ex)
@@ -327,7 +348,25 @@ public class OpenAIController : ControllerBase
             }
             else
             {
-                await response.Content.CopyToAsync(Response.Body, HttpContext.RequestAborted);
+                var responseContent = await response.Content.ReadAsStringAsync(HttpContext.RequestAborted);
+                try
+                {
+                    var resultNode = JsonNode.Parse(responseContent);
+                    if (resultNode != null)
+                    {
+                        // Mask physical model name
+                        resultNode["model"] = virtualModel.Name;
+                        await Response.WriteAsync(resultNode.ToJsonString(), HttpContext.RequestAborted);
+                    }
+                    else
+                    {
+                        await Response.WriteAsync(responseContent, HttpContext.RequestAborted);
+                    }
+                }
+                catch
+                {
+                    await Response.WriteAsync(responseContent, HttpContext.RequestAborted);
+                }
             }
         }
         catch (OperationCanceledException ex)
