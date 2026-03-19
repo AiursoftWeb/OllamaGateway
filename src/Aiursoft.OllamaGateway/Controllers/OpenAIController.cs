@@ -262,6 +262,7 @@ public class OpenAIController : ControllerBase
                 
                 var answerBuilder = new StringBuilder();
                 var thinkBuilder = new StringBuilder();
+                bool isFirstChunk = true;
                 using var reader = new StreamReader(responseStream);
                 string? line;
                 
@@ -301,6 +302,11 @@ public class OpenAIController : ControllerBase
                         };
 
                         var delta = openAiChunk["choices"]![0]!["delta"]!.AsObject();
+                        if (isFirstChunk)
+                        {
+                            delta["role"] = "assistant";
+                            isFirstChunk = false;
+                        }
                         if (!string.IsNullOrEmpty(content)) delta["content"] = content;
                         if (!string.IsNullOrEmpty(reasoning)) delta["reasoning_content"] = reasoning;
 
@@ -332,7 +338,8 @@ public class OpenAIController : ControllerBase
 
                         if (isDone)
                         {
-                            openAiChunk["choices"]![0]!["finish_reason"] = "stop";
+                            var hasToolCalls = toolCalls != null && toolCalls.Count > 0;
+                            openAiChunk["choices"]![0]!["finish_reason"] = hasToolCalls ? "tool_calls" : "stop";
 
                             var pTokens = ollamaChunk["prompt_eval_count"]?.GetValue<long>() ?? 0;
                             var cTokens = ollamaChunk["eval_count"]?.GetValue<long>() ?? 0;
@@ -392,6 +399,10 @@ public class OpenAIController : ControllerBase
                         _logContext.Log.CompletionTokens = (int)cTokens;
                         _logContext.Log.TotalTokens = (int)(pTokens + cTokens);
 
+                        // 【补丁 D：翻译非流式模型下发的工具调用指令】
+                        var toolCalls = ollamaResponse["message"]?["tool_calls"]?.AsArray();
+                        var hasToolCalls = toolCalls != null && toolCalls.Count > 0;
+
                         var openAiResponse = new JsonObject
                         {
                             ["id"] = chatId,
@@ -408,7 +419,7 @@ public class OpenAIController : ControllerBase
                                         ["role"] = "assistant",
                                         ["content"] = content
                                     },
-                                    ["finish_reason"] = "stop"
+                                    ["finish_reason"] = hasToolCalls ? "tool_calls" : "stop"
                                 }
                             },
                             ["usage"] = new JsonObject
@@ -424,8 +435,6 @@ public class OpenAIController : ControllerBase
                             openAiResponse["choices"]![0]!["message"]!["reasoning_content"] = reasoning;
                         }
 
-                        // 【补丁 D：翻译非流式模型下发的工具调用指令】
-                        var toolCalls = ollamaResponse["message"]?["tool_calls"]?.AsArray();
                         if (toolCalls != null && toolCalls.Count > 0)
                         {
                             var openAiToolCalls = new JsonArray();

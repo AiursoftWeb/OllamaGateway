@@ -809,6 +809,57 @@ public class DialectProxyTests : TestBase
         Assert.AreEqual("run_command", toolCall?["function"]?["name"]?.ToString());
         var args = toolCall?["function"]?["arguments"]?.ToString();
         Assert.AreEqual("{\"command\":\"ls -la\"}", args);
+        Assert.AreEqual("tool_calls", json?["choices"]?[0]?["finish_reason"]?.ToString());
+    }
+
+    [TestMethod]
+    public async Task OpenAI_Streaming_FirstChunk_HasRoleAssistant()
+    {
+        // 1. Arrange
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            var ndjson = """{"model":"llama3.2","message":{"role":"assistant","content":"Hi"},"done":true}""" + "\n";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(ndjson, Encoding.UTF8, "application/x-ndjson")
+            });
+        };
+
+        // 2. Act
+        var payload = $$"""{"model":"{{VirtualModelName}}","messages":[{"role":"user","content":"hi"}],"stream":true}""";
+        var response = await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
+        var body = await response.Content.ReadAsStringAsync();
+
+        // 3. Assert: First chunk should have role: assistant
+        var lines = body.Split('\n').Where(l => l.StartsWith("data: ") && l != "data: [DONE]").ToList();
+        Assert.IsTrue(lines.Any());
+        var firstChunk = JsonNode.Parse(lines[0][6..]);
+        Assert.AreEqual("assistant", firstChunk?["choices"]?[0]?["delta"]?["role"]?.ToString());
+    }
+
+    [TestMethod]
+    public async Task OpenAI_Streaming_ToolCalls_HasCorrectFinishReason()
+    {
+        // 1. Arrange
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            var ndjson = """{"model":"llama3.2","message":{"role":"assistant","content":"","tool_calls":[{"function":{"name":"test","arguments":{}}}]},"done":true}""" + "\n";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(ndjson, Encoding.UTF8, "application/x-ndjson")
+            });
+        };
+
+        // 2. Act
+        var payload = $$"""{"model":"{{VirtualModelName}}","messages":[{"role":"user","content":"hi"}],"stream":true}""";
+        var response = await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
+        var body = await response.Content.ReadAsStringAsync();
+
+        // 3. Assert: Final chunk should have finish_reason: tool_calls
+        var lines = body.Split('\n').Where(l => l.StartsWith("data: ") && l != "data: [DONE]").ToList();
+        Assert.IsTrue(lines.Any());
+        var lastChunk = JsonNode.Parse(lines.Last()[6..]);
+        Assert.AreEqual("tool_calls", lastChunk?["choices"]?[0]?["finish_reason"]?.ToString());
     }
 
     [TestMethod]
