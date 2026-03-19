@@ -50,9 +50,6 @@ public class ProxyController(
     }
 
     [HttpPost("chat")]
-    [HttpPost("v1/chat")]
-    [HttpPost("chat/completions")]
-    [HttpPost("v1/chat/completions")]
     public async Task Chat([FromBody] OllamaRequestModel input)
     {
         if (!await IsAuthorizedAsync())
@@ -129,18 +126,60 @@ public class ProxyController(
             
             if (input.Stream == true && response.IsSuccessStatusCode)
             {
-                logContext.Log.Answer = "[Streaming Response]";
-                await responseStream.CopyToAsync(Response.Body, HttpContext.RequestAborted);
+                // Ollama native streaming: NDJSON (one JSON object per line)
+                var answerBuilder = new StringBuilder();
+                var thinkBuilder = new StringBuilder();
+                using var reader = new StreamReader(responseStream);
+                string? line;
+                while ((line = await reader.ReadLineAsync(HttpContext.RequestAborted)) != null)
+                {
+                    // Forward each line immediately to maintain streaming UX
+                    await Response.WriteAsync(line + "\n", HttpContext.RequestAborted);
+                    await Response.Body.FlushAsync(HttpContext.RequestAborted);
+
+                    if (string.IsNullOrWhiteSpace(line)) continue;
+
+                    try
+                    {
+                        var chunkNode = JsonConvert.DeserializeObject<dynamic>(line);
+                        if (chunkNode == null) continue;
+
+                        string? contentStr = chunkNode.message?.content?.ToString();
+                        if (!string.IsNullOrEmpty(contentStr))
+                        {
+                            answerBuilder.Append(contentStr);
+                        }
+
+                        string? thinkStr = chunkNode.message?.think?.ToString();
+                        if (!string.IsNullOrEmpty(thinkStr))
+                        {
+                            thinkBuilder.Append(thinkStr);
+                        }
+
+                        // The final chunk (done: true) carries token counts
+                        bool isDone = chunkNode.done == true;
+                        if (isDone)
+                        {
+                            logContext.Log.PromptTokens = (int)(chunkNode.prompt_eval_count ?? 0);
+                            logContext.Log.CompletionTokens = (int)(chunkNode.eval_count ?? 0);
+                            logContext.Log.TotalTokens = logContext.Log.PromptTokens + logContext.Log.CompletionTokens;
+                        }
+                    }
+                    catch { /* Ignore parse errors on partial/malformed chunks */ }
+                }
+
+                logContext.Log.Answer = answerBuilder.ToString();
+                logContext.Log.Thinking = thinkBuilder.ToString();
             }
             else
             {
                 using var ms = new MemoryStream();
-                await responseStream.CopyToAsync(ms);
+                await responseStream.CopyToAsync(ms, HttpContext.RequestAborted);
                 ms.Seek(0, SeekOrigin.Begin);
-                var content = await new StreamReader(ms).ReadToEndAsync();
                 
                 try 
                 {
+                    var content = await new StreamReader(ms, Encoding.UTF8, false, 1024, true).ReadToEndAsync(HttpContext.RequestAborted);
                     var result = JsonConvert.DeserializeObject<dynamic>(content);
                     logContext.Log.Answer = result?.message?.content ?? string.Empty;
                     logContext.Log.Thinking = result?.message?.think ?? string.Empty;
@@ -152,11 +191,13 @@ public class ProxyController(
 
                 if (!response.IsSuccessStatusCode && string.IsNullOrWhiteSpace(logContext.Log.Answer))
                 {
-                    logContext.Log.Answer = content;
+                    ms.Seek(0, SeekOrigin.Begin);
+                    using var sReader = new StreamReader(ms, Encoding.UTF8, false, 1024, true);
+                    logContext.Log.Answer = await sReader.ReadToEndAsync(HttpContext.RequestAborted);
                 }
 
                 ms.Seek(0, SeekOrigin.Begin);
-                await ms.CopyToAsync(Response.Body);
+                await ms.CopyToAsync(Response.Body, HttpContext.RequestAborted);
             }
         }
         catch (OperationCanceledException ex)
@@ -179,9 +220,6 @@ public class ProxyController(
     }
 
     [HttpPost("embed")]
-    [HttpPost("v1/embed")]
-    [HttpPost("embeddings")]
-    [HttpPost("v1/embeddings")]
     public async Task Embed([FromBody] dynamic input)
     {
         if (!await IsAuthorizedAsync())
@@ -300,7 +338,6 @@ public class ProxyController(
     }
 
     [HttpGet("tags")]
-    [HttpGet("v1/tags")]
     public async Task<IActionResult> Tags()
     {
         if (!await IsAuthorizedAsync())
@@ -360,7 +397,6 @@ public class ProxyController(
     }
 
     [HttpGet("ps")]
-    [HttpGet("v1/ps")]
     public async Task<IActionResult> Ps()
     {
         if (!await IsAuthorizedAsync())

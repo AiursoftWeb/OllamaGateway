@@ -86,6 +86,35 @@ public class OllamaGatewayTests : TestBase
         // 3. Request tags again without auth -> Should be OK
         var anonymousResponse = await Http.GetAsync("/api/tags");
         Assert.AreEqual(HttpStatusCode.OK, anonymousResponse.StatusCode);
+
+        var v1ModelsResponse = await Http.GetAsync("/v1/models");
+        Assert.AreEqual(HttpStatusCode.OK, v1ModelsResponse.StatusCode);
+    }
+
+    [TestMethod]
+    public async Task TestAlternativeChatRoutesRouting()
+    {
+        // Enforce anonymous is off in case another test polluted the shared DB
+        using (var scope = Server!.Services.CreateScope())
+        {
+            var settings = scope.ServiceProvider.GetRequiredService<GlobalSettingsService>();
+            await settings.UpdateSettingAsync(Configuration.SettingsMap.AllowAnonymousApiCall, "False");
+        }
+
+        // Issue an unauthenticated POST request, expect 401 instead of 404 (indicating route was found)
+        var chatResponses = new List<HttpResponseMessage>
+        {
+            await Http.PostAsync("/api/chat", new StringContent("{}", System.Text.Encoding.UTF8, "application/json")),
+            await Http.PostAsync("/api/embed", new StringContent("{}", System.Text.Encoding.UTF8, "application/json")),
+            await Http.PostAsync("/v1/chat/completions", new StringContent("{}", System.Text.Encoding.UTF8, "application/json")),
+            await Http.PostAsync("/v1/embeddings", new StringContent("{}", System.Text.Encoding.UTF8, "application/json"))
+        };
+
+        foreach (var response in chatResponses)
+        {
+            var content = await response.Content.ReadAsStringAsync();
+            Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode, $"Route failed: {response.RequestMessage?.RequestUri}. Body: {content}");
+        }
     }
 
     [TestMethod]
