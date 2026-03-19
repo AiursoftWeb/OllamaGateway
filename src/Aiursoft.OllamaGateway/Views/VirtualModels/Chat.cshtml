@@ -72,9 +72,18 @@
     }
 </style>
 
+<div id="loc-data" hidden>
+    <span data-key="error-prefix">@Localizer["Error: "]</span>
+</div>
+
 @* ReSharper disable once Razor.SectionNotResolved *@
 @section scripts {
     <script>
+        function getLocalizedText(key, defaultText) {
+            const el = document.querySelector(`#loc-data span[data-key="${key}"]`);
+            return el ? el.innerText : defaultText;
+        }
+
         const chatMessages = document.getElementById('chatMessages');
         const chatForm = document.getElementById('chatForm');
         const userInput = document.getElementById('userInput');
@@ -165,7 +174,7 @@
 
             } catch (error) {
                 assistantMsgDiv.classList.add('text-danger');
-                assistantMsgDiv.innerText = "Error: " + error.message;
+                assistantMsgDiv.innerText = getLocalizedText('error-prefix', 'Error: ') + error.message;
             } finally {
                 userInput.disabled = false;
                 btnSend.disabled = false;

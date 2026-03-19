@@ -199,23 +199,33 @@
     </div>
 </div>
 
+<div id="loc-data" hidden>
+    <span data-key="restarting">@Localizer["Restarting..."]</span>
+    <span data-key="reloading">@Localizer["Reloading page..."]</span>
+</div>
+
 @* ReSharper disable once Razor.SectionNotResolved *@
 
 @section scripts {
     <script>
+        function getLocalizedText(key, defaultText) {
+            const el = document.querySelector(`#loc-data span[data-key="${key}"]`);
+            return el ? el.innerText : defaultText;
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
             const restartButton = document.querySelector('#restartConfirmModal .btn-restart');
             if (!restartButton) return;
 
             function startTimer(duration, displayElement) {
                 let timer = duration;
-                displayElement.textContent = `@Localizer["Restarting..."] (${timer}s)`;
+                displayElement.textContent = `${getLocalizedText('restarting', 'Restarting...')} (${timer}s)`;
                 const interval = setInterval(function () {
                     timer--;
-                    displayElement.textContent = `@Localizer["Restarting..."] (${timer}s)`;
+                    displayElement.textContent = `${getLocalizedText('restarting', 'Restarting...')} (${timer}s)`;
                     if (timer <= 0) {
                         clearInterval(interval);
-                        displayElement.textContent = `@Localizer["Reloading page..."]`;
+                        displayElement.textContent = getLocalizedText('reloading', 'Reloading page...');
                     }
                 }, 1000);
             }
