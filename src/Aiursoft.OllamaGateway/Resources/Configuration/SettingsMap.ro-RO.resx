@@ -27,6 +27,12 @@
   <data name="A dummy number for testing." xml:space="preserve">
     <value>Un număr dummy pentru testare.</value>
   </data>
+  <data name="Allow Anonymous API Call" xml:space="preserve">
+    <value>Permite apeluri API anonime</value>
+  </data>
+  <data name="Allow anyone to call the API without a Bearer token or authentication." xml:space="preserve">
+    <value>Permite oricui să apeleze API fără un token Bearer sau autentificare.</value>
+  </data>
   <data name="Allow User Adjust Nickname" xml:space="preserve">
     <value>Permite utilizatorului să-și ajusteze nickname-ul</value>
   </data>
@@ -39,6 +45,12 @@
   <data name="Brand Name" xml:space="preserve">
     <value>Numele mărcii</value>
   </data>
+  <data name="Default Chat Model" xml:space="preserve">
+    <value>Modelul de Chat Implicit</value>
+  </data>
+  <data name="Default Embedding Model" xml:space="preserve">
+    <value>Model de încorporare implicit</value>
+  </data>
   <data name="Dummy Choice" xml:space="preserve">
     <value>Alegere Dummy</value>
   </data>
@@ -48,20 +60,38 @@
   <data name="ICP Number" xml:space="preserve">
     <value>Număr ICP</value>
   </data>
+  <data name="Keep Alive Job Interval (Minutes)" xml:space="preserve">
+    <value>Intervalul de menținere a activității job (Minute)</value>
+  </data>
   <data name="Project Logo" xml:space="preserve">
     <value>Logo Proiect</value>
   </data>
   <data name="Project Name" xml:space="preserve">
     <value>Numele proiectului</value>
   </data>
+  <data name="Request Timeout (Minutes)" xml:space="preserve">
+    <value>Timp de Așteptare al Cererii (Minute)</value>
+  </data>
   <data name="The brand name displayed in the footer." xml:space="preserve">
     <value>Numele mărcii afișat în subsol.</value>
+  </data>
+  <data name="The default virtual model to use for chat requests when no model is specified." xml:space="preserve">
+    <value>Modelul virtual implicit de utilizat pentru cererile de chat atunci când nu este specificat niciun model.</value>
+  </data>
+  <data name="The default virtual model to use for embedding requests when no model is specified." xml:space="preserve">
+    <value>Modelul virtual implicit de utilizat pentru cererile de embedding atunci când nu este specificat niciun model.</value>
   </data>
   <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
     <value>Numărul de înregistrare ICP pentru utilizatorii din China continentală. Lăsați gol pentru a ascunde.</value>
   </data>
+  <data name="The interval in minutes to ping the loaded models to keep them in memory." xml:space="preserve">
+    <value>Intervalul în minute pentru a trimite ping modelelor încărcate pentru a le păstra în memorie.</value>
+  </data>
   <data name="The logo of the project displayed in the navbar and footer. Support jpg, png, svg." xml:space="preserve">
     <value>Logoul proiectului afișat în bara de navigare și în subsol. Suportă jpg, png, svg.</value>
+  </data>
+  <data name="The maximum time in minutes to wait for a response from the underlying Ollama server." xml:space="preserve">
+    <value>Timpul maxim în minute de așteptare a unui răspuns de la serverul Ollama subiacent.</value>
   </data>
   <data name="The name of the project displayed in the frontend." xml:space="preserve">
     <value>Numele proiectului afișat în interfața frontend</value>
