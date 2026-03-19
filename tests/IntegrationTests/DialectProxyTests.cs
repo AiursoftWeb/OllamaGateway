@@ -634,6 +634,89 @@ public class DialectProxyTests : TestBase
     }
 
     [TestMethod]
+    public async Task OpenAI_AdvancedContentArray_Flattened()
+    {
+        // 1. Arrange: Send an OpenAI-style content array (common in Opencode/Cursor)
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            var body = """{"model":"llama3.2","message":{"role":"assistant","content":"I see your plan."}, "done":true, "prompt_eval_count":5, "eval_count":3}""";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body, Encoding.UTF8, "application/json")
+            });
+        };
+
+        var payload = $$"""
+        {
+            "model": "{{VirtualModelName}}",
+            "messages": [
+                {
+                    "role": "user",
+                    "content": [
+                        { "type": "text", "text": "Part 1. " },
+                        { "type": "text", "text": "Part 2." }
+                    ]
+                }
+            ],
+            "stream": false
+        }
+        """;
+
+        // 2. Act
+        await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
+
+        // 3. Assert: Upstream should receive a single flattened string "Part 1. Part 2."
+        Assert.IsNotNull(MockUpstreamState.LastRequestBody);
+        var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody);
+        var translatedContent = upstreamBody?["messages"]?[0]?["content"]?.ToString();
+        Assert.AreEqual("Part 1. Part 2.", translatedContent);
+    }
+
+    [TestMethod]
+    public async Task OpenAI_MultiModal_ImagesExtracted()
+    {
+        // 1. Arrange: Send an OpenAI-style content array with an image
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            var body = """{"model":"llama3.2","message":{"role":"assistant","content":"Nice picture!"}, "done":true, "prompt_eval_count":5, "eval_count":3}""";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body, Encoding.UTF8, "application/json")
+            });
+        };
+
+        var payload = $$"""
+        {
+            "model": "{{VirtualModelName}}",
+            "messages": [
+                {
+                    "role": "user",
+                    "content": [
+                        { "type": "text", "text": "What is in this image?" },
+                        { "type": "image_url", "image_url": { "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==" } }
+                    ]
+                }
+            ],
+            "stream": false
+        }
+        """;
+
+        // 2. Act
+        await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
+
+        // 3. Assert: Upstream should receive content string AND images array
+        Assert.IsNotNull(MockUpstreamState.LastRequestBody);
+        var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody);
+        var message = upstreamBody?["messages"]?[0];
+        
+        Assert.AreEqual("What is in this image?", message?["content"]?.ToString());
+        var images = message?["images"]?.AsArray();
+        Assert.IsNotNull(images);
+        Assert.AreEqual(1, images.Count);
+        Assert.AreEqual("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==", images[0]?.ToString());
+    }
+
+    [TestMethod]
     public async Task OpenAI_ThinkingOverride_Injected()
     {
         // Arrange: Update the model to have thinking and context size enabled

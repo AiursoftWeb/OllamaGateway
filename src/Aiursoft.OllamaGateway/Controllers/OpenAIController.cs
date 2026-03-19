@@ -123,7 +123,59 @@ public class OpenAIController : ControllerBase
 
             if (messagesArray != null)
             {
-                ollamaRequest["messages"] = messagesArray.DeepClone();
+                var translatedMessages = new JsonArray();
+                foreach (var msgNode in messagesArray)
+                {
+                    if (msgNode == null) continue;
+                    var newMsg = new JsonObject();
+                    newMsg["role"] = msgNode["role"]?.ToString();
+
+                    var contentNode = msgNode["content"];
+                    
+                    // 【核心逻辑】：应对高级客户端（如 Opencode/Cursor）的 Content 数组结构
+                    if (contentNode is JsonArray contentArray)
+                    {
+                        var textBuilder = new StringBuilder();
+                        var imagesArray = new JsonArray();
+
+                        foreach (var item in contentArray)
+                        {
+                            var type = item?["type"]?.ToString();
+                            if (type == "text")
+                            {
+                                // 把所有散落的 text 块强行拼装成一个连续的字符串
+                                textBuilder.Append(item?["text"]?.ToString());
+                            }
+                            else if (type == "image_url")
+                            {
+                                var url = item?["image_url"]?["url"]?.ToString();
+                                if (!string.IsNullOrWhiteSpace(url))
+                                {
+                                    // 提取纯 Base64 图片数据
+                                    var base64Data = url.Contains(',') ? url.Split(',')[1] : url;
+                                    imagesArray.Add(base64Data);
+                                }
+                            }
+                        }
+                        
+                        // 无论客户端切了多少块，Ollama 这里只看到一个完美的字符串
+                        newMsg["content"] = textBuilder.ToString();
+                        
+                        if (imagesArray.Count > 0)
+                        {
+                            newMsg["images"] = imagesArray;
+                        }
+                    }
+                    else
+                    {
+                        // 应对普通客户端的纯文本请求
+                        newMsg["content"] = contentNode?.ToString() ?? string.Empty;
+                    }
+
+                    translatedMessages.Add(newMsg);
+                }
+                
+                ollamaRequest["messages"] = translatedMessages;
             }
 
             // 核心翻译：将 OpenAI 的扁平参数和网关的覆盖参数，统一打包进 Ollama 的 options 中
