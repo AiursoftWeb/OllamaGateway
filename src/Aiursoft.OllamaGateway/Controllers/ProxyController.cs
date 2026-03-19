@@ -147,19 +147,26 @@ public class ProxyController(
                 }
                 catch { /* ignored */ }
 
+                if (!response.IsSuccessStatusCode && string.IsNullOrWhiteSpace(logContext.Log.Answer))
+                {
+                    logContext.Log.Answer = content;
+                }
+
                 ms.Seek(0, SeekOrigin.Begin);
                 await ms.CopyToAsync(Response.Body);
             }
         }
-        catch (OperationCanceledException)
+        catch (OperationCanceledException ex)
         {
             logger.LogWarning("Chat request to Ollama was canceled by the client or timed out.");
             logContext.Log.Success = false;
+            logContext.Log.Answer = ex.ToString();
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "Error in ProxyController.Chat");
             logContext.Log.Success = false;
+            logContext.Log.Answer = ex.ToString();
             if (!Response.HasStarted)
             {
                 Response.StatusCode = 500;
@@ -241,17 +248,28 @@ public class ProxyController(
             logContext.Log.Success = response.IsSuccessStatusCode;
             logger.LogInformation("[{TraceId}] Received response from upstream: {StatusCode} for embedding request for model {Model}", HttpContext.TraceIdentifier, (int)response.StatusCode, virtualModel.Name);
 
-            await response.Content.CopyToAsync(Response.Body, HttpContext.RequestAborted);
+            if (!response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync(HttpContext.RequestAborted);
+                logContext.Log.Answer = content;
+                await Response.WriteAsync(content, HttpContext.RequestAborted);
+            }
+            else
+            {
+                await response.Content.CopyToAsync(Response.Body, HttpContext.RequestAborted);
+            }
         }
-        catch (OperationCanceledException)
+        catch (OperationCanceledException ex)
         {
             logger.LogWarning("Embedding request to Ollama was canceled by the client or timed out.");
             logContext.Log.Success = false;
+            logContext.Log.Answer = ex.ToString();
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "Error in ProxyController.Embed");
             logContext.Log.Success = false;
+            logContext.Log.Answer = ex.ToString();
             if (!Response.HasStarted)
             {
                 Response.StatusCode = 500;
