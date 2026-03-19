@@ -1,6 +1,5 @@
 using System.Text;
 using System.Text.Json.Nodes;
-using Aiursoft.GptClient.Abstractions;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Models;
 using Aiursoft.OllamaGateway.Services;
@@ -18,7 +17,6 @@ public class OpenAIController : ControllerBase
     private readonly TemplateDbContext _dbContext;
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly RequestLogContext _logContext;
-    private readonly OllamaService _ollamaService;
     private readonly GlobalSettingsService _globalSettingsService;
     private readonly ILogger<OpenAIController> _logger;
     private readonly MemoryUsageTracker _memoryUsageTracker;
@@ -32,7 +30,6 @@ public class OpenAIController : ControllerBase
         TemplateDbContext dbContext,
         IHttpClientFactory httpClientFactory,
         RequestLogContext logContext,
-        OllamaService ollamaService,
         GlobalSettingsService globalSettingsService,
         ILogger<OpenAIController> logger,
         MemoryUsageTracker memoryUsageTracker)
@@ -40,7 +37,6 @@ public class OpenAIController : ControllerBase
         _dbContext = dbContext;
         _httpClientFactory = httpClientFactory;
         _logContext = logContext;
-        _ollamaService = ollamaService;
         _globalSettingsService = globalSettingsService;
         _logger = logger;
         _memoryUsageTracker = memoryUsageTracker;

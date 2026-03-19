@@ -37,10 +37,19 @@ public class OllamaGatewayTests : TestBase
                 new OllamaService.OllamaRunningModel { Name = "llama3.2" }
             });
 
+        MockUpstreamState.Reset();
+
         Server = await AppAsync<TestStartup>([], port: Port);
         await Server.UpdateDbAsync<TemplateDbContext>();
         await Server.SeedAsync();
         await Server.StartAsync();
+
+        // Ensure anonymous access is off (prevent leakage from other test classes)
+        using (var scope = Server.Services.CreateScope())
+        {
+            var settings = scope.ServiceProvider.GetRequiredService<GlobalSettingsService>();
+            await settings.UpdateSettingAsync(Configuration.SettingsMap.AllowAnonymousApiCall, "False");
+        }
     }
 
     [TestMethod]
