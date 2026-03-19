@@ -27,6 +27,12 @@
   <data name="A dummy number for testing." xml:space="preserve">
     <value>Một số giả mạo để kiểm thử.</value>
   </data>
+  <data name="Allow Anonymous API Call" xml:space="preserve">
+    <value>Cho phép gọi API ẩn danh</value>
+  </data>
+  <data name="Allow anyone to call the API without a Bearer token or authentication." xml:space="preserve">
+    <value>Cho phép bất kỳ ai gọi API mà không cần mã Bearer hoặc xác thực.</value>
+  </data>
   <data name="Allow User Adjust Nickname" xml:space="preserve">
     <value>Cho phép người dùng chỉnh sửa biệt danh</value>
   </data>
@@ -39,6 +45,12 @@
   <data name="Brand Name" xml:space="preserve">
     <value>Tên thương hiệu</value>
   </data>
+  <data name="Default Chat Model" xml:space="preserve">
+    <value>Mô hình trò chuyện mặc định</value>
+  </data>
+  <data name="Default Embedding Model" xml:space="preserve">
+    <value>Mô hình nhúng mặc định</value>
+  </data>
   <data name="Dummy Choice" xml:space="preserve">
     <value>Lựa chọn giả</value>
   </data>
@@ -48,20 +60,38 @@
   <data name="ICP Number" xml:space="preserve">
     <value>Số đăng ký ICP</value>
   </data>
+  <data name="Keep Alive Job Interval (Minutes)" xml:space="preserve">
+    <value>Khoảng thời gian công việc giữ kết nối (Phút)</value>
+  </data>
   <data name="Project Logo" xml:space="preserve">
     <value>Logo dự án</value>
   </data>
   <data name="Project Name" xml:space="preserve">
     <value>Tên dự án</value>
   </data>
+  <data name="Request Timeout (Minutes)" xml:space="preserve">
+    <value>Thời gian chờ yêu cầu (Phút)</value>
+  </data>
   <data name="The brand name displayed in the footer." xml:space="preserve">
     <value>Tên thương hiệu được hiển thị trong chân trang.</value>
+  </data>
+  <data name="The default virtual model to use for chat requests when no model is specified." xml:space="preserve">
+    <value>Mô hình ảo mặc định để sử dụng cho các yêu cầu trò chuyện khi không có mô hình nào được chỉ định.</value>
+  </data>
+  <data name="The default virtual model to use for embedding requests when no model is specified." xml:space="preserve">
+    <value>Mô hình ảo mặc định để sử dụng cho các yêu cầu nhúng khi không chỉ định mô hình nào.</value>
   </data>
   <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
     <value>Số giấy phép ICP cho người dùng tại Trung Quốc đại lục. Để trống để ẩn.</value>
   </data>
+  <data name="The interval in minutes to ping the loaded models to keep them in memory." xml:space="preserve">
+    <value>Khoảng cách (tính bằng phút) để ping các mô hình đã tải nhằm giữ chúng trong bộ nhớ.</value>
+  </data>
   <data name="The logo of the project displayed in the navbar and footer. Support jpg, png, svg." xml:space="preserve">
     <value>Logo của dự án được hiển thị trong thanh điều hướng và chân trang. Hỗ trợ định dạng jpg, png, svg.</value>
+  </data>
+  <data name="The maximum time in minutes to wait for a response from the underlying Ollama server." xml:space="preserve">
+    <value>Thời gian tối đa (tính bằng phút) để chờ phản hồi từ máy chủ Ollama bên dưới.</value>
   </data>
   <data name="The name of the project displayed in the frontend." xml:space="preserve">
     <value>Tên dự án được hiển thị trên giao diện người dùng</value>

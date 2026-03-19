@@ -27,6 +27,12 @@
   <data name="A dummy number for testing." xml:space="preserve">
     <value>Um número fictício para teste.</value>
   </data>
+  <data name="Allow Anonymous API Call" xml:space="preserve">
+    <value>Permitir Chamadas API Anónimas</value>
+  </data>
+  <data name="Allow anyone to call the API without a Bearer token or authentication." xml:space="preserve">
+    <value>Permitir que qualquer pessoa chame à API sem um token Bearer ou autenticação.</value>
+  </data>
   <data name="Allow User Adjust Nickname" xml:space="preserve">
     <value>Permitir ao Utilizador Alterar o Apelido</value>
   </data>
@@ -39,6 +45,12 @@
   <data name="Brand Name" xml:space="preserve">
     <value>Nome da Marca</value>
   </data>
+  <data name="Default Chat Model" xml:space="preserve">
+    <value>Model de Chat Predefinido</value>
+  </data>
+  <data name="Default Embedding Model" xml:space="preserve">
+    <value>Model de Incorporação Predefinido</value>
+  </data>
   <data name="Dummy Choice" xml:space="preserve">
     <value>Escolha de Teste</value>
   </data>
@@ -48,20 +60,38 @@
   <data name="ICP Number" xml:space="preserve">
     <value>Número ICP</value>
   </data>
+  <data name="Keep Alive Job Interval (Minutes)" xml:space="preserve">
+    <value>Intervalo de Trabalho de Manter Vivo (Minutos)</value>
+  </data>
   <data name="Project Logo" xml:space="preserve">
     <value>Logotipo do Projeto</value>
   </data>
   <data name="Project Name" xml:space="preserve">
     <value>Nome do Projeto</value>
   </data>
+  <data name="Request Timeout (Minutes)" xml:space="preserve">
+    <value>Tempo Limite do Pedido (Minutos)</value>
+  </data>
   <data name="The brand name displayed in the footer." xml:space="preserve">
     <value>O nome da marca exibido no rodapé.</value>
+  </data>
+  <data name="The default virtual model to use for chat requests when no model is specified." xml:space="preserve">
+    <value>O modelo virtual predefinitivo a utilizar para pedidos de chat quando nenhum modelo é especificado.</value>
+  </data>
+  <data name="The default virtual model to use for embedding requests when no model is specified." xml:space="preserve">
+    <value>O modelo virtual predefinição a utilizar para pedidos de incorporação quando nenhum modelo for especificado.</value>
   </data>
   <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
     <value>O número de licença ICP para utilizadores da China continental. Deixe em branco para ocultar.</value>
   </data>
+  <data name="The interval in minutes to ping the loaded models to keep them in memory." xml:space="preserve">
+    <value>O intervalo em minutos para enviar ping aos modelos carregados para mantê-los na memória.</value>
+  </data>
   <data name="The logo of the project displayed in the navbar and footer. Support jpg, png, svg." xml:space="preserve">
     <value>O logótipo do projeto exibido na barra de navegação e no rodapé. Suporta jpg, png, svg.</value>
+  </data>
+  <data name="The maximum time in minutes to wait for a response from the underlying Ollama server." xml:space="preserve">
+    <value>O tempo máximo em minutos para aguardar uma resposta do servidor Ollama subjacente.</value>
   </data>
   <data name="The name of the project displayed in the frontend." xml:space="preserve">
     <value>O nome do projeto apresentado na interface de utilizador.</value>

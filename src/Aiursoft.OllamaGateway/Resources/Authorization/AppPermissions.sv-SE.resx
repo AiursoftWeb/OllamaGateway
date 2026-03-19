@@ -27,6 +27,15 @@
   <data name="Allows assigning or removing roles for any user." xml:space="preserve">
     <value>Tillåter att tilldela eller ta bort roller för alla användare.</value>
   </data>
+  <data name="Allows chatting with real/underlying Ollama models directly through the gateway." xml:space="preserve">
+    <value>Tillåter chatt med verkliga/underliggande Ollama-modeller direkt via gatewayn.</value>
+  </data>
+  <data name="Allows chatting with virtual models through the gateway UI or API." xml:space="preserve">
+    <value>Tillåter chatt med virtuella modeller via gateway-gränssnittet eller API.</value>
+  </data>
+  <data name="Allows managing the underlying Ollama model providers/servers." xml:space="preserve">
+    <value>Tillåter hantering av underliggande Ollama-modellleverantörer/-servrar.</value>
+  </data>
   <data name="Allows modification of role names and their assigned permissions." xml:space="preserve">
     <value>Tillåter modifiering av rollnamn och deras tilldelade behörigheter.</value>
   </data>
@@ -38,6 +47,12 @@
   </data>
   <data name="Allows the permanent deletion of user accounts." xml:space="preserve">
     <value>Tillåter permanent borttagning av användarkonton.</value>
+  </data>
+  <data name="Allows viewing and managing API keys for the current user." xml:space="preserve">
+    <value>Tillåter visning och hantering av API-nycklar för den aktuella användaren.</value>
+  </data>
+  <data name="Allows viewing and managing virtual models that override underlying Ollama models." xml:space="preserve">
+    <value>Tillåter visning och hantering av virtuella modeller som åsidosätter underliggande Ollama-modeller.</value>
   </data>
   <data name="Allows viewing and modifying global application settings." xml:space="preserve">
     <value>Tillåter visning och ändring av globala programinställningar.</value>
@@ -60,6 +75,12 @@
   <data name="Assign Roles to Users" xml:space="preserve">
     <value>Tilldela roller till användare</value>
   </data>
+  <data name="Chat With Underlying Models" xml:space="preserve">
+    <value>Chatta med underliggande modeller</value>
+  </data>
+  <data name="Chat With Virtual Models" xml:space="preserve">
+    <value>Chatta med virtuella modeller</value>
+  </data>
   <data name="Delete Roles" xml:space="preserve">
     <value>Ta bort roller</value>
   </data>
@@ -81,8 +102,17 @@
   <data name="Grants permission to restart the application instance. May cause availability interruptions but all settings and cache will be reloaded." xml:space="preserve">
     <value>Ger tillstånd att starta om applikationsinstansen. Kan orsaka tillgänglighetsavbrott men alla inställningar och cacheminnen kommer att laddas om.</value>
   </data>
+  <data name="Manage API Keys" xml:space="preserve">
+    <value>Hantera API-nycklar</value>
+  </data>
   <data name="Manage Global Settings" xml:space="preserve">
     <value>Hantera globala inställningar</value>
+  </data>
+  <data name="Manage Providers" xml:space="preserve">
+    <value>Hantera leverantörer</value>
+  </data>
+  <data name="Manage Virtual Models" xml:space="preserve">
+    <value>Hantera virtuella modeller</value>
   </data>
   <data name="Read Permissions" xml:space="preserve">
     <value>Läs behörigheter</value>

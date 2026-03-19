@@ -27,6 +27,15 @@
   <data name="Allows assigning or removing roles for any user." xml:space="preserve">
     <value>允許對任何使用者指派或移除角色。</value>
   </data>
+  <data name="Allows chatting with real/underlying Ollama models directly through the gateway." xml:space="preserve">
+    <value>允許透過閘道直接與真實/底層 Ollama 模型進行對話。</value>
+  </data>
+  <data name="Allows chatting with virtual models through the gateway UI or API." xml:space="preserve">
+    <value>允許透過閘道器 UI 或 API 與虛擬模型進行對話。</value>
+  </data>
+  <data name="Allows managing the underlying Ollama model providers/servers." xml:space="preserve">
+    <value>允許管理底層的 Ollama 模型提供者/伺服器。</value>
+  </data>
   <data name="Allows modification of role names and their assigned permissions." xml:space="preserve">
     <value>允許修改角色名稱及其分配的權限。</value>
   </data>
@@ -38,6 +47,12 @@
   </data>
   <data name="Allows the permanent deletion of user accounts." xml:space="preserve">
     <value>允許永久刪除使用者帳戶。</value>
+  </data>
+  <data name="Allows viewing and managing API keys for the current user." xml:space="preserve">
+    <value>允許檢視及管理目前使用者的 API 金鑰。</value>
+  </data>
+  <data name="Allows viewing and managing virtual models that override underlying Ollama models." xml:space="preserve">
+    <value>允許檢視與管理會覆寫底層 Ollama 模型的虛擬模型。</value>
   </data>
   <data name="Allows viewing and modifying global application settings." xml:space="preserve">
     <value>允許檢視和修改全域應用程式設定。</value>
@@ -60,6 +75,12 @@
   <data name="Assign Roles to Users" xml:space="preserve">
     <value>指派角色給使用者</value>
   </data>
+  <data name="Chat With Underlying Models" xml:space="preserve">
+    <value>與底層模型對話</value>
+  </data>
+  <data name="Chat With Virtual Models" xml:space="preserve">
+    <value>與虛擬模型對話</value>
+  </data>
   <data name="Delete Roles" xml:space="preserve">
     <value>刪除角色</value>
   </data>
@@ -81,8 +102,17 @@
   <data name="Grants permission to restart the application instance. May cause availability interruptions but all settings and cache will be reloaded." xml:space="preserve">
     <value>授予重新啟動應用程式實例的權限。可能導致服務中斷，但所有設定和快取都將重新載入。</value>
   </data>
+  <data name="Manage API Keys" xml:space="preserve">
+    <value>管理 API 金鑰</value>
+  </data>
   <data name="Manage Global Settings" xml:space="preserve">
     <value>管理全域設定</value>
+  </data>
+  <data name="Manage Providers" xml:space="preserve">
+    <value>管理提供者</value>
+  </data>
+  <data name="Manage Virtual Models" xml:space="preserve">
+    <value>管理虛擬模型</value>
   </data>
   <data name="Read Permissions" xml:space="preserve">
     <value>讀取權限</value>
