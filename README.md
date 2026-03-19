@@ -15,7 +15,7 @@ Default user name is `admin@default.com` and default password is `admin123`.
 
 ## Try
 
-Try a running OllamaGateway [here](https://ollamaGateway.aiursoft.com).
+Try a running OllamaGateway [here](https://ollama.aiursoft.com).
 
 ## Run in Ubuntu
 
