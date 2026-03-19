@@ -4,8 +4,8 @@
 [![Pipeline stat](https://gitlab.aiursoft.com/aiursoft/ollamaGateway/badges/master/pipeline.svg)](https://gitlab.aiursoft.com/aiursoft/ollamaGateway/-/pipelines)
 [![Test Coverage](https://gitlab.aiursoft.com/aiursoft/ollamaGateway/badges/master/coverage.svg)](https://gitlab.aiursoft.com/aiursoft/ollamaGateway/-/pipelines)
 [![Man hours](https://manhours.aiursoft.com/r/gitlab.aiursoft.com/aiursoft/ollamaGateway.svg)](https://manhours.aiursoft.com/r/gitlab.aiursoft.com/aiursoft/ollamaGateway.html)
-[![Website](https://img.shields.io/website?url=https%3A%2F%2FollamaGateway.aiursoft.com)](https://ollamaGateway.aiursoft.com)
-[![Docker](https://img.shields.io/docker/pulls/aiursoft/ollamaGateway.svg)](https://hub.docker.com/r/aiursoft/ollamaGateway)
+[![Website](https://img.shields.io/website?url=https%3A%2F%2FollamaGateway.aiursoft.com)](https://ollama.aiursoft.com)
+[![Docker](https://img.shields.io/docker/pulls/aiursoft/ollamagateway.svg)](https://hub.docker.com/r/aiursoft/ollamagateway)
 
 OllamaGateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, and virtual model management—your secure, private AI gateway.
 
