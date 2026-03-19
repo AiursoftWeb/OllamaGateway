@@ -203,7 +203,9 @@ public class OpenAIController : ControllerBase
                         if (ollamaChunk == null) continue;
 
                         var content = ollamaChunk["message"]?["content"]?.ToString() ?? string.Empty;
-                        var reasoning = ollamaChunk["message"]?["think"]?.ToString() ?? string.Empty;
+                        var reasoning = ollamaChunk["message"]?["thinking"]?.ToString() 
+                                     ?? ollamaChunk["message"]?["think"]?.ToString() 
+                                     ?? string.Empty;
                         var isDone = ollamaChunk["done"]?.GetValue<bool>() ?? false;
 
                         if (!string.IsNullOrEmpty(content)) answerBuilder.Append(content);
@@ -288,7 +290,9 @@ public class OpenAIController : ControllerBase
                     if (ollamaResponse != null)
                     {
                         var content = ollamaResponse["message"]?["content"]?.ToString() ?? string.Empty;
-                        var reasoning = ollamaResponse["message"]?["think"]?.ToString() ?? string.Empty;
+                        var reasoning = ollamaResponse["message"]?["thinking"]?.ToString() 
+                                     ?? ollamaResponse["message"]?["think"]?.ToString() 
+                                     ?? string.Empty;
                         var pTokens = ollamaResponse["prompt_eval_count"]?.GetValue<long>() ?? 0;
                         var cTokens = ollamaResponse["eval_count"]?.GetValue<long>() ?? 0;
 

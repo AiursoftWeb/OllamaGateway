@@ -606,6 +606,34 @@ public class DialectProxyTests : TestBase
     }
 
     [TestMethod]
+    public async Task OpenAI_Streaming_ThinkingFieldName_Captured()
+    {
+        // Arrange: Upstream returns Ollama NDJSON with 'thinking' field (instead of 'think')
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            var ndjson =
+                """{"model":"llama3.2","message":{"role":"assistant","content":"","thinking":"Thinking..."},"done":false}""" + "\n" +
+                """{"model":"llama3.2","message":{"role":"assistant","content":"Hello!"},"done":true,"prompt_eval_count":10,"eval_count":5}""" + "\n";
+            
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(ndjson, Encoding.UTF8, "application/x-ndjson")
+            };
+            return Task.FromResult(response);
+        };
+
+        // Act
+        var payload = $$"""{"model":"{{VirtualModelName}}","messages":[{"role":"user","content":"hi"}],"stream":true}""";
+        var response = await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
+        var body = await response.Content.ReadAsStringAsync();
+
+        // Assert: Reasoning content is captured from 'thinking' and translated to 'reasoning_content'
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.IsTrue(body.Contains("reasoning_content"), "Response must contain translated reasoning_content");
+        Assert.IsTrue(body.Contains("Thinking..."), "Response must contain thinking content from 'thinking' field");
+    }
+
+    [TestMethod]
     public async Task OpenAI_ThinkingOverride_Injected()
     {
         // Arrange: Update the model to have thinking and context size enabled
@@ -621,7 +649,7 @@ public class DialectProxyTests : TestBase
 
         MockUpstreamState.Handler = (_, _) =>
         {
-            var body = """{"id":"x","object":"chat.completion","choices":[{"index":0,"message":{"role":"assistant","content":"ok"},"finish_reason":"stop"}],"usage":{"prompt_tokens":1,"completion_tokens":1,"total_tokens":2}}""";
+            var body = """{"model":"llama3.2","message":{"role":"assistant","content":"ok","think":"Let me think"},"done":true,"prompt_eval_count":1,"eval_count":1}""";
             return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(body, Encoding.UTF8, "application/json")

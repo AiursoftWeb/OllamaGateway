@@ -156,7 +156,8 @@ public class ProxyController(
                                 answerBuilder.Append(contentStr);
                             }
 
-                            string? thinkStr = chunkNode["message"]?["think"]?.ToString();
+                            string? thinkStr = chunkNode["message"]?["thinking"]?.ToString() 
+                                           ?? chunkNode["message"]?["think"]?.ToString();
                             if (!string.IsNullOrEmpty(thinkStr))
                             {
                                 thinkBuilder.Append(thinkStr);
@@ -198,7 +199,9 @@ public class ProxyController(
                         resultNode["model"] = virtualModel.Name;
 
                         logContext.Log.Answer = resultNode["message"]?["content"]?.ToString() ?? string.Empty;
-                        logContext.Log.Thinking = resultNode["message"]?["think"]?.ToString() ?? string.Empty;
+                        logContext.Log.Thinking = resultNode["message"]?["thinking"]?.ToString() 
+                                               ?? resultNode["message"]?["think"]?.ToString() 
+                                               ?? string.Empty;
                         logContext.Log.PromptTokens = (int)(resultNode["prompt_eval_count"]?.GetValue<long>() ?? 0);
                         logContext.Log.CompletionTokens = (int)(resultNode["eval_count"]?.GetValue<long>() ?? 0);
                         logContext.Log.TotalTokens = logContext.Log.PromptTokens + logContext.Log.CompletionTokens;
