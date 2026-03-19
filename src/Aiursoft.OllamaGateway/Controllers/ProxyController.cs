@@ -50,6 +50,9 @@ public class ProxyController(
     }
 
     [HttpPost("chat")]
+    [HttpPost("v1/chat")]
+    [HttpPost("chat/completions")]
+    [HttpPost("v1/chat/completions")]
     public async Task Chat([FromBody] OllamaRequestModel input)
     {
         if (!await IsAuthorizedAsync())
@@ -176,6 +179,9 @@ public class ProxyController(
     }
 
     [HttpPost("embed")]
+    [HttpPost("v1/embed")]
+    [HttpPost("embeddings")]
+    [HttpPost("v1/embeddings")]
     public async Task Embed([FromBody] dynamic input)
     {
         if (!await IsAuthorizedAsync())
@@ -294,6 +300,7 @@ public class ProxyController(
     }
 
     [HttpGet("tags")]
+    [HttpGet("v1/tags")]
     public async Task<IActionResult> Tags()
     {
         if (!await IsAuthorizedAsync())
@@ -353,6 +360,7 @@ public class ProxyController(
     }
 
     [HttpGet("ps")]
+    [HttpGet("v1/ps")]
     public async Task<IActionResult> Ps()
     {
         if (!await IsAuthorizedAsync())
