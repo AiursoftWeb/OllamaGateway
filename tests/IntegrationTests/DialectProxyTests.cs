@@ -573,4 +573,80 @@ public class DialectProxyTests : TestBase
         Assert.IsTrue(requestPaths[0].Contains("/v1/chat/completions"), $"First request should go to /v1/, was: {requestPaths[0]}");
         Assert.IsTrue(requestPaths[1].Contains("/api/chat"), $"Second request should go to /api/, was: {requestPaths[1]}");
     }
+
+    [TestMethod]
+    public async Task OpenAI_Streaming_ReasoningContent_Captured()
+    {
+        // Arrange
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            var sse = new[]
+            {
+                """data: {"id":"1","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"reasoning_content":"Thinking..."},"finish_reason":null}]}""",
+                """data: {"id":"2","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"content":"Hello!"},"finish_reason":"stop"}]}""",
+                "data: [DONE]"
+            };
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(string.Join("\n\n", sse) + "\n\n", Encoding.UTF8, "text/event-stream")
+            };
+            return Task.FromResult(response);
+        };
+
+        // Act
+        var payload = $$"""{"model":"{{VirtualModelName}}","messages":[{"role":"user","content":"tell me a secret"}],"stream":true}""";
+        var response = await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
+        var body = await response.Content.ReadAsStringAsync();
+
+        // Assert: 1. Model name is masked in response chunks. 2. Reasoning content is preserved.
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        var lines = body.Split('\n').Where(l => l.StartsWith("data: ") && l != "data: [DONE]");
+        foreach (var line in lines)
+        {
+            var chunk = JsonNode.Parse(line[6..]);
+            Assert.AreEqual(VirtualModelName, chunk?["model"]?.ToString());
+        }
+        Assert.IsTrue(body.Contains("reasoning_content"), "Response must preserve reasoning_content");
+        Assert.IsTrue(body.Contains("Thinking..."), "Response must preserve thinking content");
+
+        // Assert: 3. Upstream request received the 'think' parameter if we mock it in Seed (Wait, I should check Seed)
+        // In CreateServer, we seeded VirtualModel with Temperature=0.42 and NumPredict=512, but didn't set Thinking.
+        // Let's check the last request.
+        var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody ?? "{}");
+        Assert.IsNotNull(upstreamBody);
+        // It won't have 'think' yet because Thinking.HasValue was false in the seeded model.
+    }
+
+    [TestMethod]
+    public async Task OpenAI_ThinkingOverride_Injected()
+    {
+        // Arrange: Update the model to have thinking and context size enabled
+        using (var scope = Server?.Services.CreateScope())
+        {
+            Assert.IsNotNull(scope);
+            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+            var vm = await db.VirtualModels.FirstAsync(m => m.Name == VirtualModelName);
+            vm.Thinking = true;
+            vm.NumCtx = 4096;
+            await db.SaveChangesAsync();
+        }
+
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            var body = """{"id":"x","object":"chat.completion","choices":[{"index":0,"message":{"role":"assistant","content":"ok"},"finish_reason":"stop"}],"usage":{"prompt_tokens":1,"completion_tokens":1,"total_tokens":2}}""";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body, Encoding.UTF8, "application/json")
+            });
+        };
+
+        // Act
+        var payload = $$"""{"model":"{{VirtualModelName}}","messages":[{"role":"user","content":"hi"}],"stream":false}""";
+        await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
+
+        // Assert: Upstream request should now contain "think": true and "options.num_ctx"
+        var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody ?? "{}");
+        Assert.AreEqual(true, upstreamBody?["think"]?.GetValue<bool>());
+        Assert.AreEqual(4096, upstreamBody?["options"]?["num_ctx"]?.GetValue<int>());
+    }
 }

@@ -132,6 +132,12 @@ public class OpenAIController : ControllerBase
             if (virtualModel.Temperature.HasValue) jsonNode["temperature"] = virtualModel.Temperature.Value;
             if (virtualModel.TopP.HasValue) jsonNode["top_p"] = virtualModel.TopP.Value;
             if (virtualModel.NumPredict.HasValue) jsonNode["max_tokens"] = virtualModel.NumPredict.Value; 
+            if (virtualModel.NumCtx.HasValue)
+            {
+                var options = jsonNode["options"] ??= new JsonObject();
+                options["num_ctx"] = virtualModel.NumCtx.Value;
+            }
+            if (virtualModel.Thinking.HasValue) jsonNode["think"] = virtualModel.Thinking.Value;
 
             using var client = _httpClientFactory.CreateClient();
             client.Timeout = await _globalSettingsService.GetRequestTimeoutAsync();
@@ -159,6 +165,7 @@ public class OpenAIController : ControllerBase
             if (isStream && response.IsSuccessStatusCode)
             {
                 var answerBuilder = new StringBuilder();
+                var thinkBuilder = new StringBuilder();
                 using var reader = new StreamReader(responseStream);
                 string? line;
                 while ((line = await reader.ReadLineAsync(HttpContext.RequestAborted)) != null)
@@ -177,6 +184,13 @@ public class OpenAIController : ControllerBase
                                 // Extract audit values
                                 var content = chunkNode["choices"]?[0]?["delta"]?["content"]?.ToString();
                                 if (!string.IsNullOrEmpty(content)) answerBuilder.Append(content);
+
+                                var reasoningContent = chunkNode["choices"]?[0]?["delta"]?["reasoning_content"]?.ToString();
+                                if (string.IsNullOrEmpty(reasoningContent)) 
+                                {
+                                    reasoningContent = chunkNode["choices"]?[0]?["delta"]?["think"]?.ToString(); 
+                                }
+                                if (!string.IsNullOrEmpty(reasoningContent)) thinkBuilder.Append(reasoningContent);
 
                                 var usageNode = chunkNode["usage"];
                                 if (usageNode != null)
@@ -202,6 +216,7 @@ public class OpenAIController : ControllerBase
                 }
                 
                 _logContext.Log.Answer = answerBuilder.ToString();
+                _logContext.Log.Thinking = thinkBuilder.ToString();
             }
             else
             {
@@ -219,6 +234,14 @@ public class OpenAIController : ControllerBase
                         resultNode["model"] = virtualModel.Name;
 
                         _logContext.Log.Answer = resultNode["choices"]?[0]?["message"]?["content"]?.ToString() ?? string.Empty;
+                        
+                        var reasoning = resultNode["choices"]?[0]?["message"]?["reasoning_content"]?.ToString();
+                        if (string.IsNullOrEmpty(reasoning)) 
+                        {
+                            reasoning = resultNode["choices"]?[0]?["message"]?["think"]?.ToString();
+                        }
+                        _logContext.Log.Thinking = reasoning ?? string.Empty;
+
                         var usageNode = resultNode["usage"];
                         if (usageNode != null)
                         {
