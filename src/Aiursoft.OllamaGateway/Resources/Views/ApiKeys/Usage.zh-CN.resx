@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <root>
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:element name="root" msdata:IsDataSet="true">
-    </xsd:element>
-  </xsd:schema>
-  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
-  <resheader name="version"><value>1.3</value></resheader>
-  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <data name="1. Chat Completion (Ollama Format)" xml:space="preserve">
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="1. Chat Completion (Ollama Format)" xml:space="preserve">
     <value>1. 对话补全 (Ollama 格式)</value>
   </data>
   <data name="2. Chat Completion (OpenAI Format)" xml:space="preserve">
@@ -38,6 +48,9 @@
   <data name="Then you can enjoy using OllamaGateway in Opencode." xml:space="preserve">
     <value>然后您就可以在 Opencode 中愉快地使用 OllamaGateway 了。</value>
   </data>
+  <data name="to add a new provider:" xml:space="preserve">
+    <value>以添加一个新的提供商：</value>
+  </data>
   <data name="To ask a question in OpenAI format, use the following curl command:" xml:space="preserve">
     <value>要以 OpenAI 格式提问，请使用以下 curl 命令：</value>
   </data>
@@ -47,13 +60,11 @@
   <data name="To generate embeddings for a text, use the following curl command:" xml:space="preserve">
     <value>要为文本生成向量，请使用以下 curl 命令：</value>
   </data>
-  <data name="to add a new provider:" xml:space="preserve">
-    <value>以添加一个新的提供商：</value>
-  </data>
   <data name="Using API Key" xml:space="preserve">
     <value>正在使用 API Key</value>
   </data>
   <data name="You can use this API key to access the Ollama Gateway API. The base URL is:" xml:space="preserve">
     <value>您可以使用此 API Key 访问 Ollama Gateway API。基础 URL 为：</value>
   </data>
+
 </root>
