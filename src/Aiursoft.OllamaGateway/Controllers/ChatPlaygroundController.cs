@@ -25,6 +25,7 @@ public class ChatPlaygroundController(
     public async Task<IActionResult> Index(int? id)
     {
         var models = await dbContext.VirtualModels
+            .AsNoTracking()
             .Where(m => m.Type == ModelType.Chat)
             .OrderBy(m => m.Name)
             .ToListAsync();
@@ -34,7 +35,7 @@ public class ChatPlaygroundController(
             return RedirectToAction("Index", "VirtualModels");
         }
 
-        var selectedModel = id.HasValue 
+        var selectedModel = id.HasValue
             ? models.FirstOrDefault(m => m.Id == id.Value) ?? models.First()
             : models.First();
 
@@ -44,7 +45,7 @@ public class ChatPlaygroundController(
             UnderlyingModel = selectedModel.UnderlyingModel,
             PageTitle = "Chat Playground"
         };
-        
+
         ViewData["ModelId"] = selectedModel.Id;
         ViewData["AllModels"] = models;
         return this.StackView(viewModel);
@@ -62,16 +63,17 @@ public class ChatPlaygroundController(
     public async Task<IActionResult> EmbeddingLab(int? id)
     {
         var models = await dbContext.VirtualModels
+            .AsNoTracking()
             .Where(m => m.Type == ModelType.Embedding)
             .OrderBy(m => m.Name)
             .ToListAsync();
 
         if (!models.Any())
         {
-            return RedirectToAction("Index", "VirtualModels");
+            return RedirectToAction("EmbeddingIndex", "VirtualModels");
         }
 
-        var selectedModel = id.HasValue 
+        var selectedModel = id.HasValue
             ? models.FirstOrDefault(m => m.Id == id.Value) ?? models.First()
             : models.First();
 
@@ -81,9 +83,8 @@ public class ChatPlaygroundController(
             UnderlyingModel = selectedModel.UnderlyingModel,
             PageTitle = "Embedding Lab"
         };
-        
+
         ViewData["ModelId"] = selectedModel.Id;
         ViewData["AllModels"] = models;
         return this.StackView(viewModel);
-    }
-}
+    }}

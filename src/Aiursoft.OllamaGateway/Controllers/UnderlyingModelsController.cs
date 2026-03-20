@@ -19,7 +19,7 @@ public class UnderlyingModelsController(
         NavGroupName = "Ollama Gateway",
         NavGroupOrder = 9000,
         CascadedLinksGroupName = "Gateway",
-        CascadedLinksIcon = "database",
+        CascadedLinksIcon = "layers",
         CascadedLinksOrder = 1,
         LinkText = "Physical Models",
         LinkOrder = 4)]

@@ -301,4 +301,36 @@ public class OllamaGatewayTests : TestBase
         Assert.Contains("Chatting with", html);
         Assert.Contains("chat-model:latest", html);
     }
+
+    [TestMethod]
+    public async Task TestEmbeddingLab()
+    {
+        await LoginAsAdmin();
+
+        // 1. Setup Data
+        using (var scope = Server!.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+            var provider = new OllamaProvider { Name = "Provider", BaseUrl = "http://localhost:11434" };
+            db.OllamaProviders.Add(provider);
+            await db.SaveChangesAsync();
+            db.VirtualModels.Add(new VirtualModel 
+            { 
+                Name = "embed-model:latest", 
+                UnderlyingModel = "nomic-embed-text", 
+                ProviderId = provider.Id,
+                Type = ModelType.Embedding
+            });
+            await db.SaveChangesAsync();
+        }
+
+        // 2. Access Lab
+        var response = await Http.GetAsync("/ChatPlayground/EmbeddingLab");
+        response.EnsureSuccessStatusCode();
+        var html = await response.Content.ReadAsStringAsync();
+        
+        Assert.Contains("Embedding Lab", html);
+        Assert.Contains("Generate Embeddings with", html);
+        Assert.Contains("embed-model:latest", html);
+    }
 }

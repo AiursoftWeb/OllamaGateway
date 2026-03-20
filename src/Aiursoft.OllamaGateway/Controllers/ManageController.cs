@@ -36,7 +36,7 @@ public class ManageController(
         NavGroupName = "Settings",
         NavGroupOrder = 9998,
         CascadedLinksGroupName = "Personal",
-        CascadedLinksIcon = "user-circle",
+        CascadedLinksIcon = "user",
         CascadedLinksOrder = 1,
         LinkText = "Profile Settings",
         LinkOrder = 3)]

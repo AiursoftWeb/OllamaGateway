@@ -21,7 +21,7 @@ public class ApiKeysController(
         NavGroupName = "Settings",
         NavGroupOrder = 9998,
         CascadedLinksGroupName = "Personal",
-        CascadedLinksIcon = "key",
+        CascadedLinksIcon = "user",
         CascadedLinksOrder = 1,
         LinkText = "API Keys",
         LinkOrder = 2)]

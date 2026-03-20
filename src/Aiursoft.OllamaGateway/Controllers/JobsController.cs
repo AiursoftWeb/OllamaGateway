@@ -21,7 +21,7 @@ public class JobsController(BackgroundJobQueue backgroundJobQueue) : Controller
         NavGroupName = "Administration",
         NavGroupOrder = 9999,
         CascadedLinksGroupName = "System",
-        CascadedLinksIcon = "cog",
+        CascadedLinksIcon = "settings",
         CascadedLinksOrder = 9999,
         LinkText = "Background Jobs",
         LinkOrder = 2)]

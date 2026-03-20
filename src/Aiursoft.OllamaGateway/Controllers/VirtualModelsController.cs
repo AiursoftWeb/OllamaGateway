@@ -50,7 +50,7 @@ public class VirtualModelsController(
         NavGroupName = "Ollama Gateway",
         NavGroupOrder = 9000,
         CascadedLinksGroupName = "Gateway",
-        CascadedLinksIcon = "message-square",
+        CascadedLinksIcon = "layers",
         CascadedLinksOrder = 1,
         LinkText = "Chat Models",
         LinkOrder = 1)]
