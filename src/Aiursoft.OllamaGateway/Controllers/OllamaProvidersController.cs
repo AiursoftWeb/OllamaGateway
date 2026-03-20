@@ -18,7 +18,7 @@ public class OllamaProvidersController(
         NavGroupName = "Ollama Gateway",
         NavGroupOrder = 9000,
         CascadedLinksGroupName = "Gateway",
-        CascadedLinksIcon = "server",
+        CascadedLinksIcon = "layers",
         CascadedLinksOrder = 1,
         LinkText = "Providers",
         LinkOrder = 3)]

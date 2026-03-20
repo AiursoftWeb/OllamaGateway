@@ -20,7 +20,7 @@ public class SystemController(ILogger<SystemController> logger) : Controller
         NavGroupName = "Administration",
         NavGroupOrder = 9999,
         CascadedLinksGroupName = "System",
-        CascadedLinksIcon = "cog",
+        CascadedLinksIcon = "settings",
         CascadedLinksOrder = 9999,
         LinkText = "Info",
         LinkOrder = 1)]
