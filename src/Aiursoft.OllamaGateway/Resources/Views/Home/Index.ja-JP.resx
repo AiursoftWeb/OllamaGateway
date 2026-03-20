@@ -24,6 +24,9 @@
   <data name="A built-in Role-Based Access Control (RBAC) system for fine-grained permission management." xml:space="preserve">
     <value>きめ細かい権限管理のための組み込みのロールベースアクセス制御（RBAC）システム。</value>
   </data>
+  <data name="A built-in Role-Based Access Control (RBAC) system for managing your team&apos;s access to AI models." xml:space="preserve">
+    <value>チームの AI モデルへのアクセスを管理するための組み込みロールベースアクセス制御 (RBAC) システム</value>
+  </data>
   <data name="A complete solution for user authentication and profile management right out of the box." xml:space="preserve">
     <value>ユーザー認証とプロファイル管理のための完全なソリューションが、すぐに利用できます。</value>
   </data>
@@ -38,6 +41,9 @@
   </data>
   <data name="Achieve more with Aiursoft Template" xml:space="preserve">
     <value>Aiursoft Templateでさらに多くのことを実現</value>
+  </data>
+  <data name="Admin Management GUI" xml:space="preserve">
+    <value>管理者管理 GUI</value>
   </data>
   <data name="Admin site included" xml:space="preserve">
     <value>管理サイトが含まれています</value>
@@ -57,6 +63,9 @@
   <data name="Aiursoft Template is our definitive choice for enterprise projects! It&apos;s built for developers and is lightweight yet powerful. We can skip all the boilerplate for authentication and user management." xml:space="preserve">
     <value>Aiursoft Templateは、エンタープライズプロジェクトにおける私たちの確固たる選択です！開発者のために構築されており、軽量でありながら強力です。認証やユーザー管理に関する定型コードをすべて省略できます。</value>
   </data>
+  <data name="Alias -&gt; Real" xml:space="preserve">
+    <value>エイリアス -&gt; 実体</value>
+  </data>
   <data name="All dependencies are automatically registered and always available via constructor injection." xml:space="preserve">
     <value>すべての依存関係は自動的に登録され、コンストラクタインジェクションを通じて常に利用可能です。</value>
   </data>
@@ -65,6 +74,9 @@
   </data>
   <data name="Anduin Xue" xml:space="preserve">
     <value>Anduin Xue</value>
+  </data>
+  <data name="API Authentication (Bearer)" xml:space="preserve">
+    <value>API 認証 (ベアラー)</value>
   </data>
   <data name="Artificial Intelligence Translation" xml:space="preserve">
     <value>人工知能翻訳</value>
@@ -77,6 +89,9 @@
   </data>
   <data name="Auto Deployment" xml:space="preserve">
     <value>自動デプロイ</value>
+  </data>
+  <data name="Auto Sync" xml:space="preserve">
+    <value>自動同期</value>
   </data>
   <data name="Automatic AI translation into 28 languages." xml:space="preserve">
     <value>28言語への自動AI翻訳</value>
@@ -105,11 +120,17 @@
   <data name="Automatically deploy to Docker Swarm or Kubernetes clusters." xml:space="preserve">
     <value>Docker Swarm または Kubernetes クラスタに自動的にデプロイする。</value>
   </data>
+  <data name="Automatically redirect requests to a default virtual model if no model is specified in the API call." xml:space="preserve">
+    <value>API コールでモデルが指定されていない場合、リクエストをデフォルトの仮想モデルに自動的にリダイレクトします。</value>
+  </data>
   <data name="Automatically sync OpenID roles. Unified Rule management." xml:space="preserve">
     <value>OpenIDのロールを自動で同期します。統一されたルール管理。</value>
   </data>
   <data name="Background Job Processing" xml:space="preserve">
     <value>バックグラウンドジョブ処理</value>
+  </data>
+  <data name="Bearer Token Auth" xml:space="preserve">
+    <value>ベアータークン認証</value>
   </data>
   <data name="Beginner Friendly" xml:space="preserve">
     <value>初心者向け</value>
@@ -147,6 +168,15 @@
   <data name="Built-in User Management" xml:space="preserve">
     <value>組み込みユーザー管理</value>
   </data>
+  <data name="Chat Models" xml:space="preserve">
+    <value>チャットモデル</value>
+  </data>
+  <data name="Chat/Embedding Segregation" xml:space="preserve">
+    <value>チャット/埋め込みの分離</value>
+  </data>
+  <data name="Clickhouse Auditing" xml:space="preserve">
+    <value>Clickhouse 監査</value>
+  </data>
   <data name="Comes with Docker support for simplified and consistent deployments." xml:space="preserve">
     <value>Dockerサポートを備えており、簡単で一貫性のあるデプロイが可能になります。</value>
   </data>
@@ -177,6 +207,15 @@
   <data name="Coverage Report" xml:space="preserve">
     <value>カバレッジレポート</value>
   </data>
+  <data name="Create multiple aliases for your models with custom system prompts and parameter overrides." xml:space="preserve">
+    <value>モデルに対して、カスタムシステムプロンプトとパラメータのオーバーライドで複数のエイリアスを作成します。</value>
+  </data>
+  <data name="Create multiple API keys for different users and applications, each with its own fine-grained permissions." xml:space="preserve">
+    <value>異なるユーザーとアプリケーションのために複数の API キーを作成し、それぞれに細粒度の権限を割り当てます。</value>
+  </data>
+  <data name="Create virtual chat models with persistent system prompts." xml:space="preserve">
+    <value>永続的なシステムプロンプトを持つ仮想チャットモデルを作成します。</value>
+  </data>
   <data name="Cross Platform" xml:space="preserve">
     <value>クロスプラットフォーム</value>
   </data>
@@ -198,11 +237,17 @@
   <data name="Day 1 Ready" xml:space="preserve">
     <value>Day 1 Ready</value>
   </data>
+  <data name="Dedicated management for embedding models for RAG applications." xml:space="preserve">
+    <value>RAG アプリケーション用の埋め込みモデル専用の管理</value>
+  </data>
   <data name="Deep integration testing with Authentik. Compatible with Okta." xml:space="preserve">
     <value>Authentikとの深い統合テスト。Oktaと互換性あり。</value>
   </data>
   <data name="Deep integration with DotLang AI" xml:space="preserve">
     <value>DotLang AI との深い統合</value>
+  </data>
+  <data name="Default Model Support" xml:space="preserve">
+    <value>デフォルトモデルサポート</value>
   </data>
   <data name="Default SQLite database, no configuration needed." xml:space="preserve">
     <value>デフォルトのSQLiteデータベース、設定は不要です。</value>
@@ -212,6 +257,9 @@
   </data>
   <data name="Designed for the container era. Includes pre-configured CI/CD pipelines for GitLab. Push code, pass strictly linting, auto-test, and deploy to Docker Swarm or Kubernetes automatically." xml:space="preserve">
     <value>コンテナ時代に最適化されています。GitLab用の事前設定済みCI/CDパイプラインを備えています。コードをプッシュし、厳密なLintチェックを通過させ、自動テストを行い、Docker SwarmまたはKubernetesに自動デプロイします。</value>
+  </data>
+  <data name="Detailed auditing for every request and response, stored in high-performance Clickhouse storage for compliance." xml:space="preserve">
+    <value>すべてのリクエストとレスポンスの詳細な監査ログを、コンプライアンス対応のために高パフォーマンスな Clickhouse ストレージに保存します。</value>
   </data>
   <data name="Dev &amp; Prod" xml:space="preserve">
     <value>開発 &amp; 本番</value>
@@ -249,6 +297,9 @@
   <data name="Effortlessly write integration tests using in-memory databases, temporary file systems, built-in mocking, and real-world HTTP request simulation." xml:space="preserve">
     <value>インメモリデータベース、一時ファイルシステム、組み込みモック、そして現実のHTTPリクエストシミュレーションを使用して、簡単に統合テストを書くことができます。</value>
   </data>
+  <data name="Embedding Models" xml:space="preserve">
+    <value>埋め込みモデル</value>
+  </data>
   <data name="Enforced" xml:space="preserve">
     <value>強制された</value>
   </data>
@@ -275,6 +326,9 @@
   </data>
   <data name="faster" xml:space="preserve">
     <value>より迅速に</value>
+  </data>
+  <data name="Feature Comparison" xml:space="preserve">
+    <value>機能比較</value>
   </data>
   <data name="Features" xml:space="preserve">
     <value>機能</value>
@@ -351,6 +405,9 @@
   <data name="Go to dashboard" xml:space="preserve">
     <value>ダッシュボードへ</value>
   </data>
+  <data name="Go to Dashboard" xml:space="preserve">
+    <value>ダッシュボードへ</value>
+  </data>
   <data name="Handle recurring jobs like cleanup and synchronization with a comprehensive GUI for monitoring execution history and logs." xml:space="preserve">
     <value>定期的なジョブ（クリーンアップや同期など）を処理し、実行履歴やログのモニタリングが可能な包括的なGUIを提供します。</value>
   </data>
@@ -399,6 +456,9 @@
   <data name="Integrated File Management" xml:space="preserve">
     <value>統合ファイル管理</value>
   </data>
+  <data name="Intelligent" xml:space="preserve">
+    <value>インテリジェント</value>
+  </data>
   <data name="Intern Friendly" xml:space="preserve">
     <value>インターンフレンドリー</value>
   </data>
@@ -441,11 +501,23 @@
   <data name="MIT License" xml:space="preserve">
     <value>MITライセンス</value>
   </data>
+  <data name="Model Hosting &amp; Inference" xml:space="preserve">
+    <value>モデルのホスティングと推論</value>
+  </data>
+  <data name="Model Keep-alive" xml:space="preserve">
+    <value>モデルのキープアライブ</value>
+  </data>
+  <data name="Model Keep-alive (Ping)" xml:space="preserve">
+    <value>モデルキープアライブ（Ping）</value>
+  </data>
   <data name="Models are validated on both client and server sides based on data annotations." xml:space="preserve">
     <value>モデルはデータ注釈に基づいて、クライアントおよびサーバーの両方で検証されます。</value>
   </data>
   <data name="Multi-timezone Handling" xml:space="preserve">
     <value>マルチタイムゾーン処理</value>
+  </data>
+  <data name="Multiple API Keys Management" xml:space="preserve">
+    <value>複数APIキーの管理</value>
   </data>
   <data name="Multiple Database Provider Support" xml:space="preserve">
     <value>複数のデータベースプロバイダーサポート</value>
@@ -458,6 +530,18 @@
   </data>
   <data name="Music Tools" xml:space="preserve">
     <value>音楽ツール</value>
+  </data>
+  <data name="Native Ollama" xml:space="preserve">
+    <value>Native Ollama</value>
+  </data>
+  <data name="Native Ollama is great for personal use, but it lacks the enterprise features required for team collaboration and production deployment. OllamaGateway fills those gaps without changing your workflow." xml:space="preserve">
+    <value>ネイティブのOllamaは個人利用には素晴らしいですが、チームコラボレーションや本番環境でのデプロイに必要なエンタープライズ機能が不足しています。OllamaGatewayは、ワークフローを変更せずにこれらのギャップを埋めます。</value>
+  </data>
+  <data name="Native Passthrough" xml:space="preserve">
+    <value>ネイティブパススルー</value>
+  </data>
+  <data name="Native vs. Gateway" xml:space="preserve">
+    <value>ネイティブ対ゲートウェイ</value>
   </data>
   <data name="Needs CASL or similar" xml:space="preserve">
     <value>CASL などの必要</value>
@@ -510,6 +594,15 @@
   <data name="OIDC &amp; SSO" xml:space="preserve">
     <value>OIDC &amp; SSO</value>
   </data>
+  <data name="Ollama." xml:space="preserve">
+    <value>Ollama.</value>
+  </data>
+  <data name="OllamaGateway" xml:space="preserve">
+    <value>OllamaGateway</value>
+  </data>
+  <data name="OllamaGateway: Enterprise-grade API authentication, request auditing, and virtual model management—your secure, private AI gateway." xml:space="preserve">
+    <value>OllamaGateway: エンタープライズグレードの API 認証、リクエスト監査、および仮想モデル管理—あなたの安全でプライベートな AI ゲートウェイ。</value>
+  </data>
   <data name="One Click Start" xml:space="preserve">
     <value>ワンクリックスタート</value>
   </data>
@@ -528,6 +621,15 @@
   <data name="Out-of-the-box" xml:space="preserve">
     <value>すぐに使える</value>
   </data>
+  <data name="Override temperature, top_k, and other Ollama options per virtual model." xml:space="preserve">
+    <value>仮想モデルごとに温度、top_k、およびその他の Ollama オプションを上書きします。</value>
+  </data>
+  <data name="Parameter Overrides" xml:space="preserve">
+    <value>パラメータのオーバーライド</value>
+  </data>
+  <data name="Periodically pings underlying models to ensure they stay loaded in memory for instant response times." xml:space="preserve">
+    <value>定期的に基盤となるモデルにpingを送信し、メモリにロードされた状態を維持して即座の応答時間を確保します。</value>
+  </data>
   <data name="Permission discovery and sync" xml:space="preserve">
     <value>権限の検出と同期</value>
   </data>
@@ -540,6 +642,9 @@
   <data name="Pre-configured pipelines for dev/prod" xml:space="preserve">
     <value>開発/本番環境用の事前設定済みパイプライン</value>
   </data>
+  <data name="Private AI" xml:space="preserve">
+    <value>プライベート AI</value>
+  </data>
   <data name="Quality Gate" xml:space="preserve">
     <value>品質ゲート</value>
   </data>
@@ -548,6 +653,12 @@
   </data>
   <data name="Read the document" xml:space="preserve">
     <value>ドキュメントを読む</value>
+  </data>
+  <data name="Ready to secure your AI gateway?" xml:space="preserve">
+    <value>AI ゲートウェイのセキュリティを確保する準備はできましたか？</value>
+  </data>
+  <data name="Request &amp; Response Auditing" xml:space="preserve">
+    <value>リクエストとレスポンスの監査</value>
   </data>
   <data name="Requires Laravel Socialite config" xml:space="preserve">
     <value>Laravel Socialite の設定が必要です</value>
@@ -570,8 +681,14 @@
   <data name="Scheduled Task Management" xml:space="preserve">
     <value>スケジュールされたタスク管理</value>
   </data>
+  <data name="Seamless support for native Ollama features including MCP tools, embedding, images, and stream mode." xml:space="preserve">
+    <value>MCP ツール、埋め込み、画像、ストリームモードなど、ネイティブの Ollama 機能に対するシームレスなサポート。</value>
+  </data>
   <data name="Seamlessly integrate with any OpenID Connect provider, with automatic role synchronization." xml:space="preserve">
     <value>あらゆるOpenID Connectプロバイダーとシームレスに統合し、自動的なロール同期を実現します。</value>
+  </data>
+  <data name="Security and Auditing by Design." xml:space="preserve">
+    <value>設計によるセキュリティと監査</value>
   </data>
   <data name="Shift with confidence" xml:space="preserve">
     <value>自信を持ってシフト</value>
@@ -590,6 +707,12 @@
   </data>
   <data name="Smart dark mode that automatically adapts to the user&apos;s system settings." xml:space="preserve">
     <value>ユーザーのシステム設定に自動的に適応するスマートダークモード。</value>
+  </data>
+  <data name="Smart Mapping" xml:space="preserve">
+    <value>スマートマッピング</value>
+  </data>
+  <data name="Smart Proxy" xml:space="preserve">
+    <value>スマートプロキシ</value>
   </data>
   <data name="Standard implementation. Switch providers without compilation." xml:space="preserve">
     <value>標準実装。コンパイルなしでプロバイダを切り替えられます。</value>
@@ -627,6 +750,9 @@
   <data name="Strongly Consistent Linting" xml:space="preserve">
     <value>強力で一貫したLintチェック</value>
   </data>
+  <data name="Supercharge Your Native" xml:space="preserve">
+    <value>ネイティブを強化する</value>
+  </data>
   <data name="Supports both environment variables and database-backed settings, with automatic priority given to environment variables for seamless overrides." xml:space="preserve">
     <value>環境変数とデータベースベースの設定の両方をサポートしており、環境変数に自動的に優先順位が与えられ、スムーズな上書きが可能になります。</value>
   </data>
@@ -635,6 +761,9 @@
   </data>
   <data name="Task Runner" xml:space="preserve">
     <value>タスクランナー</value>
+  </data>
+  <data name="Team Management" xml:space="preserve">
+    <value>チーム管理</value>
   </data>
   <data name="Technical Lead" xml:space="preserve">
     <value>テクニカルリード</value>
@@ -675,8 +804,17 @@
   <data name="Use it as a foundation for your SaaS, a backend for your mobile app, a corporate website, or a personal blog. The possibilities are endless." xml:space="preserve">
     <value>SaaSの基盤として、モバイルアプリのバックエンドとして、コーポレートサイトとして、個人ブログとしてお使いいただけます。可能性は無限大です。</value>
   </data>
+  <data name="Validation" xml:space="preserve">
+    <value>検証</value>
+  </data>
   <data name="View on GitHub" xml:space="preserve">
     <value>GitHubで表示</value>
+  </data>
+  <data name="Virtual Model Overrides" xml:space="preserve">
+    <value>バーチャルモデルのオーバーライド</value>
+  </data>
+  <data name="Virtual Models" xml:space="preserve">
+    <value>バーチャルモデル</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>ようこそ</value>
@@ -689,6 +827,9 @@
   </data>
   <data name="Why choose Aiursoft Template?" xml:space="preserve">
     <value>なぜ Aiursoft Template を選ぶのか？</value>
+  </data>
+  <data name="Why choose OllamaGateway?" xml:space="preserve">
+    <value>なぜ OllamaGateway を選ぶのか？</value>
   </data>
   <data name="Why use the Aiursoft Template?" xml:space="preserve">
     <value>Aiursoftテンプレートを使用する理由</value>
