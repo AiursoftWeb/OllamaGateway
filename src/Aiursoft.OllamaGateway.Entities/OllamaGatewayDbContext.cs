@@ -13,10 +13,19 @@ public abstract class TemplateDbContext(DbContextOptions options) : IdentityDbCo
     public DbSet<ApiKey> ApiKeys => Set<ApiKey>();
     public DbSet<VirtualModel> VirtualModels => Set<VirtualModel>();
     public DbSet<OllamaProvider> OllamaProviders => Set<OllamaProvider>();
+    public DbSet<UnderlyingModelUsage> UnderlyingModelUsages => Set<UnderlyingModelUsage>();
 
     public virtual  Task MigrateAsync(CancellationToken cancellationToken) =>
         Database.MigrateAsync(cancellationToken);
 
     public virtual  Task<bool> CanConnectAsync() =>
         Database.CanConnectAsync();
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+        builder.Entity<UnderlyingModelUsage>()
+            .HasIndex(u => new { u.ProviderId, u.ModelName })
+            .IsUnique();
+    }
 }
