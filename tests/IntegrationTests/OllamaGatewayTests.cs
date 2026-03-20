@@ -21,17 +21,17 @@ public class OllamaGatewayTests : TestBase
         TestStartup.MockClickhouse.Setup(c => c.Enabled).Returns(false);
 
         TestStartup.MockOllamaService.Reset();
-        TestStartup.MockOllamaService.Setup(s => s.GetUnderlyingModelsAsync(It.IsAny<string>()))
+        TestStartup.MockOllamaService.Setup(s => s.GetUnderlyingModelsAsync(It.IsAny<string>(), It.IsAny<string>()))
             .ReturnsAsync(new List<string> { "llama3.2", "nomic-embed-text" });
         
-        TestStartup.MockOllamaService.Setup(s => s.GetDetailedModelsAsync(It.IsAny<string>()))
+        TestStartup.MockOllamaService.Setup(s => s.GetDetailedModelsAsync(It.IsAny<string>(), It.IsAny<string>()))
             .ReturnsAsync(new List<OllamaService.OllamaModel> 
             { 
                 new OllamaService.OllamaModel { Name = "llama3.2", Size = 1024 * 1024 * 1024L },
                 new OllamaService.OllamaModel { Name = "nomic-embed-text", Size = 512 * 1024 * 1024L }
             });
 
-        TestStartup.MockOllamaService.Setup(s => s.GetRunningModelsAsync(It.IsAny<string>()))
+        TestStartup.MockOllamaService.Setup(s => s.GetRunningModelsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<TimeSpan?>()))
             .ReturnsAsync(new List<OllamaService.OllamaRunningModel>
             {
                 new OllamaService.OllamaRunningModel { Name = "llama3.2" }
@@ -297,7 +297,7 @@ public class OllamaGatewayTests : TestBase
         response.EnsureSuccessStatusCode();
         var html = await response.Content.ReadAsStringAsync();
         
-        Assert.Contains("Chat Playground", html);
+        Assert.Contains("chat-model:latest", html);
         Assert.Contains("Chatting with", html);
         Assert.Contains("chat-model:latest", html);
     }
@@ -332,5 +332,71 @@ public class OllamaGatewayTests : TestBase
         Assert.Contains("Embedding Lab", html);
         Assert.Contains("Generate Embeddings with", html);
         Assert.Contains("embed-model:latest", html);
+    }
+
+    [TestMethod]
+    public async Task TestBearerTokenForwarding()
+    {
+        await LoginAsAdmin();
+
+        // 1. Create Provider with Bearer Token
+        const string providerToken = "upstream-secret-123";
+        await PostForm("/OllamaProviders/Create", new Dictionary<string, string>
+        {
+            { "Name", "Authed Provider" },
+            { "BaseUrl", "http://authed-ollama:11434" },
+            { "BearerToken", providerToken }
+        });
+
+        var provider = await GetService<TemplateDbContext>().OllamaProviders
+            .FirstAsync(p => p.Name == "Authed Provider");
+        Assert.AreEqual(providerToken, provider.BearerToken);
+
+        // 2. Create Virtual Model
+        await PostForm("/VirtualModels/Create", new Dictionary<string, string>
+        {
+            { "Name", "authed-model:latest" },
+            { "UnderlyingModel", "llama3.2" },
+            { "ProviderId", provider.Id.ToString() },
+            { "Type", ModelType.Chat.ToString() }
+        });
+
+        // 3. Setup mock upstream handler to verify header
+        bool headerFound = false;
+        MockUpstreamState.Handler = (req, _) =>
+        {
+            if (req.Headers.Authorization?.Scheme == "Bearer" && 
+                req.Headers.Authorization?.Parameter == providerToken)
+            {
+                headerFound = true;
+            }
+            
+            var body = """{"model":"llama3.2","message":{"role":"assistant","content":"ok"},"done":true}""";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body, System.Text.Encoding.UTF8, "application/json")
+            });
+        };
+
+        // 4. Call proxy
+        var payload = """{"model":"authed-model:latest","messages":[{"role":"user","content":"hi"}],"stream":false}""";
+        var request = new HttpRequestMessage(HttpMethod.Post, "/api/chat")
+        {
+            Content = new StringContent(payload, System.Text.Encoding.UTF8, "application/json")
+        };
+        // Use an API key for gateway auth if anonymous is disabled (it is by default in this test class)
+        string gatewayApiKey = "gateway-auth-token";
+        using (var scope = Server!.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+            var user = await db.Users.FirstAsync();
+            db.ApiKeys.Add(new ApiKey { Name = "Gateway Key", Key = gatewayApiKey, UserId = user.Id });
+            await db.SaveChangesAsync();
+        }
+        request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", gatewayApiKey);
+
+        var response = await Http.SendAsync(request);
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.IsTrue(headerFound, "The Bearer token was NOT found in the upstream request headers!");
     }
 }

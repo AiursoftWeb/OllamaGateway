@@ -32,15 +32,15 @@ public class DialectProxyTests : TestBase
         TestStartup.MockClickhouse.Setup(c => c.Enabled).Returns(false);
 
         TestStartup.MockOllamaService.Reset();
-        TestStartup.MockOllamaService.Setup(s => s.GetUnderlyingModelsAsync(It.IsAny<string>()))
+        TestStartup.MockOllamaService.Setup(s => s.GetUnderlyingModelsAsync(It.IsAny<string>(), It.IsAny<string>()))
             .ReturnsAsync(new List<string> { PhysicalModelName, PhysicalEmbeddingModel });
-        TestStartup.MockOllamaService.Setup(s => s.GetDetailedModelsAsync(It.IsAny<string>()))
+        TestStartup.MockOllamaService.Setup(s => s.GetDetailedModelsAsync(It.IsAny<string>(), It.IsAny<string>()))
             .ReturnsAsync(new List<OllamaService.OllamaModel>
             {
                 new() { Name = PhysicalModelName, Size = 1024 * 1024 * 1024L },
                 new() { Name = PhysicalEmbeddingModel, Size = 512 * 1024 * 1024L }
             });
-        TestStartup.MockOllamaService.Setup(s => s.GetRunningModelsAsync(It.IsAny<string>()))
+        TestStartup.MockOllamaService.Setup(s => s.GetRunningModelsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<TimeSpan?>()))
             .ReturnsAsync(new List<OllamaService.OllamaRunningModel>
             {
                 new() { Name = PhysicalModelName }

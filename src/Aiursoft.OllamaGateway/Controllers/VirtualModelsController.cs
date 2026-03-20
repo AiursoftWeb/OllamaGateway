@@ -27,10 +27,10 @@ public class VirtualModelsController(
                 continue;
             }
 
-            if (!providerCache.TryGetValue(model.Provider.BaseUrl, out var underlyingModels))
+            if (!providerCache.TryGetValue($"{model.Provider.BaseUrl}_{model.Provider.BearerToken}", out var underlyingModels))
             {
-                underlyingModels = await ollamaService.GetUnderlyingModelsAsync(model.Provider.BaseUrl);
-                providerCache[model.Provider.BaseUrl] = underlyingModels;
+                underlyingModels = await ollamaService.GetUnderlyingModelsAsync(model.Provider.BaseUrl, model.Provider.BearerToken);
+                providerCache[$"{model.Provider.BaseUrl}_{model.Provider.BearerToken}"] = underlyingModels;
             }
 
             if (underlyingModels == null)
@@ -110,13 +110,14 @@ public class VirtualModelsController(
             var provider = providers.FirstOrDefault(p => p.Id == providerId);
             if (provider != null)
             {
-                underlyingModels = await ollamaService.GetUnderlyingModelsAsync(provider.BaseUrl) ?? new List<string>();
+                underlyingModels = await ollamaService.GetUnderlyingModelsAsync(provider.BaseUrl, provider.BearerToken) ?? new List<string>();
             }
         }
         else if (providers.Any())
         {
-            providerId = providers.First().Id;
-            underlyingModels = await ollamaService.GetUnderlyingModelsAsync(providers.First().BaseUrl) ?? new List<string>();
+            var firstProvider = providers.First();
+            providerId = firstProvider.Id;
+            underlyingModels = await ollamaService.GetUnderlyingModelsAsync(firstProvider.BaseUrl, firstProvider.BearerToken) ?? new List<string>();
         }
 
         var model = new CreateViewModel
@@ -139,7 +140,7 @@ public class VirtualModelsController(
             var provider = model.AvailableProviders.FirstOrDefault(p => p.Id == model.ProviderId);
             if (provider != null)
             {
-                model.AvailableUnderlyingModels = await ollamaService.GetUnderlyingModelsAsync(provider.BaseUrl) ?? new List<string>();
+                model.AvailableUnderlyingModels = await ollamaService.GetUnderlyingModelsAsync(provider.BaseUrl, provider.BearerToken) ?? new List<string>();
             }
             return this.StackView(model);
         }
@@ -152,7 +153,7 @@ public class VirtualModelsController(
             var provider = model.AvailableProviders.FirstOrDefault(p => p.Id == model.ProviderId);
             if (provider != null)
             {
-                model.AvailableUnderlyingModels = await ollamaService.GetUnderlyingModelsAsync(provider.BaseUrl) ?? new List<string>();
+                model.AvailableUnderlyingModels = await ollamaService.GetUnderlyingModelsAsync(provider.BaseUrl, provider.BearerToken) ?? new List<string>();
             }
             return this.StackView(model);
         }
@@ -191,7 +192,7 @@ public class VirtualModelsController(
 
         var providers = await dbContext.OllamaProviders.ToListAsync();
         var provider = providers.FirstOrDefault(p => p.Id == virtualModel.ProviderId);
-        var underlyingModels = provider != null ? (await ollamaService.GetUnderlyingModelsAsync(provider.BaseUrl) ?? new List<string>()) : new List<string>();
+        var underlyingModels = provider != null ? (await ollamaService.GetUnderlyingModelsAsync(provider.BaseUrl, provider.BearerToken) ?? new List<string>()) : new List<string>();
 
         var model = new CreateViewModel // Use same for edit for simplicity
         {
@@ -225,7 +226,7 @@ public class VirtualModelsController(
             var provider = model.AvailableProviders.FirstOrDefault(p => p.Id == model.ProviderId);
             if (provider != null)
             {
-                model.AvailableUnderlyingModels = await ollamaService.GetUnderlyingModelsAsync(provider.BaseUrl) ?? new List<string>();
+                model.AvailableUnderlyingModels = await ollamaService.GetUnderlyingModelsAsync(provider.BaseUrl, provider.BearerToken) ?? new List<string>();
             }
             ViewData["Id"] = id;
             return this.StackView(model);
@@ -238,7 +239,7 @@ public class VirtualModelsController(
             var provider = model.AvailableProviders.FirstOrDefault(p => p.Id == model.ProviderId);
             if (provider != null)
             {
-                model.AvailableUnderlyingModels = await ollamaService.GetUnderlyingModelsAsync(provider.BaseUrl) ?? new List<string>();
+                model.AvailableUnderlyingModels = await ollamaService.GetUnderlyingModelsAsync(provider.BaseUrl, provider.BearerToken) ?? new List<string>();
             }
             ViewData["Id"] = id;
             return this.StackView(model);

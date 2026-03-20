@@ -9,9 +9,9 @@ public class OllamaService(
     IMemoryCache memoryCache,
     GlobalSettingsService globalSettingsService) : IScopedDependency
 {
-    public virtual async Task<List<OllamaModel>?> GetDetailedModelsAsync(string baseUrl)
+    public virtual async Task<List<OllamaModel>?> GetDetailedModelsAsync(string baseUrl, string? bearerToken = null)
     {
-        var cacheKey = $"ollama_detailed_models_{baseUrl}";
+        var cacheKey = $"ollama_detailed_models_{baseUrl}_{bearerToken}";
         if (memoryCache.TryGetValue(cacheKey, out List<OllamaModel>? cachedModels))
         {
             return cachedModels;
@@ -22,6 +22,10 @@ public class OllamaService(
             var url = baseUrl.TrimEnd('/') + "/api/tags";
             using var client = httpClientFactory.CreateClient();
             client.Timeout = await globalSettingsService.GetRequestTimeoutAsync();
+            if (!string.IsNullOrWhiteSpace(bearerToken))
+            {
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", bearerToken);
+            }
             var response = await client.GetAsync(url);
             if (!response.IsSuccessStatusCode) return null;
 
@@ -38,13 +42,17 @@ public class OllamaService(
         }
     }
 
-    public virtual async Task<List<OllamaRunningModel>?> GetRunningModelsAsync(string baseUrl, TimeSpan? overrideTimeout = null)
+    public virtual async Task<List<OllamaRunningModel>?> GetRunningModelsAsync(string baseUrl, string? bearerToken = null, TimeSpan? overrideTimeout = null)
     {
         try
         {
             var url = baseUrl.TrimEnd('/') + "/api/ps";
             using var client = httpClientFactory.CreateClient();
             client.Timeout = overrideTimeout ?? await globalSettingsService.GetRequestTimeoutAsync();
+            if (!string.IsNullOrWhiteSpace(bearerToken))
+            {
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", bearerToken);
+            }
             var response = await client.GetAsync(url);
             if (!response.IsSuccessStatusCode) return null;
 
@@ -58,9 +66,9 @@ public class OllamaService(
         }
     }
 
-    public virtual async Task<List<string>?> GetUnderlyingModelsAsync(string baseUrl)
+    public virtual async Task<List<string>?> GetUnderlyingModelsAsync(string baseUrl, string? bearerToken = null)
     {
-        var models = await GetDetailedModelsAsync(baseUrl);
+        var models = await GetDetailedModelsAsync(baseUrl, bearerToken);
         return models?.Select(m => m.Name).ToList();
     }
 
