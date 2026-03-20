@@ -46,6 +46,9 @@ namespace Aiursoft.OllamaGateway.MySql.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
+                    b.Property<long>("UsageCount")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
@@ -98,6 +101,36 @@ namespace Aiursoft.OllamaGateway.MySql.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("OllamaProviders");
+                });
+
+            modelBuilder.Entity("Aiursoft.OllamaGateway.Entities.UnderlyingModelUsage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("LastUsed")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("ModelName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<int>("ProviderId")
+                        .HasColumnType("int");
+
+                    b.Property<long>("UsageCount")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProviderId", "ModelName")
+                        .IsUnique();
+
+                    b.ToTable("UnderlyingModelUsages");
                 });
 
             modelBuilder.Entity("Aiursoft.OllamaGateway.Entities.User", b =>
@@ -379,6 +412,17 @@ namespace Aiursoft.OllamaGateway.MySql.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Aiursoft.OllamaGateway.Entities.UnderlyingModelUsage", b =>
+                {
+                    b.HasOne("Aiursoft.OllamaGateway.Entities.OllamaProvider", "Provider")
+                        .WithMany()
+                        .HasForeignKey("ProviderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Provider");
                 });
 
             modelBuilder.Entity("Aiursoft.OllamaGateway.Entities.VirtualModel", b =>

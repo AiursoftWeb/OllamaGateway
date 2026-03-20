@@ -20,4 +20,5 @@ public class ApiKey
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? LastUsed { get; set; }
+    public long UsageCount { get; set; }
 }
