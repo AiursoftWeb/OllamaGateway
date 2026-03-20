@@ -261,7 +261,12 @@ public class OllamaGatewayTests : TestBase
         Assert.Contains(key.Key[..4] + "...", usageHtml); // Masked key
         Assert.Contains("curl", usageHtml);
         Assert.Contains("/api/chat", usageHtml);
+        Assert.Contains("/v1/chat/completions", usageHtml);
         Assert.Contains("/api/embed", usageHtml);
+        Assert.Contains("Opencode Usage", usageHtml);
+        Assert.Contains("~/.config/opencode/opencode.json", usageHtml);
+        Assert.Contains("@ai-sdk/openai-compatible", usageHtml);
+        Assert.Contains("Ollama Gateway", usageHtml);
         Assert.Contains("why is the sky blue?", usageHtml);
     }
 
