@@ -67,7 +67,8 @@ public class VirtualModelsController(
         {
             Models = models,
             ModelWarnings = await GetModelWarningsAsync(models),
-            PageTitle = "Chat Models"
+            PageTitle = "Chat Models",
+            CurrentType = ModelType.Chat
         };
         return this.StackView(viewModel);
     }
@@ -93,7 +94,8 @@ public class VirtualModelsController(
         {
             Models = models,
             ModelWarnings = await GetModelWarningsAsync(models),
-            PageTitle = "Embedding Models"
+            PageTitle = "Embedding Models",
+            CurrentType = ModelType.Embedding
         };
         return this.StackView(viewModel, viewName: nameof(Index));
     }

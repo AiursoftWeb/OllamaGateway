@@ -13,4 +13,6 @@ public class IndexViewModel : UiStackLayoutViewModel
     public required List<VirtualModel> Models { get; set; }
     
     public Dictionary<int, string> ModelWarnings { get; set; } = new();
+
+    public ModelType CurrentType { get; set; }
 }
