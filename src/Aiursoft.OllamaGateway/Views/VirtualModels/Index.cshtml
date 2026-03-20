@@ -8,7 +8,7 @@
         </div>
         <div class="col-auto ms-auto text-end">
             <div class="btn-group">
-                <a asp-action="Create" asp-route-type="@(Model.PageTitle!.Contains("Chat") ? ModelType.Chat : ModelType.Embedding)" class="btn btn-primary">
+                <a asp-action="Create" asp-route-type="@Model.CurrentType" class="btn btn-primary">
                     <i class="align-middle me-1" data-lucide="plus"></i>
                     @Localizer["New Model"]
                 </a>
