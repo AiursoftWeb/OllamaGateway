@@ -4,8 +4,6 @@ using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
 using Microsoft.EntityFrameworkCore;
 using static Aiursoft.WebTools.Extends;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
 namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
@@ -26,7 +24,7 @@ public class UsageTrackingTests : TestBase
         
         MockUpstreamState.Reset();
 
-        Server = await Aiursoft.WebTools.Extends.AppAsync<TestStartup>([], port: Port);
+        Server = await AppAsync<TestStartup>([], port: Port);
         await Server.UpdateDbAsync<TemplateDbContext>();
         await Server.SeedAsync();
         await Server.StartAsync();
@@ -70,7 +68,7 @@ public class UsageTrackingTests : TestBase
 
         // 2. Make an API call to trigger usage tracking
         // We need to mock the upstream response for the proxy
-        MockUpstreamState.Handler = (req, ct) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK) 
+        MockUpstreamState.Handler = (_, _) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK) 
         { 
             Content = new StringContent("{\"done\": true, \"model\": \"llama3.2\", \"message\": {\"content\": \"hi\"}}") 
         });
