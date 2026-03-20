@@ -32,7 +32,7 @@ public class OllamaProvidersController(
         var statuses = new List<ProviderStatus>();
         foreach (var p in providers)
         {
-            var runningModels = await ollamaService.GetRunningModelsAsync(p.BaseUrl, TimeSpan.FromSeconds(3));
+            var runningModels = await ollamaService.GetRunningModelsAsync(p.BaseUrl, p.BearerToken, TimeSpan.FromSeconds(3));
             statuses.Add(new ProviderStatus
             {
                 Provider = p,
@@ -54,15 +54,21 @@ public class OllamaProvidersController(
         return this.StackView(new CreateViewModel());
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Test([FromBody] string baseUrl)
+    public class TestRequest
     {
-        if (string.IsNullOrWhiteSpace(baseUrl))
+        public string? BaseUrl { get; set; }
+        public string? BearerToken { get; set; }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Test([FromBody] TestRequest request)
+    {
+        if (string.IsNullOrWhiteSpace(request.BaseUrl))
         {
             return Json(new { success = false, message = "URL is empty." });
         }
 
-        var models = await ollamaService.GetUnderlyingModelsAsync(baseUrl);
+        var models = await ollamaService.GetUnderlyingModelsAsync(request.BaseUrl, request.BearerToken);
         if (models == null)
         {
             return Json(new { success = false, message = "Failed to connect to Ollama. Ensure the URL is correct and Ollama is running." });
@@ -87,7 +93,7 @@ public class OllamaProvidersController(
         }
 
         // Mandatory verification before saving
-        var models = await ollamaService.GetUnderlyingModelsAsync(model.BaseUrl);
+        var models = await ollamaService.GetUnderlyingModelsAsync(model.BaseUrl, model.BearerToken);
         if (models == null)
         {
             ModelState.AddModelError(nameof(model.BaseUrl), "Could not reach Ollama server at this URL. Validation failed.");
@@ -97,7 +103,8 @@ public class OllamaProvidersController(
         var provider = new OllamaProvider
         {
             Name = model.Name,
-            BaseUrl = model.BaseUrl
+            BaseUrl = model.BaseUrl,
+            BearerToken = model.BearerToken
         };
 
         dbContext.OllamaProviders.Add(provider);

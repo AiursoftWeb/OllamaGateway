@@ -32,8 +32,8 @@ public class UnderlyingModelsController(
 
         foreach (var provider in providers)
         {
-            var rawModels = await ollamaService.GetDetailedModelsAsync(provider.BaseUrl);
-            var runningModels = await ollamaService.GetRunningModelsAsync(provider.BaseUrl);
+            var rawModels = await ollamaService.GetDetailedModelsAsync(provider.BaseUrl, provider.BearerToken);
+            var runningModels = await ollamaService.GetRunningModelsAsync(provider.BaseUrl, provider.BearerToken);
 
             if (rawModels != null)
             {

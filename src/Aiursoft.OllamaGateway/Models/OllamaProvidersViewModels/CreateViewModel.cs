@@ -17,4 +17,7 @@ public class CreateViewModel : UiStackLayoutViewModel
     [Required]
     [MaxLength(100)]
     public string BaseUrl { get; set; } = "http://localhost:11434";
+
+    [MaxLength(2000)]
+    public string? BearerToken { get; set; }
 }

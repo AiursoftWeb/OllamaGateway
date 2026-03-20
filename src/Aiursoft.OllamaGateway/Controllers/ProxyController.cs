@@ -106,6 +106,10 @@ public class ProxyController(
 
             using var client = httpClientFactory.CreateClient();
             client.Timeout = await globalSettingsService.GetRequestTimeoutAsync();
+            if (!string.IsNullOrWhiteSpace(virtualModel.Provider.BearerToken))
+            {
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", virtualModel.Provider.BearerToken);
+            }
             
             var json = JsonConvert.SerializeObject(input);
             var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/chat")
@@ -303,6 +307,10 @@ public class ProxyController(
 
             using var client = httpClientFactory.CreateClient();
             client.Timeout = await globalSettingsService.GetRequestTimeoutAsync();
+            if (!string.IsNullOrWhiteSpace(virtualModel.Provider.BearerToken))
+            {
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", virtualModel.Provider.BearerToken);
+            }
             
             var json = JsonConvert.SerializeObject(input);
             var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/embed")
@@ -389,10 +397,10 @@ public class ProxyController(
         {
             if (vm.Provider == null) continue;
 
-            if (!providerCache.TryGetValue(vm.Provider.BaseUrl, out var physicalModels))
+            if (!providerCache.TryGetValue($"{vm.Provider.BaseUrl}_{vm.Provider.BearerToken}", out var physicalModels))
             {
-                physicalModels = await ollamaService.GetDetailedModelsAsync(vm.Provider.BaseUrl);
-                providerCache[vm.Provider.BaseUrl] = physicalModels;
+                physicalModels = await ollamaService.GetDetailedModelsAsync(vm.Provider.BaseUrl, vm.Provider.BearerToken);
+                providerCache[$"{vm.Provider.BaseUrl}_{vm.Provider.BearerToken}"] = physicalModels;
             }
 
             var physicalModel = physicalModels?.FirstOrDefault(m => m.Name == vm.UnderlyingModel);
@@ -448,10 +456,10 @@ public class ProxyController(
         {
             if (vm.Provider == null) continue;
 
-            if (!providerCache.TryGetValue(vm.Provider.BaseUrl, out var runningPhysical))
+            if (!providerCache.TryGetValue($"{vm.Provider.BaseUrl}_{vm.Provider.BearerToken}", out var runningPhysical))
             {
-                runningPhysical = await ollamaService.GetRunningModelsAsync(vm.Provider.BaseUrl);
-                providerCache[vm.Provider.BaseUrl] = runningPhysical;
+                runningPhysical = await ollamaService.GetRunningModelsAsync(vm.Provider.BaseUrl, vm.Provider.BearerToken);
+                providerCache[$"{vm.Provider.BaseUrl}_{vm.Provider.BearerToken}"] = runningPhysical;
             }
 
             var physicalRunning = runningPhysical?.FirstOrDefault(m => m.Name == vm.UnderlyingModel);

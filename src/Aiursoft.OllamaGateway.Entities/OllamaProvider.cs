@@ -15,6 +15,9 @@ public class OllamaProvider
     [MaxLength(100)]
     public required string BaseUrl { get; set; }
 
+    [MaxLength(2000)]
+    public string? BearerToken { get; set; }
+
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public List<VirtualModel> VirtualModels { get; set; } = [];

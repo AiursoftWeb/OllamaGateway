@@ -34,6 +34,13 @@
                             <div class="form-text">@Localizer["The URL where Ollama is listening."]</div>
                         </div>
 
+                        <div class="mb-3">
+                            <label asp-for="BearerToken" class="form-label">@Localizer["Bearer Token (Optional)"]</label>
+                            <input asp-for="BearerToken" id="bearerTokenInput" class="form-control" placeholder="e.g. sk-..." />
+                            <span asp-validation-for="BearerToken" class="text-danger"></span>
+                            <div class="form-text">@Localizer["The Bearer Token for authorization if required by the upstream server."]</div>
+                        </div>
+
                         <div id="testResult" class="alert d-none mb-3"></div>
 
                         <div class="d-grid gap-2">
@@ -67,6 +74,7 @@
 
         document.getElementById('btnTestConnection').addEventListener('click', async function() {
             const baseUrl = document.getElementById('baseUrlInput').value;
+            const bearerToken = document.getElementById('bearerTokenInput').value;
             const btn = this;
             const spinner = document.getElementById('testSpinner');
             const text = document.getElementById('testText');
@@ -92,7 +100,10 @@
                         'Content-Type': 'application/json',
                         'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
                     },
-                    body: JSON.stringify(baseUrl)
+                    body: JSON.stringify({
+                        baseUrl: baseUrl,
+                        bearerToken: bearerToken
+                    })
                 });
 
                 const data = await response.json();
