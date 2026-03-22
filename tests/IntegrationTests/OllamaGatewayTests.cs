@@ -268,6 +268,18 @@ public class OllamaGatewayTests : TestBase
         Assert.Contains("@ai-sdk/openai-compatible", usageHtml);
         Assert.Contains("Ollama Gateway", usageHtml);
         Assert.Contains("why is the sky blue?", usageHtml);
+
+        // Edit API Key
+        var editResponse = await PostForm("/ApiKeys/Edit", new Dictionary<string, string>
+        {
+            { "Id", key.Id.ToString() },
+            { "Name", "My Desktop" }
+        });
+        AssertRedirect(editResponse, "/ApiKeys", exact: false);
+        var editedIndexResponse = await Http.GetAsync("/ApiKeys");
+        var editedHtml = await editedIndexResponse.Content.ReadAsStringAsync();
+        Assert.Contains("My Desktop", editedHtml);
+        Assert.IsFalse(editedHtml.Contains("My Laptop"));
     }
 
     [TestMethod]
