@@ -1,5 +1,7 @@
 @using Aiursoft.OllamaGateway.Entities
-@model Aiursoft.OllamaGateway.Models.VirtualModelsViewModels.CreateViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model Aiursoft.OllamaGateway.Models.ChatPlaygroundViewModels.IndexViewModel
 
 <div class="container-fluid p-0">
     <div class="row mb-3">
@@ -7,11 +9,17 @@
             <h1 class="h3 mb-3">@Localizer["Chat Playground"]</h1>
         </div>
         <div class="col-auto ms-auto d-flex align-items-center">
+            <label class="me-2 fw-bold">@Localizer["API Mode:"]</label>
+            <select class="form-select form-select-sm me-3" id="apiMode" style="width: auto;">
+                <option value="ollama">Ollama API</option>
+                <option value="openai">OpenAI API</option>
+            </select>
+
             <label class="me-2 fw-bold">@Localizer["Switch Model:"]</label>
             <select class="form-select form-select-sm" style="width: auto;" onchange="window.location.href='?id=' + this.value">
-                @foreach (var m in (List<VirtualModel>)ViewData["AllModels"]!)
+                @foreach (var m in Model.AllModels)
                 {
-                    <option value="@m.Id" selected="@(m.Id == (int)ViewData["ModelId"]! ? "selected" : null)">@m.Name</option>
+                    <option value="@m.Id" selected="@(m.Id == Model.ModelId ? "selected" : null)">@m.Name</option>
                 }
             </select>
         </div>
@@ -21,7 +29,10 @@
         <div class="card-header d-flex justify-content-between align-items-center">
             <div>
                 <h5 class="card-title mb-0">@Localizer["Chatting with"] <strong>@Model.Name</strong></h5>
-                <small class="text-muted">@Localizer["Provider Model:"] @Model.UnderlyingModel</small>
+                <small class="text-muted d-block">@Localizer["Provider Model:"] @Model.UnderlyingModel</small>
+                <small class="text-muted d-block mt-1">
+                    @Localizer["API Endpoint:"] <code id="endpointDisplay">@Model.BaseUrl/api/chat</code>
+                </small>
             </div>
             <button class="btn btn-sm btn-outline-secondary" id="btnClearChat">@Localizer["Clear Session"]</button>
         </div>
@@ -77,11 +88,33 @@
         display: flex;
         flex-direction: column;
     }
+    .thinking-container {
+        border-left: 3px solid #dee2e6;
+        background-color: #fdfdfd;
+        margin-bottom: 0.5rem;
+    }
+    .thinking-header {
+        cursor: pointer;
+        padding: 4px 8px;
+        user-select: none;
+        transition: background-color 0.2s;
+    }
+    .thinking-header:hover {
+        background-color: #f1f3f5;
+    }
+    .thinking-content {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+    .cursor-pointer {
+        cursor: pointer;
+    }
 </style>
 
 <div id="loc-data" hidden>
     <span data-key="session-cleared">@Localizer["Session cleared. Send a new message to start over."]</span>
     <span data-key="error-prefix">@Localizer["Error: "]</span>
+    <span data-key="thinking">@Localizer["Thinking..."]</span>
 </div>
 
 @* ReSharper disable once Razor.SectionNotResolved *@
@@ -100,9 +133,19 @@
         const btnUploadImage = document.getElementById('btnUploadImage');
         const imageInput = document.getElementById('imageInput');
         const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+        const apiModeSelect = document.getElementById('apiMode');
+        const endpointDisplay = document.getElementById('endpointDisplay');
         
         let history = [];
         let pendingImages = [];
+
+        apiModeSelect.addEventListener('change', () => {
+            if (apiModeSelect.value === 'ollama') {
+                endpointDisplay.innerText = '@Model.BaseUrl/api/chat';
+            } else {
+                endpointDisplay.innerText = '@Model.BaseUrl/v1/chat/completions';
+            }
+        });
 
         function appendMessage(role, content, images = []) {
             const welcome = document.getElementById('welcomeMessage');
@@ -110,7 +153,48 @@
 
             const msgDiv = document.createElement('div');
             msgDiv.className = `message message-${role}`;
-            msgDiv.innerText = content;
+            
+            if (role === 'assistant') {
+                // Prepare thinking container
+                const thinkContainer = document.createElement('div');
+                thinkContainer.className = 'thinking-container mb-2 d-none';
+                thinkContainer.innerHTML = `
+                    <div class="thinking-header d-flex align-items-center">
+                        <i class="align-middle me-1" style="width: 14px; height: 14px;" data-lucide="brain"></i>
+                        <small class="fw-bold">${getLocalizedText('thinking', 'Thinking...')}</small>
+                        <div class="spinner-border spinner-border-sm ms-2 thinking-spinner" role="status"></div>
+                        <i class="align-middle ms-auto toggle-icon" style="width: 14px; height: 14px;" data-lucide="chevron-down"></i>
+                    </div>
+                    <div class="thinking-content mt-1 p-2 bg-light border rounded small d-none" style="white-space: pre-wrap;"></div>
+                `;
+                msgDiv.appendChild(thinkContainer);
+                
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'message-content';
+                contentDiv.innerText = content;
+                msgDiv.appendChild(contentDiv);
+                
+                // Toggle logic
+                const header = thinkContainer.querySelector('.thinking-header');
+                const thinkContent = thinkContainer.querySelector('.thinking-content');
+                const toggleIcon = thinkContainer.querySelector('.toggle-icon');
+                header.onclick = () => {
+                    thinkContent.classList.toggle('d-none');
+                    toggleIcon.style.transform = thinkContent.classList.contains('d-none') ? '' : 'rotate(180deg)';
+                };
+                
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons({
+                        attrs: {
+                            class: 'align-middle'
+                        },
+                        nameAttr: 'data-lucide',
+                        icons: undefined
+                    });
+                }
+            } else {
+                msgDiv.innerText = content;
+            }
 
             if (images && images.length > 0) {
                 const imgContainer = document.createElement('div');
@@ -223,6 +307,9 @@
             pendingImages = [];
             renderPreviews();
             updateRequired();
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
         });
 
         chatForm.addEventListener('submit', async function(e) {
@@ -249,24 +336,42 @@
             history.push(msgObj);
 
             const assistantMsgDiv = appendMessage('assistant', '...');
+            const contentDiv = assistantMsgDiv.querySelector('.message-content');
+            const thinkContainer = assistantMsgDiv.querySelector('.thinking-container');
+            const thinkContent = assistantMsgDiv.querySelector('.thinking-content');
+            const thinkSpinner = assistantMsgDiv.querySelector('.thinking-spinner');
+            
             let assistantFullContent = '';
+            let assistantFullThinking = '';
+            const mode = apiModeSelect.value;
 
             try {
-                const response = await fetch('/api/chat', {
+                const endpoint = mode === 'ollama' ? '/api/chat' : '/v1/chat/completions';
+                const body = mode === 'ollama' ? {
+                    model: '@Model.Name',
+                    messages: history,
+                    stream: true
+                } : {
+                    model: '@Model.Name',
+                    messages: history.map(m => ({
+                        role: m.role,
+                        content: m.content
+                        // OpenAI format might not support images the same way in this simple proxy
+                    })),
+                    stream: true
+                };
+
+                const response = await fetch(endpoint, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        model: '@Model.Name',
-                        messages: history,
-                        stream: true
-                    })
+                    body: JSON.stringify(body)
                 });
 
                 if (!response.ok) throw new Error(await response.text());
 
                 const reader = response.body.getReader();
                 const decoder = new TextDecoder();
-                assistantMsgDiv.innerText = '';
+                contentDiv.innerText = '';
                 let lineBuffer = '';
 
                 while (true) {
@@ -274,32 +379,67 @@
                     if (done) break;
 
                     lineBuffer += decoder.decode(value, { stream: true });
-                    const lines = lineBuffer.split('\n');
                     
-                    // Keep the last partial line in the buffer
-                    lineBuffer = lines.pop() || '';
-                    
-                    for (const line of lines) {
-                        if (!line.trim()) continue;
-                        try {
-                            const data = JSON.parse(line);
-                            if (data.message && data.message.content) {
-                                assistantFullContent += data.message.content;
-                                assistantMsgDiv.innerText = assistantFullContent;
-                                chatMessages.scrollTop = chatMessages.scrollHeight;
+                    if (mode === 'ollama') {
+                        const lines = lineBuffer.split('\n');
+                        lineBuffer = lines.pop() || '';
+                        for (const line of lines) {
+                            if (!line.trim()) continue;
+                            try {
+                                const data = JSON.parse(line);
+                                if (data.message) {
+                                    if (data.message.content) {
+                                        assistantFullContent += data.message.content;
+                                        contentDiv.innerText = assistantFullContent;
+                                    }
+                                    const thinking = data.message.thinking || data.message.think;
+                                    if (thinking) {
+                                        assistantFullThinking += thinking;
+                                        thinkContent.innerText = assistantFullThinking;
+                                        thinkContainer.classList.remove('d-none');
+                                    }
+                                    if (data.done) {
+                                        thinkSpinner.classList.add('d-none');
+                                    }
+                                }
+                            } catch (e) { console.error(e); }
+                        }
+                    } else {
+                        // OpenAI SSE
+                        const lines = lineBuffer.split('\n');
+                        lineBuffer = lines.pop() || '';
+                        for (const line of lines) {
+                            if (!line.startsWith('data: ')) continue;
+                            const dataStr = line.substring(6).trim();
+                            if (dataStr === '[DONE]') {
+                                thinkSpinner.classList.add('d-none');
+                                continue;
                             }
-                        } catch (e) {
-                            console.error("Partial JSON or error:", line, e);
+                            try {
+                                const data = JSON.parse(dataStr);
+                                const delta = data.choices[0].delta;
+                                if (delta.content) {
+                                    assistantFullContent += delta.content;
+                                    contentDiv.innerText = assistantFullContent;
+                                }
+                                if (delta.reasoning_content) {
+                                    assistantFullThinking += delta.reasoning_content;
+                                    thinkContent.innerText = assistantFullThinking;
+                                    thinkContainer.classList.remove('d-none');
+                                }
+                            } catch (e) { console.error(e); }
                         }
                     }
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
                 }
                 
                 history.push({ role: 'assistant', content: assistantFullContent });
 
             } catch (error) {
-                assistantMsgDiv.classList.add('text-danger');
-                assistantMsgDiv.innerText = getLocalizedText('error-prefix', 'Error: ') + error.message;
+                contentDiv.classList.add('text-danger');
+                contentDiv.innerText = getLocalizedText('error-prefix', 'Error: ') + error.message;
             } finally {
+                thinkSpinner.classList.add('d-none');
                 userInput.disabled = false;
                 btnSend.disabled = false;
                 btnUploadImage.disabled = false;
