@@ -71,6 +71,10 @@
                                             <i class="align-middle me-1" data-lucide="terminal"></i>
                                             @Localizer["Use"]
                                         </a>
+                                        <a asp-action="Edit" asp-route-id="@key.Id" class="btn btn-sm btn-outline-secondary">
+                                            <i class="align-middle me-1" data-lucide="edit"></i>
+                                            @Localizer["Edit"]
+                                        </a>
                                         <form asp-action="Delete" asp-route-id="@key.Id" method="post" onsubmit="return confirm('@Localizer["Are you sure you want to delete this API key?"]');">
                                             <button type="submit" class="btn btn-sm btn-outline-danger">
                                                 <i class="align-middle" data-lucide="trash-2"></i>

@@ -105,6 +105,49 @@ public class ApiKeysController(
         return RedirectToAction(nameof(Index));
     }
 
+    [HttpGet]
+    public async Task<IActionResult> Edit(int id)
+    {
+        var user = await userManager.GetUserAsync(User);
+        var key = await dbContext.ApiKeys
+            .FirstOrDefaultAsync(k => k.Id == id && k.UserId == user!.Id);
+
+        if (key == null)
+        {
+            return NotFound();
+        }
+
+        return this.StackView(new EditViewModel
+        {
+            Id = key.Id,
+            Name = key.Name
+        });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(EditViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return this.StackView(model);
+        }
+
+        var user = await userManager.GetUserAsync(User);
+        var key = await dbContext.ApiKeys
+            .FirstOrDefaultAsync(k => k.Id == model.Id && k.UserId == user!.Id);
+
+        if (key == null)
+        {
+            return NotFound();
+        }
+
+        key.Name = model.Name;
+        await dbContext.SaveChangesAsync();
+
+        return RedirectToAction(nameof(Index));
+    }
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Delete(int id)
