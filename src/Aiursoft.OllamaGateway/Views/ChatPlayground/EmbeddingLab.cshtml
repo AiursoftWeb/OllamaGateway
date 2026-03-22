@@ -1,5 +1,4 @@
-@using Aiursoft.OllamaGateway.Entities
-@model Aiursoft.OllamaGateway.Models.VirtualModelsViewModels.CreateViewModel
+@model Aiursoft.OllamaGateway.Models.ChatPlaygroundViewModels.IndexViewModel
 
 <div class="container-fluid p-0">
     <div class="row mb-3">
@@ -9,9 +8,9 @@
         <div class="col-auto ms-auto d-flex align-items-center">
             <label class="me-2 fw-bold">@Localizer["Switch Model:"]</label>
             <select class="form-select form-select-sm" style="width: auto;" onchange="window.location.href='?id=' + this.value">
-                @foreach (var m in (List<VirtualModel>)ViewData["AllModels"]!)
+                @foreach (var m in Model.AllModels)
                 {
-                    <option value="@m.Id" selected="@(m.Id == (int)ViewData["ModelId"]! ? "selected" : null)">@m.Name</option>
+                    <option value="@m.Id" selected="@(m.Id == Model.ModelId ? "selected" : null)">@m.Name</option>
                 }
             </select>
         </div>

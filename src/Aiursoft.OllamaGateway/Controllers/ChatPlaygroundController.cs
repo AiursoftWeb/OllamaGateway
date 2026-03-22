@@ -1,6 +1,6 @@
 using Aiursoft.OllamaGateway.Authorization;
 using Aiursoft.OllamaGateway.Entities;
-using Aiursoft.OllamaGateway.Models.VirtualModelsViewModels;
+using Aiursoft.OllamaGateway.Models.ChatPlaygroundViewModels;
 using Aiursoft.OllamaGateway.Services;
 using Aiursoft.UiStack.Navigation;
 using Microsoft.AspNetCore.Authorization;
@@ -39,15 +39,17 @@ public class ChatPlaygroundController(
             ? models.FirstOrDefault(m => m.Id == id.Value) ?? models.First()
             : models.First();
 
-        var viewModel = new CreateViewModel // Reuse this for model info
+        var baseUrl = $"{Request.Scheme}://{Request.Host}";
+        var viewModel = new IndexViewModel
         {
             Name = selectedModel.Name,
             UnderlyingModel = selectedModel.UnderlyingModel,
+            ModelId = selectedModel.Id,
+            AllModels = models,
+            BaseUrl = baseUrl,
             PageTitle = "Chat Playground"
         };
 
-        ViewData["ModelId"] = selectedModel.Id;
-        ViewData["AllModels"] = models;
         return this.StackView(viewModel);
     }
 
@@ -77,14 +79,16 @@ public class ChatPlaygroundController(
             ? models.FirstOrDefault(m => m.Id == id.Value) ?? models.First()
             : models.First();
 
-        var viewModel = new CreateViewModel // Reuse this for model info
+        var baseUrl = $"{Request.Scheme}://{Request.Host}";
+        var viewModel = new IndexViewModel
         {
             Name = selectedModel.Name,
             UnderlyingModel = selectedModel.UnderlyingModel,
+            ModelId = selectedModel.Id,
+            AllModels = models,
+            BaseUrl = baseUrl,
             PageTitle = "Embedding Lab"
         };
 
-        ViewData["ModelId"] = selectedModel.Id;
-        ViewData["AllModels"] = models;
         return this.StackView(viewModel);
     }}
