@@ -24,6 +24,9 @@
   <data name="Back to List" xml:space="preserve">
     <value>Torna all&apos;elenco</value>
   </data>
+  <data name="Basic Settings" xml:space="preserve">
+    <value>Impostazioni di base</value>
+  </data>
   <data name="Context Length (num_ctx)" xml:space="preserve">
     <value>Lunghezza del contesto (num_ctx)</value>
   </data>
@@ -39,14 +42,32 @@
   <data name="e.g. MyLlama3" xml:space="preserve">
     <value>ad es. MyLlama3</value>
   </data>
+  <data name="e.g. MyLlama3:latest" xml:space="preserve">
+    <value>es. MyLlama3:latest</value>
+  </data>
   <data name="Enabled" xml:space="preserve">
     <value>Abilitato</value>
+  </data>
+  <data name="Forces the upstream engine to allocate a specific window size." xml:space="preserve">
+    <value>Forza il motore upstream ad allocare una dimensione finestra specifica.</value>
+  </data>
+  <data name="Initial Backend Configuration" xml:space="preserve">
+    <value>Configurazione iniziale del backend</value>
   </data>
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>Mantieni il modello caricato in memoria</value>
   </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>Max Retries</value>
+  </data>
   <data name="Model Details and Overrides" xml:space="preserve">
     <value>Dettagli e sovrascritture del modello</value>
+  </data>
+  <data name="Ollama num_ctx Override" xml:space="preserve">
+    <value>Override di num_ctx di Ollama</value>
+  </data>
+  <data name="Optional Model Overrides" xml:space="preserve">
+    <value>Override opzionali del modello</value>
   </data>
   <data name="Optional Overrides (Leave empty to use client/defaults)" xml:space="preserve">
     <value>Override opzionali (lasciare vuoto per utilizzare le impostazioni del client/predefinite)</value>
@@ -56,6 +77,9 @@
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Penalità ripetizione</value>
+  </data>
+  <data name="Selection Strategy" xml:space="preserve">
+    <value>Strategia di selezione</value>
   </data>
   <data name="Temperature" xml:space="preserve">
     <value>Temperatura</value>
@@ -69,8 +93,14 @@
   <data name="Top P" xml:space="preserve">
     <value>Top P</value>
   </data>
+  <data name="Try Timeout (s)" xml:space="preserve">
+    <value>Durata tentativo timeout (s)</value>
+  </data>
   <data name="Underlying Model" xml:space="preserve">
     <value>Modelo sottostante</value>
+  </data>
+  <data name="Use Raw Output" xml:space="preserve">
+    <value>Utilizza output grezzo</value>
   </data>
   <data name="Use Raw Output (Don&apos;t translate stream)" xml:space="preserve">
     <value>Usa output grezzo (non tradurre il flusso)</value>

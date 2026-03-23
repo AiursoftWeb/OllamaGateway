@@ -18,17 +18,41 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="-- Select Underlying Model --" xml:space="preserve">
+      <data name="-- Select Model --" xml:space="preserve">
+    <value>-- 選擇模型 --</value>
+  </data>
+  <data name="-- Select Provider --" xml:space="preserve">
+    <value>-- 選擇提供者 --</value>
+  </data>
+  <data name="-- Select Underlying Model --" xml:space="preserve">
     <value>-- 選擇底層模型 --</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>操作</value>
+  </data>
+  <data name="Add Backend" xml:space="preserve">
+    <value>新增後端</value>
+  </data>
+  <data name="Add New Backend" xml:space="preserve">
+    <value>新增後端</value>
+  </data>
+  <data name="Are you sure?" xml:space="preserve">
+    <value>你確定？</value>
   </data>
   <data name="Back to List" xml:space="preserve">
     <value>返回列表</value>
+  </data>
+  <data name="Configuration Guide:" xml:space="preserve">
+    <value>配置指南：</value>
   </data>
   <data name="Context Length (num_ctx)" xml:space="preserve">
     <value>上下文長度 (num_ctx)</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>預設</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>刪除</value>
   </data>
   <data name="Disabled" xml:space="preserve">
     <value>停用</value>
@@ -42,11 +66,32 @@
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>將模型保留在記憶體中載入</value>
   </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>最大重試次數</value>
+  </data>
+  <data name="Model Backends (1:N Support)" xml:space="preserve">
+    <value>模型後端（支援 1:N）</value>
+  </data>
   <data name="Model Details and Overrides" xml:space="preserve">
     <value>模型詳情與覆寫</value>
   </data>
+  <data name="No backends added." xml:space="preserve">
+    <value>未添加後端程序。</value>
+  </data>
+  <data name="Ollama num_ctx Override" xml:space="preserve">
+    <value>Ollama num_ctx 覆蓋</value>
+  </data>
+  <data name="Optional Model Overrides" xml:space="preserve">
+    <value>可選模型覆寫</value>
+  </data>
   <data name="Optional Overrides" xml:space="preserve">
     <value>可選覆寫</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>優先級</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>供應商</value>
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>重複懲罰</value>
@@ -54,11 +99,23 @@
   <data name="Save Changes" xml:space="preserve">
     <value>儲存變更</value>
   </data>
+  <data name="Save Configuration" xml:space="preserve">
+    <value>儲存設定</value>
+  </data>
+  <data name="Selection Strategy" xml:space="preserve">
+    <value>選擇策略</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>狀態</value>
+  </data>
   <data name="Temperature" xml:space="preserve">
     <value>溫度</value>
   </data>
   <data name="Thinking Mode" xml:space="preserve">
     <value>思考模式</value>
+  </data>
+  <data name="Toggle this backend?" xml:space="preserve">
+    <value>切換此後端？</value>
   </data>
   <data name="Top K" xml:space="preserve">
     <value>Top K</value>
@@ -66,14 +123,35 @@
   <data name="Top P" xml:space="preserve">
     <value>Top P</value>
   </data>
+  <data name="Try Timeout (s)" xml:space="preserve">
+    <value>嘗試超時 (秒)</value>
+  </data>
+  <data name="Underlying" xml:space="preserve">
+    <value>底層</value>
+  </data>
   <data name="Underlying Model" xml:space="preserve">
     <value>底層模型</value>
+  </data>
+  <data name="Upstream window size." xml:space="preserve">
+    <value>上游視窗大小。</value>
   </data>
   <data name="Use Raw Output" xml:space="preserve">
     <value>使用原始輸出</value>
   </data>
+  <data name="Used in &apos;Priority Fallback&apos; strategy. Lower numbers (e.g. 0, 1) have higher priority. The system will always try the healthy backend with the lowest priority number first." xml:space="preserve">
+    <value>用於「優先順序後備」策略。數值較小者（例如 0、1）優先級較高。系統會優先嘗試優先順序數值最低且健康的後端。</value>
+  </data>
+  <data name="Used in &apos;Weighted Random&apos; strategy. Higher numbers increase the traffic proportion. For example, a backend with weight 10 gets twice as much traffic as one with weight 5." xml:space="preserve">
+    <value>適用於「加權隨機」策略。數字越大，流量比例越高。例如，權重為 10 的後端所獲流量是權重為 5 的後端的兩倍。</value>
+  </data>
+  <data name="Virtual Model Configuration" xml:space="preserve">
+    <value>虛擬模型設定</value>
+  </data>
   <data name="Virtual Model Name" xml:space="preserve">
     <value>虛擬模型名稱</value>
+  </data>
+  <data name="Weight" xml:space="preserve">
+    <value>權重</value>
   </data>
 
 </root>

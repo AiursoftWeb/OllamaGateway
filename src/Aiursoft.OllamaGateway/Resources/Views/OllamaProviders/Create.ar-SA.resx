@@ -33,8 +33,14 @@
   <data name="Cancel" xml:space="preserve">
     <value>إلغاء</value>
   </data>
+  <data name="Controls how long models stay in memory after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep forever." xml:space="preserve">
+    <value>يتحكم في المدة التي تبقى فيها النماذج في الذاكرة بعد طلب. تنسيق Ollama (مثل &apos;5m&apos;، &apos;1h&apos;، &apos;24h&apos;). استخدم &apos;0&apos; للتفريغ فورًا، أو &apos;-1&apos; للاحتفاظ بها إلى الأبد.</value>
+  </data>
   <data name="e.g. My Local Ollama" xml:space="preserve">
     <value>مثال: أولاما المحلي الخاص بي</value>
+  </data>
+  <data name="Keep Alive Policy" xml:space="preserve">
+    <value>سياسة البقاء على قيد الحياة</value>
   </data>
   <data name="Models found:" xml:space="preserve">
     <value>تم العثور على النماذج:</value>

@@ -18,17 +18,41 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="-- Select Underlying Model --" xml:space="preserve">
+      <data name="-- Select Model --" xml:space="preserve">
+    <value>-- Chọn Mô hình --</value>
+  </data>
+  <data name="-- Select Provider --" xml:space="preserve">
+    <value>-- Chọn nhà cung cấp --</value>
+  </data>
+  <data name="-- Select Underlying Model --" xml:space="preserve">
     <value>-- Chọn Mô hình Cơ sở --</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Thao tác</value>
+  </data>
+  <data name="Add Backend" xml:space="preserve">
+    <value>Thêm Backend</value>
+  </data>
+  <data name="Add New Backend" xml:space="preserve">
+    <value>Thêm Backend mới</value>
+  </data>
+  <data name="Are you sure?" xml:space="preserve">
+    <value>Bạn có chắc chắn không?</value>
   </data>
   <data name="Back to List" xml:space="preserve">
     <value>Quay lại danh sách</value>
+  </data>
+  <data name="Configuration Guide:" xml:space="preserve">
+    <value>Hướng dẫn Cấu hình:</value>
   </data>
   <data name="Context Length (num_ctx)" xml:space="preserve">
     <value>Độ dài ngữ cảnh (num_ctx)</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>Mặc định</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Xóa</value>
   </data>
   <data name="Disabled" xml:space="preserve">
     <value>Vô hiệu hóa</value>
@@ -42,11 +66,32 @@
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>Giữ mô hình đã tải trong bộ nhớ</value>
   </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>Số lượt lặp tối đa</value>
+  </data>
+  <data name="Model Backends (1:N Support)" xml:space="preserve">
+    <value>Backend của Mô hình (Hỗ trợ 1:N)</value>
+  </data>
   <data name="Model Details and Overrides" xml:space="preserve">
     <value>Chi tiết Mô hình và Ghi đè</value>
   </data>
+  <data name="No backends added." xml:space="preserve">
+    <value>Không có backend nào được thêm.</value>
+  </data>
+  <data name="Ollama num_ctx Override" xml:space="preserve">
+    <value>Ghi đè số từ ngữ cảnh Ollama</value>
+  </data>
+  <data name="Optional Model Overrides" xml:space="preserve">
+    <value>Các ghi đè mô hình tùy chọn</value>
+  </data>
   <data name="Optional Overrides" xml:space="preserve">
     <value>Tùy chọn Ghi đè</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>Thứ tự ưu tiên</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Nhà cung cấp</value>
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Hình phạt lặp lại</value>
@@ -54,11 +99,23 @@
   <data name="Save Changes" xml:space="preserve">
     <value>Lưu thay đổi</value>
   </data>
+  <data name="Save Configuration" xml:space="preserve">
+    <value>Lưu cấu hình</value>
+  </data>
+  <data name="Selection Strategy" xml:space="preserve">
+    <value>Chiến lược Chọn</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
   <data name="Temperature" xml:space="preserve">
     <value>Nhiệt độ</value>
   </data>
   <data name="Thinking Mode" xml:space="preserve">
     <value>Chế độ suy nghĩ</value>
+  </data>
+  <data name="Toggle this backend?" xml:space="preserve">
+    <value>Kích hoạt backend này?</value>
   </data>
   <data name="Top K" xml:space="preserve">
     <value>Top K</value>
@@ -66,14 +123,35 @@
   <data name="Top P" xml:space="preserve">
     <value>Top P</value>
   </data>
+  <data name="Try Timeout (s)" xml:space="preserve">
+    <value>Thời gian chờ Thử (giây)</value>
+  </data>
+  <data name="Underlying" xml:space="preserve">
+    <value>Cơ sở</value>
+  </data>
   <data name="Underlying Model" xml:space="preserve">
     <value>Mô hình nền tảng</value>
+  </data>
+  <data name="Upstream window size." xml:space="preserve">
+    <value>Kích thước cửa sổ upstream.</value>
   </data>
   <data name="Use Raw Output" xml:space="preserve">
     <value>Sử dụng đầu ra thô</value>
   </data>
+  <data name="Used in &apos;Priority Fallback&apos; strategy. Lower numbers (e.g. 0, 1) have higher priority. The system will always try the healthy backend with the lowest priority number first." xml:space="preserve">
+    <value>Được sử dụng trong chiến lược &apos;Priority Fallback&apos;. Các số nhỏ hơn (ví dụ: 0, 1) có độ ưu tiên cao hơn. Hệ thống luôn sẽ thử backend khỏe mạnh có số ưu tiên thấp nhất trước tiên.</value>
+  </data>
+  <data name="Used in &apos;Weighted Random&apos; strategy. Higher numbers increase the traffic proportion. For example, a backend with weight 10 gets twice as much traffic as one with weight 5." xml:space="preserve">
+    <value>Được sử dụng trong chiến lược &apos;Weighted Random&apos;. Các số lớn hơn làm tăng tỷ trọng lưu lượng. Ví dụ, một backend có trọng số 10 sẽ nhận gấp đôi lưu lượng so với một backend có trọng số 5.</value>
+  </data>
+  <data name="Virtual Model Configuration" xml:space="preserve">
+    <value>Cấu hình Mô hình Ảo</value>
+  </data>
   <data name="Virtual Model Name" xml:space="preserve">
     <value>Tên mô hình ảo</value>
+  </data>
+  <data name="Weight" xml:space="preserve">
+    <value>Trọng số</value>
   </data>
 
 </root>

@@ -24,6 +24,9 @@
   <data name="Back to List" xml:space="preserve">
     <value>Listeye Dön</value>
   </data>
+  <data name="Basic Settings" xml:space="preserve">
+    <value>Temel Ayarlar</value>
+  </data>
   <data name="Context Length (num_ctx)" xml:space="preserve">
     <value>Bağlam Uzunluğu (num_ctx)</value>
   </data>
@@ -39,14 +42,32 @@
   <data name="e.g. MyLlama3" xml:space="preserve">
     <value>Örn. MyLlama3</value>
   </data>
+  <data name="e.g. MyLlama3:latest" xml:space="preserve">
+    <value>Örn. MyLlama3:latest</value>
+  </data>
   <data name="Enabled" xml:space="preserve">
     <value>Etkinleştirildi</value>
+  </data>
+  <data name="Forces the upstream engine to allocate a specific window size." xml:space="preserve">
+    <value>Ön uç motorunu belirli bir pencere boyutu tahsis etmeye zorlar.</value>
+  </data>
+  <data name="Initial Backend Configuration" xml:space="preserve">
+    <value>Backend Başlangıç Yapılandırması</value>
   </data>
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>Modeli bellekte tut</value>
   </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>Maksimum Deneme Sayısı</value>
+  </data>
   <data name="Model Details and Overrides" xml:space="preserve">
     <value>Model Detayları ve Geçersiz Kılmalar</value>
+  </data>
+  <data name="Ollama num_ctx Override" xml:space="preserve">
+    <value>Ollama num_ctx Geçersiz Kılma</value>
+  </data>
+  <data name="Optional Model Overrides" xml:space="preserve">
+    <value>İsteğe Bağlı Model Geçersiz Kılmalari</value>
   </data>
   <data name="Optional Overrides (Leave empty to use client/defaults)" xml:space="preserve">
     <value>İsteğe Bağlı Geçersiz Kılmalar (İstemci/varsayılan değerleri kullanmak için boş bırakın)</value>
@@ -56,6 +77,9 @@
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Tekrar Cezası</value>
+  </data>
+  <data name="Selection Strategy" xml:space="preserve">
+    <value>Seçim Stratejisi</value>
   </data>
   <data name="Temperature" xml:space="preserve">
     <value>Sıcaklık</value>
@@ -69,8 +93,14 @@
   <data name="Top P" xml:space="preserve">
     <value>Top P</value>
   </data>
+  <data name="Try Timeout (s)" xml:space="preserve">
+    <value>Deneme Zaman Aşımı (s)</value>
+  </data>
   <data name="Underlying Model" xml:space="preserve">
     <value>Alt Model</value>
+  </data>
+  <data name="Use Raw Output" xml:space="preserve">
+    <value>Ham Çıktı Kullan</value>
   </data>
   <data name="Use Raw Output (Don&apos;t translate stream)" xml:space="preserve">
     <value>Ham Çıktıyı Kullan (Akışı çevirme)</value>

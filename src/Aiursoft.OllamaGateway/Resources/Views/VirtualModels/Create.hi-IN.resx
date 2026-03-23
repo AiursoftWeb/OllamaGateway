@@ -24,6 +24,9 @@
   <data name="Back to List" xml:space="preserve">
     <value>सूची पर वापस जाएं</value>
   </data>
+  <data name="Basic Settings" xml:space="preserve">
+    <value>मूल सेटिंग्स</value>
+  </data>
   <data name="Context Length (num_ctx)" xml:space="preserve">
     <value>संदर्भ लंबाई (num_ctx)</value>
   </data>
@@ -39,14 +42,32 @@
   <data name="e.g. MyLlama3" xml:space="preserve">
     <value>उदा. MyLlama3</value>
   </data>
+  <data name="e.g. MyLlama3:latest" xml:space="preserve">
+    <value>उदा॰ MyLlama3:latest</value>
+  </data>
   <data name="Enabled" xml:space="preserve">
     <value>सक्षम</value>
+  </data>
+  <data name="Forces the upstream engine to allocate a specific window size." xml:space="preserve">
+    <value>अपस्ट्रीम इंजन को विशिष्ट विंडो साइज आवंटित करने के लिए मजबूर करता है।</value>
+  </data>
+  <data name="Initial Backend Configuration" xml:space="preserve">
+    <value>प्रारंभिक बैकएंड कॉन्फ़िगरेशन</value>
   </data>
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>मॉडल को मेमोरी में लोड रखें</value>
   </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>अधिकतम पुनरावृत्तियाँ</value>
+  </data>
   <data name="Model Details and Overrides" xml:space="preserve">
     <value>मॉडल विवरण और ओवरराइड</value>
+  </data>
+  <data name="Ollama num_ctx Override" xml:space="preserve">
+    <value>ओलामा num_ctx ओवरराइड</value>
+  </data>
+  <data name="Optional Model Overrides" xml:space="preserve">
+    <value>वैकल्पिक मॉडल अनुकूलन</value>
   </data>
   <data name="Optional Overrides (Leave empty to use client/defaults)" xml:space="preserve">
     <value>वैकल्पिक ओवरराइड (क्लाइंट/डिफ़ॉल्ट का उपयोग करने के लिए खाली छोड़ें)</value>
@@ -56,6 +77,9 @@
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>पुनरावृत्ति दंड</value>
+  </data>
+  <data name="Selection Strategy" xml:space="preserve">
+    <value>चयन रणनीति</value>
   </data>
   <data name="Temperature" xml:space="preserve">
     <value>तापमान</value>
@@ -69,8 +93,14 @@
   <data name="Top P" xml:space="preserve">
     <value>टॉप पी</value>
   </data>
+  <data name="Try Timeout (s)" xml:space="preserve">
+    <value>कोशिका टाइमआउट (सेकंड)</value>
+  </data>
   <data name="Underlying Model" xml:space="preserve">
     <value>मूल मॉडल</value>
+  </data>
+  <data name="Use Raw Output" xml:space="preserve">
+    <value>रॉउट आउटपुट का उपयोग करें</value>
   </data>
   <data name="Use Raw Output (Don&apos;t translate stream)" xml:space="preserve">
     <value>रॉ आउटपुट का उपयोग करें (स्ट्रीम का अनुवाद न करें)</value>

@@ -24,6 +24,9 @@
   <data name="Back to List" xml:space="preserve">
     <value>กลับไปยังรายการ</value>
   </data>
+  <data name="Basic Settings" xml:space="preserve">
+    <value>การตั้งค่าพื้นฐาน</value>
+  </data>
   <data name="Context Length (num_ctx)" xml:space="preserve">
     <value>ความยาวบริบท (num_ctx)</value>
   </data>
@@ -39,14 +42,32 @@
   <data name="e.g. MyLlama3" xml:space="preserve">
     <value>เช่น MyLlama3</value>
   </data>
+  <data name="e.g. MyLlama3:latest" xml:space="preserve">
+    <value>เช่น MyLlama3:latest</value>
+  </data>
   <data name="Enabled" xml:space="preserve">
     <value>เปิดใช้งาน</value>
+  </data>
+  <data name="Forces the upstream engine to allocate a specific window size." xml:space="preserve">
+    <value>บังคับให้เอนจิ้นต้นทางจัดสรรขนาดหน้าต่างเฉพาะ</value>
+  </data>
+  <data name="Initial Backend Configuration" xml:space="preserve">
+    <value>การตั้งค่าเบื้องต้นของ Backend</value>
   </data>
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>เก็บโมเดลไว้ในหน่วยความจำ</value>
   </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>จำนวนครั้งที่ลองซ้ำสูงสุด</value>
+  </data>
   <data name="Model Details and Overrides" xml:space="preserve">
     <value>รายละเอียดและค่าที่กำหนดใหม่สำหรับโมเดล</value>
+  </data>
+  <data name="Ollama num_ctx Override" xml:space="preserve">
+    <value>Ollama num_ctx Override</value>
+  </data>
+  <data name="Optional Model Overrides" xml:space="preserve">
+    <value>การกำหนดค่า Model แบบไม่บังคับ</value>
   </data>
   <data name="Optional Overrides (Leave empty to use client/defaults)" xml:space="preserve">
     <value>การแทนค่าเพิ่มเติม (เว้นว่างไว้เพื่อใช้ค่าจากไคลเอนต์/ค่าเริ่มต้น)</value>
@@ -56,6 +77,9 @@
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>ค่าปรับการทำซ้ำ</value>
+  </data>
+  <data name="Selection Strategy" xml:space="preserve">
+    <value>กลยุทธ์การเลือก</value>
   </data>
   <data name="Temperature" xml:space="preserve">
     <value>อุณหภูมิ</value>
@@ -69,8 +93,14 @@
   <data name="Top P" xml:space="preserve">
     <value>Top P</value>
   </data>
+  <data name="Try Timeout (s)" xml:space="preserve">
+    <value>ลองเวลาหมดอายุ (วินาที)</value>
+  </data>
   <data name="Underlying Model" xml:space="preserve">
     <value>แบบจำลองพื้นฐาน</value>
+  </data>
+  <data name="Use Raw Output" xml:space="preserve">
+    <value>ใช้ผลลัพธ์แบบ Raw</value>
   </data>
   <data name="Use Raw Output (Don&apos;t translate stream)" xml:space="preserve">
     <value>ใช้ผลลัพธ์แบบดิบ (อย่าแปลสตรีม)</value>

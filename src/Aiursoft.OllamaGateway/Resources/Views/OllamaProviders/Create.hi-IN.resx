@@ -33,8 +33,14 @@
   <data name="Cancel" xml:space="preserve">
     <value>रद्द करें</value>
   </data>
+  <data name="Controls how long models stay in memory after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep forever." xml:space="preserve">
+    <value>नियंत्रित करता है कि मॉडल अनुरोध के बाद कितनी देर तक मेमोरी में रहते हैं। Ollama प्रारूप (उदाहरण के लिए, &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;)। तुरंत लोड करने के लिए &apos;0&apos; का उपयोग करें, या हमेशा के लिए रखने के लिए &apos;-1&apos; का उपयोग करें।</value>
+  </data>
   <data name="e.g. My Local Ollama" xml:space="preserve">
     <value>उदाहरण के लिए: मेरा स्थानीय ओलामा</value>
+  </data>
+  <data name="Keep Alive Policy" xml:space="preserve">
+    <value>कीप-अलाइव नीति</value>
   </data>
   <data name="Models found:" xml:space="preserve">
     <value>मॉडल पाए गए:</value>

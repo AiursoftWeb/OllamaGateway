@@ -18,17 +18,41 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="-- Select Underlying Model --" xml:space="preserve">
+      <data name="-- Select Model --" xml:space="preserve">
+    <value>-- حدد الموديل --</value>
+  </data>
+  <data name="-- Select Provider --" xml:space="preserve">
+    <value>-- اختر مزود الخدمة --</value>
+  </data>
+  <data name="-- Select Underlying Model --" xml:space="preserve">
     <value>-- اختر النموذج الأساسي --</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>الإجراءات</value>
+  </data>
+  <data name="Add Backend" xml:space="preserve">
+    <value>إضافة خادم خلفي</value>
+  </data>
+  <data name="Add New Backend" xml:space="preserve">
+    <value>إضافة Backend جديد</value>
+  </data>
+  <data name="Are you sure?" xml:space="preserve">
+    <value>هل أنت متأكد؟</value>
   </data>
   <data name="Back to List" xml:space="preserve">
     <value>العودة إلى القائمة</value>
+  </data>
+  <data name="Configuration Guide:" xml:space="preserve">
+    <value>دليل الإعدادات:</value>
   </data>
   <data name="Context Length (num_ctx)" xml:space="preserve">
     <value>طول السياق (num_ctx)</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>افتراضي</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>حذف</value>
   </data>
   <data name="Disabled" xml:space="preserve">
     <value>معطل</value>
@@ -42,11 +66,32 @@
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>إبقاء النموذج محملاً في الذاكرة</value>
   </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>أقصى عدد من المحاولات</value>
+  </data>
+  <data name="Model Backends (1:N Support)" xml:space="preserve">
+    <value>أدوات تشغيل النموذج (دعم 1:N)</value>
+  </data>
   <data name="Model Details and Overrides" xml:space="preserve">
     <value>تفاصيل النموذج والتجاوزات</value>
   </data>
+  <data name="No backends added." xml:space="preserve">
+    <value>لم يتم إضافة أي خوادم خلفية.</value>
+  </data>
+  <data name="Ollama num_ctx Override" xml:space="preserve">
+    <value>إعادة تعيين Ollama num_ctx</value>
+  </data>
+  <data name="Optional Model Overrides" xml:space="preserve">
+    <value>تعديلات نموذج اختيارية</value>
+  </data>
   <data name="Optional Overrides" xml:space="preserve">
     <value>تعديلات اختيارية</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>الأولوية</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>المزود</value>
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>عقوبة التكرار</value>
@@ -54,11 +99,23 @@
   <data name="Save Changes" xml:space="preserve">
     <value>حفظ التغييرات</value>
   </data>
+  <data name="Save Configuration" xml:space="preserve">
+    <value>حفظ الإعدادات</value>
+  </data>
+  <data name="Selection Strategy" xml:space="preserve">
+    <value>استراتيجية الاختيار</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>حالة</value>
+  </data>
   <data name="Temperature" xml:space="preserve">
     <value>درجة الحرارة</value>
   </data>
   <data name="Thinking Mode" xml:space="preserve">
     <value>وضع التفكير</value>
+  </data>
+  <data name="Toggle this backend?" xml:space="preserve">
+    <value>تبديل هذا الواجهة الخلفية؟</value>
   </data>
   <data name="Top K" xml:space="preserve">
     <value>أعلى K</value>
@@ -66,14 +123,35 @@
   <data name="Top P" xml:space="preserve">
     <value>Top P</value>
   </data>
+  <data name="Try Timeout (s)" xml:space="preserve">
+    <value>محاولة مهلة (ثانية)</value>
+  </data>
+  <data name="Underlying" xml:space="preserve">
+    <value>النموذج الأساسي</value>
+  </data>
   <data name="Underlying Model" xml:space="preserve">
     <value>نموذج أساسي</value>
+  </data>
+  <data name="Upstream window size." xml:space="preserve">
+    <value>حجم نافذة المصدر.</value>
   </data>
   <data name="Use Raw Output" xml:space="preserve">
     <value>استخدم الإخراج الخام</value>
   </data>
+  <data name="Used in &apos;Priority Fallback&apos; strategy. Lower numbers (e.g. 0, 1) have higher priority. The system will always try the healthy backend with the lowest priority number first." xml:space="preserve">
+    <value>يُستخدم في استراتيجية &quot;الأولوية الاحتياطية&quot;. الأرقام الأقل (مثل 0، 1) لها أولوية أعلى. سيحاول النظام دائمًا تجربة الخادم الخلفي السليم ذو رقم الأولوية الأدنى أولاً.</value>
+  </data>
+  <data name="Used in &apos;Weighted Random&apos; strategy. Higher numbers increase the traffic proportion. For example, a backend with weight 10 gets twice as much traffic as one with weight 5." xml:space="preserve">
+    <value>تُستخدم في استراتيجية «الوزن العشوائي». تزيد الأرقام الأكبر من نسبة حركة المرور. على سبيل المثال، يستلم الخادم الخلفي ذو الوزن 10 ضعف حركة المرور التي يحصل عليها خادم ذو وزن 5.</value>
+  </data>
+  <data name="Virtual Model Configuration" xml:space="preserve">
+    <value>إعداد النموذج الافتراضي</value>
+  </data>
   <data name="Virtual Model Name" xml:space="preserve">
     <value>اسم النموذج الافتراضي</value>
+  </data>
+  <data name="Weight" xml:space="preserve">
+    <value>الوزن</value>
   </data>
 
 </root>

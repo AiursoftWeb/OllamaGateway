@@ -24,6 +24,9 @@
   <data name="Back to List" xml:space="preserve">
     <value>Tillbaka till listan</value>
   </data>
+  <data name="Basic Settings" xml:space="preserve">
+    <value>Grundläggande inställningar</value>
+  </data>
   <data name="Context Length (num_ctx)" xml:space="preserve">
     <value>Kontextlängd (num_ctx)</value>
   </data>
@@ -39,14 +42,32 @@
   <data name="e.g. MyLlama3" xml:space="preserve">
     <value>t.ex. MyLlama3</value>
   </data>
+  <data name="e.g. MyLlama3:latest" xml:space="preserve">
+    <value>t.ex. MyLlama3:latest</value>
+  </data>
   <data name="Enabled" xml:space="preserve">
     <value>Aktiverad</value>
+  </data>
+  <data name="Forces the upstream engine to allocate a specific window size." xml:space="preserve">
+    <value>Tvingar uppströmsmotorn att tilldelas en specifik fönsterstorlek.</value>
+  </data>
+  <data name="Initial Backend Configuration" xml:space="preserve">
+    <value>Initial Backend Configuration</value>
   </data>
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>Behåll modellen inläst i minnet</value>
   </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>Maxantal försök</value>
+  </data>
   <data name="Model Details and Overrides" xml:space="preserve">
     <value>Modellinformation och inställningar</value>
+  </data>
+  <data name="Ollama num_ctx Override" xml:space="preserve">
+    <value>Ollama num_ctx-överstyrring</value>
+  </data>
+  <data name="Optional Model Overrides" xml:space="preserve">
+    <value>Valfria modelländringar</value>
   </data>
   <data name="Optional Overrides (Leave empty to use client/defaults)" xml:space="preserve">
     <value>Valfria överstyrningar (Lämna tomt för att använda klientens standardvärden)</value>
@@ -56,6 +77,9 @@
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Upprepningsstraff</value>
+  </data>
+  <data name="Selection Strategy" xml:space="preserve">
+    <value>Väljningsstrategi</value>
   </data>
   <data name="Temperature" xml:space="preserve">
     <value>Temperatur</value>
@@ -69,8 +93,14 @@
   <data name="Top P" xml:space="preserve">
     <value>Top P</value>
   </data>
+  <data name="Try Timeout (s)" xml:space="preserve">
+    <value>Försökstidsgräns (s)</value>
+  </data>
   <data name="Underlying Model" xml:space="preserve">
     <value>Underliggande modell</value>
+  </data>
+  <data name="Use Raw Output" xml:space="preserve">
+    <value>Använd rent utfall</value>
   </data>
   <data name="Use Raw Output (Don&apos;t translate stream)" xml:space="preserve">
     <value>Använd rå output (översätt inte ström)</value>

@@ -33,8 +33,14 @@
   <data name="Cancel" xml:space="preserve">
     <value>İptal</value>
   </data>
+  <data name="Controls how long models stay in memory after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep forever." xml:space="preserve">
+    <value>Model isteklerden sonra bellekte ne kadar süre kalacağını kontrol eder. Ollama formatı (örn., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Hemen boşaltmak için &apos;0&apos;, sonsuza kadar tutmak için &apos;-1&apos; kullanın.</value>
+  </data>
   <data name="e.g. My Local Ollama" xml:space="preserve">
     <value>örn. Yerel Ollama&apos;m</value>
+  </data>
+  <data name="Keep Alive Policy" xml:space="preserve">
+    <value>Canlı Tutma Politikası</value>
   </data>
   <data name="Models found:" xml:space="preserve">
     <value>Model bulundu:</value>

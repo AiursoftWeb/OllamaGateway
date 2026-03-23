@@ -24,6 +24,9 @@
   <data name="Back to List" xml:space="preserve">
     <value>Terug naar lijst</value>
   </data>
+  <data name="Basic Settings" xml:space="preserve">
+    <value>Basisinstellingen</value>
+  </data>
   <data name="Context Length (num_ctx)" xml:space="preserve">
     <value>Contextlengte (num_ctx)</value>
   </data>
@@ -39,14 +42,32 @@
   <data name="e.g. MyLlama3" xml:space="preserve">
     <value>bijv. MyLlama3</value>
   </data>
+  <data name="e.g. MyLlama3:latest" xml:space="preserve">
+    <value>bijv. MyLlama3:latest</value>
+  </data>
   <data name="Enabled" xml:space="preserve">
     <value>Ingeschakeld</value>
+  </data>
+  <data name="Forces the upstream engine to allocate a specific window size." xml:space="preserve">
+    <value>Dwingt de upstream-engine om een specifieke venstergrootte toe te wijzen.</value>
+  </data>
+  <data name="Initial Backend Configuration" xml:space="preserve">
+    <value>Initiële backend-configuratie</value>
   </data>
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>Model in geheugen houden</value>
   </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>Max pogingen</value>
+  </data>
   <data name="Model Details and Overrides" xml:space="preserve">
     <value>Modelgegevens en overrides</value>
+  </data>
+  <data name="Ollama num_ctx Override" xml:space="preserve">
+    <value>Ollama num_ctx-overrid</value>
+  </data>
+  <data name="Optional Model Overrides" xml:space="preserve">
+    <value>Optionele modeloverrides</value>
   </data>
   <data name="Optional Overrides (Leave empty to use client/defaults)" xml:space="preserve">
     <value>Optionele overrides (laat leeg om de client/standaardwaarden te gebruiken)</value>
@@ -56,6 +77,9 @@
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Herhalingsstraf</value>
+  </data>
+  <data name="Selection Strategy" xml:space="preserve">
+    <value>Selectie strategie</value>
   </data>
   <data name="Temperature" xml:space="preserve">
     <value>Temperatuur</value>
@@ -69,8 +93,14 @@
   <data name="Top P" xml:space="preserve">
     <value>Top P</value>
   </data>
+  <data name="Try Timeout (s)" xml:space="preserve">
+    <value>Proeftijd (s)</value>
+  </data>
   <data name="Underlying Model" xml:space="preserve">
     <value>Onderliggend model</value>
+  </data>
+  <data name="Use Raw Output" xml:space="preserve">
+    <value>Raw output gebruiken</value>
   </data>
   <data name="Use Raw Output (Don&apos;t translate stream)" xml:space="preserve">
     <value>Gebruik ruwe uitvoer (stream niet vertalen)</value>
