@@ -24,6 +24,9 @@
   <data name="Back to List" xml:space="preserve">
     <value>Назад к списку</value>
   </data>
+  <data name="Basic Settings" xml:space="preserve">
+    <value>Основные настройки</value>
+  </data>
   <data name="Context Length (num_ctx)" xml:space="preserve">
     <value>Длина контекста (num_ctx)</value>
   </data>
@@ -39,14 +42,32 @@
   <data name="e.g. MyLlama3" xml:space="preserve">
     <value>напр. MyLlama3</value>
   </data>
+  <data name="e.g. MyLlama3:latest" xml:space="preserve">
+    <value>например, MyLlama3:latest</value>
+  </data>
   <data name="Enabled" xml:space="preserve">
     <value>Включено</value>
+  </data>
+  <data name="Forces the upstream engine to allocate a specific window size." xml:space="preserve">
+    <value>Принудительно выделяет у upstream-движка определенный размер окна.</value>
+  </data>
+  <data name="Initial Backend Configuration" xml:space="preserve">
+    <value>Исходная конфигурация бэкенда</value>
   </data>
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>Keep model loaded in memory</value>
   </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>Максимальное количество попыток</value>
+  </data>
   <data name="Model Details and Overrides" xml:space="preserve">
     <value>Детали модели и параметры переопределения</value>
+  </data>
+  <data name="Ollama num_ctx Override" xml:space="preserve">
+    <value>Переопределение num_ctx Ollama</value>
+  </data>
+  <data name="Optional Model Overrides" xml:space="preserve">
+    <value>Дополнительные настройки модели</value>
   </data>
   <data name="Optional Overrides (Leave empty to use client/defaults)" xml:space="preserve">
     <value>Дополнительные переопределения (оставьте пустым, чтобы использовать настройки клиента/значения по умолчанию)</value>
@@ -56,6 +77,9 @@
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Штраф за повторение</value>
+  </data>
+  <data name="Selection Strategy" xml:space="preserve">
+    <value>Стратегия выбора</value>
   </data>
   <data name="Temperature" xml:space="preserve">
     <value>Температура</value>
@@ -69,8 +93,14 @@
   <data name="Top P" xml:space="preserve">
     <value>Top P</value>
   </data>
+  <data name="Try Timeout (s)" xml:space="preserve">
+    <value>Время ожидания попытки (с)</value>
+  </data>
   <data name="Underlying Model" xml:space="preserve">
     <value>Базовая модель</value>
+  </data>
+  <data name="Use Raw Output" xml:space="preserve">
+    <value>Использовать сырой вывод</value>
   </data>
   <data name="Use Raw Output (Don&apos;t translate stream)" xml:space="preserve">
     <value>Использовать сырой вывод (не переводить поток)</value>

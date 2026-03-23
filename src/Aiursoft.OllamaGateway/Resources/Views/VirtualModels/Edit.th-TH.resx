@@ -18,17 +18,41 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="-- Select Underlying Model --" xml:space="preserve">
+      <data name="-- Select Model --" xml:space="preserve">
+    <value>-- เลือกแบบจำลอง --</value>
+  </data>
+  <data name="-- Select Provider --" xml:space="preserve">
+    <value>-- เลือกผู้ให้บริการ --</value>
+  </data>
+  <data name="-- Select Underlying Model --" xml:space="preserve">
     <value>-- เลือกโมเดลพื้นฐาน --</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>การดำเนินการ</value>
+  </data>
+  <data name="Add Backend" xml:space="preserve">
+    <value>เพิ่ม Backend</value>
+  </data>
+  <data name="Add New Backend" xml:space="preserve">
+    <value>เพิ่ม Backend ใหม่</value>
+  </data>
+  <data name="Are you sure?" xml:space="preserve">
+    <value>แน่ใจหรือไม่ว่าต้องการดำเนินการนี้?</value>
   </data>
   <data name="Back to List" xml:space="preserve">
     <value>กลับสู่รายการ</value>
+  </data>
+  <data name="Configuration Guide:" xml:space="preserve">
+    <value>คู่มือการตั้งค่า:</value>
   </data>
   <data name="Context Length (num_ctx)" xml:space="preserve">
     <value>ความยาวบริบท (num_ctx)</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>ค่าเริ่มต้น</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>ลบ</value>
   </data>
   <data name="Disabled" xml:space="preserve">
     <value>ปิดใช้งาน</value>
@@ -42,11 +66,32 @@
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>เก็บโมเดลไว้ในหน่วยความจำ</value>
   </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>จำนวนครั้งสูงสุด</value>
+  </data>
+  <data name="Model Backends (1:N Support)" xml:space="preserve">
+    <value>Backend ของโมเดล (รองรับ 1:N)</value>
+  </data>
   <data name="Model Details and Overrides" xml:space="preserve">
     <value>รายละเอียดโมเดลและการกำหนดค่าใหม่</value>
   </data>
+  <data name="No backends added." xml:space="preserve">
+    <value>ยังไม่ได้เพิ่ม Backends ใด ๆ</value>
+  </data>
+  <data name="Ollama num_ctx Override" xml:space="preserve">
+    <value>การแก้ไขค่า num_ctx ของ Ollama</value>
+  </data>
+  <data name="Optional Model Overrides" xml:space="preserve">
+    <value>การกำหนดค่าโมเดลแบบเลือกได้</value>
+  </data>
   <data name="Optional Overrides" xml:space="preserve">
     <value>การกำหนดค่าเพิ่มเติมแบบเลือกได้</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>ลำดับความสำคัญ</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>ผู้ให้บริการ</value>
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>บทลงโทษการทำซ้ำ</value>
@@ -54,11 +99,23 @@
   <data name="Save Changes" xml:space="preserve">
     <value>บันทึกการเปลี่ยนแปลง</value>
   </data>
+  <data name="Save Configuration" xml:space="preserve">
+    <value>บันทึกการตั้งค่า</value>
+  </data>
+  <data name="Selection Strategy" xml:space="preserve">
+    <value>กลยุทธ์การเลือก</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>สถานะ</value>
+  </data>
   <data name="Temperature" xml:space="preserve">
     <value>อุณหภูมิ</value>
   </data>
   <data name="Thinking Mode" xml:space="preserve">
     <value>โหมดการคิด</value>
+  </data>
+  <data name="Toggle this backend?" xml:space="preserve">
+    <value>เปิด/ปิด Backend นี้?</value>
   </data>
   <data name="Top K" xml:space="preserve">
     <value>Top K</value>
@@ -66,14 +123,35 @@
   <data name="Top P" xml:space="preserve">
     <value>Top P</value>
   </data>
+  <data name="Try Timeout (s)" xml:space="preserve">
+    <value>ลอง Timeout (วินาที)</value>
+  </data>
+  <data name="Underlying" xml:space="preserve">
+    <value>พื้นฐาน</value>
+  </data>
   <data name="Underlying Model" xml:space="preserve">
     <value>แบบจำลองพื้นฐาน</value>
+  </data>
+  <data name="Upstream window size." xml:space="preserve">
+    <value>ขนาดหน้าต่างของต้นทาง</value>
   </data>
   <data name="Use Raw Output" xml:space="preserve">
     <value>ใช้ผลลัพธ์แบบดิบ</value>
   </data>
+  <data name="Used in &apos;Priority Fallback&apos; strategy. Lower numbers (e.g. 0, 1) have higher priority. The system will always try the healthy backend with the lowest priority number first." xml:space="preserve">
+    <value>ใช้ในกลยุทธ์ &quot;Priority Fallback&quot; หมายเลขต่ำ (เช่น 0, 1) มีลำดับความสำคัญสูงกว่า ระบบจะพยายามตรวจสอบ backend ที่มีสุขภาพดีที่มีหมายเลขลำดับความสำคัญต่ำที่สุดก่อน</value>
+  </data>
+  <data name="Used in &apos;Weighted Random&apos; strategy. Higher numbers increase the traffic proportion. For example, a backend with weight 10 gets twice as much traffic as one with weight 5." xml:space="preserve">
+    <value>ใช้กับกลยุทธ์ &quot;Weighted Random&quot; เลขที่สูงขึ้นจะเพิ่มสัดส่วนการรับส่งข้อมูล ตัวอย่างเช่น บั๊กเอนด์ที่มีน้ำหนัก 10 จะได้รับปริมาณการรับส่งข้อมูลเป็นสองเท่าของตัวที่มีน้ำหนัก 5</value>
+  </data>
+  <data name="Virtual Model Configuration" xml:space="preserve">
+    <value>การกำหนดค่าแบบจำลองเสมือน</value>
+  </data>
   <data name="Virtual Model Name" xml:space="preserve">
     <value>ชื่อโมเดลเสมือน</value>
+  </data>
+  <data name="Weight" xml:space="preserve">
+    <value>น้ำหนัก</value>
   </data>
 
 </root>

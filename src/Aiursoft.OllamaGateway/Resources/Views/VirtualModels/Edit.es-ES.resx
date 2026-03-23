@@ -18,17 +18,41 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="-- Select Underlying Model --" xml:space="preserve">
+      <data name="-- Select Model --" xml:space="preserve">
+    <value>-- Seleccionar modelo --</value>
+  </data>
+  <data name="-- Select Provider --" xml:space="preserve">
+    <value>-- Seleccionar proveedor --</value>
+  </data>
+  <data name="-- Select Underlying Model --" xml:space="preserve">
     <value>-- Seleccione el modelo subyacente --</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Acciones</value>
+  </data>
+  <data name="Add Backend" xml:space="preserve">
+    <value>Añadir backend</value>
+  </data>
+  <data name="Add New Backend" xml:space="preserve">
+    <value>Añadir nuevo backend</value>
+  </data>
+  <data name="Are you sure?" xml:space="preserve">
+    <value>¿Está seguro?</value>
   </data>
   <data name="Back to List" xml:space="preserve">
     <value>Volver a la lista</value>
+  </data>
+  <data name="Configuration Guide:" xml:space="preserve">
+    <value>Guía de configuración:</value>
   </data>
   <data name="Context Length (num_ctx)" xml:space="preserve">
     <value>Longitud del contexto (num_ctx)</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>Predeterminado</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Eliminar</value>
   </data>
   <data name="Disabled" xml:space="preserve">
     <value>Desactivado</value>
@@ -42,11 +66,32 @@
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>Mantener el modelo cargado en memoria</value>
   </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>Máximo número de intentos</value>
+  </data>
+  <data name="Model Backends (1:N Support)" xml:space="preserve">
+    <value>Respaldos del modelo (Soporte 1:N)</value>
+  </data>
   <data name="Model Details and Overrides" xml:space="preserve">
     <value>Detalles del modelo y sobrescrituras</value>
   </data>
+  <data name="No backends added." xml:space="preserve">
+    <value>No se han añadido backends.</value>
+  </data>
+  <data name="Ollama num_ctx Override" xml:space="preserve">
+    <value>Sobreescriba de num_ctx de Ollama</value>
+  </data>
+  <data name="Optional Model Overrides" xml:space="preserve">
+    <value>Sobreescrituras opcionales del modelo</value>
+  </data>
   <data name="Optional Overrides" xml:space="preserve">
     <value>Sobrescritos opcionales</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>Prioridad</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Proveedor</value>
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Penalización por repetición</value>
@@ -54,11 +99,23 @@
   <data name="Save Changes" xml:space="preserve">
     <value>Guardar cambios</value>
   </data>
+  <data name="Save Configuration" xml:space="preserve">
+    <value>Guardar configuración</value>
+  </data>
+  <data name="Selection Strategy" xml:space="preserve">
+    <value>Estrategia de Selección</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Estado</value>
+  </data>
   <data name="Temperature" xml:space="preserve">
     <value>Temperatura</value>
   </data>
   <data name="Thinking Mode" xml:space="preserve">
     <value>Modo de razonamiento</value>
+  </data>
+  <data name="Toggle this backend?" xml:space="preserve">
+    <value>¿Desea alternar este backend?</value>
   </data>
   <data name="Top K" xml:space="preserve">
     <value>Top K</value>
@@ -66,14 +123,35 @@
   <data name="Top P" xml:space="preserve">
     <value>Top P</value>
   </data>
+  <data name="Try Timeout (s)" xml:space="preserve">
+    <value>Intentar tiempo de espera (s)</value>
+  </data>
+  <data name="Underlying" xml:space="preserve">
+    <value>Subyacente</value>
+  </data>
   <data name="Underlying Model" xml:space="preserve">
     <value>Modelo subyacente</value>
+  </data>
+  <data name="Upstream window size." xml:space="preserve">
+    <value>Tamaño de la ventana de conexión.</value>
   </data>
   <data name="Use Raw Output" xml:space="preserve">
     <value>Usar salida cruda</value>
   </data>
+  <data name="Used in &apos;Priority Fallback&apos; strategy. Lower numbers (e.g. 0, 1) have higher priority. The system will always try the healthy backend with the lowest priority number first." xml:space="preserve">
+    <value>Utilizado en la estrategia «Priority Fallback». Los números más bajos (p. ej. 0, 1) tienen mayor prioridad. El sistema siempre intentará primero el backend saludable con el número de prioridad más bajo.</value>
+  </data>
+  <data name="Used in &apos;Weighted Random&apos; strategy. Higher numbers increase the traffic proportion. For example, a backend with weight 10 gets twice as much traffic as one with weight 5." xml:space="preserve">
+    <value>Utilizado en la estrategia &apos;Aleatoriedad Ponderada&apos;. Los números más altos aumentan la proporción de tráfico. Por ejemplo, un backend con peso 10 recibe el doble de tráfico que uno con peso 5.</value>
+  </data>
+  <data name="Virtual Model Configuration" xml:space="preserve">
+    <value>Configuración de modelo virtual</value>
+  </data>
   <data name="Virtual Model Name" xml:space="preserve">
     <value>Nombre del modelo virtual</value>
+  </data>
+  <data name="Weight" xml:space="preserve">
+    <value>Peso</value>
   </data>
 
 </root>

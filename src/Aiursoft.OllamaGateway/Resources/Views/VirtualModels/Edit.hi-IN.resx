@@ -18,17 +18,41 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="-- Select Underlying Model --" xml:space="preserve">
+      <data name="-- Select Model --" xml:space="preserve">
+    <value>-- मॉडल चुनें --</value>
+  </data>
+  <data name="-- Select Provider --" xml:space="preserve">
+    <value>-- प्रदाता चुनें --</value>
+  </data>
+  <data name="-- Select Underlying Model --" xml:space="preserve">
     <value>-- अंतर्निहित मॉडल चुनें --</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>काम</value>
+  </data>
+  <data name="Add Backend" xml:space="preserve">
+    <value>बैकएंड जोड़ें</value>
+  </data>
+  <data name="Add New Backend" xml:space="preserve">
+    <value>नया बैकएन्ड जोड़ें</value>
+  </data>
+  <data name="Are you sure?" xml:space="preserve">
+    <value>क्या आप सुनिश्चित हैं?</value>
   </data>
   <data name="Back to List" xml:space="preserve">
     <value>सूची पर वापस</value>
+  </data>
+  <data name="Configuration Guide:" xml:space="preserve">
+    <value>Configration Guide:</value>
   </data>
   <data name="Context Length (num_ctx)" xml:space="preserve">
     <value>संदर्भ लंबाई (num_ctx)</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>डिफ़ॉल्ट</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>हटाएं</value>
   </data>
   <data name="Disabled" xml:space="preserve">
     <value>अक्षम</value>
@@ -42,11 +66,32 @@
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>मॉडल को मेमोरी में लोडेड रखें</value>
   </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>अधिकतम प्रयास</value>
+  </data>
+  <data name="Model Backends (1:N Support)" xml:space="preserve">
+    <value>मॉडल बैकएन्ड्स (1:N सपोर्ट)</value>
+  </data>
   <data name="Model Details and Overrides" xml:space="preserve">
     <value>मॉडल विवरण और ओवरराइड</value>
   </data>
+  <data name="No backends added." xml:space="preserve">
+    <value>कोई बैकएंड जोड़े नहीं गए।</value>
+  </data>
+  <data name="Ollama num_ctx Override" xml:space="preserve">
+    <value>ओल्लामा num_ctx ओवरराइड</value>
+  </data>
+  <data name="Optional Model Overrides" xml:space="preserve">
+    <value>सामान्य मॉडल ओवरराइड</value>
+  </data>
   <data name="Optional Overrides" xml:space="preserve">
     <value>वैकल्पिक ओवरराइड्स</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>प्रथमता</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>प्रदाता</value>
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>पुनरावृत्ति दंड</value>
@@ -54,11 +99,23 @@
   <data name="Save Changes" xml:space="preserve">
     <value>परिवर्तन सहेजें</value>
   </data>
+  <data name="Save Configuration" xml:space="preserve">
+    <value>कॉन्फ़िगरेशन सेव करें</value>
+  </data>
+  <data name="Selection Strategy" xml:space="preserve">
+    <value>चयन रणनीति</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>स्थिति</value>
+  </data>
   <data name="Temperature" xml:space="preserve">
     <value>तापमान</value>
   </data>
   <data name="Thinking Mode" xml:space="preserve">
     <value>चिंतन मोड</value>
+  </data>
+  <data name="Toggle this backend?" xml:space="preserve">
+    <value>क्या यह बैकएंड टॉगल करें?</value>
   </data>
   <data name="Top K" xml:space="preserve">
     <value>Top K</value>
@@ -66,14 +123,35 @@
   <data name="Top P" xml:space="preserve">
     <value>टॉप पी</value>
   </data>
+  <data name="Try Timeout (s)" xml:space="preserve">
+    <value>प्रयास टाइमाउट (सेकेंड)</value>
+  </data>
+  <data name="Underlying" xml:space="preserve">
+    <value>अंतर्निहित</value>
+  </data>
   <data name="Underlying Model" xml:space="preserve">
     <value>मूल मॉडल</value>
+  </data>
+  <data name="Upstream window size." xml:space="preserve">
+    <value>अपस्ट्रीम विंडो का आकार।</value>
   </data>
   <data name="Use Raw Output" xml:space="preserve">
     <value>कच्चा आउटपुट उपयोग करें</value>
   </data>
+  <data name="Used in &apos;Priority Fallback&apos; strategy. Lower numbers (e.g. 0, 1) have higher priority. The system will always try the healthy backend with the lowest priority number first." xml:space="preserve">
+    <value>&apos;प्राथमिकता फॉलबैक&apos; रणनीति में उपयोग किया जाता है। निचले अंक (जैसे 0, 1) को उच्च प्राथमिकता प्राप्त होती है। प्रणाली हमेशा सबसे कम प्राथमिकता संख्या वाले स्वस्थ बैकएंड का प्रयास करेगी।</value>
+  </data>
+  <data name="Used in &apos;Weighted Random&apos; strategy. Higher numbers increase the traffic proportion. For example, a backend with weight 10 gets twice as much traffic as one with weight 5." xml:space="preserve">
+    <value>&apos;Weighted Random&apos; रणनीति में उपयोग किया जाता है। अधिक संख्याएँ ट्रैफिक का अनुपात बढ़ाती हैं। उदाहरण के लिए, 10 भार वाली एक बैकएंड, 5 भार वाली बैकएंड की तुलना में दोगुनी ट्रैफिक प्राप्त करती है।</value>
+  </data>
+  <data name="Virtual Model Configuration" xml:space="preserve">
+    <value>वर्चुअल मॉडल कॉन्फ़िगरेशन</value>
+  </data>
   <data name="Virtual Model Name" xml:space="preserve">
     <value>वर्चुअल मॉडल का नाम</value>
+  </data>
+  <data name="Weight" xml:space="preserve">
+    <value>वजन</value>
   </data>
 
 </root>

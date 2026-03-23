@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="Back to List" xml:space="preserve">
+    <value>Listeye Dön</value>
+  </data>
+  <data name="Base URL" xml:space="preserve">
+    <value>Taban URL</value>
+  </data>
+  <data name="Bearer Token" xml:space="preserve">
+    <value>Bearer Token</value>
+  </data>
+  <data name="Connection Test" xml:space="preserve">
+    <value>Bağlantı Testi</value>
+  </data>
+  <data name="Controls how long models stay in memory after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep forever." xml:space="preserve">
+    <value>Modelin istek sonrasında bellekte ne kadar süre kalacağını kontrol eder. Ollama formatı (örneğin, &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Anında boşaltmak için &apos;0&apos; veya sonsuza kadar tutmak için &apos;-1&apos; kullanın.</value>
+  </data>
+  <data name="e.g. Local Server" xml:space="preserve">
+    <value>ör. Yerel Sunucu</value>
+  </data>
+  <data name="Edit Ollama Provider" xml:space="preserve">
+    <value>Ollama Sağlayıcısını Düzenle</value>
+  </data>
+  <data name="Keep Alive" xml:space="preserve">
+    <value>Canlı Kalma Süresi</value>
+  </data>
+  <data name="Keep Alive Policy" xml:space="preserve">
+    <value>Canlı Tutma Politikası</value>
+  </data>
+  <data name="No physical models found on this server." xml:space="preserve">
+    <value>Bu sunucuda fiziksel model bulunamadı.</value>
+  </data>
+  <data name="Optional API Key" xml:space="preserve">
+    <value>İsteğe bağlı API Anahtarı</value>
+  </data>
+  <data name="Proactive Model Warmup" xml:space="preserve">
+    <value>Proaktif Model Isıtmaya Hazırlık</value>
+  </data>
+  <data name="Provider Connection Settings" xml:space="preserve">
+    <value>Provider Bağlantı Ayarları</value>
+  </data>
+  <data name="Provider Name" xml:space="preserve">
+    <value>Sağlayıcı Adı</value>
+  </data>
+  <data name="Save Changes" xml:space="preserve">
+    <value>Değişiklikleri Kaydet</value>
+  </data>
+  <data name="Select physical models that should be proactively kept loaded in this provider&apos;s VRAM. The gateway will periodically ping these models to prevent them from being unloaded." xml:space="preserve">
+    <value>Bu sağlayıcının VRAM&apos;inde proaktif olarak yüklü kalması gereken fiziksel modelleri seçin. Gateway, bu modellerin boşaltılmasını önlemek için periyodik olarak bu modellere ping gönderecektir.</value>
+  </data>
+  <data name="Test Connection" xml:space="preserve">
+    <value>Bağlantıyı Test Et</value>
+  </data>
+  <data name="Underlying Model Name" xml:space="preserve">
+    <value>Alt Model Adı</value>
+  </data>
+
+</root>

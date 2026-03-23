@@ -18,17 +18,41 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="-- Select Underlying Model --" xml:space="preserve">
+      <data name="-- Select Model --" xml:space="preserve">
+    <value>-- Selectează modelul --</value>
+  </data>
+  <data name="-- Select Provider --" xml:space="preserve">
+    <value>-- Selecteaza Furnizor --</value>
+  </data>
+  <data name="-- Select Underlying Model --" xml:space="preserve">
     <value>-- Selectează modelul de bază --</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Acțiuni</value>
+  </data>
+  <data name="Add Backend" xml:space="preserve">
+    <value>Adaugă Backend</value>
+  </data>
+  <data name="Add New Backend" xml:space="preserve">
+    <value>Adăugare nou backend</value>
+  </data>
+  <data name="Are you sure?" xml:space="preserve">
+    <value>Ești sigur?</value>
   </data>
   <data name="Back to List" xml:space="preserve">
     <value>Înapoi la listă</value>
+  </data>
+  <data name="Configuration Guide:" xml:space="preserve">
+    <value>Ghid de configurare:</value>
   </data>
   <data name="Context Length (num_ctx)" xml:space="preserve">
     <value>Lungime context (num_ctx)</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>Implicit</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Șterge</value>
   </data>
   <data name="Disabled" xml:space="preserve">
     <value>Dezactivat</value>
@@ -42,11 +66,32 @@
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>Ține modelul încărcat în memorie</value>
   </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>Max retries</value>
+  </data>
+  <data name="Model Backends (1:N Support)" xml:space="preserve">
+    <value>Back-end-uri de model (suport 1:N)</value>
+  </data>
   <data name="Model Details and Overrides" xml:space="preserve">
     <value>Detalii model și anulari</value>
   </data>
+  <data name="No backends added." xml:space="preserve">
+    <value>Nu s-au adăugat backend-uri.</value>
+  </data>
+  <data name="Ollama num_ctx Override" xml:space="preserve">
+    <value>Override ovl num_ctx din Ollama</value>
+  </data>
+  <data name="Optional Model Overrides" xml:space="preserve">
+    <value>Anulări optional ale modelului</value>
+  </data>
   <data name="Optional Overrides" xml:space="preserve">
     <value>Suprascrieri opționale</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>Prioritate</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Furnizor</value>
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Penalizare de repetare</value>
@@ -54,11 +99,23 @@
   <data name="Save Changes" xml:space="preserve">
     <value>Salvare modificări</value>
   </data>
+  <data name="Save Configuration" xml:space="preserve">
+    <value>Salvare configurare</value>
+  </data>
+  <data name="Selection Strategy" xml:space="preserve">
+    <value>Metoda de selecție</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
   <data name="Temperature" xml:space="preserve">
     <value>Temperatură</value>
   </data>
   <data name="Thinking Mode" xml:space="preserve">
     <value>Modul de gândire</value>
+  </data>
+  <data name="Toggle this backend?" xml:space="preserve">
+    <value>Comutați acest backend?</value>
   </data>
   <data name="Top K" xml:space="preserve">
     <value>Top K</value>
@@ -66,14 +123,35 @@
   <data name="Top P" xml:space="preserve">
     <value>Top P</value>
   </data>
+  <data name="Try Timeout (s)" xml:space="preserve">
+    <value>Încearcă Timeout (s)</value>
+  </data>
+  <data name="Underlying" xml:space="preserve">
+    <value>De bază</value>
+  </data>
   <data name="Underlying Model" xml:space="preserve">
     <value>Model de bază</value>
+  </data>
+  <data name="Upstream window size." xml:space="preserve">
+    <value>Marimea ferestrei superioare.</value>
   </data>
   <data name="Use Raw Output" xml:space="preserve">
     <value>Folosește ieșirea brută</value>
   </data>
+  <data name="Used in &apos;Priority Fallback&apos; strategy. Lower numbers (e.g. 0, 1) have higher priority. The system will always try the healthy backend with the lowest priority number first." xml:space="preserve">
+    <value>Folosit în strategia &quot;Prioritate Fallback&quot;. Numerele mai mici (de ex. 0, 1) au prioritate mai mare. Sistemul va încerca întotdeauna backend-ul sănătos cu numărul de prioritate cel mai mai mic primul.</value>
+  </data>
+  <data name="Used in &apos;Weighted Random&apos; strategy. Higher numbers increase the traffic proportion. For example, a backend with weight 10 gets twice as much traffic as one with weight 5." xml:space="preserve">
+    <value>Folosit în strategia „Rândomică ponderată&quot;. Numerele mai mari cresc proporția traficului. De exemplu, un backend cu greutatea de 10 primește de două ori mai mult trafic decât unul cu greutatea de 5.</value>
+  </data>
+  <data name="Virtual Model Configuration" xml:space="preserve">
+    <value>Configurare model virtual</value>
+  </data>
   <data name="Virtual Model Name" xml:space="preserve">
     <value>Nume model virtual</value>
+  </data>
+  <data name="Weight" xml:space="preserve">
+    <value>Greutatea</value>
   </data>
 
 </root>

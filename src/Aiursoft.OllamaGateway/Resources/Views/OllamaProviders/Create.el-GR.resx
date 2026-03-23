@@ -33,8 +33,14 @@
   <data name="Cancel" xml:space="preserve">
     <value>Ακύρωση</value>
   </data>
+  <data name="Controls how long models stay in memory after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep forever." xml:space="preserve">
+    <value>Ρυθμίζει το πόσο καιρό παραμένουν τα μοντέλα στη μνήμη μετά από αίτημα. Μορφή Ollama (π.χ., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Χρησιμοποιήστε το &apos;0&apos; για άμεση αποφόρτιση, ή το &apos;-1&apos; για παραμονή για πάντα.</value>
+  </data>
   <data name="e.g. My Local Ollama" xml:space="preserve">
     <value>π.χ. Η τοπική Ollama μου</value>
+  </data>
+  <data name="Keep Alive Policy" xml:space="preserve">
+    <value>Πολιτική Διατήρησης Ενεργής Κατάστασης</value>
   </data>
   <data name="Models found:" xml:space="preserve">
     <value>Βρέθηκαν μοντέλα:</value>

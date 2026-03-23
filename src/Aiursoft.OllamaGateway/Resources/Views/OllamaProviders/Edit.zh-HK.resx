@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="Back to List" xml:space="preserve">
+    <value>返回列表</value>
+  </data>
+  <data name="Base URL" xml:space="preserve">
+    <value>基礎 URL</value>
+  </data>
+  <data name="Bearer Token" xml:space="preserve">
+    <value>Bearer Token</value>
+  </data>
+  <data name="Connection Test" xml:space="preserve">
+    <value>連接測試</value>
+  </data>
+  <data name="Controls how long models stay in memory after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep forever." xml:space="preserve">
+    <value>控制模型在請求後於記憶體中保留的時間長度。Ollama 格式（例如，&apos;5 分鐘&apos;、&apos;1 小時&apos;、&apos;24 小時&apos;）。使用 &apos;0&apos; 立即卸載，或 &apos;-1&apos; 永久保留。</value>
+  </data>
+  <data name="e.g. Local Server" xml:space="preserve">
+    <value>例如：本地伺服器</value>
+  </data>
+  <data name="Edit Ollama Provider" xml:space="preserve">
+    <value>編輯 Ollama 提供程序</value>
+  </data>
+  <data name="Keep Alive" xml:space="preserve">
+    <value>保持活躍</value>
+  </data>
+  <data name="Keep Alive Policy" xml:space="preserve">
+    <value>保持活躍策略</value>
+  </data>
+  <data name="No physical models found on this server." xml:space="preserve">
+    <value>此伺服器上找不到任何實體模型。</value>
+  </data>
+  <data name="Optional API Key" xml:space="preserve">
+    <value>選擇性 API 金鑰</value>
+  </data>
+  <data name="Proactive Model Warmup" xml:space="preserve">
+    <value>積極模型預載</value>
+  </data>
+  <data name="Provider Connection Settings" xml:space="preserve">
+    <value>提供者連接設置</value>
+  </data>
+  <data name="Provider Name" xml:space="preserve">
+    <value>提供者名稱</value>
+  </data>
+  <data name="Save Changes" xml:space="preserve">
+    <value>儲存變更</value>
+  </data>
+  <data name="Select physical models that should be proactively kept loaded in this provider&apos;s VRAM. The gateway will periodically ping these models to prevent them from being unloaded." xml:space="preserve">
+    <value>選取應在此提供者的 VRAM 中主動保留載入的實體模型。閘道器將定期對這些模型發送 Ping 訊號，以防止其被卸下。</value>
+  </data>
+  <data name="Test Connection" xml:space="preserve">
+    <value>測試連接</value>
+  </data>
+  <data name="Underlying Model Name" xml:space="preserve">
+    <value>底層模型名稱</value>
+  </data>
+
+</root>

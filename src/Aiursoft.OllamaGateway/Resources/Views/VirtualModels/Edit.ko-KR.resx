@@ -18,17 +18,41 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="-- Select Underlying Model --" xml:space="preserve">
+      <data name="-- Select Model --" xml:space="preserve">
+    <value>-- 모델 선택 --</value>
+  </data>
+  <data name="-- Select Provider --" xml:space="preserve">
+    <value>-- Provider 선택 --</value>
+  </data>
+  <data name="-- Select Underlying Model --" xml:space="preserve">
     <value>-- 기본 모델 선택 --</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>작업</value>
+  </data>
+  <data name="Add Backend" xml:space="preserve">
+    <value>백엔드 추가</value>
+  </data>
+  <data name="Add New Backend" xml:space="preserve">
+    <value>后端 추가</value>
+  </data>
+  <data name="Are you sure?" xml:space="preserve">
+    <value>확실하시겠습니까?</value>
   </data>
   <data name="Back to List" xml:space="preserve">
     <value>목록으로 돌아가기</value>
+  </data>
+  <data name="Configuration Guide:" xml:space="preserve">
+    <value>설정 가이드:</value>
   </data>
   <data name="Context Length (num_ctx)" xml:space="preserve">
     <value>컨텍스트 길이 (num_ctx)</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>기본값</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>삭제</value>
   </data>
   <data name="Disabled" xml:space="preserve">
     <value>비활성화</value>
@@ -42,11 +66,32 @@
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>모델을 메모리에 로드된 상태로 유지</value>
   </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>최대 재시도 횟수</value>
+  </data>
+  <data name="Model Backends (1:N Support)" xml:space="preserve">
+    <value>모델 백엔드 (1:N 지원)</value>
+  </data>
   <data name="Model Details and Overrides" xml:space="preserve">
     <value>모델 세부 정보 및 재정의</value>
   </data>
+  <data name="No backends added." xml:space="preserve">
+    <value>백엔드가 추가되지 않았습니다.</value>
+  </data>
+  <data name="Ollama num_ctx Override" xml:space="preserve">
+    <value>Ollama num_ctx 기본값 오버라이드</value>
+  </data>
+  <data name="Optional Model Overrides" xml:space="preserve">
+    <value>선택적 모델 수정 사항</value>
+  </data>
   <data name="Optional Overrides" xml:space="preserve">
     <value>옵션 오버라이드</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>우선순위</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>제공업체</value>
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>반복 패널티</value>
@@ -54,11 +99,23 @@
   <data name="Save Changes" xml:space="preserve">
     <value>변경 사항 저장</value>
   </data>
+  <data name="Save Configuration" xml:space="preserve">
+    <value>구성 저장</value>
+  </data>
+  <data name="Selection Strategy" xml:space="preserve">
+    <value>선택 전략</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>상태</value>
+  </data>
   <data name="Temperature" xml:space="preserve">
     <value>온도</value>
   </data>
   <data name="Thinking Mode" xml:space="preserve">
     <value>생각 모드</value>
+  </data>
+  <data name="Toggle this backend?" xml:space="preserve">
+    <value>백엔드 토글 여부 확인?</value>
   </data>
   <data name="Top K" xml:space="preserve">
     <value>Top K</value>
@@ -66,14 +123,35 @@
   <data name="Top P" xml:space="preserve">
     <value>Top P</value>
   </data>
+  <data name="Try Timeout (s)" xml:space="preserve">
+    <value>시도 시간 제한 (초)</value>
+  </data>
+  <data name="Underlying" xml:space="preserve">
+    <value>기반</value>
+  </data>
   <data name="Underlying Model" xml:space="preserve">
     <value>기본 모델</value>
+  </data>
+  <data name="Upstream window size." xml:space="preserve">
+    <value>상류 창 크기.</value>
   </data>
   <data name="Use Raw Output" xml:space="preserve">
     <value>원본 출력 사용</value>
   </data>
+  <data name="Used in &apos;Priority Fallback&apos; strategy. Lower numbers (e.g. 0, 1) have higher priority. The system will always try the healthy backend with the lowest priority number first." xml:space="preserve">
+    <value>&apos;우선순위 우회&apos; 전략에 사용됩니다. 숫자가 낮을수록 (예: 0, 1) 우선순위가 높으며, 시스템은 항상 우선순위 번호가 가장 낮은 건강한 백엔드를 먼저 시도합니다.</value>
+  </data>
+  <data name="Used in &apos;Weighted Random&apos; strategy. Higher numbers increase the traffic proportion. For example, a backend with weight 10 gets twice as much traffic as one with weight 5." xml:space="preserve">
+    <value>&apos;가중치 무작위&apos; 전략에 사용됩니다. 숫자가 높을수록 트래픽 비율이 증가합니다. 예를 들어, 가중치가 10인 백엔드는 가중치가 5인 백엔드보다 두 배의 트래픽을 처리합니다.</value>
+  </data>
+  <data name="Virtual Model Configuration" xml:space="preserve">
+    <value>가상 모델 구성</value>
+  </data>
   <data name="Virtual Model Name" xml:space="preserve">
     <value>가상 모델 이름</value>
+  </data>
+  <data name="Weight" xml:space="preserve">
+    <value>가중치</value>
   </data>
 
 </root>

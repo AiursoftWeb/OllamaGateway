@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="Back to List" xml:space="preserve">
+    <value>목록으로 돌아가기</value>
+  </data>
+  <data name="Base URL" xml:space="preserve">
+    <value>기본 URL</value>
+  </data>
+  <data name="Bearer Token" xml:space="preserve">
+    <value>Bearer 토큰</value>
+  </data>
+  <data name="Connection Test" xml:space="preserve">
+    <value>연결 테스트</value>
+  </data>
+  <data name="Controls how long models stay in memory after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep forever." xml:space="preserve">
+    <value>요청 후 모델이 메모리에 유지되는 시간을 제어합니다. Ollama 형식 (예: &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). 즉시 언로드하려면 &apos;0&apos;을 사용하고, 영원히 유지하려면 &apos;-1&apos;을 사용하세요.</value>
+  </data>
+  <data name="e.g. Local Server" xml:space="preserve">
+    <value>예: 로컬 서버</value>
+  </data>
+  <data name="Edit Ollama Provider" xml:space="preserve">
+    <value>Ollama 제공자 편집</value>
+  </data>
+  <data name="Keep Alive" xml:space="preserve">
+    <value>Keep Alive</value>
+  </data>
+  <data name="Keep Alive Policy" xml:space="preserve">
+    <value>KEEP ALIVE 정책</value>
+  </data>
+  <data name="No physical models found on this server." xml:space="preserve">
+    <value>이 서버에서 물리 모델을 찾을 수 없습니다.</value>
+  </data>
+  <data name="Optional API Key" xml:space="preserve">
+    <value>선택적 API 키</value>
+  </data>
+  <data name="Proactive Model Warmup" xml:space="preserve">
+    <value>선제적 모델 워밍업</value>
+  </data>
+  <data name="Provider Connection Settings" xml:space="preserve">
+    <value>공급자 연결 설정</value>
+  </data>
+  <data name="Provider Name" xml:space="preserve">
+    <value>공급자 이름</value>
+  </data>
+  <data name="Save Changes" xml:space="preserve">
+    <value>변경 사항 저장</value>
+  </data>
+  <data name="Select physical models that should be proactively kept loaded in this provider&apos;s VRAM. The gateway will periodically ping these models to prevent them from being unloaded." xml:space="preserve">
+    <value>이 제공자의 VRAM에 지속적으로 로딩되도록 사전에 유지할 실제 모델을 선택하십시오. 게이트웨이가 주기적으로 이 모델에 핑을 보내 로드 해제되지 않도록 합니다.</value>
+  </data>
+  <data name="Test Connection" xml:space="preserve">
+    <value>연결 테스트</value>
+  </data>
+  <data name="Underlying Model Name" xml:space="preserve">
+    <value>기반 모델 이름</value>
+  </data>
+
+</root>

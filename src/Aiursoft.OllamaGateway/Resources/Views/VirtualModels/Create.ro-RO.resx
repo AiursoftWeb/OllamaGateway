@@ -24,6 +24,9 @@
   <data name="Back to List" xml:space="preserve">
     <value>Înapoi la listă</value>
   </data>
+  <data name="Basic Settings" xml:space="preserve">
+    <value>Setări de bază</value>
+  </data>
   <data name="Context Length (num_ctx)" xml:space="preserve">
     <value>Lungime context (num_ctx)</value>
   </data>
@@ -39,14 +42,32 @@
   <data name="e.g. MyLlama3" xml:space="preserve">
     <value>de exemplu, MyLlama3</value>
   </data>
+  <data name="e.g. MyLlama3:latest" xml:space="preserve">
+    <value>e.g. MyLlama3:latest</value>
+  </data>
   <data name="Enabled" xml:space="preserve">
     <value>Activat</value>
+  </data>
+  <data name="Forces the upstream engine to allocate a specific window size." xml:space="preserve">
+    <value>Forțează motorul de la nivelul superior să aloce o dimensiune de fereastră specifică.</value>
+  </data>
+  <data name="Initial Backend Configuration" xml:space="preserve">
+    <value>Configurare inițială a backend-ului</value>
   </data>
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>Păstrați modelul încărcat în memorie</value>
   </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>Max Tentaive</value>
+  </data>
   <data name="Model Details and Overrides" xml:space="preserve">
     <value>Detalii model și modificări</value>
+  </data>
+  <data name="Ollama num_ctx Override" xml:space="preserve">
+    <value>Suprapunere num_ctx Ollama</value>
+  </data>
+  <data name="Optional Model Overrides" xml:space="preserve">
+    <value>Suprări opționale pentru model</value>
   </data>
   <data name="Optional Overrides (Leave empty to use client/defaults)" xml:space="preserve">
     <value>Suplimentare opționale (lăsați gol pentru a utiliza setările clientului/implicit)</value>
@@ -56,6 +77,9 @@
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Penalizare de repetare</value>
+  </data>
+  <data name="Selection Strategy" xml:space="preserve">
+    <value>Strategie de selecție</value>
   </data>
   <data name="Temperature" xml:space="preserve">
     <value>Temperatură</value>
@@ -69,8 +93,14 @@
   <data name="Top P" xml:space="preserve">
     <value>Top P</value>
   </data>
+  <data name="Try Timeout (s)" xml:space="preserve">
+    <value>Încercare Timeout (s)</value>
+  </data>
   <data name="Underlying Model" xml:space="preserve">
     <value>Model de bază</value>
+  </data>
+  <data name="Use Raw Output" xml:space="preserve">
+    <value>Folosiți rezultatele brute</value>
   </data>
   <data name="Use Raw Output (Don&apos;t translate stream)" xml:space="preserve">
     <value>Folosește ieșirea brută (Nu traduce fluxul)</value>

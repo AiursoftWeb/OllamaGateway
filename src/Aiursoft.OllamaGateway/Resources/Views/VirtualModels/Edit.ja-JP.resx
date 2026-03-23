@@ -18,17 +18,41 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="-- Select Underlying Model --" xml:space="preserve">
+      <data name="-- Select Model --" xml:space="preserve">
+    <value>-- モデルを選択してください --</value>
+  </data>
+  <data name="-- Select Provider --" xml:space="preserve">
+    <value>プロバイダーを選択してください</value>
+  </data>
+  <data name="-- Select Underlying Model --" xml:space="preserve">
     <value>-- 基盤モデルを選択 --</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>操作</value>
+  </data>
+  <data name="Add Backend" xml:space="preserve">
+    <value>バックエンドを追加</value>
+  </data>
+  <data name="Add New Backend" xml:space="preserve">
+    <value>新規バックエンドの追加</value>
+  </data>
+  <data name="Are you sure?" xml:space="preserve">
+    <value>よろしいですか?</value>
   </data>
   <data name="Back to List" xml:space="preserve">
     <value>リストに戻る</value>
+  </data>
+  <data name="Configuration Guide:" xml:space="preserve">
+    <value>設定ガイド：</value>
   </data>
   <data name="Context Length (num_ctx)" xml:space="preserve">
     <value>コンテキスト長 (num_ctx)</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>デフォルト</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>削除</value>
   </data>
   <data name="Disabled" xml:space="preserve">
     <value>無効</value>
@@ -42,11 +66,32 @@
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>モデルをメモリに読み込んだまま保持する</value>
   </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>最大再試行回数</value>
+  </data>
+  <data name="Model Backends (1:N Support)" xml:space="preserve">
+    <value>モデルバックエンド (1:N 対応)</value>
+  </data>
   <data name="Model Details and Overrides" xml:space="preserve">
     <value>モデルの詳細と上書き設定</value>
   </data>
+  <data name="No backends added." xml:space="preserve">
+    <value>バックエンドが追加されていません。</value>
+  </data>
+  <data name="Ollama num_ctx Override" xml:space="preserve">
+    <value>Ollama num_ctx 上書き</value>
+  </data>
+  <data name="Optional Model Overrides" xml:space="preserve">
+    <value>オプションのモデル上書き</value>
+  </data>
   <data name="Optional Overrides" xml:space="preserve">
     <value>オプションのオーバーライド</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>優先度</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>プロバイダー</value>
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>繰り返しペナルティ</value>
@@ -54,11 +99,23 @@
   <data name="Save Changes" xml:space="preserve">
     <value>変更を保存</value>
   </data>
+  <data name="Save Configuration" xml:space="preserve">
+    <value>構成を保存</value>
+  </data>
+  <data name="Selection Strategy" xml:space="preserve">
+    <value>選択戦略</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>ステータス</value>
+  </data>
   <data name="Temperature" xml:space="preserve">
     <value>温度</value>
   </data>
   <data name="Thinking Mode" xml:space="preserve">
     <value>思考モード</value>
+  </data>
+  <data name="Toggle this backend?" xml:space="preserve">
+    <value>このバックエンドを切り替えますか？</value>
   </data>
   <data name="Top K" xml:space="preserve">
     <value>トップ K</value>
@@ -66,14 +123,35 @@
   <data name="Top P" xml:space="preserve">
     <value>トップ P</value>
   </data>
+  <data name="Try Timeout (s)" xml:space="preserve">
+    <value>試行タイムアウト (秒)</value>
+  </data>
+  <data name="Underlying" xml:space="preserve">
+    <value>基底</value>
+  </data>
   <data name="Underlying Model" xml:space="preserve">
     <value>基盤モデル</value>
+  </data>
+  <data name="Upstream window size." xml:space="preserve">
+    <value>アップストリームウィンドウサイズ。</value>
   </data>
   <data name="Use Raw Output" xml:space="preserve">
     <value>生の出力を使用する</value>
   </data>
+  <data name="Used in &apos;Priority Fallback&apos; strategy. Lower numbers (e.g. 0, 1) have higher priority. The system will always try the healthy backend with the lowest priority number first." xml:space="preserve">
+    <value>「優先度フォールバック」戦略で使用されます。数値が小さいほど（例：0、1）優先度が高くなります。システムは、常に最も優先度番号の小さい正常なバックエンドを最初に試みます。</value>
+  </data>
+  <data name="Used in &apos;Weighted Random&apos; strategy. Higher numbers increase the traffic proportion. For example, a backend with weight 10 gets twice as much traffic as one with weight 5." xml:space="preserve">
+    <value>「重み付きランダム」戦略で使用されます。数値が高いほどトラフィックの割合が増加します。例えば、重みが10のバックエンドは、重みが5のバックエンドよりも2倍のトラフィックを受けます。</value>
+  </data>
+  <data name="Virtual Model Configuration" xml:space="preserve">
+    <value>仮想モデル設定</value>
+  </data>
   <data name="Virtual Model Name" xml:space="preserve">
     <value>仮想モデル名</value>
+  </data>
+  <data name="Weight" xml:space="preserve">
+    <value>重さ</value>
   </data>
 
 </root>

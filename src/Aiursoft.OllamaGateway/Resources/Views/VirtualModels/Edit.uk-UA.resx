@@ -18,17 +18,41 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="-- Select Underlying Model --" xml:space="preserve">
+      <data name="-- Select Model --" xml:space="preserve">
+    <value>-- Оберіть модель --</value>
+  </data>
+  <data name="-- Select Provider --" xml:space="preserve">
+    <value>-- Виберіть постачальника --</value>
+  </data>
+  <data name="-- Select Underlying Model --" xml:space="preserve">
     <value>-- Оберіть базову модель --</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Дії</value>
+  </data>
+  <data name="Add Backend" xml:space="preserve">
+    <value>Додати бекенд</value>
+  </data>
+  <data name="Add New Backend" xml:space="preserve">
+    <value>Додати новий бекенд</value>
+  </data>
+  <data name="Are you sure?" xml:space="preserve">
+    <value>Ви впевнені?</value>
   </data>
   <data name="Back to List" xml:space="preserve">
     <value>Назад до списку</value>
+  </data>
+  <data name="Configuration Guide:" xml:space="preserve">
+    <value>Інструкція з налаштування:</value>
   </data>
   <data name="Context Length (num_ctx)" xml:space="preserve">
     <value>Довжина контексту (num_ctx)</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>За замовчуванням</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Видалити</value>
   </data>
   <data name="Disabled" xml:space="preserve">
     <value>Вимкнено</value>
@@ -42,11 +66,32 @@
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>Зберігати модель у пам&apos;яті</value>
   </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>Макс. спроби</value>
+  </data>
+  <data name="Model Backends (1:N Support)" xml:space="preserve">
+    <value>Модельні бекенди (підтримка 1:N)</value>
+  </data>
   <data name="Model Details and Overrides" xml:space="preserve">
     <value>Деталі моделі та перевизначення</value>
   </data>
+  <data name="No backends added." xml:space="preserve">
+    <value>Жодного бекенду не додано.</value>
+  </data>
+  <data name="Ollama num_ctx Override" xml:space="preserve">
+    <value>Перевизначення параметра num_ctx Ollama</value>
+  </data>
+  <data name="Optional Model Overrides" xml:space="preserve">
+    <value>Додаткові перевизначення моделі</value>
+  </data>
   <data name="Optional Overrides" xml:space="preserve">
     <value>Додаткові перевизначення</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>Пріоритет</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Провайдер</value>
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Штраф за повторення</value>
@@ -54,11 +99,23 @@
   <data name="Save Changes" xml:space="preserve">
     <value>Зберегти зміни</value>
   </data>
+  <data name="Save Configuration" xml:space="preserve">
+    <value>Зберегти конфігурацію</value>
+  </data>
+  <data name="Selection Strategy" xml:space="preserve">
+    <value>Стратегія вибору</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Статус</value>
+  </data>
   <data name="Temperature" xml:space="preserve">
     <value>Температура</value>
   </data>
   <data name="Thinking Mode" xml:space="preserve">
     <value>Режим мислення</value>
+  </data>
+  <data name="Toggle this backend?" xml:space="preserve">
+    <value>Увімкнути цей бекенд?</value>
   </data>
   <data name="Top K" xml:space="preserve">
     <value>Верхній K</value>
@@ -66,14 +123,35 @@
   <data name="Top P" xml:space="preserve">
     <value>Верхній P</value>
   </data>
+  <data name="Try Timeout (s)" xml:space="preserve">
+    <value>Час очікування спроби (с)</value>
+  </data>
+  <data name="Underlying" xml:space="preserve">
+    <value>Основний</value>
+  </data>
   <data name="Underlying Model" xml:space="preserve">
     <value>Базова модель</value>
+  </data>
+  <data name="Upstream window size." xml:space="preserve">
+    <value>Розмір вікна попереднього запиту.</value>
   </data>
   <data name="Use Raw Output" xml:space="preserve">
     <value>Використовувати сире виведення</value>
   </data>
+  <data name="Used in &apos;Priority Fallback&apos; strategy. Lower numbers (e.g. 0, 1) have higher priority. The system will always try the healthy backend with the lowest priority number first." xml:space="preserve">
+    <value>Використовується в стратегії «Priority Fallback». Нижчі числа (напр., 0, 1) мають вищий пріоритет. Система завжди спочатку намагатиметься використати здоровий бекенд із найнижчим номером пріоритету.</value>
+  </data>
+  <data name="Used in &apos;Weighted Random&apos; strategy. Higher numbers increase the traffic proportion. For example, a backend with weight 10 gets twice as much traffic as one with weight 5." xml:space="preserve">
+    <value>Використовується у стратегії «Weighted Random». Більші числа збільшують частку трафіку. Наприклад, бекенд з вагою 10 отримує вдвічі більше трафіку, ніж бекенд з вагою 5.</value>
+  </data>
+  <data name="Virtual Model Configuration" xml:space="preserve">
+    <value>Конфігурація віртуальної моделі</value>
+  </data>
   <data name="Virtual Model Name" xml:space="preserve">
     <value>Назва віртуальної моделі</value>
+  </data>
+  <data name="Weight" xml:space="preserve">
+    <value>Вага</value>
   </data>
 
 </root>

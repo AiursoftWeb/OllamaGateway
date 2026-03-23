@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="Back to List" xml:space="preserve">
+    <value>กลับไปยังรายการ</value>
+  </data>
+  <data name="Base URL" xml:space="preserve">
+    <value>URL พื้นฐาน</value>
+  </data>
+  <data name="Bearer Token" xml:space="preserve">
+    <value>โทเค็นแบร์เออร์</value>
+  </data>
+  <data name="Connection Test" xml:space="preserve">
+    <value>การทดสอบการเชื่อมต่อ</value>
+  </data>
+  <data name="Controls how long models stay in memory after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep forever." xml:space="preserve">
+    <value>ควบคุมระยะเวลาที่โมเดลคงอยู่ในหน่วยความจำหลังจากคำขอ รูปแบบ Ollama (เช่น &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;) ใช้ &apos;0&apos; เพื่อกำจัดทันที หรือ &apos;-1&apos; เพื่อเก็บไว้ตลอดไป</value>
+  </data>
+  <data name="e.g. Local Server" xml:space="preserve">
+    <value>เช่น ใช้งานเซิร์ฟเวอร์ในท้องถิ่น</value>
+  </data>
+  <data name="Edit Ollama Provider" xml:space="preserve">
+    <value>แก้ไขผู้ให้บริการ Ollama</value>
+  </data>
+  <data name="Keep Alive" xml:space="preserve">
+    <value>Keep Alive</value>
+  </data>
+  <data name="Keep Alive Policy" xml:space="preserve">
+    <value>นโยบายการคงสถานะไว้</value>
+  </data>
+  <data name="No physical models found on this server." xml:space="preserve">
+    <value>ไม่พบแบบจำลองทางกายภาพใดๆ บนเซิร์ฟเวอร์นี้</value>
+  </data>
+  <data name="Optional API Key" xml:space="preserve">
+    <value>คีย์ API ไม่บังคับ</value>
+  </data>
+  <data name="Proactive Model Warmup" xml:space="preserve">
+    <value>การวอร์มอัพโมเดลเชิงรุก</value>
+  </data>
+  <data name="Provider Connection Settings" xml:space="preserve">
+    <value>การตั้งค่าการเชื่อมต่อผู้ให้บริการ</value>
+  </data>
+  <data name="Provider Name" xml:space="preserve">
+    <value>ชื่อผู้ให้บริการ</value>
+  </data>
+  <data name="Save Changes" xml:space="preserve">
+    <value>บันทึกการแก้ไข</value>
+  </data>
+  <data name="Select physical models that should be proactively kept loaded in this provider&apos;s VRAM. The gateway will periodically ping these models to prevent them from being unloaded." xml:space="preserve">
+    <value>เลือกแบบจำลองทางกายภาพที่ควรเก็บไว้ใน VRAM ของผู้ให้บริการนี้อย่างต่อเนื่อง ระบบเกตเวย์จะส่งสัญญาณตรวจสอบแบบจำลองเหล่านี้อย่างเป็นระยะเพื่อป้องกันไม่ให้ถูกปลดปล่อยออกจากหน่วยความจำ</value>
+  </data>
+  <data name="Test Connection" xml:space="preserve">
+    <value>ทดสอบการเชื่อมต่อ</value>
+  </data>
+  <data name="Underlying Model Name" xml:space="preserve">
+    <value>ชื่อโมเดลพื้นฐาน</value>
+  </data>
+
+</root>

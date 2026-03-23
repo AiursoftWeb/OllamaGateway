@@ -24,6 +24,9 @@
   <data name="Back to List" xml:space="preserve">
     <value>Quay lại danh sách</value>
   </data>
+  <data name="Basic Settings" xml:space="preserve">
+    <value>Cài đặt cơ bản</value>
+  </data>
   <data name="Context Length (num_ctx)" xml:space="preserve">
     <value>Độ dài ngữ cảnh (num_ctx)</value>
   </data>
@@ -39,14 +42,32 @@
   <data name="e.g. MyLlama3" xml:space="preserve">
     <value>ví dụ: MyLlama3</value>
   </data>
+  <data name="e.g. MyLlama3:latest" xml:space="preserve">
+    <value>ví dụ: MyLlama3:latest</value>
+  </data>
   <data name="Enabled" xml:space="preserve">
     <value>Bật</value>
+  </data>
+  <data name="Forces the upstream engine to allocate a specific window size." xml:space="preserve">
+    <value>Buộc động cơ upstream phân bổ kích thước cửa sổ cụ thể.</value>
+  </data>
+  <data name="Initial Backend Configuration" xml:space="preserve">
+    <value>Cấu hình Backend ban đầu</value>
   </data>
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>Giữ mô hình được tải trong bộ nhớ</value>
   </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>Tối đa số lần thử lại</value>
+  </data>
   <data name="Model Details and Overrides" xml:space="preserve">
     <value>Chi tiết Mô hình và Các ghi đè</value>
+  </data>
+  <data name="Ollama num_ctx Override" xml:space="preserve">
+    <value>Ghi đè num_ctx của Ollama</value>
+  </data>
+  <data name="Optional Model Overrides" xml:space="preserve">
+    <value>Tùy chọn ghi đè mô hình</value>
   </data>
   <data name="Optional Overrides (Leave empty to use client/defaults)" xml:space="preserve">
     <value>Tùy chọn ghi đè (Để trống để sử dụng máy khách/mặc định)</value>
@@ -56,6 +77,9 @@
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Hình phạt lặp lại</value>
+  </data>
+  <data name="Selection Strategy" xml:space="preserve">
+    <value>Chiến lược chọn lựa</value>
   </data>
   <data name="Temperature" xml:space="preserve">
     <value>Nhiệt độ</value>
@@ -69,8 +93,14 @@
   <data name="Top P" xml:space="preserve">
     <value>Top P</value>
   </data>
+  <data name="Try Timeout (s)" xml:space="preserve">
+    <value>Thời gian chờ Thử (s)</value>
+  </data>
   <data name="Underlying Model" xml:space="preserve">
     <value>Mô hình nền tảng</value>
+  </data>
+  <data name="Use Raw Output" xml:space="preserve">
+    <value>Sử dụng đầu ra thô</value>
   </data>
   <data name="Use Raw Output (Don&apos;t translate stream)" xml:space="preserve">
     <value>Sử dụng đầu ra thô (Không dịch luồng)</value>

@@ -33,8 +33,14 @@
   <data name="Cancel" xml:space="preserve">
     <value>Batal</value>
   </data>
+  <data name="Controls how long models stay in memory after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep forever." xml:space="preserve">
+    <value>Mengontrol berapa lama model tetap di memori setelah permintaan. Format Ollama (misalnya, &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Gunakan &apos;0&apos; untuk memuat ulang segera, atau &apos;-1&apos; untuk menyimpan selamanya.</value>
+  </data>
   <data name="e.g. My Local Ollama" xml:space="preserve">
     <value>mis. Ollama Lokal Saya</value>
+  </data>
+  <data name="Keep Alive Policy" xml:space="preserve">
+    <value>Kebijakan Pertahankan Aktif</value>
   </data>
   <data name="Models found:" xml:space="preserve">
     <value>Model ditemukan:</value>

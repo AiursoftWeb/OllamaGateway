@@ -18,17 +18,41 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="-- Select Underlying Model --" xml:space="preserve">
+      <data name="-- Select Model --" xml:space="preserve">
+    <value>-- Pilih Model --</value>
+  </data>
+  <data name="-- Select Provider --" xml:space="preserve">
+    <value>-- Pilih Penyedia --</value>
+  </data>
+  <data name="-- Select Underlying Model --" xml:space="preserve">
     <value>-- Pilih Model Dasar --</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Aksi</value>
+  </data>
+  <data name="Add Backend" xml:space="preserve">
+    <value>Tambah Backend</value>
+  </data>
+  <data name="Add New Backend" xml:space="preserve">
+    <value>Tambah Backend Baru</value>
+  </data>
+  <data name="Are you sure?" xml:space="preserve">
+    <value>Apakah Anda yakin?</value>
   </data>
   <data name="Back to List" xml:space="preserve">
     <value>Kembali ke Daftar</value>
+  </data>
+  <data name="Configuration Guide:" xml:space="preserve">
+    <value>Panduan Konfigurasi:</value>
   </data>
   <data name="Context Length (num_ctx)" xml:space="preserve">
     <value>Panjang Konteks (num_ctx)</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>Default</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Hapus</value>
   </data>
   <data name="Disabled" xml:space="preserve">
     <value>Dinonaktifkan</value>
@@ -42,11 +66,32 @@
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>Simpan model di memori</value>
   </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>Max Retries</value>
+  </data>
+  <data name="Model Backends (1:N Support)" xml:space="preserve">
+    <value>Backend Model (Dukungan 1:N)</value>
+  </data>
   <data name="Model Details and Overrides" xml:space="preserve">
     <value>Detail dan Pengaturan Ulang Model</value>
   </data>
+  <data name="No backends added." xml:space="preserve">
+    <value>Tidak ada backend yang ditambahkan.</value>
+  </data>
+  <data name="Ollama num_ctx Override" xml:space="preserve">
+    <value>Pemakaian num_ctx Ollama</value>
+  </data>
+  <data name="Optional Model Overrides" xml:space="preserve">
+    <value>Izlan Model Opsional</value>
+  </data>
   <data name="Optional Overrides" xml:space="preserve">
     <value>Opsional Overrides</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>Prioritas</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Penyedia</value>
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Penalti Pengulangan</value>
@@ -54,11 +99,23 @@
   <data name="Save Changes" xml:space="preserve">
     <value>Simpan Perubahan</value>
   </data>
+  <data name="Save Configuration" xml:space="preserve">
+    <value>Simpan Konfigurasi</value>
+  </data>
+  <data name="Selection Strategy" xml:space="preserve">
+    <value>Strategi Pemilihan</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
   <data name="Temperature" xml:space="preserve">
     <value>Suhu</value>
   </data>
   <data name="Thinking Mode" xml:space="preserve">
     <value>Mode Berpikir</value>
+  </data>
+  <data name="Toggle this backend?" xml:space="preserve">
+    <value>Ubah backend ini?</value>
   </data>
   <data name="Top K" xml:space="preserve">
     <value>Top K</value>
@@ -66,14 +123,35 @@
   <data name="Top P" xml:space="preserve">
     <value>Top P</value>
   </data>
+  <data name="Try Timeout (s)" xml:space="preserve">
+    <value>Coba Timeout (s)</value>
+  </data>
+  <data name="Underlying" xml:space="preserve">
+    <value>Dasar</value>
+  </data>
   <data name="Underlying Model" xml:space="preserve">
     <value>Model Dasar</value>
+  </data>
+  <data name="Upstream window size." xml:space="preserve">
+    <value>Ukuran jendela hulu.</value>
   </data>
   <data name="Use Raw Output" xml:space="preserve">
     <value>Gunakan Output Mentah</value>
   </data>
+  <data name="Used in &apos;Priority Fallback&apos; strategy. Lower numbers (e.g. 0, 1) have higher priority. The system will always try the healthy backend with the lowest priority number first." xml:space="preserve">
+    <value>Digunakan dalam strategi &apos;Priority Fallback&apos;. Angka yang lebih rendah (misalnya 0, 1) memiliki prioritas lebih tinggi. Sistem akan selalu mencoba backend yang sehat dengan nomor prioritas terendah terlebih dahulu.</value>
+  </data>
+  <data name="Used in &apos;Weighted Random&apos; strategy. Higher numbers increase the traffic proportion. For example, a backend with weight 10 gets twice as much traffic as one with weight 5." xml:space="preserve">
+    <value>Digunakan dalam strategi &apos;Weighted Random&apos;. Angka yang lebih tinggi meningkatkan proporsi lalu lintas. Sebagai contoh, backend dengan bobot 10 mendapatkan dua kali lebih banyak lalu lintas dibandingkan backend dengan bobot 5.</value>
+  </data>
+  <data name="Virtual Model Configuration" xml:space="preserve">
+    <value>Konfigurasi Model Virtual</value>
+  </data>
   <data name="Virtual Model Name" xml:space="preserve">
     <value>Nama Model Virtual</value>
+  </data>
+  <data name="Weight" xml:space="preserve">
+    <value>Bobot</value>
   </data>
 
 </root>
