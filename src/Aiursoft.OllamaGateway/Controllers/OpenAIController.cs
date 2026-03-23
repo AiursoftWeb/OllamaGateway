@@ -20,6 +20,7 @@ public class OpenAIController : ControllerBase
     private readonly GlobalSettingsService _globalSettingsService;
     private readonly ILogger<OpenAIController> _logger;
     private readonly MemoryUsageTracker _memoryUsageTracker;
+    private readonly IModelSelector _modelSelector;
 
 
 
@@ -29,7 +30,8 @@ public class OpenAIController : ControllerBase
         RequestLogContext logContext,
         GlobalSettingsService globalSettingsService,
         ILogger<OpenAIController> logger,
-        MemoryUsageTracker memoryUsageTracker)
+        MemoryUsageTracker memoryUsageTracker,
+        IModelSelector modelSelector)
     {
         _dbContext = dbContext;
         _httpClientFactory = httpClientFactory;
@@ -37,6 +39,7 @@ public class OpenAIController : ControllerBase
         _globalSettingsService = globalSettingsService;
         _logger = logger;
         _memoryUsageTracker = memoryUsageTracker;
+        _modelSelector = modelSelector;
     }
 
     private async Task<bool> IsAuthorizedAsync()
@@ -85,24 +88,32 @@ public class OpenAIController : ControllerBase
                 : inputModelVal;
 
             var virtualModel = await _dbContext.VirtualModels
-                .Include(m => m.Provider)
+                .Include(m => m.VirtualModelBackends).ThenInclude(b => b.Provider)
                 .FirstOrDefaultAsync(m => m.Name == modelToUse && m.Type == ModelType.Chat);
 
-            if (virtualModel == null || virtualModel.Provider == null)
+            if (virtualModel == null)
             {
                 Response.StatusCode = 404;
-                await Response.WriteAsync($"Model '{modelToUse}' not found in gateway or has no provider.");
+                await Response.WriteAsync($"Model '{modelToUse}' not found in gateway.");
                 return;
             }
 
-            var underlyingUrl = virtualModel.Provider.BaseUrl.TrimEnd('/');
+            var backend = _modelSelector.SelectBackend(virtualModel);
+            if (backend == null || backend.Provider == null)
+            {
+                Response.StatusCode = 503;
+                await Response.WriteAsync($"No available backend for model '{modelToUse}'.");
+                return;
+            }
+
+            var underlyingUrl = backend.Provider.BaseUrl.TrimEnd('/');
 
             var apiKeyIdClaim = User.FindFirst("ApiKeyId");
             if (apiKeyIdClaim != null && int.TryParse(apiKeyIdClaim.Value, out var apiKeyId))
             {
                 _memoryUsageTracker.TrackApiKeyUsage(apiKeyId);
             }
-            _memoryUsageTracker.TrackUnderlyingModelUsage(virtualModel.Provider.Id, virtualModel.UnderlyingModel);
+            _memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
 
             _logContext.Log.Model = virtualModel.Name;
 
@@ -117,7 +128,7 @@ public class OpenAIController : ControllerBase
             // =========================================================================================
             var ollamaRequest = new JsonObject
             {
-                ["model"] = virtualModel.UnderlyingModel,
+                ["model"] = backend.UnderlyingModelName,
                 ["stream"] = isStream
             };
 
@@ -228,16 +239,65 @@ public class OpenAIController : ControllerBase
             // =========================================================================================
             // 2. 发起底层请求
             // =========================================================================================
-            using var client = _httpClientFactory.CreateClient();
-            client.Timeout = await _globalSettingsService.GetRequestTimeoutAsync();
-
-            var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/chat")
+            HttpResponseMessage? response = null;
+            for (var i = 0; i < virtualModel.MaxRetries; i++)
             {
-                Content = new StringContent(ollamaRequest.ToJsonString(), Encoding.UTF8, "application/json")
-            };
+                var client = _httpClientFactory.CreateClient();
+                client.Timeout = await _globalSettingsService.GetRequestTimeoutAsync();
 
-            _logger.LogInformation("[{TraceId}] Translating & Proxying OpenAI chat request to {UnderlyingUrl}/api/chat", HttpContext.TraceIdentifier, underlyingUrl);
-            using var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, HttpContext.RequestAborted);
+                var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/chat")
+                {
+                    Content = new StringContent(ollamaRequest.ToJsonString(), Encoding.UTF8, "application/json")
+                };
+
+                using var cts = CancellationTokenSource.CreateLinkedTokenSource(HttpContext.RequestAborted);
+                cts.CancelAfter(TimeSpan.FromSeconds(virtualModel.HealthCheckTimeout));
+
+                _logger.LogInformation("[{TraceId}] Translating & Proxying OpenAI chat request to {UnderlyingUrl}/api/chat, attempt {Attempt}", HttpContext.TraceIdentifier, underlyingUrl, i + 1);
+                
+                try
+                {
+                    response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cts.Token);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        _modelSelector.ReportSuccess(backend.Id);
+                        _logContext.Log.BackendId = backend.Id;
+                        break;
+                    }
+                    if (!response.IsSuccessStatusCode && (int)response.StatusCode >= 500 && !Response.HasStarted)
+                    {
+                        throw new HttpRequestException($"Received {response.StatusCode} from upstream.");
+                    }
+                    else
+                    {
+                        _modelSelector.ReportSuccess(backend.Id);
+                        _logContext.Log.BackendId = backend.Id;
+                        break;
+                    }
+                }
+                catch (Exception ex) when (!Response.HasStarted)
+                {
+                    _modelSelector.ReportFailure(backend.Id);
+                    _logger.LogWarning(ex, "Attempt {Attempt} failed for OpenAI chat request to {UnderlyingUrl}", i + 1, underlyingUrl);
+                    if (i == virtualModel.MaxRetries - 1)
+                    {
+                        throw;
+                    }
+                    
+                    backend = _modelSelector.SelectBackend(virtualModel);
+                    if (backend == null)
+                    {
+                        Response.StatusCode = 503;
+                        await Response.WriteAsync($"No available backend for model '{virtualModel.Name}'.");
+                        return;
+                    }
+                    underlyingUrl = backend.Provider!.BaseUrl.TrimEnd('/');
+                    ollamaRequest["model"] = backend.UnderlyingModelName;
+                    _memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
+                }
+            }
+            
+            if (response == null) return;
 
             Response.StatusCode = (int)response.StatusCode;
             _logContext.Log.StatusCode = Response.StatusCode;
@@ -523,24 +583,32 @@ public class OpenAIController : ControllerBase
                 : inputModelVal;
 
             var virtualModel = await _dbContext.VirtualModels
-                .Include(m => m.Provider)
+                .Include(m => m.VirtualModelBackends).ThenInclude(b => b.Provider)
                 .FirstOrDefaultAsync(m => m.Name == modelName && m.Type == ModelType.Embedding);
 
-            if (virtualModel == null || virtualModel.Provider == null)
+            if (virtualModel == null)
             {
                 Response.StatusCode = 404;
-                await Response.WriteAsync($"Embedding model '{modelName}' not found in gateway or has no provider.");
+                await Response.WriteAsync($"Embedding model '{modelName}' not found in gateway.");
                 return;
             }
 
-            var underlyingUrl = virtualModel.Provider.BaseUrl.TrimEnd('/');
+            var backend = _modelSelector.SelectBackend(virtualModel);
+            if (backend == null || backend.Provider == null)
+            {
+                Response.StatusCode = 503;
+                await Response.WriteAsync($"No available backend for model '{modelName}'.");
+                return;
+            }
+
+            var underlyingUrl = backend.Provider.BaseUrl.TrimEnd('/');
             
             var apiKeyIdClaim = User.FindFirst("ApiKeyId");
             if (apiKeyIdClaim != null && int.TryParse(apiKeyIdClaim.Value, out var apiKeyId))
             {
                 _memoryUsageTracker.TrackApiKeyUsage(apiKeyId);
             }
-            _memoryUsageTracker.TrackUnderlyingModelUsage(virtualModel.Provider.Id, virtualModel.UnderlyingModel);
+            _memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
             
             _logContext.Log.Model = virtualModel.Name;
             _logContext.Log.ConversationMessageCount = 1;
@@ -551,20 +619,69 @@ public class OpenAIController : ControllerBase
             // =========================================================================================
             var ollamaRequest = new JsonObject
             {
-                ["model"] = virtualModel.UnderlyingModel,
+                ["model"] = backend.UnderlyingModelName,
                 ["input"] = clientJson["input"]!.DeepClone()
             };
 
-            using var client = _httpClientFactory.CreateClient();
-            client.Timeout = await _globalSettingsService.GetRequestTimeoutAsync();
-            
-            var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/embed")
+            HttpResponseMessage? response = null;
+            for (var i = 0; i < virtualModel.MaxRetries; i++)
             {
-                Content = new StringContent(ollamaRequest.ToJsonString(), Encoding.UTF8, "application/json")
-            };
+                var client = _httpClientFactory.CreateClient();
+                client.Timeout = await _globalSettingsService.GetRequestTimeoutAsync();
+                
+                var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/embed")
+                {
+                    Content = new StringContent(ollamaRequest.ToJsonString(), Encoding.UTF8, "application/json")
+                };
 
-            _logger.LogInformation("[{TraceId}] Translating & Proxying OpenAI embedding request for model {Model} to {UnderlyingUrl}/api/embed", HttpContext.TraceIdentifier, virtualModel.Name, underlyingUrl);
-            using var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, HttpContext.RequestAborted);
+                using var cts = CancellationTokenSource.CreateLinkedTokenSource(HttpContext.RequestAborted);
+                cts.CancelAfter(TimeSpan.FromSeconds(virtualModel.HealthCheckTimeout));
+
+                _logger.LogInformation("[{TraceId}] Translating & Proxying OpenAI embedding request for model {Model} to {UnderlyingUrl}/api/embed, attempt {Attempt}", HttpContext.TraceIdentifier, virtualModel.Name, underlyingUrl, i + 1);
+                
+                try
+                {
+                    response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cts.Token);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        _modelSelector.ReportSuccess(backend.Id);
+                        _logContext.Log.BackendId = backend.Id;
+                        break;
+                    }
+                    if (!response.IsSuccessStatusCode && (int)response.StatusCode >= 500 && !Response.HasStarted)
+                    {
+                        throw new HttpRequestException($"Received {response.StatusCode} from upstream.");
+                    }
+                    else
+                    {
+                        _modelSelector.ReportSuccess(backend.Id);
+                        _logContext.Log.BackendId = backend.Id;
+                        break;
+                    }
+                }
+                catch (Exception ex) when (!Response.HasStarted)
+                {
+                    _modelSelector.ReportFailure(backend.Id);
+                    _logger.LogWarning(ex, "Attempt {Attempt} failed for OpenAI embedding request to {UnderlyingUrl}", i + 1, underlyingUrl);
+                    if (i == virtualModel.MaxRetries - 1)
+                    {
+                        throw;
+                    }
+                    
+                    backend = _modelSelector.SelectBackend(virtualModel);
+                    if (backend == null)
+                    {
+                        Response.StatusCode = 503;
+                        await Response.WriteAsync($"No available backend for model '{virtualModel.Name}'.");
+                        return;
+                    }
+                    underlyingUrl = backend.Provider!.BaseUrl.TrimEnd('/');
+                    ollamaRequest["model"] = backend.UnderlyingModelName;
+                    _memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
+                }
+            }
+
+            if (response == null) return;
             
             Response.StatusCode = (int)response.StatusCode;
             _logContext.Log.StatusCode = Response.StatusCode;

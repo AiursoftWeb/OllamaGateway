@@ -58,10 +58,15 @@ public class UsageTrackingTests : TestBase
             var virtualModel = new VirtualModel 
             { 
                 Name = "usage-model", 
-                UnderlyingModel = "llama3.2", 
-                ProviderId = provider.Id,
                 Type = ModelType.Chat
             };
+            virtualModel.VirtualModelBackends.Add(new VirtualModelBackend
+            {
+                ProviderId = provider.Id,
+                UnderlyingModelName = "llama3.2",
+                Enabled = true,
+                IsHealthy = true
+            });
             db.VirtualModels.Add(virtualModel);
             await db.SaveChangesAsync();
         }

@@ -64,22 +64,35 @@ public class DialectProxyTests : TestBase
         db.OllamaProviders.Add(provider);
         await db.SaveChangesAsync();
 
-        db.VirtualModels.Add(new VirtualModel
+        var chatModel = new VirtualModel
         {
             Name = VirtualModelName,
-            UnderlyingModel = PhysicalModelName,
-            ProviderId = provider.Id,
             Type = ModelType.Chat,
             Temperature = 0.42f,
             NumPredict = 512
+        };
+        chatModel.VirtualModelBackends.Add(new VirtualModelBackend
+        {
+            ProviderId = provider.Id,
+            UnderlyingModelName = PhysicalModelName,
+            Enabled = true,
+            IsHealthy = true
         });
-        db.VirtualModels.Add(new VirtualModel
+        db.VirtualModels.Add(chatModel);
+
+        var embedModel = new VirtualModel
         {
             Name = EmbeddingModelName,
-            UnderlyingModel = PhysicalEmbeddingModel,
-            ProviderId = provider.Id,
             Type = ModelType.Embedding
+        };
+        embedModel.VirtualModelBackends.Add(new VirtualModelBackend
+        {
+            ProviderId = provider.Id,
+            UnderlyingModelName = PhysicalEmbeddingModel,
+            Enabled = true,
+            IsHealthy = true
         });
+        db.VirtualModels.Add(embedModel);
         await db.SaveChangesAsync();
 
         var user = await db.Users.FirstAsync();
@@ -900,5 +913,66 @@ public class DialectProxyTests : TestBase
         var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody ?? "{}");
         Assert.AreEqual(true, upstreamBody?["think"]?.GetValue<bool>());
         Assert.AreEqual(4096, upstreamBody?["options"]?["num_ctx"]?.GetValue<int>());
+    }
+
+    [TestMethod]
+    public async Task Gateway_CircuitBreaker_FallbackToNextNode()
+    {
+        // Arrange: Add a second backend (Priority 1)
+        using (var scope = Server?.Services.CreateScope())
+        {
+            Assert.IsNotNull(scope);
+            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+            
+            var provider2 = new OllamaProvider { Name = "FallbackProvider", BaseUrl = "http://fallback-ollama:11434" };
+            db.OllamaProviders.Add(provider2);
+            await db.SaveChangesAsync();
+
+            var vm = await db.VirtualModels.FirstAsync(m => m.Name == VirtualModelName);
+            vm.VirtualModelBackends.Add(new VirtualModelBackend
+            {
+                ProviderId = provider2.Id,
+                UnderlyingModelName = "fallback-model",
+                Priority = 1,
+                Enabled = true,
+                IsHealthy = true
+            });
+            await db.SaveChangesAsync();
+        }
+
+        var failCount = 0;
+        MockUpstreamState.Handler = (req, _) =>
+        {
+            if (req.RequestUri!.ToString().Contains("fake-ollama"))
+            {
+                failCount++;
+                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                {
+                    Content = new StringContent("""{"error":"model crashed"}""", Encoding.UTF8, "application/json")
+                });
+            }
+
+            // If it hits fallback-ollama
+            var body = """{"model":"fallback-model","message":{"role":"assistant","content":"Fallback success!"},"done":true,"prompt_eval_count":1,"eval_count":1}""";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body, Encoding.UTF8, "application/json")
+            });
+        };
+
+        var payload = $$"""{"model":"{{VirtualModelName}}","messages":[{"role":"user","content":"test fallback"}],"stream":false}""";
+
+        // Act 1: First request hits the primary node 3 times, fails, and bans it.
+        var response1 = await Http.SendAsync(AuthedPost("/api/chat", payload));
+        Assert.AreEqual(HttpStatusCode.InternalServerError, response1.StatusCode);
+        Assert.AreEqual(3, failCount); // MaxRetries exhausted on Node 1
+
+        // Act 2: Second request hits the fallback node because Node 1 is now in circuit breaker ban.
+        var response2 = await Http.SendAsync(AuthedPost("/api/chat", payload));
+        Assert.AreEqual(HttpStatusCode.OK, response2.StatusCode);
+        
+        var body2 = await response2.Content.ReadAsStringAsync();
+        var json2 = JsonNode.Parse(body2);
+        Assert.AreEqual("Fallback success!", json2?["message"]?["content"]?.ToString());
     }
 }

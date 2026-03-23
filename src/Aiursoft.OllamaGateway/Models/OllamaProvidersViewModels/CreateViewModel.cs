@@ -20,4 +20,8 @@ public class CreateViewModel : UiStackLayoutViewModel
 
     [MaxLength(2000)]
     public string? BearerToken { get; set; }
+
+    [Required]
+    [MaxLength(100)]
+    public string KeepAlive { get; set; } = "5m";
 }

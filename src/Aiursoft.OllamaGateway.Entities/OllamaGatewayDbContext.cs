@@ -12,6 +12,7 @@ public abstract class TemplateDbContext(DbContextOptions options) : IdentityDbCo
     public DbSet<GlobalSetting> GlobalSettings => Set<GlobalSetting>();
     public DbSet<ApiKey> ApiKeys => Set<ApiKey>();
     public DbSet<VirtualModel> VirtualModels => Set<VirtualModel>();
+    public DbSet<VirtualModelBackend> VirtualModelBackends => Set<VirtualModelBackend>();
     public DbSet<OllamaProvider> OllamaProviders => Set<OllamaProvider>();
     public DbSet<UnderlyingModelUsage> UnderlyingModelUsages => Set<UnderlyingModelUsage>();
 

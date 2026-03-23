@@ -46,6 +46,7 @@ public class Startup : IWebStartup
         // Services
         services.AddMemoryCache();
         services.AddHttpClient();
+        services.AddSingleton<Services.IModelSelector, Services.ModelSelector>();
         services.AddAssemblyDependencies(typeof(Startup).Assembly);
         services.AddSingleton<NavigationState<Startup>>();
         services.AddScoped<Models.RequestLogContext>();
@@ -53,6 +54,7 @@ public class Startup : IWebStartup
         // Background job queue
         services.AddSingleton<Services.BackgroundJobs.BackgroundJobQueue>();
         services.AddHostedService<Services.BackgroundJobs.QueueWorkerService>();
+        services.AddHostedService<Services.BackgroundJobs.BackendHealthMonitor>();
         services.AddHostedService<Services.BackgroundJobs.ModelWarmupService>();
         services.AddHostedService<Services.BackgroundJobs.UsageFlushService>();
 

@@ -27,7 +27,7 @@ public class UnderlyingModelsController(
     public async Task<IActionResult> Index()
     {
         var providers = await dbContext.OllamaProviders.ToListAsync();
-        var virtualModels = await dbContext.VirtualModels.ToListAsync();
+        var virtualModels = await dbContext.VirtualModels.Include(m => m.VirtualModelBackends).ToListAsync();
         var viewModel = new IndexViewModel();
 
         foreach (var provider in providers)
@@ -46,7 +46,7 @@ public class UnderlyingModelsController(
                         IsRunning = runningModels?.Any(r => r.Name == raw.Name) ?? false,
                         TotalCalls = memoryUsageTracker.GetUnderlyingModelStats(provider.Id, raw.Name),
                         UsedByVirtualModels = virtualModels
-                            .Where(v => v.ProviderId == provider.Id && v.UnderlyingModel == raw.Name)
+                            .Where(v => v.VirtualModelBackends.Any(b => b.ProviderId == provider.Id && b.UnderlyingModelName == raw.Name))
                             .ToList()
                     });
                 }

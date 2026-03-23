@@ -5,6 +5,7 @@ using Aiursoft.OllamaGateway.Services;
 using Aiursoft.UiStack.Navigation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.OllamaGateway.Controllers;
@@ -21,25 +22,40 @@ public class VirtualModelsController(
 
         foreach (var model in models)
         {
-            if (model.Provider == null)
+            if (!model.VirtualModelBackends.Any())
             {
-                warnings[model.Id] = "Provider not found.";
+                warnings[model.Id] = "No backends configured.";
                 continue;
             }
 
-            if (!providerCache.TryGetValue($"{model.Provider.BaseUrl}_{model.Provider.BearerToken}", out var underlyingModels))
+            var modelWarnings = new List<string>();
+            foreach (var backend in model.VirtualModelBackends)
             {
-                underlyingModels = await ollamaService.GetUnderlyingModelsAsync(model.Provider.BaseUrl, model.Provider.BearerToken);
-                providerCache[$"{model.Provider.BaseUrl}_{model.Provider.BearerToken}"] = underlyingModels;
-            }
+                if (backend.Provider == null)
+                {
+                    modelWarnings.Add($"Backend {backend.Id}: Provider not found.");
+                    continue;
+                }
 
-            if (underlyingModels == null)
-            {
-                warnings[model.Id] = "Provider offline or unreachable.";
+                if (!providerCache.TryGetValue($"{backend.Provider.BaseUrl}_{backend.Provider.BearerToken}", out var underlyingModels))
+                {
+                    underlyingModels = await ollamaService.GetUnderlyingModelsAsync(backend.Provider.BaseUrl, backend.Provider.BearerToken);
+                    providerCache[$"{backend.Provider.BaseUrl}_{backend.Provider.BearerToken}"] = underlyingModels;
+                }
+
+                if (underlyingModels == null)
+                {
+                    modelWarnings.Add($"Backend {backend.Id}: Provider offline or unreachable.");
+                }
+                else if (!underlyingModels.Contains(backend.UnderlyingModelName))
+                {
+                    modelWarnings.Add($"Backend {backend.Id}: Underlying model '{backend.UnderlyingModelName}' missing.");
+                }
             }
-            else if (!underlyingModels.Contains(model.UnderlyingModel))
+            
+            if (modelWarnings.Any())
             {
-                warnings[model.Id] = $"Underlying model '{model.UnderlyingModel}' missing.";
+                warnings[model.Id] = string.Join(" ", modelWarnings);
             }
         }
 
@@ -58,7 +74,8 @@ public class VirtualModelsController(
     public async Task<IActionResult> Index()
     {
         var models = await dbContext.VirtualModels
-            .Include(m => m.Provider)
+            .Include(m => m.VirtualModelBackends)
+            .ThenInclude(b => b.Provider)
             .Where(m => m.Type == ModelType.Chat)
             .OrderByDescending(m => m.CreatedAt)
             .ToListAsync();
@@ -85,7 +102,8 @@ public class VirtualModelsController(
     public async Task<IActionResult> EmbeddingIndex()
     {
         var models = await dbContext.VirtualModels
-            .Include(m => m.Provider)
+            .Include(m => m.VirtualModelBackends)
+            .ThenInclude(b => b.Provider)
             .Where(m => m.Type == ModelType.Embedding)
             .OrderByDescending(m => m.CreatedAt)
             .ToListAsync();
@@ -127,6 +145,12 @@ public class VirtualModelsController(
             AvailableUnderlyingModels = underlyingModels,
             AvailableProviders = providers
         };
+        ViewData["ThinkingOptions"] = new List<SelectListItem>
+        {
+            new() { Value = "", Text = "Default", Selected = true },
+            new() { Value = "true", Text = "Enabled" },
+            new() { Value = "false", Text = "Disabled" }
+        };
         return this.StackView(model);
     }
 
@@ -134,14 +158,23 @@ public class VirtualModelsController(
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(CreateViewModel model)
     {
-        if (!ModelState.IsValid)
+        if (!ModelState.IsValid || string.IsNullOrEmpty(model.UnderlyingModel) || model.ProviderId == 0)
         {
+            if (string.IsNullOrEmpty(model.UnderlyingModel)) ModelState.AddModelError(nameof(model.UnderlyingModel), "The Underlying Model field is required.");
+            if (model.ProviderId == 0) ModelState.AddModelError(nameof(model.ProviderId), "The Provider field is required.");
+            
             model.AvailableProviders = await dbContext.OllamaProviders.ToListAsync();
             var provider = model.AvailableProviders.FirstOrDefault(p => p.Id == model.ProviderId);
             if (provider != null)
             {
                 model.AvailableUnderlyingModels = await ollamaService.GetUnderlyingModelsAsync(provider.BaseUrl, provider.BearerToken) ?? new List<string>();
             }
+            ViewData["ThinkingOptions"] = new List<SelectListItem>
+            {
+                new() { Value = "", Text = "Default", Selected = model.Thinking == null },
+                new() { Value = "true", Text = "Enabled", Selected = model.Thinking == true },
+                new() { Value = "false", Text = "Disabled", Selected = model.Thinking == false }
+            };
             return this.StackView(model);
         }
 
@@ -155,15 +188,22 @@ public class VirtualModelsController(
             {
                 model.AvailableUnderlyingModels = await ollamaService.GetUnderlyingModelsAsync(provider.BaseUrl, provider.BearerToken) ?? new List<string>();
             }
+            ViewData["ThinkingOptions"] = new List<SelectListItem>
+            {
+                new() { Value = "", Text = "Default", Selected = model.Thinking == null },
+                new() { Value = "true", Text = "Enabled", Selected = model.Thinking == true },
+                new() { Value = "false", Text = "Disabled", Selected = model.Thinking == false }
+            };
             return this.StackView(model);
         }
 
         var virtualModel = new VirtualModel
         {
             Name = model.Name,
-            UnderlyingModel = model.UnderlyingModel,
-            ProviderId = model.ProviderId,
             Type = model.Type,
+            SelectionStrategy = model.SelectionStrategy,
+            MaxRetries = model.MaxRetries,
+            HealthCheckTimeout = model.HealthCheckTimeout,
             Thinking = model.Thinking,
             NumCtx = model.NumCtx,
             Temperature = model.Temperature,
@@ -172,7 +212,18 @@ public class VirtualModelsController(
             NumPredict = model.NumPredict,
             RepeatPenalty = model.RepeatPenalty,
             UseRawOutput = model.UseRawOutput,
-            KeepAlive = model.KeepAlive
+            VirtualModelBackends =
+            [
+                new VirtualModelBackend
+                {
+                    UnderlyingModelName = model.UnderlyingModel,
+                    ProviderId = model.ProviderId,
+                    Enabled = true,
+                    IsHealthy = true,
+                    Priority = 1,
+                    Weight = 1
+                }
+            ]
         };
 
         dbContext.VirtualModels.Add(virtualModel);
@@ -182,24 +233,34 @@ public class VirtualModelsController(
     }
 
     [HttpGet]
-    public async Task<IActionResult> Edit(int id)
+    public async Task<IActionResult> Edit(int id, int? providerId = null)
     {
-        var virtualModel = await dbContext.VirtualModels.FindAsync(id);
+        var virtualModel = await dbContext.VirtualModels
+            .Include(m => m.VirtualModelBackends)
+            .FirstOrDefaultAsync(m => m.Id == id);
+            
         if (virtualModel == null)
         {
             return NotFound();
         }
 
+        var firstBackend = virtualModel.VirtualModelBackends.FirstOrDefault();
+
         var providers = await dbContext.OllamaProviders.ToListAsync();
-        var provider = providers.FirstOrDefault(p => p.Id == virtualModel.ProviderId);
+        providerId ??= firstBackend?.ProviderId;
+        
+        var provider = providers.FirstOrDefault(p => p.Id == providerId);
         var underlyingModels = provider != null ? (await ollamaService.GetUnderlyingModelsAsync(provider.BaseUrl, provider.BearerToken) ?? new List<string>()) : new List<string>();
 
         var model = new CreateViewModel // Use same for edit for simplicity
         {
             Name = virtualModel.Name,
-            UnderlyingModel = virtualModel.UnderlyingModel,
-            ProviderId = virtualModel.ProviderId,
+            UnderlyingModel = firstBackend?.UnderlyingModelName ?? string.Empty,
+            ProviderId = providerId ?? 0,
             Type = virtualModel.Type,
+            SelectionStrategy = virtualModel.SelectionStrategy,
+            MaxRetries = virtualModel.MaxRetries,
+            HealthCheckTimeout = virtualModel.HealthCheckTimeout,
             Thinking = virtualModel.Thinking,
             NumCtx = virtualModel.NumCtx,
             Temperature = virtualModel.Temperature,
@@ -208,11 +269,17 @@ public class VirtualModelsController(
             NumPredict = virtualModel.NumPredict,
             RepeatPenalty = virtualModel.RepeatPenalty,
             UseRawOutput = virtualModel.UseRawOutput,
-            KeepAlive = virtualModel.KeepAlive,
             AvailableUnderlyingModels = underlyingModels,
             AvailableProviders = providers
         };
         ViewData["Id"] = id;
+        ViewData["Backends"] = virtualModel.VirtualModelBackends;
+        ViewData["ThinkingOptions"] = new List<SelectListItem>
+        {
+            new() { Value = "", Text = "Default", Selected = virtualModel.Thinking == null },
+            new() { Value = "true", Text = "Enabled", Selected = virtualModel.Thinking == true },
+            new() { Value = "false", Text = "Disabled", Selected = virtualModel.Thinking == false }
+        };
         return this.StackView(model);
     }
 
@@ -229,6 +296,14 @@ public class VirtualModelsController(
                 model.AvailableUnderlyingModels = await ollamaService.GetUnderlyingModelsAsync(provider.BaseUrl, provider.BearerToken) ?? new List<string>();
             }
             ViewData["Id"] = id;
+            var vm = await dbContext.VirtualModels.Include(m => m.VirtualModelBackends).FirstOrDefaultAsync(m => m.Id == id);
+            ViewData["Backends"] = vm?.VirtualModelBackends;
+            ViewData["ThinkingOptions"] = new List<SelectListItem>
+            {
+                new() { Value = "", Text = "Default", Selected = model.Thinking == null },
+                new() { Value = "true", Text = "Enabled", Selected = model.Thinking == true },
+                new() { Value = "false", Text = "Disabled", Selected = model.Thinking == false }
+            };
             return this.StackView(model);
         }
 
@@ -242,19 +317,31 @@ public class VirtualModelsController(
                 model.AvailableUnderlyingModels = await ollamaService.GetUnderlyingModelsAsync(provider.BaseUrl, provider.BearerToken) ?? new List<string>();
             }
             ViewData["Id"] = id;
+            var vm = await dbContext.VirtualModels.Include(m => m.VirtualModelBackends).FirstOrDefaultAsync(m => m.Id == id);
+            ViewData["Backends"] = vm?.VirtualModelBackends;
+            ViewData["ThinkingOptions"] = new List<SelectListItem>
+            {
+                new() { Value = "", Text = "Default", Selected = model.Thinking == null },
+                new() { Value = "true", Text = "Enabled", Selected = model.Thinking == true },
+                new() { Value = "false", Text = "Disabled", Selected = model.Thinking == false }
+            };
             return this.StackView(model);
         }
 
-        var virtualModel = await dbContext.VirtualModels.FindAsync(id);
+        var virtualModel = await dbContext.VirtualModels
+            .Include(m => m.VirtualModelBackends)
+            .FirstOrDefaultAsync(m => m.Id == id);
+            
         if (virtualModel == null)
         {
             return NotFound();
         }
 
         virtualModel.Name = model.Name;
-        virtualModel.UnderlyingModel = model.UnderlyingModel;
-        virtualModel.ProviderId = model.ProviderId;
         virtualModel.Type = model.Type;
+        virtualModel.SelectionStrategy = model.SelectionStrategy;
+        virtualModel.MaxRetries = model.MaxRetries;
+        virtualModel.HealthCheckTimeout = model.HealthCheckTimeout;
         virtualModel.Thinking = model.Thinking;
         virtualModel.NumCtx = model.NumCtx;
         virtualModel.Temperature = model.Temperature;
@@ -263,11 +350,72 @@ public class VirtualModelsController(
         virtualModel.NumPredict = model.NumPredict;
         virtualModel.RepeatPenalty = model.RepeatPenalty;
         virtualModel.UseRawOutput = model.UseRawOutput;
-        virtualModel.KeepAlive = model.KeepAlive;
 
         await dbContext.SaveChangesAsync();
 
         return virtualModel.Type == ModelType.Chat ? RedirectToAction(nameof(Index)) : RedirectToAction(nameof(EmbeddingIndex));
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> AddBackend(int id, int providerId, string underlyingModel, int priority = 1, int weight = 1)
+    {
+        var virtualModel = await dbContext.VirtualModels.FindAsync(id);
+        if (virtualModel == null) return NotFound();
+
+        dbContext.VirtualModelBackends.Add(new VirtualModelBackend
+        {
+            VirtualModelId = id,
+            ProviderId = providerId,
+            UnderlyingModelName = underlyingModel,
+            Priority = priority,
+            Weight = weight,
+            Enabled = true,
+            IsHealthy = true
+        });
+
+        await dbContext.SaveChangesAsync();
+        return RedirectToAction(nameof(Edit), new { id });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UpdateBackend(int id, int priority, int weight)
+    {
+        var backend = await dbContext.VirtualModelBackends.FindAsync(id);
+        if (backend == null) return NotFound();
+
+        backend.Priority = priority;
+        backend.Weight = weight;
+        await dbContext.SaveChangesAsync();
+        return RedirectToAction(nameof(Edit), new { id = backend.VirtualModelId });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> ToggleBackend(int id)
+    {
+        var backend = await dbContext.VirtualModelBackends.FindAsync(id);
+        if (backend == null) return NotFound();
+
+        backend.Enabled = !backend.Enabled;
+        await dbContext.SaveChangesAsync();
+        return RedirectToAction(nameof(Edit), new { id = backend.VirtualModelId });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteBackend(int id)
+    {
+        var backend = await dbContext.VirtualModelBackends.FindAsync(id);
+        if (backend != null)
+        {
+            var modelId = backend.VirtualModelId;
+            dbContext.VirtualModelBackends.Remove(backend);
+            await dbContext.SaveChangesAsync();
+            return RedirectToAction(nameof(Edit), new { id = modelId });
+        }
+        return BadRequest();
     }
 
     [HttpPost]
@@ -290,7 +438,8 @@ public class VirtualModelsController(
     public async Task<IActionResult> Chat(int id)
     {
         var virtualModel = await dbContext.VirtualModels
-            .Include(m => m.Provider)
+            .Include(m => m.VirtualModelBackends)
+            .ThenInclude(b => b.Provider)
             .FirstOrDefaultAsync(m => m.Id == id);
 
         if (virtualModel == null || virtualModel.Type != ModelType.Chat)
@@ -298,10 +447,12 @@ public class VirtualModelsController(
             return NotFound();
         }
 
+        var firstBackend = virtualModel.VirtualModelBackends.FirstOrDefault();
+
         var viewModel = new CreateViewModel // Reuse this for model info
         {
             Name = virtualModel.Name,
-            UnderlyingModel = virtualModel.UnderlyingModel,
+            UnderlyingModel = firstBackend?.UnderlyingModelName ?? string.Empty,
             PageTitle = $"Chat with {virtualModel.Name}"
         };
         ViewData["ModelId"] = id;

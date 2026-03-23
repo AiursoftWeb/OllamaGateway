@@ -18,10 +18,11 @@ public class RequestLog
     public string UserAgent { get; set; } = string.Empty;
     public string TraceId { get; set; } = string.Empty;
 
-    // 15-19: New fields appended at the end
+    // 15-20: New fields appended at the end
     public int PromptTokens { get; set; }
     public int CompletionTokens { get; set; }
     public int TotalTokens { get; set; }
     public string UserId { get; set; } = string.Empty;
     public string ApiKeyName { get; set; } = string.Empty;
+    public int? BackendId { get; set; }
 }

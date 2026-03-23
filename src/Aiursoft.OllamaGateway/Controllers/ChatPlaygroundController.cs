@@ -25,6 +25,7 @@ public class ChatPlaygroundController(
     public async Task<IActionResult> Index(int? id)
     {
         var models = await dbContext.VirtualModels
+            .Include(m => m.VirtualModelBackends)
             .AsNoTracking()
             .Where(m => m.Type == ModelType.Chat)
             .OrderBy(m => m.Name)
@@ -43,7 +44,7 @@ public class ChatPlaygroundController(
         var viewModel = new IndexViewModel
         {
             Name = selectedModel.Name,
-            UnderlyingModel = selectedModel.UnderlyingModel,
+            UnderlyingModel = selectedModel.VirtualModelBackends.FirstOrDefault()?.UnderlyingModelName ?? string.Empty,
             ModelId = selectedModel.Id,
             AllModels = models,
             BaseUrl = baseUrl,
@@ -65,6 +66,7 @@ public class ChatPlaygroundController(
     public async Task<IActionResult> EmbeddingLab(int? id)
     {
         var models = await dbContext.VirtualModels
+            .Include(m => m.VirtualModelBackends)
             .AsNoTracking()
             .Where(m => m.Type == ModelType.Embedding)
             .OrderBy(m => m.Name)
@@ -83,7 +85,7 @@ public class ChatPlaygroundController(
         var viewModel = new IndexViewModel
         {
             Name = selectedModel.Name,
-            UnderlyingModel = selectedModel.UnderlyingModel,
+            UnderlyingModel = selectedModel.VirtualModelBackends.FirstOrDefault()?.UnderlyingModelName ?? string.Empty,
             ModelId = selectedModel.Id,
             AllModels = models,
             BaseUrl = baseUrl,

@@ -45,11 +45,29 @@
                     {
                         @foreach (var m in Model.Models)
                         {
+                            var backends = m.VirtualModelBackends;
+                            var status = backends.Any(b => b.IsReady && b.Enabled) ? "Ready" : 
+                                         backends.Any(b => b.IsHealthy && b.Enabled) ? "Healthy" : "Down";
+                            var badgeClass = status == "Ready" ? "bg-success" : status == "Healthy" ? "bg-info" : "bg-danger";
+
                             <tr>
-                                <td><strong>@m.Name</strong></td>
-                                <td>@m.Provider?.Name</td>
                                 <td>
-                                    <code>@m.UnderlyingModel</code>
+                                    <span class="badge @badgeClass me-1" title="@status">@status</span>
+                                    <strong>@m.Name</strong>
+                                </td>
+                                <td>
+                                    @if (backends.Any())
+                                    {
+                                        var count = backends.Count;
+                                        <span>@backends.First().Provider?.Name</span>
+                                        @if (count > 1) { <span class="badge bg-secondary ms-1">+@(count - 1)</span> }
+                                    }
+                                </td>
+                                <td>
+                                    @if (backends.Any())
+                                    {
+                                        <code>@backends.First().UnderlyingModelName</code>
+                                    }
                                     @if (Model.ModelWarnings.TryGetValue(m.Id, out var warning))
                                     {
                                         <div class="mt-1">

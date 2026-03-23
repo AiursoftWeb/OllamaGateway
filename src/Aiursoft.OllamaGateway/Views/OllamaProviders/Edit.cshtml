@@ -1,0 +1,151 @@
+@model Aiursoft.OllamaGateway.Models.OllamaProvidersViewModels.CreateViewModel
+
+<div class="container-fluid p-0">
+    <div class="row mb-3">
+        <div class="col-auto">
+            <h1 class="h3 mb-3">@Localizer["Edit Ollama Provider"]</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">@Localizer["Provider Connection Settings"]</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit" asp-route-id="@ViewData["Id"]" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label">@Localizer["Provider Name"]</label>
+                            <input asp-for="Name" class="form-control" placeholder="@Localizer["e.g. Local Server"]" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="BaseUrl" class="form-label">@Localizer["Base URL"]</label>
+                            <input asp-for="BaseUrl" class="form-control" id="baseUrl" placeholder="http://localhost:11434" />
+                            <span asp-validation-for="BaseUrl" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="BearerToken" class="form-label">@Localizer["Bearer Token"]</label>
+                            <input asp-for="BearerToken" class="form-control" id="bearerToken" type="password" placeholder="@Localizer["Optional API Key"]" />
+                            <span asp-validation-for="BearerToken" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="KeepAlive" class="form-label">@Localizer["Keep Alive Policy"]</label>
+                            <input asp-for="KeepAlive" class="form-control" placeholder="5m" />
+                            <div class="form-text small">
+                                @Localizer["Controls how long models stay in memory after a request. Ollama format (e.g., '5m', '1h', '24h'). Use '0' to unload immediately, or '-1' to keep forever."]
+                            </div>
+                            <span asp-validation-for="KeepAlive" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="button" class="btn btn-outline-info me-md-2" onclick="testConnection()">@Localizer["Test Connection"]</button>
+                            <a asp-action="Index" class="btn btn-outline-secondary me-md-2">@Localizer["Back to List"]</a>
+                            <button type="submit" class="btn btn-primary">@Localizer["Save Changes"]</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">@Localizer["Proactive Model Warmup"]</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted small">
+                        @Localizer["Select physical models that should be proactively kept loaded in this provider's VRAM. The gateway will periodically ping these models to prevent them from being unloaded."]
+                    </p>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>@Localizer["Underlying Model Name"]</th>
+                                <th>@Localizer["Keep Alive"]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var physicalModels = (ViewData["PhysicalModels"] as IEnumerable<string>)?.ToList();
+                                var warmupModels = ViewData["WarmupModels"] as List<string> ?? new List<string>();
+                            }
+                            @if (physicalModels == null || !physicalModels.Any())
+                            {
+                                <tr>
+                                    <td colspan="2" class="text-center text-muted py-3">@Localizer["No physical models found on this server."]</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                @foreach (var m in physicalModels)
+                                {
+                                    <tr>
+                                        <td><code>@m</code></td>
+                                        <td>
+                                            <form asp-action="ToggleWarmup" asp-route-id="@ViewData["Id"]" asp-route-modelName="@m" method="post">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox"
+                                                           checked="@(warmupModels.Contains(m) ? "checked" : null)" 
+                                                           onchange="this.form.submit()">
+                                                </div>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div id="testResult" class="col-md-4" style="display:none;">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">@Localizer["Connection Test"]</h5>
+                </div>
+                <div id="testContent" class="card-body">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        async function testConnection() {
+            const baseUrl = document.getElementById('baseUrl').value;
+            const bearerToken = document.getElementById('bearerToken').value;
+            const resultDiv = document.getElementById('testResult');
+            const contentDiv = document.getElementById('testContent');
+            
+            resultDiv.style.display = 'block';
+            contentDiv.innerHTML = '<div class="text-center"><div class="spinner-border spinner-border-sm text-primary" role="status"></div> Connecting...</div>';
+            
+            try {
+                const response = await fetch('@Url.Action("Test")', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ baseUrl, bearerToken })
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    contentDiv.innerHTML = '<div class="alert alert-success mb-0">Connected! Found ' + data.models.length + ' models.</div>';
+                } else {
+                    contentDiv.innerHTML = '<div class="alert alert-danger mb-0">' + data.message + '</div>';
+                }
+            } catch (e) {
+                contentDiv.innerHTML = '<div class="alert alert-danger mb-0">Error: ' + e.message + '</div>';
+            }
+        }
+    </script>
+}

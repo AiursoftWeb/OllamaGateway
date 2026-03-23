@@ -93,10 +93,20 @@ namespace Aiursoft.OllamaGateway.MySql.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("KeepAlive")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
+
+                    b.Property<string>("WarmupModelsJson")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("varchar(4000)");
 
                     b.HasKey("Id");
 
@@ -221,8 +231,14 @@ namespace Aiursoft.OllamaGateway.MySql.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<int>("HealthCheckTimeout")
+                        .HasColumnType("int");
+
                     b.Property<bool>("KeepAlive")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("MaxRetries")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -235,11 +251,14 @@ namespace Aiursoft.OllamaGateway.MySql.Migrations
                     b.Property<int?>("NumPredict")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProviderId")
+                    b.Property<int?>("ProviderId")
                         .HasColumnType("int");
 
                     b.Property<float?>("RepeatPenalty")
                         .HasColumnType("float");
+
+                    b.Property<int>("SelectionStrategy")
+                        .HasColumnType("int");
 
                     b.Property<float?>("Temperature")
                         .HasColumnType("float");
@@ -257,7 +276,6 @@ namespace Aiursoft.OllamaGateway.MySql.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UnderlyingModel")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
@@ -269,6 +287,56 @@ namespace Aiursoft.OllamaGateway.MySql.Migrations
                     b.HasIndex("ProviderId");
 
                     b.ToTable("VirtualModels");
+                });
+
+            modelBuilder.Entity("Aiursoft.OllamaGateway.Entities.VirtualModelBackend", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Enabled")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("IsHealthy")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("IsReady")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("KeepAlive")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<DateTime>("LastCheckedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("Priority")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProviderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UnderlyingModelName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<int>("VirtualModelId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Weight")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProviderId");
+
+                    b.HasIndex("VirtualModelId");
+
+                    b.ToTable("VirtualModelBackends");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -429,11 +497,28 @@ namespace Aiursoft.OllamaGateway.MySql.Migrations
                 {
                     b.HasOne("Aiursoft.OllamaGateway.Entities.OllamaProvider", "Provider")
                         .WithMany("VirtualModels")
+                        .HasForeignKey("ProviderId");
+
+                    b.Navigation("Provider");
+                });
+
+            modelBuilder.Entity("Aiursoft.OllamaGateway.Entities.VirtualModelBackend", b =>
+                {
+                    b.HasOne("Aiursoft.OllamaGateway.Entities.OllamaProvider", "Provider")
+                        .WithMany()
                         .HasForeignKey("ProviderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Aiursoft.OllamaGateway.Entities.VirtualModel", "VirtualModel")
+                        .WithMany("VirtualModelBackends")
+                        .HasForeignKey("VirtualModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Provider");
+
+                    b.Navigation("VirtualModel");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -495,6 +580,11 @@ namespace Aiursoft.OllamaGateway.MySql.Migrations
             modelBuilder.Entity("Aiursoft.OllamaGateway.Entities.User", b =>
                 {
                     b.Navigation("ApiKeys");
+                });
+
+            modelBuilder.Entity("Aiursoft.OllamaGateway.Entities.VirtualModel", b =>
+                {
+                    b.Navigation("VirtualModelBackends");
                 });
 #pragma warning restore 612, 618
         }

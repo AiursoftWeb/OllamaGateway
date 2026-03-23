@@ -63,77 +63,58 @@ public class ModelWarmupService : BackgroundService
         using var scope = _serviceProvider.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
 
-        var modelsToWarmup = await dbContext.VirtualModels
-            .Include(m => m.Provider)
-            .Where(m => m.KeepAlive && m.Provider != null)
-            .ToListAsync(stoppingToken);
+        var providers = await dbContext.OllamaProviders.ToListAsync(stoppingToken);
 
-        if (!modelsToWarmup.Any())
+        if (!providers.Any())
         {
             return;
         }
 
-        _logger.LogInformation("Warming up {Count} models...", modelsToWarmup.Count);
-
         using var client = _httpClientFactory.CreateClient();
         client.Timeout = TimeSpan.FromSeconds(30);
 
-        foreach (var model in modelsToWarmup)
+        foreach (var provider in providers)
         {
-            if (model.Provider == null) continue;
-
-            var underlyingUrl = model.Provider.BaseUrl.TrimEnd('/');
-            
-            try
+            var warmupModels = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(provider.WarmupModelsJson);
+            if (warmupModels == null || !warmupModels.Any())
             {
-                if (model.Type == ModelType.Chat)
+                continue;
+            }
+
+            var underlyingUrl = provider.BaseUrl.TrimEnd('/');
+            _logger.LogInformation("Warming up {Count} models on provider {Provider}...", warmupModels.Count, provider.Name);
+
+            foreach (var modelName in warmupModels)
+            {
+                try
                 {
-                    var payload = new
+                    // Ping as chat model first (most common)
+                    var chatPayload = new
                     {
-                        model = model.UnderlyingModel,
+                        model = modelName,
                         messages = new[] { new { role = "user", content = "keep alive" } },
                         stream = false,
-                        options = new
-                        {
-                            num_predict = 1,
-                            num_ctx = model.NumCtx
-                        }
+                        options = new { num_predict = 1 }
                     };
                     
-                    var json = System.Text.Json.JsonSerializer.Serialize(payload);
+                    var json = System.Text.Json.JsonSerializer.Serialize(chatPayload);
                     var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/chat")
                     {
                         Content = new StringContent(json, System.Text.Encoding.UTF8, "application/json")
                     };
 
+                    if (!string.IsNullOrWhiteSpace(provider.BearerToken))
+                    {
+                        request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", provider.BearerToken);
+                    }
+
                     using var response = await client.SendAsync(request, stoppingToken);
-                    _logger.LogInformation("Warmed up chat model {Model} on provider {Provider} (Status: {Status})", model.Name, model.Provider.Name, response.StatusCode);
+                    _logger.LogInformation("Warmed up physical model {Underlying} on provider {Provider} (Status: {Status})", modelName, provider.Name, response.StatusCode);
                 }
-                else if (model.Type == ModelType.Embedding)
+                catch (Exception ex)
                 {
-                    var payload = new
-                    {
-                        model = model.UnderlyingModel,
-                        prompt = "keep alive",
-                        options = new
-                        {
-                            num_ctx = model.NumCtx
-                        }
-                    };
-
-                    var json = System.Text.Json.JsonSerializer.Serialize(payload);
-                    var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/embed")
-                    {
-                        Content = new StringContent(json, System.Text.Encoding.UTF8, "application/json")
-                    };
-
-                    using var response = await client.SendAsync(request, stoppingToken);
-                    _logger.LogInformation("Warmed up embedding model {Model} on provider {Provider} (Status: {Status})", model.Name, model.Provider.Name, response.StatusCode);
+                    _logger.LogWarning(ex, "Failed to warmup physical model {Underlying} on provider {Provider}", modelName, provider.Name);
                 }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogWarning(ex, "Failed to warmup model {Model} on provider {Provider}", model.Name, model.Provider.Name);
             }
         }
     }

@@ -15,14 +15,18 @@ public class CreateViewModel : UiStackLayoutViewModel
     [MaxLength(100)]
     public string Name { get; set; } = string.Empty;
 
-    [Required]
     [MaxLength(100)]
     public string UnderlyingModel { get; set; } = string.Empty;
 
-    [Required]
     public int ProviderId { get; set; }
 
     public ModelType Type { get; set; }
+
+    public SelectionStrategy SelectionStrategy { get; set; } = SelectionStrategy.PriorityFallback;
+
+    public int MaxRetries { get; set; } = 3;
+
+    public int HealthCheckTimeout { get; set; } = 30;
 
     public bool? Thinking { get; set; }
 

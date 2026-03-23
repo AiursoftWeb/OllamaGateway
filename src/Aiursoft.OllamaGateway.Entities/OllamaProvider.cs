@@ -18,6 +18,12 @@ public class OllamaProvider
     [MaxLength(2000)]
     public string? BearerToken { get; set; }
 
+    [MaxLength(100)]
+    public string KeepAlive { get; set; } = "5m";
+
+    [MaxLength(4000)]
+    public string WarmupModelsJson { get; set; } = "[]";
+
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public List<VirtualModel> VirtualModels { get; set; } = [];

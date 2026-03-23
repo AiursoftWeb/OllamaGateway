@@ -19,12 +19,22 @@ public class VirtualModel
     public required string Name { get; set; }
 
     [MaxLength(100)]
-    public required string UnderlyingModel { get; set; }
+    [Obsolete("Use VirtualModelBackends instead")]
+    public string? UnderlyingModel { get; set; }
 
-    public int ProviderId { get; set; }
+    [Obsolete("Use VirtualModelBackends instead")]
+    public int? ProviderId { get; set; }
+
+    [Obsolete("Use VirtualModelBackends instead")]
     public OllamaProvider? Provider { get; set; }
 
     public ModelType Type { get; set; }
+
+    public SelectionStrategy SelectionStrategy { get; set; } = SelectionStrategy.PriorityFallback;
+
+    public int MaxRetries { get; set; } = 3;
+
+    public int HealthCheckTimeout { get; set; } = 30;
 
     public bool? Thinking { get; set; }
 
@@ -42,7 +52,10 @@ public class VirtualModel
 
     public bool UseRawOutput { get; set; }
 
+    [Obsolete("Use KeepAlive on Provider instead")]
     public bool KeepAlive { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+    public List<VirtualModelBackend> VirtualModelBackends { get; set; } = [];
 }

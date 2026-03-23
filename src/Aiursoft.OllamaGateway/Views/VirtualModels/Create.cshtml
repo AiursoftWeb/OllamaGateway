@@ -1,5 +1,5 @@
+@using Aiursoft.OllamaGateway.Entities
 @model Aiursoft.OllamaGateway.Models.VirtualModelsViewModels.CreateViewModel
-@inject Aiursoft.OllamaGateway.Services.GlobalSettingsService GlobalSettingsService
 
 <div class="container-fluid p-0">
     <div class="row mb-3">
@@ -12,7 +12,7 @@
         <div class="col-md-10 col-lg-8">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">@Localizer["Model Details and Overrides"]</h5>
+                    <h5 class="card-title mb-0">@Localizer["Basic Settings"]</h5>
                 </div>
                 <div class="card-body">
                     <form asp-action="Create" method="post">
@@ -20,12 +20,35 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         
                         <div class="row">
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <label asp-for="Name" class="form-label">@Localizer["Virtual Model Name"]</label>
-                                <input asp-for="Name" class="form-control" placeholder="@Localizer["e.g. MyLlama3"]" />
+                                <input asp-for="Name" class="form-control" placeholder="@Localizer["e.g. MyLlama3:latest"]" />
                                 <span asp-validation-for="Name" class="text-danger"></span>
                             </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="SelectionStrategy" class="form-label">@Localizer["Selection Strategy"]</label>
+                                <select asp-for="SelectionStrategy" class="form-select" asp-items="Html.GetEnumSelectList<SelectionStrategy>()"></select>
+                                <span asp-validation-for="SelectionStrategy" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
                             <div class="col-md-4 mb-3">
+                                <label asp-for="MaxRetries" class="form-label">@Localizer["Max Retries"]</label>
+                                <input asp-for="MaxRetries" class="form-control" type="number" />
+                                <span asp-validation-for="MaxRetries" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="HealthCheckTimeout" class="form-label">@Localizer["Try Timeout (s)"]</label>
+                                <input asp-for="HealthCheckTimeout" class="form-control" type="number" />
+                                <span asp-validation-for="HealthCheckTimeout" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <h5 class="card-title mb-3">@Localizer["Initial Backend Configuration"]</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
                                 <label asp-for="ProviderId" class="form-label">@Localizer["Provider"]</label>
                                 <select asp-for="ProviderId" class="form-select" onchange="window.location.href='?type=@Model.Type&amp;providerId=' + this.value">
                                     @foreach (var p in Model.AvailableProviders)
@@ -35,7 +58,7 @@
                                 </select>
                                 <span asp-validation-for="ProviderId" class="text-danger"></span>
                             </div>
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <label asp-for="UnderlyingModel" class="form-label">@Localizer["Underlying Model"]</label>
                                 <select asp-for="UnderlyingModel" class="form-select">
                                     <option value="">@Localizer["-- Select Underlying Model --"]</option>
@@ -49,16 +72,12 @@
                         </div>
 
                         <hr />
-                        <h6 class="card-subtitle mb-2 text-muted">@Localizer["Optional Overrides (Leave empty to use client/defaults)"]</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">@Localizer["Optional Model Overrides"]</h6>
                         
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label asp-for="Thinking" class="form-label">@Localizer["Thinking Mode"]</label>
-                                <select asp-for="Thinking" class="form-select">
-                                    <option value="">@Localizer["Default"]</option>
-                                    <option value="true">@Localizer["Enabled"]</option>
-                                    <option value="false">@Localizer["Disabled"]</option>
-                                </select>
+                                <select asp-for="Thinking" class="form-select" asp-items="@(ViewData["ThinkingOptions"] as IEnumerable<SelectListItem>)"></select>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label asp-for="Temperature" class="form-label">@Localizer["Temperature"]</label>
@@ -68,8 +87,9 @@
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label asp-for="NumCtx" class="form-label">@Localizer["Context Length (num_ctx)"]</label>
+                                <label asp-for="NumCtx" class="form-label">@Localizer["Ollama num_ctx Override"]</label>
                                 <input asp-for="NumCtx" class="form-control" type="number" placeholder="32768" />
+                                <div class="form-text small">@Localizer["Forces the upstream engine to allocate a specific window size."]</div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label asp-for="TopP" class="form-label">@Localizer["Top P"]</label>
@@ -90,12 +110,7 @@
 
                         <div class="mb-3 form-check">
                             <input asp-for="UseRawOutput" class="form-check-input" type="checkbox" />
-                            <label asp-for="UseRawOutput" class="form-check-label">@Localizer["Use Raw Output (Don't translate stream)"]</label>
-                        </div>
-
-                        <div class="mb-3 form-check">
-                            <input asp-for="KeepAlive" class="form-check-input" type="checkbox" />
-                            <label asp-for="KeepAlive" class="form-check-label">@Localizer["Keep model loaded in memory"] (ping every @(await GlobalSettingsService.GetIntSettingAsync(Aiursoft.OllamaGateway.Configuration.SettingsMap.KeepAliveJobIntervalMinutes)) minutes)</label>
+                            <label asp-for="UseRawOutput" class="form-check-label">@Localizer["Use Raw Output"]</label>
                         </div>
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">

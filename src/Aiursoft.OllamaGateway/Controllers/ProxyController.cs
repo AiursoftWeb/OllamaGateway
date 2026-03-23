@@ -22,7 +22,8 @@ public class ProxyController(
     OllamaService ollamaService,
     GlobalSettingsService globalSettingsService,
     ILogger<ProxyController> logger,
-    MemoryUsageTracker memoryUsageTracker) : ControllerBase
+    MemoryUsageTracker memoryUsageTracker,
+    IModelSelector modelSelector) : ControllerBase
 {
     private static readonly HashSet<string> HeaderBlacklist = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -70,30 +71,38 @@ public class ProxyController(
                 : input.Model;
 
             var virtualModel = await dbContext.VirtualModels
-                .Include(m => m.Provider)
+                .Include(m => m.VirtualModelBackends).ThenInclude(b => b.Provider)
                 .FirstOrDefaultAsync(m => m.Name == modelToUse && m.Type == ModelType.Chat);
 
-            if (virtualModel == null || virtualModel.Provider == null)
+            if (virtualModel == null)
             {
                 Response.StatusCode = 404;
-                await Response.WriteAsync($"Model '{modelToUse}' not found in gateway or has no provider.");
+                await Response.WriteAsync($"Model '{modelToUse}' not found in gateway.");
                 return;
             }
 
-            var underlyingUrl = virtualModel.Provider.BaseUrl.TrimEnd('/');
+            var backend = modelSelector.SelectBackend(virtualModel);
+            if (backend == null || backend.Provider == null)
+            {
+                Response.StatusCode = 503;
+                await Response.WriteAsync($"No available backend for model '{modelToUse}'.");
+                return;
+            }
+
+            var underlyingUrl = backend.Provider.BaseUrl.TrimEnd('/');
             
             var apiKeyIdClaim = User.FindFirst("ApiKeyId");
             if (apiKeyIdClaim != null && int.TryParse(apiKeyIdClaim.Value, out var apiKeyId))
             {
                 memoryUsageTracker.TrackApiKeyUsage(apiKeyId);
             }
-            memoryUsageTracker.TrackUnderlyingModelUsage(virtualModel.Provider.Id, virtualModel.UnderlyingModel);
+            memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
             
             logContext.Log.Model = virtualModel.Name;
             logContext.Log.ConversationMessageCount = input.Messages.Count;
             logContext.Log.LastQuestion = input.Messages.LastOrDefault()?.Content ?? string.Empty;
 
-            input.Model = virtualModel.UnderlyingModel;
+            input.Model = backend.UnderlyingModelName;
             if (virtualModel.Thinking.HasValue) input.Think = virtualModel.Thinking.Value;
             
             input.Options ??= new OllamaRequestOptions();
@@ -104,21 +113,70 @@ public class ProxyController(
             if (virtualModel.NumPredict.HasValue) input.Options.NumPredict = virtualModel.NumPredict;
             if (virtualModel.RepeatPenalty.HasValue) input.Options.RepeatPenalty = virtualModel.RepeatPenalty;
 
-            using var client = httpClientFactory.CreateClient();
-            client.Timeout = await globalSettingsService.GetRequestTimeoutAsync();
-            if (!string.IsNullOrWhiteSpace(virtualModel.Provider.BearerToken))
+            HttpResponseMessage? response = null;
+            for (var i = 0; i < virtualModel.MaxRetries; i++)
             {
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", virtualModel.Provider.BearerToken);
+                var client = httpClientFactory.CreateClient();
+                client.Timeout = await globalSettingsService.GetRequestTimeoutAsync();
+                if (!string.IsNullOrWhiteSpace(backend.Provider.BearerToken))
+                {
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", backend.Provider.BearerToken);
+                }
+                
+                var json = JsonConvert.SerializeObject(input);
+                var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/chat")
+                {
+                    Content = new StringContent(json, Encoding.UTF8, "application/json")
+                };
+
+                using var cts = CancellationTokenSource.CreateLinkedTokenSource(HttpContext.RequestAborted);
+                cts.CancelAfter(TimeSpan.FromSeconds(virtualModel.HealthCheckTimeout));
+
+                logger.LogInformation("[{TraceId}] Proxying chat request for model {Model} to {UnderlyingUrl}, attempt {Attempt}", HttpContext.TraceIdentifier, virtualModel.Name, underlyingUrl, i + 1);
+                
+                try
+                {
+                    response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cts.Token);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        modelSelector.ReportSuccess(backend.Id);
+                        logContext.Log.BackendId = backend.Id;
+                        break;
+                    }
+                    if (!response.IsSuccessStatusCode && (int)response.StatusCode >= 500 && !Response.HasStarted)
+                    {
+                        throw new HttpRequestException($"Received {response.StatusCode} from upstream.");
+                    }
+                    else
+                    {
+                        modelSelector.ReportSuccess(backend.Id);
+                        logContext.Log.BackendId = backend.Id;
+                        break;
+                    }
+                }
+                catch (Exception ex) when (!Response.HasStarted)
+                {
+                    modelSelector.ReportFailure(backend.Id);
+                    logger.LogWarning(ex, "Attempt {Attempt} failed for model {Model} to {UnderlyingUrl}", i + 1, virtualModel.Name, underlyingUrl);
+                    if (i == virtualModel.MaxRetries - 1)
+                    {
+                        throw;
+                    }
+                    
+                    backend = modelSelector.SelectBackend(virtualModel);
+                    if (backend == null || backend.Provider == null)
+                    {
+                        Response.StatusCode = 503;
+                        await Response.WriteAsync($"No available backend for model '{virtualModel.Name}'.");
+                        return;
+                    }
+                    underlyingUrl = backend.Provider.BaseUrl.TrimEnd('/');
+                    input.Model = backend.UnderlyingModelName;
+                    memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
+                }
             }
             
-            var json = JsonConvert.SerializeObject(input);
-            var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/chat")
-            {
-                Content = new StringContent(json, Encoding.UTF8, "application/json")
-            };
-
-            logger.LogInformation("[{TraceId}] Proxying chat request for model {Model} to {UnderlyingUrl}", HttpContext.TraceIdentifier, virtualModel.Name, underlyingUrl);
-            using var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, HttpContext.RequestAborted);
+            if (response == null) return;
             
             Response.StatusCode = (int)response.StatusCode;
             CopyHeaders(response);
@@ -280,46 +338,103 @@ public class ProxyController(
             }
 
             var virtualModel = await dbContext.VirtualModels
-                .Include(m => m.Provider)
+                .Include(m => m.VirtualModelBackends).ThenInclude(b => b.Provider)
                 .FirstOrDefaultAsync(m => m.Name == modelName && m.Type == ModelType.Embedding);
 
-            if (virtualModel == null || virtualModel.Provider == null)
+            if (virtualModel == null)
             {
                 Response.StatusCode = 404;
-                await Response.WriteAsync($"Embedding model '{modelName}' not found in gateway or has no provider.");
+                await Response.WriteAsync($"Embedding model '{modelName}' not found in gateway.");
                 return;
             }
 
-            var underlyingUrl = virtualModel.Provider.BaseUrl.TrimEnd('/');
+            var backend = modelSelector.SelectBackend(virtualModel);
+            if (backend == null || backend.Provider == null)
+            {
+                Response.StatusCode = 503;
+                await Response.WriteAsync($"No available backend for model '{modelName}'.");
+                return;
+            }
+
+            var underlyingUrl = backend.Provider.BaseUrl.TrimEnd('/');
             
             var apiKeyIdClaim = User.FindFirst("ApiKeyId");
             if (apiKeyIdClaim != null && int.TryParse(apiKeyIdClaim.Value, out var apiKeyId))
             {
                 memoryUsageTracker.TrackApiKeyUsage(apiKeyId);
             }
-            memoryUsageTracker.TrackUnderlyingModelUsage(virtualModel.Provider.Id, virtualModel.UnderlyingModel);
+            memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
             
             logContext.Log.Model = virtualModel.Name;
             logContext.Log.ConversationMessageCount = 1;
             logContext.Log.LastQuestion = input.input?.ToString() ?? input.prompt?.ToString() ?? string.Empty;
 
-            input.model = virtualModel.UnderlyingModel;
+            input.model = backend.UnderlyingModelName;
 
-            using var client = httpClientFactory.CreateClient();
-            client.Timeout = await globalSettingsService.GetRequestTimeoutAsync();
-            if (!string.IsNullOrWhiteSpace(virtualModel.Provider.BearerToken))
+            HttpResponseMessage? response = null;
+            for (var i = 0; i < virtualModel.MaxRetries; i++)
             {
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", virtualModel.Provider.BearerToken);
+                var client = httpClientFactory.CreateClient();
+                client.Timeout = await globalSettingsService.GetRequestTimeoutAsync();
+                if (!string.IsNullOrWhiteSpace(backend.Provider.BearerToken))
+                {
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", backend.Provider.BearerToken);
+                }
+                
+                var json = JsonConvert.SerializeObject(input);
+                var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/embed")
+                {
+                    Content = new StringContent(json, Encoding.UTF8, "application/json")
+                };
+
+                using var cts = CancellationTokenSource.CreateLinkedTokenSource(HttpContext.RequestAborted);
+                cts.CancelAfter(TimeSpan.FromSeconds(virtualModel.HealthCheckTimeout));
+
+                logger.LogInformation("[{TraceId}] Proxying embedding request for model {Model} to {UnderlyingUrl}, attempt {Attempt}", HttpContext.TraceIdentifier, virtualModel.Name, underlyingUrl, i + 1);
+                
+                try
+                {
+                    response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cts.Token);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        modelSelector.ReportSuccess(backend.Id);
+                        logContext.Log.BackendId = backend.Id;
+                        break;
+                    }
+                    if (!response.IsSuccessStatusCode && (int)response.StatusCode >= 500 && !Response.HasStarted)
+                    {
+                        throw new HttpRequestException($"Received {response.StatusCode} from upstream.");
+                    }
+                    else
+                    {
+                        modelSelector.ReportSuccess(backend.Id);
+                        logContext.Log.BackendId = backend.Id;
+                        break;
+                    }
+                }
+                catch (Exception ex) when (!Response.HasStarted)
+                {
+                    modelSelector.ReportFailure(backend.Id);
+                    logger.LogWarning(ex, "Attempt {Attempt} failed for embedding model {Model} to {UnderlyingUrl}", i + 1, virtualModel.Name, underlyingUrl);
+                    if (i == virtualModel.MaxRetries - 1)
+                    {
+                        throw;
+                    }
+                    
+                    backend = modelSelector.SelectBackend(virtualModel);
+                    if (backend == null || backend.Provider == null)
+                    {
+                        Response.StatusCode = 503;
+                        await Response.WriteAsync($"No available backend for model '{virtualModel.Name}'.");
+                        return;
+                    }
+                    underlyingUrl = backend.Provider.BaseUrl.TrimEnd('/');
+                    input.model = backend.UnderlyingModelName;
+                    memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
+                }
             }
-            
-            var json = JsonConvert.SerializeObject(input);
-            var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/embed")
-            {
-                Content = new StringContent(json, Encoding.UTF8, "application/json")
-            };
 
-            logger.LogInformation("[{TraceId}] Proxying embedding request for model {Model} to {UnderlyingUrl}", HttpContext.TraceIdentifier, virtualModel.Name, underlyingUrl);
-            using var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, HttpContext.RequestAborted);
+            if (response == null) return;
             
             Response.StatusCode = (int)response.StatusCode;
             CopyHeaders(response);
@@ -387,7 +502,7 @@ public class ProxyController(
         }
 
         var virtualModels = await dbContext.VirtualModels
-            .Include(m => m.Provider)
+            .Include(m => m.VirtualModelBackends).ThenInclude(b => b.Provider)
             .ToListAsync();
         
         var allTags = new List<OllamaService.OllamaModel>();
@@ -395,15 +510,17 @@ public class ProxyController(
 
         foreach (var vm in virtualModels)
         {
-            if (vm.Provider == null) continue;
+            var backend = vm.VirtualModelBackends.FirstOrDefault();
+            if (backend == null || backend.Provider == null) continue;
+            var provider = backend.Provider;
 
-            if (!providerCache.TryGetValue($"{vm.Provider.BaseUrl}_{vm.Provider.BearerToken}", out var physicalModels))
+            if (!providerCache.TryGetValue($"{provider.BaseUrl}_{provider.BearerToken}", out var physicalModels))
             {
-                physicalModels = await ollamaService.GetDetailedModelsAsync(vm.Provider.BaseUrl, vm.Provider.BearerToken);
-                providerCache[$"{vm.Provider.BaseUrl}_{vm.Provider.BearerToken}"] = physicalModels;
+                physicalModels = await ollamaService.GetDetailedModelsAsync(provider.BaseUrl, provider.BearerToken);
+                providerCache[$"{provider.BaseUrl}_{provider.BearerToken}"] = physicalModels;
             }
 
-            var physicalModel = physicalModels?.FirstOrDefault(m => m.Name == vm.UnderlyingModel);
+            var physicalModel = physicalModels?.FirstOrDefault(m => m.Name == backend.UnderlyingModelName);
             if (physicalModel != null)
             {
                 allTags.Add(new OllamaService.OllamaModel
@@ -446,7 +563,7 @@ public class ProxyController(
         }
 
         var virtualModels = await dbContext.VirtualModels
-            .Include(m => m.Provider)
+            .Include(m => m.VirtualModelBackends).ThenInclude(b => b.Provider)
             .ToListAsync();
             
         var allRunning = new List<OllamaService.OllamaRunningModel>();
@@ -454,15 +571,17 @@ public class ProxyController(
 
         foreach (var vm in virtualModels)
         {
-            if (vm.Provider == null) continue;
+            var backend = vm.VirtualModelBackends.FirstOrDefault();
+            if (backend == null || backend.Provider == null) continue;
+            var provider = backend.Provider;
 
-            if (!providerCache.TryGetValue($"{vm.Provider.BaseUrl}_{vm.Provider.BearerToken}", out var runningPhysical))
+            if (!providerCache.TryGetValue($"{provider.BaseUrl}_{provider.BearerToken}", out var runningPhysical))
             {
-                runningPhysical = await ollamaService.GetRunningModelsAsync(vm.Provider.BaseUrl, vm.Provider.BearerToken);
-                providerCache[$"{vm.Provider.BaseUrl}_{vm.Provider.BearerToken}"] = runningPhysical;
+                runningPhysical = await ollamaService.GetRunningModelsAsync(provider.BaseUrl, provider.BearerToken);
+                providerCache[$"{provider.BaseUrl}_{provider.BearerToken}"] = runningPhysical;
             }
 
-            var physicalRunning = runningPhysical?.FirstOrDefault(m => m.Name == vm.UnderlyingModel);
+            var physicalRunning = runningPhysical?.FirstOrDefault(m => m.Name == backend.UnderlyingModelName);
             if (physicalRunning != null)
             {
                 allRunning.Add(new OllamaService.OllamaRunningModel

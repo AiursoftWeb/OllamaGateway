@@ -294,13 +294,19 @@ public class OllamaGatewayTests : TestBase
             var provider = new OllamaProvider { Name = "Provider", BaseUrl = "http://localhost:11434" };
             db.OllamaProviders.Add(provider);
             await db.SaveChangesAsync();
-            db.VirtualModels.Add(new VirtualModel 
+            var virtualModel = new VirtualModel 
             { 
                 Name = "chat-model:latest", 
-                UnderlyingModel = "llama3.2", 
-                ProviderId = provider.Id,
                 Type = ModelType.Chat
+            };
+            virtualModel.VirtualModelBackends.Add(new VirtualModelBackend
+            {
+                ProviderId = provider.Id,
+                UnderlyingModelName = "llama3.2",
+                Enabled = true,
+                IsHealthy = true
             });
+            db.VirtualModels.Add(virtualModel);
             await db.SaveChangesAsync();
         }
 
@@ -326,13 +332,19 @@ public class OllamaGatewayTests : TestBase
             var provider = new OllamaProvider { Name = "Provider", BaseUrl = "http://localhost:11434" };
             db.OllamaProviders.Add(provider);
             await db.SaveChangesAsync();
-            db.VirtualModels.Add(new VirtualModel 
+            var virtualModel = new VirtualModel 
             { 
                 Name = "embed-model:latest", 
-                UnderlyingModel = "nomic-embed-text", 
-                ProviderId = provider.Id,
                 Type = ModelType.Embedding
+            };
+            virtualModel.VirtualModelBackends.Add(new VirtualModelBackend
+            {
+                ProviderId = provider.Id,
+                UnderlyingModelName = "nomic-embed-text",
+                Enabled = true,
+                IsHealthy = true
             });
+            db.VirtualModels.Add(virtualModel);
             await db.SaveChangesAsync();
         }
 

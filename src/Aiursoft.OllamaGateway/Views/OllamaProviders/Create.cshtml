@@ -41,6 +41,15 @@
                             <div class="form-text">@Localizer["The Bearer Token for authorization if required by the upstream server."]</div>
                         </div>
 
+                        <div class="mb-3">
+                            <label asp-for="KeepAlive" class="form-label">@Localizer["Keep Alive Policy"]</label>
+                            <input asp-for="KeepAlive" class="form-control" placeholder="5m" />
+                            <div class="form-text small">
+                                @Localizer["Controls how long models stay in memory after a request. Ollama format (e.g., '5m', '1h', '24h'). Use '0' to unload immediately, or '-1' to keep forever."]
+                            </div>
+                            <span asp-validation-for="KeepAlive" class="text-danger"></span>
+                        </div>
+
                         <div id="testResult" class="alert d-none mb-3"></div>
 
                         <div class="d-grid gap-2">

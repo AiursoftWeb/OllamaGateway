@@ -6,6 +6,7 @@ using Aiursoft.UiStack.Navigation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace Aiursoft.OllamaGateway.Controllers;
 
@@ -104,12 +105,78 @@ public class OllamaProvidersController(
         {
             Name = model.Name,
             BaseUrl = model.BaseUrl,
-            BearerToken = model.BearerToken
+            BearerToken = model.BearerToken,
+            KeepAlive = model.KeepAlive
         };
 
         dbContext.OllamaProviders.Add(provider);
         await dbContext.SaveChangesAsync();
 
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Edit(int id)
+    {
+        var provider = await dbContext.OllamaProviders.FindAsync(id);
+        if (provider == null) return NotFound();
+
+        var physicalModels = await ollamaService.GetUnderlyingModelsAsync(provider.BaseUrl, provider.BearerToken) ?? new List<string>();
+
+        var model = new CreateViewModel
+        {
+            Name = provider.Name,
+            BaseUrl = provider.BaseUrl,
+            BearerToken = provider.BearerToken,
+            KeepAlive = provider.KeepAlive
+        };
+        ViewData["Id"] = id;
+        ViewData["PhysicalModels"] = physicalModels;
+        ViewData["WarmupModels"] = JsonConvert.DeserializeObject<List<string>>(provider.WarmupModelsJson);
+        return this.StackView(model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> ToggleWarmup(int id, string modelName)
+    {
+        var provider = await dbContext.OllamaProviders.FindAsync(id);
+        if (provider == null) return NotFound();
+
+        var warmupModels = JsonConvert.DeserializeObject<List<string>>(provider.WarmupModelsJson) ?? new List<string>();
+        if (warmupModels.Contains(modelName))
+        {
+            warmupModels.Remove(modelName);
+        }
+        else
+        {
+            warmupModels.Add(modelName);
+        }
+
+        provider.WarmupModelsJson = JsonConvert.SerializeObject(warmupModels);
+        await dbContext.SaveChangesAsync();
+        return RedirectToAction(nameof(Edit), new { id });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(int id, CreateViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            ViewData["Id"] = id;
+            return this.StackView(model);
+        }
+
+        var provider = await dbContext.OllamaProviders.FindAsync(id);
+        if (provider == null) return NotFound();
+
+        provider.Name = model.Name;
+        provider.BaseUrl = model.BaseUrl;
+        provider.BearerToken = model.BearerToken;
+        provider.KeepAlive = model.KeepAlive;
+
+        await dbContext.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
 
