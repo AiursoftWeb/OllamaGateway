@@ -2,6 +2,7 @@ using System.Security.Claims;
 using System.Text.Encodings.Web;
 using Aiursoft.OllamaGateway.Entities;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -15,7 +16,8 @@ public class ApiKeyAuthenticationHandler(
     IOptionsMonitor<ApiKeyAuthenticationOptions> options,
     ILoggerFactory logger,
     UrlEncoder encoder,
-    TemplateDbContext dbContext)
+    TemplateDbContext dbContext,
+    IUserClaimsPrincipalFactory<User> userClaimsPrincipalFactory)
     : AuthenticationHandler<ApiKeyAuthenticationOptions>(options, logger, encoder)
 {
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
@@ -49,18 +51,16 @@ public class ApiKeyAuthenticationHandler(
         apiKey.LastUsed = DateTime.UtcNow;
         await dbContext.SaveChangesAsync();
 
-        var claims = new List<Claim>
+        var principal = await userClaimsPrincipalFactory.CreateAsync(apiKey.User);
+        var identity = (ClaimsIdentity)principal.Identity!;
+        
+        identity.AddClaims(new List<Claim>
         {
-            new(ClaimTypes.NameIdentifier, apiKey.UserId),
-            new(ClaimTypes.Name, apiKey.User.UserName ?? string.Empty),
             new("ApiKeyId", apiKey.Id.ToString()),
             new("ApiKeyName", apiKey.Name)
-        };
+        });
 
-        var identity = new ClaimsIdentity(claims, Scheme.Name);
-        var principal = new ClaimsPrincipal(identity);
         var ticket = new AuthenticationTicket(principal, Scheme.Name);
-
         return AuthenticateResult.Success(ticket);
     }
 }

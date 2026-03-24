@@ -93,4 +93,36 @@ public class ChatPlaygroundController(
         };
 
         return this.StackView(viewModel);
+    }
+
+    [Authorize(Policy = AppPermissionNames.CanChatWithUnderlyingModels)]
+    [HttpGet]
+    public async Task<IActionResult> PhysicalChat(int providerId, string modelName)
+    {
+        var provider = await dbContext.OllamaProviders.FindAsync(providerId);
+        if (provider == null)
+        {
+            return NotFound();
+        }
+
+        var models = await dbContext.VirtualModels
+            .AsNoTracking()
+            .Where(m => m.Type == ModelType.Chat)
+            .OrderBy(m => m.Name)
+            .ToListAsync();
+
+        var baseUrl = $"{Request.Scheme}://{Request.Host}";
+        var physicalModelName = $"physical_{providerId}_{modelName}";
+        
+        var viewModel = new IndexViewModel
+        {
+            Name = physicalModelName,
+            UnderlyingModel = modelName,
+            ModelId = -1,
+            AllModels = models,
+            BaseUrl = baseUrl,
+            PageTitle = $"Physical Model: {modelName}"
+        };
+
+        return View("Index", viewModel);
     }}
