@@ -1,16 +1,11 @@
 using System.Net;
-using System.Security.Claims;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using Aiursoft.DbTools;
 using Aiursoft.OllamaGateway.Authorization;
 using Aiursoft.OllamaGateway.Entities;
-using Aiursoft.OllamaGateway.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 using static Aiursoft.WebTools.Extends;
 
 namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
@@ -62,7 +57,7 @@ public class PhysicalModelChatTests : TestBase
         }
 
         // 2. Mock Upstream Response
-        MockUpstreamState.Handler = (req, ct) =>
+        MockUpstreamState.Handler = (_, _) =>
         {
             var response = new JsonObject
             {
