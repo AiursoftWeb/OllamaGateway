@@ -623,6 +623,14 @@ public class OpenAIController : ControllerBase
                 ["input"] = clientJson["input"]!.DeepClone()
             };
 
+            var options = new JsonObject();
+            if (virtualModel.NumCtx.HasValue) options["num_ctx"] = virtualModel.NumCtx.Value;
+            if (virtualModel.Temperature.HasValue) options["temperature"] = virtualModel.Temperature.Value;
+            if (virtualModel.TopP.HasValue) options["top_p"] = virtualModel.TopP.Value;
+            if (virtualModel.TopK.HasValue) options["top_k"] = virtualModel.TopK.Value;
+            if (virtualModel.RepeatPenalty.HasValue) options["repeat_penalty"] = virtualModel.RepeatPenalty.Value;
+            if (options.Count > 0) ollamaRequest["options"] = options;
+
             HttpResponseMessage? response = null;
             for (var i = 0; i < virtualModel.MaxRetries; i++)
             {

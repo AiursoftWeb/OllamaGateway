@@ -64,6 +64,10 @@ public class ModelWarmupService : BackgroundService
         var dbContext = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
 
         var providers = await dbContext.OllamaProviders.ToListAsync(stoppingToken);
+        var allBackends = await dbContext.VirtualModelBackends
+            .Include(b => b.VirtualModel)
+            .Where(b => b.Enabled)
+            .ToListAsync(stoppingToken);
 
         if (!providers.Any())
         {
@@ -88,16 +92,29 @@ public class ModelWarmupService : BackgroundService
             {
                 try
                 {
+                    var config = allBackends.FirstOrDefault(b => b.ProviderId == provider.Id && b.UnderlyingModelName == modelName)?.VirtualModel;
+                    
                     // Ping as chat model first (most common)
                     var chatPayload = new
                     {
                         model = modelName,
                         messages = new[] { new { role = "user", content = "keep alive" } },
                         stream = false,
-                        options = new { num_predict = 1 }
+                        options = new
+                        {
+                            num_predict = 1,
+                            num_ctx = config?.NumCtx,
+                            temperature = config?.Temperature,
+                            top_p = config?.TopP,
+                            top_k = config?.TopK,
+                            repeat_penalty = config?.RepeatPenalty
+                        }
                     };
                     
-                    var json = System.Text.Json.JsonSerializer.Serialize(chatPayload);
+                    var json = System.Text.Json.JsonSerializer.Serialize(chatPayload, new System.Text.Json.JsonSerializerOptions
+                    {
+                        DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
+                    });
                     var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/chat")
                     {
                         Content = new StringContent(json, System.Text.Encoding.UTF8, "application/json")
@@ -109,7 +126,7 @@ public class ModelWarmupService : BackgroundService
                     }
 
                     using var response = await client.SendAsync(request, stoppingToken);
-                    _logger.LogInformation("Warmed up physical model {Underlying} on provider {Provider} (Status: {Status})", modelName, provider.Name, response.StatusCode);
+                    _logger.LogInformation("Warmed up physical model {Underlying} on provider {Provider} (Status: {Status}, num_ctx: {NumCtx})", modelName, provider.Name, response.StatusCode, config?.NumCtx ?? 0);
                 }
                 catch (Exception ex)
                 {
