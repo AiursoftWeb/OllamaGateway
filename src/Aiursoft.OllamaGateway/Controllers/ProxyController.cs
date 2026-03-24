@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json.Nodes;
 using Aiursoft.GptClient.Abstractions;
+using Aiursoft.OllamaGateway.Authorization;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
 using Aiursoft.OllamaGateway.Services.Authentication;
@@ -70,18 +71,61 @@ public class ProxyController(
                 ? await globalSettingsService.GetDefaultChatModelAsync() 
                 : input.Model;
 
-            var virtualModel = await dbContext.VirtualModels
-                .Include(m => m.VirtualModelBackends).ThenInclude(b => b.Provider)
-                .FirstOrDefaultAsync(m => m.Name == modelToUse && m.Type == ModelType.Chat);
+            VirtualModel? virtualModel = null;
+            VirtualModelBackend? backend = null;
+
+            if (modelToUse.StartsWith("physical_"))
+            {
+                var parts = modelToUse.Split('_');
+                if (parts.Length >= 3 && int.TryParse(parts[1], out var providerId))
+                {
+                    if (!User.HasClaim(AppPermissions.Type, AppPermissionNames.CanChatWithUnderlyingModels))
+                    {
+                        Response.StatusCode = 403;
+                        await Response.WriteAsync("Forbidden. You don't have permission to chat with underlying models.");
+                        return;
+                    }
+
+                    var provider = await dbContext.OllamaProviders.FindAsync(providerId);
+                    if (provider == null)
+                    {
+                        Response.StatusCode = 404;
+                        await Response.WriteAsync($"Provider with ID {providerId} not found.");
+                        return;
+                    }
+
+                    var underlyingModelName = string.Join('_', parts.Skip(2));
+                    virtualModel = new VirtualModel
+                    {
+                        Name = modelToUse,
+                        MaxRetries = 1,
+                        HealthCheckTimeout = 30,
+                    };
+                    backend = new VirtualModelBackend
+                    {
+                        Provider = provider,
+                        UnderlyingModelName = underlyingModelName,
+                        ProviderId = providerId
+                    };
+                }
+            }
 
             if (virtualModel == null)
             {
-                Response.StatusCode = 404;
-                await Response.WriteAsync($"Model '{modelToUse}' not found in gateway.");
-                return;
+                virtualModel = await dbContext.VirtualModels
+                    .Include(m => m.VirtualModelBackends).ThenInclude(b => b.Provider)
+                    .FirstOrDefaultAsync(m => m.Name == modelToUse && m.Type == ModelType.Chat);
+
+                if (virtualModel == null)
+                {
+                    Response.StatusCode = 404;
+                    await Response.WriteAsync($"Model '{modelToUse}' not found in gateway.");
+                    return;
+                }
+
+                backend = modelSelector.SelectBackend(virtualModel);
             }
 
-            var backend = modelSelector.SelectBackend(virtualModel);
             if (backend == null || backend.Provider == null)
             {
                 Response.StatusCode = 503;
