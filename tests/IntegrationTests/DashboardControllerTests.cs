@@ -4,7 +4,7 @@ namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
 public class DashboardControllerTests : TestBase
 {
     [TestMethod]
-    public async Task GetIndex()
+    public async Task GetIndex_NotAuthenticated_RedirectsToLogin()
     {
         // This is a basic test to ensure the controller is reachable.
         // Adjust the path as necessary for specific controllers.
@@ -13,9 +13,7 @@ public class DashboardControllerTests : TestBase
         var response = await Http.GetAsync(url);
         
         // Assert
-        // For some controllers, it might redirect to login, which is 302.
-        // For others, it might be 200.
-        // We just check if we get a response.
-        Assert.IsNotNull(response);
+        // Now that we added [Authorize], it should redirect to login.
+        Assert.AreEqual(System.Net.HttpStatusCode.Redirect, response.StatusCode);
     }
 }
