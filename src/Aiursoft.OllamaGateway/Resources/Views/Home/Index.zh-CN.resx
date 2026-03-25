@@ -105,11 +105,11 @@
   <data name="Automatic Dependency Injection" xml:space="preserve">
     <value>自动依赖注入</value>
   </data>
-  <data name="Automatic Role Sync" xml:space="preserve">
-    <value>自动角色同步</value>
-  </data>
   <data name="Automatic Retries" xml:space="preserve">
     <value>自动重试</value>
+  </data>
+  <data name="Automatic Role Sync" xml:space="preserve">
+    <value>自动角色同步</value>
   </data>
   <data name="Automatic Time Zone Handling" xml:space="preserve">
     <value>自动时区处理</value>
@@ -528,11 +528,11 @@
   <data name="Models are validated on both client and server sides based on data annotations." xml:space="preserve">
     <value>基于数据注解 (Data Annotations)，自动实现客户端与服务端的双重逻辑验证。</value>
   </data>
-  <data name="Multi-timezone Handling" xml:space="preserve">
-    <value>多时区处理</value>
-  </data>
   <data name="Multi-backend Support" xml:space="preserve">
     <value>多后端支持</value>
+  </data>
+  <data name="Multi-timezone Handling" xml:space="preserve">
+    <value>多时区处理</value>
   </data>
   <data name="Multimodal" xml:space="preserve">
     <value>多模态</value>
@@ -804,9 +804,6 @@
   <data name="Task Runner" xml:space="preserve">
     <value>任务运行器</value>
   </data>
-  <data name="Thinking Mode (DeepSeek)" xml:space="preserve">
-    <value>思维链支持 (DeepSeek)</value>
-  </data>
   <data name="Team Management" xml:space="preserve">
     <value>团队管理</value>
   </data>
@@ -822,17 +819,20 @@
   <data name="The Philosophy" xml:space="preserve">
     <value>哲学</value>
   </data>
-  <data name="Tiered Fallback" xml:space="preserve">
-    <value>逐级 Fallback</value>
-  </data>
   <data name="The template is built for easy deployment. It includes full Docker support, so you can containerize your app and run it anywhere. You can also deploy it directly to IIS, Azure App Service, or any server that supports ASP.NET Core." xml:space="preserve">
     <value>该模板专为简化部署而设计，内置完整的Docker支持，您可以将应用容器化后随处运行。也可直接部署到IIS、Azure应用服务或任何支持ASP.NET Core的服务器。</value>
+  </data>
+  <data name="Thinking Mode (DeepSeek)" xml:space="preserve">
+    <value>思维链支持 (DeepSeek)</value>
   </data>
   <data name="This is a template project" xml:space="preserve">
     <value>这是一个模板项目</value>
   </data>
   <data name="This is a template project, where we start the voyager..." xml:space="preserve">
     <value>这是一个模板项目，我们将从这里开启探索之旅...</value>
+  </data>
+  <data name="Tiered Fallback" xml:space="preserve">
+    <value>逐级 Fallback</value>
   </data>
   <data name="Timezone-aware fields" xml:space="preserve">
     <value>感知时区的字段</value>
