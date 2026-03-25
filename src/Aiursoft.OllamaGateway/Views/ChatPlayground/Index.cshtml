@@ -23,7 +23,46 @@
         </div>
     </div>
 
-    <div class="card flex-fill w-100" style="min-height: calc(100vh - 250px);">
+    <div class="card mb-3">
+        <div class="card-header cursor-pointer" data-bs-toggle="collapse" data-bs-target="#advancedOptions">
+            <div class="d-flex align-items-center">
+                <i class="me-2" data-lucide="settings" style="width: 18px; height: 18px;"></i>
+                <h5 class="card-title mb-0">@Localizer["Advanced Options"]</h5>
+                <i class="ms-auto" data-lucide="chevron-down" style="width: 18px; height: 18px;"></i>
+            </div>
+        </div>
+        <div id="advancedOptions" class="collapse">
+            <div class="card-body pt-0">
+                <hr class="mt-0">
+                <div class="row">
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label small fw-bold">@Localizer["Temperature"]</label>
+                        <input type="number" step="0.1" class="form-control form-control-sm" id="temperature" placeholder="Default" value="@Model.Temperature">
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label small fw-bold">@Localizer["Top P"]</label>
+                        <input type="number" step="0.1" class="form-control form-control-sm" id="topP" placeholder="Default" value="@Model.TopP">
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label small fw-bold">@Localizer["Top K"]</label>
+                        <input type="number" class="form-control form-control-sm" id="topK" placeholder="Default" value="@Model.TopK">
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label small fw-bold">@Localizer["Num Ctx"]</label>
+                        <input type="number" class="form-control form-control-sm" id="numCtx" placeholder="Default" value="@Model.NumCtx">
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-check form-switch mt-4">
+                            <input class="form-check-input" type="checkbox" id="thinking" @(Model.Thinking == true ? "checked" : "")>
+                            <label class="form-check-label small fw-bold" for="thinking">@Localizer["Thinking"]</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card flex-fill w-100" style="min-height: calc(100vh - 350px);">
         <div class="card-header d-flex justify-content-between align-items-center">
             <div>
                 <h5 class="card-title mb-0">@Localizer["Chatting with"] <strong>@Model.Name</strong></h5>
@@ -345,18 +384,35 @@
 
             try {
                 const endpoint = mode === 'ollama' ? '/api/chat' : '/v1/chat/completions';
+                
+                const temperature = parseFloat(document.getElementById('temperature').value);
+                const topP = parseFloat(document.getElementById('topP').value);
+                const topK = parseInt(document.getElementById('topK').value);
+                const numCtx = parseInt(document.getElementById('numCtx').value);
+                const thinking = document.getElementById('thinking').checked;
+
+                const options = {};
+                if (!isNaN(temperature)) options.temperature = temperature;
+                if (!isNaN(topP)) options.top_p = topP;
+                if (!isNaN(topK)) options.top_k = topK;
+                if (!isNaN(numCtx)) options.num_ctx = numCtx;
+
                 const body = mode === 'ollama' ? {
                     model: '@Model.Name',
                     messages: history,
-                    stream: true
+                    stream: true,
+                    options: options,
+                    think: thinking
                 } : {
                     model: '@Model.Name',
                     messages: history.map(m => ({
                         role: m.role,
                         content: m.content
-                        // OpenAI format might not support images the same way in this simple proxy
                     })),
-                    stream: true
+                    stream: true,
+                    temperature: isNaN(temperature) ? undefined : temperature,
+                    top_p: isNaN(topP) ? undefined : topP,
+                    max_tokens: isNaN(numCtx) ? undefined : numCtx
                 };
 
                 const response = await fetch(endpoint, {
@@ -390,9 +446,9 @@
                                         assistantFullContent += data.message.content;
                                         contentDiv.innerText = assistantFullContent;
                                     }
-                                    const thinking = data.message.thinking || data.message.think;
-                                    if (thinking) {
-                                        assistantFullThinking += thinking;
+                                    const thinkingContent = data.message.thinking || data.message.think;
+                                    if (thinkingContent) {
+                                        assistantFullThinking += thinkingContent;
                                         thinkContent.innerText = assistantFullThinking;
                                         thinkContainer.classList.remove('d-none');
                                     }

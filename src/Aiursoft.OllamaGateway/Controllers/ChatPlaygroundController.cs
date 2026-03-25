@@ -48,7 +48,12 @@ public class ChatPlaygroundController(
             ModelId = selectedModel.Id,
             AllModels = models,
             BaseUrl = baseUrl,
-            PageTitle = "Chat Playground"
+            PageTitle = "Chat Playground",
+            Thinking = selectedModel.Thinking,
+            NumCtx = selectedModel.NumCtx,
+            Temperature = selectedModel.Temperature,
+            TopP = selectedModel.TopP,
+            TopK = selectedModel.TopK
         };
 
         return this.StackView(viewModel);
@@ -89,7 +94,12 @@ public class ChatPlaygroundController(
             ModelId = selectedModel.Id,
             AllModels = models,
             BaseUrl = baseUrl,
-            PageTitle = "Embedding Lab"
+            PageTitle = "Embedding Lab",
+            Thinking = selectedModel.Thinking,
+            NumCtx = selectedModel.NumCtx,
+            Temperature = selectedModel.Temperature,
+            TopP = selectedModel.TopP,
+            TopK = selectedModel.TopK
         };
 
         return this.StackView(viewModel);
@@ -97,7 +107,14 @@ public class ChatPlaygroundController(
 
     [Authorize(Policy = AppPermissionNames.CanChatWithUnderlyingModels)]
     [HttpGet]
-    public async Task<IActionResult> PhysicalChat(int providerId, string modelName)
+    public async Task<IActionResult> PhysicalChat(
+        int providerId, 
+        string modelName,
+        bool? thinking,
+        int? numCtx,
+        float? temperature,
+        float? topP,
+        int? topK)
     {
         var provider = await dbContext.OllamaProviders.FindAsync(providerId);
         if (provider == null)
@@ -121,8 +138,14 @@ public class ChatPlaygroundController(
             ModelId = -1,
             AllModels = models,
             BaseUrl = baseUrl,
-            PageTitle = $"Physical Model: {modelName}"
+            PageTitle = $"Physical Model: {modelName}",
+            Thinking = thinking,
+            NumCtx = numCtx,
+            Temperature = temperature,
+            TopP = topP,
+            TopK = topK
         };
 
-        return View("Index", viewModel);
-    }}
+        return this.StackView(viewModel);
+    }
+}
