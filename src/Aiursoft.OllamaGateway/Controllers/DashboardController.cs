@@ -3,11 +3,13 @@ using Aiursoft.OllamaGateway.Models.DashboardViewModels;
 using Aiursoft.OllamaGateway.Services;
 using Aiursoft.UiStack.Navigation;
 using Aiursoft.WebTools.Attributes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.OllamaGateway.Controllers;
 
+[Authorize]
 [LimitPerMin]
 public class DashboardController(
     TemplateDbContext dbContext,
