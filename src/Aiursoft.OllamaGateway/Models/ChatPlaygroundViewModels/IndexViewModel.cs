@@ -19,4 +19,14 @@ public class IndexViewModel : UiStackLayoutViewModel
     public List<VirtualModel> AllModels { get; set; } = new();
 
     public string BaseUrl { get; set; } = string.Empty;
+
+    public bool? Thinking { get; set; }
+
+    public int? NumCtx { get; set; }
+
+    public float? Temperature { get; set; }
+
+    public float? TopP { get; set; }
+
+    public int? TopK { get; set; }
 }
