@@ -18,7 +18,10 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="API Endpoint:" xml:space="preserve">
+      <data name="Advanced Options" xml:space="preserve">
+    <value>ตัวเลือกขั้นสูง</value>
+  </data>
+  <data name="API Endpoint:" xml:space="preserve">
     <value>จุดเชื่อมต่อ API:</value>
   </data>
   <data name="API Mode:" xml:space="preserve">
@@ -42,6 +45,9 @@
   <data name="Hello! Send a message to start testing your virtual model configuration." xml:space="preserve">
     <value>สวัสดี! ส่งข้อความเพื่อเริ่มทดสอบการกำหนดค่าโมเดลเสมือนของคุณ</value>
   </data>
+  <data name="Num Ctx" xml:space="preserve">
+    <value>จำนวน Context</value>
+  </data>
   <data name="Provider Model:" xml:space="preserve">
     <value>แบบจำลองผู้ให้บริการ:</value>
   </data>
@@ -51,8 +57,20 @@
   <data name="Switch Model:" xml:space="preserve">
     <value>เปลี่ยนโมเดล:</value>
   </data>
+  <data name="Temperature" xml:space="preserve">
+    <value>อุณหภูมิ</value>
+  </data>
+  <data name="Thinking" xml:space="preserve">
+    <value>การคิด</value>
+  </data>
   <data name="Thinking..." xml:space="preserve">
     <value>กำลังคิด...</value>
+  </data>
+  <data name="Top K" xml:space="preserve">
+    <value>Top K</value>
+  </data>
+  <data name="Top P" xml:space="preserve">
+    <value>Top P</value>
   </data>
 
 </root>
