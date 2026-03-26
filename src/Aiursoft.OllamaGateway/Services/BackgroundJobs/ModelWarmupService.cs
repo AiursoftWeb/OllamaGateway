@@ -64,10 +64,6 @@ public class ModelWarmupService : BackgroundService
         var dbContext = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
 
         var providers = await dbContext.OllamaProviders.ToListAsync(stoppingToken);
-        var allBackends = await dbContext.VirtualModelBackends
-            .Include(b => b.VirtualModel)
-            .Where(b => b.Enabled)
-            .ToListAsync(stoppingToken);
 
         if (!providers.Any())
         {
@@ -79,7 +75,11 @@ public class ModelWarmupService : BackgroundService
 
         foreach (var provider in providers)
         {
-            var warmupModels = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(provider.WarmupModelsJson);
+            var warmupModels = System.Text.Json.JsonSerializer.Deserialize<List<WarmupModel>>(provider.WarmupModelsJson, new System.Text.Json.JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+            
             if (warmupModels == null || !warmupModels.Any())
             {
                 continue;
@@ -88,26 +88,23 @@ public class ModelWarmupService : BackgroundService
             var underlyingUrl = provider.BaseUrl.TrimEnd('/');
             _logger.LogInformation("Warming up {Count} models on provider {Provider}...", warmupModels.Count, provider.Name);
 
-            foreach (var modelName in warmupModels)
+            foreach (var warmupModel in warmupModels)
             {
                 try
                 {
-                    var config = allBackends.FirstOrDefault(b => b.ProviderId == provider.Id && b.UnderlyingModelName == modelName)?.VirtualModel;
-                    
                     // Ping as chat model first (most common)
                     var chatPayload = new
                     {
-                        model = modelName,
+                        model = warmupModel.Name,
                         messages = new[] { new { role = "user", content = "keep alive" } },
                         stream = false,
                         options = new
                         {
                             num_predict = 1,
-                            num_ctx = config?.NumCtx,
-                            temperature = config?.Temperature,
-                            top_p = config?.TopP,
-                            top_k = config?.TopK,
-                            repeat_penalty = config?.RepeatPenalty
+                            num_ctx = warmupModel.NumCtx,
+                            temperature = warmupModel.Temperature,
+                            top_p = warmupModel.TopP,
+                            top_k = warmupModel.TopK
                         }
                     };
                     
@@ -126,11 +123,11 @@ public class ModelWarmupService : BackgroundService
                     }
 
                     using var response = await client.SendAsync(request, stoppingToken);
-                    _logger.LogInformation("Warmed up physical model {Underlying} on provider {Provider} (Status: {Status}, num_ctx: {NumCtx})", modelName, provider.Name, response.StatusCode, config?.NumCtx ?? 0);
+                    _logger.LogInformation("Warmed up physical model {Underlying} on provider {Provider} (Status: {Status}, num_ctx: {NumCtx})", warmupModel.Name, provider.Name, response.StatusCode, warmupModel.NumCtx ?? 0);
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogWarning(ex, "Failed to warmup physical model {Underlying} on provider {Provider}", modelName, provider.Name);
+                    _logger.LogWarning(ex, "Failed to warmup physical model {Underlying} on provider {Provider}", warmupModel.Name, provider.Name);
                 }
             }
         }

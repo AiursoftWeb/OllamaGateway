@@ -69,34 +69,56 @@
                         <thead>
                             <tr>
                                 <th>@Localizer["Underlying Model Name"]</th>
-                                <th>@Localizer["Keep Alive"]</th>
+                                <th>@Localizer["Enabled"]</th>
+                                <th>@Localizer["Options"]</th>
                             </tr>
                         </thead>
                         <tbody>
                             @{
                                 var physicalModels = (ViewData["PhysicalModels"] as IEnumerable<string>)?.ToList();
-                                var warmupModels = ViewData["WarmupModels"] as List<string> ?? new List<string>();
+                                var warmupModels = ViewData["WarmupModels"] as List<Aiursoft.OllamaGateway.Entities.WarmupModel> ?? new List<Aiursoft.OllamaGateway.Entities.WarmupModel>();
                             }
                             @if (physicalModels == null || !physicalModels.Any())
                             {
                                 <tr>
-                                    <td colspan="2" class="text-center text-muted py-3">@Localizer["No physical models found on this server."]</td>
+                                    <td colspan="3" class="text-center text-muted py-3">@Localizer["No physical models found on this server."]</td>
                                 </tr>
                             }
                             else
                             {
                                 @foreach (var m in physicalModels)
                                 {
+                                    var warmupModel = warmupModels.FirstOrDefault(wm => wm.Name == m);
+                                    var isEnabled = warmupModel != null;
                                     <tr>
                                         <td><code>@m</code></td>
                                         <td>
                                             <form asp-action="ToggleWarmup" asp-route-id="@ViewData["Id"]" asp-route-modelName="@m" method="post">
                                                 <div class="form-check form-switch">
                                                     <input class="form-check-input" type="checkbox"
-                                                           checked="@(warmupModels.Contains(m) ? "checked" : null)" 
+                                                           checked="@(isEnabled ? "checked" : null)" 
                                                            onchange="this.form.submit()">
                                                 </div>
                                             </form>
+                                        </td>
+                                        <td>
+                                            @if (isEnabled)
+                                            {
+                                                <div class="row g-2">
+                                                    <div class="col-md-3">
+                                                        <input type="number" class="form-control form-control-sm" title="num_ctx" placeholder="num_ctx" value="@warmupModel?.NumCtx" onchange="updateOptions(event, '@m')">
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input type="number" step="0.1" class="form-control form-control-sm" title="temperature" placeholder="temp" value="@warmupModel?.Temperature" onchange="updateOptions(event, '@m')">
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input type="number" step="0.1" class="form-control form-control-sm" title="top_p" placeholder="top_p" value="@warmupModel?.TopP" onchange="updateOptions(event, '@m')">
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input type="number" class="form-control form-control-sm" title="top_k" placeholder="top_k" value="@warmupModel?.TopK" onchange="updateOptions(event, '@m')">
+                                                    </div>
+                                                </div>
+                                            }
                                         </td>
                                     </tr>
                                 }
@@ -146,6 +168,44 @@
                 }
             } catch (e) {
                 contentDiv.innerHTML = '<div class="alert alert-danger mb-0">Error: ' + e.message + '</div>';
+            }
+        }
+        async function updateOptions(event, modelName) {
+            const row = event.target.closest('tr');
+            const inputs = row.querySelectorAll('input[type="number"]');
+            
+            const nCtx = inputs[0].value;
+            const temp = inputs[1].value;
+            const tP = inputs[2].value;
+            const tK = inputs[3].value;
+
+            const formData = new FormData();
+            formData.append('modelName', modelName);
+            if (nCtx) formData.append('numCtx', nCtx);
+            if (temp) formData.append('temperature', temp);
+            if (tP) formData.append('topP', tP);
+            if (tK) formData.append('topK', tK);
+            
+            const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+            
+            try {
+                const response = await fetch('@Url.Action("UpdateWarmupOptions", new { id = ViewData["Id"] })', {
+                    method: 'POST',
+                    headers: {
+                        'RequestVerificationToken': token
+                    },
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    event.target.classList.add('is-valid');
+                    setTimeout(() => event.target.classList.remove('is-valid'), 1000);
+                } else {
+                    event.target.classList.add('is-invalid');
+                }
+            } catch (e) {
+                console.error('Failed to update options:', e);
+                event.target.classList.add('is-invalid');
             }
         }
     </script>

@@ -294,6 +294,11 @@ public class OpenAIController : ControllerBase
                     Content = new StringContent(ollamaRequest.ToJsonString(), Encoding.UTF8, "application/json")
                 };
 
+                if (!string.IsNullOrWhiteSpace(backend.Provider.BearerToken))
+                {
+                    request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", backend.Provider.BearerToken);
+                }
+
                 using var cts = CancellationTokenSource.CreateLinkedTokenSource(HttpContext.RequestAborted);
                 cts.CancelAfter(TimeSpan.FromSeconds(virtualModel.HealthCheckTimeout));
 
@@ -685,6 +690,11 @@ public class OpenAIController : ControllerBase
                 {
                     Content = new StringContent(ollamaRequest.ToJsonString(), Encoding.UTF8, "application/json")
                 };
+
+                if (!string.IsNullOrWhiteSpace(backend.Provider.BearerToken))
+                {
+                    request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", backend.Provider.BearerToken);
+                }
 
                 using var cts = CancellationTokenSource.CreateLinkedTokenSource(HttpContext.RequestAborted);
                 cts.CancelAfter(TimeSpan.FromSeconds(virtualModel.HealthCheckTimeout));

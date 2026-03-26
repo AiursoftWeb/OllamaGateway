@@ -1,6 +1,6 @@
+using System.Text.Json.Serialization;
 using Aiursoft.Scanner.Abstractions;
 using Microsoft.Extensions.Caching.Memory;
-using Newtonsoft.Json;
 
 namespace Aiursoft.OllamaGateway.Services;
 
@@ -30,7 +30,7 @@ public class OllamaService(
             if (!response.IsSuccessStatusCode) return null;
 
             var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<OllamaTagsResponse>(json);
+            var result = System.Text.Json.JsonSerializer.Deserialize<OllamaTagsResponse>(json);
             var models = result?.Models ?? new List<OllamaModel>();
             
             memoryCache.Set(cacheKey, models, TimeSpan.FromMinutes(1));
@@ -57,7 +57,7 @@ public class OllamaService(
             if (!response.IsSuccessStatusCode) return null;
 
             var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<OllamaPsResponse>(json);
+            var result = System.Text.Json.JsonSerializer.Deserialize<OllamaPsResponse>(json);
             return result?.Models ?? new List<OllamaRunningModel>();
         }
         catch (Exception)
@@ -72,33 +72,33 @@ public class OllamaService(
         return models?.Select(m => m.Name).ToList();
     }
 
-    public class OllamaTagsResponse { [JsonProperty("models")] public List<OllamaModel>? Models { get; set; } }
-    public class OllamaPsResponse { [JsonProperty("models")] public List<OllamaRunningModel>? Models { get; set; } }
+    public class OllamaTagsResponse { [JsonPropertyName("models")] public List<OllamaModel>? Models { get; set; } }
+    public class OllamaPsResponse { [JsonPropertyName("models")] public List<OllamaRunningModel>? Models { get; set; } }
 
     public class OllamaModel
     {
-        [JsonProperty("name")] public string Name { get; set; } = string.Empty;
-        [JsonProperty("model")] public string Model { get; set; } = string.Empty;
-        [JsonProperty("modified_at")] public DateTime ModifiedAt { get; set; }
-        [JsonProperty("size")] public long Size { get; set; }
-        [JsonProperty("digest")] public string Digest { get; set; } = string.Empty;
-        [JsonProperty("details")] public OllamaModelDetails? Details { get; set; }
+        [JsonPropertyName("name")] public string Name { get; set; } = string.Empty;
+        [JsonPropertyName("model")] public string Model { get; set; } = string.Empty;
+        [JsonPropertyName("modified_at")] public DateTime ModifiedAt { get; set; }
+        [JsonPropertyName("size")] public long Size { get; set; }
+        [JsonPropertyName("digest")] public string Digest { get; set; } = string.Empty;
+        [JsonPropertyName("details")] public OllamaModelDetails? Details { get; set; }
     }
 
     public class OllamaModelDetails
     {
-        [JsonProperty("parent_model")] public string? ParentModel { get; set; }
-        [JsonProperty("format")] public string? Format { get; set; }
-        [JsonProperty("family")] public string? Family { get; set; }
-        [JsonProperty("families")] public List<string>? Families { get; set; }
-        [JsonProperty("parameter_size")] public string? ParameterSize { get; set; }
-        [JsonProperty("quantization_level")] public string? QuantizationLevel { get; set; }
+        [JsonPropertyName("parent_model")] public string? ParentModel { get; set; }
+        [JsonPropertyName("format")] public string? Format { get; set; }
+        [JsonPropertyName("family")] public string? Family { get; set; }
+        [JsonPropertyName("families")] public List<string>? Families { get; set; }
+        [JsonPropertyName("parameter_size")] public string? ParameterSize { get; set; }
+        [JsonPropertyName("quantization_level")] public string? QuantizationLevel { get; set; }
     }
 
     public class OllamaRunningModel : OllamaModel
     {
-        [JsonProperty("expires_at")] public DateTime ExpiresAt { get; set; }
-        [JsonProperty("size_vram")] public long SizeVram { get; set; }
-        [JsonProperty("context_length")] public int? ContextLength { get; set; }
+        [JsonPropertyName("expires_at")] public DateTime ExpiresAt { get; set; }
+        [JsonPropertyName("size_vram")] public long SizeVram { get; set; }
+        [JsonPropertyName("context_length")] public int? ContextLength { get; set; }
     }
 }

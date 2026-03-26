@@ -6,7 +6,6 @@ using Aiursoft.UiStack.Navigation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 
 namespace Aiursoft.OllamaGateway.Controllers;
 
@@ -30,17 +29,18 @@ public class OllamaProvidersController(
             .OrderByDescending(p => p.CreatedAt)
             .ToListAsync();
 
-        var statuses = new List<ProviderStatus>();
-        foreach (var p in providers)
+        var statusTasks = providers.Select(async p =>
         {
             var runningModels = await ollamaService.GetRunningModelsAsync(p.BaseUrl, p.BearerToken, TimeSpan.FromSeconds(3));
-            statuses.Add(new ProviderStatus
+            return new ProviderStatus
             {
                 Provider = p,
                 IsAlive = runningModels != null,
                 RunningModels = runningModels
-            });
-        }
+            };
+        });
+
+        var statuses = (await Task.WhenAll(statusTasks)).ToList();
 
         var viewModel = new IndexViewModel
         {
@@ -132,7 +132,7 @@ public class OllamaProvidersController(
         };
         ViewData["Id"] = id;
         ViewData["PhysicalModels"] = physicalModels;
-        ViewData["WarmupModels"] = JsonConvert.DeserializeObject<List<string>>(provider.WarmupModelsJson);
+        ViewData["WarmupModels"] = System.Text.Json.JsonSerializer.Deserialize<List<WarmupModel>>(provider.WarmupModelsJson) ?? new List<WarmupModel>();
         return this.StackView(model);
     }
 
@@ -143,19 +143,41 @@ public class OllamaProvidersController(
         var provider = await dbContext.OllamaProviders.FindAsync(id);
         if (provider == null) return NotFound();
 
-        var warmupModels = JsonConvert.DeserializeObject<List<string>>(provider.WarmupModelsJson) ?? new List<string>();
-        if (warmupModels.Contains(modelName))
+        var warmupModels = System.Text.Json.JsonSerializer.Deserialize<List<WarmupModel>>(provider.WarmupModelsJson) ?? new List<WarmupModel>();
+        var target = warmupModels.FirstOrDefault(m => m.Name == modelName);
+        if (target != null)
         {
-            warmupModels.Remove(modelName);
+            warmupModels.Remove(target);
         }
         else
         {
-            warmupModels.Add(modelName);
+            warmupModels.Add(new WarmupModel { Name = modelName });
         }
 
-        provider.WarmupModelsJson = JsonConvert.SerializeObject(warmupModels);
+        provider.WarmupModelsJson = System.Text.Json.JsonSerializer.Serialize(warmupModels);
         await dbContext.SaveChangesAsync();
         return RedirectToAction(nameof(Edit), new { id });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UpdateWarmupOptions(int id, string modelName, int? numCtx, float? temperature, float? topP, int? topK)
+    {
+        var provider = await dbContext.OllamaProviders.FindAsync(id);
+        if (provider == null) return NotFound();
+
+        var warmupModels = System.Text.Json.JsonSerializer.Deserialize<List<WarmupModel>>(provider.WarmupModelsJson) ?? new List<WarmupModel>();
+        var target = warmupModels.FirstOrDefault(m => m.Name == modelName);
+        if (target != null)
+        {
+            target.NumCtx = numCtx;
+            target.Temperature = temperature;
+            target.TopP = topP;
+            target.TopK = topK;
+            provider.WarmupModelsJson = System.Text.Json.JsonSerializer.Serialize(warmupModels);
+            await dbContext.SaveChangesAsync();
+        }
+        return Ok();
     }
 
     [HttpPost]

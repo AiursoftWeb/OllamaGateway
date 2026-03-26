@@ -39,7 +39,8 @@ public class RequestLoggingMiddleware(RequestDelegate next, ILogger<RequestLoggi
             request.Body.Position = 0;
         }
 
-        logger.LogInformation("→ HTTP {Method} {Path}  Body: {Body}", method, path, body);
+        var loggedBody = body.Length > 500 ? body.Substring(0, 500) + "... [truncated]" : body;
+        logger.LogInformation("→ HTTP {Method} {Path}  Body: {Body}", method, path, loggedBody);
         
         try
         {

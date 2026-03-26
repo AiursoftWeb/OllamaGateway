@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using Aiursoft.OllamaGateway.Models;
 
 namespace Aiursoft.OllamaGateway.Controllers;
@@ -167,7 +166,7 @@ public class ProxyController(
                     client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", backend.Provider.BearerToken);
                 }
                 
-                var json = JsonConvert.SerializeObject(input);
+                var json = System.Text.Json.JsonSerializer.Serialize(input, new System.Text.Json.JsonSerializerOptions { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull });
                 var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/chat")
                 {
                     Content = new StringContent(json, Encoding.UTF8, "application/json")
@@ -417,7 +416,7 @@ public class ProxyController(
 
             if (virtualModel.NumCtx.HasValue || virtualModel.Temperature.HasValue || virtualModel.TopP.HasValue || virtualModel.TopK.HasValue || virtualModel.RepeatPenalty.HasValue)
             {
-                input.options ??= new Newtonsoft.Json.Linq.JObject();
+                input.options ??= new System.Dynamic.ExpandoObject();
                 if (virtualModel.NumCtx.HasValue) input.options.num_ctx = virtualModel.NumCtx.Value;
                 if (virtualModel.Temperature.HasValue) input.options.temperature = virtualModel.Temperature.Value;
                 if (virtualModel.TopP.HasValue) input.options.top_p = virtualModel.TopP.Value;
@@ -435,7 +434,7 @@ public class ProxyController(
                     client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", backend.Provider.BearerToken);
                 }
                 
-                var json = JsonConvert.SerializeObject(input);
+                var json = System.Text.Json.JsonSerializer.Serialize((object)input, new System.Text.Json.JsonSerializerOptions { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull });
                 var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/embed")
                 {
                     Content = new StringContent(json, Encoding.UTF8, "application/json")
