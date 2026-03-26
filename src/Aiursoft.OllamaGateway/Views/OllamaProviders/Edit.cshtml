@@ -1,3 +1,4 @@
+@using Aiursoft.OllamaGateway.Entities
 @model Aiursoft.OllamaGateway.Models.OllamaProvidersViewModels.CreateViewModel
 
 <div class="container-fluid p-0">
@@ -8,8 +9,8 @@
     </div>
 
     <div class="row">
-        <div class="col-md-8 col-lg-6">
-            <div class="card">
+        <div class="col-md-12 col-xl-6 mb-4">
+            <div class="card h-100">
                 <div class="card-header">
                     <h5 class="card-title mb-0">@Localizer["Provider Connection Settings"]</h5>
                 </div>
@@ -54,8 +55,8 @@
             </div>
         </div>
 
-        <div class="col-md-12 col-lg-6">
-            <div class="card">
+        <div class="col-md-12 col-xl-6 mb-4">
+            <div class="card h-100">
                 <div class="card-header">
                     <h5 class="card-title mb-0">@Localizer["Proactive Model Warmup"]</h5>
                 </div>
@@ -65,18 +66,19 @@
                     </p>
                 </div>
                 <div class="table-responsive">
+                    @Html.AntiForgeryToken()
                     <table class="table table-hover mb-0">
                         <thead>
                             <tr>
-                                <th>@Localizer["Underlying Model Name"]</th>
-                                <th>@Localizer["Enabled"]</th>
-                                <th>@Localizer["Options"]</th>
+                                <th>@Localizer["Model"]</th>
+                                <th style="width: 80px;">@Localizer["Keep"]</th>
+                                <th>@Localizer["Advanced Warmup Options"]</th>
                             </tr>
                         </thead>
                         <tbody>
                             @{
                                 var physicalModels = (ViewData["PhysicalModels"] as IEnumerable<string>)?.ToList();
-                                var warmupModels = ViewData["WarmupModels"] as List<Aiursoft.OllamaGateway.Entities.WarmupModel> ?? new List<Aiursoft.OllamaGateway.Entities.WarmupModel>();
+                                var warmupModels = ViewData["WarmupModels"] as List<WarmupModel> ?? new List<WarmupModel>();
                             }
                             @if (physicalModels == null || !physicalModels.Any())
                             {
@@ -90,35 +92,44 @@
                                 {
                                     var warmupModel = warmupModels.FirstOrDefault(wm => wm.Name == m);
                                     var isEnabled = warmupModel != null;
-                                    <tr>
-                                        <td><code>@m</code></td>
-                                        <td>
-                                            <form asp-action="ToggleWarmup" asp-route-id="@ViewData["Id"]" asp-route-modelName="@m" method="post">
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox"
-                                                           checked="@(isEnabled ? "checked" : null)" 
-                                                           onchange="this.form.submit()">
-                                                </div>
-                                            </form>
+                                    <tr data-model-name="@m">
+                                        <td class="align-middle"><code>@m</code></td>
+                                        <td class="align-middle">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox"
+                                                       checked="@(isEnabled ? "checked" : null)" 
+                                                       onchange="toggleWarmup(event, '@m')">
+                                            </div>
                                         </td>
                                         <td>
-                                            @if (isEnabled)
-                                            {
+                                            <div class="options-container @(isEnabled ? "" : "d-none")">
                                                 <div class="row g-2">
-                                                    <div class="col-md-3">
-                                                        <input type="number" class="form-control form-control-sm" title="num_ctx" placeholder="num_ctx" value="@warmupModel?.NumCtx" onchange="updateOptions(event, '@m')">
+                                                    <div class="col-md-6 col-lg-3">
+                                                        <div class="input-group input-group-sm">
+                                                            <span class="input-group-text">Ctx</span>
+                                                            <input type="number" class="form-control" title="num_ctx" placeholder="4096" value="@warmupModel?.NumCtx" onchange="updateOptions(event, '@m')">
+                                                        </div>
                                                     </div>
-                                                    <div class="col-md-3">
-                                                        <input type="number" step="0.1" class="form-control form-control-sm" title="temperature" placeholder="temp" value="@warmupModel?.Temperature" onchange="updateOptions(event, '@m')">
+                                                    <div class="col-md-6 col-lg-3">
+                                                        <div class="input-group input-group-sm">
+                                                            <span class="input-group-text">Temp</span>
+                                                            <input type="number" step="0.1" class="form-control" title="temperature" placeholder="0.8" value="@warmupModel?.Temperature" onchange="updateOptions(event, '@m')">
+                                                        </div>
                                                     </div>
-                                                    <div class="col-md-3">
-                                                        <input type="number" step="0.1" class="form-control form-control-sm" title="top_p" placeholder="top_p" value="@warmupModel?.TopP" onchange="updateOptions(event, '@m')">
+                                                    <div class="col-md-6 col-lg-3">
+                                                        <div class="input-group input-group-sm">
+                                                            <span class="input-group-text">Top P</span>
+                                                            <input type="number" step="0.1" class="form-control" title="top_p" placeholder="0.9" value="@warmupModel?.TopP" onchange="updateOptions(event, '@m')">
+                                                        </div>
                                                     </div>
-                                                    <div class="col-md-3">
-                                                        <input type="number" class="form-control form-control-sm" title="top_k" placeholder="top_k" value="@warmupModel?.TopK" onchange="updateOptions(event, '@m')">
+                                                    <div class="col-md-6 col-lg-3">
+                                                        <div class="input-group input-group-sm">
+                                                            <span class="input-group-text">Top K</span>
+                                                            <input type="number" class="form-control" title="top_k" placeholder="40" value="@warmupModel?.TopK" onchange="updateOptions(event, '@m')">
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            }
+                                            </div>
                                         </td>
                                     </tr>
                                 }
@@ -130,8 +141,8 @@
         </div>
         
         <div id="testResult" class="col-md-4" style="display:none;">
-            <div class="card">
-                <div class="card-header">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
                     <h5 class="card-title mb-0">@Localizer["Connection Test"]</h5>
                 </div>
                 <div id="testContent" class="card-body">
@@ -141,7 +152,6 @@
     </div>
 </div>
 
-@* ReSharper disable once Razor.SectionNotResolved *@
 @section scripts {
     <script>
         async function testConnection() {
@@ -162,14 +172,59 @@
                 const data = await response.json();
                 
                 if (data.success) {
-                    contentDiv.innerHTML = '<div class="alert alert-success mb-0">Connected! Found ' + data.models.length + ' models.</div>';
+                    contentDiv.innerHTML = '<div class="alert alert-success mb-0"><i class="align-middle me-2" data-feather="check-circle"></i>Connected! Found ' + data.models.length + ' models.</div>';
+                    if (window.feather) window.feather.replace();
                 } else {
-                    contentDiv.innerHTML = '<div class="alert alert-danger mb-0">' + data.message + '</div>';
+                    contentDiv.innerHTML = '<div class="alert alert-danger mb-0"><i class="align-middle me-2" data-feather="alert-triangle"></i>' + data.message + '</div>';
+                    if (window.feather) window.feather.replace();
                 }
             } catch (e) {
                 contentDiv.innerHTML = '<div class="alert alert-danger mb-0">Error: ' + e.message + '</div>';
             }
         }
+
+        async function toggleWarmup(event, modelName) {
+            const isChecked = event.target.checked;
+            const row = event.target.closest('tr');
+            const optionsContainer = row.querySelector('.options-container');
+            
+            // UI optimistic update
+            if (isChecked) {
+                optionsContainer.classList.remove('d-none');
+            } else {
+                optionsContainer.classList.add('d-none');
+            }
+
+            const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+            const formData = new FormData();
+            formData.append('modelName', modelName);
+            
+            try {
+                const response = await fetch('@Url.Action("ToggleWarmup", new { id = ViewData["Id"] })', {
+                    method: 'POST',
+                    headers: {
+                        'RequestVerificationToken': token
+                    },
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    alert('Failed to toggle warmup. Please try again.');
+                    // Revert UI
+                    event.target.checked = !isChecked;
+                    if (!isChecked) optionsContainer.classList.remove('d-none');
+                    else optionsContainer.classList.add('d-none');
+                }
+            } catch (e) {
+                console.error('Failed to toggle warmup:', e);
+                alert('An error occurred. Please check console.');
+                // Revert UI
+                event.target.checked = !isChecked;
+                if (!isChecked) optionsContainer.classList.remove('d-none');
+                else optionsContainer.classList.add('d-none');
+            }
+        }
+
         async function updateOptions(event, modelName) {
             const row = event.target.closest('tr');
             const inputs = row.querySelectorAll('input[type="number"]');
@@ -188,6 +243,9 @@
             
             const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
             
+            // Visual feedback
+            event.target.classList.remove('is-valid', 'is-invalid');
+            
             try {
                 const response = await fetch('@Url.Action("UpdateWarmupOptions", new { id = ViewData["Id"] })', {
                     method: 'POST',
@@ -199,7 +257,7 @@
                 
                 if (response.ok) {
                     event.target.classList.add('is-valid');
-                    setTimeout(() => event.target.classList.remove('is-valid'), 1000);
+                    setTimeout(() => event.target.classList.remove('is-valid'), 2000);
                 } else {
                     event.target.classList.add('is-invalid');
                 }

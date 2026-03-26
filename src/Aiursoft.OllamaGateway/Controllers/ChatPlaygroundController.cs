@@ -105,6 +105,52 @@ public class ChatPlaygroundController(
         return this.StackView(viewModel);
     }
 
+    [RenderInNavBar(
+        NavGroupName = "Chat",
+        NavGroupOrder = 100,
+        CascadedLinksGroupName = "Playground",
+        CascadedLinksIcon = "message-square",
+        CascadedLinksOrder = 1,
+        LinkText = "Completion Lab",
+        LinkOrder = 3)]
+    [HttpGet]
+    public async Task<IActionResult> CompletionLab(int? id)
+    {
+        var models = await dbContext.VirtualModels
+            .Include(m => m.VirtualModelBackends)
+            .AsNoTracking()
+            .Where(m => m.Type == ModelType.Chat)
+            .OrderBy(m => m.Name)
+            .ToListAsync();
+
+        if (!models.Any())
+        {
+            return RedirectToAction("Index", "VirtualModels");
+        }
+
+        var selectedModel = id.HasValue
+            ? models.FirstOrDefault(m => m.Id == id.Value) ?? models.First()
+            : models.First();
+
+        var baseUrl = $"{Request.Scheme}://{Request.Host}";
+        var viewModel = new IndexViewModel
+        {
+            Name = selectedModel.Name,
+            UnderlyingModel = selectedModel.VirtualModelBackends.FirstOrDefault()?.UnderlyingModelName ?? string.Empty,
+            ModelId = selectedModel.Id,
+            AllModels = models,
+            BaseUrl = baseUrl,
+            PageTitle = "Completion Lab",
+            Thinking = selectedModel.Thinking,
+            NumCtx = selectedModel.NumCtx,
+            Temperature = selectedModel.Temperature,
+            TopP = selectedModel.TopP,
+            TopK = selectedModel.TopK
+        };
+
+        return this.StackView(viewModel);
+    }
+
     [Authorize(Policy = AppPermissionNames.CanChatWithUnderlyingModels)]
     [HttpGet]
     public async Task<IActionResult> PhysicalChat(

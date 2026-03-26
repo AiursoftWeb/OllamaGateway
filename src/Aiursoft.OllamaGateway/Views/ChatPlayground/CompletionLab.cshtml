@@ -1,0 +1,192 @@
+@inject IViewLocalizer Localizer
+@model Aiursoft.OllamaGateway.Models.ChatPlaygroundViewModels.IndexViewModel
+
+<div class="container-fluid p-0">
+    <div class="row mb-3">
+        <div class="col-auto">
+            <h1 class="h3 mb-3">@Localizer["Completion Lab"]</h1>
+        </div>
+        <div class="col-auto ms-auto d-flex align-items-center">
+            <label class="me-2 fw-bold">@Localizer["Switch Model:"]</label>
+            <select class="form-select form-select-sm" style="width: auto;" onchange="window.location.href='?id=' + this.value">
+                @foreach (var m in Model.AllModels)
+                {
+                    <option value="@m.Id" selected="@(m.Id == Model.ModelId ? "selected" : null)">@m.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header cursor-pointer" data-bs-toggle="collapse" data-bs-target="#advancedOptions">
+            <div class="d-flex align-items-center">
+                <i class="me-2" data-lucide="settings" style="width: 18px; height: 18px;"></i>
+                <h5 class="card-title mb-0">@Localizer["Advanced Options"]</h5>
+                <i class="ms-auto" data-lucide="chevron-down" style="width: 18px; height: 18px;"></i>
+            </div>
+        </div>
+        <div id="advancedOptions" class="collapse">
+            <div class="card-body pt-0">
+                <hr class="mt-0">
+                <div class="row">
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label small fw-bold">@Localizer["Temperature"]</label>
+                        <input type="number" step="0.1" class="form-control form-control-sm" id="temperature" placeholder="Default" value="@Model.Temperature">
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label small fw-bold">@Localizer["Top P"]</label>
+                        <input type="number" step="0.1" class="form-control form-control-sm" id="topP" placeholder="Default" value="@Model.TopP">
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label small fw-bold">@Localizer["Top K"]</label>
+                        <input type="number" class="form-control form-control-sm" id="topK" placeholder="Default" value="@Model.TopK">
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label small fw-bold">@Localizer["Num Ctx"]</label>
+                        <input type="number" class="form-control form-control-sm" id="numCtx" placeholder="Default" value="@Model.NumCtx">
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-check form-switch mt-4">
+                            <input class="form-check-input" type="checkbox" id="rawMode">
+                            <label class="form-check-label small fw-bold" for="rawMode">@Localizer["Raw Mode"]</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 mb-3">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">@Localizer["Prompt Input"]</h5>
+                    <button class="btn btn-sm btn-outline-danger" id="btnClearInput">@Localizer["Clear"]</button>
+                </div>
+                <div class="card-body p-0">
+                    <textarea id="promptInput" class="form-control border-0 rounded-0" 
+                              style="height: 400px; resize: none; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;" 
+                              placeholder="@Localizer["Write your prompt here... (e.g. \"Once upon a time, in a far away land...\")"]"></textarea>
+                </div>
+                <div class="card-footer bg-white border-top-0">
+                    <button class="btn btn-primary w-100" id="btnRun">
+                        <i class="align-middle me-1" data-lucide="play"></i> @Localizer["Generate Completion"]
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6 mb-3">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="card-title mb-0">@Localizer["Generated Response"]</h5>
+                        <small class="text-muted">@Localizer["API Endpoint:"] <code>@Model.BaseUrl/api/generate</code></small>
+                    </div>
+                    <div class="spinner-border spinner-border-sm text-primary d-none" id="loadingSpinner" role="status"></div>
+                </div>
+                <div class="card-body p-0 bg-light">
+                    <div id="responseOutput" class="p-3" 
+                         style="height: 450px; overflow-auto; white-space: pre-wrap; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .cursor-pointer {
+        cursor: pointer;
+    }
+    #responseOutput:empty:before {
+        content: "@Localizer["Response will appear here..."]";
+        color: #adb5bd;
+    }
+</style>
+
+@section scripts {
+    <script>
+        const promptInput = document.getElementById('promptInput');
+        const responseOutput = document.getElementById('responseOutput');
+        const btnRun = document.getElementById('btnRun');
+        const btnClearInput = document.getElementById('btnClearInput');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        
+        btnClearInput.onclick = () => promptInput.value = '';
+
+        btnRun.onclick = async () => {
+            const prompt = promptInput.value.trim();
+            if (!prompt) return;
+
+            // Reset UI
+            responseOutput.innerText = '';
+            responseOutput.classList.remove('text-danger');
+            btnRun.disabled = true;
+            loadingSpinner.classList.remove('d-none');
+
+            try {
+                const temperature = parseFloat(document.getElementById('temperature').value);
+                const topP = parseFloat(document.getElementById('topP').value);
+                const topK = parseInt(document.getElementById('topK').value);
+                const numCtx = parseInt(document.getElementById('numCtx').value);
+                const rawMode = document.getElementById('rawMode').checked;
+
+                const options = {};
+                if (!isNaN(temperature)) options.temperature = temperature;
+                if (!isNaN(topP)) options.top_p = topP;
+                if (!isNaN(topK)) options.top_k = topK;
+                if (!isNaN(numCtx)) options.num_ctx = numCtx;
+
+                const body = {
+                    model: '@Model.Name',
+                    prompt: prompt,
+                    stream: true,
+                    options: options,
+                    raw: rawMode
+                };
+
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+
+                if (!response.ok) throw new Error(await response.text());
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let fullResponse = '';
+                let lineBuffer = '';
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    lineBuffer += decoder.decode(value, { stream: true });
+                    const lines = lineBuffer.split('\n');
+                    lineBuffer = lines.pop() || '';
+
+                    for (const line of lines) {
+                        if (!line.trim()) continue;
+                        try {
+                            const data = JSON.parse(line);
+                            if (data.response) {
+                                fullResponse += data.response;
+                                responseOutput.innerText = fullResponse;
+                            }
+                            if (data.done) {
+                                loadingSpinner.classList.add('d-none');
+                            }
+                        } catch (e) { console.error(e); }
+                    }
+                }
+            } catch (error) {
+                responseOutput.classList.add('text-danger');
+                responseOutput.innerText = 'Error: ' + error.message;
+            } finally {
+                loadingSpinner.classList.add('d-none');
+                btnRun.disabled = false;
+            }
+        };
+    </script>
+}

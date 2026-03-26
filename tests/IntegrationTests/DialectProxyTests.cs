@@ -497,6 +497,52 @@ public class DialectProxyTests : TestBase
         Assert.AreEqual(512, options["num_predict"]?.GetValue<int>());
     }
 
+    [TestMethod]
+    public async Task Ollama_Generate_ForwardsToApiGenerate()
+    {
+        // Arrange
+        MockUpstreamState.Handler = (req, _) =>
+        {
+            if (req.RequestUri?.PathAndQuery.Contains("/api/generate") == true)
+            {
+                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent("""{"model":"test-model","response":"hello","done":true}""", Encoding.UTF8, "application/json")
+                });
+            }
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.NotFound));
+        };
+
+        // Act
+        var payload = $$"""{"model":"{{VirtualModelName}}","prompt":"test","stream":false}""";
+        var response = await Http.SendAsync(AuthedPost("/api/generate", payload));
+
+        // Assert
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        var content = await response.Content.ReadAsStringAsync();
+        Assert.IsTrue(content.Contains("hello"));
+        Assert.AreEqual("/api/generate", MockUpstreamState.LastRequest?.RequestUri?.AbsolutePath);
+    }
+
+    [TestMethod]
+    public async Task Ollama_KeepAlive_Injected()
+    {
+        // Arrange
+        MockUpstreamState.Handler = (_, _) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+        {
+            Content = new StringContent("""{"model":"test-model","response":"ok","done":true}""", Encoding.UTF8, "application/json")
+        });
+
+        // Act
+        var payload = $$"""{"model":"{{VirtualModelName}}","prompt":"test","stream":false}""";
+        await Http.SendAsync(AuthedPost("/api/generate", payload));
+
+        // Assert
+        Assert.IsNotNull(MockUpstreamState.LastRequestBody);
+        var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody);
+        Assert.AreEqual("5m", upstreamBody?["keep_alive"]?.ToString());
+    }
+
     // ========================================================================
     // C. Gateway Robustness Tests
     // ========================================================================
