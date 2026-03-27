@@ -2,8 +2,6 @@ using System.Net;
 using System.Text.Json;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using static Aiursoft.WebTools.Extends;
 using Moq;
 using Aiursoft.OllamaGateway.Configuration;
@@ -46,7 +44,7 @@ public class OllamaApiCompatibilityTests : TestBase
         using (var scope = Server.Services.CreateScope())
         {
             var settings = scope.ServiceProvider.GetRequiredService<GlobalSettingsService>();
-            await settings.UpdateSettingAsync(Configuration.SettingsMap.AllowAnonymousApiCall, "True");
+            await settings.UpdateSettingAsync(SettingsMap.AllowAnonymousApiCall, "True");
         }
     }
 
