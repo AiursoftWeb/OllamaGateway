@@ -66,6 +66,7 @@ public class ModelWarmupService : BackgroundService
 
     private async Task WarmupAllProvidersAsync(CancellationToken stoppingToken)
     {
+        var sw = System.Diagnostics.Stopwatch.StartNew();
         using var scope = _serviceProvider.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
 
@@ -75,9 +76,14 @@ public class ModelWarmupService : BackgroundService
             return;
         }
 
+        _logger.LogInformation("Starting global warmup routine for {Count} providers...", providers.Count);
+
         // Parallelize across different providers to avoid one slow server blocking others
         var tasks = providers.Select(p => WarmupSingleProviderAsync(p, stoppingToken));
         await Task.WhenAll(tasks);
+        
+        sw.Stop();
+        _logger.LogInformation("Completed global warmup routine for {Count} providers in {Elapsed}ms.", providers.Count, sw.ElapsedMilliseconds);
     }
 
     private async Task WarmupSingleProviderAsync(OllamaProvider provider, CancellationToken stoppingToken)
@@ -102,10 +108,14 @@ public class ModelWarmupService : BackgroundService
         }
 
         var underlyingUrl = provider.BaseUrl.TrimEnd('/');
-        _logger.LogInformation("Warming up {Count} models on provider {Provider}...", warmupModels.Count, provider.Name);
+        _logger.LogInformation("Starting warmup for {Count} models on provider {Provider}...", warmupModels.Count, provider.Name);
 
         using var client = _httpClientFactory.CreateClient();
-        client.Timeout = TimeSpan.FromSeconds(30);
+        // Warmup may need to load large models into GPU/RAM, which can take minutes
+        client.Timeout = TimeSpan.FromMinutes(10);
+        
+        int successCount = 0;
+        var swTotal = System.Diagnostics.Stopwatch.StartNew();
 
         foreach (var warmupModel in warmupModels)
         {
@@ -113,52 +123,9 @@ public class ModelWarmupService : BackgroundService
             
             try
             {
-                // Ping as chat model with custom options
-                var chatPayload = new
+                if (warmupModel.IsEmbedding)
                 {
-                    model = warmupModel.Name,
-                    messages = new[] { new { role = "user", content = "keep alive" } },
-                    stream = false,
-                    keep_alive = provider.KeepAlive,
-                    options = new
-                    {
-                        num_predict = 1,
-                        num_ctx = warmupModel.NumCtx,
-                        temperature = warmupModel.Temperature,
-                        top_p = warmupModel.TopP,
-                        top_k = warmupModel.TopK
-                    }
-                };
-                
-                var json = System.Text.Json.JsonSerializer.Serialize(chatPayload, new System.Text.Json.JsonSerializerOptions
-                {
-                    DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
-                });
-                
-                var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/chat")
-                {
-                    Content = new StringContent(json, System.Text.Encoding.UTF8, "application/json")
-                };
-
-                if (!string.IsNullOrWhiteSpace(provider.BearerToken))
-                {
-                    request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", provider.BearerToken);
-                }
-
-                using var response = await client.SendAsync(request, stoppingToken);
-                if (response.IsSuccessStatusCode)
-                {
-                    _logger.LogInformation("Successfully warmed up physical model {Underlying} on provider {Provider} (Status: {Status}, num_ctx: {NumCtx})", 
-                        warmupModel.Name, provider.Name, response.StatusCode, warmupModel.NumCtx ?? 0);
-                }
-                else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
-                {
-                    // The model may be an embedding-only model (e.g. bge-m3) that doesn't support /api/chat.
-                    // Fallback to /api/embeddings with a minimal prompt to keep it loaded in memory.
-                    _logger.LogInformation(
-                        "Physical model {Underlying} on provider {Provider} returned BadRequest for /api/chat, trying /api/embeddings fallback...",
-                        warmupModel.Name, provider.Name);
-
+                    // Embedding models use /api/embeddings
                     var embeddingPayload = new
                     {
                         model = warmupModel.Name,
@@ -166,42 +133,100 @@ public class ModelWarmupService : BackgroundService
                         keep_alive = provider.KeepAlive
                     };
 
-                    var embeddingJson = System.Text.Json.JsonSerializer.Serialize(embeddingPayload);
-                    var embeddingRequest = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/embeddings")
+                    var json = System.Text.Json.JsonSerializer.Serialize(embeddingPayload);
+                    var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/embeddings")
                     {
-                        Content = new StringContent(embeddingJson, System.Text.Encoding.UTF8, "application/json")
+                        Content = new StringContent(json, System.Text.Encoding.UTF8, "application/json")
                     };
 
                     if (!string.IsNullOrWhiteSpace(provider.BearerToken))
                     {
-                        embeddingRequest.Headers.Authorization =
+                        request.Headers.Authorization =
                             new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", provider.BearerToken);
                     }
 
-                    using var embeddingResponse = await client.SendAsync(embeddingRequest, stoppingToken);
-                    if (embeddingResponse.IsSuccessStatusCode)
+                    var sw = System.Diagnostics.Stopwatch.StartNew();
+                    using var response = await client.SendAsync(request, stoppingToken);
+                    sw.Stop();
+
+                    if (response.IsSuccessStatusCode)
                     {
+                        successCount++;
                         _logger.LogInformation(
-                            "Successfully warmed up embedding model {Underlying} on provider {Provider} via /api/embeddings fallback",
-                            warmupModel.Name, provider.Name);
+                            "Successfully warmed up embedding model {Underlying} on provider {Provider} in {Elapsed}ms (keep_alive: {KeepAlive})",
+                            warmupModel.Name, provider.Name, sw.ElapsedMilliseconds, provider.KeepAlive);
                     }
                     else
                     {
                         _logger.LogWarning(
-                            "Upstream returned {Status} while warming up physical model {Underlying} on provider {Provider} via /api/embeddings fallback",
-                            embeddingResponse.StatusCode, warmupModel.Name, provider.Name);
+                            "Upstream returned {Status} while warming up embedding model {Underlying} on provider {Provider} in {Elapsed}ms",
+                            response.StatusCode, warmupModel.Name, provider.Name, sw.ElapsedMilliseconds);
                     }
                 }
                 else
                 {
-                    _logger.LogWarning("Upstream returned {Status} while warming up physical model {Underlying} on provider {Provider}", 
-                        response.StatusCode, warmupModel.Name, provider.Name);
+                    // Chat models use /api/chat
+                    var chatPayload = new
+                    {
+                        model = warmupModel.Name,
+                        messages = new[] { new { role = "user", content = "keep alive" } },
+                        stream = false,
+                        keep_alive = provider.KeepAlive,
+                        options = new
+                        {
+                            num_predict = 1,
+                            num_ctx = warmupModel.NumCtx,
+                            temperature = warmupModel.Temperature,
+                            top_p = warmupModel.TopP,
+                            top_k = warmupModel.TopK
+                        }
+                    };
+
+                    var json = System.Text.Json.JsonSerializer.Serialize(chatPayload, new System.Text.Json.JsonSerializerOptions
+                    {
+                        DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
+                    });
+
+                    var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/chat")
+                    {
+                        Content = new StringContent(json, System.Text.Encoding.UTF8, "application/json")
+                    };
+
+                    if (!string.IsNullOrWhiteSpace(provider.BearerToken))
+                    {
+                        request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", provider.BearerToken);
+                    }
+
+                    var sw = System.Diagnostics.Stopwatch.StartNew();
+                    using var response = await client.SendAsync(request, stoppingToken);
+                    sw.Stop();
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        successCount++;
+                        _logger.LogInformation("Successfully warmed up chat model {Underlying} on provider {Provider} in {Elapsed}ms (Status: {Status}, num_ctx: {NumCtx}, keep_alive: {KeepAlive})",
+                            warmupModel.Name, provider.Name, sw.ElapsedMilliseconds, response.StatusCode, warmupModel.NumCtx ?? 0, provider.KeepAlive);
+                    }
+                    else
+                    {
+                        _logger.LogWarning("Upstream returned {Status} while warming up chat model {Underlying} on provider {Provider} in {Elapsed}ms",
+                            response.StatusCode, warmupModel.Name, provider.Name, sw.ElapsedMilliseconds);
+                    }
                 }
             }
-            catch (Exception ex) when (ex is not OperationCanceledException)
+            catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
+            {
+                // Service is shutting down, propagate cancellation
+                throw;
+            }
+            catch (Exception ex)
             {
                 _logger.LogWarning(ex, "Failed to warmup physical model {Underlying} on provider {Provider}", warmupModel.Name, provider.Name);
             }
         }
+        
+        swTotal.Stop();
+        _logger.LogInformation("Finished warming up {SuccessCount}/{TotalCount} models on provider {Provider} in {Elapsed}ms.", 
+            successCount, warmupModels.Count, provider.Name, swTotal.ElapsedMilliseconds);
     }
 }

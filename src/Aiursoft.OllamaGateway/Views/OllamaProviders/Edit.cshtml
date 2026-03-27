@@ -10,7 +10,7 @@
 
     <div class="row">
         <div class="col-md-12 col-xl-6 mb-4">
-            <div class="card h-100">
+            <div class="card">
                 <div class="card-header">
                     <h5 class="card-title mb-0">@Localizer["Provider Connection Settings"]</h5>
                 </div>
@@ -56,7 +56,7 @@
         </div>
 
         <div class="col-md-12 col-xl-6 mb-4">
-            <div class="card h-100">
+            <div class="card">
                 <div class="card-header">
                     <h5 class="card-title mb-0">@Localizer["Proactive Model Warmup"]</h5>
                 </div>
@@ -72,6 +72,7 @@
                             <tr>
                                 <th>@Localizer["Model"]</th>
                                 <th style="width: 80px;">@Localizer["Keep"]</th>
+                                <th style="width: 80px;">@Localizer["Embed"]</th>
                                 <th>@Localizer["Advanced Warmup Options"]</th>
                             </tr>
                         </thead>
@@ -83,7 +84,7 @@
                             @if (physicalModels == null || !physicalModels.Any())
                             {
                                 <tr>
-                                    <td colspan="3" class="text-center text-muted py-3">@Localizer["No physical models found on this server."]</td>
+                                    <td colspan="4" class="text-center text-muted py-3">@Localizer["No physical models found on this server."]</td>
                                 </tr>
                             }
                             else
@@ -101,8 +102,15 @@
                                                        onchange="toggleWarmup(event, '@m')">
                                             </div>
                                         </td>
+                                        <td class="align-middle">
+                                            <div class="form-check form-switch embed-toggle @(isEnabled ? "" : "d-none")">
+                                                <input class="form-check-input" type="checkbox" title="isEmbedding"
+                                                       checked="@(warmupModel?.IsEmbedding == true ? "checked" : null)"
+                                                       onchange="updateOptions(event, '@m')">
+                                            </div>
+                                        </td>
                                         <td>
-                                            <div class="options-container @(isEnabled ? "" : "d-none")">
+                                            <div class="options-container @(isEnabled ? "" : "d-none") @(warmupModel?.IsEmbedding == true ? "d-none" : "")">
                                                 <div class="row g-2">
                                                     <div class="col-md-6 col-lg-3">
                                                         <div class="input-group input-group-sm">
@@ -187,12 +195,15 @@
             const isChecked = event.target.checked;
             const row = event.target.closest('tr');
             const optionsContainer = row.querySelector('.options-container');
+            const embedToggle = row.querySelector('.embed-toggle');
             
             // UI optimistic update
             if (isChecked) {
                 optionsContainer.classList.remove('d-none');
+                embedToggle.classList.remove('d-none');
             } else {
                 optionsContainer.classList.add('d-none');
+                embedToggle.classList.add('d-none');
             }
 
             const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
@@ -212,30 +223,41 @@
                     alert('Failed to toggle warmup. Please try again.');
                     // Revert UI
                     event.target.checked = !isChecked;
-                    if (!isChecked) optionsContainer.classList.remove('d-none');
-                    else optionsContainer.classList.add('d-none');
+                    if (!isChecked) { optionsContainer.classList.remove('d-none'); embedToggle.classList.remove('d-none'); }
+                    else { optionsContainer.classList.add('d-none'); embedToggle.classList.add('d-none'); }
                 }
             } catch (e) {
                 console.error('Failed to toggle warmup:', e);
                 alert('An error occurred. Please check console.');
                 // Revert UI
                 event.target.checked = !isChecked;
-                if (!isChecked) optionsContainer.classList.remove('d-none');
-                else optionsContainer.classList.add('d-none');
+                if (!isChecked) { optionsContainer.classList.remove('d-none'); embedToggle.classList.remove('d-none'); }
+                else { optionsContainer.classList.add('d-none'); embedToggle.classList.add('d-none'); }
             }
         }
 
         async function updateOptions(event, modelName) {
             const row = event.target.closest('tr');
-            const inputs = row.querySelectorAll('input[type="number"]');
+            const inputs = row.querySelectorAll('.options-container input[type="number"]');
+            const embedCheckbox = row.querySelector('.embed-toggle input[type="checkbox"]');
+            const optionsContainer = row.querySelector('.options-container');
+            const isEmbed = embedCheckbox ? embedCheckbox.checked : false;
             
-            const nCtx = inputs[0].value;
-            const temp = inputs[1].value;
-            const tP = inputs[2].value;
-            const tK = inputs[3].value;
+            // Toggle visibility of chat options based on embedding state
+            if (isEmbed) {
+                optionsContainer.classList.add('d-none');
+            } else {
+                optionsContainer.classList.remove('d-none');
+            }
+            
+            const nCtx = inputs[0]?.value;
+            const temp = inputs[1]?.value;
+            const tP = inputs[2]?.value;
+            const tK = inputs[3]?.value;
 
             const formData = new FormData();
             formData.append('modelName', modelName);
+            formData.append('isEmbedding', isEmbed);
             if (nCtx) formData.append('numCtx', nCtx);
             if (temp) formData.append('temperature', temp);
             if (tP) formData.append('topP', tP);

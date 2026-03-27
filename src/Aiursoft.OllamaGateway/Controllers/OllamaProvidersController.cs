@@ -167,7 +167,7 @@ public class OllamaProvidersController(
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> UpdateWarmupOptions(int id, string modelName, int? numCtx, float? temperature, float? topP, int? topK)
+    public async Task<IActionResult> UpdateWarmupOptions(int id, string modelName, int? numCtx, float? temperature, float? topP, int? topK, bool? isEmbedding)
     {
         var provider = await dbContext.OllamaProviders.FindAsync(id);
         if (provider == null) return NotFound();
@@ -180,6 +180,7 @@ public class OllamaProvidersController(
             target.Temperature = temperature;
             target.TopP = topP;
             target.TopK = topK;
+            target.IsEmbedding = isEmbedding ?? false;
             provider.WarmupModelsJson = System.Text.Json.JsonSerializer.Serialize(warmupModels);
             await dbContext.SaveChangesAsync();
         }

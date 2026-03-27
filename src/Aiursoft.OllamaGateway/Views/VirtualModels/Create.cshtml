@@ -111,6 +111,7 @@
                         <div class="mb-3 form-check">
                             <input asp-for="UseRawOutput" class="form-check-input" type="checkbox" />
                             <label asp-for="UseRawOutput" class="form-check-label">@Localizer["Use Raw Output"]</label>
+                            <div class="form-text small">@Localizer["When checked, the 'raw: true' parameter is sent to the upstream Ollama API. This tells Ollama to NOT apply any chat templates to your prompt. Use this for pure text completion. If unchecked, Ollama will automatically wrap your prompt in the model's default chat template, treating it as a conversational question."]</div>
                         </div>
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
