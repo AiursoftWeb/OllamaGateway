@@ -20,7 +20,21 @@
         <div class="card-body">
             <p>@Localizer["You can use this API key to access the Ollama Gateway API. The base URL is:"] <code>@Model.BaseUrl</code></p>
 
-            <h4 class="mt-4">@Localizer["1. Chat Completion (Ollama Format)"]</h4>
+            <h4 class="mt-4">@Localizer["1. Text Completion"]</h4>
+            <p>@Localizer["To simply complete a given text, use the following curl command:"]</p>
+            <div class="position-relative">
+                <pre class="bg-dark text-light p-3 rounded"><code>curl @(Model.BaseUrl)/api/generate \
+  -H "Authorization: Bearer @Model.ApiKey" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "@Model.DefaultChatModel",
+    "prompt": "why is the sky blue?",
+    "stream": false,
+    "raw": true
+  }'</code></pre>
+            </div>
+
+            <h4 class="mt-4">@Localizer["2. Chat Completion (Ollama Format)"]</h4>
             <p>@Localizer["To ask a question, use the following curl command:"]</p>
             <div class="position-relative">
                 <pre class="bg-dark text-light p-3 rounded"><code>curl @(Model.BaseUrl)/api/chat \
@@ -38,7 +52,7 @@
   }'</code></pre>
             </div>
 
-            <h4 class="mt-4">@Localizer["2. Chat Completion (OpenAI Format)"]</h4>
+            <h4 class="mt-4">@Localizer["3. Chat Completion (OpenAI Format)"]</h4>
             <p>@Localizer["To ask a question in OpenAI format, use the following curl command:"]</p>
             <div class="position-relative">
                 <pre class="bg-dark text-light p-3 rounded"><code>curl @(Model.BaseUrl)/v1/chat/completions \
@@ -56,7 +70,7 @@
   }'</code></pre>
             </div>
 
-            <h4 class="mt-4">@Localizer["3. Embedding"]</h4>
+            <h4 class="mt-4">@Localizer["4. Embedding"]</h4>
             <p>@Localizer["To generate embeddings for a text, use the following curl command:"]</p>
             <div class="position-relative">
                 <pre class="bg-dark text-light p-3 rounded"><code>curl @(Model.BaseUrl)/api/embed \
@@ -68,7 +82,7 @@
   }'</code></pre>
             </div>
 
-            <h4 class="mt-4">@Localizer["4. Opencode Usage"]</h4>
+            <h4 class="mt-4">@Localizer["5. Opencode Usage"]</h4>
             <p>@Localizer["After creating an API Key, you can edit your Opencode configuration file at"] <code>~/.config/opencode/opencode.json</code> @Localizer["to add a new provider:"]</p>
             <div class="position-relative">
                 <pre class="bg-dark text-light p-3 rounded"><code>{
