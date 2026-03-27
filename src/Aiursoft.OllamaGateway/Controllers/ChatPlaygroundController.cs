@@ -192,6 +192,6 @@ public class ChatPlaygroundController(
             TopK = topK
         };
 
-        return this.StackView(viewModel);
+        return this.StackView(viewModel, viewName: "Index");
     }
 }
