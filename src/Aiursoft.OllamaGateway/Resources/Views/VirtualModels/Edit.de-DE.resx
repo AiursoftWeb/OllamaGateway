@@ -153,5 +153,8 @@
   <data name="Weight" xml:space="preserve">
     <value>Gewichtung</value>
   </data>
+  <data name="When checked, the &apos;raw: true&apos; parameter is sent to the upstream Ollama API. This tells Ollama to NOT apply any chat templates to your prompt. Use this for pure text completion. If unchecked, Ollama will automatically wrap your prompt in the model&apos;s default chat template, treating it as a conversational question." xml:space="preserve">
+    <value>Wenn aktiviert, wird der Parameter &apos;raw: true&apos; an die Upstream-Ollama-API gesendet. Dies teilt Ollama mit, KEINE Chat-Vorlagen auf Ihren Eingabetext anzuwenden. Verwenden Sie dies für reine Textergänzungen. Wenn deaktiviert, wird Ollama Ihren Eingabetext automatisch in die Standard-Chat-Vorlage des Modells einbetten und ihn als konversationelle Frage behandeln.</value>
+  </data>
 
 </root>

@@ -153,5 +153,8 @@
   <data name="Weight" xml:space="preserve">
     <value>Greutatea</value>
   </data>
+  <data name="When checked, the &apos;raw: true&apos; parameter is sent to the upstream Ollama API. This tells Ollama to NOT apply any chat templates to your prompt. Use this for pure text completion. If unchecked, Ollama will automatically wrap your prompt in the model&apos;s default chat template, treating it as a conversational question." xml:space="preserve">
+    <value>Când este bifat, parametrul „raw: true&quot; este trimis către API-ul Ollama de la amonte. Acest lucru indică Ollama să NU aplice niciun șablon de chat la promptul dumneavoastră. Utilizați acest lucru pentru finalizarea pură a textului. Dacă nu este bifat, Ollama va încapsula automat promptul dumneavoastră în șablonul de chat implicit al modelului, tratându-l ca pe o întrebare de conversație.</value>
+  </data>
 
 </root>

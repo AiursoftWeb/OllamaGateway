@@ -108,5 +108,8 @@
   <data name="Virtual Model Name" xml:space="preserve">
     <value>Sanal Model Adı</value>
   </data>
+  <data name="When checked, the &apos;raw: true&apos; parameter is sent to the upstream Ollama API. This tells Ollama to NOT apply any chat templates to your prompt. Use this for pure text completion. If unchecked, Ollama will automatically wrap your prompt in the model&apos;s default chat template, treating it as a conversational question." xml:space="preserve">
+    <value>İşaretlendiğinde, &apos;raw: true&apos; parametresi yukarıdaki Ollama API&apos;sine gönderilir. Bu, Ollama&apos;ya isteğinizde herhangi bir sohbet şablonu uygulamamasını söyler. Saf metin tamamlama için bunu kullanın. İşaretlenmezse, Ollama isteğinizi varsayılan sohbet şablonuna otomatik olarak sarar ve bunu konuşma sorusu olarak işler.</value>
+  </data>
 
 </root>

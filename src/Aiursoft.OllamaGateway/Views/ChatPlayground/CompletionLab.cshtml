@@ -45,12 +45,16 @@
                         <label class="form-label small fw-bold">@Localizer["Num Ctx"]</label>
                         <input type="number" class="form-control form-control-sm" id="numCtx" placeholder="Default" value="@Model.NumCtx">
                     </div>
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-3 mb-3">
                         <div class="form-check form-switch mt-4">
-                            <input class="form-check-input" type="checkbox" id="rawMode">
+                            <input class="form-check-input" type="checkbox" id="rawMode" checked>
                             <label class="form-check-label small fw-bold" for="rawMode">@Localizer["Raw Mode"]</label>
                         </div>
                         <div class="form-text small" style="line-height: 1.25;">@Localizer["When enabled, the 'raw: true' parameter is sent to the upstream Ollama API. Ollama will NOT apply any chat templates and will perform pure text completion. If disabled, Ollama wraps your input in a conversational template."]</div>
+                    </div>
+                    <div class="col-md-1 mb-3">
+                        <label class="form-label small fw-bold">@Localizer["Timeout (s)"]</label>
+                        <input type="number" class="form-control form-control-sm" id="timeout" placeholder="10" value="10">
                     </div>
                 </div>
             </div>
@@ -125,12 +129,16 @@
             btnRun.disabled = true;
             loadingSpinner.classList.remove('d-none');
 
+            let abortController = null;
+            let timeoutId = null;
+
             try {
                 const temperature = parseFloat(document.getElementById('temperature').value);
                 const topP = parseFloat(document.getElementById('topP').value);
                 const topK = parseInt(document.getElementById('topK').value);
                 const numCtx = parseInt(document.getElementById('numCtx').value);
                 const rawMode = document.getElementById('rawMode').checked;
+                const timeoutSeconds = parseInt(document.getElementById('timeout').value) || 10;
 
                 const options = {};
                 if (!isNaN(temperature)) options.temperature = temperature;
@@ -146,10 +154,16 @@
                     raw: rawMode
                 };
 
+                abortController = new AbortController();
+                timeoutId = setTimeout(() => {
+                    abortController.abort(new Error(`Request timed out after ${timeoutSeconds} seconds.`));
+                }, timeoutSeconds * 1000);
+
                 const response = await fetch('/api/generate', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(body)
+                    body: JSON.stringify(body),
+                    signal: abortController.signal
                 });
 
                 if (!response.ok) throw new Error(await response.text());
@@ -160,6 +174,9 @@
                 let lineBuffer = '';
 
                 while (true) {
+                    if (abortController.signal.aborted) {
+                        throw abortController.signal.reason;
+                    }
                     const { done, value } = await reader.read();
                     if (done) break;
 
@@ -178,13 +195,22 @@
                             if (data.done) {
                                 loadingSpinner.classList.add('d-none');
                             }
-                        } catch (e) { console.error(e); }
+                        } catch (e) {
+                            if (e.name !== 'AbortError') {
+                                console.error(e);
+                            }
+                        }
                     }
                 }
             } catch (error) {
                 responseOutput.classList.add('text-danger');
-                responseOutput.innerText = 'Error: ' + error.message;
+                if (error.name === 'AbortError' || (abortController && abortController.signal.aborted)) {
+                    responseOutput.innerText = 'Error: ' + (abortController?.signal?.reason?.message || 'Request timed out.');
+                } else {
+                    responseOutput.innerText = 'Error: ' + error.message;
+                }
             } finally {
+                if (timeoutId) clearTimeout(timeoutId);
                 loadingSpinner.classList.add('d-none');
                 btnRun.disabled = false;
             }

@@ -108,5 +108,8 @@
   <data name="Virtual Model Name" xml:space="preserve">
     <value>Namn på virtuell modell</value>
   </data>
+  <data name="When checked, the &apos;raw: true&apos; parameter is sent to the upstream Ollama API. This tells Ollama to NOT apply any chat templates to your prompt. Use this for pure text completion. If unchecked, Ollama will automatically wrap your prompt in the model&apos;s default chat template, treating it as a conversational question." xml:space="preserve">
+    <value>När den är markerad skickas parametern &apos;raw: true&apos; till den överliggande Ollama API:t. Detta instruerar Ollama att INTE tillämpa några chattmallar på din prompt. Använd detta för ren textkomplettering. Om den inte är markerad kommer Ollama automatiskt att omge din prompt med modellens standardmall för chatt, och behandla den som en konversationell fråga.</value>
+  </data>
 
 </root>

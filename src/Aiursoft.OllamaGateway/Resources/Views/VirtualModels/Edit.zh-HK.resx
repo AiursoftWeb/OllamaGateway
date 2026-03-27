@@ -153,5 +153,8 @@
   <data name="Weight" xml:space="preserve">
     <value>權重</value>
   </data>
+  <data name="When checked, the &apos;raw: true&apos; parameter is sent to the upstream Ollama API. This tells Ollama to NOT apply any chat templates to your prompt. Use this for pure text completion. If unchecked, Ollama will automatically wrap your prompt in the model&apos;s default chat template, treating it as a conversational question." xml:space="preserve">
+    <value>當選取時，會將「raw: true」參數傳送至上游 Ollama API。這會告知 Ollama 不對您的提示套用任何聊天模板。請在進行純文字完成時使用此選項。若未選取，Ollama 將自動將您的提示套用至模型的預設聊天模板，將其視為對話式問題。</value>
+  </data>
 
 </root>

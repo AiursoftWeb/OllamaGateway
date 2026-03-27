@@ -108,5 +108,8 @@
   <data name="Virtual Model Name" xml:space="preserve">
     <value>Tên mô hình ảo</value>
   </data>
+  <data name="When checked, the &apos;raw: true&apos; parameter is sent to the upstream Ollama API. This tells Ollama to NOT apply any chat templates to your prompt. Use this for pure text completion. If unchecked, Ollama will automatically wrap your prompt in the model&apos;s default chat template, treating it as a conversational question." xml:space="preserve">
+    <value>Khi được chọn, tham số &apos;raw: true&apos; sẽ được gửi đến API Ollama phía trước. Điều này báo cho Ollama KHÔNG áp dụng bất kỳ mẫu trò chuyện nào cho câu lệnh của bạn. Sử dụng tùy chọn này cho việc hoàn thành văn bản thuần túy. Nếu không được chọn, Ollama sẽ tự động đóng gói câu lệnh của bạn trong mẫu trò chuyện mặc định của mô hình, xử lý nó như một câu hỏi hội thoại.</value>
+  </data>
 
 </root>
