@@ -5,8 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using Aiursoft.OllamaGateway.Authorization;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
-using Aiursoft.OllamaGateway.Services.Authentication;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -51,6 +49,7 @@ public class OllamaRequestOptions
 
 [Route("api")]
 [AllowAnonymous]
+[RequiresUserOrApiKeyAuth]
 public class ProxyController(
     TemplateDbContext dbContext,
     IHttpClientFactory httpClientFactory,
@@ -72,37 +71,9 @@ public class ProxyController(
         PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
     };
 
-    private async Task<bool> IsAuthorizedAsync()
-    {
-        // 1. If already authenticated by cookie or other middleware
-        if (User.Identity?.IsAuthenticated == true)
-        {
-            return true;
-        }
-
-        // 2. Manually trigger ApiKey authentication because [AllowAnonymous] bypasses the automatic challenge
-        var result = await HttpContext.AuthenticateAsync(AuthenticationExtensions.ApiKeyScheme);
-        if (result.Succeeded)
-        {
-            // Update the User property so subsequent code can access claims
-            HttpContext.User = result.Principal;
-            return true;
-        }
-
-        // 3. Check global setting for anonymous access
-        return await globalSettingsService.GetAllowAnonymousApiCallAsync();
-    }
-
     [HttpPost("chat")]
     public async Task Chat([FromBody] OllamaRequestModel input)
     {
-        if (!await IsAuthorizedAsync())
-        {
-            Response.StatusCode = 401;
-            await Response.WriteAsync("Unauthorized. Please provide a valid Bearer token or enable anonymous access.");
-            return;
-        }
-
         logContext.Log.UserId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "Anonymous";
         logContext.Log.ApiKeyName = User.FindFirst("ApiKeyName")?.Value ?? (User.Identity?.IsAuthenticated == true ? "Web Session" : "Anonymous");
 
@@ -398,13 +369,6 @@ public class ProxyController(
     [HttpPost("generate")]
     public async Task Generate([FromBody] OllamaRequestModel input)
     {
-        if (!await IsAuthorizedAsync())
-        {
-            Response.StatusCode = 401;
-            await Response.WriteAsync("Unauthorized. Please provide a valid Bearer token or enable anonymous access.");
-            return;
-        }
-
         logContext.Log.UserId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "Anonymous";
         logContext.Log.ApiKeyName = User.FindFirst("ApiKeyName")?.Value ?? (User.Identity?.IsAuthenticated == true ? "Web Session" : "Anonymous");
 
@@ -688,13 +652,6 @@ public class ProxyController(
     [HttpPost("embed")]
     public async Task Embed()
     {
-        if (!await IsAuthorizedAsync())
-        {
-            Response.StatusCode = 401;
-            await Response.WriteAsync("Unauthorized.");
-            return;
-        }
-
         JsonNode? inputNode;
         try
         {
@@ -894,11 +851,6 @@ public class ProxyController(
     [HttpGet("tags")]
     public async Task<IActionResult> Tags()
     {
-        if (!await IsAuthorizedAsync())
-        {
-            return Unauthorized();
-        }
-
         var virtualModels = await dbContext.VirtualModels
             .Include(m => m.VirtualModelBackends).ThenInclude(b => b.Provider)
             .ToListAsync();
@@ -956,11 +908,6 @@ public class ProxyController(
     [HttpGet("ps")]
     public async Task<IActionResult> Ps()
     {
-        if (!await IsAuthorizedAsync())
-        {
-            return Unauthorized();
-        }
-
         var virtualModels = await dbContext.VirtualModels
             .Include(m => m.VirtualModelBackends).ThenInclude(b => b.Provider)
             .ToListAsync();
@@ -1005,11 +952,6 @@ public class ProxyController(
     [HttpGet("version")]
     public async Task<IActionResult> Version()
     {
-        if (!await IsAuthorizedAsync())
-        {
-            return Unauthorized();
-        }
-
         var version = await globalSettingsService.GetFakeOllamaVersionAsync();
         var json = JsonSerializer.Serialize(new { version }, OllamaJsonOptions);
         return Content(json, "application/json");

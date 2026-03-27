@@ -1,12 +1,13 @@
 using System.Net;
 using System.Text.Json;
-using Aiursoft.DbTools;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using static Aiursoft.WebTools.Extends;
 using Moq;
+using Aiursoft.OllamaGateway.Configuration;
+using Aiursoft.DbTools;
 
 namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
 
@@ -64,7 +65,7 @@ public class OllamaApiCompatibilityTests : TestBase
         using (var scope = Server!.Services.CreateScope())
         {
             var settings = scope.ServiceProvider.GetRequiredService<GlobalSettingsService>();
-            await settings.UpdateSettingAsync(Aiursoft.OllamaGateway.Configuration.SettingsMap.FakeOllamaVersion, "1.2.3");
+            await settings.UpdateSettingAsync(SettingsMap.FakeOllamaVersion, "1.2.3");
         }
 
         // 3. Request version again -> Should be overridden

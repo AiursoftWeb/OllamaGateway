@@ -4,8 +4,6 @@ using Aiursoft.OllamaGateway.Authorization;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Models;
 using Aiursoft.OllamaGateway.Services;
-using Aiursoft.OllamaGateway.Services.Authentication;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Aiursoft.OllamaGateway.Controllers;
 
 [AllowAnonymous]
+[RequiresUserOrApiKeyAuth]
 public class OpenAIController : ControllerBase
 {
     private readonly TemplateDbContext _dbContext;
@@ -43,32 +42,11 @@ public class OpenAIController : ControllerBase
         _modelSelector = modelSelector;
     }
 
-    private async Task<bool> IsAuthorizedAsync()
-    {
-        if (User.Identity?.IsAuthenticated == true) return true;
-
-        var result = await HttpContext.AuthenticateAsync(AuthenticationExtensions.ApiKeyScheme);
-        if (result.Succeeded)
-        {
-            HttpContext.User = result.Principal;
-            return true;
-        }
-
-        return await _globalSettingsService.GetAllowAnonymousApiCallAsync();
-    }
-
 
 
     [HttpPost("/v1/chat/completions")]
     public async Task Chat()
     {
-        if (!await IsAuthorizedAsync())
-        {
-            Response.StatusCode = 401;
-            await Response.WriteAsync("Unauthorized. Please provide a valid Bearer token or enable anonymous access.");
-            return;
-        }
-
         _logContext.Log.UserId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "Anonymous";
         _logContext.Log.ApiKeyName = User.FindFirst("ApiKeyName")?.Value ?? (User.Identity?.IsAuthenticated == true ? "Web Session" : "Anonymous");
 
@@ -605,13 +583,6 @@ public class OpenAIController : ControllerBase
     [HttpPost("/v1/embeddings")]
     public async Task Embed()
     {
-        if (!await IsAuthorizedAsync())
-        {
-            Response.StatusCode = 401;
-            await Response.WriteAsync("Unauthorized.");
-            return;
-        }
-
         _logContext.Log.UserId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "Anonymous";
         _logContext.Log.ApiKeyName = User.FindFirst("ApiKeyName")?.Value ?? (User.Identity?.IsAuthenticated == true ? "Web Session" : "Anonymous");
 
@@ -833,11 +804,6 @@ public class OpenAIController : ControllerBase
     [HttpGet("/v1/models")]
     public async Task<IActionResult> Models()
     {
-        if (!await IsAuthorizedAsync())
-        {
-            return Unauthorized();
-        }
-
         var virtualModels = await _dbContext.VirtualModels.ToListAsync();
         
         var data = virtualModels.Select(vm => new
