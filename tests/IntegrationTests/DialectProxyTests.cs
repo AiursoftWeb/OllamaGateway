@@ -1021,4 +1021,124 @@ public class DialectProxyTests : TestBase
         var json2 = JsonNode.Parse(body2);
         Assert.AreEqual("Fallback success!", json2?["message"]?["content"]?.ToString());
     }
+
+    // ========================================================================
+    // F. Ollama Native Embed Endpoint Tests
+    // ========================================================================
+
+    [TestMethod]
+    public async Task Ollama_Embed_StringInput_PreservedUpstream()
+    {
+        // Arrange: mock upstream returns a valid embedding response
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            var body = """{"model":"nomic-embed-text","embeddings":[[0.1,0.2,0.3]],"prompt_eval_count":3}""";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body, Encoding.UTF8, "application/json")
+            });
+        };
+
+        // Act: send a string input (the exact scenario that was broken before the JsonNode fix)
+        var payload = $$"""{"model":"{{EmbeddingModelName}}","input":"hello world"}""";
+        var response = await Http.SendAsync(AuthedPost("/api/embed", payload));
+
+        // Assert: upstream received the request and the 'input' field is still a string (not an array)
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.IsTrue(MockUpstreamState.LastRequest!.RequestUri!.ToString().Contains("/api/embed"));
+
+        Assert.IsNotNull(MockUpstreamState.LastRequestBody);
+        var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody);
+        Assert.IsNotNull(upstreamBody);
+
+        // The critical assertion: 'input' must be a string value, not an array
+        var inputNode = upstreamBody["input"];
+        Assert.IsNotNull(inputNode, "Upstream body must contain 'input' field");
+        Assert.AreEqual("hello world", inputNode.GetValue<string>(), "Input must be preserved as a string");
+
+        // Model name must be translated to physical model
+        Assert.AreEqual(PhysicalEmbeddingModel, upstreamBody["model"]?.ToString());
+    }
+
+    [TestMethod]
+    public async Task Ollama_Embed_ArrayInput_PreservedUpstream()
+    {
+        // Arrange
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            var body = """{"model":"nomic-embed-text","embeddings":[[0.1,0.2],[0.3,0.4]],"prompt_eval_count":5}""";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body, Encoding.UTF8, "application/json")
+            });
+        };
+
+        // Act: send an array input
+        var payload = $$"""{"model":"{{EmbeddingModelName}}","input":["hello","world"]}""";
+        var response = await Http.SendAsync(AuthedPost("/api/embed", payload));
+
+        // Assert: upstream received the array input intact
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+
+        Assert.IsNotNull(MockUpstreamState.LastRequestBody);
+        var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody);
+        Assert.IsNotNull(upstreamBody);
+
+        // The input must remain an array with 2 elements
+        var inputNode = upstreamBody["input"]?.AsArray();
+        Assert.IsNotNull(inputNode, "Upstream body 'input' must be an array");
+        Assert.AreEqual(2, inputNode.Count);
+        Assert.AreEqual("hello", inputNode[0]?.GetValue<string>());
+        Assert.AreEqual("world", inputNode[1]?.GetValue<string>());
+    }
+
+    [TestMethod]
+    public async Task Ollama_Embed_ResponseModelMasked()
+    {
+        // Arrange
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            var body = """{"model":"nomic-embed-text","embeddings":[[0.5,0.6,0.7]],"prompt_eval_count":2}""";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body, Encoding.UTF8, "application/json")
+            });
+        };
+
+        // Act
+        var payload = $$"""{"model":"{{EmbeddingModelName}}","input":"test"}""";
+        var response = await Http.SendAsync(AuthedPost("/api/embed", payload));
+
+        // Assert: response model name is masked to virtual model name
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        var content = await response.Content.ReadAsStringAsync();
+        var json = JsonNode.Parse(content);
+        Assert.IsNotNull(json);
+        Assert.AreEqual(EmbeddingModelName, json["model"]?.ToString(),
+            "Response must contain the virtual model name, not the physical one");
+    }
+
+    [TestMethod]
+    public async Task Ollama_Embed_KeepAliveInjected()
+    {
+        // Arrange
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            var body = """{"model":"nomic-embed-text","embeddings":[[0.1]],"prompt_eval_count":1}""";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body, Encoding.UTF8, "application/json")
+            });
+        };
+
+        // Act
+        var payload = $$"""{"model":"{{EmbeddingModelName}}","input":"test"}""";
+        await Http.SendAsync(AuthedPost("/api/embed", payload));
+
+        // Assert: keep_alive from provider is injected into upstream request
+        Assert.IsNotNull(MockUpstreamState.LastRequestBody);
+        var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody);
+        Assert.IsNotNull(upstreamBody);
+        Assert.IsNotNull(upstreamBody["keep_alive"], "keep_alive must be injected into upstream embed request");
+    }
 }

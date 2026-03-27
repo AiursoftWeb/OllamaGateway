@@ -686,7 +686,7 @@ public class ProxyController(
     }
 
     [HttpPost("embed")]
-    public async Task Embed([FromBody] dynamic input)
+    public async Task Embed()
     {
         if (!await IsAuthorizedAsync())
         {
@@ -695,7 +695,17 @@ public class ProxyController(
             return;
         }
 
-        if (input == null)
+        JsonNode? inputNode;
+        try
+        {
+            inputNode = await JsonNode.ParseAsync(Request.Body, cancellationToken: HttpContext.RequestAborted);
+        }
+        catch
+        {
+            inputNode = null;
+        }
+
+        if (inputNode == null)
         {
             Response.StatusCode = 400;
             await Response.WriteAsync("Request body is empty or invalid JSON.");
@@ -707,7 +717,7 @@ public class ProxyController(
 
         try
         {
-            string modelName = input.model;
+            string? modelName = inputNode["model"]?.GetValue<string>();
             if (string.IsNullOrWhiteSpace(modelName))
             {
                 modelName = await globalSettingsService.GetDefaultEmbeddingModelAsync();
@@ -743,19 +753,20 @@ public class ProxyController(
             
             logContext.Log.Model = virtualModel.Name;
             logContext.Log.ConversationMessageCount = 1;
-            logContext.Log.LastQuestion = input.input?.ToString() ?? input.prompt?.ToString() ?? string.Empty;
+            logContext.Log.LastQuestion = inputNode["input"]?.ToString() ?? inputNode["prompt"]?.ToString() ?? string.Empty;
 
-            input.model = backend.UnderlyingModelName;
-            input.keep_alive = backend.Provider.KeepAlive;
+            inputNode["model"] = backend.UnderlyingModelName;
+            inputNode["keep_alive"] = backend.Provider.KeepAlive;
 
             if (virtualModel.NumCtx.HasValue || virtualModel.Temperature.HasValue || virtualModel.TopP.HasValue || virtualModel.TopK.HasValue || virtualModel.RepeatPenalty.HasValue)
             {
-                input.options ??= new System.Dynamic.ExpandoObject();
-                if (virtualModel.NumCtx.HasValue) input.options.num_ctx = virtualModel.NumCtx.Value;
-                if (virtualModel.Temperature.HasValue) input.options.temperature = virtualModel.Temperature.Value;
-                if (virtualModel.TopP.HasValue) input.options.top_p = virtualModel.TopP.Value;
-                if (virtualModel.TopK.HasValue) input.options.top_k = virtualModel.TopK.Value;
-                if (virtualModel.RepeatPenalty.HasValue) input.options.repeat_penalty = virtualModel.RepeatPenalty.Value;
+                var optionsNode = inputNode["options"]?.AsObject() ?? new JsonObject();
+                if (virtualModel.NumCtx.HasValue) optionsNode["num_ctx"] = virtualModel.NumCtx.Value;
+                if (virtualModel.Temperature.HasValue) optionsNode["temperature"] = virtualModel.Temperature.Value;
+                if (virtualModel.TopP.HasValue) optionsNode["top_p"] = virtualModel.TopP.Value;
+                if (virtualModel.TopK.HasValue) optionsNode["top_k"] = virtualModel.TopK.Value;
+                if (virtualModel.RepeatPenalty.HasValue) optionsNode["repeat_penalty"] = virtualModel.RepeatPenalty.Value;
+                inputNode["options"] = optionsNode;
             }
 
             HttpResponseMessage? response = null;
@@ -768,7 +779,7 @@ public class ProxyController(
                     client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", backend.Provider.BearerToken);
                 }
                 
-                var json = JsonSerializer.Serialize((object)input, OllamaJsonOptions);
+                var json = inputNode.ToJsonString();
                 var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/embed")
                 {
                     Content = new StringContent(json, Encoding.UTF8, "application/json")
@@ -816,7 +827,7 @@ public class ProxyController(
                         return;
                     }
                     underlyingUrl = backend.Provider.BaseUrl.TrimEnd('/');
-                    input.model = backend.UnderlyingModelName;
+                    inputNode["model"] = backend.UnderlyingModelName;
                     memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
                 }
             }
