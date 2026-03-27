@@ -848,6 +848,10 @@ public class OpenAIController : ControllerBase
             owned_by = "library"
         }).ToList();
 
-        return Ok(new { @object = "list", data });
+        var json = System.Text.Json.JsonSerializer.Serialize(new { @object = "list", data }, new System.Text.Json.JsonSerializerOptions
+        {
+            PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.SnakeCaseLower
+        });
+        return Content(json, "application/json");
     }
 }

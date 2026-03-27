@@ -72,8 +72,45 @@ public class OllamaService(
         return models?.Select(m => m.Name).ToList();
     }
 
+    public virtual async Task<string?> GetVersionAsync(string baseUrl, string? bearerToken = null)
+    {
+        var cacheKey = $"ollama_version_{baseUrl}_{bearerToken}";
+        if (memoryCache.TryGetValue(cacheKey, out string? cachedVersion))
+        {
+            return cachedVersion;
+        }
+
+        try
+        {
+            var url = baseUrl.TrimEnd('/') + "/api/version";
+            using var client = httpClientFactory.CreateClient();
+            client.Timeout = TimeSpan.FromSeconds(5); // Version check should be fast
+            if (!string.IsNullOrWhiteSpace(bearerToken))
+            {
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", bearerToken);
+            }
+            var response = await client.GetAsync(url);
+            if (!response.IsSuccessStatusCode) return null;
+
+            var json = await response.Content.ReadAsStringAsync();
+            var result = System.Text.Json.JsonSerializer.Deserialize<OllamaVersionResponse>(json);
+            var version = result?.Version;
+            
+            if (version != null)
+            {
+                memoryCache.Set(cacheKey, version, TimeSpan.FromMinutes(10));
+            }
+            return version;
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+    }
+
     public class OllamaTagsResponse { [JsonPropertyName("models")] public List<OllamaModel>? Models { get; set; } }
     public class OllamaPsResponse { [JsonPropertyName("models")] public List<OllamaRunningModel>? Models { get; set; } }
+    public class OllamaVersionResponse { [JsonPropertyName("version")] public string? Version { get; set; } }
 
     public class OllamaModel
     {

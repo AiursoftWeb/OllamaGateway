@@ -24,6 +24,7 @@
                         <th>@Localizer["Status"]</th>
                         <th>@Localizer["Name"]</th>
                         <th>@Localizer["Base URL"]</th>
+                        <th>@Localizer["Version"]</th>
                         <th>@Localizer["Running Models"]</th>
                         <th>@Localizer["Created"]</th>
                         <th>@Localizer["Actions"]</th>
@@ -33,7 +34,7 @@
                     @if (Model.ProviderStatuses.Count == 0)
                     {
                         <tr>
-                            <td colspan="6" class="text-center text-muted py-4">
+                            <td colspan="7" class="text-center text-muted py-4">
                                 @Localizer["No providers defined yet."]
                             </td>
                         </tr>
@@ -55,6 +56,16 @@
                                 </td>
                                 <td><strong>@p.Provider.Name</strong></td>
                                 <td><code>@p.Provider.BaseUrl</code></td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(p.Version))
+                                    {
+                                        <span class="badge bg-info">@p.Version</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">@Localizer["Unknown"]</span>
+                                    }
+                                </td>
                                 <td>
                                     @if (p.IsAlive && p.RunningModels != null && p.RunningModels.Any())
                                     {

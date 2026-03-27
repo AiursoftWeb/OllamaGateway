@@ -120,6 +120,7 @@ public class GlobalSettingsService(
     public async Task<string> GetDefaultChatModelAsync() => await GetSettingValueAsync(SettingsMap.DefaultChatModel);
     public async Task<string> GetDefaultEmbeddingModelAsync() => await GetSettingValueAsync(SettingsMap.DefaultEmbeddingModel);
     public async Task<bool> GetAllowAnonymousApiCallAsync() => await GetBoolSettingAsync(SettingsMap.AllowAnonymousApiCall);
+    public async Task<string> GetFakeOllamaVersionAsync() => await GetSettingValueAsync(SettingsMap.FakeOllamaVersion);
     public async Task<TimeSpan> GetRequestTimeoutAsync()
     {
         var minutesStr = await GetSettingValueAsync(SettingsMap.RequestTimeoutInMinutes);

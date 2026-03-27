@@ -32,10 +32,12 @@ public class OllamaProvidersController(
         var statusTasks = providers.Select(async p =>
         {
             var runningModels = await ollamaService.GetRunningModelsAsync(p.BaseUrl, p.BearerToken, TimeSpan.FromSeconds(3));
+            var version = await ollamaService.GetVersionAsync(p.BaseUrl, p.BearerToken);
             return new ProviderStatus
             {
                 Provider = p,
                 IsAlive = runningModels != null,
+                Version = version,
                 RunningModels = runningModels
             };
         });

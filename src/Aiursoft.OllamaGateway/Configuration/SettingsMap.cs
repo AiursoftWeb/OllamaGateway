@@ -15,6 +15,7 @@ public class SettingsMap
     public const string RequestTimeoutInMinutes = "RequestTimeoutInMinutes";
     public const string AllowAnonymousApiCall = "AllowAnonymousApiCall";
     public const string KeepAliveJobIntervalMinutes = "KeepAliveJobIntervalMinutes";
+    public const string FakeOllamaVersion = "FakeOllamaVersion";
 
     public class FakeLocalizer
     {
@@ -115,6 +116,14 @@ public class SettingsMap
             Description = Localizer["Allow anyone to call the API without a Bearer token or authentication."],
             Type = SettingType.Bool,
             DefaultValue = "False"
+        },
+        new GlobalSettingDefinition
+        {
+            Key = FakeOllamaVersion,
+            Name = Localizer["Fake Ollama Version"],
+            Description = Localizer["The version reported by the gateway to clients (e.g., Open-WebUI)."],
+            Type = SettingType.Text,
+            DefaultValue = "0.18.3"
         }
     };
 }

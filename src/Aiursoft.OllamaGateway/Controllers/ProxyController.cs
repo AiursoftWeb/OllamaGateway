@@ -949,7 +949,8 @@ public class ProxyController(
             }
         }
 
-        return Ok(new { models = allTags });
+        var json = JsonSerializer.Serialize(new { models = allTags }, OllamaJsonOptions);
+        return Content(json, "application/json");
     }
 
     [HttpGet("ps")]
@@ -997,6 +998,20 @@ public class ProxyController(
             }
         }
 
-        return Ok(new { models = allRunning });
+        var json = JsonSerializer.Serialize(new { models = allRunning }, OllamaJsonOptions);
+        return Content(json, "application/json");
+    }
+
+    [HttpGet("version")]
+    public async Task<IActionResult> Version()
+    {
+        if (!await IsAuthorizedAsync())
+        {
+            return Unauthorized();
+        }
+
+        var version = await globalSettingsService.GetFakeOllamaVersionAsync();
+        var json = JsonSerializer.Serialize(new { version }, OllamaJsonOptions);
+        return Content(json, "application/json");
     }
 }
