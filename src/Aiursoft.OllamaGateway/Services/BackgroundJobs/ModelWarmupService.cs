@@ -151,6 +151,47 @@ public class ModelWarmupService : BackgroundService
                     _logger.LogInformation("Successfully warmed up physical model {Underlying} on provider {Provider} (Status: {Status}, num_ctx: {NumCtx})", 
                         warmupModel.Name, provider.Name, response.StatusCode, warmupModel.NumCtx ?? 0);
                 }
+                else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    // The model may be an embedding-only model (e.g. bge-m3) that doesn't support /api/chat.
+                    // Fallback to /api/embeddings with a minimal prompt to keep it loaded in memory.
+                    _logger.LogInformation(
+                        "Physical model {Underlying} on provider {Provider} returned BadRequest for /api/chat, trying /api/embeddings fallback...",
+                        warmupModel.Name, provider.Name);
+
+                    var embeddingPayload = new
+                    {
+                        model = warmupModel.Name,
+                        prompt = "a",
+                        keep_alive = provider.KeepAlive
+                    };
+
+                    var embeddingJson = System.Text.Json.JsonSerializer.Serialize(embeddingPayload);
+                    var embeddingRequest = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/embeddings")
+                    {
+                        Content = new StringContent(embeddingJson, System.Text.Encoding.UTF8, "application/json")
+                    };
+
+                    if (!string.IsNullOrWhiteSpace(provider.BearerToken))
+                    {
+                        embeddingRequest.Headers.Authorization =
+                            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", provider.BearerToken);
+                    }
+
+                    using var embeddingResponse = await client.SendAsync(embeddingRequest, stoppingToken);
+                    if (embeddingResponse.IsSuccessStatusCode)
+                    {
+                        _logger.LogInformation(
+                            "Successfully warmed up embedding model {Underlying} on provider {Provider} via /api/embeddings fallback",
+                            warmupModel.Name, provider.Name);
+                    }
+                    else
+                    {
+                        _logger.LogWarning(
+                            "Upstream returned {Status} while warming up physical model {Underlying} on provider {Provider} via /api/embeddings fallback",
+                            embeddingResponse.StatusCode, warmupModel.Name, provider.Name);
+                    }
+                }
                 else
                 {
                     _logger.LogWarning("Upstream returned {Status} while warming up physical model {Underlying} on provider {Provider}", 
