@@ -47,17 +47,6 @@ public class Startup : IWebStartup
         services.AddMemoryCache();
         services.AddHttpClient();
         services.AddSingleton<Services.IModelSelector, Services.ModelSelector>();
-        services.AddScoped<Services.IModelSelectionService, Services.ModelSelectionService>();
-        
-        services.AddScoped<Services.Proxy.Handlers.IModelsInfoService, Services.Proxy.Handlers.ModelsInfoService>();
-        services.AddScoped<Services.Proxy.Handlers.IOllamaChatHandler, Services.Proxy.Handlers.OllamaChatHandler>();
-        services.AddScoped<Services.Proxy.Handlers.IOllamaEmbeddingHandler, Services.Proxy.Handlers.OllamaEmbeddingHandler>();
-        services.AddScoped<Services.Proxy.Handlers.IOpenAIChatHandler, Services.Proxy.Handlers.OpenAIChatHandler>();
-        services.AddScoped<Services.Proxy.IUpstreamExecutor, Services.Proxy.UpstreamExecutor>();
-        services.AddScoped<Services.Proxy.Formatters.OllamaResponseFormatter>();
-        services.AddScoped<Services.Proxy.Formatters.OpenAIResponseFormatter>();
-        services.AddScoped<Services.Proxy.ProxyTelemetryService>();
-        
         services.AddAssemblyDependencies(typeof(Startup).Assembly);
         services.AddSingleton<NavigationState<Startup>>();
         services.AddScoped<Models.RequestLogContext>();
@@ -85,7 +74,6 @@ public class Startup : IWebStartup
     public virtual void Configure(WebApplication app)
     {
         app.UseExceptionHandler("/Error/Code500");
-        app.UseOllamaExceptionHandler();
         app.UseStatusCodePagesWithReExecute("/Error/Code{0}");
         app.UseStaticFiles();
         app.UseRequestLogging();

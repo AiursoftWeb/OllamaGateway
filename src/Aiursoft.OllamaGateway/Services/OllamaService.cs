@@ -7,8 +7,7 @@ namespace Aiursoft.OllamaGateway.Services;
 public class OllamaService(
     IHttpClientFactory httpClientFactory,
     IMemoryCache memoryCache,
-    GlobalSettingsService globalSettingsService,
-    ILogger<OllamaService> logger) : IScopedDependency
+    GlobalSettingsService globalSettingsService) : IScopedDependency
 {
     public virtual async Task<List<OllamaModel>?> GetDetailedModelsAsync(string baseUrl, string? bearerToken = null)
     {
@@ -28,11 +27,7 @@ public class OllamaService(
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", bearerToken);
             }
             var response = await client.GetAsync(url);
-            if (!response.IsSuccessStatusCode)
-            {
-                logger.LogWarning("Failed to get detailed models from {BaseUrl}. Status: {StatusCode}", baseUrl, response.StatusCode);
-                return null;
-            }
+            if (!response.IsSuccessStatusCode) return null;
 
             var json = await response.Content.ReadAsStringAsync();
             var result = System.Text.Json.JsonSerializer.Deserialize<OllamaTagsResponse>(json);
@@ -41,9 +36,8 @@ public class OllamaService(
             memoryCache.Set(cacheKey, models, TimeSpan.FromMinutes(1));
             return models;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            logger.LogError(ex, "Exception when getting detailed models from {BaseUrl}", baseUrl);
             return null;
         }
     }
@@ -60,19 +54,14 @@ public class OllamaService(
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", bearerToken);
             }
             var response = await client.GetAsync(url);
-            if (!response.IsSuccessStatusCode)
-            {
-                logger.LogWarning("Failed to get running models from {BaseUrl}. Status: {StatusCode}", baseUrl, response.StatusCode);
-                return null;
-            }
+            if (!response.IsSuccessStatusCode) return null;
 
             var json = await response.Content.ReadAsStringAsync();
             var result = System.Text.Json.JsonSerializer.Deserialize<OllamaPsResponse>(json);
             return result?.Models ?? new List<OllamaRunningModel>();
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            logger.LogError(ex, "Exception when getting running models from {BaseUrl}", baseUrl);
             return null;
         }
     }
@@ -101,11 +90,7 @@ public class OllamaService(
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", bearerToken);
             }
             var response = await client.GetAsync(url);
-            if (!response.IsSuccessStatusCode)
-            {
-                logger.LogWarning("Failed to get version from {BaseUrl}. Status: {StatusCode}", baseUrl, response.StatusCode);
-                return null;
-            }
+            if (!response.IsSuccessStatusCode) return null;
 
             var json = await response.Content.ReadAsStringAsync();
             var result = System.Text.Json.JsonSerializer.Deserialize<OllamaVersionResponse>(json);
@@ -117,9 +102,8 @@ public class OllamaService(
             }
             return version;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            logger.LogError(ex, "Exception when getting version from {BaseUrl}", baseUrl);
             return null;
         }
     }
