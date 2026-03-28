@@ -6,7 +6,8 @@ namespace Aiursoft.OllamaGateway.Entities;
 public enum ModelType
 {
     Chat,
-    Embedding
+    Embedding,
+    Completion
 }
 
 [ExcludeFromCodeCoverage]
