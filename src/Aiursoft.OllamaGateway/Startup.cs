@@ -15,7 +15,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.Diagnostics.CodeAnalysis;
 
-using Aiursoft.OllamaGateway.Models.Configuration;
+using Aiursoft.ClickhouseLoggerProvider;
+using Aiursoft.ClickhouseSdk;
+using Aiursoft.ClickhouseSdk.Abstractions;
 
 namespace Aiursoft.OllamaGateway;
 
@@ -27,6 +29,10 @@ public class Startup : IWebStartup
         // AppSettings.
         services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
         services.Configure<ClickhouseOptions>(configuration.GetSection("Clickhouse"));
+        services.AddLogging(builder => 
+        {
+            builder.AddClickhouse(options => configuration.GetSection("Logging:Clickhouse").Bind(options));
+        });
 
         // Relational database
         var (connectionString, dbType, allowCache) = configuration.GetDbSettings();

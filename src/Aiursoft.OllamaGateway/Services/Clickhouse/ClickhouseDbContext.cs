@@ -1,30 +1,31 @@
+using Aiursoft.ClickhouseSdk;
+using Aiursoft.ClickhouseSdk.Abstractions;
 using Aiursoft.OllamaGateway.Entities;
-using Aiursoft.OllamaGateway.Models.Configuration;
 using Aiursoft.Scanner.Abstractions;
-using ClickHouse.Client.ADO;
 using Microsoft.Extensions.Options;
 
 namespace Aiursoft.OllamaGateway.Services.Clickhouse;
 
-public class ClickhouseDbContext : IAsyncDisposable, IDisposable, IScopedDependency
+public class ClickhouseDbContext : Aiursoft.ClickhouseSdk.ClickhouseDbContext, IScopedDependency
 {
-    private ClickHouseConnection? _connection;
-    private readonly ClickhouseOptions? _config;
-    private readonly ILogger<ClickhouseDbContext>? _logger;
-
-    public ClickhouseSet<RequestLog>? RequestLogs { get; }
-    public virtual bool Enabled => _config?.Enabled ?? false;
+    public ClickhouseSet<RequestLog> RequestLogs { get; }
 
     // For Moq
-    protected ClickhouseDbContext()
+    protected ClickhouseDbContext() : base(new DummyOptionsMonitor())
     {
+        RequestLogs = null!;
     }
 
-    public ClickhouseDbContext(IOptionsMonitor<ClickhouseOptions> options, ILogger<ClickhouseDbContext> logger)
+    private class DummyOptionsMonitor : IOptionsMonitor<ClickhouseOptions>
     {
-        _config = options.CurrentValue;
-        _logger = logger;
-        RequestLogs = new ClickhouseSet<RequestLog>(GetConnection, "RequestLogs", log => new object[] 
+        public ClickhouseOptions Get(string? name) => new();
+        public IDisposable? OnChange(Action<ClickhouseOptions, string?> listener) => null;
+        public ClickhouseOptions CurrentValue => new();
+    }
+
+    public ClickhouseDbContext(IOptionsMonitor<ClickhouseOptions> options) : base(options)
+    {
+        RequestLogs = new ClickhouseSet<RequestLog>(GetConnection, options.CurrentValue.TableName, log => new object[] 
         {
             log.IP,
             log.ConversationMessageCount,
@@ -44,47 +45,13 @@ public class ClickhouseDbContext : IAsyncDisposable, IDisposable, IScopedDepende
             log.CompletionTokens,
             log.TotalTokens,
             log.UserId,
-            log.ApiKeyName
+            log.ApiKeyName,
+            log.BackendId ?? 0
         });
     }
 
-    private async Task<ClickHouseConnection> GetConnection()
+    public override async Task SaveChangesAsync()
     {
-        if (_connection == null && _config != null)
-        {
-            _connection = new ClickHouseConnection(_config.ConnectionString);
-            await _connection.OpenAsync();
-        }
-        return _connection ?? throw new InvalidOperationException("Connection not initialized.");
-    }
-
-    public virtual async Task SaveChangesAsync()
-    {
-        if (_config is not { Enabled: true } || RequestLogs == null)
-        {
-            return;
-        }
-
-        try
-        {
-            await RequestLogs.SaveChangesAsync();
-        }
-        catch (Exception e)
-        {
-            _logger?.LogError(e, "Failed to save logs to Clickhouse.");
-        }
-    }
-
-    public async ValueTask DisposeAsync()
-    {
-        if (_connection != null)
-        {
-            await _connection.DisposeAsync();
-        }
-    }
-
-    public void Dispose()
-    {
-        _connection?.Dispose();
+        await RequestLogs.SaveChangesAsync();
     }
 }
