@@ -68,7 +68,7 @@ public class RequestLoggingMiddleware(RequestDelegate next, ILogger<RequestLoggi
                 logContext.Log.Duration = sw.Elapsed.TotalMilliseconds;
             }
 
-            if (clickhouseDbContext.Enabled && clickhouseDbContext.RequestLogs != null)
+            if (clickhouseDbContext.Enabled)
             {
                 clickhouseDbContext.RequestLogs.Add(logContext.Log);
                 await clickhouseDbContext.SaveChangesAsync();

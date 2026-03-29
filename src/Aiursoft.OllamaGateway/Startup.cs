@@ -16,7 +16,6 @@ using Newtonsoft.Json.Serialization;
 using System.Diagnostics.CodeAnalysis;
 
 using Aiursoft.ClickhouseLoggerProvider;
-using Aiursoft.ClickhouseSdk;
 using Aiursoft.ClickhouseSdk.Abstractions;
 
 namespace Aiursoft.OllamaGateway;
