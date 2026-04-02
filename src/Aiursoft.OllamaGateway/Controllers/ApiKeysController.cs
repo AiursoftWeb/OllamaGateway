@@ -95,7 +95,11 @@ public class ApiKeysController(
         {
             Name = model.Name,
             Key = keyStr,
-            UserId = user!.Id
+            UserId = user!.Id,
+            MaxRequests = model.MaxRequests,
+            TimeWindowSeconds = model.TimeWindowSeconds,
+            RateLimitEnabled = model.RateLimitEnabled,
+            RateLimitHang = model.RateLimitHang
         };
 
         dbContext.ApiKeys.Add(key);
@@ -120,7 +124,11 @@ public class ApiKeysController(
         return this.StackView(new EditViewModel
         {
             Id = key.Id,
-            Name = key.Name
+            Name = key.Name,
+            MaxRequests = key.MaxRequests,
+            TimeWindowSeconds = key.TimeWindowSeconds,
+            RateLimitEnabled = key.RateLimitEnabled,
+            RateLimitHang = key.RateLimitHang
         });
     }
 
@@ -143,6 +151,10 @@ public class ApiKeysController(
         }
 
         key.Name = model.Name;
+        key.MaxRequests = model.MaxRequests;
+        key.TimeWindowSeconds = model.TimeWindowSeconds;
+        key.RateLimitEnabled = model.RateLimitEnabled;
+        key.RateLimitHang = model.RateLimitHang;
         await dbContext.SaveChangesAsync();
 
         return RedirectToAction(nameof(Index));

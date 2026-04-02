@@ -7,7 +7,7 @@
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Follama.aiursoft.com)](https://ollama.aiursoft.com)
 [![Docker](https://img.shields.io/docker/pulls/aiursoft/ollamagateway.svg)](https://hub.docker.com/r/aiursoft/ollamagateway)
 
-Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, and virtual model management—your secure, private AI gateway.
+Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway.
 
 ![screenshot](./screenshot.png)
 

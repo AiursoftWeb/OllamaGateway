@@ -17,4 +17,9 @@ public class EditViewModel : UiStackLayoutViewModel
     [Required]
     [MaxLength(100)]
     public string Name { get; set; } = string.Empty;
+
+    public int MaxRequests { get; set; }
+    public int TimeWindowSeconds { get; set; }
+    public bool RateLimitEnabled { get; set; }
+    public bool RateLimitHang { get; set; }
 }

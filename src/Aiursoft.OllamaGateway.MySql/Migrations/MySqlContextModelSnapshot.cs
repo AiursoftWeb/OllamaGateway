@@ -41,10 +41,22 @@ namespace Aiursoft.OllamaGateway.MySql.Migrations
                     b.Property<DateTime?>("LastUsed")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<int>("MaxRequests")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
+
+                    b.Property<bool>("RateLimitEnabled")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("RateLimitHang")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("TimeWindowSeconds")
+                        .HasColumnType("int");
 
                     b.Property<long>("UsageCount")
                         .HasColumnType("bigint");

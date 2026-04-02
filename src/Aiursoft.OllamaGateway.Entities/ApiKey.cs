@@ -21,4 +21,9 @@ public class ApiKey
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? LastUsed { get; set; }
     public long UsageCount { get; set; }
+
+    public int MaxRequests { get; set; } = 10;
+    public int TimeWindowSeconds { get; set; } = 15;
+    public bool RateLimitEnabled { get; set; }
+    public bool RateLimitHang { get; set; } = true;
 }

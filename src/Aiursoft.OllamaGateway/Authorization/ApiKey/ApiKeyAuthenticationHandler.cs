@@ -17,7 +17,8 @@ public class ApiKeyAuthenticationHandler(
     ILoggerFactory logger,
     UrlEncoder encoder,
     TemplateDbContext dbContext,
-    IUserClaimsPrincipalFactory<User> userClaimsPrincipalFactory)
+    IUserClaimsPrincipalFactory<User> userClaimsPrincipalFactory,
+    Services.RateLimitService rateLimitService)
     : AuthenticationHandler<ApiKeyAuthenticationOptions>(options, logger, encoder)
 {
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
@@ -46,6 +47,12 @@ public class ApiKeyAuthenticationHandler(
         if (apiKey == null || apiKey.User == null)
         {
             return AuthenticateResult.Fail("Invalid API Key.");
+        }
+
+        var isAllowed = await rateLimitService.IsAllowedAsync(apiKey);
+        if (!isAllowed)
+        {
+            return AuthenticateResult.Fail("Rate limit exceeded.");
         }
 
         apiKey.LastUsed = DateTime.UtcNow;
