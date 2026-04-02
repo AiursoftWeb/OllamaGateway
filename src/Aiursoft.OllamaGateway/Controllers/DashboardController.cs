@@ -99,4 +99,26 @@ public class DashboardController(
 
         return this.StackView(model);
     }
+
+    [RenderInNavBar(
+        NavGroupName = "Features",
+        NavGroupOrder = 1,
+        CascadedLinksGroupName = "Home",
+        CascadedLinksIcon = "home",
+        CascadedLinksOrder = 1,
+        LinkText = "Monitor",
+        LinkOrder = 2)]
+    public async Task<IActionResult> Monitor()
+    {
+        var model = new MonitorViewModel
+        {
+            VirtualModels = await dbContext.VirtualModels
+                .Include(v => v.VirtualModelBackends)
+                .ThenInclude(b => b.Provider)
+                .ToListAsync(),
+            Providers = await dbContext.OllamaProviders.ToListAsync()
+        };
+
+        return this.StackView(model);
+    }
 }

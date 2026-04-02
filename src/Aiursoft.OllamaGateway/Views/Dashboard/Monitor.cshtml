@@ -1,0 +1,111 @@
+@model Aiursoft.OllamaGateway.Models.DashboardViewModels.MonitorViewModel
+@using System.Text
+
+@{
+    ViewData["Title"] = Localizer["Health Monitor"];
+    var sb = new StringBuilder();
+    sb.AppendLine("graph LR");
+    sb.AppendLine("    %% Define global style classes");
+    sb.AppendLine("    classDef gateway fill:#2d3748,stroke:#1a202c,stroke-width:2px,color:#fff,rx:8px,ry:8px;");
+    sb.AppendLine("    classDef virtualSvc fill:#4a5568,stroke:#2d3748,stroke-width:2px,color:#fff,rx:5px,ry:5px;");
+    sb.AppendLine("    ");
+    sb.AppendLine("    %% Define backend node status colors");
+    sb.AppendLine("    classDef ready fill:#38a169,stroke:#276749,stroke-width:2px,color:#fff,rx:15px,ry:15px;");
+    sb.AppendLine("    classDef healthy fill:#3182ce,stroke:#2b6cb0,stroke-width:2px,color:#fff,rx:15px,ry:15px;");
+    sb.AppendLine("    classDef down fill:#e53e3e,stroke:#c53030,stroke-width:2px,color:#fff,rx:15px,ry:15px;");
+    sb.AppendLine("    ");
+    sb.AppendLine("    classDef algo fill:#edf2f7,stroke:#a0aec0,stroke-width:1px,color:#4a5568,stroke-dasharray: 5 5;");
+    sb.AppendLine("    classDef client fill:#f7fafc,stroke:#cbd5e0,stroke-width:2px,color:#2d3748,rx:20px,ry:20px;");
+    
+    sb.AppendLine();
+    sb.AppendLine($"    Client([\"🌐 {Localizer["External Traffic (Client)"]}\"]):::client");
+    sb.AppendLine();
+    sb.AppendLine($"    subgraph LB_Core [{Localizer["Core Load Balancer Gateway"]}]");
+    sb.AppendLine($"        Gateway{{\"🛡️ {Localizer["Load Balancer"]}<br/>(Gateway)\"}}:::gateway");
+    
+    foreach(var vm in Model.VirtualModels)
+    {
+        sb.AppendLine();
+        sb.AppendLine($"        subgraph VS_{vm.Id} [{Localizer["Virtual Service"]} {vm.Name}]");
+        sb.AppendLine($"            Svc_{vm.Id}(\"📦 {vm.Name}<br/>({vm.Type})\"):::virtualSvc");
+        var algoStr = vm.SelectionStrategy.ToString();
+        sb.AppendLine($"            Algo_{vm.Id}[\"⚖️ {algoStr}\"]:::algo");
+        sb.AppendLine($"            Svc_{vm.Id} --- Algo_{vm.Id}");
+        sb.AppendLine("        end");
+    }
+    sb.AppendLine("    end");
+    
+    foreach(var vm in Model.VirtualModels)
+    {
+        sb.AppendLine();
+        sb.AppendLine($"    subgraph Pool_{vm.Id} [{Localizer["Backend Pool"]} {vm.Name}]");
+        if (!vm.VirtualModelBackends.Any())
+        {
+            sb.AppendLine($"        Empty_{vm.Id}[\"{Localizer["No Backend Nodes"]}\"]:::down");
+        }
+        else
+        {
+            foreach(var backend in vm.VirtualModelBackends)
+            {
+                var isReady = backend.IsReady;
+                var isHealthy = backend.IsHealthy;
+                var statusClass = isReady ? "ready" : (isHealthy ? "healthy" : "down");
+                var icon = isReady ? "🟢" : (isHealthy ? "🔵" : "🔴");
+                var statusText = isReady ? "Ready" : (isHealthy ? "Healthy" : "Down");
+                
+                sb.AppendLine($"        Node_{backend.Id}[(\"{icon} {backend.Provider?.Name}<br/>{backend.UnderlyingModelName}<br/>{statusText}\")]:::{statusClass}");
+            }
+        }
+        sb.AppendLine("    end");
+    }
+
+    sb.AppendLine();
+    sb.AppendLine($"    Client ===|\"{Localizer["Entry Traffic"]}\"| Gateway");
+    
+    foreach(var vm in Model.VirtualModels)
+    {
+        sb.AppendLine($"    Gateway == \"{Localizer["Route"]}: {vm.Name}\" ==> Svc_{vm.Id}");
+        
+        foreach(var backend in vm.VirtualModelBackends)
+        {
+            var actionText = (backend.Enabled && backend.IsHealthy) ? Localizer["Dispatch Traffic"].Value : Localizer["Block Node"].Value;
+            var linkStyle = "-.";
+            sb.AppendLine($"    Algo_{vm.Id} {linkStyle} \"{actionText}\" .-> Node_{backend.Id}");
+        }
+    }
+    
+    var mermaidCode = sb.ToString();
+}
+
+<div class="container-fluid p-0">
+    <div class="row mb-2 mb-xl-3">
+        <div class="col-auto d-none d-sm-block">
+            <h3>@ViewData["Title"]</h3>
+        </div>
+        <div class="col-auto ms-auto text-end mt-n1">
+            <a href="javascript:location.reload()" class="btn btn-primary shadow-sm ms-1">
+                <i class="align-middle" data-lucide="refresh-cw"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 d-flex">
+            <div class="card flex-fill w-100">
+                <div class="card-body">
+                    <pre class="mermaid" style="display: flex; justify-content: center; overflow: auto; min-height: 500px;">
+@mermaidCode
+                    </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* ReSharper disable once Razor.SectionNotResolved *@
+@section scripts {
+    <script type="module">
+        import mermaid from '/node_modules/mermaid/dist/mermaid.esm.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+}
