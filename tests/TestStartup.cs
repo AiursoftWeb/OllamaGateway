@@ -72,6 +72,7 @@ public class TestStartup : Startup
     {
         base.ConfigureServices(configuration, environment, services);
         
+        // Use TryAdd to ensure our mocks take precedence if possible, or RemoveAll then Add
         services.RemoveAll<OllamaService>();
         services.AddScoped(_ => MockOllamaService.Object);
 

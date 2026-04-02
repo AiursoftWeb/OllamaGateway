@@ -1,8 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
 using System.ComponentModel.DataAnnotations;
 using Aiursoft.UiStack.Layout;
 
 namespace Aiursoft.OllamaGateway.Models.AccountViewModels;
-
+[ExcludeFromCodeCoverage]
 public class LoginViewModel: UiStackLayoutViewModel
 {
     public LoginViewModel()

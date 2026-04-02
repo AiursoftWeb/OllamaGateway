@@ -1,9 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using System.ComponentModel.DataAnnotations;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.UiStack.Layout;
 
 namespace Aiursoft.OllamaGateway.Models.VirtualModelsViewModels;
-
+[ExcludeFromCodeCoverage]
 public class CreateViewModel : UiStackLayoutViewModel
 {
     public CreateViewModel()

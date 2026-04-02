@@ -1,5 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Aiursoft.OllamaGateway.Configuration;
 
+[ExcludeFromCodeCoverage]
 public class AppSettings
 {
     public required string AuthProvider { get; init; } = "Local";

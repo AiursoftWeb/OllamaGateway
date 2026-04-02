@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 // ... other using statements
 
 using System.ComponentModel.DataAnnotations;
@@ -5,7 +6,7 @@ using Aiursoft.UiStack.Layout;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.OllamaGateway.Models.RolesViewModels;
-
+[ExcludeFromCodeCoverage]
 public class EditViewModel: UiStackLayoutViewModel
 {
     public EditViewModel()

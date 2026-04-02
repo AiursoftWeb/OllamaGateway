@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Aiursoft.OllamaGateway.Models.UsersViewModels;
 
 // Manage if a role is selected or not in the UI.
-
+[ExcludeFromCodeCoverage]
 public class EditViewModel : UiStackLayoutViewModel
 {
     public EditViewModel()

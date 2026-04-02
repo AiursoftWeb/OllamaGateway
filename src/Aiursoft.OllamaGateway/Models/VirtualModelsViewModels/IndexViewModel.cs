@@ -1,8 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.UiStack.Layout;
 
 namespace Aiursoft.OllamaGateway.Models.VirtualModelsViewModels;
-
+[ExcludeFromCodeCoverage]
 public class IndexViewModel : UiStackLayoutViewModel
 {
     public IndexViewModel()

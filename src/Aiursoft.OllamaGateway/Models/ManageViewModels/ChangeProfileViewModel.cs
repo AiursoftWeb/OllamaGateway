@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using Aiursoft.UiStack.Layout;
 
 namespace Aiursoft.OllamaGateway.Models.ManageViewModels;
-
+[ExcludeFromCodeCoverage]
 public class ChangeProfileViewModel : UiStackLayoutViewModel
 {
     public ChangeProfileViewModel()

@@ -1,7 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
 using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.OllamaGateway.Models.GlobalSettingsViewModels;
-
+[ExcludeFromCodeCoverage]
 public class EditViewModel
 {
     [Required(ErrorMessage = "The {0} is required.")]

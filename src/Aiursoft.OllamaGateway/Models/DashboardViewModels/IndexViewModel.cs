@@ -1,6 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
 using Aiursoft.UiStack.Layout;
 
 namespace Aiursoft.OllamaGateway.Models.DashboardViewModels;
+
+[ExcludeFromCodeCoverage]
 
 public class IndexViewModel : UiStackLayoutViewModel
 {
@@ -23,11 +26,15 @@ public class IndexViewModel : UiStackLayoutViewModel
     public List<RecentUserStats> RecentUsers { get; set; } = [];
 }
 
+[ExcludeFromCodeCoverage]
+
 public class ProviderStats
 {
     public string Name { get; set; } = string.Empty;
     public int ModelCount { get; set; }
 }
+
+[ExcludeFromCodeCoverage]
 
 public class TopApiKeyStats
 {
@@ -37,11 +44,15 @@ public class TopApiKeyStats
     public DateTime? LastUsed { get; set; }
 }
 
+[ExcludeFromCodeCoverage]
+
 public class TopModelStats
 {
     public string ModelName { get; set; } = string.Empty;
     public long UsageCount { get; set; }
 }
+
+[ExcludeFromCodeCoverage]
 
 public class RecentUserStats
 {

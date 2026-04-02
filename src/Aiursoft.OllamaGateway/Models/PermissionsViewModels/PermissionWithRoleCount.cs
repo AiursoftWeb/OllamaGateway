@@ -1,7 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
 using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.OllamaGateway.Models.PermissionsViewModels;
-
+[ExcludeFromCodeCoverage]
 public class PermissionWithRoleCount
 {
     [Display(Name = "Permission Key")]

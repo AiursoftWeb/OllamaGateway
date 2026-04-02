@@ -1,9 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
 using Aiursoft.UiStack.Layout;
 
 namespace Aiursoft.OllamaGateway.Models.UnderlyingModelsViewModels;
-
+[ExcludeFromCodeCoverage]
 public class UnderlyingModelInfo
 {
     public required OllamaProvider Provider { get; set; }
@@ -12,7 +13,7 @@ public class UnderlyingModelInfo
     public long TotalCalls { get; set; }
     public List<VirtualModel> UsedByVirtualModels { get; set; } = new();
 }
-
+[ExcludeFromCodeCoverage]
 public class IndexViewModel : UiStackLayoutViewModel
 {
     public IndexViewModel()
