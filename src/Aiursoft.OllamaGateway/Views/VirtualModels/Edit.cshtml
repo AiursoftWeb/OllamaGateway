@@ -135,7 +135,11 @@
                                                 <input type="number" name="weight" value="@b.Weight" class="form-control form-control-sm" style="width: 70px;" />
                                             </td>
                                             <td>
+                                                @{
+                                                    var banTime = Model.BackendBanStatuses.GetValueOrDefault(b.Id);
+                                                }
                                                 @if (!b.Enabled) { <span class="badge bg-secondary">Disabled</span> }
+                                                else if (banTime.HasValue && banTime.Value > DateTime.UtcNow) { <span class="badge bg-danger">Banned (Till @banTime.Value.ToLocalTime().ToString("HH:mm"))</span> }
                                                 else if (b.IsReady) { <span class="badge bg-success">Ready</span> }
                                                 else if (b.IsHealthy) { <span class="badge bg-info">Healthy</span> }
                                                 else { <span class="badge bg-danger">Down</span> }

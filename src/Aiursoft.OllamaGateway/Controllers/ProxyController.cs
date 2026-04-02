@@ -111,7 +111,7 @@ public class ProxyController(
                     {
                         Name = modelToUse,
                         MaxRetries = 1,
-                        HealthCheckTimeout = 30,
+                        HealthCheckTimeout = 40,
                     };
                     backend = new VirtualModelBackend
                     {
@@ -406,7 +406,7 @@ public class ProxyController(
                     {
                         Name = modelToUse,
                         MaxRetries = 1,
-                        HealthCheckTimeout = 30,
+                        HealthCheckTimeout = 40,
                     };
                     backend = new VirtualModelBackend
                     {

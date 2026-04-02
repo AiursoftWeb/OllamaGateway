@@ -34,7 +34,7 @@ public class VirtualModel
 
     public int MaxRetries { get; set; } = 3;
 
-    public int HealthCheckTimeout { get; set; } = 30;
+    public int HealthCheckTimeout { get; set; } = 40;
 
     public bool? Thinking { get; set; }
 

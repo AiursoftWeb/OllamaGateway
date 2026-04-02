@@ -26,7 +26,7 @@ public class CreateViewModel : UiStackLayoutViewModel
 
     public int MaxRetries { get; set; } = 3;
 
-    public int HealthCheckTimeout { get; set; } = 30;
+    public int HealthCheckTimeout { get; set; } = 40;
 
     public bool? Thinking { get; set; }
 
@@ -49,4 +49,6 @@ public class CreateViewModel : UiStackLayoutViewModel
     public List<string> AvailableUnderlyingModels { get; set; } = new();
 
     public List<OllamaProvider> AvailableProviders { get; set; } = new();
+
+    public Dictionary<int, DateTime?> BackendBanStatuses { get; set; } = new();
 }

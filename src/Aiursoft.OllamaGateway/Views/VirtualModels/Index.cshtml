@@ -46,13 +46,19 @@
                         @foreach (var m in Model.Models)
                         {
                             var backends = m.VirtualModelBackends;
-                            var status = backends.Any(b => b.IsReady && b.Enabled) ? "Ready" : 
+                            var banTimes = backends.Where(b => b.Enabled).Select(b => Model.BackendBanStatuses.GetValueOrDefault(b.Id)).ToList();
+                            var isAllBanned = banTimes.Any() && banTimes.All(t => t != null && t > DateTime.UtcNow);
+                            var maxBanTime = banTimes.Where(t => t != null).Max();
+
+                            var status = isAllBanned ? "Banned" :
+                                         backends.Any(b => b.IsReady && b.Enabled) ? "Ready" : 
                                          backends.Any(b => b.IsHealthy && b.Enabled) ? "Healthy" : "Down";
-                            var badgeClass = status == "Ready" ? "bg-success" : status == "Healthy" ? "bg-info" : "bg-danger";
+                            var badgeClass = status == "Banned" ? "bg-danger" : status == "Ready" ? "bg-success" : status == "Healthy" ? "bg-info" : "bg-danger";
+                            var statusText = status == "Banned" && maxBanTime.HasValue ? $"Banned (Till {maxBanTime.Value.ToLocalTime():HH:mm})" : status;
 
                             <tr>
                                 <td>
-                                    <span class="badge @badgeClass me-1" title="@status">@status</span>
+                                    <span class="badge @badgeClass me-1" title="@statusText">@statusText</span>
                                     <strong>@m.Name</strong>
                                 </td>
                                 <td>

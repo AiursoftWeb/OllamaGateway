@@ -77,6 +77,9 @@ public class TestStartup : Startup
         services.RemoveAll<ClickhouseDbContext>();
         services.AddScoped(_ => MockClickhouse.Object);
 
+        // Completely disable all background services for maximum speed and stability
+        services.RemoveAll<Microsoft.Extensions.Hosting.IHostedService>();
+
         // Replace PrimaryHandler with our mock so all outbound HTTP is intercepted.
         // A new MockUpstreamHandler instance is created each time, avoiding reuse errors.
         services.ConfigureAll<HttpClientFactoryOptions>(options =>

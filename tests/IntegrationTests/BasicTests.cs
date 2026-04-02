@@ -1,7 +1,5 @@
 using System.Net;
 
-[assembly:DoNotParallelize]
-
 namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
 
 [TestClass]

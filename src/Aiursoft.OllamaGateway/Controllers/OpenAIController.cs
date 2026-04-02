@@ -94,7 +94,7 @@ public class OpenAIController : ControllerBase
                     {
                         Name = modelToUse,
                         MaxRetries = 1,
-                        HealthCheckTimeout = 30,
+                        HealthCheckTimeout = 40,
                     };
                     backend = new VirtualModelBackend
                     {

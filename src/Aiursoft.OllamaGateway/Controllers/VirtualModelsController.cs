@@ -13,7 +13,8 @@ namespace Aiursoft.OllamaGateway.Controllers;
 [Authorize(Policy = AppPermissionNames.CanManageModels)]
 public class VirtualModelsController(
     TemplateDbContext dbContext,
-    OllamaService ollamaService) : Controller
+    OllamaService ollamaService,
+    IModelSelector modelSelector) : Controller
 {
     private async Task<Dictionary<int, string>> GetModelWarningsAsync(List<VirtualModel> models)
     {
@@ -84,6 +85,7 @@ public class VirtualModelsController(
         {
             Models = models,
             ModelWarnings = await GetModelWarningsAsync(models),
+            BackendBanStatuses = models.SelectMany(m => m.VirtualModelBackends).ToDictionary(b => b.Id, b => modelSelector.GetBanUntil(b.Id)),
             PageTitle = "Chat Models",
             CurrentType = ModelType.Chat
         };
@@ -112,6 +114,7 @@ public class VirtualModelsController(
         {
             Models = models,
             ModelWarnings = await GetModelWarningsAsync(models),
+            BackendBanStatuses = models.SelectMany(m => m.VirtualModelBackends).ToDictionary(b => b.Id, b => modelSelector.GetBanUntil(b.Id)),
             PageTitle = "Embedding Models",
             CurrentType = ModelType.Embedding
         };
@@ -270,7 +273,8 @@ public class VirtualModelsController(
             RepeatPenalty = virtualModel.RepeatPenalty,
             UseRawOutput = virtualModel.UseRawOutput,
             AvailableUnderlyingModels = underlyingModels,
-            AvailableProviders = providers
+            AvailableProviders = providers,
+            BackendBanStatuses = virtualModel.VirtualModelBackends.ToDictionary(b => b.Id, b => modelSelector.GetBanUntil(b.Id))
         };
         ViewData["Id"] = id;
         ViewData["Backends"] = virtualModel.VirtualModelBackends;

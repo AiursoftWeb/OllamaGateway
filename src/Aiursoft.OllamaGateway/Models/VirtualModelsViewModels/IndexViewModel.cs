@@ -14,5 +14,7 @@ public class IndexViewModel : UiStackLayoutViewModel
     
     public Dictionary<int, string> ModelWarnings { get; set; } = new();
 
+    public Dictionary<int, DateTime?> BackendBanStatuses { get; set; } = new();
+
     public ModelType CurrentType { get; set; }
 }

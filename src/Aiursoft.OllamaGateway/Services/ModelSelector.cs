@@ -12,7 +12,7 @@ public class ModelSelector : IModelSelector, ISingletonDependency
     public VirtualModelBackend? SelectBackend(VirtualModel virtualModel)
     {
         var backends = virtualModel.VirtualModelBackends
-            .Where(b => b.Enabled && b.IsHealthy)
+            .Where(b => b.Enabled && (b.IsHealthy || b.IsReady))
             .Where(b => !_circuitBreakerStates.TryGetValue(b.Id, out var state) || state.BanUntil == null || state.BanUntil < DateTime.UtcNow)
             .ToList();
 
@@ -43,10 +43,36 @@ public class ModelSelector : IModelSelector, ISingletonDependency
             (_, current) =>
             {
                 var newCount = current.FailureCount + 1;
-                var banUntil = newCount >= 3 ? DateTime.UtcNow.AddMinutes(5) : current.BanUntil;
+                DateTime? banUntil = current.BanUntil;
+
+                if (newCount >= 3)
+                {
+                    // Stepped exponential backoff: 5^(n-3) minutes
+                    // n=3 -> 1 min, n=4 -> 5 min, n=5 -> 25 min, etc.
+                    var exponent = newCount - 3;
+                    var minutesToBan = (int)Math.Pow(5, exponent);
+
+                    // Cap the ban time at 24 hours (1440 minutes)
+                    minutesToBan = Math.Min(minutesToBan, 1440);
+
+                    banUntil = DateTime.UtcNow.AddMinutes(minutesToBan);
+                }
+
                 return (newCount, banUntil);
             }
         );
+    }
+
+    public DateTime? GetBanUntil(int backendId)
+    {
+        if (_circuitBreakerStates.TryGetValue(backendId, out var state))
+        {
+            if (state.BanUntil > DateTime.UtcNow)
+            {
+                return state.BanUntil;
+            }
+        }
+        return null;
     }
 
     private VirtualModelBackend GetWeightedRandom(List<VirtualModelBackend> backends)
