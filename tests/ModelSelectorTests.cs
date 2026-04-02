@@ -1,6 +1,5 @@
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Aiursoft.OllamaGateway.Tests;
 

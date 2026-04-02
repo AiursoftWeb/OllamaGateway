@@ -1,6 +1,5 @@
 using Aiursoft.OllamaGateway.Configuration;
 using Aiursoft.OllamaGateway.Services;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
 
