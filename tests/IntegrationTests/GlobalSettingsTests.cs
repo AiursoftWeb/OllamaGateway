@@ -140,7 +140,7 @@ public class GlobalSettingsTests : TestBase
         Environment.SetEnvironmentVariable($"GlobalSettings__{SettingsMap.BrandName}", "OverriddenBrand");
         try
         {
-            var server = await AppAsync<Startup>([], port: port);
+            var server = await AppAsync<TestStartup>([], port: port);
             await server.UpdateDbAsync<TemplateDbContext>();
             await server.StartAsync();
 

@@ -1,6 +1,9 @@
 using System.Net;
+using Aiursoft.DbTools;
+using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Models.BackgroundJobs;
 using Aiursoft.OllamaGateway.Services.BackgroundJobs;
+using static Aiursoft.WebTools.Extends;
 
 namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
 
@@ -10,6 +13,15 @@ namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
 [TestClass]
 public class BackgroundJobsTests : TestBase
 {
+    [TestInitialize]
+    public override async Task CreateServer()
+    {
+        Server = await AppAsync<TestStartupWithQueue>([], port: Port);
+        await Server.UpdateDbAsync<TemplateDbContext>();
+        await Server.SeedAsync();
+        await Server.StartAsync();
+    }
+
     [TestMethod]
     public async Task JobQueueBasicOperationsTest()
     {
@@ -40,7 +52,7 @@ public class BackgroundJobsTests : TestBase
         Assert.AreEqual("Test Job 1", pendingJobs[0].JobName);
 
         // Step 4: 等待任务执行完成
-        await Task.Delay(2000); // 给worker足够时间处理
+        await Task.Delay(500); // 给worker足够时间处理
 
         // Step 5: 验证任务已完成
         Assert.IsTrue(jobCompleted);
@@ -80,7 +92,7 @@ public class BackgroundJobsTests : TestBase
             });
 
         // Step 2: 等待两个任务都完成
-        await Task.Delay(2000);
+        await Task.Delay(1000);
 
         // Step 3: 验证两个任务都已完成
         Assert.IsTrue(queueACompleted);
@@ -123,7 +135,7 @@ public class BackgroundJobsTests : TestBase
             });
 
         // Step 2: 等待两个任务都完成
-        await Task.Delay(2500);
+        await Task.Delay(1500);
 
         // Step 3: 验证两个任务都已完成
         Assert.IsTrue(job1Completed);
@@ -145,7 +157,7 @@ public class BackgroundJobsTests : TestBase
             jobName: "Blocking Job",
             job: async (_) =>
             {
-                await Task.Delay(10000); // 10秒延迟，确保测试期间一直在运行
+                await Task.Delay(3000); // 延迟，确保测试期间一直在运行
             });
 
         // Step 2: 添加一个长时间运行的任务（这个应该保持在Pending状态）
@@ -155,12 +167,12 @@ public class BackgroundJobsTests : TestBase
             jobName: "Cancellable Job",
             job: async (_) =>
             {
-                await Task.Delay(5000); // 5秒延迟
+                await Task.Delay(2000); // 延迟
                 jobExecuted = true;
             });
 
         // Step 3: 等待任务入队，并获取任务ID
-        await Task.Delay(500); // 确保任务已入队
+        await Task.Delay(300); // 确保任务已入队
         var pendingJobs = queue.GetPendingJobs().ToList();
         var cancellableJob = pendingJobs.FirstOrDefault(j => j.JobName == "Cancellable Job");
         Assert.IsNotNull(cancellableJob, "Cancellable job should be in pending queue");
@@ -171,7 +183,7 @@ public class BackgroundJobsTests : TestBase
         Assert.IsTrue(cancelled);
 
         // Step 5: 等待足够长的时间，确保任务不会被执行
-        await Task.Delay(2000);
+        await Task.Delay(500);
 
         // Step 6: 验证任务没有被执行
         Assert.IsFalse(jobExecuted);
@@ -199,7 +211,7 @@ public class BackgroundJobsTests : TestBase
             });
 
         // Step 2: 等待任务执行并失败
-        await Task.Delay(2000);
+        await Task.Delay(500);
 
         // Step 3: 验证任务状态为失败，并包含错误信息
         var recentJobs = queue.GetRecentCompletedJobs(TimeSpan.FromMinutes(1)).ToList();
@@ -300,7 +312,7 @@ public class BackgroundJobsTests : TestBase
         var jobId = queue.QueueWithDependency<ILogger<BackgroundJobsTests>>("Cleanup Queue", "Cleanup Job", async (_) => await Task.CompletedTask);
         
         // Wait for it to complete
-        await Task.Delay(1000);
+        await Task.Delay(500);
         
         var completedJob = queue.GetRecentCompletedJobs(TimeSpan.FromMinutes(1)).FirstOrDefault(j => j.JobId == jobId);
         Assert.IsNotNull(completedJob);

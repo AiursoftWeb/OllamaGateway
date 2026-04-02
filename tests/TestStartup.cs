@@ -1,5 +1,6 @@
 // ReSharper disable all
 using Aiursoft.OllamaGateway.Services;
+using Aiursoft.OllamaGateway.Services.BackgroundJobs;
 using Aiursoft.OllamaGateway.Services.Clickhouse;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -89,5 +90,18 @@ public class TestStartup : Startup
                 builder.PrimaryHandler = new MockUpstreamHandler();
             });
         });
+    }
+}
+
+/// <summary>
+/// TestStartup variant that re-enables the QueueWorkerService for background job tests.
+/// All other background services (health monitor, warmup, usage flush) remain disabled.
+/// </summary>
+public class TestStartupWithQueue : TestStartup
+{
+    public override void ConfigureServices(IConfiguration configuration, IWebHostEnvironment environment, IServiceCollection services)
+    {
+        base.ConfigureServices(configuration, environment, services);
+        services.AddHostedService<QueueWorkerService>();
     }
 }

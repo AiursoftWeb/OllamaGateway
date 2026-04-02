@@ -31,7 +31,7 @@ public abstract class TestBase
     [TestInitialize]
     public virtual async Task CreateServer()
     {
-        Server = await AppAsync<Startup>([], port: Port);
+        Server = await AppAsync<TestStartup>([], port: Port);
         await Server.UpdateDbAsync<TemplateDbContext>();
         await Server.SeedAsync();
         await Server.StartAsync();
