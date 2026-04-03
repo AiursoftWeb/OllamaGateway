@@ -409,6 +409,7 @@ public class OpenAIController : ControllerBase
 
             if (virtualModel.Temperature.HasValue) options["temperature"] = virtualModel.Temperature.Value;
             if (virtualModel.TopP.HasValue) options["top_p"] = virtualModel.TopP.Value;
+            if (virtualModel.TopK.HasValue) options["top_k"] = virtualModel.TopK.Value;
             if (virtualModel.NumPredict.HasValue) options["num_predict"] = virtualModel.NumPredict.Value;
             if (virtualModel.NumCtx.HasValue) options["num_ctx"] = virtualModel.NumCtx.Value;
 

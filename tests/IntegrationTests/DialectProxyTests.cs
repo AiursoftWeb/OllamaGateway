@@ -329,6 +329,59 @@ public class DialectProxyTests : TestBase
     }
 
     // ========================================================================
+    [TestMethod]
+    public async Task OpenAI_ParameterInjection_TopKFromDbIsForwardedToOllamaBackend()
+    {
+        // Regression test for path ③ (Ollama provider + OpenAI API via /v1/chat/completions):
+        // OpenAIController's Ollama-backend code path was not injecting virtualModel.TopK into
+        // the outbound Ollama options object, silently discarding DB-configured top_k values.
+        const string topKModelName = "topk-regression:latest";
+
+        using (var scope = Server!.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+            var provider = await db.OllamaProviders.FirstAsync();
+
+            var model = new VirtualModel
+            {
+                Name = topKModelName,
+                Type = ModelType.Chat,
+                TopK = 30
+            };
+            model.VirtualModelBackends.Add(new VirtualModelBackend
+            {
+                ProviderId = provider.Id,
+                UnderlyingModelName = PhysicalModelName,
+                Enabled = true,
+                IsHealthy = true
+            });
+            db.VirtualModels.Add(model);
+            await db.SaveChangesAsync();
+        }
+
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            const string body =
+                """{"model":"llama3.2","message":{"role":"assistant","content":"ok"},"done":true,"prompt_eval_count":1,"eval_count":1}""";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body, Encoding.UTF8, "application/json")
+            });
+        };
+
+        var payload = $$"""{ "model":"{{topKModelName}}","messages":[{"role":"user","content":"test"}],"stream":false}""";
+        await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
+
+        Assert.IsNotNull(MockUpstreamState.LastRequestBody,
+            "Upstream should have received a request body");
+        var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody);
+        var options = upstreamBody?["options"];
+        Assert.IsNotNull(options, "Ollama format must have an 'options' object when DB params are set");
+        Assert.AreEqual(30, options["top_k"]?.GetValue<int>(),
+            "top_k from the virtual model DB config must be injected into the Ollama upstream request "
+          + "when the client calls via the OpenAI-compatible endpoint (/v1/chat/completions)");
+    }
+
     // B. Ollama Native Dialect Tests
     // ========================================================================
 

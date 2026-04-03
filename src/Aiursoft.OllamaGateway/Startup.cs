@@ -64,6 +64,31 @@ public class Startup : IWebStartup
         services.AddHostedService<Services.BackgroundJobs.UsageFlushService>();
 
         // Controllers and localization
+        //
+        // JSON SERIALIZER ARCHITECTURE — READ BEFORE CHANGING:
+        //
+        // This project intentionally uses TWO JSON libraries for different stages of the pipeline:
+        //
+        //   1. Newtonsoft.Json  — handles INBOUND deserialization only.
+        //      ASP.NET Core's [FromBody] model binding invokes Newtonsoft when a controller
+        //      action receives a request. DefaultContractResolver is used so that property names
+        //      stay as-is (no camelCase transform by Newtonsoft itself).
+        //      IMPORTANT: Because Newtonsoft matches JSON keys case-insensitively but does NOT
+        //      ignore underscores, every snake_case field on a model class that is bound via
+        //      [FromBody] MUST carry a [Newtonsoft.Json.JsonProperty("snake_case_name")] attribute.
+        //      Without it, keys like "num_ctx" silently fail to bind to "NumCtx".
+        //      See OllamaRequestOptions in ProxyController.cs for the canonical example.
+        //
+        //   2. System.Text.Json — handles OUTBOUND serialization and all streaming parse/transform.
+        //      ProxyController and OpenAIController use STJ (JsonSerializer + JsonNode) to:
+        //        a) Serialize the request forwarded to Ollama/OpenAI (SnakeCaseLower policy).
+        //        b) Parse and mutate NDJSON/SSE stream chunks on the fly (JsonNode mutable DOM).
+        //      STJ ignores [Newtonsoft.Json.JsonProperty] entirely, so the two libraries
+        //      do not interfere with each other.
+        //
+        // DO NOT unify to a single library without carefully auditing every [FromBody] binding
+        // and every JsonNode streaming transformation — the two stages have incompatible
+        // requirements (mutable DOM vs. schema-driven binding with snake_case contracts).
         services.AddControllersWithViews()
             .AddNewtonsoftJson(options =>
             {

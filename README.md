@@ -74,6 +74,23 @@ The docker image has the following context:
 | Data path   | /data                           |
 | Config path | /data/appsettings.json          |
 
+## Parameter Behavior by Provider and API Format
+
+Ollama Gateway supports two inbound API formats and two backend provider types, yielding four distinct request paths:
+
+- **Paths ① and ③** enter via `/v1/chat/completions` and are handled by `OpenAIController`.
+- **Paths ② and ④** enter via `/api/chat` and are handled by `ProxyController`.
+
+> **"DB override"** means a hard assignment (`=`), not a null-coalescing assignment (`??=`). When the virtual model has a value configured in the database, the client-supplied value is **always discarded**, regardless of what the client sent.
+
+| Parameter | ① OpenAI provider<br>+ OpenAI API | ② OpenAI provider<br>+ Ollama API | ③ Ollama provider<br>+ OpenAI API | ④ Ollama provider<br>+ Ollama API |
+|-----------|-----------------------------------|-----------------------------------|-----------------------------------|-----------------------------------|
+| Temperature | ✅ Client value arrives<br>DB hard-overrides if set<br>Forwarded as `"temperature"` (passthrough) | ✅ Client value arrives<br>DB hard-overrides if set<br>Forwarded as `"temperature"` | ✅ Client value arrives<br>DB hard-overrides if set<br>Forwarded as `options.temperature` to Ollama | ✅ Client value arrives<br>DB hard-overrides if set<br>Forwarded as `options.temperature` to Ollama |
+| Top P | ✅ Client value arrives<br>DB hard-overrides if set<br>Forwarded as `"top_p"` (passthrough) | ✅ Client value arrives<br>DB hard-overrides if set<br>Forwarded as `"top_p"` | ✅ Client value arrives<br>DB hard-overrides if set<br>Forwarded as `options.top_p` to Ollama | ✅ Client value arrives<br>DB hard-overrides if set<br>Forwarded as `options.top_p` to Ollama |
+| Top K | ❌ Always discarded<br>OpenAI does not support it<br>DB does not inject it | ❌ Always discarded<br>DB injects into `options` but the field is dropped before the OpenAI request is sent | ✅ Client cannot pass it (no such field in OpenAI API)<br>DB injects if set<br>Forwarded as `options.top_k` to Ollama | ✅ Client value arrives<br>DB hard-overrides if set<br>Forwarded as `options.top_k` to Ollama |
+| Num Ctx | ❌ Always discarded<br>OpenAI does not support it<br>DB does not inject it | ❌ Always discarded<br>DB injects into `options` but the field is dropped before the OpenAI request is sent | ✅ Client cannot pass it (no such field in OpenAI API)<br>DB injects if set<br>Forwarded as `options.num_ctx` to Ollama | ✅ Client value arrives<br>DB hard-overrides if set<br>Forwarded as `options.num_ctx` to Ollama |
+| Thinking | ❌ Always discarded<br>OpenAI does not support it<br>DB does not inject it | ❌ Always discarded<br>DB injects into `options` but the field is dropped before the OpenAI request is sent | ✅ Client cannot pass it (no such field in OpenAI API)<br>DB injects if set<br>Forwarded as `"think"` to Ollama | ✅ Client value arrives<br>DB hard-overrides if set<br>Forwarded as `"think"` to Ollama |
+
 ## How to contribute
 
 There are many ways to contribute to the project: logging bugs, submitting pull requests, reporting issues, and creating suggestions.

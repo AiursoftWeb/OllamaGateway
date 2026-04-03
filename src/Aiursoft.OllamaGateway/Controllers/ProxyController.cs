@@ -37,6 +37,14 @@ public class OllamaMessage
     public List<string>? Images { get; set; }
 }
 
+// INBOUND deserialization: Newtonsoft.Json (via ASP.NET Core [FromBody] model binding).
+// Newtonsoft's DefaultContractResolver matches JSON keys case-insensitively but does NOT
+// treat underscores as separators — "num_ctx" will NOT bind to a plain "NumCtx" property.
+// Every snake_case Ollama field therefore needs an explicit [JsonProperty] attribute.
+//
+// OUTBOUND serialization: System.Text.Json with SnakeCaseLower (see OllamaJsonOptions below).
+// STJ ignores [Newtonsoft.Json.JsonProperty] entirely, so these attributes only affect
+// the inbound path and do not alter the outbound key names.
 public class OllamaRequestOptions
 {
     [Newtonsoft.Json.JsonProperty("num_ctx")]
@@ -75,6 +83,12 @@ public class ProxyController(
         "Transfer-Encoding", "Content-Length", "Connection", "Keep-Alive", "Upgrade", "Host", "Accept-Ranges"
     };
 
+    // OUTBOUND serialization to Ollama/upstream — System.Text.Json with SnakeCaseLower.
+    // Used when serializing C# model objects (e.g. OllamaRequestModel) into the JSON body
+    // that is forwarded to the real Ollama instance. SnakeCaseLower converts "NumCtx" → "num_ctx"
+    // automatically, matching the Ollama API wire format.
+    // STJ is also used throughout this controller for mutable DOM manipulation of streaming
+    // NDJSON/SSE chunks (JsonNode), which has no ergonomic equivalent in Newtonsoft.
     private static readonly JsonSerializerOptions OllamaJsonOptions = new()
     {
         DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
