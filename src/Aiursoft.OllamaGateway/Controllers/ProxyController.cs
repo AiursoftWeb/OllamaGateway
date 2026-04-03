@@ -170,6 +170,239 @@ public class ProxyController(
             if (virtualModel.NumPredict.HasValue) input.Options.NumPredict = virtualModel.NumPredict;
             if (virtualModel.RepeatPenalty.HasValue) input.Options.RepeatPenalty = virtualModel.RepeatPenalty;
 
+            // ====================================================================
+            // OpenAI-compatible Backend Path (Ollama request → OpenAI downstream)
+            // ====================================================================
+            if (backend.Provider.ProviderType == ProviderType.OpenAI)
+            {
+                var openAiReqBody = new JsonObject
+                {
+                    ["model"] = backend.UnderlyingModelName,
+                    ["stream"] = input.Stream ?? false
+                };
+
+                if (input.Stream == true)
+                    openAiReqBody["stream_options"] = new JsonObject { ["include_usage"] = true };
+
+                if (input.Messages != null)
+                {
+                    var msgs = new JsonArray();
+                    foreach (var msg in input.Messages)
+                        msgs.Add(new JsonObject { ["role"] = msg.Role, ["content"] = msg.Content });
+                    openAiReqBody["messages"] = msgs;
+                }
+
+                // Map supported Ollama options → OpenAI params; silently drop top_k / num_ctx / repeat_penalty
+                if (input.Options != null)
+                {
+                    if (input.Options.Temperature.HasValue) openAiReqBody["temperature"] = input.Options.Temperature.Value;
+                    if (input.Options.TopP.HasValue) openAiReqBody["top_p"] = input.Options.TopP.Value;
+                    if (input.Options.NumPredict.HasValue) openAiReqBody["max_tokens"] = input.Options.NumPredict.Value;
+                }
+
+                HttpResponseMessage? oaiResponse = null;
+                for (var i = 0; i < virtualModel.MaxRetries; i++)
+                {
+                    var client = httpClientFactory.CreateClient();
+                    client.Timeout = await globalSettingsService.GetRequestTimeoutAsync();
+                    var oaiRequest = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/v1/chat/completions")
+                    {
+                        Content = new StringContent(openAiReqBody.ToJsonString(), Encoding.UTF8, "application/json")
+                    };
+                    if (!string.IsNullOrWhiteSpace(backend.Provider.BearerToken))
+                        oaiRequest.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", backend.Provider.BearerToken);
+
+                    using var ctsoai = CancellationTokenSource.CreateLinkedTokenSource(HttpContext.RequestAborted);
+                    ctsoai.CancelAfter(TimeSpan.FromSeconds(virtualModel.HealthCheckTimeout));
+
+                    logger.LogInformation("[{TraceId}] Translating Ollama→OpenAI chat for model {Model} to {UnderlyingUrl}, attempt {Attempt}", HttpContext.TraceIdentifier, virtualModel.Name, underlyingUrl, i + 1);
+
+                    try
+                    {
+                        oaiResponse = await client.SendAsync(oaiRequest, HttpCompletionOption.ResponseHeadersRead, ctsoai.Token);
+                        if (oaiResponse.IsSuccessStatusCode) { modelSelector.ReportSuccess(backend.Id); logContext.Log.BackendId = backend.Id; break; }
+                        if ((int)oaiResponse.StatusCode >= 500 && !Response.HasStarted)
+                            throw new HttpRequestException($"Received {oaiResponse.StatusCode} from OpenAI upstream.");
+                        modelSelector.ReportSuccess(backend.Id); logContext.Log.BackendId = backend.Id; break;
+                    }
+                    catch (Exception ex) when (!Response.HasStarted)
+                    {
+                        modelSelector.ReportFailure(backend.Id);
+                        logger.LogWarning(ex, "Attempt {Attempt} failed for OpenAI model {Model} to {UnderlyingUrl}", i + 1, virtualModel.Name, underlyingUrl);
+                        if (i == virtualModel.MaxRetries - 1) throw;
+                        backend = modelSelector.SelectBackend(virtualModel);
+                        if (backend?.Provider == null) { Response.StatusCode = 503; await Response.WriteAsync($"No available backend for model '{virtualModel.Name}'."); return; }
+                        underlyingUrl = backend.Provider.BaseUrl.TrimEnd('/');
+                        openAiReqBody["model"] = backend.UnderlyingModelName;
+                        memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
+                    }
+                }
+
+                if (oaiResponse == null) return;
+
+                Response.StatusCode = (int)oaiResponse.StatusCode;
+                logContext.Log.StatusCode = Response.StatusCode;
+                logContext.Log.Success = oaiResponse.IsSuccessStatusCode;
+                logger.LogInformation("[{TraceId}] Received OpenAI response: {StatusCode} for chat model {Model}", HttpContext.TraceIdentifier, (int)oaiResponse.StatusCode, virtualModel.Name);
+
+                await using var oaiStream = await oaiResponse.Content.ReadAsStreamAsync(HttpContext.RequestAborted);
+
+                if (input.Stream == true && oaiResponse.IsSuccessStatusCode)
+                {
+                    // Translate: OpenAI SSE → Ollama NDJSON
+                    var answerBuilder = new StringBuilder();
+                    var toolCallAccumulator = new Dictionary<int, (string Name, StringBuilder Args)>();
+                    using var sseReader = new StreamReader(oaiStream);
+                    string? sseLine;
+
+                    while ((sseLine = await sseReader.ReadLineAsync(HttpContext.RequestAborted)) != null)
+                    {
+                        if (!sseLine.StartsWith("data: ")) continue;
+                        var sseData = sseLine["data: ".Length..].Trim();
+                        if (sseData == "[DONE]") break;
+
+                        try
+                        {
+                            var oaiChunk = JsonNode.Parse(sseData);
+                            if (oaiChunk == null) continue;
+
+                            var choice = oaiChunk["choices"]?[0];
+                            var delta = choice?["delta"];
+                            var finishReason = choice?["finish_reason"]?.ToString();
+                            var content = delta?["content"]?.ToString() ?? string.Empty;
+                            if (!string.IsNullOrEmpty(content)) answerBuilder.Append(content);
+
+                            // Accumulate streaming tool calls (OpenAI sends name + arguments in separate chunks)
+                            var deltaToolCalls = delta?["tool_calls"]?.AsArray();
+                            if (deltaToolCalls != null)
+                            {
+                                foreach (var tc in deltaToolCalls)
+                                {
+                                    var idx = tc?["index"]?.GetValue<int>() ?? 0;
+                                    if (!toolCallAccumulator.TryGetValue(idx, out var acc))
+                                    {
+                                        acc = (string.Empty, new StringBuilder());
+                                        toolCallAccumulator[idx] = acc;
+                                    }
+                                    var tcName = tc?["function"]?["name"]?.ToString();
+                                    if (!string.IsNullOrEmpty(tcName))
+                                        toolCallAccumulator[idx] = (tcName, toolCallAccumulator[idx].Args);
+                                    var tcArgs = tc?["function"]?["arguments"]?.ToString();
+                                    if (!string.IsNullOrEmpty(tcArgs))
+                                        toolCallAccumulator[idx].Args.Append(tcArgs);
+                                }
+                            }
+
+                            var isDone = finishReason != null;
+                            if (string.IsNullOrEmpty(content) && !isDone) continue;
+
+                            var msgNode = new JsonObject { ["role"] = "assistant", ["content"] = content };
+
+                            if (isDone && toolCallAccumulator.Count > 0)
+                            {
+                                var tcArray = new JsonArray();
+                                foreach (var (_, (tcName, tcArgs)) in toolCallAccumulator.OrderBy(x => x.Key))
+                                {
+                                    JsonNode? argsNode;
+                                    try { argsNode = JsonNode.Parse(tcArgs.ToString()); }
+                                    catch { argsNode = new JsonObject(); }
+                                    tcArray.Add(new JsonObject { ["function"] = new JsonObject { ["name"] = tcName, ["arguments"] = argsNode } });
+                                }
+                                msgNode["tool_calls"] = tcArray;
+                            }
+
+                            var ollamaChunk = new JsonObject { ["model"] = virtualModel.Name, ["message"] = msgNode, ["done"] = isDone };
+
+                            if (isDone)
+                            {
+                                var usage = oaiChunk["usage"];
+                                if (usage != null)
+                                {
+                                    var pTokens = usage["prompt_tokens"]?.GetValue<long>() ?? 0;
+                                    var cTokens = usage["completion_tokens"]?.GetValue<long>() ?? 0;
+                                    ollamaChunk["prompt_eval_count"] = pTokens;
+                                    ollamaChunk["eval_count"] = cTokens;
+                                    logContext.Log.PromptTokens = (int)pTokens;
+                                    logContext.Log.CompletionTokens = (int)cTokens;
+                                    logContext.Log.TotalTokens = (int)(pTokens + cTokens);
+                                }
+                            }
+
+                            await Response.WriteAsync(ollamaChunk.ToJsonString() + "\n", HttpContext.RequestAborted);
+                            await Response.Body.FlushAsync(HttpContext.RequestAborted);
+                        }
+                        catch { /* skip malformed SSE chunk */ }
+                    }
+
+                    logContext.Log.Answer = answerBuilder.ToString();
+                }
+                else
+                {
+                    // Non-streaming: Translate OpenAI JSON → Ollama JSON
+                    using var oaiMs = new MemoryStream();
+                    await oaiStream.CopyToAsync(oaiMs, HttpContext.RequestAborted);
+                    oaiMs.Seek(0, SeekOrigin.Begin);
+
+                    var contentReplaced = false;
+                    try
+                    {
+                        var oaiResp = await JsonNode.ParseAsync(oaiMs, cancellationToken: HttpContext.RequestAborted);
+                        if (oaiResp != null)
+                        {
+                            var content = oaiResp["choices"]?[0]?["message"]?["content"]?.ToString() ?? string.Empty;
+                            var pTokens = oaiResp["usage"]?["prompt_tokens"]?.GetValue<long>() ?? 0;
+                            var cTokens = oaiResp["usage"]?["completion_tokens"]?.GetValue<long>() ?? 0;
+
+                            logContext.Log.Answer = content;
+                            logContext.Log.PromptTokens = (int)pTokens;
+                            logContext.Log.CompletionTokens = (int)cTokens;
+                            logContext.Log.TotalTokens = (int)(pTokens + cTokens);
+
+                            var msgNode = new JsonObject { ["role"] = "assistant", ["content"] = content };
+
+                            var tcArr = oaiResp["choices"]?[0]?["message"]?["tool_calls"]?.AsArray();
+                            if (tcArr != null && tcArr.Count > 0)
+                            {
+                                var ollamaTcArr = new JsonArray();
+                                foreach (var tc in tcArr)
+                                {
+                                    var argsStr = tc?["function"]?["arguments"]?.ToString() ?? "{}";
+                                    JsonNode? argsNode;
+                                    try { argsNode = JsonNode.Parse(argsStr); }
+                                    catch { argsNode = new JsonObject(); }
+                                    ollamaTcArr.Add(new JsonObject { ["function"] = new JsonObject { ["name"] = tc?["function"]?["name"]?.ToString(), ["arguments"] = argsNode } });
+                                }
+                                msgNode["tool_calls"] = ollamaTcArr;
+                            }
+
+                            var ollamaResp = new JsonObject
+                            {
+                                ["model"] = virtualModel.Name,
+                                ["message"] = msgNode,
+                                ["done"] = true,
+                                ["prompt_eval_count"] = pTokens,
+                                ["eval_count"] = cTokens
+                            };
+
+                            Response.ContentType = "application/json";
+                            await Response.WriteAsync(ollamaResp.ToJsonString(), HttpContext.RequestAborted);
+                            contentReplaced = true;
+                        }
+                    }
+                    catch { /* fallback to raw */ }
+
+                    if (!contentReplaced)
+                    {
+                        oaiMs.Seek(0, SeekOrigin.Begin);
+                        await oaiMs.CopyToAsync(Response.Body, HttpContext.RequestAborted);
+                    }
+                }
+                return;
+            }
+            // ====================================================================
+            // End OpenAI Backend Path — Ollama Backend Path continues below
+            // ====================================================================
+
             HttpResponseMessage? response = null;
             for (var i = 0; i < virtualModel.MaxRetries; i++)
             {
@@ -453,6 +686,14 @@ public class ProxyController(
             logContext.Log.ConversationMessageCount = 1;
             logContext.Log.LastQuestion = input.Prompt ?? string.Empty;
 
+            // /api/generate has no OpenAI-compatible equivalent — reject if backend is OpenAI
+            if (backend.Provider.ProviderType == ProviderType.OpenAI)
+            {
+                Response.StatusCode = 501;
+                await Response.WriteAsync("The /api/generate endpoint is not supported for OpenAI-compatible providers. Use /api/chat or /v1/chat/completions instead.");
+                return;
+            }
+
             input.Model = backend.UnderlyingModelName;
             if (virtualModel.Thinking.HasValue) input.Think = virtualModel.Thinking.Value;
             input.KeepAlive ??= backend.Provider.KeepAlive;
@@ -711,6 +952,105 @@ public class ProxyController(
             logContext.Log.Model = virtualModel.Name;
             logContext.Log.ConversationMessageCount = 1;
             logContext.Log.LastQuestion = inputNode["input"]?.ToString() ?? inputNode["prompt"]?.ToString() ?? string.Empty;
+
+            // ====================================================================
+            // OpenAI-compatible Backend Path (Ollama embed request → OpenAI downstream)
+            // ====================================================================
+            if (backend.Provider.ProviderType == ProviderType.OpenAI)
+            {
+                var openAiEmbedReq = new JsonObject
+                {
+                    ["model"] = backend.UnderlyingModelName,
+                    ["input"] = inputNode["input"]?.DeepClone() ?? inputNode["prompt"]?.DeepClone()
+                };
+
+                HttpResponseMessage? oaiEmbedResponse = null;
+                for (var i = 0; i < virtualModel.MaxRetries; i++)
+                {
+                    var client = httpClientFactory.CreateClient();
+                    client.Timeout = await globalSettingsService.GetRequestTimeoutAsync();
+                    var oaiEmbedRequest = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/v1/embeddings")
+                    {
+                        Content = new StringContent(openAiEmbedReq.ToJsonString(), Encoding.UTF8, "application/json")
+                    };
+                    if (!string.IsNullOrWhiteSpace(backend.Provider.BearerToken))
+                        oaiEmbedRequest.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", backend.Provider.BearerToken);
+
+                    using var ctsEmbed = CancellationTokenSource.CreateLinkedTokenSource(HttpContext.RequestAborted);
+                    ctsEmbed.CancelAfter(TimeSpan.FromSeconds(virtualModel.HealthCheckTimeout));
+
+                    logger.LogInformation("[{TraceId}] Translating Ollama→OpenAI embed for model {Model} to {UnderlyingUrl}, attempt {Attempt}", HttpContext.TraceIdentifier, virtualModel.Name, underlyingUrl, i + 1);
+
+                    try
+                    {
+                        oaiEmbedResponse = await client.SendAsync(oaiEmbedRequest, HttpCompletionOption.ResponseHeadersRead, ctsEmbed.Token);
+                        if (oaiEmbedResponse.IsSuccessStatusCode) { modelSelector.ReportSuccess(backend.Id); logContext.Log.BackendId = backend.Id; break; }
+                        if ((int)oaiEmbedResponse.StatusCode >= 500 && !Response.HasStarted)
+                            throw new HttpRequestException($"Received {oaiEmbedResponse.StatusCode} from OpenAI embedding upstream.");
+                        modelSelector.ReportSuccess(backend.Id); logContext.Log.BackendId = backend.Id; break;
+                    }
+                    catch (Exception ex) when (!Response.HasStarted)
+                    {
+                        modelSelector.ReportFailure(backend.Id);
+                        logger.LogWarning(ex, "Attempt {Attempt} failed for OpenAI embed model {Model} to {UnderlyingUrl}", i + 1, virtualModel.Name, underlyingUrl);
+                        if (i == virtualModel.MaxRetries - 1) throw;
+                        backend = modelSelector.SelectBackend(virtualModel);
+                        if (backend?.Provider == null) { Response.StatusCode = 503; await Response.WriteAsync($"No available backend for model '{virtualModel.Name}'."); return; }
+                        underlyingUrl = backend.Provider.BaseUrl.TrimEnd('/');
+                        openAiEmbedReq["model"] = backend.UnderlyingModelName;
+                        memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
+                    }
+                }
+
+                if (oaiEmbedResponse == null) return;
+
+                Response.StatusCode = (int)oaiEmbedResponse.StatusCode;
+                logContext.Log.StatusCode = Response.StatusCode;
+                logContext.Log.Success = oaiEmbedResponse.IsSuccessStatusCode;
+
+                if (!oaiEmbedResponse.IsSuccessStatusCode)
+                {
+                    var errContent = await oaiEmbedResponse.Content.ReadAsStringAsync(HttpContext.RequestAborted);
+                    logContext.Log.Answer = errContent;
+                    await Response.WriteAsync(errContent, HttpContext.RequestAborted);
+                    return;
+                }
+
+                // Translate: OpenAI response { data: [{ embedding: [...] }] } → Ollama { embeddings: [[...]] }
+                var oaiEmbedContent = await oaiEmbedResponse.Content.ReadAsStringAsync(HttpContext.RequestAborted);
+                try
+                {
+                    var oaiRespNode = JsonNode.Parse(oaiEmbedContent);
+                    if (oaiRespNode != null)
+                    {
+                        var dataArr = oaiRespNode["data"]?.AsArray();
+                        var embeddingsArr = new JsonArray();
+                        if (dataArr != null)
+                            foreach (var item in dataArr)
+                                embeddingsArr.Add(item?["embedding"]?.DeepClone());
+
+                        var pTokens = oaiRespNode["usage"]?["prompt_tokens"]?.GetValue<long>() ?? 0;
+                        logContext.Log.PromptTokens = (int)pTokens;
+                        logContext.Log.TotalTokens = (int)pTokens;
+
+                        var ollamaEmbedResp = new JsonObject
+                        {
+                            ["model"] = virtualModel.Name,
+                            ["embeddings"] = embeddingsArr
+                        };
+                        Response.ContentType = "application/json";
+                        await Response.WriteAsync(ollamaEmbedResp.ToJsonString(), HttpContext.RequestAborted);
+                    }
+                }
+                catch
+                {
+                    await Response.WriteAsync(oaiEmbedContent, HttpContext.RequestAborted);
+                }
+                return;
+            }
+            // ====================================================================
+            // End OpenAI Embed Path — Ollama Embed Path continues below
+            // ====================================================================
 
             inputNode["model"] = backend.UnderlyingModelName;
             inputNode["keep_alive"] = backend.Provider.KeepAlive;

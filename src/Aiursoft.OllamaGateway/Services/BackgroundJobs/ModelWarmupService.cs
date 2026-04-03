@@ -88,6 +88,13 @@ public class ModelWarmupService : BackgroundService
 
     private async Task WarmupSingleProviderAsync(OllamaProvider provider, CancellationToken stoppingToken)
     {
+        if (provider.ProviderType == ProviderType.OpenAI)
+        {
+            // OpenAI-compatible providers manage model loading automatically; warmup is not applicable
+            _logger.LogDebug("Skipping warmup for OpenAI-compatible provider {Provider}.", provider.Name);
+            return;
+        }
+
         List<WarmupModel>? warmupModels;
         try
         {

@@ -146,6 +146,163 @@ public class OpenAIController : ControllerBase
             var isStream = clientJson["stream"]?.GetValue<bool>() ?? false;
 
             // =========================================================================================
+            // OpenAI-compatible Backend Path: direct passthrough, no format translation needed
+            // =========================================================================================
+            if (backend.Provider.ProviderType == ProviderType.OpenAI)
+            {
+                // Replace model name; apply VirtualModel parameter overrides on top of client request
+                clientJson["model"] = backend.UnderlyingModelName;
+                if (virtualModel.Temperature.HasValue) clientJson["temperature"] = virtualModel.Temperature.Value;
+                if (virtualModel.TopP.HasValue) clientJson["top_p"] = virtualModel.TopP.Value;
+                if (virtualModel.NumPredict.HasValue) clientJson["max_tokens"] = virtualModel.NumPredict.Value;
+                if (isStream) clientJson["stream_options"] = new JsonObject { ["include_usage"] = true };
+
+                HttpResponseMessage? oaiDirectResponse = null;
+                for (var i = 0; i < virtualModel.MaxRetries; i++)
+                {
+                    var client = _httpClientFactory.CreateClient();
+                    client.Timeout = await _globalSettingsService.GetRequestTimeoutAsync();
+                    var oaiDirectReq = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/v1/chat/completions")
+                    {
+                        Content = new StringContent(clientJson.ToJsonString(), Encoding.UTF8, "application/json")
+                    };
+                    if (!string.IsNullOrWhiteSpace(backend.Provider.BearerToken))
+                        oaiDirectReq.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", backend.Provider.BearerToken);
+
+                    using var ctsDirect = CancellationTokenSource.CreateLinkedTokenSource(HttpContext.RequestAborted);
+                    ctsDirect.CancelAfter(TimeSpan.FromSeconds(virtualModel.HealthCheckTimeout));
+
+                    _logger.LogInformation("[{TraceId}] Pass-through OpenAI chat for model {Model} to {UnderlyingUrl}/v1/chat/completions, attempt {Attempt}", HttpContext.TraceIdentifier, virtualModel.Name, underlyingUrl, i + 1);
+
+                    try
+                    {
+                        oaiDirectResponse = await client.SendAsync(oaiDirectReq, HttpCompletionOption.ResponseHeadersRead, ctsDirect.Token);
+                        if (oaiDirectResponse.IsSuccessStatusCode) { _modelSelector.ReportSuccess(backend.Id); _logContext.Log.BackendId = backend.Id; break; }
+                        if ((int)oaiDirectResponse.StatusCode >= 500 && !Response.HasStarted)
+                            throw new HttpRequestException($"Received {oaiDirectResponse.StatusCode} from upstream OpenAI provider.");
+                        _modelSelector.ReportSuccess(backend.Id); _logContext.Log.BackendId = backend.Id; break;
+                    }
+                    catch (Exception ex) when (!Response.HasStarted)
+                    {
+                        _modelSelector.ReportFailure(backend.Id);
+                        _logger.LogWarning(ex, "Attempt {Attempt} failed for OpenAI direct passthrough to {UnderlyingUrl}", i + 1, underlyingUrl);
+                        if (i == virtualModel.MaxRetries - 1) throw;
+                        backend = _modelSelector.SelectBackend(virtualModel);
+                        if (backend?.Provider == null) { Response.StatusCode = 503; await Response.WriteAsync($"No available backend for model '{virtualModel.Name}'."); return; }
+                        underlyingUrl = backend.Provider.BaseUrl.TrimEnd('/');
+                        clientJson["model"] = backend.UnderlyingModelName;
+                        _memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
+                    }
+                }
+
+                if (oaiDirectResponse == null) return;
+
+                Response.StatusCode = (int)oaiDirectResponse.StatusCode;
+                _logContext.Log.StatusCode = Response.StatusCode;
+                _logContext.Log.Success = oaiDirectResponse.IsSuccessStatusCode;
+
+                if (!oaiDirectResponse.IsSuccessStatusCode)
+                {
+                    var errContent = await oaiDirectResponse.Content.ReadAsStringAsync(HttpContext.RequestAborted);
+                    _logContext.Log.Answer = errContent;
+                    Response.ContentType = "application/json";
+                    await Response.WriteAsync(errContent, HttpContext.RequestAborted);
+                    return;
+                }
+
+                await using var directStream = await oaiDirectResponse.Content.ReadAsStreamAsync(HttpContext.RequestAborted);
+
+                if (isStream)
+                {
+                    Response.ContentType = "text/event-stream";
+                    var answerBuilderDirect = new StringBuilder();
+                    var thinkBuilderDirect = new StringBuilder();
+                    using var directReader = new StreamReader(directStream);
+                    string? sLine;
+                    while ((sLine = await directReader.ReadLineAsync(HttpContext.RequestAborted)) != null)
+                    {
+                        if (string.IsNullOrWhiteSpace(sLine)) continue;
+                        if (sLine.StartsWith("data: ") && sLine != "data: [DONE]")
+                        {
+                            try
+                            {
+                                var chunk = JsonNode.Parse(sLine["data: ".Length..]);
+                                if (chunk != null)
+                                {
+                                    chunk["model"] = virtualModel.Name;
+                                    var deltaContent = chunk["choices"]?[0]?["delta"]?["content"]?.ToString();
+                                    var deltaReasoning = chunk["choices"]?[0]?["delta"]?["reasoning_content"]?.ToString();
+                                    if (!string.IsNullOrEmpty(deltaContent)) answerBuilderDirect.Append(deltaContent);
+                                    if (!string.IsNullOrEmpty(deltaReasoning)) thinkBuilderDirect.Append(deltaReasoning);
+                                    if (chunk["usage"] != null)
+                                    {
+                                        var pTok = chunk["usage"]!["prompt_tokens"]?.GetValue<long>() ?? 0;
+                                        var cTok = chunk["usage"]!["completion_tokens"]?.GetValue<long>() ?? 0;
+                                        _logContext.Log.PromptTokens = (int)pTok;
+                                        _logContext.Log.CompletionTokens = (int)cTok;
+                                        _logContext.Log.TotalTokens = (int)(pTok + cTok);
+                                    }
+                                    await Response.WriteAsync($"data: {chunk.ToJsonString()}\n\n", HttpContext.RequestAborted);
+                                    await Response.Body.FlushAsync(HttpContext.RequestAborted);
+                                    continue;
+                                }
+                            }
+                            catch { /* fall through to raw write */ }
+                        }
+                        if (sLine == "data: [DONE]")
+                        {
+                            await Response.WriteAsync("data: [DONE]\n\n", HttpContext.RequestAborted);
+                            await Response.Body.FlushAsync(HttpContext.RequestAborted);
+                        }
+                        else if (!string.IsNullOrWhiteSpace(sLine))
+                        {
+                            await Response.WriteAsync(sLine + "\n", HttpContext.RequestAborted);
+                            await Response.Body.FlushAsync(HttpContext.RequestAborted);
+                        }
+                    }
+                    _logContext.Log.Answer = answerBuilderDirect.ToString();
+                    _logContext.Log.Thinking = thinkBuilderDirect.ToString();
+                }
+                else
+                {
+                    using var directMs = new MemoryStream();
+                    await directStream.CopyToAsync(directMs, HttpContext.RequestAborted);
+                    directMs.Seek(0, SeekOrigin.Begin);
+                    try
+                    {
+                        var respNode = await JsonNode.ParseAsync(directMs, cancellationToken: HttpContext.RequestAborted);
+                        if (respNode != null)
+                        {
+                            respNode["model"] = virtualModel.Name;
+                            var respContent = respNode["choices"]?[0]?["message"]?["content"]?.ToString() ?? string.Empty;
+                            var respReasoning = respNode["choices"]?[0]?["message"]?["reasoning_content"]?.ToString() ?? string.Empty;
+                            var pTok = respNode["usage"]?["prompt_tokens"]?.GetValue<long>() ?? 0;
+                            var cTok = respNode["usage"]?["completion_tokens"]?.GetValue<long>() ?? 0;
+                            _logContext.Log.Answer = respContent;
+                            _logContext.Log.Thinking = respReasoning;
+                            _logContext.Log.PromptTokens = (int)pTok;
+                            _logContext.Log.CompletionTokens = (int)cTok;
+                            _logContext.Log.TotalTokens = (int)(pTok + cTok);
+                            Response.ContentType = "application/json";
+                            await Response.WriteAsync(respNode.ToJsonString(), HttpContext.RequestAborted);
+                        }
+                    }
+                    catch
+                    {
+                        directMs.Seek(0, SeekOrigin.Begin);
+                        var rawResp = await new StreamReader(directMs).ReadToEndAsync(HttpContext.RequestAborted);
+                        _logContext.Log.Answer = rawResp;
+                        Response.ContentType = "application/json";
+                        await Response.WriteAsync(rawResp, HttpContext.RequestAborted);
+                    }
+                }
+                return;
+            }
+            // =========================================================================================
+            // End OpenAI Direct Passthrough — format translation path continues below
+            // =========================================================================================
+
+            // =========================================================================================
             // 1. 请求翻译阶段：OpenAI 格式 -> Ollama Native 格式
             // =========================================================================================
             var ollamaRequest = new JsonObject
@@ -633,6 +790,89 @@ public class OpenAIController : ControllerBase
             _logContext.Log.Model = virtualModel.Name;
             _logContext.Log.ConversationMessageCount = 1;
             _logContext.Log.LastQuestion = clientJson["input"]?.ToString() ?? string.Empty;
+
+            // =========================================================================================
+            // OpenAI-compatible Backend Path: direct passthrough for embeddings
+            // =========================================================================================
+            if (backend.Provider.ProviderType == ProviderType.OpenAI)
+            {
+                clientJson["model"] = backend.UnderlyingModelName;
+
+                HttpResponseMessage? oaiEmbedDirect = null;
+                for (var i = 0; i < virtualModel.MaxRetries; i++)
+                {
+                    var client = _httpClientFactory.CreateClient();
+                    client.Timeout = await _globalSettingsService.GetRequestTimeoutAsync();
+                    var oaiEmbedDirectReq = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/v1/embeddings")
+                    {
+                        Content = new StringContent(clientJson.ToJsonString(), Encoding.UTF8, "application/json")
+                    };
+                    if (!string.IsNullOrWhiteSpace(backend.Provider.BearerToken))
+                        oaiEmbedDirectReq.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", backend.Provider.BearerToken);
+
+                    using var ctsEmbedDirect = CancellationTokenSource.CreateLinkedTokenSource(HttpContext.RequestAborted);
+                    ctsEmbedDirect.CancelAfter(TimeSpan.FromSeconds(virtualModel.HealthCheckTimeout));
+
+                    _logger.LogInformation("[{TraceId}] Pass-through OpenAI embedding for model {Model} to {UnderlyingUrl}/v1/embeddings, attempt {Attempt}", HttpContext.TraceIdentifier, virtualModel.Name, underlyingUrl, i + 1);
+
+                    try
+                    {
+                        oaiEmbedDirect = await client.SendAsync(oaiEmbedDirectReq, HttpCompletionOption.ResponseHeadersRead, ctsEmbedDirect.Token);
+                        if (oaiEmbedDirect.IsSuccessStatusCode) { _modelSelector.ReportSuccess(backend.Id); _logContext.Log.BackendId = backend.Id; break; }
+                        if ((int)oaiEmbedDirect.StatusCode >= 500 && !Response.HasStarted)
+                            throw new HttpRequestException($"Received {oaiEmbedDirect.StatusCode} from upstream OpenAI embedding provider.");
+                        _modelSelector.ReportSuccess(backend.Id); _logContext.Log.BackendId = backend.Id; break;
+                    }
+                    catch (Exception ex) when (!Response.HasStarted)
+                    {
+                        _modelSelector.ReportFailure(backend.Id);
+                        _logger.LogWarning(ex, "Attempt {Attempt} failed for OpenAI embedding direct passthrough to {UnderlyingUrl}", i + 1, underlyingUrl);
+                        if (i == virtualModel.MaxRetries - 1) throw;
+                        backend = _modelSelector.SelectBackend(virtualModel);
+                        if (backend?.Provider == null) { Response.StatusCode = 503; await Response.WriteAsync($"No available backend for model '{virtualModel.Name}'."); return; }
+                        underlyingUrl = backend.Provider.BaseUrl.TrimEnd('/');
+                        clientJson["model"] = backend.UnderlyingModelName;
+                        _memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
+                    }
+                }
+
+                if (oaiEmbedDirect == null) return;
+
+                Response.StatusCode = (int)oaiEmbedDirect.StatusCode;
+                _logContext.Log.StatusCode = Response.StatusCode;
+                _logContext.Log.Success = oaiEmbedDirect.IsSuccessStatusCode;
+
+                if (!oaiEmbedDirect.IsSuccessStatusCode)
+                {
+                    var errContent = await oaiEmbedDirect.Content.ReadAsStringAsync(HttpContext.RequestAborted);
+                    _logContext.Log.Answer = errContent;
+                    Response.ContentType = "application/json";
+                    await Response.WriteAsync(errContent, HttpContext.RequestAborted);
+                    return;
+                }
+
+                var embedRespContent = await oaiEmbedDirect.Content.ReadAsStringAsync(HttpContext.RequestAborted);
+                try
+                {
+                    var embedRespNode = JsonNode.Parse(embedRespContent);
+                    if (embedRespNode != null)
+                    {
+                        embedRespNode["model"] = virtualModel.Name;
+                        var pTokens = embedRespNode["usage"]?["prompt_tokens"]?.GetValue<long>() ?? 0;
+                        _logContext.Log.PromptTokens = (int)pTokens;
+                        _logContext.Log.TotalTokens = (int)pTokens;
+                        Response.ContentType = "application/json";
+                        await Response.WriteAsync(embedRespNode.ToJsonString(), HttpContext.RequestAborted);
+                        return;
+                    }
+                }
+                catch { /* fall through */ }
+                await Response.WriteAsync(embedRespContent, HttpContext.RequestAborted);
+                return;
+            }
+            // =========================================================================================
+            // End OpenAI Embedding Direct Passthrough — format translation path continues below
+            // =========================================================================================
 
             // =========================================================================================
             // 1. 请求翻译阶段：OpenAI 格式 (/v1/embeddings) -> Ollama Native 格式 (/api/embed)

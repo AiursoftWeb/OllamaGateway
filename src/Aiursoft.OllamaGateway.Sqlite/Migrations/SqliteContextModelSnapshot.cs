@@ -106,6 +106,9 @@ namespace Aiursoft.OllamaGateway.Sqlite.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("ProviderType")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("WarmupModelsJson")
                         .IsRequired()
                         .HasMaxLength(4000)

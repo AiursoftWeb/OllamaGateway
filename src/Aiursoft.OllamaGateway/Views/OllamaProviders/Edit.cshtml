@@ -25,6 +25,14 @@
                         </div>
 
                         <div class="mb-3">
+                            <label asp-for="ProviderType" class="form-label">@Localizer["Provider Type"]</label>
+                            <select asp-for="ProviderType" class="form-select">
+                                <option value="0">@Localizer["Ollama"]</option>
+                                <option value="1">@Localizer["OpenAI Compatible"]</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
                             <label asp-for="BaseUrl" class="form-label">@Localizer["Base URL"]</label>
                             <input asp-for="BaseUrl" class="form-control" id="baseUrl" placeholder="http://localhost:11434" />
                             <span asp-validation-for="BaseUrl" class="text-danger"></span>
@@ -56,6 +64,19 @@
         </div>
 
         <div class="col-md-12 col-xl-9 mb-4">
+            @if (Model.ProviderType == ProviderType.OpenAI)
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <p class="text-muted mb-0">
+                            <i class="align-middle me-1" data-feather="info"></i>
+                            @Localizer["Warmup is not applicable to OpenAI-compatible providers. The upstream service manages model loading automatically."]
+                        </p>
+                    </div>
+                </div>
+            }
+            else
+            {
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title mb-0">@Localizer["Proactive Model Warmup"]</h5>
@@ -146,6 +167,7 @@
                     </table>
                 </div>
             </div>
+            } @* end else (Ollama warmup section) *@
         </div>
         
         <div id="testResult" class="col-md-4" style="display:none;">
@@ -176,7 +198,7 @@
                 const response = await fetch('@Url.Action("Test")', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ baseUrl, bearerToken })
+                    body: JSON.stringify({ baseUrl, bearerToken, providerType: parseInt(document.querySelector('select[name="ProviderType"]')?.value ?? '0') })
                 });
                 const data = await response.json();
                 

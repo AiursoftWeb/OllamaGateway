@@ -72,6 +72,38 @@ public class OllamaService(
         return models?.Select(m => m.Name).ToList();
     }
 
+    public virtual async Task<List<string>?> GetOpenAIAvailableModelsAsync(string baseUrl, string? bearerToken = null)
+    {
+        try
+        {
+            var url = baseUrl.TrimEnd('/') + "/v1/models";
+            using var client = httpClientFactory.CreateClient();
+            client.Timeout = TimeSpan.FromSeconds(10);
+            if (!string.IsNullOrWhiteSpace(bearerToken))
+            {
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", bearerToken);
+            }
+            var response = await client.GetAsync(url);
+            if (!response.IsSuccessStatusCode) return null;
+
+            var json = await response.Content.ReadAsStringAsync();
+            using var doc = System.Text.Json.JsonDocument.Parse(json);
+            if (!doc.RootElement.TryGetProperty("data", out var data)) return null;
+
+            var models = new List<string>();
+            foreach (var item in data.EnumerateArray())
+            {
+                if (item.TryGetProperty("id", out var idEl))
+                    models.Add(idEl.GetString() ?? string.Empty);
+            }
+            return models;
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+    }
+
     public virtual async Task<string?> GetVersionAsync(string baseUrl, string? bearerToken = null)
     {
         var cacheKey = $"ollama_version_{baseUrl}_{bearerToken}";

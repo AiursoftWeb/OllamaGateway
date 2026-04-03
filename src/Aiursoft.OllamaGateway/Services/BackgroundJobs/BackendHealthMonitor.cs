@@ -51,17 +51,32 @@ public class BackendHealthMonitor : BackgroundService
             var provider = group.First().Provider!;
             try
             {
-                var availableModels = await ollamaService.GetDetailedModelsAsync(provider.BaseUrl, provider.BearerToken);
-                var runningModels = await ollamaService.GetRunningModelsAsync(provider.BaseUrl, provider.BearerToken);
-                
-                var availableModelNames = availableModels?.Select(m => m.Name).ToHashSet() ?? new HashSet<string>();
-                var runningModelNames = runningModels?.Select(m => m.Name).ToHashSet() ?? new HashSet<string>();
-                
-                foreach (var backend in group)
+                if (provider.ProviderType == ProviderType.OpenAI)
                 {
-                    backend.IsHealthy = availableModelNames.Contains(backend.UnderlyingModelName);
-                    backend.IsReady = runningModelNames.Contains(backend.UnderlyingModelName);
-                    backend.LastCheckedAt = DateTime.UtcNow;
+                    var availableModels = await ollamaService.GetOpenAIAvailableModelsAsync(provider.BaseUrl, provider.BearerToken);
+                    var availableModelNames = availableModels?.ToHashSet() ?? new HashSet<string>();
+
+                    foreach (var backend in group)
+                    {
+                        backend.IsHealthy = availableModelNames.Contains(backend.UnderlyingModelName);
+                        backend.IsReady = backend.IsHealthy; // OpenAI models are always "ready" if available
+                        backend.LastCheckedAt = DateTime.UtcNow;
+                    }
+                }
+                else
+                {
+                    var availableModels = await ollamaService.GetDetailedModelsAsync(provider.BaseUrl, provider.BearerToken);
+                    var runningModels = await ollamaService.GetRunningModelsAsync(provider.BaseUrl, provider.BearerToken);
+
+                    var availableModelNames = availableModels?.Select(m => m.Name).ToHashSet() ?? new HashSet<string>();
+                    var runningModelNames = runningModels?.Select(m => m.Name).ToHashSet() ?? new HashSet<string>();
+
+                    foreach (var backend in group)
+                    {
+                        backend.IsHealthy = availableModelNames.Contains(backend.UnderlyingModelName);
+                        backend.IsReady = runningModelNames.Contains(backend.UnderlyingModelName);
+                        backend.LastCheckedAt = DateTime.UtcNow;
+                    }
                 }
             }
             catch (Exception ex)

@@ -3,6 +3,12 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Aiursoft.OllamaGateway.Entities;
 
+public enum ProviderType
+{
+    Ollama = 0,
+    OpenAI = 1
+}
+
 [ExcludeFromCodeCoverage]
 public class OllamaProvider
 {
@@ -23,6 +29,8 @@ public class OllamaProvider
 
     [MaxLength(4000)]
     public string WarmupModelsJson { get; set; } = "[]";
+
+    public ProviderType ProviderType { get; set; } = ProviderType.Ollama;
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

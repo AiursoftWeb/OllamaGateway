@@ -31,6 +31,18 @@ public class OllamaProvidersController(
 
         var statusTasks = providers.Select(async p =>
         {
+            if (p.ProviderType == ProviderType.OpenAI)
+            {
+                var oaiModels = await ollamaService.GetOpenAIAvailableModelsAsync(p.BaseUrl, p.BearerToken);
+                return new ProviderStatus
+                {
+                    Provider = p,
+                    IsAlive = oaiModels != null,
+                    Version = "OpenAI API",
+                    RunningModels = null
+                };
+            }
+
             var runningModels = await ollamaService.GetRunningModelsAsync(p.BaseUrl, p.BearerToken, TimeSpan.FromSeconds(3));
             var version = await ollamaService.GetVersionAsync(p.BaseUrl, p.BearerToken);
             return new ProviderStatus
@@ -61,6 +73,7 @@ public class OllamaProvidersController(
     {
         public string? BaseUrl { get; set; }
         public string? BearerToken { get; set; }
+        public ProviderType ProviderType { get; set; } = ProviderType.Ollama;
     }
 
     [HttpPost]
@@ -69,6 +82,14 @@ public class OllamaProvidersController(
         if (string.IsNullOrWhiteSpace(request.BaseUrl))
         {
             return Json(new { success = false, message = "URL is empty." });
+        }
+
+        if (request.ProviderType == ProviderType.OpenAI)
+        {
+            var oaiModels = await ollamaService.GetOpenAIAvailableModelsAsync(request.BaseUrl, request.BearerToken);
+            if (oaiModels == null)
+                return Json(new { success = false, message = "Failed to connect to the OpenAI-compatible server. Ensure the URL and token are correct." });
+            return Json(new { success = true, models = oaiModels });
         }
 
         var models = await ollamaService.GetUnderlyingModelsAsync(request.BaseUrl, request.BearerToken);
@@ -96,11 +117,23 @@ public class OllamaProvidersController(
         }
 
         // Mandatory verification before saving
-        var models = await ollamaService.GetUnderlyingModelsAsync(model.BaseUrl, model.BearerToken);
-        if (models == null)
+        if (model.ProviderType == ProviderType.OpenAI)
         {
-            ModelState.AddModelError(nameof(model.BaseUrl), "Could not reach Ollama server at this URL. Validation failed.");
-            return this.StackView(model);
+            var oaiModels = await ollamaService.GetOpenAIAvailableModelsAsync(model.BaseUrl, model.BearerToken);
+            if (oaiModels == null)
+            {
+                ModelState.AddModelError(nameof(model.BaseUrl), "Could not reach OpenAI-compatible server at this URL. Validation failed.");
+                return this.StackView(model);
+            }
+        }
+        else
+        {
+            var ollamaModels = await ollamaService.GetUnderlyingModelsAsync(model.BaseUrl, model.BearerToken);
+            if (ollamaModels == null)
+            {
+                ModelState.AddModelError(nameof(model.BaseUrl), "Could not reach Ollama server at this URL. Validation failed.");
+                return this.StackView(model);
+            }
         }
 
         var provider = new OllamaProvider
@@ -108,7 +141,8 @@ public class OllamaProvidersController(
             Name = model.Name,
             BaseUrl = model.BaseUrl,
             BearerToken = model.BearerToken,
-            KeepAlive = model.KeepAlive
+            KeepAlive = model.KeepAlive,
+            ProviderType = model.ProviderType
         };
 
         dbContext.OllamaProviders.Add(provider);
@@ -123,14 +157,19 @@ public class OllamaProvidersController(
         var provider = await dbContext.OllamaProviders.FindAsync(id);
         if (provider == null) return NotFound();
 
-        var physicalModels = await ollamaService.GetUnderlyingModelsAsync(provider.BaseUrl, provider.BearerToken) ?? new List<string>();
+        List<string> physicalModels;
+        if (provider.ProviderType == ProviderType.OpenAI)
+            physicalModels = new List<string>(); // warmup not applicable to OpenAI providers
+        else
+            physicalModels = await ollamaService.GetUnderlyingModelsAsync(provider.BaseUrl, provider.BearerToken) ?? new List<string>();
 
         var model = new CreateViewModel
         {
             Name = provider.Name,
             BaseUrl = provider.BaseUrl,
             BearerToken = provider.BearerToken,
-            KeepAlive = provider.KeepAlive
+            KeepAlive = provider.KeepAlive,
+            ProviderType = provider.ProviderType
         };
         ViewData["Id"] = id;
         ViewData["PhysicalModels"] = physicalModels;
@@ -206,6 +245,7 @@ public class OllamaProvidersController(
         provider.BaseUrl = model.BaseUrl;
         provider.BearerToken = model.BearerToken;
         provider.KeepAlive = model.KeepAlive;
+        provider.ProviderType = model.ProviderType;
 
         await dbContext.SaveChangesAsync();
         return RedirectToAction(nameof(Index));

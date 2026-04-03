@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.ComponentModel.DataAnnotations;
+using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.UiStack.Layout;
 
 namespace Aiursoft.OllamaGateway.Models.OllamaProvidersViewModels;
@@ -25,4 +26,6 @@ public class CreateViewModel : UiStackLayoutViewModel
     [Required]
     [MaxLength(100)]
     public string KeepAlive { get; set; } = "5m";
+
+    public ProviderType ProviderType { get; set; } = ProviderType.Ollama;
 }
