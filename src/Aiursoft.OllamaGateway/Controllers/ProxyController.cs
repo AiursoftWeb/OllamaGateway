@@ -1191,57 +1191,25 @@ public class ProxyController(
     [HttpGet("tags")]
     public async Task<IActionResult> Tags()
     {
-        var virtualModels = await dbContext.VirtualModels
-            .Include(m => m.VirtualModelBackends).ThenInclude(b => b.Provider)
-            .ToListAsync();
-        
-        var allTags = new List<OllamaService.OllamaModel>();
-        var providerCache = new Dictionary<string, List<OllamaService.OllamaModel>?>();
+        // Do NOT call upstream providers here. Doing so would cause infinite recursion when a
+        // provider points back at this gateway (self-referential Ollama provider). The /api/tags
+        // endpoint represents the gateway's own virtual models; physical metadata (size, digest)
+        // is not required by Ollama clients and is omitted to keep this endpoint safe.
+        var virtualModels = await dbContext.VirtualModels.ToListAsync();
 
-        foreach (var vm in virtualModels)
+        var allTags = virtualModels.Select(vm => new OllamaService.OllamaModel
         {
-            var backend = vm.VirtualModelBackends.FirstOrDefault();
-            if (backend == null || backend.Provider == null) continue;
-            var provider = backend.Provider;
-
-            if (!providerCache.TryGetValue($"{provider.BaseUrl}_{provider.BearerToken}", out var physicalModels))
+            Name = vm.Name,
+            Model = vm.Name,
+            ModifiedAt = vm.CreatedAt,
+            Details = new OllamaService.OllamaModelDetails
             {
-                physicalModels = provider.ProviderType == ProviderType.OpenAI
-                    ? null
-                    : await ollamaService.GetDetailedModelsAsync(provider.BaseUrl, provider.BearerToken);
-                providerCache[$"{provider.BaseUrl}_{provider.BearerToken}"] = physicalModels;
+                Format = "gguf",
+                Family = vm.Type == ModelType.Chat ? "llama" : "bert",
+                ParameterSize = "Unknown",
+                QuantizationLevel = "Unknown"
             }
-
-            var physicalModel = physicalModels?.FirstOrDefault(m => m.Name == backend.UnderlyingModelName);
-            if (physicalModel != null)
-            {
-                allTags.Add(new OllamaService.OllamaModel
-                {
-                    Name = vm.Name,
-                    Model = vm.Name,
-                    ModifiedAt = vm.CreatedAt,
-                    Size = physicalModel.Size,
-                    Digest = physicalModel.Digest,
-                    Details = physicalModel.Details
-                });
-            }
-            else
-            {
-                allTags.Add(new OllamaService.OllamaModel
-                {
-                    Name = vm.Name,
-                    Model = vm.Name,
-                    ModifiedAt = vm.CreatedAt,
-                    Details = new OllamaService.OllamaModelDetails
-                    {
-                        Format = "gguf",
-                        Family = vm.Type == ModelType.Chat ? "llama" : "bert",
-                        ParameterSize = "Unknown",
-                        QuantizationLevel = "Unknown"
-                    }
-                });
-            }
-        }
+        }).ToList();
 
         var json = JsonSerializer.Serialize(new { models = allTags }, OllamaJsonOptions);
         return Content(json, "application/json");
@@ -1250,53 +1218,18 @@ public class ProxyController(
     [HttpGet("ps")]
     public async Task<IActionResult> Ps()
     {
-        var virtualModels = await dbContext.VirtualModels
-            .Include(m => m.VirtualModelBackends).ThenInclude(b => b.Provider)
-            .ToListAsync();
-            
-        var allRunning = new List<OllamaService.OllamaRunningModel>();
-        var providerCache = new Dictionary<string, List<OllamaService.OllamaRunningModel>?>();
+        // Do NOT call upstream providers here — same reason as Tags(): calling
+        // GetRunningModelsAsync on a self-referential Ollama provider (localhost) would hit
+        // this same endpoint and cause infinite recursion. Return all virtual models as
+        // "running" with placeholder metadata; Ollama clients only need the model names.
+        var virtualModels = await dbContext.VirtualModels.ToListAsync();
 
-        foreach (var vm in virtualModels)
+        var allRunning = virtualModels.Select(vm => new OllamaService.OllamaRunningModel
         {
-            var backend = vm.VirtualModelBackends.FirstOrDefault();
-            if (backend == null || backend.Provider == null) continue;
-            var provider = backend.Provider;
-
-            if (provider.ProviderType == ProviderType.OpenAI)
-            {
-                allRunning.Add(new OllamaService.OllamaRunningModel
-                {
-                    Name = vm.Name,
-                    Model = vm.Name,
-                    ModifiedAt = vm.CreatedAt
-                });
-                continue;
-            }
-
-            if (!providerCache.TryGetValue($"{provider.BaseUrl}_{provider.BearerToken}", out var runningPhysical))
-            {
-                runningPhysical = await ollamaService.GetRunningModelsAsync(provider.BaseUrl, provider.BearerToken);
-                providerCache[$"{provider.BaseUrl}_{provider.BearerToken}"] = runningPhysical;
-            }
-
-            var physicalRunning = runningPhysical?.FirstOrDefault(m => m.Name == backend.UnderlyingModelName);
-            if (physicalRunning != null)
-            {
-                allRunning.Add(new OllamaService.OllamaRunningModel
-                {
-                    Name = vm.Name,
-                    Model = vm.Name,
-                    ModifiedAt = vm.CreatedAt,
-                    Size = physicalRunning.Size,
-                    Digest = physicalRunning.Digest,
-                    Details = physicalRunning.Details,
-                    ExpiresAt = physicalRunning.ExpiresAt,
-                    SizeVram = physicalRunning.SizeVram,
-                    ContextLength = physicalRunning.ContextLength
-                });
-            }
-        }
+            Name = vm.Name,
+            Model = vm.Name,
+            ModifiedAt = vm.CreatedAt
+        }).ToList();
 
         var json = JsonSerializer.Serialize(new { models = allRunning }, OllamaJsonOptions);
         return Content(json, "application/json");
