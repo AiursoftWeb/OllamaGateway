@@ -93,6 +93,88 @@ public class PhysicalModelChatTests : TestBase
     }
 
     [TestMethod]
+    public async Task TestChatOptions_SnakeCaseKeysAreDeserializedAndForwardedToUpstream()
+    {
+        // Regression test: Newtonsoft.Json DefaultContractResolver was not matching snake_case keys
+        // (e.g. "num_ctx", "top_p", "top_k") against PascalCase C# properties, silently dropping them.
+        // After adding [JsonProperty("...")] attributes the fix should pass these assertions.
+
+        const string optionsKey = "options-fwd-test-key";
+
+        int providerId;
+        using (var scope = Server!.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+            var user = await db.Users.FirstAsync();
+            db.UserClaims.Add(new IdentityUserClaim<string>
+            {
+                UserId = user.Id,
+                ClaimType = AppPermissions.Type,
+                ClaimValue = AppPermissionNames.CanChatWithUnderlyingModels
+            });
+            db.ApiKeys.Add(new ApiKey { Name = "Options Fwd Key", Key = optionsKey, UserId = user.Id });
+            var provider = new OllamaProvider { Name = "OptionsFwdProvider", BaseUrl = "http://options-fwd:11434" };
+            db.OllamaProviders.Add(provider);
+            await db.SaveChangesAsync();
+            providerId = provider.Id;
+        }
+
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            var reply = new JsonObject
+            {
+                ["model"] = PhysicalModelName,
+                ["message"] = new JsonObject { ["role"] = "assistant", ["content"] = "ok" },
+                ["done"] = true
+            };
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(reply.ToJsonString(), System.Text.Encoding.UTF8, "application/json")
+            });
+        };
+
+        // Send with snake_case option keys — these were the ones silently dropped before the fix
+        var chatRequest = new
+        {
+            model = $"physical_{providerId}_{PhysicalModelName}",
+            messages = new[] { new { role = "user", content = "Hello" } },
+            stream = false,
+            options = new
+            {
+                num_ctx    = 32768,
+                top_p      = 0.9,
+                top_k      = 40,
+                temperature = 0.7
+            }
+        };
+
+        var request = new HttpRequestMessage(HttpMethod.Post, "/api/chat");
+        request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", optionsKey);
+        request.Content = new StringContent(
+            JsonSerializer.Serialize(chatRequest),
+            System.Text.Encoding.UTF8,
+            "application/json");
+
+        var response = await Http.SendAsync(request);
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+
+        // The critical assertion: what actually reached Ollama?
+        Assert.IsNotNull(MockUpstreamState.LastRequestBody, "Upstream should have received a request body");
+        var forwarded = JsonNode.Parse(MockUpstreamState.LastRequestBody);
+        var opts = forwarded?["options"];
+        Assert.IsNotNull(opts, "options block must be present in the forwarded request");
+
+        Assert.AreEqual(32768, opts["num_ctx"]?.GetValue<int>(),
+            "num_ctx must survive deserialization and be forwarded");
+        Assert.AreEqual(40, opts["top_k"]?.GetValue<int>(),
+            "top_k must survive deserialization and be forwarded");
+        Assert.AreEqual(0.9, opts["top_p"]!.GetValue<double>(), 0.01,
+            "top_p must survive deserialization and be forwarded");
+        Assert.AreEqual(0.7, opts["temperature"]!.GetValue<double>(), 0.01,
+            "temperature must survive deserialization and be forwarded");
+    }
+
+    [TestMethod]
     public async Task TestChatWithPhysicalModel_NoPermission()
     {
         // 1. Setup provider and API key for a user WITHOUT permission
