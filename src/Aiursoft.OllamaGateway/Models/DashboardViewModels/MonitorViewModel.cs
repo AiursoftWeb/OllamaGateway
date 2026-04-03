@@ -1,0 +1,16 @@
+using Aiursoft.OllamaGateway.Entities;
+using Aiursoft.UiStack.Layout;
+
+namespace Aiursoft.OllamaGateway.Models.DashboardViewModels;
+
+public class MonitorViewModel : UiStackLayoutViewModel
+{
+    public MonitorViewModel()
+    {
+        PageTitle = "Monitor";
+    }
+
+    public List<VirtualModel> VirtualModels { get; set; } = [];
+    public List<OllamaProvider> Providers { get; set; } = [];
+}
+
