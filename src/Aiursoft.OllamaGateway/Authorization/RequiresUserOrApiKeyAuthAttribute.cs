@@ -35,6 +35,14 @@ public class RequiresUserOrApiKeyAuthFilter(GlobalSettingsService globalSettings
                 context.HttpContext.User = result.Principal;
                 isAuthorized = true;
             }
+            else if (result.Failure?.Message == "Rate limit exceeded.")
+            {
+                context.Result = new ObjectResult("Too many requests.")
+                {
+                    StatusCode = 429
+                };
+                return;
+            }
         }
 
         // 3. Check global setting for anonymous access

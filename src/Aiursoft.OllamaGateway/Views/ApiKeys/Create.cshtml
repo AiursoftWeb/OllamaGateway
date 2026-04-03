@@ -22,6 +22,25 @@
                             <span asp-validation-for="Name" class="text-danger"></span>
                             <div class="form-text">@Localizer["A name to help you identify where this key is used."]</div>
                         </div>
+                        <div class="mb-3 form-check form-switch">
+                            <input asp-for="RateLimitEnabled" class="form-check-input" type="checkbox">
+                            <label asp-for="RateLimitEnabled" class="form-check-label">@Localizer["Enable Rate Limit"]</label>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="MaxRequests" class="form-label">@Localizer["Max Requests"]</label>
+                            <input asp-for="MaxRequests" class="form-control" type="number" min="1" />
+                            <span asp-validation-for="MaxRequests" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="TimeWindowSeconds" class="form-label">@Localizer["Time Window (Seconds)"]</label>
+                            <input asp-for="TimeWindowSeconds" class="form-control" type="number" min="1" />
+                            <span asp-validation-for="TimeWindowSeconds" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3 form-check form-switch">
+                            <input asp-for="RateLimitHang" class="form-check-input" type="checkbox">
+                            <label asp-for="RateLimitHang" class="form-check-label">@Localizer["Wait if rate limited (Hang)"]</label>
+                            <div class="form-text">@Localizer["If enabled, requests will wait instead of returning 429."]</div>
+                        </div>
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-primary">@Localizer["Generate Key"]</button>
                             <a asp-action="Index" class="btn btn-outline-secondary">@Localizer["Cancel"]</a>

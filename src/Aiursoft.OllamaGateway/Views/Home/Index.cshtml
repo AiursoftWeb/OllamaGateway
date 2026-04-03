@@ -16,7 +16,7 @@
                 <h1 id="main-slogan" class="my-4 text-white" style="font-size: 3rem;">
                     @Localizer["Supercharge Your Native"] <span class='text-primary'>@Localizer["Ollama."]</span>
                 </h1>
-                <p class="text-lg text-white-50">@Localizer["Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, and virtual model management—your secure, private AI gateway."]</p>
+                <p class="text-lg text-white-50">@Localizer["Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway."]</p>
                 <div class="my-4">
                     <a asp-controller="Dashboard" asp-action="Index" class="btn btn-primary btn-lg btn-pill">
                         <i class="align-middle" data-lucide="grid"></i> @Localizer["Go to dashboard"]
@@ -304,6 +304,11 @@
                     </tr>
                     <tr>
                         <td class="text-start fw-medium">@Localizer["Request & Response Auditing"]</td>
+                        <td><i class="fas fa-times-circle text-danger"></i></td>
+                        <td><i class="fas fa-check-circle text-success"></i></td>
+                    </tr>
+                    <tr>
+                        <td class="text-start fw-medium">@Localizer["API Rate Limiting"]</td>
                         <td><i class="fas fa-times-circle text-danger"></i></td>
                         <td><i class="fas fa-check-circle text-success"></i></td>
                     </tr>
