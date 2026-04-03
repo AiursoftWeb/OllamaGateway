@@ -18,15 +18,15 @@
     sb.AppendLine("    classDef client fill:#f7fafc,stroke:#cbd5e0,stroke-width:2px,color:#2d3748,rx:20px,ry:20px;");
     
     sb.AppendLine();
-    sb.AppendLine($"    Client([\"🌐 {Localizer["External Traffic (Client)"]}\"]):::client");
+    sb.AppendLine($"    Client([\"🌐 {Localizer["External Traffic (Client)"].Value}\"]):::client");
     sb.AppendLine();
-    sb.AppendLine($"    subgraph LB_Core [{Localizer["Core Load Balancer Gateway"]}]");
-    sb.AppendLine($"        Gateway{{\"🛡️ {Localizer["Load Balancer"]}<br/>(Gateway)\"}}:::gateway");
+    sb.AppendLine($"    subgraph LB_Core [{Localizer["Core Load Balancer Gateway"].Value}]");
+    sb.AppendLine($"        Gateway{{\"🛡️ {Localizer["Load Balancer"].Value}<br/>(Gateway)\"}}:::gateway");
     
     foreach(var vm in Model.VirtualModels)
     {
         sb.AppendLine();
-        sb.AppendLine($"        subgraph VS_{vm.Id} [{Localizer["Virtual Service"]} {vm.Name}]");
+        sb.AppendLine($"        subgraph VS_{vm.Id} [{Localizer["Virtual Service"].Value} {vm.Name}]");
         sb.AppendLine($"            Svc_{vm.Id}(\"📦 {vm.Name}<br/>({vm.Type})\"):::virtualSvc");
         var algoStr = vm.SelectionStrategy.ToString();
         sb.AppendLine($"            Algo_{vm.Id}[\"⚖️ {algoStr}\"]:::algo");
@@ -38,10 +38,10 @@
     foreach(var vm in Model.VirtualModels)
     {
         sb.AppendLine();
-        sb.AppendLine($"    subgraph Pool_{vm.Id} [{Localizer["Backend Pool"]} {vm.Name}]");
+        sb.AppendLine($"    subgraph Pool_{vm.Id} [{Localizer["Backend Pool"].Value} {vm.Name}]");
         if (!vm.VirtualModelBackends.Any())
         {
-            sb.AppendLine($"        Empty_{vm.Id}[\"{Localizer["No Backend Nodes"]}\"]:::down");
+            sb.AppendLine($"        Empty_{vm.Id}[\"{Localizer["No Backend Nodes"].Value}\"]:::down");
         }
         else
         {
@@ -60,11 +60,11 @@
     }
 
     sb.AppendLine();
-    sb.AppendLine($"    Client ===|\"{Localizer["Entry Traffic"]}\"| Gateway");
+    sb.AppendLine($"    Client ===|\"{Localizer["Entry Traffic"].Value}\"| Gateway");
     
     foreach(var vm in Model.VirtualModels)
     {
-        sb.AppendLine($"    Gateway == \"{Localizer["Route"]}: {vm.Name}\" ==> Svc_{vm.Id}");
+        sb.AppendLine($"    Gateway == \"{Localizer["Route"].Value}: {vm.Name}\" ==> Svc_{vm.Id}");
         
         foreach(var backend in vm.VirtualModelBackends)
         {
