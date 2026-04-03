@@ -46,8 +46,8 @@ public class BasicTests : TestBase
         });
         AssertRedirect(loginResponse, "/Dashboard/Index");
 
-        // Step 4: Verify the final login state by checking the home page content.
-        var finalHomePageResponse = await Http.GetAsync("/dashboard/index");
+        // Step 4: Verify the final login state by checking the manage page content.
+        var finalHomePageResponse = await Http.GetAsync("/Manage/Index");
         finalHomePageResponse.EnsureSuccessStatusCode();
         var finalHtml = await finalHomePageResponse.Content.ReadAsStringAsync();
         Assert.Contains(expectedUserName, finalHtml);
@@ -233,8 +233,8 @@ await PostForm("/Account/LogOff", new Dictionary<string, string>(), includeToken
         // Step 3: Assert the profile change was successful and redirected correctly.
         AssertRedirect(changeProfileResponse, "/Manage?Message=ChangeProfileSuccess");
 
-        // Step 4: Visit the home page and verify the new name is displayed.
-        var homePageResponse = await Http.GetAsync("/dashboard/index");
+        // Step 4: Visit the manage page and verify the new name is displayed.
+        var homePageResponse = await Http.GetAsync("/Manage/Index");
         homePageResponse.EnsureSuccessStatusCode();
         var html = await homePageResponse.Content.ReadAsStringAsync();
         Assert.Contains(newUserName, html);
