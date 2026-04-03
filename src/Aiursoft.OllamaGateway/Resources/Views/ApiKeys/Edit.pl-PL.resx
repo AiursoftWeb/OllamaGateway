@@ -30,14 +30,29 @@
   <data name="Edit API Key" xml:space="preserve">
     <value>Edytuj klucz API</value>
   </data>
+  <data name="Enable Rate Limit" xml:space="preserve">
+    <value>Włącz limitowanie żądań</value>
+  </data>
   <data name="Friendly Name" xml:space="preserve">
     <value>Przyjazna nazwa</value>
+  </data>
+  <data name="If enabled, requests will wait instead of returning 429." xml:space="preserve">
+    <value>Po włączeniu żądania będą oczekiwać zamiast zwracać 429.</value>
   </data>
   <data name="Key Details" xml:space="preserve">
     <value>Szczegóły klucza</value>
   </data>
+  <data name="Max Requests" xml:space="preserve">
+    <value>Maksymalna liczba żądań</value>
+  </data>
   <data name="Save Changes" xml:space="preserve">
     <value>Zapisz zmiany</value>
+  </data>
+  <data name="Time Window (Seconds)" xml:space="preserve">
+    <value>Okno czasowe (sekundy)</value>
+  </data>
+  <data name="Wait if rate limited (Hang)" xml:space="preserve">
+    <value>Czekaj, jeśli przekroczono limit (Wstrzymaj)</value>
   </data>
 
 </root>

@@ -30,14 +30,29 @@
   <data name="Edit API Key" xml:space="preserve">
     <value>Muokkaa API-avainta</value>
   </data>
+  <data name="Enable Rate Limit" xml:space="preserve">
+    <value>Ota käyttöön nopeusrajoitus</value>
+  </data>
   <data name="Friendly Name" xml:space="preserve">
     <value>Ystävällinen nimi</value>
+  </data>
+  <data name="If enabled, requests will wait instead of returning 429." xml:space="preserve">
+    <value>Jos tämä on käytössä, pyynnöt odottavat 429-virheen sijaan.</value>
   </data>
   <data name="Key Details" xml:space="preserve">
     <value>Avaintiedot</value>
   </data>
+  <data name="Max Requests" xml:space="preserve">
+    <value>Enintään pyyntöjä</value>
+  </data>
   <data name="Save Changes" xml:space="preserve">
     <value>Tallenna muutokset</value>
+  </data>
+  <data name="Time Window (Seconds)" xml:space="preserve">
+    <value>Aikaväli (sekuntia)</value>
+  </data>
+  <data name="Wait if rate limited (Hang)" xml:space="preserve">
+    <value>Odota, jos nopeusrajoitus on ylittynyt (Pysäytä)</value>
   </data>
 
 </root>
