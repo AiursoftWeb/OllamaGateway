@@ -175,10 +175,7 @@ public class ModelWarmupService : BackgroundService
                         options = new
                         {
                             num_predict = 1,
-                            num_ctx = warmupModel.NumCtx,
-                            temperature = warmupModel.Temperature,
-                            top_p = warmupModel.TopP,
-                            top_k = warmupModel.TopK
+                            num_ctx = warmupModel.NumCtx
                         }
                     };
 
