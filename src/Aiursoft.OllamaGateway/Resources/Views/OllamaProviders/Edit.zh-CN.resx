@@ -60,6 +60,12 @@
   <data name="No physical models found on this server." xml:space="preserve">
     <value>未在此服务器找到任何物理模型</value>
   </data>
+  <data name="Ollama" xml:space="preserve">
+    <value>Ollama</value>
+  </data>
+  <data name="OpenAI Compatible" xml:space="preserve">
+    <value>兼容 OpenAI</value>
+  </data>
   <data name="Optional API Key" xml:space="preserve">
     <value>可选的 API 密钥</value>
   </data>
@@ -72,6 +78,9 @@
   <data name="Provider Name" xml:space="preserve">
     <value>服务名称</value>
   </data>
+  <data name="Provider Type" xml:space="preserve">
+    <value>提供商类型</value>
+  </data>
   <data name="Save Changes" xml:space="preserve">
     <value>保存更改</value>
   </data>
@@ -83,6 +92,9 @@
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>底层模型名称</value>
+  </data>
+  <data name="Warmup is not applicable to OpenAI-compatible providers. The upstream service manages model loading automatically." xml:space="preserve">
+    <value>预热不适用于 OpenAI 兼容提供商。上游服务会自动管理模型加载。</value>
   </data>
 
 </root>
