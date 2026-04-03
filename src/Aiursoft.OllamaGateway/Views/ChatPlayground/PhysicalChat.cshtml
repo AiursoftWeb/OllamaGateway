@@ -4,33 +4,54 @@
 <div class="container-fluid p-0">
     <div class="row mb-3">
         <div class="col-auto">
-            <h1 class="h3 mb-3">@Localizer["Chat Playground"]</h1>
+            <h1 class="h3 mb-3">@Localizer["Physical Model Chat"]</h1>
         </div>
-        <div class="col-auto ms-auto d-flex align-items-center">
-            <label class="me-2 fw-bold">@Localizer["API Mode:"]</label>
-            <select class="form-select form-select-sm me-3" id="apiMode" style="width: auto;">
-                <option value="ollama">Ollama API</option>
-                <option value="openai">OpenAI API</option>
-            </select>
+    </div>
 
-            <label class="me-2 fw-bold">@Localizer["Switch Model:"]</label>
-            <select class="form-select form-select-sm" style="width: auto;" onchange="window.location.href='?id=' + this.value">
-                @foreach (var m in Model.AllModels)
-                {
-                    <option value="@m.Id" selected="@(m.Id == Model.ModelId ? "selected" : null)">@m.Name</option>
-                }
-            </select>
+    <div class="card mb-3">
+        <div class="card-header cursor-pointer" data-bs-toggle="collapse" data-bs-target="#advancedOptions">
+            <div class="d-flex align-items-center">
+                <i class="me-2" data-lucide="settings" style="width: 18px; height: 18px;"></i>
+                <h5 class="card-title mb-0">@Localizer["Advanced Options"]</h5>
+                <i class="ms-auto" data-lucide="chevron-down" style="width: 18px; height: 18px;"></i>
+            </div>
+        </div>
+        <div id="advancedOptions" class="collapse">
+            <div class="card-body pt-0">
+                <hr class="mt-0">
+                <div class="row">
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label small fw-bold">@Localizer["Temperature"]</label>
+                        <input type="number" step="0.1" class="form-control form-control-sm" id="temperature" placeholder="Default" value="@Model.Temperature">
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label small fw-bold">@Localizer["Top P"]</label>
+                        <input type="number" step="0.1" class="form-control form-control-sm" id="topP" placeholder="Default" value="@Model.TopP">
+                    </div>
+                    <div class="col-md-2 mb-3 ollama-only-param">
+                        <label class="form-label small fw-bold">@Localizer["Top K"]</label>
+                        <input type="number" class="form-control form-control-sm" id="topK" placeholder="Default" value="@Model.TopK">
+                    </div>
+                    <div class="col-md-2 mb-3 ollama-only-param">
+                        <label class="form-label small fw-bold">@Localizer["Num Ctx"]</label>
+                        <input type="number" class="form-control form-control-sm" id="numCtx" placeholder="Default" value="@Model.NumCtx">
+                    </div>
+                    <div class="col-md-2 mb-3 ollama-only-param">
+                        <div class="form-check form-switch mt-4">
+                            <input class="form-check-input" type="checkbox" id="thinking" @(Model.Thinking == true ? "checked" : "")>
+                            <label class="form-check-label small fw-bold" for="thinking">@Localizer["Thinking"]</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="card flex-fill w-100" style="min-height: calc(100vh - 350px);">
         <div class="card-header d-flex justify-content-between align-items-center">
             <div>
-                <h5 class="card-title mb-0">@Localizer["Chatting with"] <strong>@Model.Name</strong></h5>
-                <small class="text-muted d-block">@Localizer["Provider Model:"] @Model.UnderlyingModel</small>
-                <small class="text-muted d-block mt-1">
-                    @Localizer["API Endpoint:"] <code id="endpointDisplay">@Model.BaseUrl/api/chat</code>
-                </small>
+                <h5 class="card-title mb-0">@Localizer["Chatting with"] <strong>@Model.UnderlyingModel</strong></h5>
+                <small class="text-muted d-block">@Localizer["API Endpoint:"] <code>@Model.BaseUrl/api/chat</code></small>
             </div>
             <button class="btn btn-sm btn-outline-secondary" id="btnClearChat">@Localizer["Clear Session"]</button>
         </div>
@@ -41,7 +62,7 @@
                     <p class="mt-2">@Localizer["Hello! Send a message to start testing your virtual model configuration."]</p>
                 </div>
             </div>
-            
+
             <div class="p-3 border-top bg-white">
                 <div id="imagePreviewContainer" class="mb-2 d-none"></div>
                 <form id="chatForm" class="input-group">
@@ -118,6 +139,15 @@
 @* ReSharper disable once Razor.SectionNotResolved *@
 @section scripts {
     <script>
+        const isOpenAIProvider = @(Model.IsOpenAIProvider ? "true" : "false");
+
+        // Hide Ollama-only params immediately if this is an OpenAI provider
+        if (isOpenAIProvider) {
+            document.querySelectorAll('.ollama-only-param').forEach(el => {
+                el.classList.add('d-none');
+            });
+        }
+
         function getLocalizedText(key, defaultText) {
             const el = document.querySelector(`#loc-data span[data-key="${key}"]`);
             return el ? el.innerText : defaultText;
@@ -131,19 +161,9 @@
         const btnUploadImage = document.getElementById('btnUploadImage');
         const imageInput = document.getElementById('imageInput');
         const imagePreviewContainer = document.getElementById('imagePreviewContainer');
-        const apiModeSelect = document.getElementById('apiMode');
-        const endpointDisplay = document.getElementById('endpointDisplay');
-        
+
         let history = [];
         let pendingImages = [];
-
-        apiModeSelect.addEventListener('change', () => {
-            if (apiModeSelect.value === 'ollama') {
-                endpointDisplay.innerText = '@Model.BaseUrl/api/chat';
-            } else {
-                endpointDisplay.innerText = '@Model.BaseUrl/v1/chat/completions';
-            }
-        });
 
         function appendMessage(role, content, images = []) {
             const welcome = document.getElementById('welcomeMessage');
@@ -151,9 +171,8 @@
 
             const msgDiv = document.createElement('div');
             msgDiv.className = `message message-${role}`;
-            
+
             if (role === 'assistant') {
-                // Prepare thinking container
                 const thinkContainer = document.createElement('div');
                 thinkContainer.className = 'thinking-container mb-2 d-none';
                 thinkContainer.innerHTML = `
@@ -166,13 +185,12 @@
                     <div class="thinking-content mt-1 p-2 bg-light border rounded small d-none" style="white-space: pre-wrap;"></div>
                 `;
                 msgDiv.appendChild(thinkContainer);
-                
+
                 const contentDiv = document.createElement('div');
                 contentDiv.className = 'message-content';
                 contentDiv.innerText = content;
                 msgDiv.appendChild(contentDiv);
-                
-                // Toggle logic
+
                 const header = thinkContainer.querySelector('.thinking-header');
                 const thinkContent = thinkContainer.querySelector('.thinking-content');
                 const toggleIcon = thinkContainer.querySelector('.toggle-icon');
@@ -180,15 +198,9 @@
                     thinkContent.classList.toggle('d-none');
                     toggleIcon.style.transform = thinkContent.classList.contains('d-none') ? '' : 'rotate(180deg)';
                 };
-                
+
                 if (typeof lucide !== 'undefined') {
-                    lucide.createIcons({
-                        attrs: {
-                            class: 'align-middle'
-                        },
-                        nameAttr: 'data-lucide',
-                        icons: undefined
-                    });
+                    lucide.createIcons({ attrs: { class: 'align-middle' }, nameAttr: 'data-lucide', icons: undefined });
                 }
             } else {
                 msgDiv.innerText = content;
@@ -219,12 +231,12 @@
                 pendingImages.forEach((imgBase64, index) => {
                     const wrapper = document.createElement('div');
                     wrapper.className = 'position-relative d-inline-block me-2 mb-2';
-                    
+
                     const img = document.createElement('img');
                     img.src = `data:image/jpeg;base64,${imgBase64}`;
                     img.className = 'img-thumbnail';
                     img.style.maxHeight = '100px';
-                    
+
                     const removeBtn = document.createElement('button');
                     removeBtn.className = 'btn btn-sm btn-danger position-absolute p-0 d-flex align-items-center justify-content-center';
                     removeBtn.style.top = '-5px';
@@ -239,7 +251,7 @@
                         renderPreviews();
                         updateRequired();
                     };
-                    
+
                     wrapper.appendChild(img);
                     wrapper.appendChild(removeBtn);
                     imagePreviewContainer.appendChild(wrapper);
@@ -273,14 +285,12 @@
             reader.readAsDataURL(file);
         }
 
-        btnUploadImage.addEventListener('click', () => {
-            imageInput.click();
-        });
+        btnUploadImage.addEventListener('click', () => { imageInput.click(); });
 
         imageInput.addEventListener('change', (e) => {
             if (e.target.files.length > 0) {
                 processFile(e.target.files[0]);
-                e.target.value = ''; 
+                e.target.value = '';
             }
         });
 
@@ -289,8 +299,7 @@
             for (let index in items) {
                 const item = items[index];
                 if (item.kind === 'file' && item.type.startsWith('image/')) {
-                    const file = item.getAsFile();
-                    processFile(file);
+                    processFile(item.getAsFile());
                 }
             }
         });
@@ -305,9 +314,7 @@
             pendingImages = [];
             renderPreviews();
             updateRequired();
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-            }
+            if (typeof lucide !== 'undefined') { lucide.createIcons(); }
         });
 
         chatForm.addEventListener('submit', async function(e) {
@@ -326,11 +333,9 @@
             updateRequired();
 
             appendMessage('user', message, imagesToSend);
-            
+
             const msgObj = { role: 'user', content: message };
-            if (imagesToSend.length > 0) {
-                msgObj.images = imagesToSend;
-            }
+            if (imagesToSend.length > 0) { msgObj.images = imagesToSend; }
             history.push(msgObj);
 
             const assistantMsgDiv = appendMessage('assistant', '...');
@@ -338,28 +343,36 @@
             const thinkContainer = assistantMsgDiv.querySelector('.thinking-container');
             const thinkContent = assistantMsgDiv.querySelector('.thinking-content');
             const thinkSpinner = assistantMsgDiv.querySelector('.thinking-spinner');
-            
+
             let assistantFullContent = '';
             let assistantFullThinking = '';
-            const mode = apiModeSelect.value;
 
             try {
-                const endpoint = mode === 'ollama' ? '/api/chat' : '/v1/chat/completions';
-                
-                const body = mode === 'ollama' ? {
+                const temperature = parseFloat(document.getElementById('temperature').value);
+                const topP = parseFloat(document.getElementById('topP').value);
+
+                const options = {};
+                if (!isNaN(temperature)) options.temperature = temperature;
+                if (!isNaN(topP)) options.top_p = topP;
+
+                if (!isOpenAIProvider) {
+                    const topK = parseInt(document.getElementById('topK').value);
+                    const numCtx = parseInt(document.getElementById('numCtx').value);
+                    if (!isNaN(topK)) options.top_k = topK;
+                    if (!isNaN(numCtx)) options.num_ctx = numCtx;
+                }
+
+                const thinking = !isOpenAIProvider && document.getElementById('thinking').checked;
+
+                const body = {
                     model: '@Model.Name',
                     messages: history,
-                    stream: true
-                } : {
-                    model: '@Model.Name',
-                    messages: history.map(m => ({
-                        role: m.role,
-                        content: m.content
-                    })),
-                    stream: true
+                    stream: true,
+                    options: Object.keys(options).length > 0 ? options : undefined,
+                    think: thinking || undefined
                 };
 
-                const response = await fetch(endpoint, {
+                const response = await fetch('/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(body)
@@ -377,60 +390,32 @@
                     if (done) break;
 
                     lineBuffer += decoder.decode(value, { stream: true });
-                    
-                    if (mode === 'ollama') {
-                        const lines = lineBuffer.split('\n');
-                        lineBuffer = lines.pop() || '';
-                        for (const line of lines) {
-                            if (!line.trim()) continue;
-                            try {
-                                const data = JSON.parse(line);
-                                if (data.message) {
-                                    if (data.message.content) {
-                                        assistantFullContent += data.message.content;
-                                        contentDiv.innerText = assistantFullContent;
-                                    }
-                                    const thinkingContent = data.message.thinking || data.message.think;
-                                    if (thinkingContent) {
-                                        assistantFullThinking += thinkingContent;
-                                        thinkContent.innerText = assistantFullThinking;
-                                        thinkContainer.classList.remove('d-none');
-                                    }
-                                    if (data.done) {
-                                        thinkSpinner.classList.add('d-none');
-                                    }
-                                }
-                            } catch (e) { console.error(e); }
-                        }
-                    } else {
-                        // OpenAI SSE
-                        const lines = lineBuffer.split('\n');
-                        lineBuffer = lines.pop() || '';
-                        for (const line of lines) {
-                            if (!line.startsWith('data: ')) continue;
-                            const dataStr = line.substring(6).trim();
-                            if (dataStr === '[DONE]') {
-                                thinkSpinner.classList.add('d-none');
-                                continue;
-                            }
-                            try {
-                                const data = JSON.parse(dataStr);
-                                const delta = data.choices[0].delta;
-                                if (delta.content) {
-                                    assistantFullContent += delta.content;
+                    const lines = lineBuffer.split('\n');
+                    lineBuffer = lines.pop() || '';
+                    for (const line of lines) {
+                        if (!line.trim()) continue;
+                        try {
+                            const data = JSON.parse(line);
+                            if (data.message) {
+                                if (data.message.content) {
+                                    assistantFullContent += data.message.content;
                                     contentDiv.innerText = assistantFullContent;
                                 }
-                                if (delta.reasoning_content) {
-                                    assistantFullThinking += delta.reasoning_content;
+                                const thinkingContent = data.message.thinking || data.message.think;
+                                if (thinkingContent) {
+                                    assistantFullThinking += thinkingContent;
                                     thinkContent.innerText = assistantFullThinking;
                                     thinkContainer.classList.remove('d-none');
                                 }
-                            } catch (e) { console.error(e); }
-                        }
+                                if (data.done) {
+                                    thinkSpinner.classList.add('d-none');
+                                }
+                            }
+                        } catch (err) { console.error(err); }
                     }
                     chatMessages.scrollTop = chatMessages.scrollHeight;
                 }
-                
+
                 history.push({ role: 'assistant', content: assistantFullContent });
 
             } catch (error) {

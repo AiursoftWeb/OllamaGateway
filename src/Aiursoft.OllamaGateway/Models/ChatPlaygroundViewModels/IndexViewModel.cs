@@ -30,4 +30,6 @@ public class IndexViewModel : UiStackLayoutViewModel
     public float? TopP { get; set; }
 
     public int? TopK { get; set; }
+
+    public bool IsOpenAIProvider { get; set; }
 }

@@ -189,9 +189,10 @@ public class ChatPlaygroundController(
             NumCtx = numCtx,
             Temperature = temperature,
             TopP = topP,
-            TopK = topK
+            TopK = topK,
+            IsOpenAIProvider = provider.ProviderType == ProviderType.OpenAI
         };
 
-        return this.StackView(viewModel, viewName: "Index");
+        return this.StackView(viewModel);
     }
 }
