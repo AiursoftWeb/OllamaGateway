@@ -1,8 +1,29 @@
 @model Aiursoft.OllamaGateway.Models.DashboardViewModels.MonitorViewModel
 @using System.Text
+@using System.Text.RegularExpressions
 
 @{
     ViewData["Title"] = Localizer["Health Monitor"];
+
+    // Build a deduplicated map of physical nodes keyed by (ProviderId, ModelName).
+    // When multiple virtual models share the same physical backend we only render it once.
+    var physicalNodeMap = new Dictionary<(int ProviderId, string ModelName), VirtualModelBackend>();
+    foreach (var vm in Model.VirtualModels)
+    {
+        foreach (var backend in vm.VirtualModelBackends)
+        {
+            var key = (backend.ProviderId, backend.UnderlyingModelName);
+            physicalNodeMap.TryAdd(key, backend);
+        }
+    }
+
+    // Produce a stable, Mermaid-safe node ID for a physical backend.
+    string PhysNodeId(int providerId, string modelName)
+    {
+        var sanitized = Regex.Replace(modelName, @"[^a-zA-Z0-9]", "_");
+        return $"Phys_P{providerId}_{sanitized}";
+    }
+
     var sb = new StringBuilder();
     sb.AppendLine("graph LR");
     sb.AppendLine("    %% Define global style classes");
@@ -16,14 +37,14 @@
     sb.AppendLine("    ");
     sb.AppendLine("    classDef algo fill:#edf2f7,stroke:#a0aec0,stroke-width:1px,color:#4a5568,stroke-dasharray: 5 5;");
     sb.AppendLine("    classDef client fill:#f7fafc,stroke:#cbd5e0,stroke-width:2px,color:#2d3748,rx:20px,ry:20px;");
-    
+
     sb.AppendLine();
     sb.AppendLine($"    Client([\"🌐 {Localizer["External Traffic (Client)"].Value}\"]):::client");
     sb.AppendLine();
     sb.AppendLine($"    subgraph LB_Core [{Localizer["Core Load Balancer Gateway"].Value}]");
     sb.AppendLine($"        Gateway{{\"🛡️ {Localizer["Load Balancer"].Value}<br/>(Gateway)\"}}:::gateway");
-    
-    foreach(var vm in Model.VirtualModels)
+
+    foreach (var vm in Model.VirtualModels)
     {
         sb.AppendLine();
         sb.AppendLine($"        subgraph VS_{vm.Id} [{Localizer["Virtual Service"].Value} {vm.Name}]");
@@ -34,46 +55,50 @@
         sb.AppendLine("        end");
     }
     sb.AppendLine("    end");
-    
-    foreach(var vm in Model.VirtualModels)
+
+    // Render one subgraph per provider, containing only the unique physical models for that provider.
+    var byProvider = physicalNodeMap.GroupBy(kv => kv.Key.ProviderId);
+    foreach (var providerGroup in byProvider)
+    {
+        var providerName = providerGroup.First().Value.Provider?.Name ?? $"Provider {providerGroup.Key}";
+        sb.AppendLine();
+        sb.AppendLine($"    subgraph PhysPool_P{providerGroup.Key} [{Localizer["Backend Pool"].Value} {providerName}]");
+        foreach (var kv in providerGroup)
+        {
+            var backend = kv.Value;
+            var nodeId = PhysNodeId(kv.Key.ProviderId, kv.Key.ModelName);
+            var statusClass = backend.IsReady ? "ready" : (backend.IsHealthy ? "healthy" : "down");
+            var icon = backend.IsReady ? "🟢" : (backend.IsHealthy ? "🔵" : "🔴");
+            var statusText = backend.IsReady ? "Ready" : (backend.IsHealthy ? "Healthy" : "Down");
+            sb.AppendLine($"        {nodeId}[(\"{icon} {providerName}<br/>{backend.UnderlyingModelName}<br/>{statusText}\")]:::{statusClass}");
+        }
+        sb.AppendLine("    end");
+    }
+
+    // Handle virtual models that have no backends at all.
+    foreach (var vm in Model.VirtualModels.Where(v => !v.VirtualModelBackends.Any()))
     {
         sb.AppendLine();
-        sb.AppendLine($"    subgraph Pool_{vm.Id} [{Localizer["Backend Pool"].Value} {vm.Name}]");
-        if (!vm.VirtualModelBackends.Any())
-        {
-            sb.AppendLine($"        Empty_{vm.Id}[\"{Localizer["No Backend Nodes"].Value}\"]:::down");
-        }
-        else
-        {
-            foreach(var backend in vm.VirtualModelBackends)
-            {
-                var isReady = backend.IsReady;
-                var isHealthy = backend.IsHealthy;
-                var statusClass = isReady ? "ready" : (isHealthy ? "healthy" : "down");
-                var icon = isReady ? "🟢" : (isHealthy ? "🔵" : "🔴");
-                var statusText = isReady ? "Ready" : (isHealthy ? "Healthy" : "Down");
-                
-                sb.AppendLine($"        Node_{backend.Id}[(\"{icon} {backend.Provider?.Name}<br/>{backend.UnderlyingModelName}<br/>{statusText}\")]:::{statusClass}");
-            }
-        }
+        sb.AppendLine($"    subgraph Pool_Empty_{vm.Id} [{Localizer["Backend Pool"].Value} {vm.Name}]");
+        sb.AppendLine($"        Empty_{vm.Id}[\"{Localizer["No Backend Nodes"].Value}\"]:::down");
         sb.AppendLine("    end");
     }
 
     sb.AppendLine();
     sb.AppendLine($"    Client ===|\"{Localizer["Entry Traffic"].Value}\"| Gateway");
-    
-    foreach(var vm in Model.VirtualModels)
+
+    foreach (var vm in Model.VirtualModels)
     {
         sb.AppendLine($"    Gateway == \"{Localizer["Route"].Value}: {vm.Name}\" ==> Svc_{vm.Id}");
-        
-        foreach(var backend in vm.VirtualModelBackends)
+
+        foreach (var backend in vm.VirtualModelBackends)
         {
+            var nodeId = PhysNodeId(backend.ProviderId, backend.UnderlyingModelName);
             var actionText = (backend.Enabled && backend.IsHealthy) ? Localizer["Dispatch Traffic"].Value : Localizer["Block Node"].Value;
-            var linkStyle = "-.";
-            sb.AppendLine($"    Algo_{vm.Id} {linkStyle} \"{actionText}\" .-> Node_{backend.Id}");
+            sb.AppendLine($"    Algo_{vm.Id} -. \"{actionText}\" .-> {nodeId}");
         }
     }
-    
+
     var mermaidCode = sb.ToString();
 }
 
