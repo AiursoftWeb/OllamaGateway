@@ -105,6 +105,9 @@ public class ViewModelArgsInjector(
         _ = localizer["Completion Lab"];
     
         _ = localizer["Monitor"];
+    
+        _ = localizer["Admin Center"];
+        _ = localizer["Traffic Visualization"];
     }
 
     public void InjectSimple(
