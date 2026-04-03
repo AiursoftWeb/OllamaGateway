@@ -30,14 +30,29 @@
   <data name="Edit API Key" xml:space="preserve">
     <value>API 키 편집</value>
   </data>
+  <data name="Enable Rate Limit" xml:space="preserve">
+    <value>Rate Limit 활성화</value>
+  </data>
   <data name="Friendly Name" xml:space="preserve">
     <value>친구 이름</value>
+  </data>
+  <data name="If enabled, requests will wait instead of returning 429." xml:space="preserve">
+    <value>활성화되면 요청이 429를 반환하는 대신 대기합니다.</value>
   </data>
   <data name="Key Details" xml:space="preserve">
     <value>키 세부 정보</value>
   </data>
+  <data name="Max Requests" xml:space="preserve">
+    <value>최대 요청 수</value>
+  </data>
   <data name="Save Changes" xml:space="preserve">
     <value>변경 사항 저장</value>
+  </data>
+  <data name="Time Window (Seconds)" xml:space="preserve">
+    <value>시간 창 (초)</value>
+  </data>
+  <data name="Wait if rate limited (Hang)" xml:space="preserve">
+    <value>제한 시 대기 (일시 정지)</value>
   </data>
 
 </root>

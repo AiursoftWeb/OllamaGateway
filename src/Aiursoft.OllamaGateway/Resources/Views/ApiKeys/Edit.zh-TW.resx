@@ -30,14 +30,29 @@
   <data name="Edit API Key" xml:space="preserve">
     <value>編輯 API 金鑰</value>
   </data>
+  <data name="Enable Rate Limit" xml:space="preserve">
+    <value>啟用速率限制</value>
+  </data>
   <data name="Friendly Name" xml:space="preserve">
     <value>友善名稱</value>
+  </data>
+  <data name="If enabled, requests will wait instead of returning 429." xml:space="preserve">
+    <value>若已啟用，請求將等待，而非返回 429。</value>
   </data>
   <data name="Key Details" xml:space="preserve">
     <value>金鑰詳情</value>
   </data>
+  <data name="Max Requests" xml:space="preserve">
+    <value>最大請求數</value>
+  </data>
   <data name="Save Changes" xml:space="preserve">
     <value>儲存變更</value>
+  </data>
+  <data name="Time Window (Seconds)" xml:space="preserve">
+    <value>時間視窗 (秒)</value>
+  </data>
+  <data name="Wait if rate limited (Hang)" xml:space="preserve">
+    <value>若限流則等待（掛起）</value>
   </data>
 
 </root>

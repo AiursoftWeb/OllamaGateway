@@ -30,14 +30,29 @@
   <data name="e.g. My Laptop, Development" xml:space="preserve">
     <value>np. Mój Laptop, Programowanie</value>
   </data>
+  <data name="Enable Rate Limit" xml:space="preserve">
+    <value>Włącz limitowanie</value>
+  </data>
   <data name="Friendly Name" xml:space="preserve">
     <value>Nazwa</value>
   </data>
   <data name="Generate Key" xml:space="preserve">
     <value>Generuj klucz</value>
   </data>
+  <data name="If enabled, requests will wait instead of returning 429." xml:space="preserve">
+    <value>Po włączeniu żądania będą czekać zamiast zwracać błąd 429.</value>
+  </data>
+  <data name="Max Requests" xml:space="preserve">
+    <value>Maksymalna liczba żądań</value>
+  </data>
   <data name="New Key Details" xml:space="preserve">
     <value>Nowe szczegóły klucza</value>
+  </data>
+  <data name="Time Window (Seconds)" xml:space="preserve">
+    <value>Okno czasowe (sekundy)</value>
+  </data>
+  <data name="Wait if rate limited (Hang)" xml:space="preserve">
+    <value>Czekaj, jeśli przekroczono limit (wstrzymaj)</value>
   </data>
 
 </root>

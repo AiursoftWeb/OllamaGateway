@@ -30,14 +30,29 @@
   <data name="Edit API Key" xml:space="preserve">
     <value>Modifica chiave API</value>
   </data>
+  <data name="Enable Rate Limit" xml:space="preserve">
+    <value>Attiva limite di frequenza</value>
+  </data>
   <data name="Friendly Name" xml:space="preserve">
     <value>Nome amichevole</value>
+  </data>
+  <data name="If enabled, requests will wait instead of returning 429." xml:space="preserve">
+    <value>Se abilitata, le richieste verranno in attesa invece di restituire 429.</value>
   </data>
   <data name="Key Details" xml:space="preserve">
     <value>Dettagli chiave</value>
   </data>
+  <data name="Max Requests" xml:space="preserve">
+    <value>Numero massimo di richieste</value>
+  </data>
   <data name="Save Changes" xml:space="preserve">
     <value>Salva modifiche</value>
+  </data>
+  <data name="Time Window (Seconds)" xml:space="preserve">
+    <value>Finestra temporale (secondi)</value>
+  </data>
+  <data name="Wait if rate limited (Hang)" xml:space="preserve">
+    <value>Attendi se il limite è stato raggiunto (Attendi)</value>
   </data>
 
 </root>
