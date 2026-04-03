@@ -24,6 +24,7 @@ public class IndexViewModel : UiStackLayoutViewModel
     public List<TopApiKeyStats> TopApiKeys { get; set; } = [];
     public List<TopModelStats> TopModels { get; set; } = [];
     public List<RecentUserStats> RecentUsers { get; set; } = [];
+    public List<ActiveModelInfo> ActiveRequests { get; set; } = [];
 }
 
 [ExcludeFromCodeCoverage]
@@ -58,4 +59,13 @@ public class RecentUserStats
 {
     public string Email { get; set; } = string.Empty;
     public DateTime CreationTime { get; set; }
+}
+
+[ExcludeFromCodeCoverage]
+public class ActiveModelInfo
+{
+    public string ModelName { get; set; } = string.Empty;
+    public int ActiveCount { get; set; }
+    public string LastQuestion { get; set; } = string.Empty;
+    public DateTime LastStartedAt { get; set; }
 }

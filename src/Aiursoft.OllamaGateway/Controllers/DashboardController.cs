@@ -14,7 +14,8 @@ namespace Aiursoft.OllamaGateway.Controllers;
 [LimitPerMin]
 public class DashboardController(
     TemplateDbContext dbContext,
-    MemoryUsageTracker memoryUsageTracker) : Controller
+    MemoryUsageTracker memoryUsageTracker,
+    ActiveRequestTracker activeRequestTracker) : Controller
 {
     [RenderInNavBar(
         NavGroupName = "Dashboard",
@@ -97,6 +98,19 @@ public class DashboardController(
                 })
                 .ToList();
         }
+
+        // Live active requests from in-memory tracker (only models with queued/running requests)
+        model.ActiveRequests = activeRequestTracker.GetAll()
+            .Where(kv => kv.Value.ActiveCount > 0)
+            .OrderByDescending(kv => kv.Value.LastStartedAt)
+            .Select(kv => new ActiveModelInfo
+            {
+                ModelName = kv.Key,
+                ActiveCount = kv.Value.ActiveCount,
+                LastQuestion = kv.Value.LastQuestion,
+                LastStartedAt = kv.Value.LastStartedAt
+            })
+            .ToList();
 
         return this.StackView(model);
     }

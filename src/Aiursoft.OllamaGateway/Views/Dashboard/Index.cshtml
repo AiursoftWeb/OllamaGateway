@@ -112,7 +112,83 @@
         </div>
     </div>
 
-    @* === Row 2: Charts & Stats === *@
+    @* === Row 2: Live Inference Status === *@
+    <div class="row">
+        <div class="col-12 d-flex">
+            <div class="card flex-fill w-100">
+                <div class="card-header d-flex align-items-center">
+                    <h5 class="card-title mb-0 flex-grow-1">
+                        <i class="align-middle me-1" data-lucide="zap"></i>
+                        @Localizer["Live Inference"]
+                    </h5>
+                    @if (Model.ActiveRequests.Any())
+                    {
+                        <span class="badge bg-danger">@Model.ActiveRequests.Sum(r => r.ActiveCount) @Localizer["active"]</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">@Localizer["Idle"]</span>
+                    }
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>@Localizer["Virtual Model"]</th>
+                                <th class="text-center">@Localizer["Concurrent Requests"]</th>
+                                <th>@Localizer["Last Question (first 30 chars)"]</th>
+                                <th class="text-end">@Localizer["Running for"]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.ActiveRequests.Any())
+                            {
+                                foreach (var req in Model.ActiveRequests)
+                                {
+                                    var elapsed = DateTime.UtcNow - req.LastStartedAt;
+                                    var elapsedStr = elapsed.TotalSeconds < 60
+                                        ? $"{(int)elapsed.TotalSeconds}s"
+                                        : $"{(int)elapsed.TotalMinutes}m {elapsed.Seconds}s";
+                                    <tr>
+                                        <td>
+                                            <span class="badge bg-success-subtle text-success me-1">●</span>
+                                            <strong>@req.ModelName</strong>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="badge bg-warning text-dark">@req.ActiveCount</span>
+                                        </td>
+                                        <td class="font-monospace text-muted small">
+                                            @if (!string.IsNullOrWhiteSpace(req.LastQuestion))
+                                            {
+                                                @req.LastQuestion
+                                                @if (req.LastQuestion.Length >= 30){<text>…</text>}
+                                            }
+                                            else
+                                            {
+                                                <em>@Localizer["(no content)"]</em>
+                                            }
+                                        </td>
+                                        <td class="text-end text-muted small">@elapsedStr</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted py-3">
+                                        <i data-lucide="moon" class="me-1" style="width:16px;height:16px;"></i>
+                                        @Localizer["No active inference requests — all models are idle"]
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* === Row 3: Charts & Stats === *@
     <div class="row">
         <div class="col-12 col-md-6 col-xxl-3 d-flex">
             <div class="card flex-fill w-100">

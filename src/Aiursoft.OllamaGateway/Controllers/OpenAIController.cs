@@ -21,6 +21,7 @@ public class OpenAIController : ControllerBase
     private readonly ILogger<OpenAIController> _logger;
     private readonly MemoryUsageTracker _memoryUsageTracker;
     private readonly IModelSelector _modelSelector;
+    private readonly ActiveRequestTracker _activeRequestTracker;
 
 
 
@@ -31,7 +32,8 @@ public class OpenAIController : ControllerBase
         GlobalSettingsService globalSettingsService,
         ILogger<OpenAIController> logger,
         MemoryUsageTracker memoryUsageTracker,
-        IModelSelector modelSelector)
+        IModelSelector modelSelector,
+        ActiveRequestTracker activeRequestTracker)
     {
         _dbContext = dbContext;
         _httpClientFactory = httpClientFactory;
@@ -40,6 +42,7 @@ public class OpenAIController : ControllerBase
         _logger = logger;
         _memoryUsageTracker = memoryUsageTracker;
         _modelSelector = modelSelector;
+        _activeRequestTracker = activeRequestTracker;
     }
 
 
@@ -142,6 +145,7 @@ public class OpenAIController : ControllerBase
             var messagesArray = clientJson["messages"]?.AsArray();
             _logContext.Log.ConversationMessageCount = messagesArray?.Count ?? 0;
             _logContext.Log.LastQuestion = messagesArray?.LastOrDefault()?["content"]?.ToString() ?? string.Empty;
+            _activeRequestTracker.StartRequest(virtualModel.Name, _logContext.Log.LastQuestion);
 
             var isStream = clientJson["stream"]?.GetValue<bool>() ?? false;
 
@@ -735,6 +739,11 @@ public class OpenAIController : ControllerBase
                 Response.StatusCode = 500;
                 await Response.WriteAsync("Internal Server Error in Gateway.");
             }
+        }
+        finally
+        {
+            if (!string.IsNullOrEmpty(_logContext.Log.Model))
+                _activeRequestTracker.EndRequest(_logContext.Log.Model);
         }
     }
 

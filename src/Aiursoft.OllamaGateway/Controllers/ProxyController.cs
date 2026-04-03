@@ -76,6 +76,7 @@ public class ProxyController(
     GlobalSettingsService globalSettingsService,
     ILogger<ProxyController> logger,
     MemoryUsageTracker memoryUsageTracker,
+    ActiveRequestTracker activeRequestTracker,
     IModelSelector modelSelector) : ControllerBase
 {
     private static readonly HashSet<string> HeaderBlacklist = new(StringComparer.OrdinalIgnoreCase)
@@ -181,6 +182,7 @@ public class ProxyController(
             logContext.Log.Model = virtualModel.Name;
             logContext.Log.ConversationMessageCount = input.Messages?.Count ?? 0;
             logContext.Log.LastQuestion = input.Messages?.LastOrDefault()?.Content ?? string.Empty;
+            activeRequestTracker.StartRequest(virtualModel.Name, logContext.Log.LastQuestion);
 
             input.Model = backend.UnderlyingModelName;
             if (virtualModel.Thinking.HasValue) input.Think = virtualModel.Thinking.Value;
@@ -620,6 +622,11 @@ public class ProxyController(
                 Response.StatusCode = 500;
                 await Response.WriteAsync("Internal Server Error in Gateway.");
             }
+        }
+        finally
+        {
+            if (!string.IsNullOrEmpty(logContext.Log.Model))
+                activeRequestTracker.EndRequest(logContext.Log.Model);
         }
     }
 
