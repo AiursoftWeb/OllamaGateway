@@ -1,3 +1,4 @@
+using Aiursoft.OllamaGateway.Authorization;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Models.DashboardViewModels;
 using Aiursoft.OllamaGateway.Services;
@@ -9,19 +10,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.OllamaGateway.Controllers;
 
-[Authorize]
+[Authorize(Policy = AppPermissionNames.CanViewSystemContext)]
 [LimitPerMin]
 public class DashboardController(
     TemplateDbContext dbContext,
     MemoryUsageTracker memoryUsageTracker) : Controller
 {
     [RenderInNavBar(
-        NavGroupName = "Features",
+        NavGroupName = "Dashboard",
         NavGroupOrder = 1,
-        CascadedLinksGroupName = "Home",
-        CascadedLinksIcon = "home",
+        CascadedLinksGroupName = "Monitor",
+        CascadedLinksIcon = "monitor",
         CascadedLinksOrder = 1,
-        LinkText = "Index",
+        LinkText = "Admin Center",
         LinkOrder = 1)]
     public async Task<IActionResult> Index()
     {
@@ -101,12 +102,12 @@ public class DashboardController(
     }
 
     [RenderInNavBar(
-        NavGroupName = "Features",
+        NavGroupName = "Dashboard",
         NavGroupOrder = 1,
-        CascadedLinksGroupName = "Home",
-        CascadedLinksIcon = "home",
+        CascadedLinksGroupName = "Monitor",
+        CascadedLinksIcon = "monitor",
         CascadedLinksOrder = 1,
-        LinkText = "Monitor",
+        LinkText = "Traffic Visualization",
         LinkOrder = 2)]
     public async Task<IActionResult> Monitor()
     {
