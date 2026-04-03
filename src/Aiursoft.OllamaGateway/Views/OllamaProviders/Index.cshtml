@@ -74,8 +74,15 @@
                                             {
                                                 <li>
                                                     <strong>@m.Name</strong>
-                                                    <span class="badge bg-secondary ms-1">@(m.SizeVram > 0 ? "GPU" : "CPU")</span>
-                                                    <span class="badge bg-info ms-1">@Localizer["Ctx"]: @(m.ContextLength ?? 0)</span>
+                                                    @if (p.Provider.ProviderType == Aiursoft.OllamaGateway.Entities.ProviderType.OpenAI)
+                                                    {
+                                                        <span class="badge bg-success ms-1">API</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge bg-secondary ms-1">@(m.SizeVram > 0 ? "GPU" : "CPU")</span>
+                                                        <span class="badge bg-info ms-1">@Localizer["Ctx"]: @(m.ContextLength ?? 0)</span>
+                                                    }
                                                 </li>
                                             }
                                         </ul>

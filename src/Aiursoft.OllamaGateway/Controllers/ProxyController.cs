@@ -1206,7 +1206,9 @@ public class ProxyController(
 
             if (!providerCache.TryGetValue($"{provider.BaseUrl}_{provider.BearerToken}", out var physicalModels))
             {
-                physicalModels = await ollamaService.GetDetailedModelsAsync(provider.BaseUrl, provider.BearerToken);
+                physicalModels = provider.ProviderType == ProviderType.OpenAI
+                    ? null
+                    : await ollamaService.GetDetailedModelsAsync(provider.BaseUrl, provider.BearerToken);
                 providerCache[$"{provider.BaseUrl}_{provider.BearerToken}"] = physicalModels;
             }
 
@@ -1260,6 +1262,17 @@ public class ProxyController(
             var backend = vm.VirtualModelBackends.FirstOrDefault();
             if (backend == null || backend.Provider == null) continue;
             var provider = backend.Provider;
+
+            if (provider.ProviderType == ProviderType.OpenAI)
+            {
+                allRunning.Add(new OllamaService.OllamaRunningModel
+                {
+                    Name = vm.Name,
+                    Model = vm.Name,
+                    ModifiedAt = vm.CreatedAt
+                });
+                continue;
+            }
 
             if (!providerCache.TryGetValue($"{provider.BaseUrl}_{provider.BearerToken}", out var runningPhysical))
             {

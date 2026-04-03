@@ -39,7 +39,7 @@ public class OllamaProvidersController(
                     Provider = p,
                     IsAlive = oaiModels != null,
                     Version = "OpenAI API",
-                    RunningModels = null
+                    RunningModels = oaiModels?.Select(m => new OllamaService.OllamaRunningModel { Name = m, Model = m }).ToList()
                 };
             }
 

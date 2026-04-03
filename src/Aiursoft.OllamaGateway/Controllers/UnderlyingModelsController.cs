@@ -32,6 +32,28 @@ public class UnderlyingModelsController(
 
         foreach (var provider in providers)
         {
+            if (provider.ProviderType == ProviderType.OpenAI)
+            {
+                var openAiModels = await ollamaService.GetOpenAIAvailableModelsAsync(provider.BaseUrl, provider.BearerToken);
+                if (openAiModels != null)
+                {
+                    foreach (var modelName in openAiModels)
+                    {
+                        viewModel.Models.Add(new UnderlyingModelInfo
+                        {
+                            Provider = provider,
+                            RawModel = new OllamaService.OllamaModel { Name = modelName, Model = modelName },
+                            IsRunning = true,
+                            TotalCalls = memoryUsageTracker.GetUnderlyingModelStats(provider.Id, modelName),
+                            UsedByVirtualModels = virtualModels
+                                .Where(v => v.VirtualModelBackends.Any(b => b.ProviderId == provider.Id && b.UnderlyingModelName == modelName))
+                                .ToList()
+                        });
+                    }
+                }
+                continue;
+            }
+
             var rawModels = await ollamaService.GetDetailedModelsAsync(provider.BaseUrl, provider.BearerToken);
             var runningModels = await ollamaService.GetRunningModelsAsync(provider.BaseUrl, provider.BearerToken);
 
