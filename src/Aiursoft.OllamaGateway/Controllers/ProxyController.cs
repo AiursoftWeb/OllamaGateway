@@ -39,11 +39,22 @@ public class OllamaMessage
 
 public class OllamaRequestOptions
 {
+    [Newtonsoft.Json.JsonProperty("num_ctx")]
     public int? NumCtx { get; set; }
+
+    [Newtonsoft.Json.JsonProperty("temperature")]
     public float? Temperature { get; set; }
+
+    [Newtonsoft.Json.JsonProperty("top_p")]
     public float? TopP { get; set; }
+
+    [Newtonsoft.Json.JsonProperty("top_k")]
     public int? TopK { get; set; }
+
+    [Newtonsoft.Json.JsonProperty("num_predict")]
     public int? NumPredict { get; set; }
+
+    [Newtonsoft.Json.JsonProperty("repeat_penalty")]
     public float? RepeatPenalty { get; set; }
 }
 
@@ -54,7 +65,6 @@ public class ProxyController(
     TemplateDbContext dbContext,
     IHttpClientFactory httpClientFactory,
     RequestLogContext logContext,
-    OllamaService ollamaService,
     GlobalSettingsService globalSettingsService,
     ILogger<ProxyController> logger,
     MemoryUsageTracker memoryUsageTracker,
