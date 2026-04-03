@@ -30,6 +30,7 @@
     sb.AppendLine("    %% Define global style classes");
     sb.AppendLine("    classDef gateway fill:#2d3748,stroke:#1a202c,stroke-width:2px,color:#fff,rx:8px,ry:8px;");
     sb.AppendLine("    classDef virtualSvc fill:#4a5568,stroke:#2d3748,stroke-width:2px,color:#fff,rx:5px,ry:5px;");
+    sb.AppendLine("    classDef virtualSvcBusy fill:#b7791f,stroke:#744210,stroke-width:3px,color:#fff,rx:5px,ry:5px;");
     sb.AppendLine("    ");
     sb.AppendLine("    %% Define backend node status colors");
     sb.AppendLine("    classDef ready fill:#38a169,stroke:#276749,stroke-width:2px,color:#fff,rx:15px,ry:15px;");
@@ -47,9 +48,12 @@
 
     foreach (var vm in Model.VirtualModels)
     {
+        var isBusy = Model.BusyModels.Contains(vm.Name);
         sb.AppendLine();
         sb.AppendLine($"        subgraph VS_{vm.Id} [{Localizer["Virtual Service"].Value} {vm.Name}]");
-        sb.AppendLine($"            Svc_{vm.Id}(\"📦 {vm.Name}<br/>({vm.Type})\"):::virtualSvc");
+        var svcClass = isBusy ? "virtualSvcBusy" : "virtualSvc";
+        var svcLabel = isBusy ? $"🔥 {vm.Name}<br/>({vm.Type})" : $"📦 {vm.Name}<br/>({vm.Type})";
+        sb.AppendLine($"            Svc_{vm.Id}(\"{svcLabel}\"):::{svcClass}");
         var algoStr = vm.SelectionStrategy.ToString();
         sb.AppendLine($"            Algo_{vm.Id}[\"⚖️ {algoStr}\"]:::algo");
         sb.AppendLine($"            Svc_{vm.Id} --- Algo_{vm.Id}");

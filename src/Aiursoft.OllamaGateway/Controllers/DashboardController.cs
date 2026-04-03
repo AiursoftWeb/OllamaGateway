@@ -108,6 +108,7 @@ public class DashboardController(
                 ModelName = kv.Key,
                 ActiveCount = kv.Value.ActiveCount,
                 LastQuestion = kv.Value.LastQuestion,
+                BackendModelName = kv.Value.BackendModelName,
                 LastStartedAt = kv.Value.LastStartedAt
             })
             .ToList();
@@ -131,7 +132,11 @@ public class DashboardController(
                 .Include(v => v.VirtualModelBackends)
                 .ThenInclude(b => b.Provider)
                 .ToListAsync(),
-            Providers = await dbContext.OllamaProviders.ToListAsync()
+            Providers = await dbContext.OllamaProviders.ToListAsync(),
+            BusyModels = activeRequestTracker.GetAll()
+                .Where(kv => kv.Value.ActiveCount > 0)
+                .Select(kv => kv.Key)
+                .ToHashSet()
         };
 
         return this.StackView(model);

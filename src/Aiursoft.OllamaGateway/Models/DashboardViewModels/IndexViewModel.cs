@@ -67,5 +67,6 @@ public class ActiveModelInfo
     public string ModelName { get; set; } = string.Empty;
     public int ActiveCount { get; set; }
     public string LastQuestion { get; set; } = string.Empty;
+    public string BackendModelName { get; set; } = string.Empty;
     public DateTime LastStartedAt { get; set; }
 }

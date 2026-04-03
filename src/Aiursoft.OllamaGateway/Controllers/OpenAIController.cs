@@ -145,7 +145,7 @@ public class OpenAIController : ControllerBase
             var messagesArray = clientJson["messages"]?.AsArray();
             _logContext.Log.ConversationMessageCount = messagesArray?.Count ?? 0;
             _logContext.Log.LastQuestion = messagesArray?.LastOrDefault()?["content"]?.ToString() ?? string.Empty;
-            _activeRequestTracker.StartRequest(virtualModel.Name, _logContext.Log.LastQuestion);
+            _activeRequestTracker.StartRequest(virtualModel.Name, _logContext.Log.LastQuestion, backend.UnderlyingModelName);
 
             var isStream = clientJson["stream"]?.GetValue<bool>() ?? false;
 

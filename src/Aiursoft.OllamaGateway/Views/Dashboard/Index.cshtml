@@ -135,6 +135,7 @@
                         <thead>
                             <tr>
                                 <th>@Localizer["Virtual Model"]</th>
+                                <th>@Localizer["Backend Model"]</th>
                                 <th class="text-center">@Localizer["Concurrent Requests"]</th>
                                 <th>@Localizer["Last Question (first 30 chars)"]</th>
                                 <th class="text-end">@Localizer["Running for"]</th>
@@ -153,6 +154,12 @@
                                         <td>
                                             <span class="badge bg-success-subtle text-success me-1">●</span>
                                             <strong>@req.ModelName</strong>
+                                        </td>
+                                        <td class="text-muted small font-monospace">
+                                            @if (!string.IsNullOrWhiteSpace(req.BackendModelName))
+                                            {
+                                                <i data-lucide="server" class="me-1" style="width:12px;height:12px;"></i>@req.BackendModelName
+                                            }
                                         </td>
                                         <td class="text-center">
                                             <span class="badge bg-warning text-dark">@req.ActiveCount</span>
@@ -175,7 +182,7 @@
                             else
                             {
                                 <tr>
-                                    <td colspan="4" class="text-center text-muted py-3">
+                                    <td colspan="5" class="text-center text-muted py-3">
                                         <i data-lucide="moon" class="me-1" style="width:16px;height:16px;"></i>
                                         @Localizer["No active inference requests — all models are idle"]
                                     </td>

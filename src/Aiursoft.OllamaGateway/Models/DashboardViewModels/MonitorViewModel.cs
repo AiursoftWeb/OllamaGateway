@@ -12,5 +12,10 @@ public class MonitorViewModel : UiStackLayoutViewModel
 
     public List<VirtualModel> VirtualModels { get; set; } = [];
     public List<OllamaProvider> Providers { get; set; } = [];
+
+    /// <summary>
+    /// Set of virtual model names that currently have at least one active inference request.
+    /// </summary>
+    public HashSet<string> BusyModels { get; set; } = [];
 }
 

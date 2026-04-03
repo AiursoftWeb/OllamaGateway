@@ -182,7 +182,7 @@ public class ProxyController(
             logContext.Log.Model = virtualModel.Name;
             logContext.Log.ConversationMessageCount = input.Messages?.Count ?? 0;
             logContext.Log.LastQuestion = input.Messages?.LastOrDefault()?.Content ?? string.Empty;
-            activeRequestTracker.StartRequest(virtualModel.Name, logContext.Log.LastQuestion);
+            activeRequestTracker.StartRequest(virtualModel.Name, logContext.Log.LastQuestion, backend.UnderlyingModelName);
 
             input.Model = backend.UnderlyingModelName;
             if (virtualModel.Thinking.HasValue) input.Think = virtualModel.Thinking.Value;

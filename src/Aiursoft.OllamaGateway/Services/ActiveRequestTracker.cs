@@ -11,6 +11,7 @@ public class ActiveModelRequestInfo
 {
     public int ActiveCount;
     public string LastQuestion = string.Empty;
+    public string BackendModelName = string.Empty;
     public DateTime LastStartedAt = DateTime.UtcNow;
 }
 
@@ -25,13 +26,14 @@ public class ActiveRequestTracker : ISingletonDependency
     /// <summary>
     /// Call immediately before forwarding a request to the upstream model.
     /// </summary>
-    public void StartRequest(string modelName, string question)
+    public void StartRequest(string modelName, string question, string backendModelName)
     {
         var info = _state.GetOrAdd(modelName, _ => new ActiveModelRequestInfo());
         lock (info)
         {
             info.ActiveCount++;
             info.LastQuestion = question.Length > 30 ? question[..30] : question;
+            info.BackendModelName = backendModelName;
             info.LastStartedAt = DateTime.UtcNow;
         }
     }
