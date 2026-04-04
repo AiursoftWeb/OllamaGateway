@@ -240,9 +240,35 @@
         </div>
     </div>
 
-    @* === Row 3: Charts & Stats === *@
+    @* === Row 3: Physical Models (large) + Virtual Models Distribution (right) === *@
     <div class="row">
-        <div class="col-12 col-md-6 col-xxl-3 d-flex">
+        <div class="col-12 col-lg-8 d-flex">
+            <div class="card flex-fill w-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="align-middle me-1" data-lucide="bar-chart-2"></i>
+                        @Localizer["Physical Models — Total Call Count"]
+                    </h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.PhysicalModelStats.Any())
+                    {
+                        <div class="chart" style="min-height: @(Math.Max(220, Model.PhysicalModelStats.Count * 40))px;">
+                            <canvas id="chartPhysicalModels"></canvas>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center text-muted py-5">
+                            <i data-lucide="bar-chart-2" class="d-block mx-auto mb-2" style="width:32px;height:32px;"></i>
+                            @Localizer["No call statistics yet — models will appear here once used"]
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-4 d-flex">
             <div class="card flex-fill w-100">
                 <div class="card-header">
                     <h5 class="card-title mb-0">@Localizer["Virtual Models Distribution"]</h5>
@@ -282,8 +308,95 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="col-12 col-md-6 col-xxl-3 d-flex">
+    @* === Row 4: Top Virtual Models + Top API Keys + Models By Provider === *@
+    <div class="row">
+        <div class="col-12 col-lg-4 d-flex">
+            <div class="card flex-fill w-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="align-middle me-1" data-lucide="layers"></i>
+                        @Localizer["Top Virtual Models By Usage"]
+                    </h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.TopVirtualModels.Any())
+                    {
+                        <div class="chart" style="height:200px;">
+                            <canvas id="chartTopVirtualModels"></canvas>
+                        </div>
+                        <table class="table table-sm mt-3 mb-0">
+                            <thead>
+                                <tr>
+                                    <th>@Localizer["Model Name"]</th>
+                                    <th class="text-end">@Localizer["Usage Count"]</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var m in Model.TopVirtualModels)
+                                {
+                                    <tr>
+                                        <td><i class="fas fa-cube text-primary me-1"></i>@m.ModelName</td>
+                                        <td class="text-end">@m.UsageCount</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <div class="text-center text-muted py-5">
+                            <i data-lucide="layers" class="d-block mx-auto mb-2" style="width:32px;height:32px;"></i>
+                            @Localizer["No stats yet"]
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-4 d-flex">
+            <div class="card flex-fill w-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">@Localizer["Top API Keys By Usage"]</h5>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th class="ps-3">@Localizer["API Key"]</th>
+                                <th>@Localizer["User"]</th>
+                                <th class="text-end pe-3">@Localizer["Usage Count"]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.TopApiKeys.Any())
+                            {
+                                foreach (var key in Model.TopApiKeys)
+                                {
+                                    <tr>
+                                        <td class="ps-3"><i class="fas fa-key text-warning me-1"></i>@key.Name</td>
+                                        <td class="text-muted small">@key.UserName</td>
+                                        <td class="text-end pe-3"><strong>@key.UsageCount</strong></td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="3" class="text-center text-muted py-5">
+                                        <i data-lucide="key" class="d-block mx-auto mb-2" style="width:28px;height:28px;"></i>
+                                        @Localizer["No stats yet"]
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-4 d-flex">
             <div class="card flex-fill w-100">
                 <div class="card-header">
                     <h5 class="card-title mb-0">@Localizer["Models By Provider"]</h5>
@@ -329,126 +442,9 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-12 col-md-6 col-xxl-3 d-flex">
-            <div class="card flex-fill w-100">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">@Localizer["Top Virtual Models By Usage"]</h5>
-                </div>
-                <div class="card-body d-flex">
-                    <div class="align-self-center w-100">
-                        <div class="py-3">
-                            <div class="chart chart-sm">
-                                <canvas id="chartTopVirtualModels"></canvas>
-                            </div>
-                        </div>
-                        <table class="table mb-0">
-                            <thead>
-                                <tr>
-                                    <th>@Localizer["Model Name"]</th>
-                                    <th class="text-end">@Localizer["Usage Count"]</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (Model.TopVirtualModels.Any())
-                                {
-                                    foreach (var m in Model.TopVirtualModels)
-                                    {
-                                        <tr>
-                                            <td><i class="fas fa-cube text-primary"></i> @m.ModelName</td>
-                                            <td class="text-end">@m.UsageCount</td>
-                                        </tr>
-                                    }
-                                }
-                                else
-                                {
-                                    <tr>
-                                        <td colspan="2" class="text-center text-muted">@Localizer["No stats yet"]</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-xxl-3 d-flex">
-            <div class="card flex-fill w-100">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">@Localizer["Top API Keys By Usage"]</h5>
-                </div>
-                <div class="card-body d-flex">
-                    <div class="align-self-center w-100">
-                        <div class="py-3">
-                            <div class="chart chart-sm">
-                                <canvas id="chartTopApiKeys"></canvas>
-                            </div>
-                        </div>
-                        <table class="table mb-0">
-                            <thead>
-                                <tr>
-                                    <th>@Localizer["API Key"]</th>
-                                    <th class="text-end">@Localizer["Usage Count"]</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (Model.TopApiKeys.Any())
-                                {
-                                    foreach (var key in Model.TopApiKeys)
-                                    {
-                                        <tr>
-                                            <td>
-                                                <i class="fas fa-key text-warning"></i> @key.Name
-                                            </td>
-                                            <td class="text-end">@key.UsageCount</td>
-                                        </tr>
-                                    }
-                                }
-                                else
-                                {
-                                    <tr>
-                                        <td colspan="2" class="text-center text-muted">@Localizer["No stats yet"]</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
-    @* === Row 4: Physical Models Call Count === *@
-    <div class="row">
-        <div class="col-12 d-flex">
-            <div class="card flex-fill w-100">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">
-                        <i class="align-middle me-1" data-lucide="bar-chart-2"></i>
-                        @Localizer["Physical Models — Total Call Count"]
-                    </h5>
-                </div>
-                <div class="card-body">
-                    @if (Model.PhysicalModelStats.Any())
-                    {
-                        <div class="chart" style="min-height: @(Math.Max(200, Model.PhysicalModelStats.Count * 44))px;">
-                            <canvas id="chartPhysicalModels"></canvas>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="text-center text-muted py-4">
-                            <i data-lucide="bar-chart-2" class="d-block mx-auto mb-2" style="width:32px;height:32px;"></i>
-                            @Localizer["No call statistics yet — models will appear here once used"]
-                        </div>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-
-    @* === Row 5: Content Overview, System Status, Recent Users === *@
+    @* === Row 5: Gateway Overview + System Status + Recent Users === *@
     <div class="row">
         <div class="col-12 col-lg-4 d-flex">
             <div class="card flex-fill w-100">
@@ -652,8 +648,8 @@
                             parseInt(getAttr('data-embedding-count'))
                         ],
                         backgroundColor: [
-                            "rgba(59, 125, 221, 0.85)", // primary
-                            "rgba(40, 167, 69, 0.85)"   // success
+                            "rgba(59, 125, 221, 0.85)",
+                            "rgba(40, 167, 69, 0.85)"
                         ],
                         borderWidth: 3,
                         borderColor: "#fff"
@@ -688,12 +684,12 @@
                     datasets: [{
                         data: pData,
                         backgroundColor: [
-                            "rgba(59, 125, 221, 0.85)", // primary
-                            "rgba(255, 193, 7, 0.85)",  // warning
-                            "rgba(40, 167, 69, 0.85)",  // success
-                            "rgba(220, 53, 69, 0.85)",  // danger
-                            "rgba(23, 162, 184, 0.85)", // info
-                            "rgba(108, 117, 125, 0.85)" // secondary
+                            "rgba(59, 125, 221, 0.85)",
+                            "rgba(255, 193, 7, 0.85)",
+                            "rgba(40, 167, 69, 0.85)",
+                            "rgba(220, 53, 69, 0.85)",
+                            "rgba(23, 162, 184, 0.85)",
+                            "rgba(108, 117, 125, 0.85)"
                         ],
                         borderWidth: 2,
                         borderColor: "#fff"
@@ -735,15 +731,10 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    indexAxis: 'y', // Horizontal
-                    plugins: {
-                        legend: { display: false }
-                    },
+                    indexAxis: 'y',
+                    plugins: { legend: { display: false } },
                     scales: {
-                        x: {
-                            beginAtZero: true,
-                            ticks: { stepSize: 1 }
-                        }
+                        x: { beginAtZero: true, ticks: { stepSize: 1 } }
                     }
                 }
             });
@@ -781,51 +772,9 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     indexAxis: 'y',
-                    plugins: {
-                        legend: { display: false }
-                    },
+                    plugins: { legend: { display: false } },
                     scales: {
-                        x: {
-                            beginAtZero: true,
-                            ticks: { stepSize: 1 }
-                        }
-                    }
-                }
-            });
-        }
-
-        // --- Top API Keys Bar ---
-        var ctxTopK = document.getElementById("chartTopApiKeys");
-        if (ctxTopK) {
-            var kLabels = getJsonAttr('data-top-api-keys-labels');
-            var kData = getJsonAttr('data-top-api-keys-data');
-
-            new Chart(ctxTopK, {
-                type: "bar",
-                data: {
-                    labels: kLabels,
-                    datasets: [{
-                        label: getAttr('data-usage-count-label'),
-                        data: kData,
-                        backgroundColor: "rgba(255, 193, 7, 0.85)",
-                        borderColor: "rgba(255, 193, 7, 0.85)",
-                        borderWidth: 1,
-                        borderRadius: 4,
-                        barPercentage: 0.5,
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    indexAxis: 'y', // Horizontal
-                    plugins: {
-                        legend: { display: false }
-                    },
-                    scales: {
-                        x: {
-                            beginAtZero: true,
-                            ticks: { stepSize: 1 }
-                        }
+                        x: { beginAtZero: true, ticks: { stepSize: 1 } }
                     }
                 }
             });
