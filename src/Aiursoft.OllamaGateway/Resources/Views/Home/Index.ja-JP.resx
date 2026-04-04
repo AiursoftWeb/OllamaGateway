@@ -21,6 +21,12 @@
       <data name="&quot;Fire-and-forget&quot; support for long-running tasks (like emails or AI), featuring a GUI for queue management, parallel processing, and cancellation." xml:space="preserve">
     <value>長時間実行タスク（メールやAIなど）に対する「Fire-and-forget」サポート。キュー管理、並列処理、キャンセルを備えたGUIを備えています。</value>
   </data>
+  <data name="→ Native Ollama" xml:space="preserve">
+    <value>→ ネイティブ Ollama</value>
+  </data>
+  <data name="→ OpenAI-compatible provider" xml:space="preserve">
+    <value>→ OpenAI 互換プロバイダー</value>
+  </data>
   <data name="A built-in Role-Based Access Control (RBAC) system for fine-grained permission management." xml:space="preserve">
     <value>きめ細かい権限管理のための組み込みのロールベースアクセス制御（RBAC）システム。</value>
   </data>
@@ -246,6 +252,15 @@
   <data name="Day 1 Ready" xml:space="preserve">
     <value>Day 1 Ready</value>
   </data>
+  <data name="DB injects the value but it is dropped before the OpenAI request is sent" xml:space="preserve">
+    <value>DB に値が注入されますが、OpenAI リクエストが送信される前に破棄されます</value>
+  </data>
+  <data name="DB override" xml:space="preserve">
+    <value>DB 上書き</value>
+  </data>
+  <data name="DB override discarded" xml:space="preserve">
+    <value>DB 値が無効化されました</value>
+  </data>
   <data name="Dedicated management for embedding models for RAG applications." xml:space="preserve">
     <value>RAG アプリケーション用の埋め込みモデル専用の管理</value>
   </data>
@@ -390,6 +405,9 @@
   <data name="Full stack open source. Completely free software, no paid features. Built entirely on open standards." xml:space="preserve">
     <value>フルスタックのオープンソース。完全に無料のソフトウェアで、有料機能は一切ありません。完全にオープンスタンダードに基づいて構築されています。</value>
   </data>
+  <data name="Full support" xml:space="preserve">
+    <value>完全サポート</value>
+  </data>
   <data name="Fully Offline" xml:space="preserve">
     <value>オフライン完全対応</value>
   </data>
@@ -453,6 +471,9 @@
   <data name="IDE Support" xml:space="preserve">
     <value>IDEサポート</value>
   </data>
+  <data name="If DB has a value, it overrides the client value. If DB is unset, the client value passes through." xml:space="preserve">
+    <value>DB に値が設定されている場合、クライアントの値を上書きします。DB が未設定の場合は、クライアントの値がそのまま引き継がれます。</value>
+  </data>
   <data name="Included" xml:space="preserve">
     <value>含まれる</value>
   </data>
@@ -515,6 +536,9 @@
   </data>
   <data name="MIT License" xml:space="preserve">
     <value>MITライセンス</value>
+  </data>
+  <data name="Mix Any Client with Any Backend" xml:space="preserve">
+    <value>任意のクライアントを任意のバックエンドと組み合わせる</value>
   </data>
   <data name="Model Hosting &amp; Inference" xml:space="preserve">
     <value>モデルのホスティングと推論</value>
@@ -609,11 +633,26 @@
   <data name="No dependency on any cloud vendor. Run anywhere, any time." xml:space="preserve">
     <value>クラウドベンダーへの依存なし。どこでも、いつでも実行可能。</value>
   </data>
+  <data name="Not supported" xml:space="preserve">
+    <value>非対応</value>
+  </data>
   <data name="Offline Capable" xml:space="preserve">
     <value>オフライン対応</value>
   </data>
   <data name="OIDC &amp; SSO" xml:space="preserve">
     <value>OIDC &amp; SSO</value>
+  </data>
+  <data name="Ollama → Ollama" xml:space="preserve">
+    <value>Ollama → Ollama</value>
+  </data>
+  <data name="Ollama → OpenAI" xml:space="preserve">
+    <value>Ollama → OpenAI</value>
+  </data>
+  <data name="Ollama Backend" xml:space="preserve">
+    <value>Ollama Backend</value>
+  </data>
+  <data name="Ollama Client" xml:space="preserve">
+    <value>Ollama Client</value>
   </data>
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: エンタープライズグレードの API 認証、リクエスト監査、仮想モデル管理により、ネイティブの Ollama を強化します—あなたの安全でプライベートな AI ゲートウェイ。</value>
@@ -630,6 +669,9 @@
   <data name="OllamaGateway has been officially tested and is fully compatible with popular ecosystem tools including Open-WebUI, Opencode, and Roocode. Its robust API translation makes it the ideal choice for deploying autonomous AI agents." xml:space="preserve">
     <value>OllamaGateway は公式にテスト済みであり、Open-WebUI、Opencode、Roocode を含む人気のあるエコシステムツールと完全に互換性があります。その堅牢な API 変換により、自律型 AI エージェントのデプロイに最適な選択肢となっています。</value>
   </data>
+  <data name="OllamaGateway supports two inbound API formats (OpenAI &amp; Ollama) and two backend provider types — in any combination. Your clients and physical models don&apos;t have to speak the same language." xml:space="preserve">
+    <value>OllamaGateway は 2 つのインバウンド API フォーマット (OpenAI &amp; Ollama) と 2 つのバックエンドプロバイダータイプをサポートしており、任意の組み合わせで使用できます。クライアントと物理モデルは、同じ言語を話す必要はありません。</value>
+  </data>
   <data name="OllamaGateway: Enterprise-grade API authentication, request auditing, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>OllamaGateway: エンタープライズグレードの API 認証、リクエスト監査、および仮想モデル管理—あなたの安全でプライベートな AI ゲートウェイ。</value>
   </data>
@@ -639,8 +681,20 @@
   <data name="Open Source" xml:space="preserve">
     <value>オープンソース</value>
   </data>
+  <data name="OpenAI → Ollama" xml:space="preserve">
+    <value>OpenAI → Ollama</value>
+  </data>
+  <data name="OpenAI → OpenAI" xml:space="preserve">
+    <value>OpenAI → OpenAI</value>
+  </data>
   <data name="OpenAI API Translation" xml:space="preserve">
     <value>OpenAI API 翻訳</value>
+  </data>
+  <data name="OpenAI Backend" xml:space="preserve">
+    <value>OpenAI Backend</value>
+  </data>
+  <data name="OpenAI Client" xml:space="preserve">
+    <value>OpenAI Client</value>
   </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>OpenID Connect 連携</value>
@@ -656,6 +710,9 @@
   </data>
   <data name="Override temperature, top_k, and other Ollama options per virtual model." xml:space="preserve">
     <value>仮想モデルごとに温度、top_k、およびその他の Ollama オプションを上書きします。</value>
+  </data>
+  <data name="Parameter" xml:space="preserve">
+    <value>パラメータ</value>
   </data>
   <data name="Parameter Overrides" xml:space="preserve">
     <value>パラメータのオーバーライド</value>
@@ -825,6 +882,9 @@
   <data name="The template is built for easy deployment. It includes full Docker support, so you can containerize your app and run it anywhere. You can also deploy it directly to IIS, Azure App Service, or any server that supports ASP.NET Core." xml:space="preserve">
     <value>このテンプレートは簡単なデプロイを実現するために構築されています。完全なDockerサポートを含んでいるため、アプリをコンテナ化してどこでも実行できます。また、IIS、Azure App Service、またはASP.NET Coreをサポートする任意のサーバーに直接デプロイすることも可能です。</value>
   </data>
+  <data name="Thinking (think)" xml:space="preserve">
+    <value>推論 (think)</value>
+  </data>
   <data name="Thinking Mode (DeepSeek)" xml:space="preserve">
     <value>思考モード（DeepSeek）</value>
   </data>
@@ -848,6 +908,9 @@
   </data>
   <data name="Unified Identity" xml:space="preserve">
     <value>統合ID</value>
+  </data>
+  <data name="Universal API Compatibility" xml:space="preserve">
+    <value>ユニバーサル API 互換性</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>使用方法</value>
@@ -875,6 +938,9 @@
   </data>
   <data name="What our developers say" xml:space="preserve">
     <value>開発者の声</value>
+  </data>
+  <data name="When a virtual model has parameters configured in the database, those values always override what the client sends." xml:space="preserve">
+    <value>仮想モデルにデータベースでパラメータが設定されている場合、その値はクライアントが送信する値を常に上書きします。</value>
   </data>
   <data name="Why choose Aiursoft Template?" xml:space="preserve">
     <value>なぜ Aiursoft Template を選ぶのか？</value>

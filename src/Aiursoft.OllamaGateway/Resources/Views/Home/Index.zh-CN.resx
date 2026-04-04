@@ -21,6 +21,12 @@
       <data name="&quot;Fire-and-forget&quot; support for long-running tasks (like emails or AI), featuring a GUI for queue management, parallel processing, and cancellation." xml:space="preserve">
     <value>支持“即发即弃”的长运行任务（如邮件发送或 AI 推理），内置队列管理、并行处理及任务取消的可视化面板。</value>
   </data>
+  <data name="→ Native Ollama" xml:space="preserve">
+    <value>→ 原生 Ollama</value>
+  </data>
+  <data name="→ OpenAI-compatible provider" xml:space="preserve">
+    <value>→ 兼容 OpenAI 的提供商</value>
+  </data>
   <data name="A built-in Role-Based Access Control (RBAC) system for fine-grained permission management." xml:space="preserve">
     <value>内置基于角色的访问控制（RBAC）系统，用于细粒度权限管理。</value>
   </data>
@@ -246,6 +252,15 @@
   <data name="Day 1 Ready" xml:space="preserve">
     <value>第一天就准备就绪</value>
   </data>
+  <data name="DB injects the value but it is dropped before the OpenAI request is sent" xml:space="preserve">
+    <value>数据库注入该值，但在发送 OpenAI 请求前会被丢弃</value>
+  </data>
+  <data name="DB override" xml:space="preserve">
+    <value>数据库覆盖</value>
+  </data>
+  <data name="DB override discarded" xml:space="preserve">
+    <value>DB 覆盖被丢弃</value>
+  </data>
   <data name="Dedicated management for embedding models for RAG applications." xml:space="preserve">
     <value>专为 RAG 应用打造的嵌入模型管理功能。</value>
   </data>
@@ -390,6 +405,9 @@
   <data name="Full stack open source. Completely free software, no paid features. Built entirely on open standards." xml:space="preserve">
     <value>全栈开源。完全免费的软件，无付费功能。完全基于开放标准构建。</value>
   </data>
+  <data name="Full support" xml:space="preserve">
+    <value>完全支持</value>
+  </data>
   <data name="Fully Offline" xml:space="preserve">
     <value>完全离线</value>
   </data>
@@ -453,6 +471,9 @@
   <data name="IDE Support" xml:space="preserve">
     <value>IDE 支持</value>
   </data>
+  <data name="If DB has a value, it overrides the client value. If DB is unset, the client value passes through." xml:space="preserve">
+    <value>如果数据库中存在值，它将覆盖客户端值。如果数据库未设置，则保留客户端值。</value>
+  </data>
   <data name="Included" xml:space="preserve">
     <value>包含</value>
   </data>
@@ -515,6 +536,9 @@
   </data>
   <data name="MIT License" xml:space="preserve">
     <value>MIT 许可证</value>
+  </data>
+  <data name="Mix Any Client with Any Backend" xml:space="preserve">
+    <value>混合任意客户端与任意后端</value>
   </data>
   <data name="Model Hosting &amp; Inference" xml:space="preserve">
     <value>模型托管与推理</value>
@@ -609,11 +633,26 @@
   <data name="No dependency on any cloud vendor. Run anywhere, any time." xml:space="preserve">
     <value>无需依赖任何云服务提供商。随时随地运行。</value>
   </data>
+  <data name="Not supported" xml:space="preserve">
+    <value>不支持</value>
+  </data>
   <data name="Offline Capable" xml:space="preserve">
     <value>离线可用</value>
   </data>
   <data name="OIDC &amp; SSO" xml:space="preserve">
     <value>OIDC &amp; SSO</value>
+  </data>
+  <data name="Ollama → Ollama" xml:space="preserve">
+    <value>Ollama → Ollama</value>
+  </data>
+  <data name="Ollama → OpenAI" xml:space="preserve">
+    <value>Ollama → OpenAI</value>
+  </data>
+  <data name="Ollama Backend" xml:space="preserve">
+    <value>Ollama Backend</value>
+  </data>
+  <data name="Ollama Client" xml:space="preserve">
+    <value>Ollama 客户端</value>
   </data>
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway：通过企业级 API 身份验证、请求审计和虚拟模型管理，为您的原生 Ollama 赋能——您安全、私有的 AI 网关。</value>
@@ -630,6 +669,9 @@
   <data name="OllamaGateway has been officially tested and is fully compatible with popular ecosystem tools including Open-WebUI, Opencode, and Roocode. Its robust API translation makes it the ideal choice for deploying autonomous AI agents." xml:space="preserve">
     <value>OllamaGateway 经过官方测试，完全兼容 Open-webui、Opencode 和 Roocode 等主流生态工具。其强大的 API 翻译功能使其成为部署自主 AI Agent 的理想选择。</value>
   </data>
+  <data name="OllamaGateway supports two inbound API formats (OpenAI &amp; Ollama) and two backend provider types — in any combination. Your clients and physical models don&apos;t have to speak the same language." xml:space="preserve">
+    <value>OllamaGateway 支持两种入站 API 格式（OpenAI 和 Ollama）以及两种后端提供程序类型——可任意组合。您的客户端和物理模型无需使用相同的语言。</value>
+  </data>
   <data name="OllamaGateway: Enterprise-grade API authentication, request auditing, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>OllamaGateway：企业级 API 认证、请求审计和虚拟模型管理——您安全、私密的 AI 网关。</value>
   </data>
@@ -639,8 +681,20 @@
   <data name="Open Source" xml:space="preserve">
     <value>开源</value>
   </data>
+  <data name="OpenAI → Ollama" xml:space="preserve">
+    <value>OpenAI → Ollama</value>
+  </data>
+  <data name="OpenAI → OpenAI" xml:space="preserve">
+    <value>OpenAI → OpenAI</value>
+  </data>
   <data name="OpenAI API Translation" xml:space="preserve">
     <value>OpenAI API 翻译</value>
+  </data>
+  <data name="OpenAI Backend" xml:space="preserve">
+    <value>OpenAI Backend</value>
+  </data>
+  <data name="OpenAI Client" xml:space="preserve">
+    <value>OpenAI 客户端</value>
   </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>OpenID Connect 集成</value>
@@ -656,6 +710,9 @@
   </data>
   <data name="Override temperature, top_k, and other Ollama options per virtual model." xml:space="preserve">
     <value>为每个虚拟模型覆盖温度、top_k 及其他 Ollama 选项。</value>
+  </data>
+  <data name="Parameter" xml:space="preserve">
+    <value>参数</value>
   </data>
   <data name="Parameter Overrides" xml:space="preserve">
     <value>参数覆盖</value>
@@ -825,6 +882,9 @@
   <data name="The template is built for easy deployment. It includes full Docker support, so you can containerize your app and run it anywhere. You can also deploy it directly to IIS, Azure App Service, or any server that supports ASP.NET Core." xml:space="preserve">
     <value>该模板专为简化部署而设计，内置完整的Docker支持，您可以将应用容器化后随处运行。也可直接部署到IIS、Azure应用服务或任何支持ASP.NET Core的服务器。</value>
   </data>
+  <data name="Thinking (think)" xml:space="preserve">
+    <value>思考 (think)</value>
+  </data>
   <data name="Thinking Mode (DeepSeek)" xml:space="preserve">
     <value>思维链支持 (DeepSeek)</value>
   </data>
@@ -848,6 +908,9 @@
   </data>
   <data name="Unified Identity" xml:space="preserve">
     <value>统一身份</value>
+  </data>
+  <data name="Universal API Compatibility" xml:space="preserve">
+    <value>通用 API 兼容性</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>使用</value>
@@ -875,6 +938,9 @@
   </data>
   <data name="What our developers say" xml:space="preserve">
     <value>我们的开发者怎么说</value>
+  </data>
+  <data name="When a virtual model has parameters configured in the database, those values always override what the client sends." xml:space="preserve">
+    <value>当虚拟模型在数据库中配置了参数时，这些值将始终覆盖客户端发送的值。</value>
   </data>
   <data name="Why choose Aiursoft Template?" xml:space="preserve">
     <value>为何选择 Aiursoft Template？</value>
