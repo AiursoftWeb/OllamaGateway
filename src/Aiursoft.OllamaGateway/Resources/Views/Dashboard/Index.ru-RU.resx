@@ -21,6 +21,9 @@
       <data name="&quot;Fire-and-forget&quot; support for long-running tasks (like emails or AI), featuring a GUI for queue management, parallel processing, and cancellation." xml:space="preserve">
     <value>Поддержка &quot;fire-and-forget&quot; для длительных задач (например, электронной почты или ИИ), с графическим интерфейсом для управления очередями, параллельной обработки и отмены.</value>
   </data>
+  <data name="(no content)" xml:space="preserve">
+    <value>(нет данных)</value>
+  </data>
   <data name="A built-in Role-Based Access Control (RBAC) system for fine-grained permission management." xml:space="preserve">
     <value>Встроенная система управления доступом на основе ролей (RBAC) для детального управления разрешениями.</value>
   </data>
@@ -35,6 +38,9 @@
   </data>
   <data name="A modern, feature-rich, and highly extensible foundation for your next web application." xml:space="preserve">
     <value>Современная, многофункциональная и легко расширяемая основа для вашего следующего веб-приложения.</value>
+  </data>
+  <data name="active" xml:space="preserve">
+    <value>активных</value>
   </data>
   <data name="Active" xml:space="preserve">
     <value>Активные</value>
@@ -72,11 +78,17 @@
   <data name="Automatic, AI-driven translation into 28 languages." xml:space="preserve">
     <value>Автоматический перевод с использованием ИИ на 28 языков.</value>
   </data>
+  <data name="Backend Model" xml:space="preserve">
+    <value>Бэкенд-модель</value>
+  </data>
   <data name="Background Job Processing" xml:space="preserve">
     <value>Обработка фоновых задач</value>
   </data>
   <data name="Built-in User Management" xml:space="preserve">
     <value>Встроенное управление пользователями</value>
+  </data>
+  <data name="Busy" xml:space="preserve">
+    <value>Занят</value>
   </data>
   <data name="Chat" xml:space="preserve">
     <value>Чат</value>
@@ -92,6 +104,9 @@
   </data>
   <data name="Comprehensive Documentation" xml:space="preserve">
     <value>Полная документация</value>
+  </data>
+  <data name="Concurrent Requests" xml:space="preserve">
+    <value>Активные запросы</value>
   </data>
   <data name="Consistency Validation" xml:space="preserve">
     <value>Проверка согласованности</value>
@@ -153,6 +168,9 @@
   <data name="High Performance" xml:space="preserve">
     <value>Высокая производительность</value>
   </data>
+  <data name="Idle" xml:space="preserve">
+    <value>Ожидание</value>
+  </data>
   <data name="In the last 30 days" xml:space="preserve">
     <value>За последние 30 дней</value>
   </data>
@@ -164,6 +182,15 @@
   </data>
   <data name="Issued keys for access" xml:space="preserve">
     <value>Выданные ключи доступа</value>
+  </data>
+  <data name="Last at" xml:space="preserve">
+    <value>Последний:</value>
+  </data>
+  <data name="Last Question (first 30 chars)" xml:space="preserve">
+    <value>Последний вопрос (первые 30 символов)</value>
+  </data>
+  <data name="Live Inference" xml:space="preserve">
+    <value>Живой вывод</value>
   </data>
   <data name="Model Count" xml:space="preserve">
     <value>Количество моделей</value>
@@ -183,6 +210,12 @@
   <data name="Multiple Database Support" xml:space="preserve">
     <value>Поддержка нескольких баз данных</value>
   </data>
+  <data name="No active inference requests — all models are idle" xml:space="preserve">
+    <value>Нет активных запросов на вывод — все модели простаивают</value>
+  </data>
+  <data name="No call statistics yet — models will appear here once used" xml:space="preserve">
+    <value>Статистика вызовов пока отсутствует — модели появятся здесь после использования</value>
+  </data>
   <data name="No providers yet" xml:space="preserve">
     <value>Пока нет провайдеров</value>
   </data>
@@ -197,6 +230,9 @@
   </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>Интеграция OpenID Connect</value>
+  </data>
+  <data name="Physical Models — Total Call Count" xml:space="preserve">
+    <value>Физические модели — Общее количество вызовов</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>Поставщик</value>
@@ -219,6 +255,9 @@
   <data name="Robust Integration Testing" xml:space="preserve">
     <value>Надежное интеграционное тестирование</value>
   </data>
+  <data name="Running for" xml:space="preserve">
+    <value>Выполняется</value>
+  </data>
   <data name="Scheduled Task Management" xml:space="preserve">
     <value>Планирование задач</value>
   </data>
@@ -237,6 +276,9 @@
   <data name="Start a new project" xml:space="preserve">
     <value>Начать новый проект</value>
   </data>
+  <data name="Status" xml:space="preserve">
+    <value>Статус</value>
+  </data>
   <data name="Supports both environment variables and database-backed settings, with automatic priority given to environment variables for seamless overrides." xml:space="preserve">
     <value>Поддерживает как переменные среды, так и настройки, хранящиеся в базе данных, при этом переменные среды автоматически получают приоритет для бесшовного переопределения.</value>
   </data>
@@ -248,6 +290,9 @@
   </data>
   <data name="This is a template project, where we start the voyager..." xml:space="preserve">
     <value>Это шаблонный проект, с которого мы начинаем наше путешествие...</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Время</value>
   </data>
   <data name="Top API Keys By Usage" xml:space="preserve">
     <value>Топ API-ключи по использованию</value>
@@ -267,11 +312,17 @@
   <data name="Usage Count" xml:space="preserve">
     <value>Количество использований</value>
   </data>
+  <data name="User" xml:space="preserve">
+    <value>Пользователь</value>
+  </data>
   <data name="Users" xml:space="preserve">
     <value>Пользователи</value>
   </data>
   <data name="View All" xml:space="preserve">
     <value>Посмотреть все</value>
+  </data>
+  <data name="Virtual Model" xml:space="preserve">
+    <value>Виртуальная модель</value>
   </data>
   <data name="Virtual Models" xml:space="preserve">
     <value>Виртуальные модели</value>
@@ -286,15 +337,4 @@
     <value>Зачем использовать шаблон Aiursoft?</value>
   </data>
 
-  <data name="Physical Models — Total Call Count" xml:space="preserve">
-    <value>Физические модели — Общее количество вызовов</value>
-  </data>
-  <data name="No call statistics yet — models will appear here once used" xml:space="preserve">
-    <value>Статистика вызовов пока отсутствует — модели появятся здесь после использования</value>
-  </data>
-  <data name="Status" xml:space="preserve"><value>Статус</value></data>
-  <data name="Busy" xml:space="preserve"><value>Занят</value></data>
-  <data name="Time" xml:space="preserve"><value>Время</value></data>
-  <data name="Last at" xml:space="preserve"><value>Последний:</value></data>
-  <data name="Running for" xml:space="preserve"><value>Выполняется</value></data>
 </root>

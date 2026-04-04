@@ -21,6 +21,12 @@
       <data name="&quot;Fire-and-forget&quot; support for long-running tasks (like emails or AI), featuring a GUI for queue management, parallel processing, and cancellation." xml:space="preserve">
     <value>การสนับสนุนแบบ &quot;Fire-and-forget&quot; สำหรับงานที่ใช้เวลานาน (เช่น อีเมลหรือ AI) พร้อมด้วย GUI สำหรับการจัดการคิว การประมวลผลแบบขนาน และการยกเลิก</value>
   </data>
+  <data name="→ Native Ollama" xml:space="preserve">
+    <value>→ Ollama ดั้งเดิม</value>
+  </data>
+  <data name="→ OpenAI-compatible provider" xml:space="preserve">
+    <value>→ ผู้ให้บริการที่เข้ากันได้กับ OpenAI</value>
+  </data>
   <data name="A built-in Role-Based Access Control (RBAC) system for fine-grained permission management." xml:space="preserve">
     <value>ระบบควบคุมการเข้าถึงตามบทบาท (RBAC) ในตัว สำหรับการจัดการสิทธิ์แบบละเอียด</value>
   </data>
@@ -246,6 +252,15 @@
   <data name="Day 1 Ready" xml:space="preserve">
     <value>พร้อมใช้งานตั้งแต่วันแรก</value>
   </data>
+  <data name="DB injects the value but it is dropped before the OpenAI request is sent" xml:space="preserve">
+    <value>DB ฉีดค่าเข้าไปแต่จะถูกตัดออกก่อนที่คำขอ OpenAI จะถูกส่ง</value>
+  </data>
+  <data name="DB override" xml:space="preserve">
+    <value>การแทนค่าจากฐานข้อมูล</value>
+  </data>
+  <data name="DB override discarded" xml:space="preserve">
+    <value>ละเลยการแทนค่าจากฐานข้อมูล</value>
+  </data>
   <data name="Dedicated management for embedding models for RAG applications." xml:space="preserve">
     <value>การจัดการแบบเฉพาะสำหรับโมเดลการฝังตัวสำหรับแอปพลิเคชัน RAG</value>
   </data>
@@ -390,6 +405,9 @@
   <data name="Full stack open source. Completely free software, no paid features. Built entirely on open standards." xml:space="preserve">
     <value>ระบบเปิดทั้งหมด โอเพนซอร์ส ซอฟต์แวร์ฟรีทั้งหมด ไม่มีฟีเจอร์เสียค่าใช้จ่าย สร้างขึ้นบนมาตรฐานโอเพนซอร์สทั้งหมด</value>
   </data>
+  <data name="Full support" xml:space="preserve">
+    <value>รองรับเต็มรูปแบบ</value>
+  </data>
   <data name="Fully Offline" xml:space="preserve">
     <value>ทำงานแบบออฟไลน์ทั้งหมด</value>
   </data>
@@ -453,6 +471,9 @@
   <data name="IDE Support" xml:space="preserve">
     <value>การรองรับ IDE</value>
   </data>
+  <data name="If DB has a value, it overrides the client value. If DB is unset, the client value passes through." xml:space="preserve">
+    <value>หากฐานข้อมูลมีค่า ค่าดังกล่าวจะแทนที่ค่าจากไคลเอนต์ หากฐานข้อมูลไม่ได้กำหนด ค่าจากไคลเอนต์จะถูกส่งต่อ</value>
+  </data>
   <data name="Included" xml:space="preserve">
     <value>รวมไว้แล้ว</value>
   </data>
@@ -515,6 +536,9 @@
   </data>
   <data name="MIT License" xml:space="preserve">
     <value>MIT License</value>
+  </data>
+  <data name="Mix Any Client with Any Backend" xml:space="preserve">
+    <value>ผสมไคลเอนต์ใด ๆ กับแบ็กเอนด์ใด ๆ</value>
   </data>
   <data name="Model Hosting &amp; Inference" xml:space="preserve">
     <value>การโฮสต์และการอนุมานแบบจำลอง</value>
@@ -609,11 +633,26 @@
   <data name="No dependency on any cloud vendor. Run anywhere, any time." xml:space="preserve">
     <value>ไม่มีการพึ่งพาผู้ให้บริการคลาวด์ใด ๆ ใช้งานได้ทุกที่ ทุกเวลา</value>
   </data>
+  <data name="Not supported" xml:space="preserve">
+    <value>ไม่รองรับ</value>
+  </data>
   <data name="Offline Capable" xml:space="preserve">
     <value>รองรับการทำงานแบบออฟไลน์</value>
   </data>
   <data name="OIDC &amp; SSO" xml:space="preserve">
     <value>OIDC &amp; SSO</value>
+  </data>
+  <data name="Ollama → Ollama" xml:space="preserve">
+    <value>Ollama → Ollama</value>
+  </data>
+  <data name="Ollama → OpenAI" xml:space="preserve">
+    <value>Ollama → OpenAI</value>
+  </data>
+  <data name="Ollama Backend" xml:space="preserve">
+    <value>Ollama Backend</value>
+  </data>
+  <data name="Ollama Client" xml:space="preserve">
+    <value>Ollama Client</value>
   </data>
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: เพิ่มประสิทธิภาพ Ollama ของคุณด้วยระบบตรวจสอบสิทธิ์ API ระดับองค์กร การตรวจสอบคำขอ และการจัดการโมเดลเสมือน—ประตูทางเข้า AI ที่ปลอดภัยและเป็นส่วนตัวของคุณ</value>
@@ -630,14 +669,29 @@
   <data name="OllamaGateway has been officially tested and is fully compatible with popular ecosystem tools including Open-WebUI, Opencode, and Roocode. Its robust API translation makes it the ideal choice for deploying autonomous AI agents." xml:space="preserve">
     <value>OllamaGateway ได้รับการทดสอบอย่างเป็นทางการแล้วและเข้ากันได้เต็มที่กับเครื่องมือในระบบนิเวศยอดนิยม ได้แก่ Open-WebUI, Opencode และ Roocode การแปล API ที่แข็งแกร่งทำให้เป็นตัวเลือกที่เหมาะสมที่สุดสำหรับการปรับใช้อัจฉริยะประดิษฐ์อัตโนมัติ</value>
   </data>
+  <data name="OllamaGateway supports two inbound API formats (OpenAI &amp; Ollama) and two backend provider types — in any combination. Your clients and physical models don&apos;t have to speak the same language." xml:space="preserve">
+    <value>OllamaGateway รองรับรูปแบบ API ทางเข้าสองรูปแบบ (OpenAI &amp; Ollama) และประเภทผู้ให้บริการแบ็กเอนด์สองประเภท — สามารถใช้ผสมผสานกันได้ ผู้ใช้และโมเดลทางกายภาพของคุณไม่จำเป็นต้องใช้ภาษาเดียวกัน</value>
+  </data>
   <data name="One Click Start" xml:space="preserve">
     <value>เริ่มต้นด้วยคลิกเดียว</value>
   </data>
   <data name="Open Source" xml:space="preserve">
     <value>โอเพนซอร์ส</value>
   </data>
+  <data name="OpenAI → Ollama" xml:space="preserve">
+    <value>OpenAI → Ollama</value>
+  </data>
+  <data name="OpenAI → OpenAI" xml:space="preserve">
+    <value>OpenAI → OpenAI</value>
+  </data>
   <data name="OpenAI API Translation" xml:space="preserve">
     <value>การแปล API ของ OpenAI</value>
+  </data>
+  <data name="OpenAI Backend" xml:space="preserve">
+    <value>OpenAI Backend</value>
+  </data>
+  <data name="OpenAI Client" xml:space="preserve">
+    <value>OpenAI Client</value>
   </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>การผสานรวม OpenID Connect</value>
@@ -653,6 +707,9 @@
   </data>
   <data name="Override temperature, top_k, and other Ollama options per virtual model." xml:space="preserve">
     <value>กำหนดค่าอุณหภูมิ top_k และตัวเลือก Ollama อื่นๆ สำหรับแต่ละแบบจำลองเสมือน</value>
+  </data>
+  <data name="Parameter" xml:space="preserve">
+    <value>พารามิเตอร์</value>
   </data>
   <data name="Parameter Overrides" xml:space="preserve">
     <value>การแทนที่พารามิเตอร์</value>
@@ -822,6 +879,9 @@
   <data name="The template is built for easy deployment. It includes full Docker support, so you can containerize your app and run it anywhere. You can also deploy it directly to IIS, Azure App Service, or any server that supports ASP.NET Core." xml:space="preserve">
     <value>เทมเพลตนี้ถูกสร้างขึ้นเพื่อให้การปรับใช้เป็นเรื่องง่าย โดยมีระบบรองรับ Docker เต็มรูปแบบ ทำให้คุณสามารถสร้างคอนเทนเนอร์สำหรับแอปพลิเคชันและรันได้ทุกที่ นอกจากนี้คุณยังสามารถปรับใช้โดยตรงไปยัง IIS, Azure App Service หรือเซิร์ฟเวอร์ใดๆ ที่รองรับ ASP.NET Core ได้อีกด้วย</value>
   </data>
+  <data name="Thinking (think)" xml:space="preserve">
+    <value>การคิด (think)</value>
+  </data>
   <data name="Thinking Mode (DeepSeek)" xml:space="preserve">
     <value>โหมดคิด (DeepSeek)</value>
   </data>
@@ -845,6 +905,9 @@
   </data>
   <data name="Unified Identity" xml:space="preserve">
     <value>เอกลักษณ์ที่เป็นหนึ่งเดียว</value>
+  </data>
+  <data name="Universal API Compatibility" xml:space="preserve">
+    <value>ความเข้ากันได้ของ API ทั่วไป</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>การใช้งาน</value>
@@ -872,6 +935,9 @@
   </data>
   <data name="What our developers say" xml:space="preserve">
     <value>นักพัฒนาของเราพูดว่าอย่างไร</value>
+  </data>
+  <data name="When a virtual model has parameters configured in the database, those values always override what the client sends." xml:space="preserve">
+    <value>เมื่อแบบจำลองเสมือนมีพารามิเตอร์ที่กำหนดไว้ในฐานข้อมูล ค่าเหล่านั้นจะข้ามค่าที่ส่งจากไคลเอนต์เสมอ</value>
   </data>
   <data name="Why choose Aiursoft Template?" xml:space="preserve">
     <value>ทำไมต้องเลือก Aiursoft Template?</value>
