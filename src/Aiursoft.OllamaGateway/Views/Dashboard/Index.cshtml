@@ -333,13 +333,13 @@
         <div class="col-12 col-md-6 col-xxl-3 d-flex">
             <div class="card flex-fill w-100">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">@Localizer["Top Underlying Models"]</h5>
+                    <h5 class="card-title mb-0">@Localizer["Top Virtual Models By Usage"]</h5>
                 </div>
                 <div class="card-body d-flex">
                     <div class="align-self-center w-100">
                         <div class="py-3">
                             <div class="chart chart-sm">
-                                <canvas id="chartTopModels"></canvas>
+                                <canvas id="chartTopVirtualModels"></canvas>
                             </div>
                         </div>
                         <table class="table mb-0">
@@ -350,12 +350,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (Model.TopModels.Any())
+                                @if (Model.TopVirtualModels.Any())
                                 {
-                                    foreach (var m in Model.TopModels)
+                                    foreach (var m in Model.TopVirtualModels)
                                     {
                                         <tr>
-                                            <td><i class="fas fa-microchip text-primary"></i> @m.ModelName</td>
+                                            <td><i class="fas fa-cube text-primary"></i> @m.ModelName</td>
                                             <td class="text-end">@m.UsageCount</td>
                                         </tr>
                                     }
@@ -620,8 +620,8 @@
      data-usage-count-label="@Localizer["Usage Count"]"
      data-provider-labels='@Json.Serialize(Model.ProviderStats.Select(p => p.Name))'
      data-provider-data='@Json.Serialize(Model.ProviderStats.Select(p => p.ModelCount))'
-     data-top-models-labels='@Json.Serialize(Model.TopModels.Select(t => t.ModelName))'
-     data-top-models-data='@Json.Serialize(Model.TopModels.Select(t => t.UsageCount))'
+     data-top-virtual-models-labels='@Json.Serialize(Model.TopVirtualModels.Select(t => t.ModelName))'
+     data-top-virtual-models-data='@Json.Serialize(Model.TopVirtualModels.Select(t => t.UsageCount))'
      data-top-api-keys-labels='@Json.Serialize(Model.TopApiKeys.Select(t => t.Name))'
      data-top-api-keys-data='@Json.Serialize(Model.TopApiKeys.Select(t => t.UsageCount))'
      data-physical-models-labels='@Json.Serialize(Model.PhysicalModelStats.Select(m => m.ProviderName + " / " + m.ModelName))'
@@ -712,19 +712,19 @@
             });
         }
 
-        // --- Top Models Bar ---
-        var ctxTopM = document.getElementById("chartTopModels");
-        if (ctxTopM) {
-            var mLabels = getJsonAttr('data-top-models-labels');
-            var mData = getJsonAttr('data-top-models-data');
+        // --- Top Virtual Models Bar ---
+        var ctxTopVM = document.getElementById("chartTopVirtualModels");
+        if (ctxTopVM) {
+            var vmLabels = getJsonAttr('data-top-virtual-models-labels');
+            var vmData = getJsonAttr('data-top-virtual-models-data');
 
-            new Chart(ctxTopM, {
+            new Chart(ctxTopVM, {
                 type: "bar",
                 data: {
-                    labels: mLabels,
+                    labels: vmLabels,
                     datasets: [{
                         label: getAttr('data-usage-count-label'),
-                        data: mData,
+                        data: vmData,
                         backgroundColor: "rgba(59, 125, 221, 0.85)",
                         borderColor: "rgba(59, 125, 221, 0.85)",
                         borderWidth: 1,

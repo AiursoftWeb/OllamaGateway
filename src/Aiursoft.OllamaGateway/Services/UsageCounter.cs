@@ -9,9 +9,11 @@ public class UsageCounter : ISingletonDependency
     private ConcurrentDictionary<(int providerId, string modelName), long> _modelUsageBuffer = new();
     private ConcurrentDictionary<int, DateTime> _apiKeyLastUsedBuffer = new();
     private ConcurrentDictionary<(int providerId, string modelName), DateTime> _modelLastUsedBuffer = new();
+    private ConcurrentDictionary<string, long> _virtualModelUsageBuffer = new();
 
     private readonly object _apiKeyLock = new();
     private readonly object _modelLock = new();
+    private readonly object _virtualModelLock = new();
 
     public void TrackApiKeyUsage(int apiKeyId)
     {
@@ -23,6 +25,11 @@ public class UsageCounter : ISingletonDependency
     {
         _modelUsageBuffer.AddOrUpdate((providerId, modelName), 1, (_, current) => current + 1);
         _modelLastUsedBuffer.AddOrUpdate((providerId, modelName), DateTime.UtcNow, (_, _) => DateTime.UtcNow);
+    }
+
+    public void TrackVirtualModelUsage(string virtualModelName)
+    {
+        _virtualModelUsageBuffer.AddOrUpdate(virtualModelName, 1, (_, current) => current + 1);
     }
 
     public (IDictionary<int, long> usages, IDictionary<int, DateTime> lastUsed) SwapApiKeyBuffers()
@@ -46,6 +53,16 @@ public class UsageCounter : ISingletonDependency
             _modelUsageBuffer = new();
             _modelLastUsedBuffer = new();
             return (oldUsages, oldLastUsed);
+        }
+    }
+
+    public IDictionary<string, long> SwapVirtualModelBuffers()
+    {
+        lock (_virtualModelLock)
+        {
+            var old = _virtualModelUsageBuffer;
+            _virtualModelUsageBuffer = new();
+            return old;
         }
     }
 }

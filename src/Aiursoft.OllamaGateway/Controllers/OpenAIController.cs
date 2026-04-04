@@ -139,6 +139,7 @@ public class OpenAIController : ControllerBase
                 _memoryUsageTracker.TrackApiKeyUsage(apiKeyId);
             }
             _memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
+            _memoryUsageTracker.TrackVirtualModelUsage(virtualModel.Name);
 
             _logContext.Log.Model = virtualModel.Name;
 
@@ -796,6 +797,7 @@ public class OpenAIController : ControllerBase
                 _memoryUsageTracker.TrackApiKeyUsage(apiKeyId);
             }
             _memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
+            _memoryUsageTracker.TrackVirtualModelUsage(virtualModel.Name);
             
             _logContext.Log.Model = virtualModel.Name;
             _logContext.Log.ConversationMessageCount = 1;

@@ -84,20 +84,17 @@ public class DashboardController(
             .ToList();
         }
 
-        // Model Stats from memory
-        var allModelStats = memoryUsageTracker.GetAllUnderlyingModelStats();
-        if (allModelStats.Any())
-        {
-            model.TopModels = allModelStats
-                .OrderByDescending(x => x.Value)
-                .Take(5)
-                .Select(x => new TopModelStats
-                {
-                    ModelName = x.Key, // format is "providerId_modelName"
-                    UsageCount = x.Value
-                })
-                .ToList();
-        }
+        // Top Virtual Model Stats from DB
+        model.TopVirtualModels = await dbContext.VirtualModels
+            .Where(v => v.UsageCount > 0)
+            .OrderByDescending(v => v.UsageCount)
+            .Take(5)
+            .Select(v => new TopVirtualModelStats
+            {
+                ModelName = v.Name,
+                UsageCount = v.UsageCount
+            })
+            .ToListAsync();
 
         // Live active requests from in-memory tracker — include idle models that have history
         model.ActiveRequests = activeRequestTracker.GetAll()

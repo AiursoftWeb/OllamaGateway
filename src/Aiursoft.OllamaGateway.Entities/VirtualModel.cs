@@ -57,5 +57,7 @@ public class VirtualModel
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
+    public long UsageCount { get; set; }
+
     public List<VirtualModelBackend> VirtualModelBackends { get; set; } = [];
 }

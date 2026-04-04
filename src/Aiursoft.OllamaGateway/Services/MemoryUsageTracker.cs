@@ -35,6 +35,11 @@ public class MemoryUsageTracker(
         counter.TrackUnderlyingModelUsage(providerId, modelName);
     }
 
+    public void TrackVirtualModelUsage(string virtualModelName)
+    {
+        counter.TrackVirtualModelUsage(virtualModelName);
+    }
+
     public long GetUnderlyingModelStats(int providerId, string modelName)
     {
         using var scope = scopeFactory.CreateScope();
@@ -52,5 +57,15 @@ public class MemoryUsageTracker(
         return db.UnderlyingModelUsages
             .AsNoTracking()
             .ToDictionary(u => $"{u.ProviderId}_{u.ModelName}", u => u.UsageCount);
+    }
+
+    public IDictionary<string, long> GetAllVirtualModelStats()
+    {
+        using var scope = scopeFactory.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+        return db.VirtualModels
+            .AsNoTracking()
+            .Where(v => v.UsageCount > 0)
+            .ToDictionary(v => v.Name, v => v.UsageCount);
     }
 }

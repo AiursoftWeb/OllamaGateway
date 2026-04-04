@@ -159,5 +159,31 @@ public class UsageFlushService : BackgroundService
         {
             await dbContext.SaveChangesAsync();
         }
+
+        // Flush Virtual Models
+        var virtualModelUsages = _usageCounter.SwapVirtualModelBuffers();
+        foreach (var modelName in virtualModelUsages.Keys)
+        {
+            var count = virtualModelUsages[modelName];
+            if (isInMemory)
+            {
+                var model = await dbContext.VirtualModels.FirstOrDefaultAsync(v => v.Name == modelName);
+                if (model != null)
+                {
+                    model.UsageCount += count;
+                }
+            }
+            else
+            {
+                await dbContext.VirtualModels
+                    .Where(v => v.Name == modelName)
+                    .ExecuteUpdateAsync(s => s.SetProperty(v => v.UsageCount, v => v.UsageCount + count));
+            }
+        }
+
+        if (isInMemory)
+        {
+            await dbContext.SaveChangesAsync();
+        }
     }
 }

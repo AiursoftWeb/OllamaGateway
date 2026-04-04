@@ -294,6 +294,9 @@ namespace Aiursoft.OllamaGateway.MySql.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
+                    b.Property<long>("UsageCount")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("UseRawOutput")
                         .HasColumnType("tinyint(1)");
 

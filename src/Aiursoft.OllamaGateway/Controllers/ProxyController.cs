@@ -178,6 +178,7 @@ public class ProxyController(
                 memoryUsageTracker.TrackApiKeyUsage(apiKeyId);
             }
             memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
+            memoryUsageTracker.TrackVirtualModelUsage(virtualModel.Name);
             
             logContext.Log.Model = virtualModel.Name;
             logContext.Log.ConversationMessageCount = input.Messages?.Count ?? 0;
@@ -712,6 +713,7 @@ public class ProxyController(
                 memoryUsageTracker.TrackApiKeyUsage(apiKeyId);
             }
             memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
+            memoryUsageTracker.TrackVirtualModelUsage(virtualModel.Name);
             
             logContext.Log.Model = virtualModel.Name;
             logContext.Log.ConversationMessageCount = 1;
@@ -979,6 +981,7 @@ public class ProxyController(
                 memoryUsageTracker.TrackApiKeyUsage(apiKeyId);
             }
             memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
+            memoryUsageTracker.TrackVirtualModelUsage(virtualModel.Name);
             
             logContext.Log.Model = virtualModel.Name;
             logContext.Log.ConversationMessageCount = 1;

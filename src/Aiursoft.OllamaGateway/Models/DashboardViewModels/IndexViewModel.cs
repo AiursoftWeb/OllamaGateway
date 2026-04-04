@@ -22,7 +22,7 @@ public class IndexViewModel : UiStackLayoutViewModel
 
     public List<ProviderStats> ProviderStats { get; set; } = [];
     public List<TopApiKeyStats> TopApiKeys { get; set; } = [];
-    public List<TopModelStats> TopModels { get; set; } = [];
+    public List<TopVirtualModelStats> TopVirtualModels { get; set; } = [];
     public List<RecentUserStats> RecentUsers { get; set; } = [];
     public List<ActiveModelInfo> ActiveRequests { get; set; } = [];
     public List<PhysicalModelCallStats> PhysicalModelStats { get; set; } = [];
@@ -48,7 +48,7 @@ public class TopApiKeyStats
 
 [ExcludeFromCodeCoverage]
 
-public class TopModelStats
+public class TopVirtualModelStats
 {
     public string ModelName { get; set; } = string.Empty;
     public long UsageCount { get; set; }
