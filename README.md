@@ -91,6 +91,33 @@ Ollama Gateway supports two inbound API formats and two backend provider types, 
 | Num Ctx | ❌ Always discarded<br>🚫 OpenAI does not support it<br>➖ DB does not inject it | ❌ Always discarded<br>✏️ DB injects into `options` but the field is dropped before the OpenAI request is sent | 🚫 Client cannot pass it (no such field in OpenAI API)<br>✏️ DB injects if set<br>➡️ Forwarded as `options.num_ctx` to Ollama | ✅ Client value arrives<br>✏️ DB hard-overrides if set<br>➡️ Forwarded as `options.num_ctx` to Ollama |
 | Thinking | ❌ Always discarded<br>🚫 OpenAI does not support it<br>➖ DB does not inject it | ❌ Always discarded<br>✏️ DB injects into `options` but the field is dropped before the OpenAI request is sent | 🚫 Client cannot pass it (no such field in OpenAI API)<br>✏️ DB injects if set<br>➡️ Forwarded as `"think"` to Ollama | ✅ Client value arrives<br>✏️ DB hard-overrides if set<br>➡️ Forwarded as `"think"` to Ollama |
 
+## Why OllamaGateway?
+
+Native Ollama is great for personal use, but it lacks the enterprise features required for team collaboration and production deployment. OllamaGateway fills those gaps without changing your workflow.
+
+| Feature | Native Ollama | OllamaGateway |
+|---|:---:|:---:|
+| Model Hosting & Inference | ✅ | ✅ |
+| Multimodal | ✅ | ✅ |
+| MCP | ✅ | ✅ |
+| Function Call | ✅ | ✅ |
+| Streaming | ✅ | ✅ |
+| OpenAI API Translation | ⚠️ Partial[^1] | ✅ |
+| API Authentication (Bearer Token) | ❌ | ✅ |
+| Multiple API Keys Management | ❌ | ✅ |
+| Request & Response Auditing | ❌ | ✅ |
+| API Rate Limiting | ❌ | ✅ |
+| Virtual Model Overrides | ❌ | ✅ |
+| Multi-backend Support | ❌ | ✅ |
+| Load Balancing | ❌ | ✅ |
+| Tiered Fallback | ❌ | ✅ |
+| Default Model Support | ❌ | ✅ |
+| Model Keep-alive (Ping) | ❌ | ✅ |
+| Admin Management GUI | ❌ | ✅ |
+| Chat/Embedding Segregation | ❌ | ✅ |
+
+[^1]: Native Ollama partially supports OpenAI API. It lacks advanced system prompt mapping, parameter overriding, and role translation.
+
 ## How to contribute
 
 There are many ways to contribute to the project: logging bugs, submitting pull requests, reporting issues, and creating suggestions.
