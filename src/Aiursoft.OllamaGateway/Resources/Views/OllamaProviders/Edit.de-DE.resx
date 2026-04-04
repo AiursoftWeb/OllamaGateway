@@ -60,6 +60,12 @@
   <data name="No physical models found on this server." xml:space="preserve">
     <value>Keine physischen Modelle auf diesem Server gefunden.</value>
   </data>
+  <data name="Ollama" xml:space="preserve">
+    <value>Ollama</value>
+  </data>
+  <data name="OpenAI Compatible" xml:space="preserve">
+    <value>OpenAI-kompatibel</value>
+  </data>
   <data name="Optional API Key" xml:space="preserve">
     <value>Optionale API-Schlüssel</value>
   </data>
@@ -72,6 +78,9 @@
   <data name="Provider Name" xml:space="preserve">
     <value>Anbietername</value>
   </data>
+  <data name="Provider Type" xml:space="preserve">
+    <value>Anbieterart</value>
+  </data>
   <data name="Save Changes" xml:space="preserve">
     <value>Änderungen speichern</value>
   </data>
@@ -83,6 +92,9 @@
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>Name des zugrunde liegenden Modells</value>
+  </data>
+  <data name="Warmup is not applicable to OpenAI-compatible providers. The upstream service manages model loading automatically." xml:space="preserve">
+    <value>Warmup ist für OpenAI-kompatible Anbieter nicht anwendbar. Der vorgelagerte Dienst verwaltet das Modell-Laden automatisch.</value>
   </data>
 
 </root>

@@ -60,6 +60,12 @@
   <data name="No physical models found on this server." xml:space="preserve">
     <value>이 서버에서 물리 모델을 찾을 수 없습니다.</value>
   </data>
+  <data name="Ollama" xml:space="preserve">
+    <value>Ollama</value>
+  </data>
+  <data name="OpenAI Compatible" xml:space="preserve">
+    <value>OpenAI 호환</value>
+  </data>
   <data name="Optional API Key" xml:space="preserve">
     <value>선택적 API 키</value>
   </data>
@@ -72,6 +78,9 @@
   <data name="Provider Name" xml:space="preserve">
     <value>공급자 이름</value>
   </data>
+  <data name="Provider Type" xml:space="preserve">
+    <value>제공자 유형</value>
+  </data>
   <data name="Save Changes" xml:space="preserve">
     <value>변경 사항 저장</value>
   </data>
@@ -83,6 +92,9 @@
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>기반 모델 이름</value>
+  </data>
+  <data name="Warmup is not applicable to OpenAI-compatible providers. The upstream service manages model loading automatically." xml:space="preserve">
+    <value>Warmup은 OpenAI 호환 제공업체에는 적용되지 않습니다. 상위 서비스에서 모델 로딩을 자동으로 관리합니다.</value>
   </data>
 
 </root>
