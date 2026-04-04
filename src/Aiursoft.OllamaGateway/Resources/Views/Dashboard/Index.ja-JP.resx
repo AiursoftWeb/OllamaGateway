@@ -87,6 +87,9 @@
   <data name="Built-in User Management" xml:space="preserve">
     <value>組み込みユーザー管理</value>
   </data>
+  <data name="Busy" xml:space="preserve">
+    <value>処理中</value>
+  </data>
   <data name="Chat" xml:space="preserve">
     <value>チャット</value>
   </data>
@@ -180,6 +183,9 @@
   <data name="Issued keys for access" xml:space="preserve">
     <value>アクセス発行済みキー</value>
   </data>
+  <data name="Last at" xml:space="preserve">
+    <value>最終:</value>
+  </data>
   <data name="Last Question (first 30 chars)" xml:space="preserve">
     <value>直近の質問（先頭 30 文字）</value>
   </data>
@@ -207,6 +213,9 @@
   <data name="No active inference requests — all models are idle" xml:space="preserve">
     <value>アクティブな推論リクエストはありません — すべてのモデルがアイドル状態です</value>
   </data>
+  <data name="No call statistics yet — models will appear here once used" xml:space="preserve">
+    <value>まだ呼び出し統計はありません — モデルが使用されると表示されます</value>
+  </data>
   <data name="No providers yet" xml:space="preserve">
     <value>まだプロバイダーはありません</value>
   </data>
@@ -221,6 +230,9 @@
   </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>OpenID Connect連携</value>
+  </data>
+  <data name="Physical Models — Total Call Count" xml:space="preserve">
+    <value>物理モデル — 総呼び出し回数</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>プロバイダー</value>
@@ -264,6 +276,9 @@
   <data name="Start a new project" xml:space="preserve">
     <value>新規プロジェクトを開始</value>
   </data>
+  <data name="Status" xml:space="preserve">
+    <value>ステータス</value>
+  </data>
   <data name="Supports both environment variables and database-backed settings, with automatic priority given to environment variables for seamless overrides." xml:space="preserve">
     <value>環境変数とデータベースバックエンド設定の両方をサポートしており、環境変数に自動的に優先順位が与えられ、スムーズな上書きが可能になります。</value>
   </data>
@@ -275,6 +290,9 @@
   </data>
   <data name="This is a template project, where we start the voyager..." xml:space="preserve">
     <value>これはテンプレートプロジェクトです。ここから航海が始まります...</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>時刻</value>
   </data>
   <data name="Top API Keys By Usage" xml:space="preserve">
     <value>使用量上位のAPIキー</value>
@@ -316,15 +334,4 @@
     <value>Aiursoftテンプレートを使用する理由</value>
   </data>
 
-  <data name="Physical Models — Total Call Count" xml:space="preserve">
-    <value>物理モデル — 総呼び出し回数</value>
-  </data>
-  <data name="No call statistics yet — models will appear here once used" xml:space="preserve">
-    <value>まだ呼び出し統計はありません — モデルが使用されると表示されます</value>
-  </data>
-  <data name="Status" xml:space="preserve"><value>ステータス</value></data>
-  <data name="Busy" xml:space="preserve"><value>処理中</value></data>
-  <data name="Time" xml:space="preserve"><value>時刻</value></data>
-  <data name="Last at" xml:space="preserve"><value>最終:</value></data>
-  <data name="Running for" xml:space="preserve"><value>実行中:</value></data>
 </root>

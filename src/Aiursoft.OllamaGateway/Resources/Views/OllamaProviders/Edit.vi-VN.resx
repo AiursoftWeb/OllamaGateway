@@ -60,6 +60,12 @@
   <data name="No physical models found on this server." xml:space="preserve">
     <value>Không tìm thấy mô hình vật lý nào trên máy chủ này.</value>
   </data>
+  <data name="Ollama" xml:space="preserve">
+    <value>Ollama</value>
+  </data>
+  <data name="OpenAI Compatible" xml:space="preserve">
+    <value>Tương thích OpenAI</value>
+  </data>
   <data name="Optional API Key" xml:space="preserve">
     <value>Khóa API tùy chọn</value>
   </data>
@@ -72,6 +78,9 @@
   <data name="Provider Name" xml:space="preserve">
     <value>Tên nhà cung cấp</value>
   </data>
+  <data name="Provider Type" xml:space="preserve">
+    <value>Loại nhà cung cấp</value>
+  </data>
   <data name="Save Changes" xml:space="preserve">
     <value>Lưu thay đổi</value>
   </data>
@@ -83,6 +92,9 @@
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>Tên Mô hình Cơ sở</value>
+  </data>
+  <data name="Warmup is not applicable to OpenAI-compatible providers. The upstream service manages model loading automatically." xml:space="preserve">
+    <value>Warmup không áp dụng cho các nhà cung cấp tương thích OpenAI. Dịch vụ upstream tự động quản lý việc tải mô hình.</value>
   </data>
 
 </root>
