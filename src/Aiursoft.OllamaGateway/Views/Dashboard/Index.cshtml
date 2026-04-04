@@ -1,4 +1,5 @@
 @model Aiursoft.OllamaGateway.Models.DashboardViewModels.IndexViewModel
+@using Aiursoft.WebTools
 
 <div class="container-fluid p-0">
     @* === Row 0: Header === *@
@@ -121,9 +122,12 @@
                         <i class="align-middle me-1" data-lucide="zap"></i>
                         @Localizer["Live Inference"]
                     </h5>
-                    @if (Model.ActiveRequests.Any())
+                    @{
+                        var totalActive = Model.ActiveRequests.Where(r => r.IsActive).Sum(r => r.ActiveCount);
+                    }
+                    @if (totalActive > 0)
                     {
-                        <span class="badge bg-danger">@Model.ActiveRequests.Sum(r => r.ActiveCount) @Localizer["active"]</span>
+                        <span class="badge bg-danger">@totalActive @Localizer["active"]</span>
                     }
                     else
                     {
@@ -134,11 +138,12 @@
                     <table class="table table-hover mb-0">
                         <thead>
                             <tr>
+                                <th>@Localizer["Status"]</th>
                                 <th>@Localizer["Virtual Model"]</th>
                                 <th>@Localizer["Backend Model"]</th>
                                 <th class="text-center">@Localizer["Concurrent Requests"]</th>
                                 <th>@Localizer["Last Question (first 30 chars)"]</th>
-                                <th class="text-end">@Localizer["Running for"]</th>
+                                <th class="text-end">@Localizer["Time"]</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -146,43 +151,83 @@
                             {
                                 foreach (var req in Model.ActiveRequests)
                                 {
-                                    var elapsed = DateTime.UtcNow - req.LastStartedAt;
-                                    var elapsedStr = elapsed.TotalSeconds < 60
-                                        ? $"{(int)elapsed.TotalSeconds}s"
-                                        : $"{(int)elapsed.TotalMinutes}m {elapsed.Seconds}s";
-                                    <tr>
-                                        <td>
-                                            <span class="badge bg-success-subtle text-success me-1">●</span>
-                                            <strong>@req.ModelName</strong>
-                                        </td>
-                                        <td class="text-muted small font-monospace">
-                                            @if (!string.IsNullOrWhiteSpace(req.BackendModelName))
-                                            {
-                                                <i data-lucide="server" class="me-1" style="width:12px;height:12px;"></i>@req.BackendModelName
-                                            }
-                                        </td>
-                                        <td class="text-center">
-                                            <span class="badge bg-warning text-dark">@req.ActiveCount</span>
-                                        </td>
-                                        <td class="font-monospace text-muted small">
-                                            @if (!string.IsNullOrWhiteSpace(req.LastQuestion))
-                                            {
-                                                @req.LastQuestion
-                                                @if (req.LastQuestion.Length >= 30){<text>…</text>}
-                                            }
-                                            else
-                                            {
-                                                <em>@Localizer["(no content)"]</em>
-                                            }
-                                        </td>
-                                        <td class="text-end text-muted small">@elapsedStr</td>
-                                    </tr>
+                                    @if (req.IsActive)
+                                    {
+                                        var elapsed = DateTime.UtcNow - req.LastStartedAt;
+                                        var elapsedStr = elapsed.TotalSeconds < 60
+                                            ? $"{(int)elapsed.TotalSeconds}s"
+                                            : $"{(int)elapsed.TotalMinutes}m {elapsed.Seconds}s";
+                                        <tr>
+                                            <td>
+                                                <span class="badge bg-danger">@Localizer["Busy"]</span>
+                                            </td>
+                                            <td>
+                                                <strong>@req.ModelName</strong>
+                                            </td>
+                                            <td class="text-muted small font-monospace">
+                                                @if (!string.IsNullOrWhiteSpace(req.BackendModelName))
+                                                {
+                                                    <i data-lucide="server" class="me-1" style="width:12px;height:12px;"></i>@req.BackendModelName
+                                                }
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="badge bg-warning text-dark">@req.ActiveCount</span>
+                                            </td>
+                                            <td class="font-monospace text-muted small">
+                                                @if (!string.IsNullOrWhiteSpace(req.LastQuestion))
+                                                {
+                                                    @req.LastQuestion
+                                                    @if (req.LastQuestion.Length >= 30){<text>…</text>}
+                                                }
+                                                else
+                                                {
+                                                    <em>@Localizer["(no content)"]</em>
+                                                }
+                                            </td>
+                                            <td class="text-end text-muted small">@Localizer["Running for"] @elapsedStr</td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        <tr class="text-muted">
+                                            <td>
+                                                <span class="badge bg-secondary">@Localizer["Idle"]</span>
+                                            </td>
+                                            <td>@req.ModelName</td>
+                                            <td class="small font-monospace">
+                                                @if (!string.IsNullOrWhiteSpace(req.BackendModelName))
+                                                {
+                                                    <i data-lucide="server" class="me-1" style="width:12px;height:12px;"></i>@req.BackendModelName
+                                                }
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="badge bg-secondary">0</span>
+                                            </td>
+                                            <td class="font-monospace small">
+                                                @if (!string.IsNullOrWhiteSpace(req.LastQuestion))
+                                                {
+                                                    @req.LastQuestion
+                                                    @if (req.LastQuestion.Length >= 30){<text>…</text>}
+                                                }
+                                                else
+                                                {
+                                                    <em>@Localizer["(no content)"]</em>
+                                                }
+                                            </td>
+                                            <td class="text-end small">
+                                                @if (req.LastCompletedAt.HasValue)
+                                                {
+                                                    @Localizer["Last at"] <label data-utc-time="@req.LastCompletedAt.Value.ToHtmlDateTime()" class="mb-0"></label>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
                                 }
                             }
                             else
                             {
                                 <tr>
-                                    <td colspan="5" class="text-center text-muted py-3">
+                                    <td colspan="6" class="text-center text-muted py-3">
                                         <i data-lucide="moon" class="me-1" style="width:16px;height:16px;"></i>
                                         @Localizer["No active inference requests — all models are idle"]
                                     </td>
@@ -374,7 +419,36 @@
         </div>
     </div>
 
-    @* === Row 3: Content Overview, System Status, Recent Users === *@
+    @* === Row 4: Physical Models Call Count === *@
+    <div class="row">
+        <div class="col-12 d-flex">
+            <div class="card flex-fill w-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="align-middle me-1" data-lucide="bar-chart-2"></i>
+                        @Localizer["Physical Models — Total Call Count"]
+                    </h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.PhysicalModelStats.Any())
+                    {
+                        <div class="chart" style="min-height: @(Math.Max(200, Model.PhysicalModelStats.Count * 44))px;">
+                            <canvas id="chartPhysicalModels"></canvas>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center text-muted py-4">
+                            <i data-lucide="bar-chart-2" class="d-block mx-auto mb-2" style="width:32px;height:32px;"></i>
+                            @Localizer["No call statistics yet — models will appear here once used"]
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* === Row 5: Content Overview, System Status, Recent Users === *@
     <div class="row">
         <div class="col-12 col-lg-4 d-flex">
             <div class="card flex-fill w-100">
@@ -520,7 +594,7 @@
                                 </div>
                                 <div class="flex-grow-1 ms-3">
                                     <strong>@user.Email</strong>
-                                    <div class="text-muted small">@user.CreationTime.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</div>
+                                    <div class="text-muted small"><label data-utc-time="@user.CreationTime.ToHtmlDateTime()" class="mb-0"></label></div>
                                 </div>
                             </div>
                         }
@@ -549,7 +623,9 @@
      data-top-models-labels='@Json.Serialize(Model.TopModels.Select(t => t.ModelName))'
      data-top-models-data='@Json.Serialize(Model.TopModels.Select(t => t.UsageCount))'
      data-top-api-keys-labels='@Json.Serialize(Model.TopApiKeys.Select(t => t.Name))'
-     data-top-api-keys-data='@Json.Serialize(Model.TopApiKeys.Select(t => t.UsageCount))'>
+     data-top-api-keys-data='@Json.Serialize(Model.TopApiKeys.Select(t => t.UsageCount))'
+     data-physical-models-labels='@Json.Serialize(Model.PhysicalModelStats.Select(m => m.ProviderName + " / " + m.ModelName))'
+     data-physical-models-data='@Json.Serialize(Model.PhysicalModelStats.Select(m => m.UsageCount))'>
 </div>
 
 @* === Chart.js Scripts === *@
@@ -660,6 +736,51 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     indexAxis: 'y', // Horizontal
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            ticks: { stepSize: 1 }
+                        }
+                    }
+                }
+            });
+        }
+
+        // --- Physical Models Call Count Bar ---
+        var ctxPhysical = document.getElementById("chartPhysicalModels");
+        if (ctxPhysical) {
+            var pmLabels = getJsonAttr('data-physical-models-labels');
+            var pmData = getJsonAttr('data-physical-models-data');
+
+            new Chart(ctxPhysical, {
+                type: "bar",
+                data: {
+                    labels: pmLabels,
+                    datasets: [{
+                        label: getAttr('data-usage-count-label'),
+                        data: pmData,
+                        backgroundColor: [
+                            "rgba(59, 125, 221, 0.85)",
+                            "rgba(40, 167, 69, 0.85)",
+                            "rgba(255, 193, 7, 0.85)",
+                            "rgba(220, 53, 69, 0.85)",
+                            "rgba(23, 162, 184, 0.85)",
+                            "rgba(108, 117, 125, 0.85)",
+                            "rgba(111, 66, 193, 0.85)",
+                            "rgba(253, 126, 20, 0.85)",
+                        ],
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        barPercentage: 0.6,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
                     plugins: {
                         legend: { display: false }
                     },

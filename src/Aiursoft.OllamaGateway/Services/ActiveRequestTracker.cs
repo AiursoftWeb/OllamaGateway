@@ -13,6 +13,7 @@ public class ActiveModelRequestInfo
     public string LastQuestion = string.Empty;
     public string BackendModelName = string.Empty;
     public DateTime LastStartedAt = DateTime.UtcNow;
+    public DateTime? LastCompletedAt;
 }
 
 /// <summary>
@@ -48,7 +49,7 @@ public class ActiveRequestTracker : ISingletonDependency
         {
             info.ActiveCount = Math.Max(0, info.ActiveCount - 1);
             if (info.ActiveCount == 0)
-                info.LastQuestion = string.Empty;
+                info.LastCompletedAt = DateTime.UtcNow;
         }
     }
 

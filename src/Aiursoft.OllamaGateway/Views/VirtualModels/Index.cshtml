@@ -1,4 +1,5 @@
 @using Aiursoft.OllamaGateway.Entities
+@using Aiursoft.WebTools
 @model Aiursoft.OllamaGateway.Models.VirtualModelsViewModels.IndexViewModel
 
 <div class="container-fluid p-0">
@@ -54,11 +55,20 @@
                                          backends.Any(b => b.IsReady && b.Enabled) ? "Ready" : 
                                          backends.Any(b => b.IsHealthy && b.Enabled) ? "Healthy" : "Down";
                             var badgeClass = status == "Banned" ? "bg-danger" : status == "Ready" ? "bg-success" : status == "Healthy" ? "bg-info" : "bg-danger";
-                            var statusText = status == "Banned" && maxBanTime.HasValue ? $"Banned (Till {maxBanTime.Value.ToLocalTime():HH:mm})" : status;
-
                             <tr>
                                 <td>
-                                    <span class="badge @badgeClass me-1" title="@statusText">@statusText</span>
+                                    <span class="badge @badgeClass me-1" title="@status">
+                                        @if (isAllBanned && maxBanTime.HasValue)
+                                        {
+                                            <text>Banned (Till </text>
+                                            <label data-utc-time="@maxBanTime.Value.ToHtmlDateTime()" class="d-inline mb-0"></label>
+                                            <text>)</text>
+                                        }
+                                        else
+                                        {
+                                            @status
+                                        }
+                                    </span>
                                     <strong>@m.Name</strong>
                                 </td>
                                 <td>

@@ -99,19 +99,34 @@ public class DashboardController(
                 .ToList();
         }
 
-        // Live active requests from in-memory tracker (only models with queued/running requests)
+        // Live active requests from in-memory tracker — include idle models that have history
         model.ActiveRequests = activeRequestTracker.GetAll()
-            .Where(kv => kv.Value.ActiveCount > 0)
-            .OrderByDescending(kv => kv.Value.LastStartedAt)
+            .OrderByDescending(kv => kv.Value.ActiveCount > 0)
+            .ThenByDescending(kv => kv.Value.LastStartedAt)
             .Select(kv => new ActiveModelInfo
             {
                 ModelName = kv.Key,
+                IsActive = kv.Value.ActiveCount > 0,
                 ActiveCount = kv.Value.ActiveCount,
                 LastQuestion = kv.Value.LastQuestion,
                 BackendModelName = kv.Value.BackendModelName,
-                LastStartedAt = kv.Value.LastStartedAt
+                LastStartedAt = kv.Value.LastStartedAt,
+                LastCompletedAt = kv.Value.LastCompletedAt
             })
             .ToList();
+
+        // Physical model call stats from DB
+        var physicalUsages = await dbContext.UnderlyingModelUsages
+            .Include(u => u.Provider)
+            .OrderByDescending(u => u.UsageCount)
+            .ToListAsync();
+
+        model.PhysicalModelStats = physicalUsages.Select(u => new PhysicalModelCallStats
+        {
+            ModelName = u.ModelName,
+            ProviderName = u.Provider?.Name ?? "Unknown",
+            UsageCount = u.UsageCount
+        }).ToList();
 
         return this.StackView(model);
     }

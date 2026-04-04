@@ -25,6 +25,7 @@ public class IndexViewModel : UiStackLayoutViewModel
     public List<TopModelStats> TopModels { get; set; } = [];
     public List<RecentUserStats> RecentUsers { get; set; } = [];
     public List<ActiveModelInfo> ActiveRequests { get; set; } = [];
+    public List<PhysicalModelCallStats> PhysicalModelStats { get; set; } = [];
 }
 
 [ExcludeFromCodeCoverage]
@@ -65,8 +66,18 @@ public class RecentUserStats
 public class ActiveModelInfo
 {
     public string ModelName { get; set; } = string.Empty;
+    public bool IsActive { get; set; }
     public int ActiveCount { get; set; }
     public string LastQuestion { get; set; } = string.Empty;
     public string BackendModelName { get; set; } = string.Empty;
     public DateTime LastStartedAt { get; set; }
+    public DateTime? LastCompletedAt { get; set; }
+}
+
+[ExcludeFromCodeCoverage]
+public class PhysicalModelCallStats
+{
+    public string ModelName { get; set; } = string.Empty;
+    public string ProviderName { get; set; } = string.Empty;
+    public long UsageCount { get; set; }
 }

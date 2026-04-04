@@ -1,4 +1,5 @@
 @model Aiursoft.OllamaGateway.Models.ApiKeysViewModels.IndexViewModel
+@using Aiursoft.WebTools
 
 <div class="container-fluid p-0">
     <div class="row mb-3">
@@ -62,8 +63,17 @@
                                 <td>
                                     <code>@key.Key[..4]...</code>
                                 </td>
-                                <td>@key.CreatedAt.ToLocalTime().ToString("g")</td>
-                                <td>@(Model.LastUsedTimes[key.Id]?.ToLocalTime().ToString("g") ?? Localizer["Never"].Value)</td>
+                                <td><label data-utc-time="@key.CreatedAt.ToHtmlDateTime()" class="mb-0"></label></td>
+                                <td>
+                                    @if (Model.LastUsedTimes[key.Id].HasValue)
+                                    {
+                                        <label data-utc-time="@Model.LastUsedTimes[key.Id]!.Value.ToHtmlDateTime()" class="mb-0"></label>
+                                    }
+                                    else
+                                    {
+                                        @Localizer["Never"]
+                                    }
+                                </td>
                                 <td>@Model.TotalCalls[key.Id]</td>
                                 <td>
                                     <div class="btn-group">

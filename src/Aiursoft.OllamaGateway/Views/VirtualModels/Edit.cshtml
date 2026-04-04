@@ -1,4 +1,5 @@
 @using Aiursoft.OllamaGateway.Entities
+@using Aiursoft.WebTools
 @model Aiursoft.OllamaGateway.Models.VirtualModelsViewModels.CreateViewModel
 
 <div class="container-fluid p-0">
@@ -139,7 +140,7 @@
                                                     var banTime = Model.BackendBanStatuses.GetValueOrDefault(b.Id);
                                                 }
                                                 @if (!b.Enabled) { <span class="badge bg-secondary">Disabled</span> }
-                                                else if (banTime.HasValue && banTime.Value > DateTime.UtcNow) { <span class="badge bg-danger">Banned (Till @banTime.Value.ToLocalTime().ToString("HH:mm"))</span> }
+                                                else if (banTime.HasValue && banTime.Value > DateTime.UtcNow) { <span class="badge bg-danger">Banned (Till <label data-utc-time="@banTime.Value.ToHtmlDateTime()" class="d-inline mb-0"></label>)</span> }
                                                 else if (b.IsReady) { <span class="badge bg-success">Ready</span> }
                                                 else if (b.IsHealthy) { <span class="badge bg-info">Healthy</span> }
                                                 else { <span class="badge bg-danger">Down</span> }
