@@ -60,6 +60,12 @@
   <data name="No physical models found on this server." xml:space="preserve">
     <value>このサーバーには物理モデルが見つかりませんでした。</value>
   </data>
+  <data name="Ollama" xml:space="preserve">
+    <value>Ollama</value>
+  </data>
+  <data name="OpenAI Compatible" xml:space="preserve">
+    <value>OpenAI 互換</value>
+  </data>
   <data name="Optional API Key" xml:space="preserve">
     <value>オプションの API キー</value>
   </data>
@@ -72,6 +78,9 @@
   <data name="Provider Name" xml:space="preserve">
     <value>プロバイダー名</value>
   </data>
+  <data name="Provider Type" xml:space="preserve">
+    <value>プロバイダー種別</value>
+  </data>
   <data name="Save Changes" xml:space="preserve">
     <value>変更を保存</value>
   </data>
@@ -83,6 +92,9 @@
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>基盤モデル名</value>
+  </data>
+  <data name="Warmup is not applicable to OpenAI-compatible providers. The upstream service manages model loading automatically." xml:space="preserve">
+    <value>ウォームアップは OpenAI 互換プロバイダーには適用されません。アップストリームサービスがモデルの読み込みを自動的に管理します。</value>
   </data>
 
 </root>
