@@ -60,6 +60,12 @@
   <data name="No physical models found on this server." xml:space="preserve">
     <value>لم يتم العثور على نماذج فعلية على هذا الخادم.</value>
   </data>
+  <data name="Ollama" xml:space="preserve">
+    <value>Ollama</value>
+  </data>
+  <data name="OpenAI Compatible" xml:space="preserve">
+    <value>متوافق مع OpenAI</value>
+  </data>
   <data name="Optional API Key" xml:space="preserve">
     <value>مفتاح API اختياري</value>
   </data>
@@ -72,6 +78,9 @@
   <data name="Provider Name" xml:space="preserve">
     <value>اسم المزود</value>
   </data>
+  <data name="Provider Type" xml:space="preserve">
+    <value>نوع المزود</value>
+  </data>
   <data name="Save Changes" xml:space="preserve">
     <value>حفظ التغييرات</value>
   </data>
@@ -83,6 +92,9 @@
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>اسم النموذج الأساسي</value>
+  </data>
+  <data name="Warmup is not applicable to OpenAI-compatible providers. The upstream service manages model loading automatically." xml:space="preserve">
+    <value>لا ينطبق التسخين على مزودي واجهة OpenAI المتوافقة. تدير الخدمة العلوية تحميل النماذج تلقائيًا.</value>
   </data>
 
 </root>

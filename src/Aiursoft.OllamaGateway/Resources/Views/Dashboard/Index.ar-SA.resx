@@ -21,6 +21,9 @@
       <data name="&quot;Fire-and-forget&quot; support for long-running tasks (like emails or AI), featuring a GUI for queue management, parallel processing, and cancellation." xml:space="preserve">
     <value>دعم &quot;إطلاق ونسي&quot; للمهام الطويلة (مثل البريد الإلكتروني أو الذكاء الاصطناعي)، يشمل واجهة رسومية لإدارة الطابور، والمعالجة المتوازية، والإلغاء.</value>
   </data>
+  <data name="(no content)" xml:space="preserve">
+    <value>(لا توجد محتوى)</value>
+  </data>
   <data name="A built-in Role-Based Access Control (RBAC) system for fine-grained permission management." xml:space="preserve">
     <value>نظام مضمن للتحكم في الوصول القائم على الأدوار (RBAC) لإدارة دقيقة للصلاحيات.</value>
   </data>
@@ -35,6 +38,9 @@
   </data>
   <data name="A modern, feature-rich, and highly extensible foundation for your next web application." xml:space="preserve">
     <value>أساس حديث، غني بالميزات، وقابل للتوسعة بشكل كبير لتطبيق الويب القادم الخاص بك.</value>
+  </data>
+  <data name="active" xml:space="preserve">
+    <value>نشطة</value>
   </data>
   <data name="Active" xml:space="preserve">
     <value>نشط</value>
@@ -72,11 +78,17 @@
   <data name="Automatic, AI-driven translation into 28 languages." xml:space="preserve">
     <value>ترجمة تلقائية، مدعومة بالذكاء الاصطناعي، إلى 28 لغة.</value>
   </data>
+  <data name="Backend Model" xml:space="preserve">
+    <value>نموذج الخلفية</value>
+  </data>
   <data name="Background Job Processing" xml:space="preserve">
     <value>معالجة المهام الخلفية</value>
   </data>
   <data name="Built-in User Management" xml:space="preserve">
     <value>إدارة المستخدمين المدمجة</value>
+  </data>
+  <data name="Busy" xml:space="preserve">
+    <value>مشغول</value>
   </data>
   <data name="Chat" xml:space="preserve">
     <value>دردشة</value>
@@ -92,6 +104,9 @@
   </data>
   <data name="Comprehensive Documentation" xml:space="preserve">
     <value>توثيق شامل</value>
+  </data>
+  <data name="Concurrent Requests" xml:space="preserve">
+    <value>الطلبات المتزامنة</value>
   </data>
   <data name="Consistency Validation" xml:space="preserve">
     <value>التحقق من الاتساق</value>
@@ -153,6 +168,9 @@
   <data name="High Performance" xml:space="preserve">
     <value>أداء عالي</value>
   </data>
+  <data name="Idle" xml:space="preserve">
+    <value>خامل</value>
+  </data>
   <data name="In the last 30 days" xml:space="preserve">
     <value>خلال آخر 30 يومًا</value>
   </data>
@@ -164,6 +182,15 @@
   </data>
   <data name="Issued keys for access" xml:space="preserve">
     <value>مفاتيح الصادرة للوصول</value>
+  </data>
+  <data name="Last at" xml:space="preserve">
+    <value>آخر مرة في</value>
+  </data>
+  <data name="Last Question (first 30 chars)" xml:space="preserve">
+    <value>آخر سؤال (أول 30 حرفًا)</value>
+  </data>
+  <data name="Live Inference" xml:space="preserve">
+    <value>الاستدلال المباشر</value>
   </data>
   <data name="Model Count" xml:space="preserve">
     <value>عدد النماذج</value>
@@ -183,6 +210,12 @@
   <data name="Multiple Database Support" xml:space="preserve">
     <value>دعم قواعد بيانات متعددة</value>
   </data>
+  <data name="No active inference requests — all models are idle" xml:space="preserve">
+    <value>لا توجد طلبات استدلال نشطة — جميع النماذج خاملة</value>
+  </data>
+  <data name="No call statistics yet — models will appear here once used" xml:space="preserve">
+    <value>لا توجد إحصائيات مكالمات بعد — ستظهر النماذج هنا عند الاستخدام</value>
+  </data>
   <data name="No providers yet" xml:space="preserve">
     <value>لا توجد مزودين بعد</value>
   </data>
@@ -197,6 +230,9 @@
   </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>دمج OpenID Connect</value>
+  </data>
+  <data name="Physical Models — Total Call Count" xml:space="preserve">
+    <value>النماذج الفيزيائية — إجمالي عدد الاستدعاءات</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>مُزوِّد</value>
@@ -219,6 +255,9 @@
   <data name="Robust Integration Testing" xml:space="preserve">
     <value>اختبارات دمج قوية</value>
   </data>
+  <data name="Running for" xml:space="preserve">
+    <value>يعمل منذ</value>
+  </data>
   <data name="Scheduled Task Management" xml:space="preserve">
     <value>إدارة المهام المجدولة</value>
   </data>
@@ -237,6 +276,9 @@
   <data name="Start a new project" xml:space="preserve">
     <value>بدء مشروع جديد</value>
   </data>
+  <data name="Status" xml:space="preserve">
+    <value>الحالة</value>
+  </data>
   <data name="Supports both environment variables and database-backed settings, with automatic priority given to environment variables for seamless overrides." xml:space="preserve">
     <value>يدعم متغيرات البيئة والإعدادات المخزنة في قاعدة البيانات، مع إعطاء الأولوية التلقائية لمتغيرات البيئة لتمكين التجاوزات السلسة.</value>
   </data>
@@ -248,6 +290,9 @@
   </data>
   <data name="This is a template project, where we start the voyager..." xml:space="preserve">
     <value>هذا مشروع قالب، حيث نبدأ رحلة المستكشف...</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>الوقت</value>
   </data>
   <data name="Top API Keys By Usage" xml:space="preserve">
     <value>أفضل مفاتيح API حسب الاستخدام</value>
@@ -267,11 +312,17 @@
   <data name="Usage Count" xml:space="preserve">
     <value>عدد الاستخدامات</value>
   </data>
+  <data name="User" xml:space="preserve">
+    <value>مستخدم</value>
+  </data>
   <data name="Users" xml:space="preserve">
     <value>المستخدمين</value>
   </data>
   <data name="View All" xml:space="preserve">
     <value>عرض الكل</value>
+  </data>
+  <data name="Virtual Model" xml:space="preserve">
+    <value>نموذج افتراضي</value>
   </data>
   <data name="Virtual Models" xml:space="preserve">
     <value>النماذج الافتراضية</value>
@@ -286,15 +337,4 @@
     <value>لماذا نستخدم قالب Aiursoft؟</value>
   </data>
 
-  <data name="Physical Models — Total Call Count" xml:space="preserve">
-    <value>النماذج الفيزيائية — إجمالي عدد الاستدعاءات</value>
-  </data>
-  <data name="No call statistics yet — models will appear here once used" xml:space="preserve">
-    <value>لا توجد إحصائيات مكالمات بعد — ستظهر النماذج هنا عند الاستخدام</value>
-  </data>
-  <data name="Status" xml:space="preserve"><value>الحالة</value></data>
-  <data name="Busy" xml:space="preserve"><value>مشغول</value></data>
-  <data name="Time" xml:space="preserve"><value>الوقت</value></data>
-  <data name="Last at" xml:space="preserve"><value>آخر مرة في</value></data>
-  <data name="Running for" xml:space="preserve"><value>يعمل منذ</value></data>
 </root>
