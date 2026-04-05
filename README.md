@@ -74,6 +74,15 @@ The docker image has the following context:
 | Data path   | /data                           |
 | Config path | /data/appsettings.json          |
 
+## Grafana Monitoring Dashboard
+
+OllamaGateway logs every request to a ClickHouse database. A pre-built Grafana dashboard template is provided at [`docs/grafana-config.json`](./docs/grafana-config.json) to visualize traffic, latency, and usage in real time.
+
+1. In Grafana, go to **Dashboards → Import**.
+2. Upload `docs/grafana-config.json` or paste its contents.
+3. When prompted, select your ClickHouse data source for the **grafana-clickhouse-datasource** input.
+4. Click **Import**.
+
 ## Parameter Behavior by Provider and API Format
 
 Ollama Gateway supports two inbound API formats and two backend provider types, yielding four distinct request paths:
