@@ -21,6 +21,12 @@
       <data name="&quot;Fire-and-forget&quot; support for long-running tasks (like emails or AI), featuring a GUI for queue management, parallel processing, and cancellation." xml:space="preserve">
     <value>&quot;Fire-and-forget&quot;-stöd för långvariga uppgifter (t.ex. e-post eller AI), med en GUI för köhantering, parallell bearbetning och avbrott.</value>
   </data>
+  <data name="→ Native Ollama" xml:space="preserve">
+    <value>→ Native Ollama</value>
+  </data>
+  <data name="→ OpenAI-compatible provider" xml:space="preserve">
+    <value>→ OpenAI-kompatibel leverantör</value>
+  </data>
   <data name="A built-in Role-Based Access Control (RBAC) system for fine-grained permission management." xml:space="preserve">
     <value>Ett inbyggt rollbaserat åtkomstkontrollsystem (RBAC) för detaljerad behörighetshantering.</value>
   </data>
@@ -246,6 +252,15 @@
   <data name="Day 1 Ready" xml:space="preserve">
     <value>Klart från dag ett</value>
   </data>
+  <data name="DB injects the value but it is dropped before the OpenAI request is sent" xml:space="preserve">
+    <value>DB injicerar värdet men det kasseras innan OpenAI-begäran skickas</value>
+  </data>
+  <data name="DB override" xml:space="preserve">
+    <value>DB-överskrivning</value>
+  </data>
+  <data name="DB override discarded" xml:space="preserve">
+    <value>DB-överskrivning kasseras</value>
+  </data>
   <data name="Dedicated management for embedding models for RAG applications." xml:space="preserve">
     <value>Specialiserad hantering av inbäddningsmodeller för RAG-applikationer.</value>
   </data>
@@ -390,6 +405,9 @@
   <data name="Full stack open source. Completely free software, no paid features. Built entirely on open standards." xml:space="preserve">
     <value>Full stack öppen källkod. Fullt gratis programvara, inga betalda funktioner. Byggd helt på öppna standarder.</value>
   </data>
+  <data name="Full support" xml:space="preserve">
+    <value>Full support</value>
+  </data>
   <data name="Fully Offline" xml:space="preserve">
     <value>Fullständigt offline</value>
   </data>
@@ -453,6 +471,9 @@
   <data name="IDE Support" xml:space="preserve">
     <value>IDE-stöd</value>
   </data>
+  <data name="If DB has a value, it overrides the client value. If DB is unset, the client value passes through." xml:space="preserve">
+    <value>Om DB har ett värde överskrider det klientvärdet. Om DB inte är inställt, passerar klientvärdet igenom.</value>
+  </data>
   <data name="Included" xml:space="preserve">
     <value>Inkluderat</value>
   </data>
@@ -515,6 +536,9 @@
   </data>
   <data name="MIT License" xml:space="preserve">
     <value>MIT-licens</value>
+  </data>
+  <data name="Mix Any Client with Any Backend" xml:space="preserve">
+    <value>Koppla ihop vilken klient som helst med vilken backend som helst</value>
   </data>
   <data name="Model Hosting &amp; Inference" xml:space="preserve">
     <value>Modellhostning &amp; inferens</value>
@@ -609,11 +633,26 @@
   <data name="No dependency on any cloud vendor. Run anywhere, any time." xml:space="preserve">
     <value>Ingen beroende på någon molnleverantör. Kör överallt, när som helst.</value>
   </data>
+  <data name="Not supported" xml:space="preserve">
+    <value>Inte stödd</value>
+  </data>
   <data name="Offline Capable" xml:space="preserve">
     <value>Offline-förmåga</value>
   </data>
   <data name="OIDC &amp; SSO" xml:space="preserve">
     <value>OIDC &amp; SSO</value>
+  </data>
+  <data name="Ollama → Ollama" xml:space="preserve">
+    <value>Ollama → Ollama</value>
+  </data>
+  <data name="Ollama → OpenAI" xml:space="preserve">
+    <value>Ollama → OpenAI</value>
+  </data>
+  <data name="Ollama Backend" xml:space="preserve">
+    <value>Ollama Backend</value>
+  </data>
+  <data name="Ollama Client" xml:space="preserve">
+    <value>Ollama-klient</value>
   </data>
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: Öka prestandan på din inbyggda Ollama med API-autentisering av företagsklass, granskning av begär och virtuell hantering av modeller – din säkra, privata AI-gateway.</value>
@@ -630,14 +669,29 @@
   <data name="OllamaGateway has been officially tested and is fully compatible with popular ecosystem tools including Open-WebUI, Opencode, and Roocode. Its robust API translation makes it the ideal choice for deploying autonomous AI agents." xml:space="preserve">
     <value>OllamaGateway har officiellt testats och är fullt kompatibel med populära verktyg i ekosystemet, inklusive Open-WebUI, Opencode och Roocode. Dess robusta API-översättning gör den till det ideala valet för att distribuera autonoma AI-agenter.</value>
   </data>
+  <data name="OllamaGateway supports two inbound API formats (OpenAI &amp; Ollama) and two backend provider types — in any combination. Your clients and physical models don&apos;t have to speak the same language." xml:space="preserve">
+    <value>OllamaGateway stöder två inkommande API-format (OpenAI &amp; Ollama) och två typer av backend-leverantörer — i vilken kombination som helst. Dina klienter och fysiska modeller behöver inte prata samma språk.</value>
+  </data>
   <data name="One Click Start" xml:space="preserve">
     <value>Enkelt klick för att starta</value>
   </data>
   <data name="Open Source" xml:space="preserve">
     <value>Öppen källkod</value>
   </data>
+  <data name="OpenAI → Ollama" xml:space="preserve">
+    <value>OpenAI → Ollama</value>
+  </data>
+  <data name="OpenAI → OpenAI" xml:space="preserve">
+    <value>OpenAI → OpenAI</value>
+  </data>
   <data name="OpenAI API Translation" xml:space="preserve">
     <value>OpenAI API-översättning</value>
+  </data>
+  <data name="OpenAI Backend" xml:space="preserve">
+    <value>OpenAI Backend</value>
+  </data>
+  <data name="OpenAI Client" xml:space="preserve">
+    <value>OpenAI-klient</value>
   </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>OpenID Connect-integrering</value>
@@ -653,6 +707,9 @@
   </data>
   <data name="Override temperature, top_k, and other Ollama options per virtual model." xml:space="preserve">
     <value>Åsidosätt temperatur, top_k och andra Ollama-inställningar per virtuell modell.</value>
+  </data>
+  <data name="Parameter" xml:space="preserve">
+    <value>Parameter</value>
   </data>
   <data name="Parameter Overrides" xml:space="preserve">
     <value>Parameterinställningar</value>
@@ -822,6 +879,9 @@
   <data name="The template is built for easy deployment. It includes full Docker support, so you can containerize your app and run it anywhere. You can also deploy it directly to IIS, Azure App Service, or any server that supports ASP.NET Core." xml:space="preserve">
     <value>Mallen är byggd för enkel distribution. Den inkluderar fullt Docker-stöd, så du kan containerisera din app och köra den var som helst. Du kan också distribuera den direkt till IIS, Azure App Service eller vilken server som helst som stöder ASP.NET Core.</value>
   </data>
+  <data name="Thinking (think)" xml:space="preserve">
+    <value>Tänkande (think)</value>
+  </data>
   <data name="Thinking Mode (DeepSeek)" xml:space="preserve">
     <value>Tänkläge (DeepSeek)</value>
   </data>
@@ -845,6 +905,9 @@
   </data>
   <data name="Unified Identity" xml:space="preserve">
     <value>Enad Identitet</value>
+  </data>
+  <data name="Universal API Compatibility" xml:space="preserve">
+    <value>Universell API-kompatibilitet</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>Användning</value>
@@ -872,6 +935,9 @@
   </data>
   <data name="What our developers say" xml:space="preserve">
     <value>Vad våra utvecklare säger</value>
+  </data>
+  <data name="When a virtual model has parameters configured in the database, those values always override what the client sends." xml:space="preserve">
+    <value>När en virtuell modell har parametrar konfigurerade i databasen överskrivs alltid de värdena av det som klienten skickar.</value>
   </data>
   <data name="Why choose Aiursoft Template?" xml:space="preserve">
     <value>Varför välja Aiursoft Template?</value>
