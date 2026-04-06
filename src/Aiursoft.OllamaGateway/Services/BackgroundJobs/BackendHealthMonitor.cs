@@ -1,48 +1,23 @@
+using Aiursoft.Canon.BackgroundJobs;
 using Aiursoft.OllamaGateway.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.OllamaGateway.Services.BackgroundJobs;
 
-public class BackendHealthMonitor : BackgroundService
+public class BackendHealthMonitor(
+    TemplateDbContext dbContext,
+    OllamaService ollamaService,
+    ILogger<BackendHealthMonitor> logger) : IBackgroundJob
 {
-    private readonly IServiceProvider _serviceProvider;
-    private readonly ILogger<BackendHealthMonitor> _logger;
+    public string Name => "Backend Health Monitor";
+    public string Description => "Checks the health of all AI provider backends and updates their availability status in the database.";
 
-    public BackendHealthMonitor(
-        IServiceProvider serviceProvider,
-        ILogger<BackendHealthMonitor> logger)
+    public async Task ExecuteAsync()
     {
-        _serviceProvider = serviceProvider;
-        _logger = logger;
-    }
-
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-    {
-        while (!stoppingToken.IsCancellationRequested)
-        {
-            try
-            {
-                await CheckHealthAsync(stoppingToken);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error occurred during backend health check");
-            }
-
-            await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
-        }
-    }
-
-    private async Task CheckHealthAsync(CancellationToken cancellationToken)
-    {
-        using var scope = _serviceProvider.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
-        var ollamaService = scope.ServiceProvider.GetRequiredService<OllamaService>();
-
         var backends = await dbContext.VirtualModelBackends
             .Include(b => b.Provider)
             .Where(b => b.Enabled)
-            .ToListAsync(cancellationToken);
+            .ToListAsync();
 
         var providerGroup = backends.GroupBy(b => b.ProviderId);
 
@@ -81,7 +56,7 @@ public class BackendHealthMonitor : BackgroundService
             }
             catch (Exception ex)
             {
-                _logger.LogWarning(ex, "Health check failed for Provider ID {ProviderId}", provider.Id);
+                logger.LogWarning(ex, "Health check failed for Provider ID {ProviderId}", provider.Id);
                 foreach (var backend in group)
                 {
                     backend.IsHealthy = false;
@@ -91,6 +66,6 @@ public class BackendHealthMonitor : BackgroundService
             }
         }
 
-        await dbContext.SaveChangesAsync(cancellationToken);
+        await dbContext.SaveChangesAsync();
     }
 }

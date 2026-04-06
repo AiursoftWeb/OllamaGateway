@@ -1,4 +1,5 @@
 // ReSharper disable all
+using Aiursoft.Canon.TaskQueue;
 using Aiursoft.OllamaGateway.Services;
 using Aiursoft.OllamaGateway.Services.BackgroundJobs;
 using Aiursoft.OllamaGateway.Services.Clickhouse;
@@ -95,7 +96,7 @@ public class TestStartup : Startup
 }
 
 /// <summary>
-/// TestStartup variant that re-enables the QueueWorkerService for background job tests.
+/// TestStartup variant used for background job tests (queue engine is already registered by main Startup).
 /// All other background services (health monitor, warmup, usage flush) remain disabled.
 /// </summary>
 public class TestStartupWithQueue : TestStartup
@@ -103,6 +104,7 @@ public class TestStartupWithQueue : TestStartup
     public override void ConfigureServices(IConfiguration configuration, IWebHostEnvironment environment, IServiceCollection services)
     {
         base.ConfigureServices(configuration, environment, services);
-        services.AddHostedService<QueueWorkerService>();
+        // Re-add the task queue worker since base removes all IHostedService registrations
+        services.AddTaskQueueEngine();
     }
 }

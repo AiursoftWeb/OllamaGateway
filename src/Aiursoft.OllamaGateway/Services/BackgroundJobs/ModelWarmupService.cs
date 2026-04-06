@@ -1,97 +1,42 @@
-using Aiursoft.OllamaGateway.Configuration;
+using Aiursoft.Canon.BackgroundJobs;
 using Aiursoft.OllamaGateway.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.OllamaGateway.Services.BackgroundJobs;
 
-public class ModelWarmupService : BackgroundService
+public class ModelWarmupService(
+    TemplateDbContext dbContext,
+    IHttpClientFactory httpClientFactory,
+    ILogger<ModelWarmupService> logger) : IBackgroundJob
 {
-    private readonly IServiceProvider _serviceProvider;
-    private readonly ILogger<ModelWarmupService> _logger;
-    private readonly IHttpClientFactory _httpClientFactory;
+    public string Name => "Model Warmup";
+    public string Description => "Sends keep-alive requests to all configured Ollama providers to prevent model unloading from GPU/RAM.";
 
-    public ModelWarmupService(
-        IServiceProvider serviceProvider, 
-        ILogger<ModelWarmupService> logger,
-        IHttpClientFactory httpClientFactory)
+    public async Task ExecuteAsync()
     {
-        _serviceProvider = serviceProvider;
-        _logger = logger;
-        _httpClientFactory = httpClientFactory;
-    }
-
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-    {
-        _logger.LogInformation("Model Warmup Service is starting.");
-
-        while (!stoppingToken.IsCancellationRequested)
-        {
-            try
-            {
-                await WarmupAllProvidersAsync(stoppingToken);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while warming up models.");
-            }
-
-            int intervalMinutes = 5;
-            try
-            {
-                using var scope = _serviceProvider.CreateScope();
-                var globalSettings = scope.ServiceProvider.GetRequiredService<GlobalSettingsService>();
-                var intervalStr = await globalSettings.GetSettingValueAsync(SettingsMap.KeepAliveJobIntervalMinutes);
-                if (int.TryParse(intervalStr, out var parsedInterval) && parsedInterval > 0)
-                {
-                    intervalMinutes = parsedInterval;
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogWarning(ex, "Failed to get KeepAliveJobIntervalMinutes setting. Using default 5 minutes.");
-            }
-
-            try
-            {
-                await Task.Delay(TimeSpan.FromMinutes(intervalMinutes), stoppingToken);
-            }
-            catch (OperationCanceledException)
-            {
-                // Normal shutdown
-            }
-        }
-
-        _logger.LogInformation("Model Warmup Service is stopping.");
-    }
-
-    private async Task WarmupAllProvidersAsync(CancellationToken stoppingToken)
-    {
-        var sw = System.Diagnostics.Stopwatch.StartNew();
-        using var scope = _serviceProvider.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
-
-        var providers = await dbContext.OllamaProviders.AsNoTracking().ToListAsync(stoppingToken);
+        var providers = await dbContext.OllamaProviders.AsNoTracking().ToListAsync();
         if (!providers.Any())
         {
             return;
         }
 
-        _logger.LogInformation("Starting global warmup routine for {Count} providers...", providers.Count);
+        logger.LogInformation("Starting global warmup routine for {Count} providers...", providers.Count);
+        var sw = System.Diagnostics.Stopwatch.StartNew();
 
         // Parallelize across different providers to avoid one slow server blocking others
-        var tasks = providers.Select(p => WarmupSingleProviderAsync(p, stoppingToken));
+        var tasks = providers.Select(p => WarmupSingleProviderAsync(p));
         await Task.WhenAll(tasks);
-        
+
         sw.Stop();
-        _logger.LogInformation("Completed global warmup routine for {Count} providers in {Elapsed}ms.", providers.Count, sw.ElapsedMilliseconds);
+        logger.LogInformation("Completed global warmup routine for {Count} providers in {Elapsed}ms.", providers.Count, sw.ElapsedMilliseconds);
     }
 
-    private async Task WarmupSingleProviderAsync(OllamaProvider provider, CancellationToken stoppingToken)
+    private async Task WarmupSingleProviderAsync(OllamaProvider provider)
     {
         if (provider.ProviderType == ProviderType.OpenAI)
         {
             // OpenAI-compatible providers manage model loading automatically; warmup is not applicable
-            _logger.LogDebug("Skipping warmup for OpenAI-compatible provider {Provider}.", provider.Name);
+            logger.LogDebug("Skipping warmup for OpenAI-compatible provider {Provider}.", provider.Name);
             return;
         }
 
@@ -105,7 +50,7 @@ public class ModelWarmupService : BackgroundService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to deserialize warmup models for provider {Provider}", provider.Name);
+            logger.LogError(ex, "Failed to deserialize warmup models for provider {Provider}", provider.Name);
             return;
         }
 
@@ -115,19 +60,17 @@ public class ModelWarmupService : BackgroundService
         }
 
         var underlyingUrl = provider.BaseUrl.TrimEnd('/');
-        _logger.LogInformation("Starting warmup for {Count} models on provider {Provider}...", warmupModels.Count, provider.Name);
+        logger.LogInformation("Starting warmup for {Count} models on provider {Provider}...", warmupModels.Count, provider.Name);
 
-        using var client = _httpClientFactory.CreateClient();
+        using var client = httpClientFactory.CreateClient();
         // Warmup may need to load large models into GPU/RAM, which can take minutes
         client.Timeout = TimeSpan.FromMinutes(10);
-        
+
         int successCount = 0;
         var swTotal = System.Diagnostics.Stopwatch.StartNew();
 
         foreach (var warmupModel in warmupModels)
         {
-            if (stoppingToken.IsCancellationRequested) break;
-            
             try
             {
                 if (warmupModel.IsEmbedding)
@@ -153,19 +96,19 @@ public class ModelWarmupService : BackgroundService
                     }
 
                     var sw = System.Diagnostics.Stopwatch.StartNew();
-                    using var response = await client.SendAsync(request, stoppingToken);
+                    using var response = await client.SendAsync(request);
                     sw.Stop();
 
                     if (response.IsSuccessStatusCode)
                     {
                         successCount++;
-                        _logger.LogInformation(
+                        logger.LogInformation(
                             "Successfully warmed up embedding model {Underlying} on provider {Provider} in {Elapsed}ms (keep_alive: {KeepAlive})",
                             warmupModel.Name, provider.Name, sw.ElapsedMilliseconds, provider.KeepAlive);
                     }
                     else
                     {
-                        _logger.LogWarning(
+                        logger.LogWarning(
                             "Upstream returned {Status} while warming up embedding model {Underlying} on provider {Provider} in {Elapsed}ms",
                             response.StatusCode, warmupModel.Name, provider.Name, sw.ElapsedMilliseconds);
                     }
@@ -202,35 +145,30 @@ public class ModelWarmupService : BackgroundService
                     }
 
                     var sw = System.Diagnostics.Stopwatch.StartNew();
-                    using var response = await client.SendAsync(request, stoppingToken);
+                    using var response = await client.SendAsync(request);
                     sw.Stop();
 
                     if (response.IsSuccessStatusCode)
                     {
                         successCount++;
-                        _logger.LogInformation("Successfully warmed up chat model {Underlying} on provider {Provider} in {Elapsed}ms (Status: {Status}, num_ctx: {NumCtx}, keep_alive: {KeepAlive})",
+                        logger.LogInformation("Successfully warmed up chat model {Underlying} on provider {Provider} in {Elapsed}ms (Status: {Status}, num_ctx: {NumCtx}, keep_alive: {KeepAlive})",
                             warmupModel.Name, provider.Name, sw.ElapsedMilliseconds, response.StatusCode, warmupModel.NumCtx ?? 0, provider.KeepAlive);
                     }
                     else
                     {
-                        _logger.LogWarning("Upstream returned {Status} while warming up chat model {Underlying} on provider {Provider} in {Elapsed}ms",
+                        logger.LogWarning("Upstream returned {Status} while warming up chat model {Underlying} on provider {Provider} in {Elapsed}ms",
                             response.StatusCode, warmupModel.Name, provider.Name, sw.ElapsedMilliseconds);
                     }
                 }
             }
-            catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
-            {
-                // Service is shutting down, propagate cancellation
-                throw;
-            }
             catch (Exception ex)
             {
-                _logger.LogWarning(ex, "Failed to warmup physical model {Underlying} on provider {Provider}", warmupModel.Name, provider.Name);
+                logger.LogWarning(ex, "Failed to warmup physical model {Underlying} on provider {Provider}", warmupModel.Name, provider.Name);
             }
         }
-        
+
         swTotal.Stop();
-        _logger.LogInformation("Finished warming up {SuccessCount}/{TotalCount} models on provider {Provider} in {Elapsed}ms.", 
+        logger.LogInformation("Finished warming up {SuccessCount}/{TotalCount} models on provider {Provider} in {Elapsed}ms.",
             successCount, warmupModels.Count, provider.Name, swTotal.ElapsedMilliseconds);
     }
 }

@@ -1,71 +1,29 @@
+using Aiursoft.Canon.BackgroundJobs;
 using Aiursoft.OllamaGateway.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.OllamaGateway.Services.BackgroundJobs;
 
-public class UsageFlushService : BackgroundService
+public class UsageFlushService(
+    TemplateDbContext dbContext,
+    UsageCounter usageCounter,
+    ILogger<UsageFlushService> logger) : IBackgroundJob
 {
-    private readonly IServiceProvider _serviceProvider;
-    private readonly ILogger<UsageFlushService> _logger;
-    private readonly UsageCounter _usageCounter;
+    public string Name => "Usage Flush";
+    public string Description => "Flushes in-memory API usage counters to the database to keep usage statistics up to date.";
 
-    public UsageFlushService(
-        IServiceProvider serviceProvider,
-        ILogger<UsageFlushService> logger,
-        UsageCounter usageCounter)
+    public async Task ExecuteAsync()
     {
-        _serviceProvider = serviceProvider;
-        _logger = logger;
-        _usageCounter = usageCounter;
-    }
-
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-    {
-        _logger.LogInformation("Usage Flush Service is starting.");
-
-        while (!stoppingToken.IsCancellationRequested)
-        {
-            try
-            {
-                await Task.Delay(TimeSpan.FromMinutes(3), stoppingToken);
-                await FlushUsageAsync();
-            }
-            catch (TaskCanceledException)
-            {
-                // Normal shutdown
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while flushing usage.");
-            }
-        }
-
-        // Final flush on shutdown
-        try
-        {
-            await FlushUsageAsync();
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Final usage flush failed.");
-        }
-        _logger.LogInformation("Usage Flush Service is stopping.");
-    }
-
-    private async Task FlushUsageAsync()
-    {
-        _logger.LogInformation("Flushing usage stats to database...");
-        using var scope = _serviceProvider.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+        logger.LogInformation("Flushing usage stats to database...");
         var isInMemory = dbContext.Database.ProviderName == "Microsoft.EntityFrameworkCore.InMemory";
 
         // Flush API Keys
-        var (apiKeyUsages, apiKeyLastUsed) = _usageCounter.SwapApiKeyBuffers();
+        var (apiKeyUsages, apiKeyLastUsed) = usageCounter.SwapApiKeyBuffers();
         foreach (var apiKeyId in apiKeyUsages.Keys)
         {
             var count = apiKeyUsages[apiKeyId];
             var lastUsed = apiKeyLastUsed[apiKeyId];
-            
+
             if (isInMemory)
             {
                 var apiKey = await dbContext.ApiKeys.FindAsync(apiKeyId);
@@ -84,14 +42,14 @@ public class UsageFlushService : BackgroundService
                         .SetProperty(a => a.LastUsed, lastUsed));
             }
         }
-        
+
         if (isInMemory)
         {
             await dbContext.SaveChangesAsync();
         }
 
         // Flush Models
-        var (modelUsages, modelLastUsed) = _usageCounter.SwapModelBuffers();
+        var (modelUsages, modelLastUsed) = usageCounter.SwapModelBuffers();
         foreach (var modelKey in modelUsages.Keys)
         {
             var count = modelUsages[modelKey];
@@ -154,14 +112,14 @@ public class UsageFlushService : BackgroundService
                 }
             }
         }
-        
+
         if (isInMemory)
         {
             await dbContext.SaveChangesAsync();
         }
 
         // Flush Virtual Models
-        var virtualModelUsages = _usageCounter.SwapVirtualModelBuffers();
+        var virtualModelUsages = usageCounter.SwapVirtualModelBuffers();
         foreach (var modelName in virtualModelUsages.Keys)
         {
             var count = virtualModelUsages[modelName];

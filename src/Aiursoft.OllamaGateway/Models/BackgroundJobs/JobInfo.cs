@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.OllamaGateway.Models.BackgroundJobs;
@@ -6,7 +5,6 @@ namespace Aiursoft.OllamaGateway.Models.BackgroundJobs;
 /// <summary>
 /// Represents a background job in the queue system.
 /// </summary>
-[ExcludeFromCodeCoverage]
 public class JobInfo
 {
     [Display(Name = "Job ID")]

@@ -17,6 +17,9 @@ using System.Diagnostics.CodeAnalysis;
 
 using Aiursoft.ClickhouseLoggerProvider;
 using Aiursoft.ClickhouseSdk.Abstractions;
+using Aiursoft.Canon.TaskQueue;
+using Aiursoft.Canon.BackgroundJobs;
+using Aiursoft.Canon.ScheduledTasks;
 
 namespace Aiursoft.OllamaGateway;
 
@@ -57,11 +60,17 @@ public class Startup : IWebStartup
         services.AddScoped<Models.RequestLogContext>();
 
         // Background job queue
-        services.AddSingleton<Services.BackgroundJobs.BackgroundJobQueue>();
-        services.AddHostedService<Services.BackgroundJobs.QueueWorkerService>();
-        services.AddHostedService<Services.BackgroundJobs.BackendHealthMonitor>();
-        services.AddHostedService<Services.BackgroundJobs.ModelWarmupService>();
-        services.AddHostedService<Services.BackgroundJobs.UsageFlushService>();
+        services.AddTaskQueueEngine();
+        services.AddScheduledTaskEngine();
+        services.RegisterBackgroundJob<Services.BackgroundJobs.DummyJob>();
+        var orphanAvatarCleanupJob = services.RegisterBackgroundJob<Services.BackgroundJobs.OrphanAvatarCleanupJob>();
+        services.RegisterScheduledTask(registration: orphanAvatarCleanupJob, period: TimeSpan.FromHours(6), startDelay: TimeSpan.FromMinutes(5));
+        var backendHealthJob = services.RegisterBackgroundJob<Services.BackgroundJobs.BackendHealthMonitor>();
+        services.RegisterScheduledTask(registration: backendHealthJob, period: TimeSpan.FromMinutes(1), startDelay: TimeSpan.FromSeconds(30));
+        var modelWarmupJob = services.RegisterBackgroundJob<Services.BackgroundJobs.ModelWarmupService>();
+        services.RegisterScheduledTask(registration: modelWarmupJob, period: TimeSpan.FromMinutes(5), startDelay: TimeSpan.FromMinutes(1));
+        var usageFlushJob = services.RegisterBackgroundJob<Services.BackgroundJobs.UsageFlushService>();
+        services.RegisterScheduledTask(registration: usageFlushJob, period: TimeSpan.FromMinutes(3), startDelay: TimeSpan.FromSeconds(30));
 
         // Controllers and localization
         //

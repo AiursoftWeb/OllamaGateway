@@ -1,9 +1,14 @@
-using System.Diagnostics.CodeAnalysis;
+using Aiursoft.Canon.BackgroundJobs;
+using Aiursoft.Canon.ScheduledTasks;
 using Aiursoft.UiStack.Layout;
 
 namespace Aiursoft.OllamaGateway.Models.BackgroundJobs;
-[ExcludeFromCodeCoverage]
+
 public class JobsIndexViewModel : UiStackLayoutViewModel
 {
+    public IReadOnlyList<RegisteredJob> RegisteredJobs { get; init; } = [];
+    public IReadOnlyList<ScheduledTaskRegistration> ScheduledTasks { get; init; } = [];
+    public IReadOnlyDictionary<Type, DateTime> LastRunAtByJobType { get; init; } =
+        new Dictionary<Type, DateTime>();
     public IEnumerable<JobInfo> AllRecentJobs { get; init; } = [];
 }
