@@ -60,6 +60,12 @@
   <data name="No physical models found on this server." xml:space="preserve">
     <value>Δεν βρέθηκαν φυσικά μοντέλα σε αυτήν την εξυπηρετητή.</value>
   </data>
+  <data name="Ollama" xml:space="preserve">
+    <value>Ollama</value>
+  </data>
+  <data name="OpenAI Compatible" xml:space="preserve">
+    <value>Συμβατό με OpenAI</value>
+  </data>
   <data name="Optional API Key" xml:space="preserve">
     <value>Προαιρετικό κλειδί API</value>
   </data>
@@ -72,6 +78,9 @@
   <data name="Provider Name" xml:space="preserve">
     <value>Όνομα Παρόχου</value>
   </data>
+  <data name="Provider Type" xml:space="preserve">
+    <value>Τύπος Παρόχου</value>
+  </data>
   <data name="Save Changes" xml:space="preserve">
     <value>Αποθήκευση Αλλαγών</value>
   </data>
@@ -83,6 +92,9 @@
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>Όνομα Υποκείμενου Μοντέλου</value>
+  </data>
+  <data name="Warmup is not applicable to OpenAI-compatible providers. The upstream service manages model loading automatically." xml:space="preserve">
+    <value>Η λειτουργία προθέρμανσης δεν ισχύει για παρόχους συμβατούς με την OpenAI. Η υπηρεσία upstream διαχειρίζεται αυτόματα τη φόρτωση των μοντέλων.</value>
   </data>
 
 </root>

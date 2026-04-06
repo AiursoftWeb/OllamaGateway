@@ -21,6 +21,12 @@
       <data name="&quot;Fire-and-forget&quot; support for long-running tasks (like emails or AI), featuring a GUI for queue management, parallel processing, and cancellation." xml:space="preserve">
     <value>Υποστήριξη &quot;Fire-and-forget&quot; για μακροχρόνιες εργασίες (όπως email ή AI), με GUI για διαχείριση ουράς, παράλληλη επεξεργασία και ακύρωση.</value>
   </data>
+  <data name="→ Native Ollama" xml:space="preserve">
+    <value>→ Γνήσιο Ollama</value>
+  </data>
+  <data name="→ OpenAI-compatible provider" xml:space="preserve">
+    <value>→ Παροχέας συμβατός με OpenAI</value>
+  </data>
   <data name="A built-in Role-Based Access Control (RBAC) system for fine-grained permission management." xml:space="preserve">
     <value>Ένα ενσωματωμένο σύστημα Ελέγχου Πρόσβασης Βάσει Ρόλων (RBAC) για λεπτομερή διαχείριση δικαιωμάτων.</value>
   </data>
@@ -246,6 +252,15 @@
   <data name="Day 1 Ready" xml:space="preserve">
     <value>Έτος 1 έτοιμο</value>
   </data>
+  <data name="DB injects the value but it is dropped before the OpenAI request is sent" xml:space="preserve">
+    <value>Η DB εισάγει την τιμή, αλλά αυτή απορρίπτεται πριν αποσταλεί το αίτημα στο OpenAI</value>
+  </data>
+  <data name="DB override" xml:space="preserve">
+    <value>DB επαναφορά</value>
+  </data>
+  <data name="DB override discarded" xml:space="preserve">
+    <value>Απόρριψη παρέμβασης βάσης δεδομένων</value>
+  </data>
   <data name="Dedicated management for embedding models for RAG applications." xml:space="preserve">
     <value>Εξειδικευμένη διαχείριση μοντέλων ενσωμάτωσης για εφαρμογές RAG.</value>
   </data>
@@ -390,6 +405,9 @@
   <data name="Full stack open source. Completely free software, no paid features. Built entirely on open standards." xml:space="preserve">
     <value>Πλήρης stack ανοιχτού κώδικα. Πλήρως ελεύθερο λογισμικό, χωρίς πληρωμένα χαρακτηριστικά. Κατασκευασμένο εξ ολοκλήρου με βάση ανοιχτά πρότυπα.</value>
   </data>
+  <data name="Full support" xml:space="preserve">
+    <value>Πλήρης υποστήριξη</value>
+  </data>
   <data name="Fully Offline" xml:space="preserve">
     <value>Πλήρως Αποσυνδεδεμένο</value>
   </data>
@@ -453,6 +471,9 @@
   <data name="IDE Support" xml:space="preserve">
     <value>Υποστήριξη IDE</value>
   </data>
+  <data name="If DB has a value, it overrides the client value. If DB is unset, the client value passes through." xml:space="preserve">
+    <value>Αν η βάση δεδομένων περιέχει τιμή, αυτή υπερισχύει της τιμής του πελάτη. Αν η τιμή της βάσης δεδομένων δεν έχει οριστεί, η τιμή του πελάτη μεταβιβάζεται ως έχει.</value>
+  </data>
   <data name="Included" xml:space="preserve">
     <value>Συμπεριλαμβανόμενο</value>
   </data>
@@ -515,6 +536,9 @@
   </data>
   <data name="MIT License" xml:space="preserve">
     <value>MIT License</value>
+  </data>
+  <data name="Mix Any Client with Any Backend" xml:space="preserve">
+    <value>Συνδυάστε οποιονδήποτε πελάτη με οποιονδήποτε διακομιστή</value>
   </data>
   <data name="Model Hosting &amp; Inference" xml:space="preserve">
     <value>Εγκατάσταση και Εκτέλεση Μοντέλων</value>
@@ -609,11 +633,26 @@
   <data name="No dependency on any cloud vendor. Run anywhere, any time." xml:space="preserve">
     <value>Χωρίς εξάρτηση από κάποιον πάροχο cloud. Εκτελέστε παντού, παντότε.</value>
   </data>
+  <data name="Not supported" xml:space="preserve">
+    <value>Δεν υποστηρίζεται</value>
+  </data>
   <data name="Offline Capable" xml:space="preserve">
     <value>Εκτός Σύνδεσης Εφοδιασμένο</value>
   </data>
   <data name="OIDC &amp; SSO" xml:space="preserve">
     <value>OIDC &amp; SSO</value>
+  </data>
+  <data name="Ollama → Ollama" xml:space="preserve">
+    <value>Ollama → Ollama</value>
+  </data>
+  <data name="Ollama → OpenAI" xml:space="preserve">
+    <value>Ollama → OpenAI</value>
+  </data>
+  <data name="Ollama Backend" xml:space="preserve">
+    <value>Ollama Backend</value>
+  </data>
+  <data name="Ollama Client" xml:space="preserve">
+    <value>Πελάτης Ollama</value>
   </data>
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: Ενισχύστε το δικό σας Ollama με πιστοποίηση API επιχειρηματικού επιπέδου, ελεγχόμενη διεκπεραίωση αιτημάτων και διαχείριση εικονικών μοντέλων—το ασφαλές, ιδιωτικό σας AI gateway.</value>
@@ -630,14 +669,29 @@
   <data name="OllamaGateway has been officially tested and is fully compatible with popular ecosystem tools including Open-WebUI, Opencode, and Roocode. Its robust API translation makes it the ideal choice for deploying autonomous AI agents." xml:space="preserve">
     <value>Το OllamaGateway έχει ελεγχθεί επίσημα και είναι πλήρως συμβατό με δημοφιλή εργαλεία οικοσυστήματος, συμπεριλαμβανομένων των Open-WebUI, Opencode και Roocode. Η ισχυρή μετάφραση API του το καθιστά την ιδανική επιλογή για την ανάπτυξη αυτόνομων πράκτορων AI.</value>
   </data>
+  <data name="OllamaGateway supports two inbound API formats (OpenAI &amp; Ollama) and two backend provider types — in any combination. Your clients and physical models don&apos;t have to speak the same language." xml:space="preserve">
+    <value>Το OllamaGateway υποστηρίζει δύο μορφές εισερχόμενων API (OpenAI &amp; Ollama) και δύο τύπους παρόχων backend — σε οποιαδήποτε συνδυασμό. Οι πελάτες και τα φυσικά μοντέλα σας δεν χρειάζεται να μιλούν την ίδια γλώσσα.</value>
+  </data>
   <data name="One Click Start" xml:space="preserve">
     <value>Μία κλικ για έναρξη</value>
   </data>
   <data name="Open Source" xml:space="preserve">
     <value>Ανοιχτού Κώδικα</value>
   </data>
+  <data name="OpenAI → Ollama" xml:space="preserve">
+    <value>OpenAI → Ollama</value>
+  </data>
+  <data name="OpenAI → OpenAI" xml:space="preserve">
+    <value>OpenAI → OpenAI</value>
+  </data>
   <data name="OpenAI API Translation" xml:space="preserve">
     <value>Μετάφραση OpenAI API</value>
+  </data>
+  <data name="OpenAI Backend" xml:space="preserve">
+    <value>OpenAI Backend</value>
+  </data>
+  <data name="OpenAI Client" xml:space="preserve">
+    <value>Πελάτης OpenAI</value>
   </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>Ενσωμάτωση OpenID Connect</value>
@@ -653,6 +707,9 @@
   </data>
   <data name="Override temperature, top_k, and other Ollama options per virtual model." xml:space="preserve">
     <value>Επικαλύψτε τη θερμοκρασία, το top_k και άλλες επιλογές Ollama ανά εικονικό μοντέλο.</value>
+  </data>
+  <data name="Parameter" xml:space="preserve">
+    <value>Παράμετρος</value>
   </data>
   <data name="Parameter Overrides" xml:space="preserve">
     <value>Παράμετροι Επικαλύψεων</value>
@@ -822,6 +879,9 @@
   <data name="The template is built for easy deployment. It includes full Docker support, so you can containerize your app and run it anywhere. You can also deploy it directly to IIS, Azure App Service, or any server that supports ASP.NET Core." xml:space="preserve">
     <value>Το πρότυπο είναι κατασκευασμένο για εύκολη ανάπτυξη. Περιλαμβάνει πλήρη υποστήριξη Docker, ώστε να μπορείτε να συσκευάσετε την εφαρμογή σας σε containers και να την εκτελέσετε οπουδήποτε. Μπορείτε επίσης να την αναπτύξετε απευθείας στο IIS, στο Azure App Service ή σε οποιονδήποτε διακομιστή που υποστηρίζει ASP.NET Core.</value>
   </data>
+  <data name="Thinking (think)" xml:space="preserve">
+    <value>Σκέψη (think)</value>
+  </data>
   <data name="Thinking Mode (DeepSeek)" xml:space="preserve">
     <value>Λειτουργία Σκέψης (DeepSeek)</value>
   </data>
@@ -845,6 +905,9 @@
   </data>
   <data name="Unified Identity" xml:space="preserve">
     <value>Ομοιομορφισμός Ταυτότητας</value>
+  </data>
+  <data name="Universal API Compatibility" xml:space="preserve">
+    <value>Πανευρωπαϊκή συμβατότητα API</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>Χρήση</value>
@@ -872,6 +935,9 @@
   </data>
   <data name="What our developers say" xml:space="preserve">
     <value>Τι λένε οι προγραμματιστές μας</value>
+  </data>
+  <data name="When a virtual model has parameters configured in the database, those values always override what the client sends." xml:space="preserve">
+    <value>Όταν ένα εικονικό μοντέλο έχει παραμέτρους που έχουν ρυθμιστεί στη βάση δεδομένων, αυτές οι τιμές υπερκαλύπτουν πάντα ό,τι στέλνει ο πελάτης.</value>
   </data>
   <data name="Why choose Aiursoft Template?" xml:space="preserve">
     <value>Γιατί να επιλέξετε το Aiursoft Template;</value>
