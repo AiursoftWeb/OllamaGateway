@@ -21,6 +21,12 @@
       <data name="&quot;Fire-and-forget&quot; support for long-running tasks (like emails or AI), featuring a GUI for queue management, parallel processing, and cancellation." xml:space="preserve">
     <value>लंबे समय तक चलने वाले कार्यों (जैसे ईमेल या AI) के लिए &quot;Fire-and-forget&quot; समर्थन, जिसमें कतार प्रबंधन, समानांतर प्रसंस्करण और रद्द करने के लिए GUI शामिल है।</value>
   </data>
+  <data name="→ Native Ollama" xml:space="preserve">
+    <value>→ स्थानीय ओलामा</value>
+  </data>
+  <data name="→ OpenAI-compatible provider" xml:space="preserve">
+    <value>→ ओपनएआई-सुसंगत प्रदाता</value>
+  </data>
   <data name="A built-in Role-Based Access Control (RBAC) system for fine-grained permission management." xml:space="preserve">
     <value>अनुमति प्रबंधन के लिए एक अंतर्निहित रोल-आधारित एक्सेस कंट्रोल (RBAC) प्रणाली।</value>
   </data>
@@ -246,6 +252,15 @@
   <data name="Day 1 Ready" xml:space="preserve">
     <value>दिन 1 तैयार</value>
   </data>
+  <data name="DB injects the value but it is dropped before the OpenAI request is sent" xml:space="preserve">
+    <value>डेटाबेस मान इंजेक्ट करता है, लेकिन ओपनएआई अनुरोध भेजने से पहले उसे हटा दिया जाता है</value>
+  </data>
+  <data name="DB override" xml:space="preserve">
+    <value>डेटाबेस ओवरराइड</value>
+  </data>
+  <data name="DB override discarded" xml:space="preserve">
+    <value>डेटाबेस ओवरराइड अस्वीकार</value>
+  </data>
   <data name="Dedicated management for embedding models for RAG applications." xml:space="preserve">
     <value>RAG एप्लिकेशन के लिए एम्बेडिंग मॉडल के लिए समर्पित प्रबंधन।</value>
   </data>
@@ -390,6 +405,9 @@
   <data name="Full stack open source. Completely free software, no paid features. Built entirely on open standards." xml:space="preserve">
     <value>फुल स्टैक ओपन सोर्स। पूरी तरह से मुफ्त सॉफ्टवेयर, कोई भुगतान वाली सुविधाएँ नहीं। पूरी तरह से ओपन स्टैंडर्ड्स पर बनाया गया।</value>
   </data>
+  <data name="Full support" xml:space="preserve">
+    <value>पूर्ण समर्थन</value>
+  </data>
   <data name="Fully Offline" xml:space="preserve">
     <value>पूरी तरह से ऑफलाइन</value>
   </data>
@@ -453,6 +471,9 @@
   <data name="IDE Support" xml:space="preserve">
     <value>IDE समर्थन</value>
   </data>
+  <data name="If DB has a value, it overrides the client value. If DB is unset, the client value passes through." xml:space="preserve">
+    <value>यदि डेटाबेस में कोई मान है, तो वह क्लाइंट मान को अतिरिक्त कर देता है। यदि डेटाबेस अनुपलब्ध है, तो क्लाइंट मान वही रहता है।</value>
+  </data>
   <data name="Included" xml:space="preserve">
     <value>शामिल</value>
   </data>
@@ -515,6 +536,9 @@
   </data>
   <data name="MIT License" xml:space="preserve">
     <value>MIT लाइसेंस</value>
+  </data>
+  <data name="Mix Any Client with Any Backend" xml:space="preserve">
+    <value>किसी भी क्लाइंट को किसी भी बैकएंड के साथ मिलाएं</value>
   </data>
   <data name="Model Hosting &amp; Inference" xml:space="preserve">
     <value>मॉडल होस्टिंग और इनफरेंस</value>
@@ -609,11 +633,26 @@
   <data name="No dependency on any cloud vendor. Run anywhere, any time." xml:space="preserve">
     <value>किसी भी क्लाउड वेंडर पर निर्भरता नहीं। कहीं भी, कभी भी चलाएं।</value>
   </data>
+  <data name="Not supported" xml:space="preserve">
+    <value>समर्थन नहीं है</value>
+  </data>
   <data name="Offline Capable" xml:space="preserve">
     <value>ऑफलाइन कैपेबल</value>
   </data>
   <data name="OIDC &amp; SSO" xml:space="preserve">
     <value>OIDC &amp; SSO</value>
+  </data>
+  <data name="Ollama → Ollama" xml:space="preserve">
+    <value>Ollama → Ollama</value>
+  </data>
+  <data name="Ollama → OpenAI" xml:space="preserve">
+    <value>Ollama → OpenAI</value>
+  </data>
+  <data name="Ollama Backend" xml:space="preserve">
+    <value>Ollama Backend</value>
+  </data>
+  <data name="Ollama Client" xml:space="preserve">
+    <value>ओलामा क्लाइंट</value>
   </data>
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>ओलामा गेटवे: एंटरप्राइज़-ग्रेड एपीआई प्रमाणीकरण, अनुरोध ऑडिटिंग और आभासी मॉडल प्रबंधन के साथ अपने स्थानीय ओलामा को शक्तिशाली बनाएं—आपका सुरक्षित, निजी एआई गेटवे।</value>
@@ -630,14 +669,29 @@
   <data name="OllamaGateway has been officially tested and is fully compatible with popular ecosystem tools including Open-WebUI, Opencode, and Roocode. Its robust API translation makes it the ideal choice for deploying autonomous AI agents." xml:space="preserve">
     <value>ओलामागेटवे को आधिकारिक रूप से परीक्षण किया गया है और यह ओपन-वेबयू, ओपencode, और रूकोड जैसे लोकप्रिय पारिस्थितिकी तंत्र उपकरणों के साथ पूर्ण रूप से संगत है। इसकी मजबूत एपीआई अनुवाद इसे स्वायत्त एआई एजेंटों को तैनात करने के लिए आदर्श विकल्प बनाता है।</value>
   </data>
+  <data name="OllamaGateway supports two inbound API formats (OpenAI &amp; Ollama) and two backend provider types — in any combination. Your clients and physical models don&apos;t have to speak the same language." xml:space="preserve">
+    <value>ओलाइमागेटवे दो इनबौंड एपीआई प्रारूपों (ओपनएआई &amp; ओलाइमा) और दो बैकएंड प्रोवाइडर प्रकारों का समर्थन करता है — किसी भी संयोजन में। आपके क्लाइंट और भौतिक मॉडलों को एक ही भाषा बोलने की आवश्यकता नहीं है।</value>
+  </data>
   <data name="One Click Start" xml:space="preserve">
     <value>एक क्लिक से शुरू करें</value>
   </data>
   <data name="Open Source" xml:space="preserve">
     <value>ओपन सोर्स</value>
   </data>
+  <data name="OpenAI → Ollama" xml:space="preserve">
+    <value>OpenAI → Ollama</value>
+  </data>
+  <data name="OpenAI → OpenAI" xml:space="preserve">
+    <value>OpenAI → OpenAI</value>
+  </data>
   <data name="OpenAI API Translation" xml:space="preserve">
     <value>OpenAI API अनुवाद</value>
+  </data>
+  <data name="OpenAI Backend" xml:space="preserve">
+    <value>OpenAI Backend</value>
+  </data>
+  <data name="OpenAI Client" xml:space="preserve">
+    <value>OpenAI Client</value>
   </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>ओपनआईडी कनेक्ट एकीकरण</value>
@@ -653,6 +707,9 @@
   </data>
   <data name="Override temperature, top_k, and other Ollama options per virtual model." xml:space="preserve">
     <value>प्रति आभासी मॉडल तापमान, top_k, और अन्य Ollama विकल्पों को ओवरराइड करें।</value>
+  </data>
+  <data name="Parameter" xml:space="preserve">
+    <value>पैरामीटर</value>
   </data>
   <data name="Parameter Overrides" xml:space="preserve">
     <value>पैरामीटर ओवरराइड</value>
@@ -822,6 +879,9 @@
   <data name="The template is built for easy deployment. It includes full Docker support, so you can containerize your app and run it anywhere. You can also deploy it directly to IIS, Azure App Service, or any server that supports ASP.NET Core." xml:space="preserve">
     <value>यह टेम्पलेट आसान डेप्लॉयमेंट के लिए बनाया गया है। इसमें पूर्ण Docker सपोर्ट शामिल है, जिससे आप अपने ऐप को कंटेनराइज़ करके कहीं भी चला सकते हैं। आप इसे सीधे IIS, Azure App Service, या किसी भी सर्वर पर डेप्लॉय कर सकते हैं जो ASP.NET Core को सपोर्ट करता है।</value>
   </data>
+  <data name="Thinking (think)" xml:space="preserve">
+    <value>चिंतन (think)</value>
+  </data>
   <data name="Thinking Mode (DeepSeek)" xml:space="preserve">
     <value>चिंतन मोड (DeepSeek)</value>
   </data>
@@ -845,6 +905,9 @@
   </data>
   <data name="Unified Identity" xml:space="preserve">
     <value>एकीकृत पहचान</value>
+  </data>
+  <data name="Universal API Compatibility" xml:space="preserve">
+    <value>सर्वव्यापी API संगतता</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>प्रयोग</value>
@@ -872,6 +935,9 @@
   </data>
   <data name="What our developers say" xml:space="preserve">
     <value>हमारे डेवलपर्स क्या कहते हैं</value>
+  </data>
+  <data name="When a virtual model has parameters configured in the database, those values always override what the client sends." xml:space="preserve">
+    <value>जब एक आभासी मॉडल में डेटाबेस में मापदंडों को कॉन्फ़िगर किया जाता है, तो वे मान हमेशा क्लाइंट द्वारा भेजे गए मानों को अतिरेक करते हैं।</value>
   </data>
   <data name="Why choose Aiursoft Template?" xml:space="preserve">
     <value>Aiursoft टेम्पलेट क्यों चुनें?</value>
