@@ -21,6 +21,12 @@
       <data name="&quot;Fire-and-forget&quot; support for long-running tasks (like emails or AI), featuring a GUI for queue management, parallel processing, and cancellation." xml:space="preserve">
     <value>Підтримка &quot;Fire-and-forget&quot; для довготривалих завдань (наприклад, електронні листи або штучний інтелект), із графічним інтерфейсом для управління чергою, паралельною обробкою та відміною.</value>
   </data>
+  <data name="→ Native Ollama" xml:space="preserve">
+    <value>→ Нативний Ollama</value>
+  </data>
+  <data name="→ OpenAI-compatible provider" xml:space="preserve">
+    <value>→ сумісний із OpenAI провайдер</value>
+  </data>
   <data name="A built-in Role-Based Access Control (RBAC) system for fine-grained permission management." xml:space="preserve">
     <value>Вбудована система контролю доступу на основі ролей (RBAC) для деталізованого управління дозволами.</value>
   </data>
@@ -246,6 +252,15 @@
   <data name="Day 1 Ready" xml:space="preserve">
     <value>Готово з першого дня</value>
   </data>
+  <data name="DB injects the value but it is dropped before the OpenAI request is sent" xml:space="preserve">
+    <value>DB вставляє значення, але воно відкидається до надсилання запиту до OpenAI</value>
+  </data>
+  <data name="DB override" xml:space="preserve">
+    <value>перезаписування БД</value>
+  </data>
+  <data name="DB override discarded" xml:space="preserve">
+    <value>Перезапис бази даних відкинуто</value>
+  </data>
   <data name="Dedicated management for embedding models for RAG applications." xml:space="preserve">
     <value>Спеціалізоване керування моделями вбудовування для застосунків RAG.</value>
   </data>
@@ -390,6 +405,9 @@
   <data name="Full stack open source. Completely free software, no paid features. Built entirely on open standards." xml:space="preserve">
     <value>Повна стекова відкрита програма. Зовсім безкоштовний софтвер, без платних функцій. Створено повністю на відкритих стандартах.</value>
   </data>
+  <data name="Full support" xml:space="preserve">
+    <value>Повна підтримка</value>
+  </data>
   <data name="Fully Offline" xml:space="preserve">
     <value>Повністю автономно</value>
   </data>
@@ -453,6 +471,9 @@
   <data name="IDE Support" xml:space="preserve">
     <value>Підтримка IDE</value>
   </data>
+  <data name="If DB has a value, it overrides the client value. If DB is unset, the client value passes through." xml:space="preserve">
+    <value>Якщо в базі даних є значення, воно перевищує значення клієнта. Якщо в базі даних значення не вказано, значення клієнта передається далі.</value>
+  </data>
   <data name="Included" xml:space="preserve">
     <value>Включено</value>
   </data>
@@ -515,6 +536,9 @@
   </data>
   <data name="MIT License" xml:space="preserve">
     <value>MIT License</value>
+  </data>
+  <data name="Mix Any Client with Any Backend" xml:space="preserve">
+    <value>Поєднуйте будь-якого клієнта з будь-яким бекендом</value>
   </data>
   <data name="Model Hosting &amp; Inference" xml:space="preserve">
     <value>Хостинг та інференція моделей</value>
@@ -609,11 +633,26 @@
   <data name="No dependency on any cloud vendor. Run anywhere, any time." xml:space="preserve">
     <value>Немає залежності від постачальника хмарних послуг. Запускайте в будь-якому місці, в будь-який час.</value>
   </data>
+  <data name="Not supported" xml:space="preserve">
+    <value>Не підтримується</value>
+  </data>
   <data name="Offline Capable" xml:space="preserve">
     <value>Підтримка офлайн-режиму</value>
   </data>
   <data name="OIDC &amp; SSO" xml:space="preserve">
     <value>OIDC &amp; SSO</value>
+  </data>
+  <data name="Ollama → Ollama" xml:space="preserve">
+    <value>Ollama → Ollama</value>
+  </data>
+  <data name="Ollama → OpenAI" xml:space="preserve">
+    <value>Ollama → OpenAI</value>
+  </data>
+  <data name="Ollama Backend" xml:space="preserve">
+    <value>Backend Ollama</value>
+  </data>
+  <data name="Ollama Client" xml:space="preserve">
+    <value>Клієнт Ollama</value>
   </data>
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: Підсиште свій рідний Ollama завдяки корпоративній аутентифікації API, аудиті запитів та віртуальному керуванню моделями — ваш безпечний приватний AI-шлюз.</value>
@@ -630,14 +669,29 @@
   <data name="OllamaGateway has been officially tested and is fully compatible with popular ecosystem tools including Open-WebUI, Opencode, and Roocode. Its robust API translation makes it the ideal choice for deploying autonomous AI agents." xml:space="preserve">
     <value>OllamaGateway офіційно протестовано, і воно повністю сумісне з популярними інструментами екосистеми, включаючи Open-WebUI, Opencode та Roocode. Його надійна трансляція API робить його ідеальним вибором для розгортання автономних ШІ-агентів.</value>
   </data>
+  <data name="OllamaGateway supports two inbound API formats (OpenAI &amp; Ollama) and two backend provider types — in any combination. Your clients and physical models don&apos;t have to speak the same language." xml:space="preserve">
+    <value>OllamaGateway підтримує два формати вхідних API (OpenAI &amp; Ollama) та два типи бекенд-постачальників — у будь-якій комбінації. Ваші клієнти та фізичні моделі не повинні використовувати одну й ту саму мову.</value>
+  </data>
   <data name="One Click Start" xml:space="preserve">
     <value>Один клік для початку</value>
   </data>
   <data name="Open Source" xml:space="preserve">
     <value>Відкритий код</value>
   </data>
+  <data name="OpenAI → Ollama" xml:space="preserve">
+    <value>OpenAI → Ollama</value>
+  </data>
+  <data name="OpenAI → OpenAI" xml:space="preserve">
+    <value>OpenAI → OpenAI</value>
+  </data>
   <data name="OpenAI API Translation" xml:space="preserve">
     <value>Переклад OpenAI API</value>
+  </data>
+  <data name="OpenAI Backend" xml:space="preserve">
+    <value>Backend OpenAI</value>
+  </data>
+  <data name="OpenAI Client" xml:space="preserve">
+    <value>Клієнт OpenAI</value>
   </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>Інтеграція OpenID Connect</value>
@@ -653,6 +707,9 @@
   </data>
   <data name="Override temperature, top_k, and other Ollama options per virtual model." xml:space="preserve">
     <value>Замінити температуру, top_k та інші параметри Ollama для віртуальної моделі.</value>
+  </data>
+  <data name="Parameter" xml:space="preserve">
+    <value>Параметр</value>
   </data>
   <data name="Parameter Overrides" xml:space="preserve">
     <value>Перевизначення параметрів</value>
@@ -822,6 +879,9 @@
   <data name="The template is built for easy deployment. It includes full Docker support, so you can containerize your app and run it anywhere. You can also deploy it directly to IIS, Azure App Service, or any server that supports ASP.NET Core." xml:space="preserve">
     <value>Цей шаблон створено для простоти розгортання. Він включає повну підтримку Docker, тому ви можете контейнеризувати ваш додаток і запускати його де завгодно. Ви також можете розгорнути його безпосередньо в IIS, Azure App Service або на будь-якому сервері, що підтримує ASP.NET Core.</value>
   </data>
+  <data name="Thinking (think)" xml:space="preserve">
+    <value>Мислення (think)</value>
+  </data>
   <data name="Thinking Mode (DeepSeek)" xml:space="preserve">
     <value>Режим роздумів (DeepSeek)</value>
   </data>
@@ -845,6 +905,9 @@
   </data>
   <data name="Unified Identity" xml:space="preserve">
     <value>Єдиний ідентифікатор</value>
+  </data>
+  <data name="Universal API Compatibility" xml:space="preserve">
+    <value>Універсальна сумісність API</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>Використання</value>
@@ -872,6 +935,9 @@
   </data>
   <data name="What our developers say" xml:space="preserve">
     <value>Що кажуть наші розробники</value>
+  </data>
+  <data name="When a virtual model has parameters configured in the database, those values always override what the client sends." xml:space="preserve">
+    <value>Коли у віртуальної моделі параметри налаштовано в базі даних, ці значення завжди перевищують ті, що надсилає клієнт.</value>
   </data>
   <data name="Why choose Aiursoft Template?" xml:space="preserve">
     <value>Чому обрати Aiursoft Template?</value>

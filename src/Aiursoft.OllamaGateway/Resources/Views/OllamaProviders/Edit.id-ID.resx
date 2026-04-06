@@ -60,6 +60,12 @@
   <data name="No physical models found on this server." xml:space="preserve">
     <value>Tidak ditemukan model fisik pada server ini.</value>
   </data>
+  <data name="Ollama" xml:space="preserve">
+    <value>Ollama</value>
+  </data>
+  <data name="OpenAI Compatible" xml:space="preserve">
+    <value>Kompatibel OpenAI</value>
+  </data>
   <data name="Optional API Key" xml:space="preserve">
     <value>Kunci API Opsional</value>
   </data>
@@ -72,6 +78,9 @@
   <data name="Provider Name" xml:space="preserve">
     <value>Nama Penyedia</value>
   </data>
+  <data name="Provider Type" xml:space="preserve">
+    <value>Jenis Penyedia</value>
+  </data>
   <data name="Save Changes" xml:space="preserve">
     <value>Simpan Perubahan</value>
   </data>
@@ -83,6 +92,9 @@
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>Nama Model Dasar</value>
+  </data>
+  <data name="Warmup is not applicable to OpenAI-compatible providers. The upstream service manages model loading automatically." xml:space="preserve">
+    <value>Warmup tidak berlaku untuk penyedia yang kompatibel dengan OpenAI. Layanan hulu mengelola pemuatan model secara otomatis.</value>
   </data>
 
 </root>
