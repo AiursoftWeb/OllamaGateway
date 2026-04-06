@@ -17,5 +17,7 @@ public class MonitorViewModel : UiStackLayoutViewModel
     /// Set of virtual model names that currently have at least one active inference request.
     /// </summary>
     public HashSet<string> BusyModels { get; set; } = [];
+
+    public Dictionary<int, DateTime?> BackendBanStatuses { get; set; } = [];
 }
 
