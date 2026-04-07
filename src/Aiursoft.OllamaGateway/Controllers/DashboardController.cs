@@ -15,7 +15,8 @@ namespace Aiursoft.OllamaGateway.Controllers;
 public class DashboardController(
     TemplateDbContext dbContext,
     MemoryUsageTracker memoryUsageTracker,
-    ActiveRequestTracker activeRequestTracker) : Controller
+    ActiveRequestTracker activeRequestTracker,
+    IModelSelector modelSelector) : Controller
 {
     [RenderInNavBar(
         NavGroupName = "Dashboard",
@@ -138,17 +139,22 @@ public class DashboardController(
         LinkOrder = 2)]
     public async Task<IActionResult> Monitor()
     {
-        var model = new MonitorViewModel
-        {
-            VirtualModels = await dbContext.VirtualModels
+        var virtualModels = await dbContext.VirtualModels
                 .Include(v => v.VirtualModelBackends)
                 .ThenInclude(b => b.Provider)
-                .ToListAsync(),
+                .ToListAsync();
+
+        var model = new MonitorViewModel
+        {
+            VirtualModels = virtualModels,
             Providers = await dbContext.OllamaProviders.ToListAsync(),
             BusyModels = activeRequestTracker.GetAll()
                 .Where(kv => kv.Value.ActiveCount > 0)
                 .Select(kv => kv.Key)
-                .ToHashSet()
+                .ToHashSet(),
+            BackendBanStatuses = virtualModels
+                .SelectMany(m => m.VirtualModelBackends)
+                .ToDictionary(b => b.Id, b => modelSelector.GetBanUntil(b.Id))
         };
 
         return this.StackView(model);

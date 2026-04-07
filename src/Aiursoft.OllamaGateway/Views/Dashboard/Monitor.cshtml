@@ -36,6 +36,7 @@
     sb.AppendLine("    classDef ready fill:#38a169,stroke:#276749,stroke-width:2px,color:#fff,rx:15px,ry:15px;");
     sb.AppendLine("    classDef healthy fill:#3182ce,stroke:#2b6cb0,stroke-width:2px,color:#fff,rx:15px,ry:15px;");
     sb.AppendLine("    classDef down fill:#e53e3e,stroke:#c53030,stroke-width:2px,color:#fff,rx:15px,ry:15px;");
+    sb.AppendLine("    classDef banned fill:#805ad5,stroke:#553c9a,stroke-width:2px,color:#fff,rx:15px,ry:15px;");
     sb.AppendLine("    ");
     sb.AppendLine("    classDef algo fill:#edf2f7,stroke:#a0aec0,stroke-width:1px,color:#4a5568,stroke-dasharray: 5 5;");
     sb.AppendLine("    classDef client fill:#f7fafc,stroke:#cbd5e0,stroke-width:2px,color:#2d3748,rx:20px,ry:20px;");
@@ -72,9 +73,18 @@
         {
             var backend = kv.Value;
             var nodeId = PhysNodeId(kv.Key.ProviderId, kv.Key.ModelName);
-            var statusClass = backend.IsReady ? "ready" : (backend.IsHealthy ? "healthy" : "down");
-            var icon = backend.IsReady ? "🟢" : (backend.IsHealthy ? "🔵" : "🔴");
-            var statusText = backend.IsReady ? "Ready" : (backend.IsHealthy ? "Healthy" : "Down");
+            
+            var matchingBackends = Model.VirtualModels
+                .SelectMany(m => m.VirtualModelBackends)
+                .Where(b => b.ProviderId == kv.Key.ProviderId && b.UnderlyingModelName == kv.Key.ModelName)
+                .ToList();
+            var banTimes = matchingBackends.Select(b => Model.BackendBanStatuses.GetValueOrDefault(b.Id)).ToList();
+            var isBanned = banTimes.Any(t => t.HasValue && t.Value > DateTime.UtcNow);
+
+            var statusClass = isBanned ? "banned" : backend.IsReady ? "ready" : (backend.IsHealthy ? "healthy" : "down");
+            var icon = isBanned ? "🚫" : backend.IsReady ? "🟢" : (backend.IsHealthy ? "🔵" : "🔴");
+            var statusText = isBanned ? "Banned" : backend.IsReady ? "Ready" : (backend.IsHealthy ? "Healthy" : "Down");
+            
             sb.AppendLine($"        {nodeId}[(\"{icon} {providerName}<br/>{backend.UnderlyingModelName}<br/>{statusText}\")]:::{statusClass}");
         }
         sb.AppendLine("    end");
