@@ -65,7 +65,7 @@ public class DashboardController(
         if (allApiKeyStats.Any())
         {
             var topKeyIds = allApiKeyStats.OrderByDescending(x => x.Value.TotalCalls)
-                .Take(5)
+                .Take(9)
                 .Select(x => x.Key)
                 .ToList();
 
@@ -89,7 +89,7 @@ public class DashboardController(
         model.TopVirtualModels = await dbContext.VirtualModels
             .Where(v => v.UsageCount > 0)
             .OrderByDescending(v => v.UsageCount)
-            .Take(5)
+            .Take(9)
             .Select(v => new TopVirtualModelStats
             {
                 ModelName = v.Name,
