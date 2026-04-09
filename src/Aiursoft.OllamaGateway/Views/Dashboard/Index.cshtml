@@ -250,20 +250,22 @@
                         @Localizer["Physical Models — Total Call Count"]
                     </h5>
                 </div>
-                <div class="card-body">
-                    @if (Model.PhysicalModelStats.Any())
-                    {
-                        <div class="chart" style="min-height: @(Math.Max(220, Model.PhysicalModelStats.Count * 40))px;">
-                            <canvas id="chartPhysicalModels"></canvas>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="text-center text-muted py-5">
-                            <i data-lucide="bar-chart-2" class="d-block mx-auto mb-2" style="width:32px;height:32px;"></i>
-                            @Localizer["No call statistics yet — models will appear here once used"]
-                        </div>
-                    }
+                <div class="card-body d-flex">
+                    <div class="align-self-center w-100">
+                        @if (Model.PhysicalModelStats.Any())
+                        {
+                            <div class="chart" style="min-height: @(Math.Max(220, Model.PhysicalModelStats.Count * 40))px;">
+                                <canvas id="chartPhysicalModels"></canvas>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="text-center text-muted py-5">
+                                <i data-lucide="bar-chart-2" class="d-block mx-auto mb-2" style="width:32px;height:32px;"></i>
+                                @Localizer["No call statistics yet — models will appear here once used"]
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
@@ -334,11 +336,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var m in Model.TopVirtualModels)
+                                @foreach (var m in Model.TopVirtualModels.Take(8))
                                 {
                                     <tr>
                                         <td><i class="fas fa-cube text-primary me-1"></i>@m.ModelName</td>
                                         <td class="text-end">@m.UsageCount</td>
+                                    </tr>
+                                }
+                                @if (Model.TopVirtualModels.Count > 8)
+                                {
+                                    <tr>
+                                        <td colspan="2" class="text-center text-muted">...</td>
                                     </tr>
                                 }
                             </tbody>
@@ -372,12 +380,18 @@
                         <tbody>
                             @if (Model.TopApiKeys.Any())
                             {
-                                foreach (var key in Model.TopApiKeys)
+                                foreach (var key in Model.TopApiKeys.Take(8))
                                 {
                                     <tr>
                                         <td class="ps-3"><i class="fas fa-key text-warning me-1"></i>@key.Name</td>
                                         <td class="text-muted small">@key.UserName</td>
                                         <td class="text-end pe-3"><strong>@key.UsageCount</strong></td>
+                                    </tr>
+                                }
+                                if (Model.TopApiKeys.Count > 8)
+                                {
+                                    <tr>
+                                        <td colspan="3" class="text-center text-muted">...</td>
                                     </tr>
                                 }
                             }
