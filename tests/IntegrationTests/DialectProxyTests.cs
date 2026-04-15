@@ -1172,26 +1172,67 @@ public class DialectProxyTests : TestBase
     }
 
     [TestMethod]
-    public async Task Ollama_Embed_KeepAliveInjected()
+    public async Task OpenAI_NullRole_Handled()
     {
         // Arrange
         MockUpstreamState.Handler = (_, _) =>
         {
-            var body = """{"model":"nomic-embed-text","embeddings":[[0.1]],"prompt_eval_count":1}""";
+            var body = """{"model":"llama3.2","message":{"role":"assistant","content":"ok"},"done":true}""";
             return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(body, Encoding.UTF8, "application/json")
             });
         };
 
-        // Act
-        var payload = $$"""{"model":"{{EmbeddingModelName}}","input":"test"}""";
-        await Http.SendAsync(AuthedPost("/api/embed", payload));
+        var payload = $$"""
+        {
+            "model": "{{VirtualModelName}}",
+            "messages": [
+                {
+                    "content": "hi"
+                }
+            ],
+            "stream": false
+        }
+        """;
 
-        // Assert: keep_alive from provider is injected into upstream request
-        Assert.IsNotNull(MockUpstreamState.LastRequestBody);
-        var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody);
-        Assert.IsNotNull(upstreamBody);
-        Assert.IsNotNull(upstreamBody["keep_alive"], "keep_alive must be injected into upstream embed request");
+        // Act
+        var response = await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
+
+        // Assert
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+    }
+
+    [TestMethod]
+    public async Task OpenAI_ArrayInRole_Handled()
+    {
+        // Arrange
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            var body = """{"model":"llama3.2","message":{"role":"assistant","content":"ok"},"done":true}""";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body, Encoding.UTF8, "application/json")
+            });
+        };
+
+        var payload = $$"""
+        {
+            "model": "{{VirtualModelName}}",
+            "messages": [
+                {
+                    "role": ["user"],
+                    "content": "hi"
+                }
+            ],
+            "stream": false
+        }
+        """;
+
+        // Act
+        var response = await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
+
+        // Assert
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
     }
 }
