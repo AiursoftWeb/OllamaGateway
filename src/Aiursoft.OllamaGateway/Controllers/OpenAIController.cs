@@ -162,6 +162,23 @@ public class OpenAIController : ControllerBase
                 if (virtualModel.NumPredict.HasValue) clientJson["max_tokens"] = virtualModel.NumPredict.Value;
                 if (isStream) clientJson["stream_options"] = new JsonObject { ["include_usage"] = true };
 
+                // [Patch E] Ensure content is never null in messages for Ollama OpenAI compatibility
+                if (messagesArray != null)
+                {
+                    foreach (var msgNode in messagesArray)
+                    {
+                        if (msgNode == null) continue;
+                        if (msgNode["content"] == null)
+                        {
+                            msgNode["content"] = string.Empty;
+                        }
+                        if (msgNode["role"] == null)
+                        {
+                            msgNode["role"] = "user";
+                        }
+                    }
+                }
+
                 HttpResponseMessage? oaiDirectResponse = null;
                 for (var i = 0; i < virtualModel.MaxRetries; i++)
                 {
@@ -327,7 +344,7 @@ public class OpenAIController : ControllerBase
                 {
                     if (msgNode == null) continue;
                     var newMsg = new JsonObject();
-                    newMsg["role"] = msgNode["role"]?.ToString();
+                    newMsg["role"] = msgNode["role"]?.ToString() ?? "user";
 
                     // 处理多模态/复杂数组 Content
                     var contentNode = msgNode["content"];
@@ -387,6 +404,10 @@ public class OpenAIController : ControllerBase
                                 {
                                     try { oFunc["arguments"] = JsonNode.Parse(argsStr); }
                                     catch { oFunc["arguments"] = new JsonObject(); }
+                                }
+                                else
+                                {
+                                    oFunc["arguments"] = new JsonObject();
                                 }
                                 oTc["function"] = oFunc;
                             }
