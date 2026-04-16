@@ -15,6 +15,9 @@ public class CreateViewModel : UiStackLayoutViewModel
     [MaxLength(100)]
     public string Name { get; set; } = string.Empty;
 
+    [Range(1, 36500)]
+    public int ExpirationDays { get; set; } = 365;
+
     public int MaxRequests { get; set; } = 10;
     public int TimeWindowSeconds { get; set; } = 15;
     public bool RateLimitEnabled { get; set; }

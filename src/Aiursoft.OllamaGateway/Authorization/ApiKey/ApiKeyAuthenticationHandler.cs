@@ -49,6 +49,11 @@ public class ApiKeyAuthenticationHandler(
             return AuthenticateResult.Fail("Invalid API Key.");
         }
 
+        if (apiKey.ExpirationTime < DateTime.UtcNow)
+        {
+            return AuthenticateResult.Fail("API Key expired.");
+        }
+
         var isAllowed = await rateLimitService.IsAllowedAsync(apiKey);
         if (!isAllowed)
         {

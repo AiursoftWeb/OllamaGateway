@@ -19,6 +19,7 @@ public class ApiKey
     public User? User { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime ExpirationTime { get; set; } = DateTime.UtcNow.AddYears(1);
     public DateTime? LastUsed { get; set; }
     public long UsageCount { get; set; }
 

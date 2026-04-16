@@ -23,6 +23,11 @@
                             <span asp-validation-for="Name" class="text-danger"></span>
                             <div class="form-text">@Localizer["A name to help you identify where this key is used."]</div>
                         </div>
+                        <div class="mb-3">
+                            <label asp-for="ExpirationTime" class="form-label">@Localizer["Expiration Time"]</label>
+                            <input asp-for="ExpirationTime" class="form-control" type="datetime-local" />
+                            <span asp-validation-for="ExpirationTime" class="text-danger"></span>
+                        </div>
                         <div class="mb-3 form-check form-switch">
                             <input asp-for="RateLimitEnabled" class="form-check-input" type="checkbox">
                             <label asp-for="RateLimitEnabled" class="form-check-label">@Localizer["Enable Rate Limit"]</label>
