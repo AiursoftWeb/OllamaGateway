@@ -1,14 +1,14 @@
 using System.Net;
 using Aiursoft.OllamaGateway.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
 
 [TestClass]
 public class ApiKeyExpirationTests : TestBase
 {
+    private static readonly HttpClient CleanHttp = new HttpClient();
+
     [TestMethod]
     public async Task TestExpiredApiKey()
     {
@@ -108,10 +108,9 @@ public class ApiKeyExpirationTests : TestBase
         Assert.IsTrue(Math.Abs((updatedKey.ExpirationTime - expiredTime).TotalMinutes) < 2);
 
         // 5. Verify it fails authentication
-        using var cleanHttp = new HttpClient { BaseAddress = Http.BaseAddress };
-        var request = new HttpRequestMessage(HttpMethod.Get, "/api/tags");
+        var request = new HttpRequestMessage(HttpMethod.Get, new Uri(Http.BaseAddress!, "/api/tags"));
         request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", updatedKey.Key);
-        var response = await cleanHttp.SendAsync(request);
+        var response = await CleanHttp.SendAsync(request);
         Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
     }
 }
