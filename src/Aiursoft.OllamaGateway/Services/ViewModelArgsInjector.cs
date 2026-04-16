@@ -108,6 +108,9 @@ public class ViewModelArgsInjector(
     
         _ = localizer["Admin Center"];
         _ = localizer["Traffic Visualization"];
+        _ = localizer["Self Host"];
+        _ = localizer["Deployment"];
+        _ = localizer["Recommended local deployment"];
     }
 
     public void InjectSimple(
