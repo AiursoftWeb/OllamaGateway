@@ -126,4 +126,22 @@ public abstract class TestBase
         if (Server == null) throw new InvalidOperationException("Server is not started.");
         return Server.Services.GetRequiredService<T>();
     }
+
+    protected async Task GrantPermissionToUser(string email, string permissionName)
+    {
+        using var scope = Server!.Services.CreateScope();
+        var userManager = scope.ServiceProvider.GetRequiredService<Microsoft.AspNetCore.Identity.UserManager<User>>();
+        var roleManager = scope.ServiceProvider.GetRequiredService<Microsoft.AspNetCore.Identity.RoleManager<Microsoft.AspNetCore.Identity.IdentityRole>>();
+        var user = await userManager.FindByEmailAsync(email);
+
+        var roleName = $"Role-{permissionName}";
+        if (!await roleManager.RoleExistsAsync(roleName))
+        {
+            await roleManager.CreateAsync(new Microsoft.AspNetCore.Identity.IdentityRole(roleName));
+            await roleManager.AddClaimAsync(await roleManager.FindByNameAsync(roleName) ?? throw new Exception(),
+                new System.Security.Claims.Claim(Authorization.AppPermissions.Type, permissionName));
+        }
+
+        await userManager.AddToRoleAsync(user!, roleName);
+    }
 }

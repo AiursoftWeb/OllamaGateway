@@ -96,6 +96,7 @@ public class ApiKeysController(
             Name = model.Name,
             Key = keyStr,
             UserId = user!.Id,
+            ExpirationTime = DateTime.UtcNow.AddDays(model.ExpirationDays),
             MaxRequests = model.MaxRequests,
             TimeWindowSeconds = model.TimeWindowSeconds,
             RateLimitEnabled = model.RateLimitEnabled,
@@ -125,6 +126,7 @@ public class ApiKeysController(
         {
             Id = key.Id,
             Name = key.Name,
+            ExpirationTime = key.ExpirationTime,
             MaxRequests = key.MaxRequests,
             TimeWindowSeconds = key.TimeWindowSeconds,
             RateLimitEnabled = key.RateLimitEnabled,
@@ -151,6 +153,7 @@ public class ApiKeysController(
         }
 
         key.Name = model.Name;
+        key.ExpirationTime = model.ExpirationTime;
         key.MaxRequests = model.MaxRequests;
         key.TimeWindowSeconds = model.TimeWindowSeconds;
         key.RateLimitEnabled = model.RateLimitEnabled;

@@ -39,7 +39,7 @@
                     <tr>
                         <th>@Localizer["Name"]</th>
                         <th>@Localizer["Key"]</th>
-                        <th>@Localizer["Created At"]</th>
+                        <th>@Localizer["Expires"]</th>
                         <th>@Localizer["Last Used"]</th>
                         <th>@Localizer["Total Calls"]</th>
                         <th>@Localizer["Actions"]</th>
@@ -63,7 +63,16 @@
                                 <td>
                                     <code>@key.Key[..4]...</code>
                                 </td>
-                                <td><label data-utc-time="@key.CreatedAt.ToHtmlDateTime()" class="mb-0"></label></td>
+                                <td>
+                                    @if (key.ExpirationTime < DateTime.UtcNow)
+                                    {
+                                        <span class="badge bg-danger">@Localizer["Expired"]</span>
+                                    }
+                                    else
+                                    {
+                                        <label data-utc-time="@key.ExpirationTime.ToHtmlDateTime()" class="mb-0"></label>
+                                    }
+                                </td>
                                 <td>
                                     @if (Model.LastUsedTimes[key.Id].HasValue)
                                     {

@@ -22,6 +22,18 @@
                             <span asp-validation-for="Name" class="text-danger"></span>
                             <div class="form-text">@Localizer["A name to help you identify where this key is used."]</div>
                         </div>
+                        <div class="mb-3">
+                            <label asp-for="ExpirationDays" class="form-label">@Localizer["Expiration"]</label>
+                            <select asp-for="ExpirationDays" class="form-select">
+                                <option value="1">@Localizer["1 Day"]</option>
+                                <option value="7">@Localizer["1 Week"]</option>
+                                <option value="30">@Localizer["1 Month"]</option>
+                                <option value="365" selected>@Localizer["1 Year"]</option>
+                                <option value="3650">@Localizer["10 Years"]</option>
+                                <option value="36500">@Localizer["100 Years"]</option>
+                            </select>
+                            <span asp-validation-for="ExpirationDays" class="text-danger"></span>
+                        </div>
                         <div class="mb-3 form-check form-switch">
                             <input asp-for="RateLimitEnabled" class="form-check-input" type="checkbox">
                             <label asp-for="RateLimitEnabled" class="form-check-label">@Localizer["Enable Rate Limit"]</label>
