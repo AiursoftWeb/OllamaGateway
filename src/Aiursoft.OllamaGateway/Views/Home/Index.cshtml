@@ -21,6 +21,9 @@
                     <a asp-controller="Dashboard" asp-action="Index" class="btn btn-primary btn-lg btn-pill">
                         <i class="align-middle" data-lucide="grid"></i> @Localizer["Go to Dashboard"]
                     </a>
+                    <a asp-controller="Home" asp-action="SelfHost" class="btn btn-outline-primary btn-lg btn-pill">
+                        <i class="align-middle" data-lucide="server"></i> @Localizer["Deployment Guide"]
+                    </a>
                     <a href="https://github.com/aiursoftweb/OllamaGateway" target="_blank" class="btn btn-outline-primary btn-lg btn-pill">
                         <i class="align-middle" data-lucide="github"></i> @Localizer["View on GitHub"]
                     </a>
@@ -513,6 +516,10 @@
                 <a asp-controller="Dashboard" asp-action="Index" class="btn btn-primary btn-pill btn-lg mt-n1">
                     <i class="fa-solid fa-rocket"></i>
                     <span class="ms-1">@Localizer["Go to Dashboard"]</span>
+                </a>
+                <a asp-controller="Home" asp-action="SelfHost" class="btn btn-outline-primary btn-pill btn-lg mt-n1">
+                    <i class="fa-solid fa-server"></i>
+                    <span class="ms-1">@Localizer["Deployment Guide"]</span>
                 </a>
                 <a href="https://github.com/aiursoftweb/OllamaGateway" class="btn btn-dark btn-pill btn-lg mt-n1" target="_blank">
                     <i class="fa-brands fa-github"></i>
