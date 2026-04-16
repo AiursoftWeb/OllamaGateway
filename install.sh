@@ -1,7 +1,7 @@
-aiur() { arg="$( cut -d ' ' -f 2- <<< "$@" )" && curl -sL https://gitlab.aiursoft.com/aiursoft/aiurscript/-/raw/master/$1.sh | sudo bash -s $arg; }
+aiur() { arg="$( cut -d ' ' -f 2- <<< "$@" )" && curl -sL https://github.com/aiursoftweb/aiurscript/raw/master/$1.sh | sudo bash -s $arg; }
 
 app_name="ollamaGateway"
-repo_path="https://gitlab.aiursoft.com/aiursoft/ollamaGateway"
+repo_path="https://github.com/aiursoftweb/ollamaGateway"
 proj_path="src/Aiursoft.OllamaGateway/Aiursoft.OllamaGateway.csproj"
 
 get_dll_name()
