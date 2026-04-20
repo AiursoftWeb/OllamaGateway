@@ -37,7 +37,16 @@ public class RequiresUserOrApiKeyAuthFilter(GlobalSettingsService globalSettings
             }
             else if (result.Failure?.Message == "Rate limit exceeded.")
             {
-                context.Result = new ObjectResult("Too many requests.")
+                context.Result = new JsonResult(new
+                {
+                    error = new
+                    {
+                        message = "Rate limit reached for requests",
+                        type = "requests",
+                        param = (string?)null,
+                        code = "rate_limit_exceeded"
+                    }
+                })
                 {
                     StatusCode = 429
                 };
