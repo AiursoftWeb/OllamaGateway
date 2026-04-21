@@ -1,10 +1,6 @@
-using System.Net;
-using System.Text.Json;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
 using Aiursoft.OllamaGateway.Configuration;
-using Aiursoft.DbTools;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
 
@@ -40,10 +36,10 @@ public class OpenAIApiCompatibilityTests : TestBase
     public async Task TestListModels()
     {
         var response = await Http.GetAsync("/v1/models");
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.AreEqual(System.Net.HttpStatusCode.OK, response.StatusCode);
         
         var content = await response.Content.ReadAsStringAsync();
-        var json = JsonDocument.Parse(content);
+        var json = System.Text.Json.JsonDocument.Parse(content);
         
         Assert.AreEqual("list", json.RootElement.GetProperty("object").GetString());
         var data = json.RootElement.GetProperty("data");
@@ -67,10 +63,10 @@ public class OpenAIApiCompatibilityTests : TestBase
     public async Task TestGetSingleModel()
     {
         var response = await Http.GetAsync($"/v1/models/{TestModelName}");
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.AreEqual(System.Net.HttpStatusCode.OK, response.StatusCode);
         
         var content = await response.Content.ReadAsStringAsync();
-        var json = JsonDocument.Parse(content);
+        var json = System.Text.Json.JsonDocument.Parse(content);
         
         Assert.AreEqual(TestModelName, json.RootElement.GetProperty("id").GetString());
         Assert.AreEqual("model", json.RootElement.GetProperty("object").GetString());
@@ -82,10 +78,10 @@ public class OpenAIApiCompatibilityTests : TestBase
     public async Task TestGetNonExistentModel()
     {
         var response = await Http.GetAsync("/v1/models/non-existent-model");
-        Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        Assert.AreEqual(System.Net.HttpStatusCode.NotFound, response.StatusCode);
         
         var content = await response.Content.ReadAsStringAsync();
-        var json = JsonDocument.Parse(content);
+        var json = System.Text.Json.JsonDocument.Parse(content);
         
         Assert.IsTrue(json.RootElement.TryGetProperty("error", out var error));
         Assert.AreEqual("model_not_found", error.GetProperty("code").GetString());
