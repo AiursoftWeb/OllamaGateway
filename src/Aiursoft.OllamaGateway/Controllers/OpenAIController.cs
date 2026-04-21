@@ -1093,4 +1093,28 @@ public class OpenAIController : ControllerBase
         });
         return Content(json, "application/json");
     }
+
+    [HttpGet("/v1/models/{id}")]
+    public async Task<IActionResult> Model(string id)
+    {
+        var vm = await _dbContext.VirtualModels.FirstOrDefaultAsync(m => m.Name == id);
+        if (vm == null)
+        {
+            return NotFound(new { error = new { message = $"Model '{id}' not found in gateway.", type = "invalid_request_error", param = "model", code = "model_not_found" } });
+        }
+
+        var result = new
+        {
+            id = vm.Name,
+            @object = "model",
+            created = ((DateTimeOffset)vm.CreatedAt).ToUnixTimeSeconds(),
+            owned_by = "library"
+        };
+
+        var json = System.Text.Json.JsonSerializer.Serialize(result, new System.Text.Json.JsonSerializerOptions
+        {
+            PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.SnakeCaseLower
+        });
+        return Content(json, "application/json");
+    }
 }
