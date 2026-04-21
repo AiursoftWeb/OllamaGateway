@@ -1,3 +1,5 @@
+using System.Net;
+using System.Text.Json;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
 using Aiursoft.OllamaGateway.Configuration;
