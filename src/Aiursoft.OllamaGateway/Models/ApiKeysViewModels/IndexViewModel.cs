@@ -8,7 +8,7 @@ public class IndexViewModel : UiStackLayoutViewModel
 {
     public IndexViewModel()
     {
-        PageTitle = "API Keys";
+        PageTitle = "Your API Keys";
     }
 
     public required List<ApiKey> ApiKeys { get; set; }

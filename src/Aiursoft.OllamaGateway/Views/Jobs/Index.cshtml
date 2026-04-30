@@ -3,7 +3,6 @@
 @using Aiursoft.OllamaGateway.Models.BackgroundJobs
 
 @{
-    ViewData["Title"] = "Background Jobs";
 
     string ToFriendlyDuration(TimeSpan value)
     {
@@ -40,7 +39,7 @@
     var lastRunAtByType = Model.LastRunAtByJobType;
 }
 
-<h1 class="h3 mb-1">@Localizer["Background Jobs"]</h1>
+<h1 class="h3 mb-1">@Model.PageTitle</h1>
 <p class="lead mb-4">@Localizer["Monitor and manage background job queues. Trigger any registered job manually or let the scheduler run it automatically."]</p>
 
 @* ── Registered Jobs ──────────────────────────────────────────────────────── *@
