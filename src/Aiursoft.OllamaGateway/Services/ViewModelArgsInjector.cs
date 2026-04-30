@@ -111,6 +111,11 @@ public class ViewModelArgsInjector(
         _ = localizer["Self Host"];
         _ = localizer["Deployment"];
         _ = localizer["Recommended local deployment"];
+    
+        _ = localizer["Health Monitor"];
+        _ = localizer["Manage Roles"];
+        _ = localizer["Manage Users"];
+        _ = localizer["Your API Keys"];
     }
 
     public void InjectSimple(
