@@ -7,7 +7,7 @@ public class MonitorViewModel : UiStackLayoutViewModel
 {
     public MonitorViewModel()
     {
-        PageTitle = "Monitor";
+        PageTitle = "Health Monitor";
     }
 
     public List<VirtualModel> VirtualModels { get; set; } = [];

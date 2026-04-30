@@ -7,7 +7,7 @@ public class IndexViewModel : UiStackLayoutViewModel
 {
     public IndexViewModel()
     {
-        PageTitle = "Roles";
+        PageTitle = "Manage Roles";
     }
 
     public required List<IdentityRoleWithCount> Roles { get; init; }

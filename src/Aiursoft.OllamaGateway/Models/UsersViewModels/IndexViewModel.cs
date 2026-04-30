@@ -7,7 +7,7 @@ public class IndexViewModel : UiStackLayoutViewModel
 {
     public IndexViewModel()
     {
-        PageTitle = "Users";
+        PageTitle = "Manage Users";
     }
 
     public required List<UserWithRolesViewModel> Users { get; set; }
