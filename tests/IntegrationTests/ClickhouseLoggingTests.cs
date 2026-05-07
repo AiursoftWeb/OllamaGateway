@@ -2,7 +2,6 @@ using System.Net;
 using Aiursoft.DbTools;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
-using Microsoft.EntityFrameworkCore;
 using static Aiursoft.WebTools.Extends;
 using Moq;
 
