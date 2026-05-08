@@ -13,7 +13,7 @@ public class ClickhouseDbContext : Aiursoft.ClickhouseSdk.ClickhouseDbContext, I
     // For Moq
     protected ClickhouseDbContext() : base(new DummyOptionsMonitor())
     {
-        RequestLogs = null!;
+        RequestLogs = new ClickhouseSet<RequestLog>(() => null!, "RequestLogs", _ => []);
     }
 
     private class DummyOptionsMonitor : IOptionsMonitor<ClickhouseOptions>
