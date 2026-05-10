@@ -48,6 +48,41 @@ public class AnthropicController : ControllerBase
     private string ExtractTextFromBlocks(object? content)
     {
         if (content == null) return string.Empty;
+        
+        // Handle Newtonsoft.Json.Linq types if they arrive from the binder
+        if (content is Newtonsoft.Json.Linq.JToken jToken)
+        {
+            if (jToken is Newtonsoft.Json.Linq.JValue jValue && jValue.Type == Newtonsoft.Json.Linq.JTokenType.String)
+            {
+                return jValue.Value?.ToString() ?? string.Empty;
+            }
+
+            if (jToken is Newtonsoft.Json.Linq.JArray jArray)
+            {
+                var parts = new List<string>();
+                foreach (var item in jArray)
+                {
+                    if (item is Newtonsoft.Json.Linq.JObject obj)
+                    {
+                        var type = obj["type"]?.ToString();
+                        if (type == "text")
+                        {
+                            var text = obj["text"]?.ToString();
+                            if (!string.IsNullOrEmpty(text)) parts.Add(text);
+                        }
+                        else if (type == "tool_use" || type == "tool_result")
+                        {
+                            var inner = obj["content"] ?? obj["input"];
+                            parts.Add(ExtractTextFromBlocks(inner));
+                        }
+                    }
+                }
+                return string.Join("\n", parts);
+            }
+            
+            return jToken.ToString(Newtonsoft.Json.Formatting.None);
+        }
+
         var node = JsonSerializer.SerializeToNode(content);
         if (node == null) return string.Empty;
         if (node is JsonValue jv && jv.TryGetValue<string>(out var str)) return str;
@@ -216,6 +251,16 @@ public class AnthropicController : ControllerBase
                 var toolsArray = new JsonArray();
                 foreach (var tool in request.Tools)
                 {
+                    JsonNode? parameters;
+                    if (tool.InputSchema is Newtonsoft.Json.Linq.JToken jToken)
+                    {
+                        parameters = JsonNode.Parse(jToken.ToString(Newtonsoft.Json.Formatting.None));
+                    }
+                    else
+                    {
+                        parameters = JsonSerializer.SerializeToNode(tool.InputSchema);
+                    }
+
                     toolsArray.Add(new JsonObject
                     {
                         ["type"] = "function",
@@ -223,7 +268,7 @@ public class AnthropicController : ControllerBase
                         {
                             ["name"] = tool.Name,
                             ["description"] = tool.Description ?? "",
-                            ["parameters"] = JsonSerializer.SerializeToNode(tool.InputSchema) ?? new JsonObject()
+                            ["parameters"] = parameters ?? new JsonObject()
                         }
                     });
                 }
@@ -245,10 +290,12 @@ public class AnthropicController : ControllerBase
                     ["stream"] = isStream
                 };
                 if (openaiBody["tools"] != null) requestBody["tools"] = openaiBody["tools"]!.DeepClone();
+                
                 var options = new JsonObject();
                 if (openaiBody["temperature"] != null) options["temperature"] = openaiBody["temperature"]!.DeepClone();
                 if (openaiBody["top_p"] != null) options["top_p"] = openaiBody["top_p"]!.DeepClone();
                 if (openaiBody["max_tokens"] != null) options["num_predict"] = openaiBody["max_tokens"]!.DeepClone();
+                
                 if (virtualModel.TopK.HasValue) options["top_k"] = virtualModel.TopK.Value;
                 if (virtualModel.NumCtx.HasValue) options["num_ctx"] = virtualModel.NumCtx.Value;
                 if (virtualModel.Thinking.HasValue) requestBody["think"] = virtualModel.Thinking.Value;
