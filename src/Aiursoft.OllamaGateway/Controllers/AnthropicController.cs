@@ -251,7 +251,7 @@ public class AnthropicController : ControllerBase
                 if (openaiBody["max_tokens"] != null) options["num_predict"] = openaiBody["max_tokens"]!.DeepClone();
                 if (virtualModel.TopK.HasValue) options["top_k"] = virtualModel.TopK.Value;
                 if (virtualModel.NumCtx.HasValue) options["num_ctx"] = virtualModel.NumCtx.Value;
-                if (virtualModel.Think.HasValue) requestBody["think"] = virtualModel.Think.Value;
+                if (virtualModel.Thinking.HasValue) requestBody["think"] = virtualModel.Thinking.Value;
                 if (options.Count > 0) requestBody["options"] = options;
             }
 
