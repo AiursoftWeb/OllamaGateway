@@ -25,4 +25,6 @@ public class RequestLog
     public string UserId { get; set; } = string.Empty;
     public string ApiKeyName { get; set; } = string.Empty;
     public int? BackendId { get; set; }
+    public int? ProviderId { get; set; }
+    public string UnderlyingModelName { get; set; } = string.Empty;
 }
