@@ -2,11 +2,9 @@ using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.InMemory;
 using Aiursoft.OllamaGateway.Services.BackgroundJobs;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Moq;
 using Moq.Protected;
 using System.Net;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Aiursoft.OllamaGateway.Tests;
 
