@@ -369,7 +369,7 @@
                     messages: history,
                     stream: true,
                     options: Object.keys(options).length > 0 ? options : undefined,
-                    think: thinking || undefined
+                    think: thinking
                 };
 
                 const response = await fetch('/api/chat', {
