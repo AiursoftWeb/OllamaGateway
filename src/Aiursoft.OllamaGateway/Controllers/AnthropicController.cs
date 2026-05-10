@@ -241,7 +241,7 @@ public class AnthropicController : ControllerBase
                 requestBody = new JsonObject
                 {
                     ["model"] = backend.UnderlyingModelName,
-                    ["messages"] = openaiMessages,
+                    ["messages"] = openaiMessages.DeepClone(),
                     ["stream"] = isStream
                 };
                 if (openaiBody["tools"] != null) requestBody["tools"] = openaiBody["tools"]!.DeepClone();
