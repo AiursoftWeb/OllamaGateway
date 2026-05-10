@@ -183,7 +183,9 @@ public class ProxyController(
             logContext.Log.Model = virtualModel.Name;
             logContext.Log.ConversationMessageCount = input.Messages?.Count ?? 0;
             logContext.Log.LastQuestion = input.Messages?.LastOrDefault()?.Content ?? string.Empty;
-            activeRequestTracker.StartRequest(virtualModel.Name, logContext.Log.LastQuestion, backend.UnderlyingModelName);
+            logContext.Log.ProviderId = backend.Provider.Id;
+            logContext.Log.UnderlyingModelName = backend.UnderlyingModelName;
+            activeRequestTracker.StartRequest(virtualModel.Name, logContext.Log.LastQuestion, backend.Provider.Id, backend.UnderlyingModelName);
 
             input.Model = backend.UnderlyingModelName;
             if (virtualModel.Thinking.HasValue) input.Think = virtualModel.Thinking.Value;
@@ -627,7 +629,10 @@ public class ProxyController(
         finally
         {
             if (!string.IsNullOrEmpty(logContext.Log.Model))
-                activeRequestTracker.EndRequest(logContext.Log.Model);
+                activeRequestTracker.EndRequest(
+                    logContext.Log.Model, 
+                    logContext.Log.ProviderId ?? 0, 
+                    logContext.Log.UnderlyingModelName);
         }
     }
 
@@ -718,6 +723,9 @@ public class ProxyController(
             logContext.Log.Model = virtualModel.Name;
             logContext.Log.ConversationMessageCount = 1;
             logContext.Log.LastQuestion = input.Prompt ?? string.Empty;
+            logContext.Log.ProviderId = backend.Provider.Id;
+            logContext.Log.UnderlyingModelName = backend.UnderlyingModelName;
+            activeRequestTracker.StartRequest(virtualModel.Name, logContext.Log.LastQuestion, backend.Provider.Id, backend.UnderlyingModelName);
 
             // /api/generate has no OpenAI-compatible equivalent — reject if backend is OpenAI
             if (backend.Provider.ProviderType == ProviderType.OpenAI)
@@ -921,6 +929,14 @@ public class ProxyController(
                 await Response.WriteAsync("Internal Server Error in Gateway.");
             }
         }
+        finally
+        {
+            if (!string.IsNullOrEmpty(logContext.Log.Model))
+                activeRequestTracker.EndRequest(
+                    logContext.Log.Model, 
+                    logContext.Log.ProviderId ?? 0, 
+                    logContext.Log.UnderlyingModelName);
+        }
     }
 
     [HttpPost("embed")]
@@ -986,6 +1002,9 @@ public class ProxyController(
             logContext.Log.Model = virtualModel.Name;
             logContext.Log.ConversationMessageCount = 1;
             logContext.Log.LastQuestion = inputNode["input"]?.ToString() ?? inputNode["prompt"]?.ToString() ?? string.Empty;
+            logContext.Log.ProviderId = backend.Provider.Id;
+            logContext.Log.UnderlyingModelName = backend.UnderlyingModelName;
+            activeRequestTracker.StartRequest(virtualModel.Name, logContext.Log.LastQuestion, backend.Provider.Id, backend.UnderlyingModelName);
 
             // ====================================================================
             // OpenAI-compatible Backend Path (Ollama embed request → OpenAI downstream)
@@ -1204,6 +1223,14 @@ public class ProxyController(
                 Response.StatusCode = 500;
                 await Response.WriteAsync("Internal Server Error in Gateway.");
             }
+        }
+        finally
+        {
+            if (!string.IsNullOrEmpty(logContext.Log.Model))
+                activeRequestTracker.EndRequest(
+                    logContext.Log.Model, 
+                    logContext.Log.ProviderId ?? 0, 
+                    logContext.Log.UnderlyingModelName);
         }
     }
 

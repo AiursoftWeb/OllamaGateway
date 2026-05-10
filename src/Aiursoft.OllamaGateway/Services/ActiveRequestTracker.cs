@@ -23,11 +23,12 @@ public class ActiveModelRequestInfo
 public class ActiveRequestTracker : ISingletonDependency
 {
     private readonly ConcurrentDictionary<string, ActiveModelRequestInfo> _state = new();
+    private readonly ConcurrentDictionary<(int providerId, string modelName), int> _physicalState = new();
 
     /// <summary>
     /// Call immediately before forwarding a request to the upstream model.
     /// </summary>
-    public void StartRequest(string modelName, string question, string backendModelName)
+    public void StartRequest(string modelName, string question, int providerId, string backendModelName)
     {
         var info = _state.GetOrAdd(modelName, _ => new ActiveModelRequestInfo());
         lock (info)
@@ -37,21 +38,35 @@ public class ActiveRequestTracker : ISingletonDependency
             info.BackendModelName = backendModelName;
             info.LastStartedAt = DateTime.UtcNow;
         }
+
+        _physicalState.AddOrUpdate((providerId, backendModelName), 1, (_, count) => count + 1);
     }
 
     /// <summary>
     /// Call in a finally block once the upstream response has been fully streamed.
     /// </summary>
-    public void EndRequest(string modelName)
+    public void EndRequest(string modelName, int providerId, string backendModelName)
     {
-        if (!_state.TryGetValue(modelName, out var info)) return;
-        lock (info)
+        if (_state.TryGetValue(modelName, out var info))
         {
-            info.ActiveCount = Math.Max(0, info.ActiveCount - 1);
-            if (info.ActiveCount == 0)
-                info.LastCompletedAt = DateTime.UtcNow;
+            lock (info)
+            {
+                info.ActiveCount = Math.Max(0, info.ActiveCount - 1);
+                if (info.ActiveCount == 0)
+                    info.LastCompletedAt = DateTime.UtcNow;
+            }
         }
+
+        _physicalState.AddOrUpdate((providerId, backendModelName), 0, (_, count) => Math.Max(0, count - 1));
     }
 
     public IReadOnlyDictionary<string, ActiveModelRequestInfo> GetAll() => _state;
+
+    public HashSet<(int providerId, string modelName)> GetBusyPhysicalModels()
+    {
+        return _physicalState
+            .Where(kv => kv.Value > 0)
+            .Select(kv => kv.Key)
+            .ToHashSet();
+    }
 }

@@ -18,6 +18,11 @@ public class MonitorViewModel : UiStackLayoutViewModel
     /// </summary>
     public HashSet<string> BusyModels { get; set; } = [];
 
+    /// <summary>
+    /// Set of physical model (providerId, modelName) that currently have at least one active inference request.
+    /// </summary>
+    public HashSet<(int providerId, string modelName)> BusyPhysicalModels { get; set; } = [];
+
     public Dictionary<int, DateTime?> BackendBanStatuses { get; set; } = [];
 }
 
