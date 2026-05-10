@@ -21,7 +21,7 @@ public class AvatarTests : TestBase
         fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/gif");
 
         var multipartContent = new MultipartFormDataContent();
-        multipartContent.Add(fileContent, "file", "avatar.gif");
+        multipartContent.Add(fileContent, "file", $"avatar_{Guid.NewGuid()}.gif");
 
         var storage = GetService<StorageService>();
         var uploadUrl = storage.GetUploadUrl("avatars", isVault: false);
@@ -54,7 +54,7 @@ public class AvatarTests : TestBase
         fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/gif");
 
         var multipartContent = new MultipartFormDataContent();
-        multipartContent.Add(fileContent, "file", "avatar.gif");
+        multipartContent.Add(fileContent, "file", $"avatar_{Guid.NewGuid()}.gif");
 
         var storage = GetService<StorageService>();
         var uploadUrl = storage.GetUploadUrl("avatars", isVault: false);
@@ -89,7 +89,7 @@ public class AvatarTests : TestBase
         fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/png");
 
         var multipartContent = new MultipartFormDataContent();
-        multipartContent.Add(fileContent, "file", "avatar.png");
+        multipartContent.Add(fileContent, "file", $"avatar_{Guid.NewGuid()}.png");
 
         var storage = GetService<StorageService>();
         var uploadUrl = storage.GetUploadUrl("avatars", isVault: false);
@@ -127,7 +127,7 @@ public class AvatarTests : TestBase
         fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/png");
 
         var multipartContent = new MultipartFormDataContent();
-        multipartContent.Add(fileContent, "file", "avatar.png");
+        multipartContent.Add(fileContent, "file", $"avatar_{Guid.NewGuid()}.png");
 
         var storage = GetService<StorageService>();
         var uploadUrl = storage.GetUploadUrl("avatars", isVault: false);
@@ -164,7 +164,7 @@ public class AvatarTests : TestBase
         fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/png");
 
         var multipartContent = new MultipartFormDataContent();
-        multipartContent.Add(fileContent, "file", "avatar.png");
+        multipartContent.Add(fileContent, "file", $"avatar_{Guid.NewGuid()}.png");
 
         var storage = GetService<StorageService>();
         var uploadUrl = storage.GetUploadUrl("avatars", isVault: false);
@@ -194,7 +194,7 @@ public class AvatarTests : TestBase
         fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/png");
 
         var multipartContent = new MultipartFormDataContent();
-        multipartContent.Add(fileContent, "file", "avatar.png");
+        multipartContent.Add(fileContent, "file", $"avatar_{Guid.NewGuid()}.png");
 
         var storage = GetService<StorageService>();
         var uploadUrl = storage.GetUploadUrl("avatars", isVault: false);
@@ -218,7 +218,7 @@ public class AvatarTests : TestBase
         // Upload a text file but give it an image extension to try to trick the processor
         var content = new StringContent("Not an image");
         var multipartContent = new MultipartFormDataContent();
-        multipartContent.Add(content, "file", "fake.jpg");
+        multipartContent.Add(content, "file", $"fake_{Guid.NewGuid()}.jpg");
 
         var storage = GetService<StorageService>();
         var uploadUrl = storage.GetUploadUrl("test", isVault: false);

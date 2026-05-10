@@ -1,3 +1,6 @@
+using Aiursoft.OllamaGateway.Entities;
+using Aiursoft.OllamaGateway.Services;
+
 namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
 
 [TestClass]
@@ -49,25 +52,25 @@ public class DashboardControllerTests : TestBase
         await LoginAsAdmin();
         
         // Add a virtual model and backend to the DB
-        var db = GetService<Aiursoft.OllamaGateway.Entities.TemplateDbContext>();
-        var provider = new Aiursoft.OllamaGateway.Entities.OllamaProvider
+        var db = GetService<TemplateDbContext>();
+        var provider = new OllamaProvider
         {
             Name = "Test Provider",
             BaseUrl = "http://localhost:11434",
-            ProviderType = Aiursoft.OllamaGateway.Entities.ProviderType.Ollama
+            ProviderType = ProviderType.Ollama
         };
         db.OllamaProviders.Add(provider);
         await db.SaveChangesAsync();
 
-        var vm = new Aiursoft.OllamaGateway.Entities.VirtualModel
+        var vm = new VirtualModel
         {
             Name = "test-virtual-model",
-            Type = Aiursoft.OllamaGateway.Entities.ModelType.Chat
+            Type = ModelType.Chat
         };
         db.VirtualModels.Add(vm);
         await db.SaveChangesAsync();
 
-        var backend = new Aiursoft.OllamaGateway.Entities.VirtualModelBackend
+        var backend = new VirtualModelBackend
         {
             VirtualModelId = vm.Id,
             ProviderId = provider.Id,
@@ -78,7 +81,7 @@ public class DashboardControllerTests : TestBase
         await db.SaveChangesAsync();
         
         // Mark a model as busy
-        var tracker = GetService<Aiursoft.OllamaGateway.Services.ActiveRequestTracker>();
+        var tracker = GetService<ActiveRequestTracker>();
         tracker.StartRequest(vm.Name, "test question", provider.Id, "test-physical-model");
 
         var url = "/Dashboard/Monitor";
