@@ -146,7 +146,9 @@ public class OpenAIController : ControllerBase
             var messagesArray = clientJson["messages"]?.AsArray();
             _logContext.Log.ConversationMessageCount = messagesArray?.Count ?? 0;
             _logContext.Log.LastQuestion = messagesArray?.LastOrDefault()?["content"]?.ToString() ?? string.Empty;
-            _activeRequestTracker.StartRequest(virtualModel.Name, _logContext.Log.LastQuestion, backend.UnderlyingModelName);
+            _logContext.Log.ProviderId = backend.Provider.Id;
+            _logContext.Log.UnderlyingModelName = backend.UnderlyingModelName;
+            _activeRequestTracker.StartRequest(virtualModel.Name, _logContext.Log.LastQuestion, backend.Provider.Id, backend.UnderlyingModelName);
 
             var isStream = clientJson["stream"]?.GetValue<bool>() ?? false;
 
@@ -765,7 +767,10 @@ public class OpenAIController : ControllerBase
         finally
         {
             if (!string.IsNullOrEmpty(_logContext.Log.Model))
-                _activeRequestTracker.EndRequest(_logContext.Log.Model);
+                _activeRequestTracker.EndRequest(
+                    _logContext.Log.Model, 
+                    _logContext.Log.ProviderId ?? 0, 
+                    _logContext.Log.UnderlyingModelName);
         }
     }
 
@@ -823,6 +828,9 @@ public class OpenAIController : ControllerBase
             _logContext.Log.Model = virtualModel.Name;
             _logContext.Log.ConversationMessageCount = 1;
             _logContext.Log.LastQuestion = clientJson["input"]?.ToString() ?? string.Empty;
+            _logContext.Log.ProviderId = backend.Provider.Id;
+            _logContext.Log.UnderlyingModelName = backend.UnderlyingModelName;
+            _activeRequestTracker.StartRequest(virtualModel.Name, _logContext.Log.LastQuestion, backend.Provider.Id, backend.UnderlyingModelName);
 
             // =========================================================================================
             // OpenAI-compatible Backend Path: direct passthrough for embeddings
@@ -1071,6 +1079,14 @@ public class OpenAIController : ControllerBase
                 Response.StatusCode = 500;
                 await Response.WriteAsync("Internal Server Error in Gateway.");
             }
+        }
+        finally
+        {
+            if (!string.IsNullOrEmpty(_logContext.Log.Model))
+                _activeRequestTracker.EndRequest(
+                    _logContext.Log.Model, 
+                    _logContext.Log.ProviderId ?? 0, 
+                    _logContext.Log.UnderlyingModelName);
         }
     }
 

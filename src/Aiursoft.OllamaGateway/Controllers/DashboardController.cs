@@ -152,6 +152,7 @@ public class DashboardController(
                 .Where(kv => kv.Value.ActiveCount > 0)
                 .Select(kv => kv.Key)
                 .ToHashSet(),
+            BusyPhysicalModels = activeRequestTracker.GetBusyPhysicalModels(),
             BackendBanStatuses = virtualModels
                 .SelectMany(m => m.VirtualModelBackends)
                 .ToDictionary(b => b.Id, b => modelSelector.GetBanUntil(b.Id))
