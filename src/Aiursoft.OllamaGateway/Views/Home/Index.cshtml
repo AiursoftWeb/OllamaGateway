@@ -280,46 +280,55 @@
             <div class="row justify-content-center mt-3">
                 <div class="col-lg-8">
                     <p class="text-gray-400 fs-lg">
-                        @Localizer["OllamaGateway supports two inbound API formats (OpenAI & Ollama) and two backend provider types — in any combination. Your clients and physical models don't have to speak the same language."]
+                        @Localizer["OllamaGateway supports three inbound API formats (OpenAI, Ollama & Anthropic) and two backend provider types — in any combination. Your clients and physical models don't have to speak the same language."]
                     </p>
                 </div>
             </div>
         </div>
 
         <div class="row g-3 mb-5">
-            <div class="col-12 col-md-6 col-xl-3 d-flex">
+            <div class="col-12 col-md-4 col-xl-2 d-flex">
                 <div class="card bg-dark-glass border-white-10 flex-fill hover-lift">
-                    <div class="card-body p-4 text-center">
+                    <div class="card-body p-3 text-center">
                         <span class="badge bg-primary fs-6 mb-3 px-3 py-2">①</span>
                         <h6 class="text-white fw-bold mb-2">@Localizer["OpenAI Client"]<br>→ @Localizer["OpenAI Backend"]</h6>
                         <p class="text-gray-400 small mb-0"><code class="text-gray-300">/v1/chat/completions</code><br>@Localizer["→ OpenAI-compatible provider"]</p>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6 col-xl-3 d-flex">
+            <div class="col-12 col-md-4 col-xl-2 d-flex">
                 <div class="card bg-dark-glass border-white-10 flex-fill hover-lift">
-                    <div class="card-body p-4 text-center">
+                    <div class="card-body p-3 text-center">
                         <span class="badge bg-warning text-dark fs-6 mb-3 px-3 py-2">②</span>
                         <h6 class="text-white fw-bold mb-2">@Localizer["Ollama Client"]<br>→ @Localizer["OpenAI Backend"]</h6>
                         <p class="text-gray-400 small mb-0"><code class="text-gray-300">/api/chat</code><br>@Localizer["→ OpenAI-compatible provider"]</p>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6 col-xl-3 d-flex">
+            <div class="col-12 col-md-4 col-xl-2 d-flex">
                 <div class="card bg-dark-glass border-white-10 flex-fill hover-lift">
-                    <div class="card-body p-4 text-center">
+                    <div class="card-body p-3 text-center">
                         <span class="badge bg-success fs-6 mb-3 px-3 py-2">③</span>
                         <h6 class="text-white fw-bold mb-2">@Localizer["OpenAI Client"]<br>→ @Localizer["Ollama Backend"]</h6>
                         <p class="text-gray-400 small mb-0"><code class="text-gray-300">/v1/chat/completions</code><br>@Localizer["→ Native Ollama"]</p>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6 col-xl-3 d-flex">
+            <div class="col-12 col-md-4 col-xl-2 d-flex">
                 <div class="card bg-dark-glass border-white-10 flex-fill hover-lift">
-                    <div class="card-body p-4 text-center">
+                    <div class="card-body p-3 text-center">
                         <span class="badge bg-info fs-6 mb-3 px-3 py-2">④</span>
                         <h6 class="text-white fw-bold mb-2">@Localizer["Ollama Client"]<br>→ @Localizer["Ollama Backend"]</h6>
                         <p class="text-gray-400 small mb-0"><code class="text-gray-300">/api/chat</code><br>@Localizer["→ Native Ollama"]</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-xl-4 d-flex">
+                <div class="card bg-dark-glass border-white-10 flex-fill hover-lift">
+                    <div class="card-body p-3 text-center">
+                        <span class="badge bg-danger fs-6 mb-3 px-3 py-2">⑤</span>
+                        <h6 class="text-white fw-bold mb-2">@Localizer["Anthropic Client"]<br>→ @Localizer["Any Backend"]</h6>
+                        <p class="text-gray-400 small mb-0"><code class="text-gray-300">/v1/messages</code><br>@Localizer["→ Claude-compatible API for Ollama/OpenAI"]</p>
                     </div>
                 </div>
             </div>
@@ -334,11 +343,13 @@
                         <th><span class="badge bg-warning text-dark me-1">②</span>@Localizer["Ollama → OpenAI"]</th>
                         <th><span class="badge bg-success me-1">③</span>@Localizer["OpenAI → Ollama"]</th>
                         <th><span class="badge bg-info me-1">④</span>@Localizer["Ollama → Ollama"]</th>
+                        <th><span class="badge bg-danger me-1">⑤</span>@Localizer["Anthropic → Any"]</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td class="text-start fw-medium ps-3">Temperature</td>
+                        <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
                         <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
                         <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
                         <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
@@ -350,6 +361,7 @@
                         <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
                         <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
                         <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
+                        <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
                     </tr>
                     <tr>
                         <td class="text-start fw-medium ps-3">Top K</td>
@@ -357,6 +369,7 @@
                         <td><i class="fas fa-exclamation-triangle text-warning" data-bs-toggle="tooltip" title="@Localizer["DB injects the value but it is dropped before the OpenAI request is sent"]"></i> @Localizer["DB override discarded"]</td>
                         <td><i class="fas fa-check-circle text-success"></i> @Localizer["DB override"]</td>
                         <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
+                        <td><i class="fas fa-times-circle text-danger"></i> @Localizer["Not supported"]</td>
                     </tr>
                     <tr>
                         <td class="text-start fw-medium ps-3">Num Ctx</td>
@@ -364,6 +377,7 @@
                         <td><i class="fas fa-exclamation-triangle text-warning" data-bs-toggle="tooltip" title="@Localizer["DB injects the value but it is dropped before the OpenAI request is sent"]"></i> @Localizer["DB override discarded"]</td>
                         <td><i class="fas fa-check-circle text-success"></i> @Localizer["DB override"]</td>
                         <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
+                        <td><i class="fas fa-times-circle text-danger"></i> @Localizer["Not supported"]</td>
                     </tr>
                     <tr>
                         <td class="text-start fw-medium ps-3">@Localizer["Thinking (think)"]</td>
@@ -371,6 +385,7 @@
                         <td><i class="fas fa-exclamation-triangle text-warning" data-bs-toggle="tooltip" title="@Localizer["DB injects the value but it is dropped before the OpenAI request is sent"]"></i> @Localizer["DB override discarded"]</td>
                         <td><i class="fas fa-check-circle text-success"></i> @Localizer["DB override"]</td>
                         <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
+                        <td><i class="fas fa-times-circle text-danger"></i> @Localizer["Not supported"]</td>
                     </tr>
                 </tbody>
             </table>
@@ -435,6 +450,11 @@
                         <td>
                             <i class="fas fa-exclamation-triangle text-warning" data-bs-toggle="tooltip" title="@Localizer["Partially supported. Lacks advanced system prompt mapping, parameter overriding, and role translation."]"></i>
                         </td>
+                        <td><i class="fas fa-check-circle text-success"></i></td>
+                    </tr>
+                    <tr>
+                        <td class="text-start fw-medium">@Localizer["Anthropic API Translation"]</td>
+                        <td><i class="fas fa-times-circle text-danger"></i></td>
                         <td><i class="fas fa-check-circle text-success"></i></td>
                     </tr>
                     <tr>
