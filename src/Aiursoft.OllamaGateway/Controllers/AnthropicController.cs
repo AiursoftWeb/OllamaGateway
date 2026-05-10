@@ -1,0 +1,615 @@
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using Aiursoft.OllamaGateway.Authorization;
+using Aiursoft.OllamaGateway.Entities;
+using Aiursoft.OllamaGateway.Models;
+using Aiursoft.OllamaGateway.Models.AnthropicViewModels;
+using Aiursoft.OllamaGateway.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
+namespace Aiursoft.OllamaGateway.Controllers;
+
+[AllowAnonymous]
+[RequiresUserOrApiKeyAuth]
+public class AnthropicController : ControllerBase
+{
+    private readonly TemplateDbContext _dbContext;
+    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly RequestLogContext _logContext;
+    private readonly GlobalSettingsService _globalSettingsService;
+    private readonly ILogger<AnthropicController> _logger;
+    private readonly MemoryUsageTracker _memoryUsageTracker;
+    private readonly IModelSelector _modelSelector;
+    private readonly ActiveRequestTracker _activeRequestTracker;
+
+    public AnthropicController(
+        TemplateDbContext dbContext,
+        IHttpClientFactory httpClientFactory,
+        RequestLogContext logContext,
+        GlobalSettingsService globalSettingsService,
+        ILogger<AnthropicController> logger,
+        MemoryUsageTracker memoryUsageTracker,
+        IModelSelector modelSelector,
+        ActiveRequestTracker activeRequestTracker)
+    {
+        _dbContext = dbContext;
+        _httpClientFactory = httpClientFactory;
+        _logContext = logContext;
+        _globalSettingsService = globalSettingsService;
+        _logger = logger;
+        _memoryUsageTracker = memoryUsageTracker;
+        _modelSelector = modelSelector;
+        _activeRequestTracker = activeRequestTracker;
+    }
+
+    private string ExtractTextFromBlocks(object? content)
+    {
+        if (content == null) return string.Empty;
+        var node = JsonSerializer.SerializeToNode(content);
+        if (node == null) return string.Empty;
+        if (node is JsonValue jv && jv.TryGetValue<string>(out var str)) return str;
+        if (node is JsonArray arr)
+        {
+            var parts = new List<string>();
+            foreach (var item in arr)
+            {
+                if (item == null) continue;
+                if (item is JsonValue itemJv && itemJv.TryGetValue<string>(out var itemStr))
+                {
+                    parts.Add(itemStr);
+                }
+                else if (item is JsonObject obj)
+                {
+                    var type = obj["type"]?.ToString();
+                    if (type == "text")
+                    {
+                        var text = obj["text"]?.ToString();
+                        if (!string.IsNullOrEmpty(text)) parts.Add(text);
+                    }
+                    else if (type == "tool_use" || type == "tool_result")
+                    {
+                        var inner = obj["content"] ?? obj["input"];
+                        parts.Add(ExtractTextFromBlocks(inner));
+                    }
+                }
+            }
+            return string.Join("\n", parts);
+        }
+        return node.ToString();
+    }
+
+    [HttpPost("/v1/messages")]
+    public async Task Messages([FromBody] AnthropicMessageRequest? request)
+    {
+        _logContext.Log.UserId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "Anonymous";
+        _logContext.Log.ApiKeyName = User.FindFirst("ApiKeyName")?.Value ?? (User.Identity?.IsAuthenticated == true ? "Web Session" : "Anonymous");
+
+        if (request == null)
+        {
+            Response.StatusCode = 400;
+            await Response.WriteAsync("Invalid request body.");
+            return;
+        }
+
+        try
+        {
+            var modelToUse = string.IsNullOrWhiteSpace(request.Model)
+                ? await _globalSettingsService.GetDefaultChatModelAsync()
+                : request.Model;
+
+            VirtualModel? virtualModel = null;
+            VirtualModelBackend? backend = null;
+
+            if (modelToUse.StartsWith("physical_"))
+            {
+                var parts = modelToUse.Split('_');
+                if (parts.Length >= 3 && int.TryParse(parts[1], out var providerId))
+                {
+                    if (!User.HasClaim(AppPermissions.Type, AppPermissionNames.CanChatWithUnderlyingModels))
+                    {
+                        Response.StatusCode = 403;
+                        await Response.WriteAsync("Forbidden. You don't have permission to chat with underlying models.");
+                        return;
+                    }
+
+                    var provider = await _dbContext.OllamaProviders.FindAsync(providerId);
+                    if (provider == null)
+                    {
+                        Response.StatusCode = 404;
+                        await Response.WriteAsync($"Provider with ID {providerId} not found.");
+                        return;
+                    }
+
+                    var underlyingModelName = string.Join('_', parts.Skip(2));
+                    virtualModel = new VirtualModel
+                    {
+                        Name = modelToUse,
+                        MaxRetries = 1,
+                        HealthCheckTimeout = 40,
+                    };
+                    backend = new VirtualModelBackend
+                    {
+                        Provider = provider,
+                        UnderlyingModelName = underlyingModelName,
+                        ProviderId = providerId
+                    };
+                }
+            }
+
+            if (virtualModel == null)
+            {
+                virtualModel = await _dbContext.VirtualModels
+                    .Include(m => m.VirtualModelBackends).ThenInclude(b => b.Provider)
+                    .FirstOrDefaultAsync(m => m.Name == modelToUse && m.Type == ModelType.Chat);
+
+                if (virtualModel == null)
+                {
+                    Response.StatusCode = 404;
+                    await Response.WriteAsync($"Model '{modelToUse}' not found in gateway.");
+                    return;
+                }
+
+                backend = _modelSelector.SelectBackend(virtualModel);
+            }
+
+            if (backend == null || backend.Provider == null)
+            {
+                Response.StatusCode = 503;
+                await Response.WriteAsync($"No available backend for model '{modelToUse}'.");
+                return;
+            }
+
+            var underlyingUrl = backend.Provider.BaseUrl.TrimEnd('/');
+
+            var apiKeyIdClaim = User.FindFirst("ApiKeyId");
+            if (apiKeyIdClaim != null && int.TryParse(apiKeyIdClaim.Value, out var apiKeyId))
+            {
+                _memoryUsageTracker.TrackApiKeyUsage(apiKeyId);
+            }
+            _memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
+            _memoryUsageTracker.TrackVirtualModelUsage(virtualModel.Name);
+
+            _logContext.Log.Model = virtualModel.Name;
+
+            var conversationMessageCount = request.Messages.Count;
+            _logContext.Log.ConversationMessageCount = conversationMessageCount;
+            _logContext.Log.LastQuestion = request.Messages.LastOrDefault()?.Content?.ToString() ?? string.Empty;
+            _activeRequestTracker.StartRequest(virtualModel.Name, _logContext.Log.LastQuestion, backend.UnderlyingModelName);
+
+            var isStream = request.Stream;
+
+            // Translate Anthropic -> OpenAI Format for the backend
+            var openaiMessages = new JsonArray();
+            if (request.System != null)
+            {
+                var sysText = ExtractTextFromBlocks(request.System);
+                openaiMessages.Add(new JsonObject { ["role"] = "system", ["content"] = sysText });
+            }
+
+            foreach (var msg in request.Messages)
+            {
+                var text = ExtractTextFromBlocks(msg.Content);
+                openaiMessages.Add(new JsonObject { ["role"] = msg.Role, ["content"] = text });
+            }
+
+            var openaiBody = new JsonObject
+            {
+                ["model"] = backend.UnderlyingModelName,
+                ["messages"] = openaiMessages,
+                ["stream"] = isStream
+            };
+
+            // Apply overrides
+            if (request.MaxTokens.HasValue) openaiBody["max_tokens"] = request.MaxTokens.Value;
+            if (request.Temperature.HasValue) openaiBody["temperature"] = request.Temperature.Value;
+            if (request.TopP.HasValue) openaiBody["top_p"] = request.TopP.Value;
+
+            if (virtualModel.Temperature.HasValue) openaiBody["temperature"] = virtualModel.Temperature.Value;
+            if (virtualModel.TopP.HasValue) openaiBody["top_p"] = virtualModel.TopP.Value;
+            if (virtualModel.NumPredict.HasValue) openaiBody["max_tokens"] = virtualModel.NumPredict.Value;
+
+            if (request.Tools != null && request.Tools.Count > 0)
+            {
+                var toolsArray = new JsonArray();
+                foreach (var tool in request.Tools)
+                {
+                    toolsArray.Add(new JsonObject
+                    {
+                        ["type"] = "function",
+                        ["function"] = new JsonObject
+                        {
+                            ["name"] = tool.Name,
+                            ["description"] = tool.Description ?? "",
+                            ["parameters"] = JsonSerializer.SerializeToNode(tool.InputSchema) ?? new JsonObject()
+                        }
+                    });
+                }
+                openaiBody["tools"] = toolsArray;
+            }
+
+            HttpResponseMessage? upstreamResponse = null;
+            var isOllamaDirect = backend.Provider.ProviderType == ProviderType.Ollama;
+            var targetEndpoint = "/v1/chat/completions";
+
+            JsonObject requestBody = openaiBody;
+            if (isOllamaDirect)
+            {
+                targetEndpoint = "/api/chat";
+                requestBody = new JsonObject
+                {
+                    ["model"] = backend.UnderlyingModelName,
+                    ["messages"] = openaiMessages,
+                    ["stream"] = isStream
+                };
+                if (openaiBody["tools"] != null) requestBody["tools"] = openaiBody["tools"]!.DeepClone();
+                var options = new JsonObject();
+                if (openaiBody["temperature"] != null) options["temperature"] = openaiBody["temperature"]!.DeepClone();
+                if (openaiBody["top_p"] != null) options["top_p"] = openaiBody["top_p"]!.DeepClone();
+                if (openaiBody["max_tokens"] != null) options["num_predict"] = openaiBody["max_tokens"]!.DeepClone();
+                if (virtualModel.TopK.HasValue) options["top_k"] = virtualModel.TopK.Value;
+                if (virtualModel.NumCtx.HasValue) options["num_ctx"] = virtualModel.NumCtx.Value;
+                if (options.Count > 0) requestBody["options"] = options;
+            }
+
+            var client = _httpClientFactory.CreateClient();
+            client.Timeout = await _globalSettingsService.GetRequestTimeoutAsync();
+            
+            for (var i = 0; i < virtualModel.MaxRetries; i++)
+            {
+                var req = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}{targetEndpoint}")
+                {
+                    Content = new StringContent(requestBody.ToJsonString(), Encoding.UTF8, "application/json")
+                };
+                if (!string.IsNullOrWhiteSpace(backend.Provider.BearerToken))
+                    req.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", backend.Provider.BearerToken);
+
+                using var cts = CancellationTokenSource.CreateLinkedTokenSource(HttpContext.RequestAborted);
+                cts.CancelAfter(TimeSpan.FromSeconds(virtualModel.HealthCheckTimeout));
+
+                try
+                {
+                    upstreamResponse = await client.SendAsync(req, HttpCompletionOption.ResponseHeadersRead, cts.Token);
+                    if (upstreamResponse.IsSuccessStatusCode) { _modelSelector.ReportSuccess(backend.Id); _logContext.Log.BackendId = backend.Id; break; }
+                    if ((int)upstreamResponse.StatusCode >= 500 && !Response.HasStarted)
+                        throw new HttpRequestException($"Received {upstreamResponse.StatusCode} from upstream.");
+                    _modelSelector.ReportSuccess(backend.Id); _logContext.Log.BackendId = backend.Id; break;
+                }
+                catch (Exception ex) when (!Response.HasStarted)
+                {
+                    _modelSelector.ReportFailure(backend.Id);
+                    _logger.LogWarning(ex, "Attempt {Attempt} failed", i + 1);
+                    if (i == virtualModel.MaxRetries - 1) throw;
+                    backend = _modelSelector.SelectBackend(virtualModel);
+                    if (backend?.Provider == null) { Response.StatusCode = 503; await Response.WriteAsync($"No available backend."); return; }
+                    underlyingUrl = backend.Provider.BaseUrl.TrimEnd('/');
+                    requestBody["model"] = backend.UnderlyingModelName;
+                    _memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
+                }
+            }
+
+            if (upstreamResponse == null) return;
+
+            Response.StatusCode = (int)upstreamResponse.StatusCode;
+            _logContext.Log.StatusCode = Response.StatusCode;
+            _logContext.Log.Success = upstreamResponse.IsSuccessStatusCode;
+
+            if (!upstreamResponse.IsSuccessStatusCode)
+            {
+                var errContent = await upstreamResponse.Content.ReadAsStringAsync(HttpContext.RequestAborted);
+                _logContext.Log.Answer = errContent;
+                Response.ContentType = "application/json";
+                await Response.WriteAsync(errContent, HttpContext.RequestAborted);
+                return;
+            }
+
+            await using var upstreamStream = await upstreamResponse.Content.ReadAsStreamAsync(HttpContext.RequestAborted);
+
+            if (isStream)
+            {
+                Response.ContentType = "text/event-stream";
+                var answerBuilder = new StringBuilder();
+                using var reader = new StreamReader(upstreamStream);
+                string? sLine;
+                var msgId = $"msg_{Guid.NewGuid():N}";
+                
+                // Emitting message_start
+                var messageStart = new JsonObject
+                {
+                    ["type"] = "message_start",
+                    ["message"] = new JsonObject
+                    {
+                        ["id"] = msgId,
+                        ["type"] = "message",
+                        ["role"] = "assistant",
+                        ["model"] = virtualModel.Name,
+                        ["content"] = new JsonArray(),
+                        ["usage"] = new JsonObject { ["input_tokens"] = 0, ["output_tokens"] = 0 }
+                    }
+                };
+                await Response.WriteAsync($"event: message_start\ndata: {messageStart.ToJsonString()}\n\n", HttpContext.RequestAborted);
+                
+                var contentBlockStart = new JsonObject
+                {
+                    ["type"] = "content_block_start",
+                    ["index"] = 0,
+                    ["content_block"] = new JsonObject { ["type"] = "text", ["text"] = "" }
+                };
+                await Response.WriteAsync($"event: content_block_start\ndata: {contentBlockStart.ToJsonString()}\n\n", HttpContext.RequestAborted);
+
+                var activeToolBlocks = new HashSet<int>();
+                var currentStopReason = "end_turn";
+                var localToolIndexCounter = 0;
+
+                while ((sLine = await reader.ReadLineAsync(HttpContext.RequestAborted)) != null)
+                {
+                    if (string.IsNullOrWhiteSpace(sLine)) continue;
+                    
+                    string deltaText = "";
+                    JsonArray? toolCalls = null;
+
+                    if (isOllamaDirect)
+                    {
+                        try
+                        {
+                            var chunk = JsonNode.Parse(sLine);
+                            if (chunk != null)
+                            {
+                                deltaText = chunk["message"]?["content"]?.ToString() ?? "";
+                                toolCalls = chunk["message"]?["tool_calls"]?.AsArray();
+
+                                if (chunk["done"]?.GetValue<bool>() == true)
+                                {
+                                    var pTok = chunk["prompt_eval_count"]?.GetValue<long>() ?? 0;
+                                    var cTok = chunk["eval_count"]?.GetValue<long>() ?? 0;
+                                    _logContext.Log.PromptTokens = (int)pTok;
+                                    _logContext.Log.CompletionTokens = (int)cTok;
+                                }
+                            }
+                        }
+                        catch (JsonException) { }
+                    }
+                    else
+                    {
+                        if (sLine.StartsWith("data: ") && sLine != "data: [DONE]")
+                        {
+                            try
+                            {
+                                var chunk = JsonNode.Parse(sLine["data: ".Length..]);
+                                if (chunk != null)
+                                {
+                                    var choice = chunk["choices"]?[0];
+                                    deltaText = choice?["delta"]?["content"]?.ToString() ?? "";
+                                    
+                                    // DeepSeek reasoning content mapping
+                                    var reasoning = choice?["delta"]?["reasoning_content"]?.ToString();
+                                    if (!string.IsNullOrEmpty(reasoning)) deltaText = reasoning + deltaText;
+
+                                    toolCalls = choice?["delta"]?["tool_calls"]?.AsArray();
+                                    var finishReason = choice?["finish_reason"]?.ToString();
+                                    if (finishReason == "length") currentStopReason = "max_tokens";
+                                    else if (finishReason == "tool_calls") currentStopReason = "tool_use";
+
+                                    if (chunk["usage"] != null)
+                                    {
+                                        var pTok = chunk["usage"]!["prompt_tokens"]?.GetValue<long>() ?? 0;
+                                        var cTok = chunk["usage"]!["completion_tokens"]?.GetValue<long>() ?? 0;
+                                        _logContext.Log.PromptTokens = (int)pTok;
+                                        _logContext.Log.CompletionTokens = (int)cTok;
+                                    }
+                                }
+                            }
+                            catch (JsonException) { }
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(deltaText))
+                    {
+                        answerBuilder.Append(deltaText);
+                        var deltaObj = new JsonObject
+                        {
+                            ["type"] = "content_block_delta",
+                            ["index"] = 0,
+                            ["delta"] = new JsonObject { ["type"] = "text_delta", ["text"] = deltaText }
+                        };
+                        await Response.WriteAsync($"event: content_block_delta\ndata: {deltaObj.ToJsonString()}\n\n", HttpContext.RequestAborted);
+                    }
+
+                    if (toolCalls != null)
+                    {
+                        foreach (var tc in toolCalls)
+                        {
+                            var tcIndexNode = tc?["index"];
+                            var index = tcIndexNode != null ? tcIndexNode.GetValue<int>() : localToolIndexCounter++;
+                            var id = tc?["id"]?.ToString();
+                            var funcName = tc?["function"]?["name"]?.ToString();
+                            var argsDelta = tc?["function"]?["arguments"]?.ToString();
+
+                            // Start a new tool block if we haven't seen this index yet
+                            if (!activeToolBlocks.Contains(index) && !string.IsNullOrEmpty(id))
+                            {
+                                activeToolBlocks.Add(index);
+                                var toolStart = new JsonObject
+                                {
+                                    ["type"] = "content_block_start",
+                                    ["index"] = index + 1, // Text is at 0
+                                    ["content_block"] = new JsonObject
+                                    {
+                                        ["type"] = "tool_use",
+                                        ["id"] = id,
+                                        ["name"] = funcName ?? "unknown",
+                                        ["input"] = new JsonObject()
+                                    }
+                                };
+                                await Response.WriteAsync($"event: content_block_start\ndata: {toolStart.ToJsonString()}\n\n", HttpContext.RequestAborted);
+                            }
+
+                            if (!string.IsNullOrEmpty(argsDelta))
+                            {
+                                var toolDelta = new JsonObject
+                                {
+                                    ["type"] = "content_block_delta",
+                                    ["index"] = index + 1,
+                                    ["delta"] = new JsonObject
+                                    {
+                                        ["type"] = "input_json_delta",
+                                        ["partial_json"] = argsDelta
+                                    }
+                                };
+                                await Response.WriteAsync($"event: content_block_delta\ndata: {toolDelta.ToJsonString()}\n\n", HttpContext.RequestAborted);
+                            }
+                        }
+                    }
+                    await Response.Body.FlushAsync(HttpContext.RequestAborted);
+                }
+
+                // Close all blocks
+                var contentBlockStop = new JsonObject { ["type"] = "content_block_stop", ["index"] = 0 };
+                await Response.WriteAsync($"event: content_block_stop\ndata: {contentBlockStop.ToJsonString()}\n\n", HttpContext.RequestAborted);
+                foreach (var idx in activeToolBlocks)
+                {
+                    var stop = new JsonObject { ["type"] = "content_block_stop", ["index"] = idx + 1 };
+                    await Response.WriteAsync($"event: content_block_stop\ndata: {stop.ToJsonString()}\n\n", HttpContext.RequestAborted);
+                }
+
+                var messageDelta = new JsonObject
+                {
+                    ["type"] = "message_delta",
+                    ["delta"] = new JsonObject { ["stop_reason"] = currentStopReason },
+                    ["usage"] = new JsonObject { ["output_tokens"] = _logContext.Log.CompletionTokens }
+                };
+                await Response.WriteAsync($"event: message_delta\ndata: {messageDelta.ToJsonString()}\n\n", HttpContext.RequestAborted);
+                
+                var messageStop = new JsonObject { ["type"] = "message_stop" };
+                await Response.WriteAsync($"event: message_stop\ndata: {messageStop.ToJsonString()}\n\n", HttpContext.RequestAborted);
+                await Response.Body.FlushAsync(HttpContext.RequestAborted);
+
+                _logContext.Log.Answer = answerBuilder.ToString();
+            }
+            else
+            {
+                using var directMs = new MemoryStream();
+                await upstreamStream.CopyToAsync(directMs, HttpContext.RequestAborted);
+                directMs.Seek(0, SeekOrigin.Begin);
+                try
+                {
+                    var respNode = await JsonNode.ParseAsync(directMs, cancellationToken: HttpContext.RequestAborted);
+                    if (respNode != null)
+                    {
+                        string respContent;
+                        string stopReason = "end_turn";
+                        var contentBlocks = new List<AnthropicContentBlock>();
+                        long pTok, cTok;
+
+                        if (isOllamaDirect)
+                        {
+                            respContent = respNode["message"]?["content"]?.ToString() ?? "";
+                            pTok = respNode["prompt_eval_count"]?.GetValue<long>() ?? 0;
+                            cTok = respNode["eval_count"]?.GetValue<long>() ?? 0;
+                            
+                            // Handle Ollama tool calls if present
+                            var toolCalls = respNode["message"]?["tool_calls"]?.AsArray();
+                            if (toolCalls != null && toolCalls.Count > 0)
+                            {
+                                stopReason = "tool_use";
+                                foreach (var tc in toolCalls)
+                                {
+                                    if (tc == null) continue;
+                                    contentBlocks.Add(new AnthropicContentBlock
+                                    {
+                                        Type = "tool_use",
+                                        Id = $"toolu_{Guid.NewGuid():N}",
+                                        Name = tc["function"]?["name"]?.ToString() ?? "unknown",
+                                        Input = tc["function"]?["arguments"]?.DeepClone()
+                                    });
+                                }
+                            }
+                        }
+                        else
+                        {
+                            var message = respNode["choices"]?[0]?["message"];
+                            respContent = message?["content"]?.ToString() ?? "";
+                            var oaiFinish = respNode["choices"]?[0]?["finish_reason"]?.ToString();
+                            if (oaiFinish == "length") stopReason = "max_tokens";
+                            else if (oaiFinish == "tool_calls") stopReason = "tool_use";
+                            
+                            pTok = respNode["usage"]?["prompt_tokens"]?.GetValue<long>() ?? 0;
+                            cTok = respNode["usage"]?["completion_tokens"]?.GetValue<long>() ?? 0;
+
+                            var toolCalls = message?["tool_calls"]?.AsArray();
+                            if (toolCalls != null && toolCalls.Count > 0)
+                            {
+                                stopReason = "tool_use";
+                                foreach (var tc in toolCalls)
+                                {
+                                    if (tc == null) continue;
+                                    JsonNode? args;
+                                    try
+                                    {
+                                        args = JsonNode.Parse(tc["function"]?["arguments"]?.ToString() ?? "{}");
+                                    }
+                                    catch { args = new JsonObject(); }
+
+                                    contentBlocks.Add(new AnthropicContentBlock
+                                    {
+                                        Type = "tool_use",
+                                        Id = tc["id"]?.ToString() ?? $"toolu_{Guid.NewGuid():N}",
+                                        Name = tc["function"]?["name"]?.ToString() ?? "unknown",
+                                        Input = args
+                                    });
+                                }
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(respContent))
+                        {
+                            contentBlocks.Insert(0, new AnthropicContentBlock { Type = "text", Text = respContent });
+                        }
+
+                        _logContext.Log.Answer = respContent;
+                        _logContext.Log.PromptTokens = (int)pTok;
+                        _logContext.Log.CompletionTokens = (int)cTok;
+                        _logContext.Log.TotalTokens = (int)(pTok + cTok);
+
+                        var anthropicResponse = new AnthropicResponse
+                        {
+                            Id = $"msg_{Guid.NewGuid():N}",
+                            Model = virtualModel.Name,
+                            StopReason = stopReason,
+                            Usage = new AnthropicUsage { InputTokens = (int)pTok, OutputTokens = (int)cTok },
+                            Content = contentBlocks
+                        };
+
+                        Response.ContentType = "application/json";
+                        await Response.WriteAsync(JsonSerializer.Serialize(anthropicResponse), HttpContext.RequestAborted);
+                    }
+                }
+                catch
+                {
+                    directMs.Seek(0, SeekOrigin.Begin);
+                    var rawResp = await new StreamReader(directMs).ReadToEndAsync(HttpContext.RequestAborted);
+                    _logContext.Log.Answer = rawResp;
+                    Response.ContentType = "application/json";
+                    await Response.WriteAsync(rawResp, HttpContext.RequestAborted);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error processing Anthropic request");
+            Response.StatusCode = 500;
+            var errObj = new JsonObject
+            {
+                ["type"] = "error",
+                ["error"] = new JsonObject { ["type"] = "internal_error", ["message"] = e.Message }
+            };
+            await Response.WriteAsync(errObj.ToJsonString());
+        }
+        finally
+        {
+            _activeRequestTracker.EndRequest(_logContext.Log.Model);
+        }
+    }
+}

@@ -138,6 +138,49 @@
             </div>
             <p>@Localizer["Then you can use Qwen Code to access the Ollama Gateway."] <a href="https://github.com/QwenLM/qwen-code" target="_blank">@Localizer["Learn more about Qwen Code."]</a></p>
 
+            <h4 class="mt-4">@Localizer["7. Anthropic Messages API"]</h4>
+            <p>@Localizer["To ask a question in Anthropic Messages format, use the following curl command:"]</p>
+            <div class="position-relative">
+                <pre class="bg-dark text-light p-3 rounded"><code>curl @(Model.BaseUrl)/v1/messages \
+  -H "x-api-key: @Model.ApiKey" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "@Model.DefaultChatModel",
+    "max_tokens": 1024,
+    "messages": [
+      {"role": "user", "content": "Hello!"}
+    ]
+  }'</code></pre>
+            </div>
+
+            <h4 class="mt-4">@Localizer["8. Claude Code & CC Switch (Recommended)"]</h4>
+            <p>@Localizer["Claude Code is a powerful CLI agent from Anthropic. We recommend using 'CC Switch' (an All-in-One manager) to manage your configurations easily."] <a href="https://github.com/farion1231/cc-switch" target="_blank">@Localizer["Learn more about CC Switch."]</a></p>
+
+            <h5 class="mt-3">@Localizer["Option A: Using CC Switch (GUI)"]</h5>
+            <ol>
+                <li>@Localizer["Download and install"] <a href="https://github.com/farion1231/cc-switch/releases" target="_blank">CC Switch</a>.</li>
+                <li>@Localizer["Click 'Add Provider' and select 'Claude Code' as the target tool."]</li>
+                <li>@Localizer["Fill in the following configuration:"]
+                    <ul>
+                        <li><strong>@Localizer["Provider Name"]:</strong> <code>Ollama Gateway</code></li>
+                        <li><strong>@Localizer["Base URL"]:</strong> <code>@Model.BaseUrl</code></li>
+                        <li><strong>@Localizer["API Key"]:</strong> <code>@Model.ApiKey</code></li>
+                        <li><strong>@Localizer["Model Name"]:</strong> <code>@Model.DefaultChatModel</code></li>
+                    </ul>
+                </li>
+                <li>@Localizer["Click 'Enable' in the system tray or main interface. Now your 'claude' command will use this gateway."]</li>
+            </ol>
+
+            <h5 class="mt-3">@Localizer["Option B: Manual Configuration (CLI)"]</h5>
+            <p>@Localizer["Run these commands in your terminal to configure Claude Code manually:"]</p>
+            <div class="position-relative">
+                <pre class="bg-dark text-light p-3 rounded"><code>claude config set env ANTHROPIC_AUTH_TOKEN "@Model.ApiKey"
+claude config set env ANTHROPIC_BASE_URL "@Model.BaseUrl"
+claude config set env ANTHROPIC_DEFAULT_SONNET_MODEL "@Model.DefaultChatModel"
+claude config set env ANTHROPIC_DEFAULT_HAIKU_MODEL "@Model.DefaultChatModel"</code></pre>
+            </div>
+            <p>@Localizer["After configuration, you can start the agent by running:"] <code>claude</code></p>
+
             <p class="text-muted mt-4">
                 <i data-lucide="info" class="me-1"></i>
                 @Localizer["Note: Replace '{0}' or '{1}' with other available models if needed.", Model.DefaultChatModel, Model.DefaultEmbeddingModel]

@@ -11,6 +11,7 @@
             <select class="form-select form-select-sm me-3" id="apiMode" style="width: auto;">
                 <option value="ollama">Ollama API</option>
                 <option value="openai">OpenAI API</option>
+                <option value="anthropic">Anthropic API</option>
             </select>
 
             <label class="me-2 fw-bold">@Localizer["Switch Model:"]</label>
@@ -140,6 +141,8 @@
         apiModeSelect.addEventListener('change', () => {
             if (apiModeSelect.value === 'ollama') {
                 endpointDisplay.innerText = '@Model.BaseUrl/api/chat';
+            } else if (apiModeSelect.value === 'anthropic') {
+                endpointDisplay.innerText = '@Model.BaseUrl/v1/messages';
             } else {
                 endpointDisplay.innerText = '@Model.BaseUrl/v1/chat/completions';
             }
@@ -344,7 +347,7 @@
             const mode = apiModeSelect.value;
 
             try {
-                const endpoint = mode === 'ollama' ? '/api/chat' : '/v1/chat/completions';
+                const endpoint = mode === 'ollama' ? '/api/chat' : (mode === 'anthropic' ? '/v1/messages' : '/v1/chat/completions');
                 
                 const body = mode === 'ollama' ? {
                     model: '@Model.Name',
@@ -399,6 +402,23 @@
                                     if (data.done) {
                                         thinkSpinner.classList.add('d-none');
                                     }
+                                }
+                            } catch (e) { console.error(e); }
+                        }
+                    } else if (mode === 'anthropic') {
+                        // Anthropic SSE
+                        const lines = lineBuffer.split('\n');
+                        lineBuffer = lines.pop() || '';
+                        for (const line of lines) {
+                            if (!line.startsWith('data: ')) continue;
+                            const dataStr = line.substring(6).trim();
+                            try {
+                                const data = JSON.parse(dataStr);
+                                if (data.type === 'content_block_delta' && data.delta && data.delta.text) {
+                                    assistantFullContent += data.delta.text;
+                                    contentDiv.innerText = assistantFullContent;
+                                } else if (data.type === 'message_stop') {
+                                    thinkSpinner.classList.add('d-none');
                                 }
                             } catch (e) { console.error(e); }
                         }

@@ -23,21 +23,31 @@ public class ApiKeyAuthenticationHandler(
 {
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        if (!Request.Headers.TryGetValue("Authorization", out var authHeaderValues))
+        string? apiKeyStr = null;
+        if (Request.Headers.TryGetValue("Authorization", out var authHeaderValues))
         {
-            return AuthenticateResult.NoResult();
+            var authHeader = authHeaderValues.ToString();
+            if (authHeader.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
+            {
+                apiKeyStr = authHeader["Bearer ".Length..].Trim();
+            }
+            else
+            {
+                apiKeyStr = authHeader.Trim();
+            }
+        }
+        else if (Request.Headers.TryGetValue("x-api-key", out var xApiKeyValues))
+        {
+            apiKeyStr = xApiKeyValues.ToString().Trim();
+        }
+        else if (Request.Headers.TryGetValue("api-key", out var apiKeyValues))
+        {
+            apiKeyStr = apiKeyValues.ToString().Trim();
         }
 
-        var authHeader = authHeaderValues.ToString();
-        if (string.IsNullOrWhiteSpace(authHeader) || !authHeader.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
-        {
-            return AuthenticateResult.NoResult();
-        }
-
-        var apiKeyStr = authHeader["Bearer ".Length..].Trim();
         if (string.IsNullOrWhiteSpace(apiKeyStr))
         {
-            return AuthenticateResult.Fail("Empty API Key.");
+            return AuthenticateResult.NoResult();
         }
 
         var apiKey = await dbContext.ApiKeys
