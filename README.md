@@ -85,7 +85,7 @@ OllamaGateway logs every request to a ClickHouse database. A pre-built Grafana d
 
 ## Parameter Behavior by Provider and API Format
 
-Ollama Gateway supports three inbound API formats (Ollama, OpenAI, Anthropic) and two backend provider types, yielding several distinct request paths:
+Ollama Gateway supports two inbound API formats and two backend provider types, yielding four distinct request paths:
 
 - **Paths ① and ③** enter via `/v1/chat/completions` and are handled by `OpenAIController`.
 - **Paths ② and ④** enter via `/api/chat` and are handled by `ProxyController`.
@@ -113,7 +113,6 @@ Native Ollama is great for personal use, but it lacks the enterprise features re
 | Function Call | ✅ | ✅ |
 | Streaming | ✅ | ✅ |
 | OpenAI API Translation | ⚠️ Partial[^1] | ✅ |
-| Anthropic API Translation | ❌ | ✅ |
 | API Authentication (Bearer Token) | ❌ | ✅ |
 | Multiple API Keys Management | ❌ | ✅ |
 | Request & Response Auditing | ❌ | ✅ |
