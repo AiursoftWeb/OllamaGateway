@@ -171,60 +171,6 @@ public class AnthropicApiTests : TestBase
     }
 
     [TestMethod]
-    public async Task Anthropic_Messages_OllamaBackend_MappingWorks()
-    {
-        var token = await CreateApiKey();
-        var modelName = "test-ollama-model";
-        
-        using (var scope = Server!.Services.CreateScope())
-        {
-            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
-            var userInDb = await db.Users.FirstAsync();
-            var provider = new OllamaProvider
-            {
-                Name = "Test Provider",
-                BaseUrl = "http://localhost:11434",
-                ProviderType = ProviderType.Ollama
-            };
-            db.OllamaProviders.Add(provider);
-            await db.SaveChangesAsync();
-
-            var vm = new VirtualModel
-            {
-                Name = modelName,
-                Type = ModelType.Chat,
-                MaxRetries = 1
-            };
-            db.VirtualModels.Add(vm);
-            await db.SaveChangesAsync();
-
-            db.VirtualModelBackends.Add(new VirtualModelBackend
-            {
-                VirtualModelId = vm.Id,
-                ProviderId = provider.Id,
-                UnderlyingModelName = "llama3"
-            });
-            await db.SaveChangesAsync();
-            Assert.IsNotNull(userInDb);
-        }
-
-        var anthropicRequest = new AnthropicMessageRequest
-        {
-            Model = modelName,
-            Messages = [new AnthropicMessage { Role = "user", Content = JsonValue.Create("Hello") }]
-        };
-
-        var request = new HttpRequestMessage(HttpMethod.Post, "/v1/messages")
-        {
-            Content = JsonContent.Create(anthropicRequest)
-        };
-        request.Headers.Add("x-api-key", token);
-
-        var response = await Http.SendAsync(request);
-        Assert.AreNotEqual(HttpStatusCode.InternalServerError, response.StatusCode);
-    }
-
-    [TestMethod]
     public async Task Anthropic_Messages_HandlesSystemAsArray()
     {
         var token = await CreateApiKey();
@@ -243,5 +189,89 @@ public class AnthropicApiTests : TestBase
 
         var response = await Http.SendAsync(request);
         Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [TestMethod]
+    public async Task Anthropic_Messages_UltimateStressTest_MappingWorks()
+    {
+        var token = await CreateApiKey();
+        var modelName = "stress-test-model";
+        
+        using (var scope = Server!.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+            var userInDb = await db.Users.FirstAsync();
+            var provider = new OllamaProvider
+            {
+                Name = "Stress Provider",
+                BaseUrl = "http://localhost:11434",
+                ProviderType = ProviderType.Ollama
+            };
+            db.OllamaProviders.Add(provider);
+            await db.SaveChangesAsync();
+
+            var vm = new VirtualModel
+            {
+                Name = modelName,
+                Type = ModelType.Chat,
+                MaxRetries = 1,
+                Thinking = true,
+                NumCtx = 8192
+            };
+            db.VirtualModels.Add(vm);
+            await db.SaveChangesAsync();
+
+            db.VirtualModelBackends.Add(new VirtualModelBackend
+            {
+                VirtualModelId = vm.Id,
+                ProviderId = provider.Id,
+                UnderlyingModelName = "llama3"
+            });
+            await db.SaveChangesAsync();
+            Assert.IsNotNull(userInDb);
+        }
+
+        var anthropicRequest = new AnthropicMessageRequest
+        {
+            Model = modelName,
+            System = new JsonArray { new JsonObject { ["type"] = "text", ["text"] = "You are a stress tester." } },
+            Messages =
+            [
+                new AnthropicMessage
+                {
+                    Role = "user",
+                    Content = new JsonArray
+                    {
+                        new JsonObject { ["type"] = "text", ["text"] = "First block" },
+                        new JsonObject { ["type"] = "tool_result", ["tool_use_id"] = "t1", ["content"] = "Tool output" }
+                    }
+                }
+            ],
+            Tools =
+            [
+                new AnthropicTool
+                {
+                    Name = "complex_tool",
+                    InputSchema = new JsonObject
+                    {
+                        ["type"] = "object",
+                        ["properties"] = new JsonObject
+                        {
+                            ["data"] = new JsonObject { ["type"] = "string" }
+                        }
+                    }
+                }
+            ],
+            Stream = true
+        };
+
+        var request = new HttpRequestMessage(HttpMethod.Post, "/v1/messages")
+        {
+            Content = JsonContent.Create(anthropicRequest)
+        };
+        request.Headers.Add("x-api-key", token);
+
+        var response = await Http.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+        Assert.AreNotEqual(HttpStatusCode.InternalServerError, response.StatusCode);
     }
 }
