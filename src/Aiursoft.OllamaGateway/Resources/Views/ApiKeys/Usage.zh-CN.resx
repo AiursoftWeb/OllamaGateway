@@ -48,11 +48,20 @@
   <data name="6. Qwen Code Usage" xml:space="preserve">
     <value>6. Qwen Code 用法</value>
   </data>
+  <data name="7. Anthropic Messages API" xml:space="preserve">
+    <value>7. Anthropic Messages API</value>
+  </data>
+  <data name="8. Claude Code &amp; CC Switch (Recommended)" xml:space="preserve">
+    <value>8. Claude Code 与 CC Switch（推荐）</value>
+  </data>
   <data name="After creating an API Key, you can edit your Opencode configuration file at" xml:space="preserve">
     <value>创建 API Key 后，您可以编辑您的 Opencode 配置文件</value>
   </data>
   <data name="After creating an API Key, you can edit your Qwen Code configuration file at" xml:space="preserve">
     <value>创建 API Key 后，您可以编辑您的 Qwen Code 配置文件</value>
+  </data>
+  <data name="API Key" xml:space="preserve">
+    <value>API 密钥</value>
   </data>
   <data name="API Key Usage Guide" xml:space="preserve">
     <value>API Key 使用教程</value>
@@ -60,14 +69,50 @@
   <data name="Back to List" xml:space="preserve">
     <value>返回列表</value>
   </data>
+  <data name="Base URL" xml:space="preserve">
+    <value>基础 URL</value>
+  </data>
+  <data name="Claude Code is a powerful CLI agent from Anthropic. We recommend using &apos;CC Switch&apos; (an All-in-One manager) to manage your configurations easily." xml:space="preserve">
+    <value>Claude Code 是 Anthropic 推出的强大 CLI 代理。我们推荐使用“CC Switch”（一款全能管理器）来轻松管理您的配置。</value>
+  </data>
+  <data name="Claude Code natively reads standard Anthropic environment variables. You can configure it manually by exporting these variables in your terminal:" xml:space="preserve">
+    <value>Claude Code 原生支持读取标准的 Anthropic 环境变量。您可以通过在终端中导出这些变量来手动进行配置：</value>
+  </data>
+  <data name="Click &apos;Add Provider&apos; and select &apos;Claude Code&apos; as the target tool." xml:space="preserve">
+    <value>点击“添加提供商”并将“Claude Code”选为目标工具。</value>
+  </data>
+  <data name="Click &apos;Enable&apos; in the system tray or main interface. Now your &apos;claude&apos; command will use this gateway." xml:space="preserve">
+    <value>在系统托盘或主界面中点击“启用”。现在您的“claude”命令将使用此网关。</value>
+  </data>
+  <data name="Download and install" xml:space="preserve">
+    <value>下载并安装</value>
+  </data>
+  <data name="Fill in the following configuration:" xml:space="preserve">
+    <value>填写以下配置：</value>
+  </data>
+  <data name="Learn more about CC Switch." xml:space="preserve">
+    <value>了解更多关于 CC Switch 的信息。</value>
+  </data>
   <data name="Learn more about Opencode." xml:space="preserve">
     <value>了解更多关于 Opencode。</value>
   </data>
   <data name="Learn more about Qwen Code." xml:space="preserve">
     <value>了解更多关于 Qwen Code。</value>
   </data>
+  <data name="Model Name" xml:space="preserve">
+    <value>模型名称</value>
+  </data>
   <data name="Note: Replace &apos;{0}&apos; or &apos;{1}&apos; with other available models if needed." xml:space="preserve">
     <value>注意：如有需要，请将 &apos;{0}&apos; 或 &apos;{1}&apos; 替换为其他可用模型。</value>
+  </data>
+  <data name="Option A: Using CC Switch (GUI)" xml:space="preserve">
+    <value>选项 A：使用 CC Switch（图形界面）</value>
+  </data>
+  <data name="Option B: Manual Configuration (Environment Variables)" xml:space="preserve">
+    <value>选项 B：手动配置（环境变量）</value>
+  </data>
+  <data name="Provider Name" xml:space="preserve">
+    <value>提供商名称</value>
   </data>
   <data name="Then you can enjoy using OllamaGateway in Opencode." xml:space="preserve">
     <value>然后您就可以在 Opencode 中愉快地使用 OllamaGateway 了。</value>
@@ -78,6 +123,9 @@
   <data name="to add a new provider:" xml:space="preserve">
     <value>以添加一个新的提供商：</value>
   </data>
+  <data name="To ask a question in Anthropic Messages format, use the following curl command:" xml:space="preserve">
+    <value>要以 Anthropic Messages 格式提问，请使用以下 curl 命令：</value>
+  </data>
   <data name="To ask a question in OpenAI format, use the following curl command:" xml:space="preserve">
     <value>要以 OpenAI 格式提问，请使用以下 curl 命令：</value>
   </data>
@@ -86,6 +134,9 @@
   </data>
   <data name="To generate embeddings for a text, use the following curl command:" xml:space="preserve">
     <value>要为文本生成向量，请使用以下 curl 命令：</value>
+  </data>
+  <data name="To make this permanent, you can add the export commands to your shell profile (e.g., ~/.bashrc or ~/.zshrc)." xml:space="preserve">
+    <value>若要使其永久生效，您可以将 export 命令添加到您的 shell 配置文件中（例如 ~/.bashrc 或 ~/.zshrc）。</value>
   </data>
   <data name="To simply complete a given text, use the following curl command:" xml:space="preserve">
     <value>要简单地完成给定文本，请使用以下 curl 命令：</value>
