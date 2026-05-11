@@ -46,7 +46,9 @@ public class ClickhouseDbContext : Aiursoft.ClickhouseSdk.ClickhouseDbContext, I
             log.TotalTokens,
             log.UserId,
             log.ApiKeyName,
-            log.BackendId ?? 0
+            log.BackendId ?? 0,
+            log.ProviderId ?? 0,
+            log.UnderlyingModelName
         });
     }
 
