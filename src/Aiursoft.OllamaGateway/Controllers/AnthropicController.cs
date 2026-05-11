@@ -397,10 +397,37 @@ public class AnthropicController : ControllerBase
             if (isOllamaDirect)
             {
                 targetEndpoint = "/api/chat";
+                var clonedMessages = openaiMessages.DeepClone().AsArray();
+                foreach (var msgNode in clonedMessages)
+                {
+                    if (msgNode is JsonObject msgObj)
+                    {
+                        if (msgObj["tool_calls"] is JsonArray toolCalls)
+                        {
+                            foreach (var tc in toolCalls)
+                            {
+                                if (tc is JsonObject tcObj && tcObj["function"] is JsonObject funcObj)
+                                {
+                                    var argsStr = funcObj["arguments"]?.ToString();
+                                    if (!string.IsNullOrWhiteSpace(argsStr))
+                                    {
+                                        try { funcObj["arguments"] = JsonNode.Parse(argsStr); }
+                                        catch { funcObj["arguments"] = new JsonObject(); }
+                                    }
+                                    else
+                                    {
+                                        funcObj["arguments"] = new JsonObject();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
                 requestBody = new JsonObject
                 {
                     ["model"] = backend.UnderlyingModelName,
-                    ["messages"] = openaiMessages.DeepClone(),
+                    ["messages"] = clonedMessages,
                     ["stream"] = isStream
                 };
                 if (openaiBody["tools"] != null) requestBody["tools"] = openaiBody["tools"]!.DeepClone();
