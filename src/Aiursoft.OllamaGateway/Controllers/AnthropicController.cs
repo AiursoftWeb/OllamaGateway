@@ -129,14 +129,14 @@ public class AnthropicController : ControllerBase
             return;
         }
 
+        VirtualModel? virtualModel = null;
+        VirtualModelBackend? backend = null;
+
         try
         {
             var modelToUse = string.IsNullOrWhiteSpace(request.Model)
                 ? await _globalSettingsService.GetDefaultChatModelAsync()
                 : request.Model;
-
-            VirtualModel? virtualModel = null;
-            VirtualModelBackend? backend = null;
 
             if (modelToUse.StartsWith("physical_"))
             {
@@ -212,7 +212,7 @@ public class AnthropicController : ControllerBase
             var conversationMessageCount = request.Messages.Count;
             _logContext.Log.ConversationMessageCount = conversationMessageCount;
             _logContext.Log.LastQuestion = request.Messages.LastOrDefault()?.Content?.ToString() ?? string.Empty;
-            _activeRequestTracker.StartRequest(virtualModel.Name, _logContext.Log.LastQuestion, backend.UnderlyingModelName);
+            _activeRequestTracker.StartRequest(virtualModel.Name, _logContext.Log.LastQuestion, backend.Provider.Id, backend.UnderlyingModelName);
 
             var isStream = request.Stream;
 
@@ -657,7 +657,7 @@ public class AnthropicController : ControllerBase
         }
         finally
         {
-            _activeRequestTracker.EndRequest(_logContext.Log.Model);
+            _activeRequestTracker.EndRequest(_logContext.Log.Model, backend?.Provider?.Id ?? 0, backend?.UnderlyingModelName ?? string.Empty);
         }
     }
 }
