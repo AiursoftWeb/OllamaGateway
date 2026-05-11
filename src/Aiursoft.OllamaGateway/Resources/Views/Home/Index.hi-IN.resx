@@ -84,6 +84,18 @@
   <data name="Anduin Xue" xml:space="preserve">
     <value>Anduin Xue</value>
   </data>
+  <data name="Anthropic → Ollama" xml:space="preserve">
+    <value>एन्थ्रोपिक → ओलामा</value>
+  </data>
+  <data name="Anthropic → OpenAI" xml:space="preserve">
+    <value>Anthropic → OpenAI</value>
+  </data>
+  <data name="Anthropic API Translation" xml:space="preserve">
+    <value>एंट्रोपिक एपीआई अनुवाद</value>
+  </data>
+  <data name="Anthropic Client" xml:space="preserve">
+    <value>Anthropic क्लाइंट</value>
+  </data>
   <data name="API Authentication (Bearer)" xml:space="preserve">
     <value>API प्रमाणन (Bearer)</value>
   </data>
@@ -669,8 +681,14 @@
   <data name="OllamaGateway" xml:space="preserve">
     <value>OllamaGateway</value>
   </data>
+  <data name="OllamaGateway has been officially tested and is fully compatible with popular ecosystem tools including Claude Code, Open-WebUI, Opencode, and Roocode. Its robust API translation makes it the ideal choice for deploying autonomous AI agents." xml:space="preserve">
+    <value>OllamaGateway को आधिकारिक रूप से परीक्षण किया गया है और यह Claude Code, Open-WebUI, Opencode, और Roocode सहित लोकप्रिय इकोसिस्टम टूल्स के साथ पूरी तरह से संगत है। इसकी मजबूत API अनुवाद क्षमता इसे स्वतंत्र AI एजेंट्स को तैनात करने के लिए आदर्श विकल्प बनाती है।</value>
+  </data>
   <data name="OllamaGateway has been officially tested and is fully compatible with popular ecosystem tools including Open-WebUI, Opencode, and Roocode. Its robust API translation makes it the ideal choice for deploying autonomous AI agents." xml:space="preserve">
     <value>ओलामागेटवे को आधिकारिक रूप से परीक्षण किया गया है और यह ओपन-वेबयू, ओपencode, और रूकोड जैसे लोकप्रिय पारिस्थितिकी तंत्र उपकरणों के साथ पूर्ण रूप से संगत है। इसकी मजबूत एपीआई अनुवाद इसे स्वायत्त एआई एजेंटों को तैनात करने के लिए आदर्श विकल्प बनाता है।</value>
+  </data>
+  <data name="OllamaGateway seamlessly connects your local Ollama capabilities to professional AI development tools. Whether you are using Claude Code, Opencode or Qwen Code, you can now leverage your own hardware for automated coding and development tasks—all verified and officially supported by our team." xml:space="preserve">
+    <value>OllamaGateway आपकी स्थानीय Ollama क्षमताओं को पेशेवर AI विकास उपकरणों के साथ सहजता से जोड़ता है। चाहे आप Claude Code, Opencode या Qwen Code का उपयोग कर रहे हों, अब आप स्वचालित कोडिंग और विकास कार्यों के लिए अपने खुद के हार्डवेयर का लाभ उठा सकते हैं—जिसे हमारी टीम द्वारा सत्यापित और आधिकारिक रूप से समर्थित किया गया है।</value>
   </data>
   <data name="OllamaGateway seamlessly connects your local Ollama capabilities to professional AI development tools. Whether you are using Opencode or Qwen Code, you can now leverage your own hardware for automated coding and development tasks—all verified and officially supported by our team." xml:space="preserve">
     <value>ओलामागेटवे आपके स्थानीय ओलामा क्षमताओं को पेशेवर एआई विकास उपकरणों के साथ सहजता से जोड़ता है। चाहे आप ओपेनकोड या क्वेन कोड का उपयोग कर रहे हों, अब आप अपने स्वयं के हार्डवेयर का उपयोग स्वचालित कोडिंग और विकास कार्यों के लिए कर सकते हैं—जिन्हें हमारी टीम द्वारा सत्यापित और आधिकारिक रूप से समर्थित किया गया है।</value>
@@ -704,6 +722,9 @@
   </data>
   <data name="Optimized Docker &amp; K8s config" xml:space="preserve">
     <value>कृषित Docker &amp; K8s कॉन्फ़िगरेशन</value>
+  </data>
+  <data name="Optimized for Opencode &amp; Qwen Code ecosystems" xml:space="preserve">
+    <value>Opencode और Qwen Code इकोसिस्टम के लिए अनुकूलित</value>
   </data>
   <data name="Optimized for Qwen Code automated development" xml:space="preserve">
     <value>Qwen Code स्वचालित विकास के लिए अनुकूलित</value>
@@ -861,6 +882,9 @@
   <data name="Strongly Consistent Linting" xml:space="preserve">
     <value>तीव्र और सुसंगत लिंटिंग</value>
   </data>
+  <data name="Supercharge AI Development with Claude Code, Opencode &amp; Qwen Code" xml:space="preserve">
+    <value>क्लाउड कोड, ओपेनकोड और क्वेन कोड के साथ AI विकास को और तेज़ करें</value>
+  </data>
   <data name="Supercharge AI Development with Opencode &amp; Qwen Code" xml:space="preserve">
     <value>Opencode और Qwen Code के साथ AI विकास को सुपरचार्ज करें</value>
   </data>
@@ -893,6 +917,9 @@
   </data>
   <data name="The template is built for easy deployment. It includes full Docker support, so you can containerize your app and run it anywhere. You can also deploy it directly to IIS, Azure App Service, or any server that supports ASP.NET Core." xml:space="preserve">
     <value>यह टेम्पलेट आसान डेप्लॉयमेंट के लिए बनाया गया है। इसमें पूर्ण Docker सपोर्ट शामिल है, जिससे आप अपने ऐप को कंटेनराइज़ करके कहीं भी चला सकते हैं। आप इसे सीधे IIS, Azure App Service, या किसी भी सर्वर पर डेप्लॉय कर सकते हैं जो ASP.NET Core को सपोर्ट करता है।</value>
+  </data>
+  <data name="Thinking" xml:space="preserve">
+    <value>चिंतन</value>
   </data>
   <data name="Thinking (think)" xml:space="preserve">
     <value>चिंतन (think)</value>
@@ -932,6 +959,9 @@
   </data>
   <data name="Validation" xml:space="preserve">
     <value>सत्यापन</value>
+  </data>
+  <data name="Verified compatibility with Claude Code agent" xml:space="preserve">
+    <value>क्लाउड कोड एजेंट के साथ सुसंगतता की पुष्टि की गई</value>
   </data>
   <data name="Verified compatibility with Opencode ecosystem" xml:space="preserve">
     <value>Opencode पर्यावरण के साथ सुसंगतता की पुष्टि की गई</value>
