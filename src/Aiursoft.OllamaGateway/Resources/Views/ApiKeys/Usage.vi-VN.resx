@@ -48,11 +48,20 @@
   <data name="6. Qwen Code Usage" xml:space="preserve">
     <value>6. Hướng dẫn sử dụng Qwen Code</value>
   </data>
+  <data name="7. Anthropic Messages API" xml:space="preserve">
+    <value>7. Anthropic Messages API</value>
+  </data>
+  <data name="8. Claude Code &amp; CC Switch (Recommended)" xml:space="preserve">
+    <value>8. Claude Code &amp; CC Switch (Khuyến nghị)</value>
+  </data>
   <data name="After creating an API Key, you can edit your Opencode configuration file at" xml:space="preserve">
     <value>Sau khi tạo API Key, bạn có thể chỉnh sửa tệp cấu hình Opencode của mình tại</value>
   </data>
   <data name="After creating an API Key, you can edit your Qwen Code configuration file at" xml:space="preserve">
     <value>Sau khi tạo khóa API, bạn có thể chỉnh sửa tệp cấu hình Qwen Code của mình tại</value>
+  </data>
+  <data name="API Key" xml:space="preserve">
+    <value>Khóa API</value>
   </data>
   <data name="API Key Usage Guide" xml:space="preserve">
     <value>Hướng dẫn sử dụng khóa API</value>
@@ -60,14 +69,50 @@
   <data name="Back to List" xml:space="preserve">
     <value>Quay lại danh sách</value>
   </data>
+  <data name="Base URL" xml:space="preserve">
+    <value>URL cơ sở</value>
+  </data>
+  <data name="Claude Code is a powerful CLI agent from Anthropic. We recommend using &apos;CC Switch&apos; (an All-in-One manager) to manage your configurations easily." xml:space="preserve">
+    <value>Claude Code là một tác nhân CLI mạnh mẽ từ Anthropic. Chúng tôi khuyên dùng &apos;CC Switch&apos; (trình quản lý tất-trong-một) để quản lý cấu hình của bạn một cách dễ dàng.</value>
+  </data>
+  <data name="Claude Code natively reads standard Anthropic environment variables. You can configure it manually by exporting these variables in your terminal:" xml:space="preserve">
+    <value>Claude Code tự động đọc các biến môi trường chuẩn của Anthropic. Bạn có thể cấu hình thủ công bằng cách xuất các biến này trong terminal của bạn:</value>
+  </data>
+  <data name="Click &apos;Add Provider&apos; and select &apos;Claude Code&apos; as the target tool." xml:space="preserve">
+    <value>Nhấp vào &apos;Thêm Nhà cung cấp&apos; và chọn &apos;Claude Code&apos; làm công cụ mục tiêu.</value>
+  </data>
+  <data name="Click &apos;Enable&apos; in the system tray or main interface. Now your &apos;claude&apos; command will use this gateway." xml:space="preserve">
+    <value>Nhấp &apos;Bật&apos; trong khay hệ thống hoặc giao diện chính. Bây giờ lệnh &apos;claude&apos; của bạn sẽ sử dụng cổng này.</value>
+  </data>
+  <data name="Download and install" xml:space="preserve">
+    <value>Tải xuống và cài đặt</value>
+  </data>
+  <data name="Fill in the following configuration:" xml:space="preserve">
+    <value>Điền vào cấu hình sau:</value>
+  </data>
+  <data name="Learn more about CC Switch." xml:space="preserve">
+    <value>Tìm hiểu thêm về CC Switch.</value>
+  </data>
   <data name="Learn more about Opencode." xml:space="preserve">
     <value>Tìm hiểu thêm về Opencode.</value>
   </data>
   <data name="Learn more about Qwen Code." xml:space="preserve">
     <value>Tìm hiểu thêm về Qwen Code.</value>
   </data>
+  <data name="Model Name" xml:space="preserve">
+    <value>Tên Mô hình</value>
+  </data>
   <data name="Note: Replace &apos;{0}&apos; or &apos;{1}&apos; with other available models if needed." xml:space="preserve">
     <value>Lưu ý: Thay thế &apos;{0}&apos; hoặc &apos;{1}&apos; bằng các mô hình khả dụng khác nếu cần.</value>
+  </data>
+  <data name="Option A: Using CC Switch (GUI)" xml:space="preserve">
+    <value>Tùy chọn A: Sử dụng CC Switch (Giao diện đồ họa)</value>
+  </data>
+  <data name="Option B: Manual Configuration (Environment Variables)" xml:space="preserve">
+    <value>Tùy chọn B: Cấu hình thủ công (Biến môi trường)</value>
+  </data>
+  <data name="Provider Name" xml:space="preserve">
+    <value>Tên nhà cung cấp</value>
   </data>
   <data name="Then you can enjoy using OllamaGateway in Opencode." xml:space="preserve">
     <value>Sau đó, bạn có thể tận hưởng việc sử dụng OllamaGateway trong Opencode.</value>
@@ -78,6 +123,9 @@
   <data name="to add a new provider:" xml:space="preserve">
     <value>để thêm một nhà cung cấp mới:</value>
   </data>
+  <data name="To ask a question in Anthropic Messages format, use the following curl command:" xml:space="preserve">
+    <value>Để đặt câu hỏi theo định dạng Anthropic Messages, hãy sử dụng lệnh curl sau:</value>
+  </data>
   <data name="To ask a question in OpenAI format, use the following curl command:" xml:space="preserve">
     <value>Để đặt câu hỏi theo định dạng OpenAI, hãy sử dụng lệnh curl sau:</value>
   </data>
@@ -86,6 +134,9 @@
   </data>
   <data name="To generate embeddings for a text, use the following curl command:" xml:space="preserve">
     <value>Để tạo embeddings cho văn bản, hãy sử dụng lệnh curl sau:</value>
+  </data>
+  <data name="To make this permanent, you can add the export commands to your shell profile (e.g., ~/.bashrc or ~/.zshrc)." xml:space="preserve">
+    <value>Để lưu thay đổi này vĩnh viễn, bạn có thể thêm các lệnh export vào tệp cấu hình shell của mình (ví dụ: ~/.bashrc hoặc ~/.zshrc).</value>
   </data>
   <data name="To simply complete a given text, use the following curl command:" xml:space="preserve">
     <value>Để hoàn thành một văn bản đã cho một cách đơn giản, hãy sử dụng lệnh curl sau:</value>

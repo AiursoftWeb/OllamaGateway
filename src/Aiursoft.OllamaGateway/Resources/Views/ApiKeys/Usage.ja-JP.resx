@@ -48,11 +48,20 @@
   <data name="6. Qwen Code Usage" xml:space="preserve">
     <value>6. Qwen Code の使用方法</value>
   </data>
+  <data name="7. Anthropic Messages API" xml:space="preserve">
+    <value>7. Anthropic Messages API</value>
+  </data>
+  <data name="8. Claude Code &amp; CC Switch (Recommended)" xml:space="preserve">
+    <value>8. Claude Code &amp; CC Switch（推奨）</value>
+  </data>
   <data name="After creating an API Key, you can edit your Opencode configuration file at" xml:space="preserve">
     <value>API キーを作成した後、Opencode の設定ファイルを次の場所で編集できます。</value>
   </data>
   <data name="After creating an API Key, you can edit your Qwen Code configuration file at" xml:space="preserve">
     <value>API キーを作成した後、Qwen Code の設定ファイルを次の場所で編集できます</value>
+  </data>
+  <data name="API Key" xml:space="preserve">
+    <value>APIキー</value>
   </data>
   <data name="API Key Usage Guide" xml:space="preserve">
     <value>API キー使用ガイド</value>
@@ -60,14 +69,50 @@
   <data name="Back to List" xml:space="preserve">
     <value>リストに戻る</value>
   </data>
+  <data name="Base URL" xml:space="preserve">
+    <value>ベースURL</value>
+  </data>
+  <data name="Claude Code is a powerful CLI agent from Anthropic. We recommend using &apos;CC Switch&apos; (an All-in-One manager) to manage your configurations easily." xml:space="preserve">
+    <value>Claude CodeはAnthropic製の強力なCLIエージェントです。設定を簡単に管理するために、「CC Switch」（オールインワンマネージャー）の使用を推奨します。</value>
+  </data>
+  <data name="Claude Code natively reads standard Anthropic environment variables. You can configure it manually by exporting these variables in your terminal:" xml:space="preserve">
+    <value>Claude Code は標準的な Anthropic 環境変数を自動的に読み取ります。これらの変数をターミナルでエクスポートすることで、手動で設定できます。</value>
+  </data>
+  <data name="Click &apos;Add Provider&apos; and select &apos;Claude Code&apos; as the target tool." xml:space="preserve">
+    <value>「プロバイダーの追加」をクリックし、ターゲットツールとして「Claude Code」を選択してください。</value>
+  </data>
+  <data name="Click &apos;Enable&apos; in the system tray or main interface. Now your &apos;claude&apos; command will use this gateway." xml:space="preserve">
+    <value>システムトレイまたはメインインターフェースで「有効化」をクリックしてください。これで「claude」コマンドがこのゲートウェイを使用するようになります。</value>
+  </data>
+  <data name="Download and install" xml:space="preserve">
+    <value>ダウンロードしてインストール</value>
+  </data>
+  <data name="Fill in the following configuration:" xml:space="preserve">
+    <value>以下の設定を入力してください：</value>
+  </data>
+  <data name="Learn more about CC Switch." xml:space="preserve">
+    <value>CC Switch について詳しくはこちら</value>
+  </data>
   <data name="Learn more about Opencode." xml:space="preserve">
     <value>Opencodeの詳細はこちらをご覧ください。</value>
   </data>
   <data name="Learn more about Qwen Code." xml:space="preserve">
     <value>Qwen Code について詳しくはこちら</value>
   </data>
+  <data name="Model Name" xml:space="preserve">
+    <value>モデル名</value>
+  </data>
   <data name="Note: Replace &apos;{0}&apos; or &apos;{1}&apos; with other available models if needed." xml:space="preserve">
     <value>注：必要に応じて &apos;{0}&apos; または &apos;{1}&apos; を他の利用可能なモデルに置き換えてください。</value>
+  </data>
+  <data name="Option A: Using CC Switch (GUI)" xml:space="preserve">
+    <value>オプションA: CC Switch（GUI）を使用する</value>
+  </data>
+  <data name="Option B: Manual Configuration (Environment Variables)" xml:space="preserve">
+    <value>オプション B：手動設定（環境変数）</value>
+  </data>
+  <data name="Provider Name" xml:space="preserve">
+    <value>プロバイダー名</value>
   </data>
   <data name="Then you can enjoy using OllamaGateway in Opencode." xml:space="preserve">
     <value>これで、OpencodeでOllamaGatewayを快適に利用できるようになります。</value>
@@ -78,6 +123,9 @@
   <data name="to add a new provider:" xml:space="preserve">
     <value>新しいプロバイダーを追加するには：</value>
   </data>
+  <data name="To ask a question in Anthropic Messages format, use the following curl command:" xml:space="preserve">
+    <value>Anthropic Messages 形式で質問を送信するには、以下の curl コマンドを使用してください：</value>
+  </data>
   <data name="To ask a question in OpenAI format, use the following curl command:" xml:space="preserve">
     <value>OpenAI 形式で質問するには、次の curl コマンドを使用してください：</value>
   </data>
@@ -86,6 +134,9 @@
   </data>
   <data name="To generate embeddings for a text, use the following curl command:" xml:space="preserve">
     <value>テキストの埋め込みを生成するには、次の curl コマンドを使用してください：</value>
+  </data>
+  <data name="To make this permanent, you can add the export commands to your shell profile (e.g., ~/.bashrc or ~/.zshrc)." xml:space="preserve">
+    <value>これを永続化するには、シェルプロファイル（例：~/.bashrc や ~/.zshrc）にエクスポートコマンドを追加してください。</value>
   </data>
   <data name="To simply complete a given text, use the following curl command:" xml:space="preserve">
     <value>テキストを単純に補完するには、以下の curl コマンドを使用してください:</value>

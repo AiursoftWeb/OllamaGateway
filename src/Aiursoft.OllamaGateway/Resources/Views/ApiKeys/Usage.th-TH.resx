@@ -48,11 +48,20 @@
   <data name="6. Qwen Code Usage" xml:space="preserve">
     <value>6. การใช้ Qwen Code</value>
   </data>
+  <data name="7. Anthropic Messages API" xml:space="preserve">
+    <value>7. Anthropic Messages API</value>
+  </data>
+  <data name="8. Claude Code &amp; CC Switch (Recommended)" xml:space="preserve">
+    <value>8. Claude Code &amp; CC Switch (แนะนำ)</value>
+  </data>
   <data name="After creating an API Key, you can edit your Opencode configuration file at" xml:space="preserve">
     <value>หลังจากสร้างคีย์ API แล้ว คุณสามารถแก้ไขไฟล์การตั้งค่า Opencode ของคุณได้ที่</value>
   </data>
   <data name="After creating an API Key, you can edit your Qwen Code configuration file at" xml:space="preserve">
     <value>หลังจากสร้างคีย์ API แล้ว คุณสามารถแก้ไขไฟล์การตั้งค่า Qwen Code ที่</value>
+  </data>
+  <data name="API Key" xml:space="preserve">
+    <value>คีย์ API</value>
   </data>
   <data name="API Key Usage Guide" xml:space="preserve">
     <value>คู่มือการใช้งาน API Key</value>
@@ -60,14 +69,50 @@
   <data name="Back to List" xml:space="preserve">
     <value>กลับสู่รายการ</value>
   </data>
+  <data name="Base URL" xml:space="preserve">
+    <value>URL พื้นฐาน</value>
+  </data>
+  <data name="Claude Code is a powerful CLI agent from Anthropic. We recommend using &apos;CC Switch&apos; (an All-in-One manager) to manage your configurations easily." xml:space="preserve">
+    <value>Claude Code เป็น CLI agent ที่มีประสิทธิภาพจาก Anthropic เราแนะนำให้ใช้ &apos;CC Switch&apos; (ตัวจัดการแบบ All-in-One) เพื่อจัดการการตั้งค่าของคุณได้อย่างง่ายดาย</value>
+  </data>
+  <data name="Claude Code natively reads standard Anthropic environment variables. You can configure it manually by exporting these variables in your terminal:" xml:space="preserve">
+    <value>Claude Code อ่านตัวแปรสภาพแวดล้อมมาตรฐานของ Anthropic โดยตรง คุณสามารถกำหนดค่าด้วยตนเองโดยการส่งออกตัวแปรเหล่านี้ในเทอร์มินัลของคุณ:</value>
+  </data>
+  <data name="Click &apos;Add Provider&apos; and select &apos;Claude Code&apos; as the target tool." xml:space="preserve">
+    <value>คลิก &apos;เพิ่มผู้ให้บริการ&apos; และเลือก &apos;Claude Code&apos; เป็นเครื่องมือเป้าหมาย</value>
+  </data>
+  <data name="Click &apos;Enable&apos; in the system tray or main interface. Now your &apos;claude&apos; command will use this gateway." xml:space="preserve">
+    <value>คลิก &apos;เปิดใช้งาน&apos; ในระบบทาสก์บาร์หรืออินเทอร์เฟซหลัก ตอนนี้คำสั่ง &apos;claude&apos; ของคุณจะใช้เกตเวย์นี้</value>
+  </data>
+  <data name="Download and install" xml:space="preserve">
+    <value>ดาวน์โหลดและติดตั้ง</value>
+  </data>
+  <data name="Fill in the following configuration:" xml:space="preserve">
+    <value>กรอกการตั้งค่าต่อไปนี้:</value>
+  </data>
+  <data name="Learn more about CC Switch." xml:space="preserve">
+    <value>เรียนรู้เพิ่มเติมเกี่ยวกับ CC Switch</value>
+  </data>
   <data name="Learn more about Opencode." xml:space="preserve">
     <value>เรียนรู้เพิ่มเติมเกี่ยวกับ Opencode</value>
   </data>
   <data name="Learn more about Qwen Code." xml:space="preserve">
     <value>เรียนรู้เพิ่มเติมเกี่ยวกับ Qwen Code</value>
   </data>
+  <data name="Model Name" xml:space="preserve">
+    <value>ชื่อโมเดล</value>
+  </data>
   <data name="Note: Replace &apos;{0}&apos; or &apos;{1}&apos; with other available models if needed." xml:space="preserve">
     <value>หมายเหตุ: หากจำเป็น ให้แทนที่ &apos;{0}&apos; หรือ &apos;{1}&apos; ด้วยโมเดลอื่นที่มีอยู่</value>
+  </data>
+  <data name="Option A: Using CC Switch (GUI)" xml:space="preserve">
+    <value>ตัวเลือก A: ใช้ CC Switch (GUI)</value>
+  </data>
+  <data name="Option B: Manual Configuration (Environment Variables)" xml:space="preserve">
+    <value>ตัวเลือก B: การกำหนดค่าด้วยตนเอง (ตัวแปรสภาพแวดล้อม)</value>
+  </data>
+  <data name="Provider Name" xml:space="preserve">
+    <value>ชื่อผู้ให้บริการ</value>
   </data>
   <data name="Then you can enjoy using OllamaGateway in Opencode." xml:space="preserve">
     <value>จากนั้นคุณสามารถเพลิดเพลินกับการใช้ OllamaGateway ใน Opencode</value>
@@ -78,6 +123,9 @@
   <data name="to add a new provider:" xml:space="preserve">
     <value>เพื่อเพิ่มผู้ให้บริการใหม่:</value>
   </data>
+  <data name="To ask a question in Anthropic Messages format, use the following curl command:" xml:space="preserve">
+    <value>เพื่อส่งคำถามในรูปแบบ Anthropic Messages ให้ใช้คำสั่ง curl ต่อไปนี้:</value>
+  </data>
   <data name="To ask a question in OpenAI format, use the following curl command:" xml:space="preserve">
     <value>เพื่อถามคำถามในรูปแบบ OpenAI ให้ใช้คำสั่ง curl ต่อไปนี้:</value>
   </data>
@@ -86,6 +134,9 @@
   </data>
   <data name="To generate embeddings for a text, use the following curl command:" xml:space="preserve">
     <value>To generate embeddings for a text, use the following curl command:</value>
+  </data>
+  <data name="To make this permanent, you can add the export commands to your shell profile (e.g., ~/.bashrc or ~/.zshrc)." xml:space="preserve">
+    <value>เพื่อให้การตั้งค่านี้ถาวร คุณสามารถเพิ่มคำสั่ง export ลงในโปรไฟล์ shell ของคุณ (เช่น ~/.bashrc หรือ ~/.zshrc)</value>
   </data>
   <data name="To simply complete a given text, use the following curl command:" xml:space="preserve">
     <value>เพื่อทำข้อความที่กำหนดให้เสร็จสิ้นอย่างง่าย ให้ใช้คำสั่ง curl ต่อไปนี้:</value>
