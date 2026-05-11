@@ -17,6 +17,16 @@ Default user name is `admin@default.com` and default password is `Admin@123456!`
 
 Try a running OllamaGateway [here](https://ollama.aiursoft.com).
 
+## Agent & Ecosystem Ready
+
+OllamaGateway has been officially tested and is fully compatible with popular ecosystem tools including **Claude Code**, **Open-WebUI**, **Opencode**, and **Roocode**. Its robust API translation makes it the ideal choice for deploying autonomous AI agents.
+
+### Recommended Models for Agents
+
+For the best experience with AI agents, we recommend the following models:
+- `qwen3.5:27b-q8_0`
+- `qwen3.5:35b-a3b-q4_K_M`
+
 ## Run in Ubuntu
 
 The following script will install\update this app on your Ubuntu server. Supports Ubuntu 25.04.
@@ -113,6 +123,7 @@ Native Ollama is great for personal use, but it lacks the enterprise features re
 | Function Call | ✅ | ✅ |
 | Streaming | ✅ | ✅ |
 | OpenAI API Translation | ⚠️ Partial[^1] | ✅ |
+| Anthropic API Translation | ❌ | ✅ |
 | API Authentication (Bearer Token) | ❌ | ✅ |
 | Multiple API Keys Management | ❌ | ✅ |
 | Request & Response Auditing | ❌ | ✅ |
