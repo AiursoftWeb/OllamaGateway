@@ -18,7 +18,10 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="&quot;Fire-and-forget&quot; support for long-running tasks (like emails or AI), featuring a GUI for queue management, parallel processing, and cancellation." xml:space="preserve">
+      <data name="&apos;DB override&apos; means a hard assignment (=), not a null-coalescing assignment (??=). When the virtual model has a value configured in the database, the client-supplied value is always discarded." xml:space="preserve">
+    <value>&apos;DB override&apos; tarkoittaa kiinteää sijoitusta (=), ei tyhjäarvon yhdistämistä (??=). Kun virtuaalimallissa on tietokannassa määritetty arvo, asiakkaan toimittama arvo hylätään aina.</value>
+  </data>
+  <data name="&quot;Fire-and-forget&quot; support for long-running tasks (like emails or AI), featuring a GUI for queue management, parallel processing, and cancellation." xml:space="preserve">
     <value>Tuki pitkäkestoisille tehtäville (esimerkiksi sähköposteille tai AI:lle), jossa on käyttöliittymä jonon hallintaan, rinnakkaisprosessointiin ja peruutukseen.</value>
   </data>
   <data name="→ Native Ollama" xml:space="preserve">

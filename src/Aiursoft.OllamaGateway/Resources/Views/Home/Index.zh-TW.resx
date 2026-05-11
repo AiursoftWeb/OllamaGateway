@@ -18,7 +18,10 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="&quot;Fire-and-forget&quot; support for long-running tasks (like emails or AI), featuring a GUI for queue management, parallel processing, and cancellation." xml:space="preserve">
+      <data name="&apos;DB override&apos; means a hard assignment (=), not a null-coalescing assignment (??=). When the virtual model has a value configured in the database, the client-supplied value is always discarded." xml:space="preserve">
+    <value>「DB override」代表硬指派（=），而非空合併指派（??=）。當虛擬模型在資料庫中已設定值時，客戶端提供的值一律會被捨棄。</value>
+  </data>
+  <data name="&quot;Fire-and-forget&quot; support for long-running tasks (like emails or AI), featuring a GUI for queue management, parallel processing, and cancellation." xml:space="preserve">
     <value>「Fire-and-forget」支援長時間執行的作業（例如電子郵件或 AI），並提供圖形使用者介面以進行佇列管理、平行處理和取消。</value>
   </data>
   <data name="→ Native Ollama" xml:space="preserve">
