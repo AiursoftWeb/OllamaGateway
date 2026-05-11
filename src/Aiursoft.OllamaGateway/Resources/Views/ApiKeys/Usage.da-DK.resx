@@ -48,11 +48,20 @@
   <data name="6. Qwen Code Usage" xml:space="preserve">
     <value>6. Qwen Code-brug</value>
   </data>
+  <data name="7. Anthropic Messages API" xml:space="preserve">
+    <value>7. Anthropic Messages API</value>
+  </data>
+  <data name="8. Claude Code &amp; CC Switch (Recommended)" xml:space="preserve">
+    <value>8. Claude Code &amp; CC Switch (Anbefalet)</value>
+  </data>
   <data name="After creating an API Key, you can edit your Opencode configuration file at" xml:space="preserve">
     <value>Efter at have oprettet en API-nøgle, kan du redigere din Opencode-konfigurationsfil på</value>
   </data>
   <data name="After creating an API Key, you can edit your Qwen Code configuration file at" xml:space="preserve">
     <value>Efter oprettelse af en API-nøgle kan du redigere din Qwen Code-konfigurationsfil på</value>
+  </data>
+  <data name="API Key" xml:space="preserve">
+    <value>API-nøgle</value>
   </data>
   <data name="API Key Usage Guide" xml:space="preserve">
     <value>Brugsvejledning for API-nøgle</value>
@@ -60,14 +69,50 @@
   <data name="Back to List" xml:space="preserve">
     <value>Tilbage til liste</value>
   </data>
+  <data name="Base URL" xml:space="preserve">
+    <value>Base URL</value>
+  </data>
+  <data name="Claude Code is a powerful CLI agent from Anthropic. We recommend using &apos;CC Switch&apos; (an All-in-One manager) to manage your configurations easily." xml:space="preserve">
+    <value>Claude Code er en kraftfuld CLI-agent fra Anthropic. Vi anbefaler at bruge &apos;CC Switch&apos; (en alt-i-en-manager) til nemt at administrere dine konfigurationer.</value>
+  </data>
+  <data name="Claude Code natively reads standard Anthropic environment variables. You can configure it manually by exporting these variables in your terminal:" xml:space="preserve">
+    <value>Claude Code læser standard Anthropic-miljøvariabler indbygget. Du kan konfigurere det manuelt ved at eksportere disse variabler i din terminal:</value>
+  </data>
+  <data name="Click &apos;Add Provider&apos; and select &apos;Claude Code&apos; as the target tool." xml:space="preserve">
+    <value>Klik på &apos;Tilføj udbyder&apos; og vælg &apos;Claude Code&apos; som måltool.</value>
+  </data>
+  <data name="Click &apos;Enable&apos; in the system tray or main interface. Now your &apos;claude&apos; command will use this gateway." xml:space="preserve">
+    <value>Klik på &apos;Aktivér&apos; i systembakken eller hovedgrænsefladen. Nu vil dit &apos;claude&apos;-kommando bruge denne gateway.</value>
+  </data>
+  <data name="Download and install" xml:space="preserve">
+    <value>Download og installer</value>
+  </data>
+  <data name="Fill in the following configuration:" xml:space="preserve">
+    <value>Udfyld følgende konfiguration:</value>
+  </data>
+  <data name="Learn more about CC Switch." xml:space="preserve">
+    <value>Lær mere om CC Switch.</value>
+  </data>
   <data name="Learn more about Opencode." xml:space="preserve">
     <value>Læs mere om Opencode.</value>
   </data>
   <data name="Learn more about Qwen Code." xml:space="preserve">
     <value>Lær mere om Qwen Code.</value>
   </data>
+  <data name="Model Name" xml:space="preserve">
+    <value>Modelnavn</value>
+  </data>
   <data name="Note: Replace &apos;{0}&apos; or &apos;{1}&apos; with other available models if needed." xml:space="preserve">
     <value>Bemærk: Udskift &apos;{0}&apos; eller &apos;{1}&apos; med andre tilgængelige modeller, hvis det er nødvendigt.</value>
+  </data>
+  <data name="Option A: Using CC Switch (GUI)" xml:space="preserve">
+    <value>Indstilling A: Brug af CC Switch (GUI)</value>
+  </data>
+  <data name="Option B: Manual Configuration (Environment Variables)" xml:space="preserve">
+    <value>Indstilling B: Manuel konfiguration (miljøvariabler)</value>
+  </data>
+  <data name="Provider Name" xml:space="preserve">
+    <value>Leverandørens navn</value>
   </data>
   <data name="Then you can enjoy using OllamaGateway in Opencode." xml:space="preserve">
     <value>Så kan du nyde at bruge OllamaGateway i Opencode.</value>
@@ -78,6 +123,9 @@
   <data name="to add a new provider:" xml:space="preserve">
     <value>for at tilføje en ny provider:</value>
   </data>
+  <data name="To ask a question in Anthropic Messages format, use the following curl command:" xml:space="preserve">
+    <value>For at stille et spørgsmål i Anthropic Messages-format skal du bruge følgende curl-kommando:</value>
+  </data>
   <data name="To ask a question in OpenAI format, use the following curl command:" xml:space="preserve">
     <value>For at stille et spørgsmål i OpenAI-format, brug følgende curl-kommando:</value>
   </data>
@@ -86,6 +134,9 @@
   </data>
   <data name="To generate embeddings for a text, use the following curl command:" xml:space="preserve">
     <value>For at generere embeddings for en tekst, skal du bruge følgende curl-kommando:</value>
+  </data>
+  <data name="To make this permanent, you can add the export commands to your shell profile (e.g., ~/.bashrc or ~/.zshrc)." xml:space="preserve">
+    <value>For at gøre dette permanent, kan du tilføje export-kommandoerne til dit shell-profil (f.eks. ~/.bashrc eller ~/.zshrc).</value>
   </data>
   <data name="To simply complete a given text, use the following curl command:" xml:space="preserve">
     <value>For at udføre en simpel tekstgenerering, brug følgende curl-kommando:</value>
