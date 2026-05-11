@@ -279,6 +279,7 @@ public class AnthropicController : ControllerBase
                     {
                         var textParts = new List<string>();
                         var toolCalls = new JsonArray();
+                        string? reasoningContent = null;
                         
                         foreach (var item in arr)
                         {
@@ -289,6 +290,10 @@ public class AnthropicController : ControllerBase
                                 {
                                     var text = obj["text"]?.ToString();
                                     if (!string.IsNullOrEmpty(text)) textParts.Add(text);
+                                }
+                                else if (type == "thinking")
+                                {
+                                    reasoningContent = obj["thinking"]?.ToString();
                                 }
                                 else if (type == "tool_use")
                                 {
@@ -316,6 +321,10 @@ public class AnthropicController : ControllerBase
                         }
                         
                         var assistantMsg = new JsonObject { ["role"] = "assistant", ["content"] = string.Join("\n", textParts) };
+                        if (!string.IsNullOrEmpty(reasoningContent))
+                        {
+                            assistantMsg["reasoning_content"] = reasoningContent;
+                        }
                         if (toolCalls.Count > 0)
                         {
                             assistantMsg["tool_calls"] = toolCalls;
