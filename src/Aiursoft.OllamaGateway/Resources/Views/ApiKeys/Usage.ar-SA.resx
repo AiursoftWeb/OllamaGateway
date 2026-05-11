@@ -48,11 +48,20 @@
   <data name="6. Qwen Code Usage" xml:space="preserve">
     <value>6. استخدام Qwen Code</value>
   </data>
+  <data name="7. Anthropic Messages API" xml:space="preserve">
+    <value>7. واجهة برمجة تطبيقات Anthropic للرسائل</value>
+  </data>
+  <data name="8. Claude Code &amp; CC Switch (Recommended)" xml:space="preserve">
+    <value>8. كود Claude وتبديل CC (موصى به)</value>
+  </data>
   <data name="After creating an API Key, you can edit your Opencode configuration file at" xml:space="preserve">
     <value>بعد إنشاء مفتاح API، يمكنك تحرير ملف تكوين Opencode الخاص بك في</value>
   </data>
   <data name="After creating an API Key, you can edit your Qwen Code configuration file at" xml:space="preserve">
     <value>بعد إنشاء مفتاح API، يمكنك تحرير ملف تكوين Qwen Code الخاص بك في</value>
+  </data>
+  <data name="API Key" xml:space="preserve">
+    <value>مفتاح واجهة برمجة التطبيقات</value>
   </data>
   <data name="API Key Usage Guide" xml:space="preserve">
     <value>دليل استخدام مفتاح API</value>
@@ -60,14 +69,50 @@
   <data name="Back to List" xml:space="preserve">
     <value>العودة إلى القائمة</value>
   </data>
+  <data name="Base URL" xml:space="preserve">
+    <value>عنوان URL الأساسي</value>
+  </data>
+  <data name="Claude Code is a powerful CLI agent from Anthropic. We recommend using &apos;CC Switch&apos; (an All-in-One manager) to manage your configurations easily." xml:space="preserve">
+    <value>Claude Code هو وكيل CLI قوي من Anthropic. نوصي باستخدام &apos;CC Switch&apos; (مدير شامل) لإدارة تكويناتك بسهولة.</value>
+  </data>
+  <data name="Claude Code natively reads standard Anthropic environment variables. You can configure it manually by exporting these variables in your terminal:" xml:space="preserve">
+    <value>يدعم Claude Code قراءة متغيرات البيئة القياسية من Anthropic بشكل أصلي. يمكنك تكوينه يدوياً عن طريق تصدير هذه المتغيرات في طرفية الأوامر الخاصة بك:</value>
+  </data>
+  <data name="Click &apos;Add Provider&apos; and select &apos;Claude Code&apos; as the target tool." xml:space="preserve">
+    <value>انقر على &apos;إضافة مزود&apos; وحدد &apos;Claude Code&apos; كأداة مستهدفة.</value>
+  </data>
+  <data name="Click &apos;Enable&apos; in the system tray or main interface. Now your &apos;claude&apos; command will use this gateway." xml:space="preserve">
+    <value>انقر على &apos;تمكين&apos; في منطقة الإعلام أو الواجهة الرئيسية. الآن سيعتمد أمر &apos;claude&apos; على هذا البوابة.</value>
+  </data>
+  <data name="Download and install" xml:space="preserve">
+    <value>قم بالتنزيل والتثبيت</value>
+  </data>
+  <data name="Fill in the following configuration:" xml:space="preserve">
+    <value>املأ التكوين التالي:</value>
+  </data>
+  <data name="Learn more about CC Switch." xml:space="preserve">
+    <value>اعرف المزيد حول CC Switch.</value>
+  </data>
   <data name="Learn more about Opencode." xml:space="preserve">
     <value>تعرف على المزيد حول Opencode.</value>
   </data>
   <data name="Learn more about Qwen Code." xml:space="preserve">
     <value>تعرف على المزيد حول Qwen Code.</value>
   </data>
+  <data name="Model Name" xml:space="preserve">
+    <value>اسم النموذج</value>
+  </data>
   <data name="Note: Replace &apos;{0}&apos; or &apos;{1}&apos; with other available models if needed." xml:space="preserve">
     <value>ملاحظة: استبدل &apos;{0}&apos; أو &apos;{1}&apos; بنماذج أخرى متاحة إذا لزم الأمر.</value>
+  </data>
+  <data name="Option A: Using CC Switch (GUI)" xml:space="preserve">
+    <value>الخيار أ: استخدام CC Switch (واجهة المستخدم الرسومية)</value>
+  </data>
+  <data name="Option B: Manual Configuration (Environment Variables)" xml:space="preserve">
+    <value>الخيار ب: التكوين اليدوي (متغيرات البيئة)</value>
+  </data>
+  <data name="Provider Name" xml:space="preserve">
+    <value>اسم المزود</value>
   </data>
   <data name="Then you can enjoy using OllamaGateway in Opencode." xml:space="preserve">
     <value>بعد ذلك، يمكنك الاستمتاع باستخدام OllamaGateway في Opencode.</value>
@@ -78,6 +123,9 @@
   <data name="to add a new provider:" xml:space="preserve">
     <value>لإضافة مزود جديد:</value>
   </data>
+  <data name="To ask a question in Anthropic Messages format, use the following curl command:" xml:space="preserve">
+    <value>لطرح سؤال بتنسيق Anthropic Messages، استخدم أمر curl التالي:</value>
+  </data>
   <data name="To ask a question in OpenAI format, use the following curl command:" xml:space="preserve">
     <value>لطرح سؤال بتنسيق OpenAI، استخدم أمر curl التالي:</value>
   </data>
@@ -86,6 +134,9 @@
   </data>
   <data name="To generate embeddings for a text, use the following curl command:" xml:space="preserve">
     <value>لتوليد تضمينات لنص، استخدم أمر curl التالي:</value>
+  </data>
+  <data name="To make this permanent, you can add the export commands to your shell profile (e.g., ~/.bashrc or ~/.zshrc)." xml:space="preserve">
+    <value>لجعل هذا الإعداد دائمًا، يمكنك إضافة أوامر التصدير إلى ملف تعريف قذيفة الطرفية (مثل ~/.bashrc أو ~/.zshrc).</value>
   </data>
   <data name="To simply complete a given text, use the following curl command:" xml:space="preserve">
     <value>لإكمال نص معين ببساطة، استخدم أمر curl التالي:</value>

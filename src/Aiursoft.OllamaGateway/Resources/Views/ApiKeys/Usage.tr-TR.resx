@@ -48,11 +48,20 @@
   <data name="6. Qwen Code Usage" xml:space="preserve">
     <value>6. Qwen Code Kullanımı</value>
   </data>
+  <data name="7. Anthropic Messages API" xml:space="preserve">
+    <value>7. Anthropic Messages API</value>
+  </data>
+  <data name="8. Claude Code &amp; CC Switch (Recommended)" xml:space="preserve">
+    <value>8. Claude Code ve CC Switch (Önerilen)</value>
+  </data>
   <data name="After creating an API Key, you can edit your Opencode configuration file at" xml:space="preserve">
     <value>API Anahtarını oluşturduktan sonra, Opencode yapılandırma dosyanızı şurada düzenleyebilirsiniz:</value>
   </data>
   <data name="After creating an API Key, you can edit your Qwen Code configuration file at" xml:space="preserve">
     <value>API Anahtarını oluşturduktan sonra, Qwen Code yapılandırma dosyanızı şurada düzenleyebilirsiniz:</value>
+  </data>
+  <data name="API Key" xml:space="preserve">
+    <value>API Anahtarı</value>
   </data>
   <data name="API Key Usage Guide" xml:space="preserve">
     <value>API Anahtarı Kullanım Kılavuzu</value>
@@ -60,14 +69,50 @@
   <data name="Back to List" xml:space="preserve">
     <value>Listeye Dön</value>
   </data>
+  <data name="Base URL" xml:space="preserve">
+    <value>Temel URL</value>
+  </data>
+  <data name="Claude Code is a powerful CLI agent from Anthropic. We recommend using &apos;CC Switch&apos; (an All-in-One manager) to manage your configurations easily." xml:space="preserve">
+    <value>Claude Code, Anthropic&apos;tan güçlü bir CLI ajanıdır. Yapılandırmalarınızı kolayca yönetmek için &apos;CC Switch&apos;i (her şeyi içeren bir yönetici) kullanmanızı öneririz.</value>
+  </data>
+  <data name="Claude Code natively reads standard Anthropic environment variables. You can configure it manually by exporting these variables in your terminal:" xml:space="preserve">
+    <value>Claude Code, standart Anthropic ortam değişkenlerini yerel olarak okur. Bu değişkenleri terminalinizde dışa aktararak yapılandırmayı manuel olarak gerçekleştirebilirsiniz:</value>
+  </data>
+  <data name="Click &apos;Add Provider&apos; and select &apos;Claude Code&apos; as the target tool." xml:space="preserve">
+    <value>&apos;Sağlayıcı Ekle&apos;ye tıklayın ve hedef araç olarak &apos;Claude Code&apos;u seçin.&apos;</value>
+  </data>
+  <data name="Click &apos;Enable&apos; in the system tray or main interface. Now your &apos;claude&apos; command will use this gateway." xml:space="preserve">
+    <value>Sistem tepsisinde veya ana arayüzde &apos;Etkinleştir&apos; düğmesine tıklayın. Artık &apos;claude&apos; komutu bu ağ geçidini kullanacak.</value>
+  </data>
+  <data name="Download and install" xml:space="preserve">
+    <value>İndir ve yükle</value>
+  </data>
+  <data name="Fill in the following configuration:" xml:space="preserve">
+    <value>Aşağıdaki yapılandırmayı doldurun:</value>
+  </data>
+  <data name="Learn more about CC Switch." xml:space="preserve">
+    <value>CC Switch hakkında daha fazla bilgi edinin.</value>
+  </data>
   <data name="Learn more about Opencode." xml:space="preserve">
     <value>Opencode hakkında daha fazla bilgi edinin.</value>
   </data>
   <data name="Learn more about Qwen Code." xml:space="preserve">
     <value>Qwen Code hakkında daha fazla bilgi edinin.</value>
   </data>
+  <data name="Model Name" xml:space="preserve">
+    <value>Model Adı</value>
+  </data>
   <data name="Note: Replace &apos;{0}&apos; or &apos;{1}&apos; with other available models if needed." xml:space="preserve">
     <value>Not: Gerekirse &apos;{0}&apos; veya &apos;{1}&apos; yerine diğer mevcut modelleri kullanın.</value>
+  </data>
+  <data name="Option A: Using CC Switch (GUI)" xml:space="preserve">
+    <value>Seçenek A: CC Switch Kullanımı (GUI)</value>
+  </data>
+  <data name="Option B: Manual Configuration (Environment Variables)" xml:space="preserve">
+    <value>Seçenek B: Manuel Yapılandırma (Çevre Değişkenleri)</value>
+  </data>
+  <data name="Provider Name" xml:space="preserve">
+    <value>Sağlayıcı Adı</value>
   </data>
   <data name="Then you can enjoy using OllamaGateway in Opencode." xml:space="preserve">
     <value>Ardından Opencode içinde OllamaGateway kullanmaktan keyif alabilirsiniz.</value>
@@ -78,6 +123,9 @@
   <data name="to add a new provider:" xml:space="preserve">
     <value>yeni bir sağlayıcı eklemek için:</value>
   </data>
+  <data name="To ask a question in Anthropic Messages format, use the following curl command:" xml:space="preserve">
+    <value>Anthropic Messages formatında bir soru sormak için aşağıdaki curl komutunu kullanın:</value>
+  </data>
   <data name="To ask a question in OpenAI format, use the following curl command:" xml:space="preserve">
     <value>OpenAI formatında bir soru sormak için aşağıdaki curl komutunu kullanın:</value>
   </data>
@@ -86,6 +134,9 @@
   </data>
   <data name="To generate embeddings for a text, use the following curl command:" xml:space="preserve">
     <value>Bir metin için gömme oluşturmak için aşağıdaki curl komutunu kullanın:</value>
+  </data>
+  <data name="To make this permanent, you can add the export commands to your shell profile (e.g., ~/.bashrc or ~/.zshrc)." xml:space="preserve">
+    <value>Bu işlemi kalıcı hale getirmek için export komutlarını kabuk profilinize (örneğin, ~/.bashrc veya ~/.zshrc) ekleyebilirsiniz.</value>
   </data>
   <data name="To simply complete a given text, use the following curl command:" xml:space="preserve">
     <value>Verilen metni tamamlamak için aşağıdaki curl komutunu kullanın:</value>

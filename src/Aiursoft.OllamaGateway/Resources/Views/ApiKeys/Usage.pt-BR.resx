@@ -48,11 +48,20 @@
   <data name="6. Qwen Code Usage" xml:space="preserve">
     <value>6. Uso do Qwen Code</value>
   </data>
+  <data name="7. Anthropic Messages API" xml:space="preserve">
+    <value>7. API de Mensagens da Anthropic</value>
+  </data>
+  <data name="8. Claude Code &amp; CC Switch (Recommended)" xml:space="preserve">
+    <value>8. Claude Code e CC Switch (Recomendado)</value>
+  </data>
   <data name="After creating an API Key, you can edit your Opencode configuration file at" xml:space="preserve">
     <value>Após criar uma chave de API, você pode editar seu arquivo de configuração do Opencode em</value>
   </data>
   <data name="After creating an API Key, you can edit your Qwen Code configuration file at" xml:space="preserve">
     <value>Após criar uma chave de API, você pode editar o arquivo de configuração do Qwen Code em</value>
+  </data>
+  <data name="API Key" xml:space="preserve">
+    <value>Chave de API</value>
   </data>
   <data name="API Key Usage Guide" xml:space="preserve">
     <value>Guia de Uso da Chave de API</value>
@@ -60,14 +69,50 @@
   <data name="Back to List" xml:space="preserve">
     <value>Voltar à lista</value>
   </data>
+  <data name="Base URL" xml:space="preserve">
+    <value>URL Base</value>
+  </data>
+  <data name="Claude Code is a powerful CLI agent from Anthropic. We recommend using &apos;CC Switch&apos; (an All-in-One manager) to manage your configurations easily." xml:space="preserve">
+    <value>Claude Code é um poderoso agente CLI da Anthropic. Recomendamos usar o &apos;CC Switch&apos; (um gerenciador tudo-em-um) para gerenciar suas configurações facilmente.</value>
+  </data>
+  <data name="Claude Code natively reads standard Anthropic environment variables. You can configure it manually by exporting these variables in your terminal:" xml:space="preserve">
+    <value>O Claude Code lê nativamente as variáveis de ambiente padrão da Anthropic. Você pode configurá-lo manualmente exportando essas variáveis no seu terminal:</value>
+  </data>
+  <data name="Click &apos;Add Provider&apos; and select &apos;Claude Code&apos; as the target tool." xml:space="preserve">
+    <value>Clique em &apos;Adicionar Provedor&apos; e selecione &apos;Claude Code&apos; como a ferramenta de destino.</value>
+  </data>
+  <data name="Click &apos;Enable&apos; in the system tray or main interface. Now your &apos;claude&apos; command will use this gateway." xml:space="preserve">
+    <value>Clique em &apos;Habilitar&apos; na bandeja do sistema ou na interface principal. Agora seu comando &apos;claude&apos; usará este gateway.</value>
+  </data>
+  <data name="Download and install" xml:space="preserve">
+    <value>Baixe e instale</value>
+  </data>
+  <data name="Fill in the following configuration:" xml:space="preserve">
+    <value>Preencha a seguinte configuração:</value>
+  </data>
+  <data name="Learn more about CC Switch." xml:space="preserve">
+    <value>Saiba mais sobre o CC Switch.</value>
+  </data>
   <data name="Learn more about Opencode." xml:space="preserve">
     <value>Saiba mais sobre o Opencode.</value>
   </data>
   <data name="Learn more about Qwen Code." xml:space="preserve">
     <value>Saiba mais sobre o Qwen Code.</value>
   </data>
+  <data name="Model Name" xml:space="preserve">
+    <value>Nome do Modelo</value>
+  </data>
   <data name="Note: Replace &apos;{0}&apos; or &apos;{1}&apos; with other available models if needed." xml:space="preserve">
     <value>Nota: Substitua &apos;{0}&apos; ou &apos;{1}&apos; por outros modelos disponíveis, se necessário.</value>
+  </data>
+  <data name="Option A: Using CC Switch (GUI)" xml:space="preserve">
+    <value>Opção A: Usando CC Switch (GUI)</value>
+  </data>
+  <data name="Option B: Manual Configuration (Environment Variables)" xml:space="preserve">
+    <value>Opção B: Configuração Manual (Variáveis de Ambiente)</value>
+  </data>
+  <data name="Provider Name" xml:space="preserve">
+    <value>Nome do Provedor</value>
   </data>
   <data name="Then you can enjoy using OllamaGateway in Opencode." xml:space="preserve">
     <value>Então você pode aproveitar o uso do OllamaGateway no Opencode.</value>
@@ -78,6 +123,9 @@
   <data name="to add a new provider:" xml:space="preserve">
     <value>para adicionar um novo provedor:</value>
   </data>
+  <data name="To ask a question in Anthropic Messages format, use the following curl command:" xml:space="preserve">
+    <value>Para fazer uma pergunta no formato Anthropic Messages, utilize o seguinte comando curl:</value>
+  </data>
   <data name="To ask a question in OpenAI format, use the following curl command:" xml:space="preserve">
     <value>Para fazer uma pergunta no formato OpenAI, use o seguinte comando curl:</value>
   </data>
@@ -86,6 +134,9 @@
   </data>
   <data name="To generate embeddings for a text, use the following curl command:" xml:space="preserve">
     <value>Para gerar embeddings de um texto, use o seguinte comando curl:</value>
+  </data>
+  <data name="To make this permanent, you can add the export commands to your shell profile (e.g., ~/.bashrc or ~/.zshrc)." xml:space="preserve">
+    <value>Para tornar isso permanente, você pode adicionar os comandos de exportação ao seu perfil de shell (por exemplo, ~/.bashrc ou ~/.zshrc).</value>
   </data>
   <data name="To simply complete a given text, use the following curl command:" xml:space="preserve">
     <value>Para simplesmente completar um texto fornecido, use o seguinte comando curl:</value>
