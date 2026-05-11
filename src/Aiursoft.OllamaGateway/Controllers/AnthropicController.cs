@@ -226,8 +226,113 @@ public class AnthropicController : ControllerBase
 
             foreach (var msg in request.Messages)
             {
-                var text = ExtractTextFromBlocks(msg.Content);
-                openaiMessages.Add(new JsonObject { ["role"] = msg.Role, ["content"] = text });
+                var contentNode = msg.Content is Newtonsoft.Json.Linq.JToken jt 
+                    ? JsonNode.Parse(jt.ToString(Newtonsoft.Json.Formatting.None))
+                    : JsonSerializer.SerializeToNode(msg.Content);
+
+                if (contentNode is JsonArray arr)
+                {
+                    if (msg.Role == "user")
+                    {
+                        var textParts = new List<string>();
+                        foreach (var item in arr)
+                        {
+                            if (item is JsonObject obj)
+                            {
+                                var type = obj["type"]?.ToString();
+                                if (type == "text")
+                                {
+                                    var text = obj["text"]?.ToString();
+                                    if (!string.IsNullOrEmpty(text)) textParts.Add(text);
+                                }
+                                else if (type == "tool_result")
+                                {
+                                    if (textParts.Count > 0)
+                                    {
+                                        openaiMessages.Add(new JsonObject { ["role"] = "user", ["content"] = string.Join("\n", textParts) });
+                                        textParts.Clear();
+                                    }
+                                    
+                                    var toolUseId = obj["tool_use_id"]?.ToString() ?? string.Empty;
+                                    var innerContent = ExtractTextFromBlocks(obj["content"]);
+                                    var isError = obj["is_error"]?.GetValue<bool>() == true;
+                                    
+                                    openaiMessages.Add(new JsonObject
+                                    {
+                                        ["role"] = "tool",
+                                        ["tool_call_id"] = toolUseId,
+                                        ["content"] = isError ? $"Error: {innerContent}" : innerContent
+                                    });
+                                }
+                            }
+                            else if (item is JsonValue jv && jv.TryGetValue<string>(out var str))
+                            {
+                                textParts.Add(str);
+                            }
+                        }
+                        if (textParts.Count > 0)
+                        {
+                            openaiMessages.Add(new JsonObject { ["role"] = "user", ["content"] = string.Join("\n", textParts) });
+                        }
+                    }
+                    else if (msg.Role == "assistant")
+                    {
+                        var textParts = new List<string>();
+                        var toolCalls = new JsonArray();
+                        
+                        foreach (var item in arr)
+                        {
+                            if (item is JsonObject obj)
+                            {
+                                var type = obj["type"]?.ToString();
+                                if (type == "text")
+                                {
+                                    var text = obj["text"]?.ToString();
+                                    if (!string.IsNullOrEmpty(text)) textParts.Add(text);
+                                }
+                                else if (type == "tool_use")
+                                {
+                                    var id = obj["id"]?.ToString() ?? string.Empty;
+                                    var name = obj["name"]?.ToString() ?? string.Empty;
+                                    var inputNode = obj["input"];
+                                    var inputStr = inputNode?.ToJsonString() ?? "{}";
+                                    
+                                    toolCalls.Add(new JsonObject
+                                    {
+                                        ["id"] = id,
+                                        ["type"] = "function",
+                                        ["function"] = new JsonObject
+                                        {
+                                            ["name"] = name,
+                                            ["arguments"] = inputStr
+                                        }
+                                    });
+                                }
+                            }
+                            else if (item is JsonValue jv && jv.TryGetValue<string>(out var str))
+                            {
+                                textParts.Add(str);
+                            }
+                        }
+                        
+                        var assistantMsg = new JsonObject { ["role"] = "assistant", ["content"] = string.Join("\n", textParts) };
+                        if (toolCalls.Count > 0)
+                        {
+                            assistantMsg["tool_calls"] = toolCalls;
+                        }
+                        openaiMessages.Add(assistantMsg);
+                    }
+                    else
+                    {
+                        var text = ExtractTextFromBlocks(msg.Content);
+                        openaiMessages.Add(new JsonObject { ["role"] = msg.Role, ["content"] = text });
+                    }
+                }
+                else
+                {
+                    var text = ExtractTextFromBlocks(msg.Content);
+                    openaiMessages.Add(new JsonObject { ["role"] = msg.Role, ["content"] = text });
+                }
             }
 
             var openaiBody = new JsonObject
@@ -358,6 +463,7 @@ public class AnthropicController : ControllerBase
             if (isStream)
             {
                 Response.ContentType = "text/event-stream";
+                Response.Headers.CacheControl = "no-cache";
                 var answerBuilder = new StringBuilder();
                 using var reader = new StreamReader(upstreamStream);
                 string? sLine;
@@ -407,6 +513,7 @@ public class AnthropicController : ControllerBase
                             {
                                 deltaText = chunk["message"]?["content"]?.ToString() ?? "";
                                 toolCalls = chunk["message"]?["tool_calls"]?.AsArray();
+                                if (toolCalls != null && toolCalls.Count > 0) currentStopReason = "tool_use";
 
                                 if (chunk["done"]?.GetValue<bool>() == true)
                                 {
@@ -414,6 +521,9 @@ public class AnthropicController : ControllerBase
                                     var cTok = chunk["eval_count"]?.GetValue<long>() ?? 0;
                                     _logContext.Log.PromptTokens = (int)pTok;
                                     _logContext.Log.CompletionTokens = (int)cTok;
+
+                                    var doneReason = chunk["done_reason"]?.ToString();
+                                    if (doneReason == "length") currentStopReason = "max_tokens";
                                 }
                             }
                         }
@@ -438,7 +548,8 @@ public class AnthropicController : ControllerBase
                                     toolCalls = choice?["delta"]?["tool_calls"]?.AsArray();
                                     var finishReason = choice?["finish_reason"]?.ToString();
                                     if (finishReason == "length") currentStopReason = "max_tokens";
-                                    else if (finishReason == "tool_calls") currentStopReason = "tool_use";
+                                    else if (finishReason == "tool_calls" || finishReason == "function_call") currentStopReason = "tool_use";
+                                    else if (finishReason == "stop") currentStopReason = "end_turn";
 
                                     if (chunk["usage"] != null)
                                     {
@@ -557,6 +668,9 @@ public class AnthropicController : ControllerBase
                             pTok = respNode["prompt_eval_count"]?.GetValue<long>() ?? 0;
                             cTok = respNode["eval_count"]?.GetValue<long>() ?? 0;
                             
+                            var doneReason = respNode["done_reason"]?.ToString();
+                            if (doneReason == "length") stopReason = "max_tokens";
+
                             // Handle Ollama tool calls if present
                             var toolCalls = respNode["message"]?["tool_calls"]?.AsArray();
                             if (toolCalls != null && toolCalls.Count > 0)
@@ -568,7 +682,7 @@ public class AnthropicController : ControllerBase
                                     contentBlocks.Add(new AnthropicContentBlock
                                     {
                                         Type = "tool_use",
-                                        Id = $"toolu_{Guid.NewGuid():N}",
+                                        Id = tc["id"]?.ToString() ?? $"toolu_{Guid.NewGuid():N}",
                                         Name = tc["function"]?["name"]?.ToString() ?? "unknown",
                                         Input = tc["function"]?["arguments"]?.DeepClone()
                                     });
@@ -581,7 +695,8 @@ public class AnthropicController : ControllerBase
                             respContent = message?["content"]?.ToString() ?? "";
                             var oaiFinish = respNode["choices"]?[0]?["finish_reason"]?.ToString();
                             if (oaiFinish == "length") stopReason = "max_tokens";
-                            else if (oaiFinish == "tool_calls") stopReason = "tool_use";
+                            else if (oaiFinish == "tool_calls" || oaiFinish == "function_call") stopReason = "tool_use";
+                            else if (oaiFinish == "stop") stopReason = "end_turn";
                             
                             pTok = respNode["usage"]?["prompt_tokens"]?.GetValue<long>() ?? 0;
                             cTok = respNode["usage"]?["completion_tokens"]?.GetValue<long>() ?? 0;
