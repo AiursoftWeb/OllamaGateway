@@ -48,11 +48,20 @@
   <data name="6. Qwen Code Usage" xml:space="preserve">
     <value>6. Qwen Code -käyttö</value>
   </data>
+  <data name="7. Anthropic Messages API" xml:space="preserve">
+    <value>7. Anthropic Messages API</value>
+  </data>
+  <data name="8. Claude Code &amp; CC Switch (Recommended)" xml:space="preserve">
+    <value>8. Claude Code &amp; CC Switch (Suositeltu)</value>
+  </data>
   <data name="After creating an API Key, you can edit your Opencode configuration file at" xml:space="preserve">
     <value>API-avaimen luomisen jälkeen voit muokata Opencode-asetustiedostoa osoitteessa</value>
   </data>
   <data name="After creating an API Key, you can edit your Qwen Code configuration file at" xml:space="preserve">
     <value>API-avaimen luomisen jälkeen voit muokata Qwen Code -asetustiedostoa osoitteessa</value>
+  </data>
+  <data name="API Key" xml:space="preserve">
+    <value>API-avain</value>
   </data>
   <data name="API Key Usage Guide" xml:space="preserve">
     <value>API-avaimen käyttöohje</value>
@@ -60,14 +69,50 @@
   <data name="Back to List" xml:space="preserve">
     <value>Takaisin listaan</value>
   </data>
+  <data name="Base URL" xml:space="preserve">
+    <value>Pää-URL</value>
+  </data>
+  <data name="Claude Code is a powerful CLI agent from Anthropic. We recommend using &apos;CC Switch&apos; (an All-in-One manager) to manage your configurations easily." xml:space="preserve">
+    <value>Claude Code on Anthropican tehokas CLI-agentti. Suosittelemme käyttämään &apos;CC Switchiä&apos; (kaikki-yhdessä-hallintaohjelma) konfiguraatioiden helppoon hallintaan.</value>
+  </data>
+  <data name="Claude Code natively reads standard Anthropic environment variables. You can configure it manually by exporting these variables in your terminal:" xml:space="preserve">
+    <value>Claude Code lukee oletuksena Anthropicon ympäristömuuttujat. Voit määrittää ne manuaalisesti vientimalla nämä muuttujat terminaalissa:</value>
+  </data>
+  <data name="Click &apos;Add Provider&apos; and select &apos;Claude Code&apos; as the target tool." xml:space="preserve">
+    <value>Napsauta &quot;Lisää tarjoaja&quot; ja valitse &quot;Claude Code&quot; kohteena.</value>
+  </data>
+  <data name="Click &apos;Enable&apos; in the system tray or main interface. Now your &apos;claude&apos; command will use this gateway." xml:space="preserve">
+    <value>Napsauta &apos;Ota käyttöön&apos; järjestelmäviereessä tai pääkäyttöliittymässä. Nyt &apos;claude&apos;-komentosi käyttää tätä porttia.</value>
+  </data>
+  <data name="Download and install" xml:space="preserve">
+    <value>Lataa ja asenna</value>
+  </data>
+  <data name="Fill in the following configuration:" xml:space="preserve">
+    <value>Täytä seuraavat asetukset:</value>
+  </data>
+  <data name="Learn more about CC Switch." xml:space="preserve">
+    <value>Lisätietoja CC Switchistä.</value>
+  </data>
   <data name="Learn more about Opencode." xml:space="preserve">
     <value>Lue lisää Opencodesta.</value>
   </data>
   <data name="Learn more about Qwen Code." xml:space="preserve">
     <value>Lue lisää Qwen Code -ohjelmasta.</value>
   </data>
+  <data name="Model Name" xml:space="preserve">
+    <value>Mallin nimi</value>
+  </data>
   <data name="Note: Replace &apos;{0}&apos; or &apos;{1}&apos; with other available models if needed." xml:space="preserve">
     <value>Huom: Vaihda &apos;{0}&apos; tai &apos;{1}&apos; muihin saatavilla oleviin malleihin tarvittaessa.</value>
+  </data>
+  <data name="Option A: Using CC Switch (GUI)" xml:space="preserve">
+    <value>Vaihtoehto A: CC Switchin (GUI) käyttö</value>
+  </data>
+  <data name="Option B: Manual Configuration (Environment Variables)" xml:space="preserve">
+    <value>Vaihtoehto B: Manuaalinen määritys (ympäristömuuttujat)</value>
+  </data>
+  <data name="Provider Name" xml:space="preserve">
+    <value>Toimittajan nimi</value>
   </data>
   <data name="Then you can enjoy using OllamaGateway in Opencode." xml:space="preserve">
     <value>Sitten voit nauttia OllamaGateway:n käytöstä Opencodessa.</value>
@@ -78,6 +123,9 @@
   <data name="to add a new provider:" xml:space="preserve">
     <value>lisätä uusi tarjoaja:</value>
   </data>
+  <data name="To ask a question in Anthropic Messages format, use the following curl command:" xml:space="preserve">
+    <value>Kysyäksesi kysymyksen Anthropic Messages -muodossa, käytä seuraavaa curl-komentoa:</value>
+  </data>
   <data name="To ask a question in OpenAI format, use the following curl command:" xml:space="preserve">
     <value>Kysyäksesi kysymyksen OpenAI-muodossa, käytä seuraavaa curl-komentoa:</value>
   </data>
@@ -86,6 +134,9 @@
   </data>
   <data name="To generate embeddings for a text, use the following curl command:" xml:space="preserve">
     <value>Jotta voit luoda tekstin upotukset, käytä seuraavaa curl-komentoa:</value>
+  </data>
+  <data name="To make this permanent, you can add the export commands to your shell profile (e.g., ~/.bashrc or ~/.zshrc)." xml:space="preserve">
+    <value>Jotta tämä pysyy voimassa, voit lisätä vientikomennot kuorensi profiiliin (esim. ~/.bashrc tai ~/.zshrc).</value>
   </data>
   <data name="To simply complete a given text, use the following curl command:" xml:space="preserve">
     <value>Jotta voit yksinkertaisesti suorittaa annetun tekstin, käytä seuraavaa curl-komentoa:</value>
