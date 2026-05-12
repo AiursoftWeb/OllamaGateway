@@ -438,4 +438,79 @@ public class AnthropicApiTests : TestBase
         // Ensure no 500 error happens when mapping the complex thinking block back to an OpenAI backend
         Assert.AreNotEqual(HttpStatusCode.InternalServerError, response.StatusCode);
     }
+
+    [TestMethod]
+    public async Task Anthropic_Messages_History_WithThinking_OllamaBackend_RoundtripsProperly()
+    {
+        var token = await CreateApiKey();
+        var modelName = "thinking-history-ollama-model";
+        
+        using (var scope = Server!.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+            var provider = new OllamaProvider
+            {
+                Name = "Mock Provider for Thinking (Ollama)",
+                BaseUrl = "http://localhost:11434",
+                ProviderType = ProviderType.Ollama // Use Ollama provider
+            };
+            db.OllamaProviders.Add(provider);
+            await db.SaveChangesAsync();
+
+            var vm = new VirtualModel
+            {
+                Name = modelName,
+                Type = ModelType.Chat,
+                MaxRetries = 1
+            };
+            db.VirtualModels.Add(vm);
+            await db.SaveChangesAsync();
+
+            db.VirtualModelBackends.Add(new VirtualModelBackend
+            {
+                VirtualModelId = vm.Id,
+                ProviderId = provider.Id,
+                UnderlyingModelName = "deepseek-r1"
+            });
+            await db.SaveChangesAsync();
+        }
+
+        var anthropicRequest = new AnthropicMessageRequest
+        {
+            Model = modelName,
+            Messages =
+            [
+                new AnthropicMessage
+                {
+                    Role = "user",
+                    Content = new JsonArray { new JsonObject { ["type"] = "text", ["text"] = "Solve this puzzle." } }
+                },
+                new AnthropicMessage
+                {
+                    Role = "assistant",
+                    Content = new JsonArray
+                    {
+                        new JsonObject { ["type"] = "thinking", ["thinking"] = "I need to think step by step." },
+                        new JsonObject { ["type"] = "text", ["text"] = "Here is the solution." }
+                    }
+                },
+                new AnthropicMessage
+                {
+                    Role = "user",
+                    Content = new JsonArray { new JsonObject { ["type"] = "text", ["text"] = "Explain the second step." } }
+                }
+            ]
+        };
+
+        var request = new HttpRequestMessage(HttpMethod.Post, "/v1/messages")
+        {
+            Content = JsonContent.Create(anthropicRequest)
+        };
+        request.Headers.Add("x-api-key", token);
+
+        var response = await Http.SendAsync(request);
+        
+        // Ensure it processes correctly for Ollama backend as well without 500 error
+        Assert.AreNotEqual(HttpStatusCode.InternalServerError, response.StatusCode);
+    }
 }
