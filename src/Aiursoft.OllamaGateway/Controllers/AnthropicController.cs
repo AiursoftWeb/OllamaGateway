@@ -320,7 +320,27 @@ public class AnthropicController : ControllerBase
                             }
                         }
                         
-                        var assistantMsg = new JsonObject { ["role"] = "assistant", ["content"] = string.Join("\n", textParts) };
+                        var fullText = string.Join("\n", textParts);
+                        if (string.IsNullOrEmpty(reasoningContent))
+                        {
+                            var thinkStartIndex = fullText.IndexOf("<think>", StringComparison.OrdinalIgnoreCase);
+                            if (thinkStartIndex >= 0)
+                            {
+                                var thinkEndIndex = fullText.IndexOf("</think>", StringComparison.OrdinalIgnoreCase);
+                                if (thinkEndIndex > thinkStartIndex)
+                                {
+                                    reasoningContent = fullText.Substring(thinkStartIndex + 7, thinkEndIndex - thinkStartIndex - 7).Trim();
+                                    fullText = fullText.Remove(thinkStartIndex, thinkEndIndex + 8 - thinkStartIndex).Trim();
+                                }
+                                else
+                                {
+                                    reasoningContent = fullText.Substring(thinkStartIndex + 7).Trim();
+                                    fullText = fullText.Substring(0, thinkStartIndex).Trim();
+                                }
+                            }
+                        }
+                        
+                        var assistantMsg = new JsonObject { ["role"] = "assistant", ["content"] = fullText };
                         if (!string.IsNullOrEmpty(reasoningContent))
                         {
                             assistantMsg["reasoning_content"] = reasoningContent;
@@ -532,6 +552,8 @@ public class AnthropicController : ControllerBase
                 var activeToolBlocks = new HashSet<int>();
                 var currentStopReason = "end_turn";
                 var localToolIndexCounter = 0;
+                var hasStartedReasoning = false;
+                var hasEndedReasoning = false;
 
                 while ((sLine = await reader.ReadLineAsync(HttpContext.RequestAborted)) != null)
                 {
@@ -578,8 +600,25 @@ public class AnthropicController : ControllerBase
                                     deltaText = choice?["delta"]?["content"]?.ToString() ?? "";
                                     
                                     // DeepSeek reasoning content mapping
-                                    var reasoning = choice?["delta"]?["reasoning_content"]?.ToString();
-                                    if (!string.IsNullOrEmpty(reasoning)) deltaText = reasoning + deltaText;
+                                    var reasoningNode = choice?["delta"]?["reasoning_content"];
+                                    if (reasoningNode != null)
+                                    {
+                                        var reasoningStr = reasoningNode.ToString();
+                                        if (!hasStartedReasoning)
+                                        {
+                                            deltaText = "<think>\n" + reasoningStr;
+                                            hasStartedReasoning = true;
+                                        }
+                                        else
+                                        {
+                                            deltaText = reasoningStr;
+                                        }
+                                    }
+                                    else if (hasStartedReasoning && !hasEndedReasoning)
+                                    {
+                                        deltaText = "\n</think>\n" + deltaText;
+                                        hasEndedReasoning = true;
+                                    }
 
                                     toolCalls = choice?["delta"]?["tool_calls"]?.AsArray();
                                     var finishReason = choice?["finish_reason"]?.ToString();
