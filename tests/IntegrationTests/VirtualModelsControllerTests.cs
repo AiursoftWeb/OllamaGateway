@@ -1,6 +1,5 @@
 using System.Net;
 using Aiursoft.OllamaGateway.Entities;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
 
