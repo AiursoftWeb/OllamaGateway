@@ -72,7 +72,7 @@ public class Startup : IWebStartup
         var usageFlushJob = services.RegisterBackgroundJob<Services.BackgroundJobs.UsageFlushService>();
         services.RegisterScheduledTask(registration: usageFlushJob, period: TimeSpan.FromMinutes(3), startDelay: TimeSpan.FromSeconds(30));
         var clickhouseFlushJob = services.RegisterBackgroundJob<Services.Clickhouse.ClickhouseFlushService>();
-        services.RegisterScheduledTask(registration: clickhouseFlushJob, period: TimeSpan.FromSeconds(5), startDelay: TimeSpan.FromSeconds(10));
+        services.RegisterScheduledTask(registration: clickhouseFlushJob, period: TimeSpan.FromMinutes(2), startDelay: TimeSpan.FromSeconds(10));
 
         // Controllers and localization
         //
