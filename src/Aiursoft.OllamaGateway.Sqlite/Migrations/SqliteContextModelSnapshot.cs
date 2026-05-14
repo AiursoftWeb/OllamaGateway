@@ -15,7 +15,7 @@ namespace Aiursoft.OllamaGateway.Sqlite.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "10.0.6");
+            modelBuilder.HasAnnotation("ProductVersion", "10.0.7");
 
             modelBuilder.Entity("Aiursoft.OllamaGateway.Entities.ApiKey", b =>
                 {
@@ -65,7 +65,7 @@ namespace Aiursoft.OllamaGateway.Sqlite.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ApiKeys");
+                    b.ToTable("ApiKeys", (string)null);
                 });
 
             modelBuilder.Entity("Aiursoft.OllamaGateway.Entities.GlobalSetting", b =>
@@ -78,7 +78,7 @@ namespace Aiursoft.OllamaGateway.Sqlite.Migrations
 
                     b.HasKey("Key");
 
-                    b.ToTable("GlobalSettings");
+                    b.ToTable("GlobalSettings", (string)null);
                 });
 
             modelBuilder.Entity("Aiursoft.OllamaGateway.Entities.OllamaProvider", b =>
@@ -119,7 +119,7 @@ namespace Aiursoft.OllamaGateway.Sqlite.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OllamaProviders");
+                    b.ToTable("OllamaProviders", (string)null);
                 });
 
             modelBuilder.Entity("Aiursoft.OllamaGateway.Entities.UnderlyingModelUsage", b =>
@@ -147,7 +147,7 @@ namespace Aiursoft.OllamaGateway.Sqlite.Migrations
                     b.HasIndex("ProviderId", "ModelName")
                         .IsUnique();
 
-                    b.ToTable("UnderlyingModelUsages");
+                    b.ToTable("UnderlyingModelUsages", (string)null);
                 });
 
             modelBuilder.Entity("Aiursoft.OllamaGateway.Entities.User", b =>
@@ -294,7 +294,7 @@ namespace Aiursoft.OllamaGateway.Sqlite.Migrations
 
                     b.HasIndex("ProviderId");
 
-                    b.ToTable("VirtualModels");
+                    b.ToTable("VirtualModels", (string)null);
                 });
 
             modelBuilder.Entity("Aiursoft.OllamaGateway.Entities.VirtualModelBackend", b =>
@@ -342,7 +342,7 @@ namespace Aiursoft.OllamaGateway.Sqlite.Migrations
 
                     b.HasIndex("VirtualModelId");
 
-                    b.ToTable("VirtualModelBackends");
+                    b.ToTable("VirtualModelBackends", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

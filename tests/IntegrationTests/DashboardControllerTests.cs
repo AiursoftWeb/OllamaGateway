@@ -47,6 +47,52 @@ public class DashboardControllerTests : TestBase
     }
 
     [TestMethod]
+    public async Task GetIndex_WithProviderAndModels_ShowsCorrectModelCount()
+    {
+        await LoginAsAdmin();
+
+        var db = GetService<TemplateDbContext>();
+        var provider = new OllamaProvider
+        {
+            Name = "Stats Provider",
+            BaseUrl = "http://localhost:11434",
+            ProviderType = ProviderType.Ollama
+        };
+        db.OllamaProviders.Add(provider);
+        await db.SaveChangesAsync();
+
+        var vm1 = new VirtualModel { Name = "vm1:latest", Type = ModelType.Chat };
+        var vm2 = new VirtualModel { Name = "vm2:latest", Type = ModelType.Chat };
+        db.VirtualModels.AddRange(vm1, vm2);
+        await db.SaveChangesAsync();
+
+        db.VirtualModelBackends.Add(new VirtualModelBackend
+        {
+            VirtualModelId = vm1.Id,
+            ProviderId = provider.Id,
+            UnderlyingModelName = "p1",
+            Enabled = true
+        });
+        db.VirtualModelBackends.Add(new VirtualModelBackend
+        {
+            VirtualModelId = vm2.Id,
+            ProviderId = provider.Id,
+            UnderlyingModelName = "p2",
+            Enabled = true
+        });
+        await db.SaveChangesAsync();
+
+        var url = "/Dashboard/Index";
+        var response = await Http.GetAsync(url);
+        
+        // Assert
+        response.EnsureSuccessStatusCode();
+        var content = await response.Content.ReadAsStringAsync();
+        Assert.IsTrue(content.Contains("Stats Provider"));
+        Assert.IsTrue(content.Contains("2</td>"), "Should show model count of 2 for Stats Provider");
+    }
+
+    [TestMethod]
     public async Task GetMonitor_WithBusyModel_HighlightsModel()
     {
         await LoginAsAdmin();
