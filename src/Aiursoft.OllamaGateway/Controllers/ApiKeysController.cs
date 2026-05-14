@@ -45,8 +45,18 @@ public class ApiKeysController(
             var stats = memoryUsageTracker.GetApiKeyStats(key.Id);
             model.LastUsedTimes[key.Id] = stats.LastUsed;
             model.TotalCalls[key.Id] = stats.TotalCalls;
+
+            var breakdown = memoryUsageTracker.GetApiKeyModelBreakdown(key.Id);
+            if (breakdown.Count > 0)
+            {
+                var topModel = breakdown.First();
+                model.TopModels[key.Id] = topModel.Key;
+                model.TopModelPercentages[key.Id] = model.TotalCalls[key.Id] > 0
+                    ? (double)topModel.Value / model.TotalCalls[key.Id] * 100.0
+                    : 0;
+            }
         }
-        
+
         return this.StackView(model);
     }
 

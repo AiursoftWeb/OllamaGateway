@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.Scanner.Abstractions;
 using Microsoft.EntityFrameworkCore;
@@ -8,9 +9,23 @@ public class MemoryUsageTracker(
     UsageCounter counter,
     IServiceScopeFactory scopeFactory) : ISingletonDependency
 {
+    private readonly ConcurrentDictionary<(int ApiKeyId, string VirtualModelName), long> _apiKeyModelUsages = new();
     public void TrackApiKeyUsage(int apiKeyId)
     {
         counter.TrackApiKeyUsage(apiKeyId);
+    }
+
+    public void TrackApiKeyModelUsage(int apiKeyId, string virtualModelName)
+    {
+        _apiKeyModelUsages.AddOrUpdate((apiKeyId, virtualModelName), 1, (_, c) => c + 1);
+    }
+
+    public Dictionary<string, long> GetApiKeyModelBreakdown(int apiKeyId)
+    {
+        return _apiKeyModelUsages
+            .Where(kv => kv.Key.ApiKeyId == apiKeyId && kv.Value > 0)
+            .OrderByDescending(kv => kv.Value)
+            .ToDictionary(kv => kv.Key.VirtualModelName, kv => kv.Value);
     }
 
     public (DateTime? LastUsed, long TotalCalls) GetApiKeyStats(int apiKeyId)

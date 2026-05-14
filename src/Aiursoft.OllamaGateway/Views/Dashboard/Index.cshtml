@@ -142,6 +142,7 @@
                                 <th>@Localizer["Virtual Model"]</th>
                                 <th>@Localizer["Backend Model"]</th>
                                 <th class="text-center">@Localizer["Concurrent Requests"]</th>
+                                <th>@Localizer["API Key"]</th>
                                 <th>@Localizer["Last Question (first 30 chars)"]</th>
                                 <th class="text-end">@Localizer["Time"]</th>
                             </tr>
@@ -173,6 +174,16 @@
                                             <td class="text-center">
                                                 <span class="badge bg-warning text-dark">@req.ActiveCount</span>
                                             </td>
+                                            <td class="text-muted small">
+                                                @if (!string.IsNullOrWhiteSpace(req.ApiKeyName))
+                                                {
+                                                    <i data-lucide="key" class="me-1" style="width:12px;height:12px;"></i>@req.ApiKeyName
+                                                }
+                                                else
+                                                {
+                                                    <em>@Localizer["(anonymous)"]</em>
+                                                }
+                                            </td>
                                             <td class="font-monospace text-muted small">
                                                 @if (!string.IsNullOrWhiteSpace(req.LastQuestion))
                                                 {
@@ -203,6 +214,16 @@
                                             <td class="text-center">
                                                 <span class="badge bg-secondary">0</span>
                                             </td>
+                                            <td class="text-muted small">
+                                                @if (!string.IsNullOrWhiteSpace(req.ApiKeyName))
+                                                {
+                                                    <i data-lucide="key" class="me-1" style="width:12px;height:12px;"></i>@req.ApiKeyName
+                                                }
+                                                else
+                                                {
+                                                    <em>@Localizer["(anonymous)"]</em>
+                                                }
+                                            </td>
                                             <td class="font-monospace small">
                                                 @if (!string.IsNullOrWhiteSpace(req.LastQuestion))
                                                 {
@@ -227,7 +248,7 @@
                             else
                             {
                                 <tr>
-                                    <td colspan="6" class="text-center text-muted py-3">
+                                    <td colspan="7" class="text-center text-muted py-3">
                                         <i data-lucide="moon" class="me-1" style="width:16px;height:16px;"></i>
                                         @Localizer["No active inference requests — all models are idle"]
                                     </td>
@@ -368,44 +389,43 @@
                 <div class="card-header">
                     <h5 class="card-title mb-0">@Localizer["Top API Keys By Usage"]</h5>
                 </div>
-                <div class="card-body p-0">
-                    <table class="table table-hover mb-0">
-                        <thead>
-                            <tr>
-                                <th class="ps-3">@Localizer["API Key"]</th>
-                                <th>@Localizer["User"]</th>
-                                <th class="text-end pe-3">@Localizer["Usage Count"]</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (Model.TopApiKeys.Any())
-                            {
-                                foreach (var key in Model.TopApiKeys.Take(8))
-                                {
-                                    <tr>
-                                        <td class="ps-3"><i class="fas fa-key text-warning me-1"></i>@key.Name</td>
-                                        <td class="text-muted small">@key.UserName</td>
-                                        <td class="text-end pe-3"><strong>@key.UsageCount</strong></td>
-                                    </tr>
-                                }
-                                if (Model.TopApiKeys.Count > 8)
-                                {
-                                    <tr>
-                                        <td colspan="3" class="text-center text-muted">...</td>
-                                    </tr>
-                                }
-                            }
-                            else
-                            {
+                <div class="card-body">
+                    @if (Model.TopApiKeys.Any())
+                    {
+                        <div class="chart" style="height:200px;">
+                            <canvas id="chartTopApiKeys"></canvas>
+                        </div>
+                        <table class="table table-sm mt-3 mb-0">
+                            <thead>
                                 <tr>
-                                    <td colspan="3" class="text-center text-muted py-5">
-                                        <i data-lucide="key" class="d-block mx-auto mb-2" style="width:28px;height:28px;"></i>
-                                        @Localizer["No stats yet"]
-                                    </td>
+                                    <th>@Localizer["API Key"]</th>
+                                    <th class="text-end">@Localizer["Usage Count"]</th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach (var key in Model.TopApiKeys.Take(8))
+                                {
+                                    <tr>
+                                        <td><i class="fas fa-key text-warning me-1"></i>@key.Name</td>
+                                        <td class="text-end">@key.UsageCount</td>
+                                    </tr>
+                                }
+                                @if (Model.TopApiKeys.Count > 8)
+                                {
+                                    <tr>
+                                        <td colspan="2" class="text-center text-muted">...</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <div class="text-center text-muted py-5">
+                            <i data-lucide="key" class="d-block mx-auto mb-2" style="width:32px;height:32px;"></i>
+                            @Localizer["No stats yet"]
+                        </div>
+                    }
                 </div>
             </div>
         </div>
@@ -737,6 +757,38 @@
                         data: vmData,
                         backgroundColor: "rgba(59, 125, 221, 0.85)",
                         borderColor: "rgba(59, 125, 221, 0.85)",
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        barPercentage: 0.5,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { beginAtZero: true, ticks: { stepSize: 1 } }
+                    }
+                }
+            });
+        }
+
+        // --- Top API Keys Bar ---
+        var ctxTopApiKeys = document.getElementById("chartTopApiKeys");
+        if (ctxTopApiKeys) {
+            var akLabels = getJsonAttr('data-top-api-keys-labels');
+            var akData = getJsonAttr('data-top-api-keys-data');
+
+            new Chart(ctxTopApiKeys, {
+                type: "bar",
+                data: {
+                    labels: akLabels,
+                    datasets: [{
+                        label: getAttr('data-usage-count-label'),
+                        data: akData,
+                        backgroundColor: "rgba(255, 193, 7, 0.85)",
+                        borderColor: "rgba(255, 193, 7, 0.85)",
                         borderWidth: 1,
                         borderRadius: 4,
                         barPercentage: 0.5,

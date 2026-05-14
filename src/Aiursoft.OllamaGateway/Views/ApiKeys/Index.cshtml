@@ -42,6 +42,7 @@
                         <th>@Localizer["Expires"]</th>
                         <th>@Localizer["Last Used"]</th>
                         <th>@Localizer["Total Calls"]</th>
+                        <th>@Localizer["Top Model"]</th>
                         <th>@Localizer["Actions"]</th>
                     </tr>
                 </thead>
@@ -49,7 +50,7 @@
                     @if (Model.ApiKeys.Count == 0)
                     {
                         <tr>
-                            <td colspan="6" class="text-center text-muted py-4">
+                            <td colspan="7" class="text-center text-muted py-4">
                                 @Localizer["You don't have any API keys yet."]
                             </td>
                         </tr>
@@ -84,6 +85,22 @@
                                     }
                                 </td>
                                 <td>@Model.TotalCalls[key.Id]</td>
+                                <td style="min-width:180px;">
+                                    @if (Model.TopModels.TryGetValue(key.Id, out var topModel) && Model.TopModelPercentages.TryGetValue(key.Id, out var pct))
+                                    {
+                                        var pctRounded = (int)Math.Round(pct);
+                                        <div class="d-flex align-items-center">
+                                            <div class="progress flex-grow-1 me-2" style="height:6px;" title="@pctRounded%">
+                                                <div class="progress-bar bg-info" style="width:@pctRounded%;"></div>
+                                            </div>
+                                            <small class="text-muted text-nowrap">@topModel</small>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <small class="text-muted">-</small>
+                                    }
+                                </td>
                                 <td>
                                     <div class="btn-group">
                                         <a asp-action="Usage" asp-route-id="@key.Id" class="btn btn-sm btn-outline-primary">

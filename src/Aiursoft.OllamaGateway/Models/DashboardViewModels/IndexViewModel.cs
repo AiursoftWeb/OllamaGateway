@@ -70,6 +70,7 @@ public class ActiveModelInfo
     public int ActiveCount { get; set; }
     public string LastQuestion { get; set; } = string.Empty;
     public string BackendModelName { get; set; } = string.Empty;
+    public string ApiKeyName { get; set; } = string.Empty;
     public DateTime LastStartedAt { get; set; }
     public DateTime? LastCompletedAt { get; set; }
 }

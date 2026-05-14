@@ -108,6 +108,7 @@ public class DashboardController(
                 ActiveCount = kv.Value.ActiveCount,
                 LastQuestion = kv.Value.LastQuestion,
                 BackendModelName = kv.Value.BackendModelName,
+                ApiKeyName = kv.Value.ApiKeyName,
                 LastStartedAt = kv.Value.LastStartedAt,
                 LastCompletedAt = kv.Value.LastCompletedAt
             })

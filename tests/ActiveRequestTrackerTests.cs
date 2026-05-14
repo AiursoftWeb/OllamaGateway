@@ -80,4 +80,28 @@ public class ActiveRequestTrackerTests
         Assert.AreEqual(30, all[modelName].LastQuestion.Length);
         Assert.AreEqual(new string('a', 30), all[modelName].LastQuestion);
     }
+
+    [TestMethod]
+    public void TestApiKeyNameIsStored()
+    {
+        var tracker = new ActiveRequestTracker();
+        var modelName = "test-model";
+        var apiKeyName = "my-key";
+
+        tracker.StartRequest(modelName, "hello", 1, "llama2", apiKeyName);
+
+        var all = tracker.GetAll();
+        Assert.AreEqual(apiKeyName, all[modelName].ApiKeyName);
+    }
+
+    [TestMethod]
+    public void TestApiKeyNameDefaultsToEmpty()
+    {
+        var tracker = new ActiveRequestTracker();
+
+        tracker.StartRequest("test-model", "hello", 1, "llama2");
+
+        var all = tracker.GetAll();
+        Assert.AreEqual("", all["test-model"].ApiKeyName);
+    }
 }

@@ -176,21 +176,22 @@ public class ProxyController(
             if (apiKeyIdClaim != null && int.TryParse(apiKeyIdClaim.Value, out var apiKeyId))
             {
                 memoryUsageTracker.TrackApiKeyUsage(apiKeyId);
+                memoryUsageTracker.TrackApiKeyModelUsage(apiKeyId, virtualModel.Name);
             }
             memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
             memoryUsageTracker.TrackVirtualModelUsage(virtualModel.Name);
-            
+
             logContext.Log.Model = virtualModel.Name;
             logContext.Log.ConversationMessageCount = input.Messages?.Count ?? 0;
             logContext.Log.LastQuestion = input.Messages?.LastOrDefault()?.Content ?? string.Empty;
             logContext.Log.ProviderId = backend.Provider.Id;
             logContext.Log.UnderlyingModelName = backend.UnderlyingModelName;
-            activeRequestTracker.StartRequest(virtualModel.Name, logContext.Log.LastQuestion, backend.Provider.Id, backend.UnderlyingModelName);
+            activeRequestTracker.StartRequest(virtualModel.Name, logContext.Log.LastQuestion, backend.Provider.Id, backend.UnderlyingModelName, logContext.Log.ApiKeyName);
 
             input.Model = backend.UnderlyingModelName;
             if (virtualModel.Thinking.HasValue) input.Think = virtualModel.Thinking.Value;
             input.KeepAlive ??= backend.Provider.KeepAlive;
-            
+
             input.Options ??= new OllamaRequestOptions();
             if (virtualModel.NumCtx.HasValue) input.Options.NumCtx = virtualModel.NumCtx;
             if (virtualModel.Temperature.HasValue) input.Options.Temperature = virtualModel.Temperature;
@@ -716,16 +717,17 @@ public class ProxyController(
             if (apiKeyIdClaim != null && int.TryParse(apiKeyIdClaim.Value, out var apiKeyId))
             {
                 memoryUsageTracker.TrackApiKeyUsage(apiKeyId);
+                memoryUsageTracker.TrackApiKeyModelUsage(apiKeyId, virtualModel.Name);
             }
             memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
             memoryUsageTracker.TrackVirtualModelUsage(virtualModel.Name);
-            
+
             logContext.Log.Model = virtualModel.Name;
             logContext.Log.ConversationMessageCount = 1;
             logContext.Log.LastQuestion = input.Prompt ?? string.Empty;
             logContext.Log.ProviderId = backend.Provider.Id;
             logContext.Log.UnderlyingModelName = backend.UnderlyingModelName;
-            activeRequestTracker.StartRequest(virtualModel.Name, logContext.Log.LastQuestion, backend.Provider.Id, backend.UnderlyingModelName);
+            activeRequestTracker.StartRequest(virtualModel.Name, logContext.Log.LastQuestion, backend.Provider.Id, backend.UnderlyingModelName, logContext.Log.ApiKeyName);
 
             // /api/generate has no OpenAI-compatible equivalent — reject if backend is OpenAI
             if (backend.Provider.ProviderType == ProviderType.OpenAI)
@@ -995,16 +997,17 @@ public class ProxyController(
             if (apiKeyIdClaim != null && int.TryParse(apiKeyIdClaim.Value, out var apiKeyId))
             {
                 memoryUsageTracker.TrackApiKeyUsage(apiKeyId);
+                memoryUsageTracker.TrackApiKeyModelUsage(apiKeyId, virtualModel.Name);
             }
             memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
             memoryUsageTracker.TrackVirtualModelUsage(virtualModel.Name);
-            
+
             logContext.Log.Model = virtualModel.Name;
             logContext.Log.ConversationMessageCount = 1;
             logContext.Log.LastQuestion = inputNode["input"]?.ToString() ?? inputNode["prompt"]?.ToString() ?? string.Empty;
             logContext.Log.ProviderId = backend.Provider.Id;
             logContext.Log.UnderlyingModelName = backend.UnderlyingModelName;
-            activeRequestTracker.StartRequest(virtualModel.Name, logContext.Log.LastQuestion, backend.Provider.Id, backend.UnderlyingModelName);
+            activeRequestTracker.StartRequest(virtualModel.Name, logContext.Log.LastQuestion, backend.Provider.Id, backend.UnderlyingModelName, logContext.Log.ApiKeyName);
 
             // ====================================================================
             // OpenAI-compatible Backend Path (Ollama embed request → OpenAI downstream)
