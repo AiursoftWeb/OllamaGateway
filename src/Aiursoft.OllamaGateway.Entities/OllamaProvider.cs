@@ -34,5 +34,8 @@ public class OllamaProvider
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
+    [Obsolete("Use VirtualModelBackends instead")]
     public List<VirtualModel> VirtualModels { get; set; } = [];
+
+    public List<VirtualModelBackend> VirtualModelBackends { get; set; } = [];
 }

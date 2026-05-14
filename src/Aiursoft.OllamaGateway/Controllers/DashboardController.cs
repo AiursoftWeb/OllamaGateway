@@ -51,13 +51,13 @@ public class DashboardController(
         };
 
         var providers = await dbContext.OllamaProviders
-            .Include(p => p.VirtualModels)
+            .Include(p => p.VirtualModelBackends)
             .ToListAsync();
 
         model.ProviderStats = providers.Select(p => new ProviderStats
         {
             Name = p.Name,
-            ModelCount = p.VirtualModels.Count
+            ModelCount = p.VirtualModelBackends.Count
         }).ToList();
 
         // API Key Stats from memory
