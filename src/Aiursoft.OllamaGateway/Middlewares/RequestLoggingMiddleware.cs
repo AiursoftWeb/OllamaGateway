@@ -7,7 +7,7 @@ namespace Aiursoft.OllamaGateway.Middlewares;
 
 public class RequestLoggingMiddleware(RequestDelegate next, ILogger<RequestLoggingMiddleware> logger)
 {
-    public async Task InvokeAsync(HttpContext context, RequestLogContext logContext, ClickhouseDbContext clickhouseDbContext)
+    public async Task InvokeAsync(HttpContext context, RequestLogContext logContext, RequestLogBuffer logBuffer)
     {
         var sw = Stopwatch.StartNew();
         var request = context.Request;
@@ -68,10 +68,9 @@ public class RequestLoggingMiddleware(RequestDelegate next, ILogger<RequestLoggi
                 logContext.Log.Duration = sw.Elapsed.TotalMilliseconds;
             }
 
-            if (clickhouseDbContext.Enabled && !string.IsNullOrWhiteSpace(logContext.Log.Model))
+            if (!string.IsNullOrWhiteSpace(logContext.Log.Model))
             {
-                clickhouseDbContext.RequestLogs.Add(logContext.Log);
-                await clickhouseDbContext.SaveChangesAsync();
+                logBuffer.Enqueue(logContext.Log);
             }
         }
     }

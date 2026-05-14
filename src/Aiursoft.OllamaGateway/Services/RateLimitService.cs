@@ -41,13 +41,13 @@ public class RateLimitService : ISingletonDependency
                     else
                     {
                         // Smallest wait to avoid tight loop
-                        await Task.Delay(10);
+                        await Task.Delay(100);
                     }
                 }
                 else
                 {
                     // Should not happen if history.Count >= MaxRequests (which is at least 1)
-                    await Task.Delay(10);
+                    await Task.Delay(100);
                 }
             }
         }

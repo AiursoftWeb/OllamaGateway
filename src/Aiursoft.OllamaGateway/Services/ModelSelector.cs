@@ -11,23 +11,31 @@ public class ModelSelector : IModelSelector, ISingletonDependency
 
     public VirtualModelBackend? SelectBackend(VirtualModel virtualModel)
     {
+        var utcNow = DateTime.UtcNow;
         var backends = virtualModel.VirtualModelBackends
             .Where(b => b.Enabled && (b.IsHealthy || b.IsReady))
-            .Where(b => !_circuitBreakerStates.TryGetValue(b.Id, out var state) || state.BanUntil == null || state.BanUntil < DateTime.UtcNow)
+            .Where(b => !_circuitBreakerStates.TryGetValue(b.Id, out var state) || state.BanUntil == null || state.BanUntil < utcNow)
             .ToList();
 
-        if (!backends.Any())
-        {
-            return null;
-        }
+        if (backends.Count == 0) return null;
 
         return virtualModel.SelectionStrategy switch
         {
-            SelectionStrategy.PriorityFallback => backends.OrderBy(b => b.Priority).First(),
+            SelectionStrategy.PriorityFallback => PriorityFallback(backends),
             SelectionStrategy.WeightedRandom => GetWeightedRandom(backends),
             SelectionStrategy.RoundRobin => GetRoundRobin(virtualModel.Id, backends),
-            _ => backends.OrderBy(b => b.Priority).First()
+            _ => PriorityFallback(backends)
         };
+    }
+
+    private static VirtualModelBackend? PriorityFallback(List<VirtualModelBackend> backends)
+    {
+        VirtualModelBackend? best = null;
+        foreach (var b in backends)
+        {
+            if (best == null || b.Priority < best.Priority) best = b;
+        }
+        return best;
     }
 
     public void ReportSuccess(int backendId)

@@ -70,8 +70,8 @@ public class ApiKeyAuthenticationHandler(
             return AuthenticateResult.Fail("Rate limit exceeded.");
         }
 
-        apiKey.LastUsed = DateTime.UtcNow;
-        await dbContext.SaveChangesAsync();
+        // LastUsed is persisted in batch by UsageFlushService every 3 minutes.
+        // Writing it here would add a synchronous DB round-trip to every request.
 
         var principal = await userClaimsPrincipalFactory.CreateAsync(apiKey.User);
         var identity = (ClaimsIdentity)principal.Identity!;
