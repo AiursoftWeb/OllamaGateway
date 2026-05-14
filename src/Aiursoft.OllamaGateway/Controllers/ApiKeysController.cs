@@ -51,8 +51,9 @@ public class ApiKeysController(
             {
                 var topModel = breakdown.First();
                 model.TopModels[key.Id] = topModel.Key;
-                model.TopModelPercentages[key.Id] = model.TotalCalls[key.Id] > 0
-                    ? (double)topModel.Value / model.TotalCalls[key.Id] * 100.0
+                var totalInMemory = breakdown.Values.Sum();
+                model.TopModelPercentages[key.Id] = totalInMemory > 0
+                    ? (double)topModel.Value / totalInMemory * 100.0
                     : 0;
             }
         }
