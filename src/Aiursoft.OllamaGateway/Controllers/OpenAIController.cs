@@ -137,6 +137,7 @@ public class OpenAIController : ControllerBase
             if (apiKeyIdClaim != null && int.TryParse(apiKeyIdClaim.Value, out var apiKeyId))
             {
                 _memoryUsageTracker.TrackApiKeyUsage(apiKeyId);
+                _memoryUsageTracker.TrackApiKeyModelUsage(apiKeyId, virtualModel.Name);
             }
             _memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
             _memoryUsageTracker.TrackVirtualModelUsage(virtualModel.Name);
@@ -148,7 +149,7 @@ public class OpenAIController : ControllerBase
             _logContext.Log.LastQuestion = messagesArray?.LastOrDefault()?["content"]?.ToString() ?? string.Empty;
             _logContext.Log.ProviderId = backend.Provider.Id;
             _logContext.Log.UnderlyingModelName = backend.UnderlyingModelName;
-            _activeRequestTracker.StartRequest(virtualModel.Name, _logContext.Log.LastQuestion, backend.Provider.Id, backend.UnderlyingModelName);
+            _activeRequestTracker.StartRequest(virtualModel.Name, _logContext.Log.LastQuestion, backend.Provider.Id, backend.UnderlyingModelName, _logContext.Log.ApiKeyName);
 
             var isStream = clientJson["stream"]?.GetValue<bool>() ?? false;
 
@@ -821,16 +822,17 @@ public class OpenAIController : ControllerBase
             if (apiKeyIdClaim != null && int.TryParse(apiKeyIdClaim.Value, out var apiKeyId))
             {
                 _memoryUsageTracker.TrackApiKeyUsage(apiKeyId);
+                _memoryUsageTracker.TrackApiKeyModelUsage(apiKeyId, virtualModel.Name);
             }
             _memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
             _memoryUsageTracker.TrackVirtualModelUsage(virtualModel.Name);
-            
+
             _logContext.Log.Model = virtualModel.Name;
             _logContext.Log.ConversationMessageCount = 1;
             _logContext.Log.LastQuestion = clientJson["input"]?.ToString() ?? string.Empty;
             _logContext.Log.ProviderId = backend.Provider.Id;
             _logContext.Log.UnderlyingModelName = backend.UnderlyingModelName;
-            _activeRequestTracker.StartRequest(virtualModel.Name, _logContext.Log.LastQuestion, backend.Provider.Id, backend.UnderlyingModelName);
+            _activeRequestTracker.StartRequest(virtualModel.Name, _logContext.Log.LastQuestion, backend.Provider.Id, backend.UnderlyingModelName, _logContext.Log.ApiKeyName);
 
             // =========================================================================================
             // OpenAI-compatible Backend Path: direct passthrough for embeddings

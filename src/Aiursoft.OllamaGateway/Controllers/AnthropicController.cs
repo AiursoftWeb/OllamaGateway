@@ -203,6 +203,7 @@ public class AnthropicController : ControllerBase
             if (apiKeyIdClaim != null && int.TryParse(apiKeyIdClaim.Value, out var apiKeyId))
             {
                 _memoryUsageTracker.TrackApiKeyUsage(apiKeyId);
+                _memoryUsageTracker.TrackApiKeyModelUsage(apiKeyId, virtualModel.Name);
             }
             _memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
             _memoryUsageTracker.TrackVirtualModelUsage(virtualModel.Name);
@@ -212,7 +213,7 @@ public class AnthropicController : ControllerBase
             var conversationMessageCount = request.Messages.Count;
             _logContext.Log.ConversationMessageCount = conversationMessageCount;
             _logContext.Log.LastQuestion = request.Messages.LastOrDefault()?.Content?.ToString() ?? string.Empty;
-            _activeRequestTracker.StartRequest(virtualModel.Name, _logContext.Log.LastQuestion, backend.Provider.Id, backend.UnderlyingModelName);
+            _activeRequestTracker.StartRequest(virtualModel.Name, _logContext.Log.LastQuestion, backend.Provider.Id, backend.UnderlyingModelName, _logContext.Log.ApiKeyName);
 
             var isStream = request.Stream;
 
