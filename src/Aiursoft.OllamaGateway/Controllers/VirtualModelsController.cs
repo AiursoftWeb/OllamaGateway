@@ -91,7 +91,7 @@ public class VirtualModelsController(
             PageTitle = "Chat Models",
             CurrentType = ModelType.Chat
         };
-        return this.StackView(viewModel);
+        return this.StackView(viewModel, nameof(Index));
     }
 
     [RenderInNavBar(
@@ -156,7 +156,7 @@ public class VirtualModelsController(
             new() { Value = "true", Text = "Enabled" },
             new() { Value = "false", Text = "Disabled" }
         };
-        return this.StackView(model);
+        return this.StackView(model, nameof(Create));
     }
 
     [HttpPost]
@@ -180,7 +180,7 @@ public class VirtualModelsController(
                 new() { Value = "true", Text = "Enabled", Selected = model.Thinking == true },
                 new() { Value = "false", Text = "Disabled", Selected = model.Thinking == false }
             };
-            return this.StackView(model);
+            return this.StackView(model, nameof(Create));
         }
 
         // Validate name format: lowercase, numbers, dots, hyphens, underscores and strictly one colon for tag
@@ -199,9 +199,8 @@ public class VirtualModelsController(
                 new() { Value = "true", Text = "Enabled", Selected = model.Thinking == true },
                 new() { Value = "false", Text = "Disabled", Selected = model.Thinking == false }
             };
-            return this.StackView(model);
+            return this.StackView(model, nameof(Create));
         }
-
         var virtualModel = new VirtualModel
         {
             Name = model.Name,
@@ -286,7 +285,7 @@ public class VirtualModelsController(
             new() { Value = "true", Text = "Enabled", Selected = virtualModel.Thinking == true },
             new() { Value = "false", Text = "Disabled", Selected = virtualModel.Thinking == false }
         };
-        return this.StackView(model);
+        return this.StackView(model, nameof(Edit));
     }
 
     [HttpPost]
@@ -310,7 +309,7 @@ public class VirtualModelsController(
                 new() { Value = "true", Text = "Enabled", Selected = model.Thinking == true },
                 new() { Value = "false", Text = "Disabled", Selected = model.Thinking == false }
             };
-            return this.StackView(model);
+            return this.StackView(model, nameof(Edit));
         }
 
         if (!System.Text.RegularExpressions.Regex.IsMatch(model.Name, @"^[a-z0-9\.\-_]+:[a-zA-Z0-9\.\-_]+$"))
@@ -331,9 +330,8 @@ public class VirtualModelsController(
                 new() { Value = "true", Text = "Enabled", Selected = model.Thinking == true },
                 new() { Value = "false", Text = "Disabled", Selected = model.Thinking == false }
             };
-            return this.StackView(model);
+            return this.StackView(model, nameof(Edit));
         }
-
         var virtualModel = await dbContext.VirtualModels
             .Include(m => m.VirtualModelBackends)
             .FirstOrDefaultAsync(m => m.Id == id);
@@ -368,6 +366,19 @@ public class VirtualModelsController(
     {
         var virtualModel = await dbContext.VirtualModels.FindAsync(id);
         if (virtualModel == null) return NotFound();
+
+        if (string.IsNullOrEmpty(underlyingModel) || providerId <= 0)
+        {
+            if (string.IsNullOrEmpty(underlyingModel))
+            {
+                ModelState.AddModelError(nameof(underlyingModel), "The underlying model is required.");
+            }
+            if (providerId <= 0)
+            {
+                ModelState.AddModelError(nameof(providerId), "The provider is required.");
+            }
+            return await Edit(id, providerId);
+        }
 
         dbContext.VirtualModelBackends.Add(new VirtualModelBackend
         {
@@ -462,7 +473,7 @@ public class VirtualModelsController(
             PageTitle = $"Chat with {virtualModel.Name}"
         };
         ViewData["ModelId"] = id;
-        return this.StackView(viewModel);
+        return this.StackView(viewModel, nameof(Index));
     }
 
     private async Task<List<string>> GetModelsForProviderAsync(OllamaProvider provider)

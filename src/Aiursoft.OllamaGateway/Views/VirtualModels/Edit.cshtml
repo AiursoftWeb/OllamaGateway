@@ -169,10 +169,11 @@
                 </div>
                 <div class="card-footer">
                     <h6>@Localizer["Add New Backend"]</h6>
+                    <div asp-validation-summary="All" class="text-danger small"></div>
                     <form asp-action="AddBackend" asp-route-id="@ViewData["Id"]" method="post" class="row g-2">
                         <div class="col-md-6">
                             <label class="form-label small mb-1">@Localizer["Provider"]</label>
-                            <select name="providerId" class="form-select form-select-sm" onchange="window.location.href='?id=@ViewData["Id"]&amp;providerId=' + this.value">
+                            <select name="providerId" class="form-select form-select-sm" onchange="window.location.href='?id=@ViewData["Id"]&amp;providerId=' + this.value" required>
                                 <option value="">@Localizer["-- Select Provider --"]</option>
                                 @foreach (var p in Model.AvailableProviders)
                                 {
@@ -182,7 +183,7 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label small mb-1">@Localizer["Underlying Model"]</label>
-                            <select name="underlyingModel" class="form-select form-select-sm">
+                            <select name="underlyingModel" class="form-select form-select-sm" required>
                                 <option value="">@Localizer["-- Select Model --"]</option>
                                 @foreach (var m in Model.AvailableUnderlyingModels)
                                 {
