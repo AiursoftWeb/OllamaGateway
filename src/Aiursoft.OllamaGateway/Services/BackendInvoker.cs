@@ -89,7 +89,6 @@ public class BackendInvoker(
                 if (concurrencySlot != null)
                 {
                     await concurrencySlot.DisposeAsync();
-                    concurrencySlot = null;
                 }
                 throw;
             }

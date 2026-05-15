@@ -264,11 +264,15 @@ public class ImageProcessingService(
 
         var result = new SKBitmap(finalWidth, finalHeight);
         using var canvas = new SKCanvas(result);
-        using var paint = new SKPaint { IsAntialias = true };
-        canvas.DrawBitmap(source,
-            new SKRect(0, 0, source.Width, source.Height),
-            new SKRect(0, 0, finalWidth, finalHeight),
-            paint);
+        var paint = new SKPaint();
+        paint.IsAntialias = true;
+        using (paint)
+        {
+            canvas.DrawBitmap(source,
+                new SKRect(0, 0, source.Width, source.Height),
+                new SKRect(0, 0, finalWidth, finalHeight),
+                paint);
+        }
         canvas.Flush();
         return result;
     }

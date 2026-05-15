@@ -268,6 +268,5 @@ public class ProviderConcurrencyLimiterTests
 
         // If we get here, the slot was successfully acquired → the previous
         // disposal correctly released the semaphore.
-        Assert.IsTrue(true);
     }
 }
