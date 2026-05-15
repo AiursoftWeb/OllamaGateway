@@ -33,15 +33,15 @@ public class RecentRequestEntry
 
 /// <summary>
 /// Thread-safe singleton that tracks which virtual models are currently handling
-/// inference requests and keeps a ring buffer of the last 10 completed requests.
+/// inference requests and keeps a ring buffer of the last 50 completed requests.
 /// </summary>
 public class ActiveRequestTracker : ISingletonDependency
 {
     private readonly ConcurrentDictionary<string, ActiveModelRequestInfo> _state = new();
     private readonly ConcurrentDictionary<(int providerId, string modelName), int> _physicalState = new();
 
-    // Ring buffer for the last 10 completed requests
-    private readonly RecentRequestEntry[] _recentBuffer = new RecentRequestEntry[10];
+    // Ring buffer for the last 50 completed requests
+    private readonly RecentRequestEntry[] _recentBuffer = new RecentRequestEntry[50];
     private int _recentIndex = -1;
     private int _recentCount;
     private readonly object _recentLock = new();
@@ -100,9 +100,9 @@ public class ActiveRequestTracker : ISingletonDependency
 
         lock (_recentLock)
         {
-            _recentIndex = (_recentIndex + 1) % 10;
+            _recentIndex = (_recentIndex + 1) % 50;
             _recentBuffer[_recentIndex] = entry;
-            if (_recentCount < 10) _recentCount++;
+            if (_recentCount < 50) _recentCount++;
         }
     }
 
@@ -117,7 +117,7 @@ public class ActiveRequestTracker : ISingletonDependency
     }
 
     /// <summary>
-    /// Returns the last 10 completed requests, most recent first.
+    /// Returns the last 50 completed requests, most recent first.
     /// </summary>
     public List<RecentRequestEntry> GetRecentRequests()
     {
@@ -128,7 +128,7 @@ public class ActiveRequestTracker : ISingletonDependency
 
             for (int i = 0; i < _recentCount; i++)
             {
-                var idx = (_recentIndex - i + 10) % 10;
+                var idx = (_recentIndex - i + 50) % 50;
                 result.Add(_recentBuffer[idx]);
             }
             return result;
