@@ -1,0 +1,94 @@
+@using Aiursoft.OllamaGateway.Views.Shared.Components.RecentRequests
+@using Aiursoft.WebTools
+@model RecentRequestsViewModel
+
+<div class="card flex-fill w-100">
+    <div class="card-header d-flex align-items-center">
+        <h5 class="card-title mb-0 flex-grow-1">
+            <i class="align-middle me-1" data-lucide="clock"></i>
+            @Localizer["Recent Requests"]
+        </h5>
+        <span class="badge bg-info">@Localizer["Last 10"]</span>
+    </div>
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0">
+            <thead>
+                <tr>
+                    <th>@Localizer["Status"]</th>
+                    <th>@Localizer["Virtual Model"]</th>
+                    <th>@Localizer["Backend Model"]</th>
+                    <th>@Localizer["API Key"]</th>
+                    <th>@Localizer["Last Question (first 30 chars)"]</th>
+                    <th class="text-end">@Localizer["Duration"]</th>
+                    <th class="text-end">@Localizer["Time"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Items.Count > 0)
+                {
+                    foreach (var req in Model.Items)
+                    {
+                        var isSuccess = req.Status == "Completed";
+                        var durationStr = req.DurationMs < 1000
+                            ? $"{(int)req.DurationMs}ms"
+                            : $"{req.DurationMs / 1000:F1}s";
+                        <tr>
+                            <td>
+                                @if (isSuccess)
+                                {
+                                    <span class="badge bg-success">@Localizer["Completed"]</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">@Localizer["Failed"]</span>
+                                }
+                            </td>
+                            <td><strong>@req.ModelName</strong></td>
+                            <td class="text-muted small font-monospace">
+                                @if (!string.IsNullOrWhiteSpace(req.BackendModelName))
+                                {
+                                    <i data-lucide="server" class="me-1" style="width:12px;height:12px;"></i>@req.BackendModelName
+                                }
+                            </td>
+                            <td class="text-muted small">
+                                @if (!string.IsNullOrWhiteSpace(req.ApiKeyName))
+                                {
+                                    <i data-lucide="key" class="me-1" style="width:12px;height:12px;"></i>@req.ApiKeyName
+                                }
+                                else
+                                {
+                                    <em>@Localizer["(anonymous)"]</em>
+                                }
+                            </td>
+                            <td class="font-monospace text-muted small">
+                                @if (!string.IsNullOrWhiteSpace(req.Question))
+                                {
+                                    @req.Question
+                                    @if (req.Question.Length >= 30)
+                                    {
+                                        <text>…</text>
+                                    }
+                                }
+                                else
+                                {
+                                    <em>@Localizer["(no content)"]</em>
+                                }
+                            </td>
+                            <td class="text-end text-muted small">@durationStr</td>
+                            <td class="text-end text-muted small"><label data-utc-time="@req.CompletedAt.ToHtmlDateTime()" class="mb-0"></label></td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" class="text-center text-muted py-3">
+                            <i data-lucide="inbox" class="me-1" style="width:16px;height:16px;"></i>
+                            @Localizer["No recent requests — data will appear once requests complete"]
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

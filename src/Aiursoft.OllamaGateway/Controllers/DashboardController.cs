@@ -97,37 +97,6 @@ public class DashboardController(
             })
             .ToListAsync();
 
-        // Live active requests from in-memory tracker — include idle models that have history
-        model.ActiveRequests = activeRequestTracker.GetAll()
-            .OrderByDescending(kv => kv.Value.ActiveCount > 0)
-            .ThenByDescending(kv => kv.Value.LastStartedAt)
-            .Select(kv => new ActiveModelInfo
-            {
-                ModelName = kv.Key,
-                IsActive = kv.Value.ActiveCount > 0,
-                ActiveCount = kv.Value.ActiveCount,
-                LastQuestion = kv.Value.LastQuestion,
-                BackendModelName = kv.Value.BackendModelName,
-                ApiKeyName = kv.Value.ApiKeyName,
-                LastStartedAt = kv.Value.LastStartedAt,
-                LastCompletedAt = kv.Value.LastCompletedAt
-            })
-            .ToList();
-
-        // Last 10 completed requests from ring buffer
-        model.RecentRequests = activeRequestTracker.GetRecentRequests()
-            .Select(r => new RecentRequestInfo
-            {
-                Status = r.Status,
-                ModelName = r.ModelName,
-                BackendModelName = r.BackendModelName,
-                ApiKeyName = r.ApiKeyName,
-                Question = r.Question,
-                CompletedAt = r.CompletedAt,
-                DurationMs = r.DurationMs
-            })
-            .ToList();
-
         // Physical model call stats from DB
         var physicalUsages = await dbContext.UnderlyingModelUsages
             .Include(u => u.Provider)
