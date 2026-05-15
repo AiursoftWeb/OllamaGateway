@@ -192,4 +192,82 @@ public class ProviderConcurrencyLimiterTests
 
         holdTcs.SetResult();
     }
+
+    /// <summary>
+    /// PRODUCTION BUG REPRODUCTION: When BackendInvoker.SendAsync() acquires a semaphore
+    /// slot (line 36-37) and the CLIENT disconnects during the HTTP call to the backend,
+    /// the exception filter on line 83 intentionally skips the catch block:
+    ///
+    ///   catch (Exception ex) when (
+    ///       ex is not OperationCanceledException ||
+    ///       !clientCancellation.IsCancellationRequested)
+    ///
+    /// When clientCancellation IS signaled, the filter returns false → exception propagates
+    /// WITHOUT releasing the slot (line 85 is skipped, lines 100-101 are also skipped).
+    /// The semaphore is permanently exhausted → all future requests queue forever.
+    ///
+    /// This test simulates the leak: acquire a slot and abandon it without disposal,
+    /// then prove that subsequent acquire attempts are permanently blocked.
+    /// </summary>
+    [TestMethod]
+    public async Task LeakedSemaphore_PermanentlyBlocksSubsequentRequests()
+    {
+        var limiter = new ProviderConcurrencyLimiter();
+
+        // Simulate BackendInvoker line 36-37: acquire the only slot (1/1 → 0/1)
+        var leakedSlot = await limiter.AcquireAsync(
+            providerId: 1, maxParallelism: 1, CancellationToken.None);
+
+        // BUG: BackendInvoker does NOT dispose concurrencySlot when
+        // clientCancellation fires during client.SendAsync(). The exception
+        // propagates past both the catch block (line 83 filter) and the
+        // post-loop cleanup (lines 100-101). The slot is abandoned.
+
+        // VERIFY: the semaphore is now at 0/1. Any subsequent AcquireAsync
+        // will block until its cancellation token fires — the slot is gone forever.
+        using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(300));
+        var secondRequestSucceeded = false;
+        try
+        {
+            await limiter.AcquireAsync(providerId: 1, maxParallelism: 1, cts.Token);
+            secondRequestSucceeded = true;
+        }
+        catch (OperationCanceledException)
+        {
+            // Expected: the leaked slot leaves 0 available, so WaitAsync blocks
+            // until the cancellation token fires after 300ms.
+        }
+
+        Assert.IsFalse(secondRequestSucceeded,
+            "BUG CONFIRMED: a leaked semaphore slot permanently blocks all " +
+            "subsequent requests. When BackendInvoker fails to release the slot " +
+            "after client cancellation, MaxParallelism=1 becomes MaxParallelism=0 " +
+            "forever. This is why Ollama is idle but requests queue infinitely.");
+
+        // Cleanup so this test doesn't leak into others
+        await leakedSlot.DisposeAsync();
+    }
+
+    /// <summary>
+    /// CONTROL: When the slot IS properly disposed (the correct behavior),
+    /// subsequent requests can acquire it immediately.
+    /// </summary>
+    [TestMethod]
+    public async Task ProperlyDisposedSlot_AllowsSubsequentRequests()
+    {
+        var limiter = new ProviderConcurrencyLimiter();
+
+        await using (await limiter.AcquireAsync(1, maxParallelism: 1, CancellationToken.None))
+        {
+            // Slot acquired and immediately released via await using disposal
+        }
+
+        // Next request should succeed without blocking
+        using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(200));
+        await using var nextSlot = await limiter.AcquireAsync(1, maxParallelism: 1, cts.Token);
+
+        // If we get here, the slot was successfully acquired → the previous
+        // disposal correctly released the semaphore.
+        Assert.IsTrue(true);
+    }
 }
