@@ -4,6 +4,7 @@ using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.UiStack.Layout;
 
 namespace Aiursoft.OllamaGateway.Models.OllamaProvidersViewModels;
+
 [ExcludeFromCodeCoverage]
 public class CreateViewModel : UiStackLayoutViewModel
 {

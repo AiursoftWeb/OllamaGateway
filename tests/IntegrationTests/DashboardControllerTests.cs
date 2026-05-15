@@ -10,9 +10,9 @@ public class DashboardControllerTests : TestBase
     public async Task GetIndex_NotAuthenticated_RedirectsToLogin()
     {
         var url = "/Dashboard/Index";
-        
+
         var response = await Http.GetAsync(url);
-        
+
         // Assert
         Assert.AreEqual(System.Net.HttpStatusCode.Redirect, response.StatusCode);
     }
@@ -22,9 +22,9 @@ public class DashboardControllerTests : TestBase
     {
         await LoginAsAdmin();
         var url = "/Dashboard/Index";
-        
+
         var response = await Http.GetAsync(url);
-        
+
         // Assert
         response.EnsureSuccessStatusCode();
         var content = await response.Content.ReadAsStringAsync();
@@ -36,9 +36,9 @@ public class DashboardControllerTests : TestBase
     {
         await LoginAsAdmin();
         var url = "/Dashboard/Monitor";
-        
+
         var response = await Http.GetAsync(url);
-        
+
         // Assert
         response.EnsureSuccessStatusCode();
         var content = await response.Content.ReadAsStringAsync();
@@ -84,7 +84,7 @@ public class DashboardControllerTests : TestBase
 
         var url = "/Dashboard/Index";
         var response = await Http.GetAsync(url);
-        
+
         // Assert
         response.EnsureSuccessStatusCode();
         var content = await response.Content.ReadAsStringAsync();
@@ -96,7 +96,7 @@ public class DashboardControllerTests : TestBase
     public async Task GetMonitor_WithBusyModel_HighlightsModel()
     {
         await LoginAsAdmin();
-        
+
         // Add a virtual model and backend to the DB
         var db = GetService<TemplateDbContext>();
         var provider = new OllamaProvider
@@ -125,14 +125,14 @@ public class DashboardControllerTests : TestBase
         };
         db.VirtualModelBackends.Add(backend);
         await db.SaveChangesAsync();
-        
+
         // Mark a model as busy
         var tracker = GetService<ActiveRequestTracker>();
         tracker.StartRequest(vm.Name, "test question", provider.Id, "test-physical-model");
 
         var url = "/Dashboard/Monitor";
         var response = await Http.GetAsync(url);
-        
+
         // Assert
         response.EnsureSuccessStatusCode();
         var content = await response.Content.ReadAsStringAsync();

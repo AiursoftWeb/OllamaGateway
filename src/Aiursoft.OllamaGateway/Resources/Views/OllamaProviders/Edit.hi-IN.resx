@@ -54,6 +54,12 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>कार्यरत नीति बनाए रखें</value>
   </data>
+  <data name="Max Concurrent Requests" xml:space="preserve">
+    <value>अधिकतम समानांतर अनुरोध</value>
+  </data>
+  <data name="Maximum number of concurrent requests sent to this provider. 0 = unlimited (default). Set to 1 to serialize requests and prevent the backend from being overwhelmed." xml:space="preserve">
+    <value>इस प्रदाता को भेजे जाने वाले समवर्ती अनुरोधों की अधिकतम संख्या। 0 = असीमित (डिफ़ॉल्ट)। अनुरोधों को क्रमबद्ध करने और बैकएंड को अधिकभार से बचाने के लिए इसे 1 पर सेट करें।</value>
+  </data>
   <data name="Model" xml:space="preserve">
     <value>Model</value>
   </data>

@@ -21,7 +21,7 @@ public class UsageTrackingTests : TestBase
         TestStartup.MockOllamaService.Reset();
         TestStartup.MockOllamaService.Setup(s => s.GetUnderlyingModelsAsync(It.IsAny<string>()))
             .ReturnsAsync(new List<string> { "llama3.2" });
-        
+
         MockUpstreamState.Reset();
 
         Server = await AppAsync<TestStartup>([], port: Port);
@@ -49,15 +49,15 @@ public class UsageTrackingTests : TestBase
             var user = await db.Users.FirstAsync();
             var apiKey = new ApiKey { Name = "Usage Test Key", Key = apiKeyStr, UserId = user.Id };
             db.ApiKeys.Add(apiKey);
-            
+
             var provider = new OllamaProvider { Name = "Usage Provider", BaseUrl = "http://localhost:11434" };
             db.OllamaProviders.Add(provider);
             await db.SaveChangesAsync();
             providerId = provider.Id;
 
-            var virtualModel = new VirtualModel 
-            { 
-                Name = "usage-model", 
+            var virtualModel = new VirtualModel
+            {
+                Name = "usage-model",
                 Type = ModelType.Chat
             };
             virtualModel.VirtualModelBackends.Add(new VirtualModelBackend
@@ -73,9 +73,9 @@ public class UsageTrackingTests : TestBase
 
         // 2. Make an API call to trigger usage tracking
         // We need to mock the upstream response for the proxy
-        MockUpstreamState.Handler = (_, _) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK) 
-        { 
-            Content = new StringContent("{\"done\": true, \"model\": \"llama3.2\", \"message\": {\"content\": \"hi\"}}") 
+        MockUpstreamState.Handler = (_, _) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+        {
+            Content = new StringContent("{\"done\": true, \"model\": \"llama3.2\", \"message\": {\"content\": \"hi\"}}")
         });
 
         var proxyRequest = new HttpRequestMessage(HttpMethod.Post, $"/api/chat");
@@ -90,7 +90,7 @@ public class UsageTrackingTests : TestBase
             var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
             var apiKey = await db.ApiKeys.FirstAsync(k => k.Key == apiKeyStr);
             Assert.AreEqual(0, apiKey.UsageCount, "Usage should not be in DB yet.");
-            
+
             var modelUsage = await db.UnderlyingModelUsages.FirstOrDefaultAsync(u => u.ProviderId == providerId && u.ModelName == "llama3.2");
             Assert.IsNull(modelUsage, "Model usage should not be in DB yet.");
         }
@@ -101,7 +101,7 @@ public class UsageTrackingTests : TestBase
             var usageCounter = scope.ServiceProvider.GetRequiredService<UsageCounter>();
             var dbContext = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
             var isInMemory = dbContext.Database.ProviderName == "Microsoft.EntityFrameworkCore.InMemory";
-            
+
             // Manual flush logic (simulating UsageFlushService)
             var (apiKeyUsages, apiKeyLastUsed) = usageCounter.SwapApiKeyBuffers();
             foreach (var id in apiKeyUsages.Keys)
@@ -122,7 +122,7 @@ public class UsageTrackingTests : TestBase
                         .SetProperty(a => a.LastUsed, apiKeyLastUsed[id]));
                 }
             }
-            
+
             var (modelUsages, modelLastUsed) = usageCounter.SwapModelBuffers();
             foreach (var modelKey in modelUsages.Keys)
             {
@@ -143,7 +143,7 @@ public class UsageTrackingTests : TestBase
             var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
             var apiKey = await db.ApiKeys.FirstAsync(k => k.Key == apiKeyStr);
             Assert.IsTrue(apiKey.UsageCount >= 1, $"Usage should be in DB now. Actual: {apiKey.UsageCount}");
-            
+
             var modelUsage = await db.UnderlyingModelUsages.FirstOrDefaultAsync(u => u.ProviderId == providerId && u.ModelName == "llama3.2");
             Assert.IsNotNull(modelUsage);
             Assert.IsTrue(modelUsage.UsageCount >= 1);

@@ -34,11 +34,11 @@ public class AnthropicApiTests : TestBase
                 db.Users.Add(userInDb);
                 await db.SaveChangesAsync();
             }
-            
-            db.ApiKeys.Add(new ApiKey 
-            { 
-                Name = "Test Key", 
-                Key = apiKeyStr, 
+
+            db.ApiKeys.Add(new ApiKey
+            {
+                Name = "Test Key",
+                Key = apiKeyStr,
                 UserId = userInDb.Id,
                 ExpirationTime = DateTime.UtcNow.AddDays(1)
             });
@@ -105,7 +105,7 @@ public class AnthropicApiTests : TestBase
     public async Task Anthropic_Messages_HandlesToolDefinitions()
     {
         var token = await CreateApiKey();
-        
+
         var anthropicRequest = new AnthropicMessageRequest
         {
             Model = "non-existent-model",
@@ -142,20 +142,20 @@ public class AnthropicApiTests : TestBase
     public async Task Anthropic_Messages_HandlesComplexContentArrays()
     {
         var token = await CreateApiKey();
-        
+
         var anthropicRequest = new AnthropicMessageRequest
         {
             Model = "non-existent-model",
             Messages =
             [
                 new AnthropicMessage
-                { 
-                    Role = "user", 
-                    Content = new JsonArray 
-                    { 
+                {
+                    Role = "user",
+                    Content = new JsonArray
+                    {
                         new JsonObject { ["type"] = "text", ["text"] = "Look at this:" },
                         new JsonObject { ["type"] = "text", ["text"] = "What do you see?" }
-                    } 
+                    }
                 }
             ]
         };
@@ -196,7 +196,7 @@ public class AnthropicApiTests : TestBase
     {
         var token = await CreateApiKey();
         var modelName = "stress-test-model";
-        
+
         using (var scope = Server!.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
@@ -280,7 +280,7 @@ public class AnthropicApiTests : TestBase
     {
         var token = await CreateApiKey();
         var modelName = "tool-history-model";
-        
+
         using (var scope = Server!.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
@@ -327,12 +327,12 @@ public class AnthropicApiTests : TestBase
                     Content = new JsonArray
                     {
                         new JsonObject { ["type"] = "text", ["text"] = "I need to check the weather." },
-                        new JsonObject 
-                        { 
-                            ["type"] = "tool_use", 
-                            ["id"] = "tool_123", 
-                            ["name"] = "get_weather", 
-                            ["input"] = new JsonObject { ["location"] = "San Francisco" } 
+                        new JsonObject
+                        {
+                            ["type"] = "tool_use",
+                            ["id"] = "tool_123",
+                            ["name"] = "get_weather",
+                            ["input"] = new JsonObject { ["location"] = "San Francisco" }
                         }
                     }
                 },
@@ -341,11 +341,11 @@ public class AnthropicApiTests : TestBase
                     Role = "user",
                     Content = new JsonArray
                     {
-                        new JsonObject 
-                        { 
-                            ["type"] = "tool_result", 
-                            ["tool_use_id"] = "tool_123", 
-                            ["content"] = "Sunny, 70F" 
+                        new JsonObject
+                        {
+                            ["type"] = "tool_result",
+                            ["tool_use_id"] = "tool_123",
+                            ["content"] = "Sunny, 70F"
                         }
                     }
                 }
@@ -359,7 +359,7 @@ public class AnthropicApiTests : TestBase
         request.Headers.Add("x-api-key", token);
 
         var response = await Http.SendAsync(request);
-        
+
         // We expect it not to throw 500 (Internal Server Error). It might throw 503 if the upstream is unreachable.
         Assert.AreNotEqual(HttpStatusCode.InternalServerError, response.StatusCode);
     }
@@ -369,7 +369,7 @@ public class AnthropicApiTests : TestBase
     {
         var token = await CreateApiKey();
         var modelName = "thinking-history-model";
-        
+
         using (var scope = Server!.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
@@ -434,7 +434,7 @@ public class AnthropicApiTests : TestBase
         request.Headers.Add("x-api-key", token);
 
         var response = await Http.SendAsync(request);
-        
+
         // Ensure no 500 error happens when mapping the complex thinking block back to an OpenAI backend
         Assert.AreNotEqual(HttpStatusCode.InternalServerError, response.StatusCode);
     }
@@ -444,7 +444,7 @@ public class AnthropicApiTests : TestBase
     {
         var token = await CreateApiKey();
         var modelName = "thinking-history-ollama-model";
-        
+
         using (var scope = Server!.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
@@ -509,7 +509,7 @@ public class AnthropicApiTests : TestBase
         request.Headers.Add("x-api-key", token);
 
         var response = await Http.SendAsync(request);
-        
+
         // Ensure it processes correctly for Ollama backend as well without 500 error
         Assert.AreNotEqual(HttpStatusCode.InternalServerError, response.StatusCode);
     }

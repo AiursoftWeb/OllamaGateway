@@ -199,7 +199,7 @@ public class OllamaProvidersController(
 
         provider.WarmupModelsJson = System.Text.Json.JsonSerializer.Serialize(warmupModels);
         await dbContext.SaveChangesAsync();
-        
+
         // Return 200 for AJAX, 302 for normal post
         if (Request.Headers["X-Requested-With"] == "XMLHttpRequest" || Request.Headers["Accept"].ToString().Contains("application/json"))
         {

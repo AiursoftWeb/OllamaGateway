@@ -4,8 +4,9 @@ using Aiursoft.CSTools.Attributes;
 using Aiursoft.UiStack.Layout;
 
 namespace Aiursoft.OllamaGateway.Models.UsersViewModels;
+
 [ExcludeFromCodeCoverage]
-public class CreateViewModel: UiStackLayoutViewModel
+public class CreateViewModel : UiStackLayoutViewModel
 {
     public CreateViewModel()
     {

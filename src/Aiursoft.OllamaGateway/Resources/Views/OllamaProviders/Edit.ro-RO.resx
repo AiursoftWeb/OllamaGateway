@@ -54,6 +54,12 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>Politica de menținere a conexiunii</value>
   </data>
+  <data name="Max Concurrent Requests" xml:space="preserve">
+    <value>Număr maxim de cereri simultane</value>
+  </data>
+  <data name="Maximum number of concurrent requests sent to this provider. 0 = unlimited (default). Set to 1 to serialize requests and prevent the backend from being overwhelmed." xml:space="preserve">
+    <value>Numărul maxim de cereri concurente trimise către acest furnizor. 0 = nelimitat (implicit). Setează la 1 pentru a serializa cererile și a împiedica supraîncărcarea backend-ului.</value>
+  </data>
   <data name="Model" xml:space="preserve">
     <value>Model</value>
   </data>

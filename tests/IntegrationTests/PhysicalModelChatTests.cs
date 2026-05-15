@@ -39,7 +39,7 @@ public class PhysicalModelChatTests : TestBase
         {
             var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
             var user = await db.Users.FirstAsync();
-            
+
             // Add permission to the user via claims
             db.UserClaims.Add(new IdentityUserClaim<string>
             {
@@ -47,9 +47,9 @@ public class PhysicalModelChatTests : TestBase
                 ClaimType = AppPermissions.Type,
                 ClaimValue = AppPermissionNames.CanChatWithUnderlyingModels
             });
-            
+
             db.ApiKeys.Add(new ApiKey { Name = "Direct Key", Key = TestApiKey, UserId = user.Id });
-            
+
             var provider = new OllamaProvider { Name = "DirectProvider", BaseUrl = "http://direct-ollama:11434" };
             db.OllamaProviders.Add(provider);
             await db.SaveChangesAsync();
@@ -82,9 +82,9 @@ public class PhysicalModelChatTests : TestBase
         var request = new HttpRequestMessage(HttpMethod.Post, "/api/chat");
         request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", TestApiKey);
         request.Content = new StringContent(JsonSerializer.Serialize(chatRequest), System.Text.Encoding.UTF8, "application/json");
-        
+
         var response = await Http.SendAsync(request);
-        
+
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         var content = await response.Content.ReadAsStringAsync();
         var result = JsonNode.Parse(content);
@@ -141,9 +141,9 @@ public class PhysicalModelChatTests : TestBase
             stream = false,
             options = new
             {
-                num_ctx    = 32768,
-                top_p      = 0.9,
-                top_k      = 40,
+                num_ctx = 32768,
+                top_p = 0.9,
+                top_k = 40,
                 temperature = 0.7
             }
         };
@@ -183,11 +183,11 @@ public class PhysicalModelChatTests : TestBase
         using (var scope = Server!.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
-            
+
             // Create a new user without any roles/permissions initially
-            var user = new User 
-            { 
-                UserName = "noperm@aiursoft.com", 
+            var user = new User
+            {
+                UserName = "noperm@aiursoft.com",
                 Email = "noperm@aiursoft.com",
                 DisplayName = "No Permission User"
             };
@@ -195,7 +195,7 @@ public class PhysicalModelChatTests : TestBase
             await db.SaveChangesAsync();
 
             db.ApiKeys.Add(new ApiKey { Name = "No Perm Key", Key = NoPermKey, UserId = user.Id });
-            
+
             var provider = new OllamaProvider { Name = "DirectProvider2", BaseUrl = "http://direct-ollama:11434" };
             db.OllamaProviders.Add(provider);
             await db.SaveChangesAsync();
@@ -213,9 +213,9 @@ public class PhysicalModelChatTests : TestBase
         var request = new HttpRequestMessage(HttpMethod.Post, "/api/chat");
         request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", NoPermKey);
         request.Content = new StringContent(JsonSerializer.Serialize(chatRequest), System.Text.Encoding.UTF8, "application/json");
-        
+
         var response = await Http.SendAsync(request);
-        
+
         // Should be 403 Forbidden because the user doesn't have CanChatWithUnderlyingModels
         Assert.AreEqual(HttpStatusCode.Forbidden, response.StatusCode);
     }

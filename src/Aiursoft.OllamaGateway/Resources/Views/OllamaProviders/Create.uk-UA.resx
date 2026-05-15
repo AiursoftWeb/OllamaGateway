@@ -42,6 +42,12 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>Політика збереження активного стану</value>
   </data>
+  <data name="Max Concurrent Requests" xml:space="preserve">
+    <value>Макс. одночасних запитів</value>
+  </data>
+  <data name="Maximum number of concurrent requests sent to this provider. 0 = unlimited (default). Set to 1 to serialize requests and prevent the backend from being overwhelmed." xml:space="preserve">
+    <value>Максимальна кількість одночасних запитів, надісланих до цього постачальника. 0 = необмежено (за замовчуванням). Встановіть значення 1 для послідовної обробки запитів та запобігання перевантаження бекенду.</value>
+  </data>
   <data name="Models found:" xml:space="preserve">
     <value>Знайдені моделі:</value>
   </data>

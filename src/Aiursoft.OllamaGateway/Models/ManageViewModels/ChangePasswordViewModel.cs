@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Aiursoft.UiStack.Layout;
 
 namespace Aiursoft.OllamaGateway.Models.ManageViewModels;
+
 [ExcludeFromCodeCoverage]
 public class ChangePasswordViewModel : UiStackLayoutViewModel
 {

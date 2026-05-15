@@ -4,6 +4,7 @@ using Aiursoft.UiStack.Layout;
 using Microsoft.AspNetCore.Identity;
 
 namespace Aiursoft.OllamaGateway.Models.RolesViewModels;
+
 [ExcludeFromCodeCoverage]
 public class DeleteViewModel : UiStackLayoutViewModel
 {

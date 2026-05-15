@@ -54,6 +54,12 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>保持就緒策略</value>
   </data>
+  <data name="Max Concurrent Requests" xml:space="preserve">
+    <value>最大併發請求數</value>
+  </data>
+  <data name="Maximum number of concurrent requests sent to this provider. 0 = unlimited (default). Set to 1 to serialize requests and prevent the backend from being overwhelmed." xml:space="preserve">
+    <value>發送至此提供者的最大並行請求數。0 表示無限制（預設值）。設為 1 以序列化請求，防止後端不堪負荷。</value>
+  </data>
   <data name="Model" xml:space="preserve">
     <value>模型</value>
   </data>

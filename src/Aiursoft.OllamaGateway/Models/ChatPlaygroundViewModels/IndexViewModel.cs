@@ -3,6 +3,7 @@ using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.UiStack.Layout;
 
 namespace Aiursoft.OllamaGateway.Models.ChatPlaygroundViewModels;
+
 [ExcludeFromCodeCoverage]
 public class IndexViewModel : UiStackLayoutViewModel
 {

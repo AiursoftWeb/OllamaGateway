@@ -75,7 +75,7 @@ public class ApiKeyAuthenticationHandler(
 
         var principal = await userClaimsPrincipalFactory.CreateAsync(apiKey.User);
         var identity = (ClaimsIdentity)principal.Identity!;
-        
+
         identity.AddClaims(new List<Claim>
         {
             new("ApiKeyId", apiKey.Id.ToString()),

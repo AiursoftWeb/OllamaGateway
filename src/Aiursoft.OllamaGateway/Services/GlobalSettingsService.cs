@@ -8,7 +8,7 @@ using Microsoft.Extensions.Caching.Memory;
 namespace Aiursoft.OllamaGateway.Services;
 
 public class GlobalSettingsService(
-    TemplateDbContext dbContext, 
+    TemplateDbContext dbContext,
     IConfiguration configuration,
     IMemoryCache cache) : IScopedDependency
 {
@@ -147,7 +147,7 @@ public class GlobalSettingsService(
             var dbSetting = await dbContext.GlobalSettings.AsNoTracking().FirstOrDefaultAsync(s => s.Key == definition.Key);
             if (dbSetting == null)
             {
-                var initialValue = configuration[$"GlobalSettings:{definition.Key}"] 
+                var initialValue = configuration[$"GlobalSettings:{definition.Key}"]
                                    ?? configuration[definition.Key]
                                    ?? definition.DefaultValue;
                 dbContext.GlobalSettings.Add(new GlobalSetting

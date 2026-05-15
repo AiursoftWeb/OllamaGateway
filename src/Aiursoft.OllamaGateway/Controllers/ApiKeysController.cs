@@ -39,7 +39,7 @@ public class ApiKeysController(
             ApiKeys = keys,
             NewKey = TempData["NewKey"] as string
         };
-        
+
         foreach (var key in keys)
         {
             var stats = memoryUsageTracker.GetApiKeyStats(key.Id);

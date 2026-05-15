@@ -79,7 +79,7 @@ public class ViewModelArgsInjector(
         _ = localizer["Not Found"];
         _ = localizer["Permission Details"];
         _ = localizer["Register"];
-    
+
         _ = localizer["API Keys"];
         _ = localizer["Chat"];
         _ = localizer["Chat Models"];
@@ -97,21 +97,21 @@ public class ViewModelArgsInjector(
         _ = localizer["Underlying Models"];
         _ = localizer["Virtual Model Settings"];
         _ = localizer["Virtual Models"];
-    
+
         _ = localizer["API Key Usage Guide"];
-    
+
         _ = localizer["Edit API Key"];
-    
+
         _ = localizer["Completion Lab"];
-    
+
         _ = localizer["Monitor"];
-    
+
         _ = localizer["Admin Center"];
         _ = localizer["Traffic Visualization"];
         _ = localizer["Self Host"];
         _ = localizer["Deployment"];
         _ = localizer["Recommended local deployment"];
-    
+
         _ = localizer["Health Monitor"];
         _ = localizer["Manage Roles"];
         _ = localizer["Manage Users"];

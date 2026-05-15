@@ -18,10 +18,10 @@ public class ApiKeyExpirationTests : TestBase
         {
             var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
             var user = await db.Users.FirstAsync();
-            db.ApiKeys.Add(new ApiKey 
-            { 
-                Name = "Expired Key", 
-                Key = apiKeyStr, 
+            db.ApiKeys.Add(new ApiKey
+            {
+                Name = "Expired Key",
+                Key = apiKeyStr,
                 UserId = user.Id,
                 ExpirationTime = DateTime.UtcNow.AddMinutes(-1) // Already expired
             });
@@ -32,7 +32,7 @@ public class ApiKeyExpirationTests : TestBase
         var request = new HttpRequestMessage(HttpMethod.Get, "/api/tags");
         request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKeyStr);
         var response = await Http.SendAsync(request);
-        
+
         // Should return 401 Unauthorized because the key is expired
         Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
     }
@@ -46,10 +46,10 @@ public class ApiKeyExpirationTests : TestBase
         {
             var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
             var user = await db.Users.FirstAsync();
-            db.ApiKeys.Add(new ApiKey 
-            { 
-                Name = "Valid Key", 
-                Key = apiKeyStr, 
+            db.ApiKeys.Add(new ApiKey
+            {
+                Name = "Valid Key",
+                Key = apiKeyStr,
                 UserId = user.Id,
                 ExpirationTime = DateTime.UtcNow.AddDays(1) // Valid
             });
@@ -60,14 +60,14 @@ public class ApiKeyExpirationTests : TestBase
         var request = new HttpRequestMessage(HttpMethod.Get, "/api/tags");
         request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKeyStr);
         var response = await Http.SendAsync(request);
-        
+
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
     }
 
     [TestMethod]
     public async Task TestApiKeyExpirationWorkflow()
     {
-        var (email, password) = await RegisterAndLoginAsync(); 
+        var (email, password) = await RegisterAndLoginAsync();
         await GrantPermissionToUser(email, Authorization.AppPermissionNames.CanManageApiKeys);
 
         // RE-LOGIN to refresh claims in cookie

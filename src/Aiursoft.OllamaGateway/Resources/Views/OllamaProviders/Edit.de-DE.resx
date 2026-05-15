@@ -54,6 +54,12 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>Keep-Alive-Richtlinie</value>
   </data>
+  <data name="Max Concurrent Requests" xml:space="preserve">
+    <value>Maximale parallele Anfragen</value>
+  </data>
+  <data name="Maximum number of concurrent requests sent to this provider. 0 = unlimited (default). Set to 1 to serialize requests and prevent the backend from being overwhelmed." xml:space="preserve">
+    <value>Maximale Anzahl gleichzeitiger Anfragen, die an diesen Anbieter gesendet werden. 0 = unbegrenzt (Standard). Auf 1 setzen, um Anfragen zu serialisieren und eine Überlastung des Backends zu verhindern.</value>
+  </data>
   <data name="Model" xml:space="preserve">
     <value>Modell</value>
   </data>

@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Aiursoft.UiStack.Layout;
 
 namespace Aiursoft.OllamaGateway.Models.ApiKeysViewModels;
+
 [ExcludeFromCodeCoverage]
 public class UsageViewModel : UiStackLayoutViewModel
 {

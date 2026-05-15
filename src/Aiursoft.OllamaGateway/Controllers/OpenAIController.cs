@@ -218,91 +218,91 @@ public class OpenAIController : ControllerBase
 
                     await using var directStream = await oaiDirectResponse.Content.ReadAsStreamAsync(HttpContext.RequestAborted);
 
-                if (isStream)
-                {
-                    Response.ContentType = "text/event-stream";
-                    var answerBuilderDirect = new StringBuilder();
-                    var thinkBuilderDirect = new StringBuilder();
-                    using var directReader = new StreamReader(directStream);
-                    string? sLine;
-                    while ((sLine = await directReader.ReadLineAsync(HttpContext.RequestAborted)) != null)
+                    if (isStream)
                     {
-                        if (string.IsNullOrWhiteSpace(sLine)) continue;
-                        if (sLine.StartsWith("data: ") && sLine != "data: [DONE]")
+                        Response.ContentType = "text/event-stream";
+                        var answerBuilderDirect = new StringBuilder();
+                        var thinkBuilderDirect = new StringBuilder();
+                        using var directReader = new StreamReader(directStream);
+                        string? sLine;
+                        while ((sLine = await directReader.ReadLineAsync(HttpContext.RequestAborted)) != null)
                         {
-                            try
+                            if (string.IsNullOrWhiteSpace(sLine)) continue;
+                            if (sLine.StartsWith("data: ") && sLine != "data: [DONE]")
                             {
-                                var chunk = JsonNode.Parse(sLine["data: ".Length..]);
-                                if (chunk != null)
+                                try
                                 {
-                                    chunk["model"] = virtualModel.Name;
-                                    var deltaContent = chunk["choices"]?[0]?["delta"]?["content"]?.ToString();
-                                    var deltaReasoning = chunk["choices"]?[0]?["delta"]?["reasoning_content"]?.ToString();
-                                    if (!string.IsNullOrEmpty(deltaContent)) answerBuilderDirect.Append(deltaContent);
-                                    if (!string.IsNullOrEmpty(deltaReasoning)) thinkBuilderDirect.Append(deltaReasoning);
-                                    if (chunk["usage"] != null)
+                                    var chunk = JsonNode.Parse(sLine["data: ".Length..]);
+                                    if (chunk != null)
                                     {
-                                        var pTok = chunk["usage"]!["prompt_tokens"]?.GetValue<long>() ?? 0;
-                                        var cTok = chunk["usage"]!["completion_tokens"]?.GetValue<long>() ?? 0;
-                                        _logContext.Log.PromptTokens = (int)pTok;
-                                        _logContext.Log.CompletionTokens = (int)cTok;
-                                        _logContext.Log.TotalTokens = (int)(pTok + cTok);
+                                        chunk["model"] = virtualModel.Name;
+                                        var deltaContent = chunk["choices"]?[0]?["delta"]?["content"]?.ToString();
+                                        var deltaReasoning = chunk["choices"]?[0]?["delta"]?["reasoning_content"]?.ToString();
+                                        if (!string.IsNullOrEmpty(deltaContent)) answerBuilderDirect.Append(deltaContent);
+                                        if (!string.IsNullOrEmpty(deltaReasoning)) thinkBuilderDirect.Append(deltaReasoning);
+                                        if (chunk["usage"] != null)
+                                        {
+                                            var pTok = chunk["usage"]!["prompt_tokens"]?.GetValue<long>() ?? 0;
+                                            var cTok = chunk["usage"]!["completion_tokens"]?.GetValue<long>() ?? 0;
+                                            _logContext.Log.PromptTokens = (int)pTok;
+                                            _logContext.Log.CompletionTokens = (int)cTok;
+                                            _logContext.Log.TotalTokens = (int)(pTok + cTok);
+                                        }
+                                        await Response.WriteAsync($"data: {chunk.ToJsonString()}\n\n", HttpContext.RequestAborted);
+                                        await Response.Body.FlushAsync(HttpContext.RequestAborted);
+                                        continue;
                                     }
-                                    await Response.WriteAsync($"data: {chunk.ToJsonString()}\n\n", HttpContext.RequestAborted);
-                                    await Response.Body.FlushAsync(HttpContext.RequestAborted);
-                                    continue;
                                 }
+                                catch { /* fall through to raw write */ }
                             }
-                            catch { /* fall through to raw write */ }
+                            if (sLine == "data: [DONE]")
+                            {
+                                await Response.WriteAsync("data: [DONE]\n\n", HttpContext.RequestAborted);
+                                await Response.Body.FlushAsync(HttpContext.RequestAborted);
+                            }
+                            else if (!string.IsNullOrWhiteSpace(sLine))
+                            {
+                                await Response.WriteAsync(sLine + "\n", HttpContext.RequestAborted);
+                                await Response.Body.FlushAsync(HttpContext.RequestAborted);
+                            }
                         }
-                        if (sLine == "data: [DONE]")
-                        {
-                            await Response.WriteAsync("data: [DONE]\n\n", HttpContext.RequestAborted);
-                            await Response.Body.FlushAsync(HttpContext.RequestAborted);
-                        }
-                        else if (!string.IsNullOrWhiteSpace(sLine))
-                        {
-                            await Response.WriteAsync(sLine + "\n", HttpContext.RequestAborted);
-                            await Response.Body.FlushAsync(HttpContext.RequestAborted);
-                        }
+                        _logContext.Log.Answer = answerBuilderDirect.ToString();
+                        _logContext.Log.Thinking = thinkBuilderDirect.ToString();
                     }
-                    _logContext.Log.Answer = answerBuilderDirect.ToString();
-                    _logContext.Log.Thinking = thinkBuilderDirect.ToString();
-                }
-                else
-                {
-                    using var directMs = new MemoryStream();
-                    await directStream.CopyToAsync(directMs, HttpContext.RequestAborted);
-                    directMs.Seek(0, SeekOrigin.Begin);
-                    try
+                    else
                     {
-                        var respNode = await JsonNode.ParseAsync(directMs, cancellationToken: HttpContext.RequestAborted);
-                        if (respNode != null)
-                        {
-                            respNode["model"] = virtualModel.Name;
-                            var respContent = respNode["choices"]?[0]?["message"]?["content"]?.ToString() ?? string.Empty;
-                            var respReasoning = respNode["choices"]?[0]?["message"]?["reasoning_content"]?.ToString() ?? string.Empty;
-                            var pTok = respNode["usage"]?["prompt_tokens"]?.GetValue<long>() ?? 0;
-                            var cTok = respNode["usage"]?["completion_tokens"]?.GetValue<long>() ?? 0;
-                            _logContext.Log.Answer = respContent;
-                            _logContext.Log.Thinking = respReasoning;
-                            _logContext.Log.PromptTokens = (int)pTok;
-                            _logContext.Log.CompletionTokens = (int)cTok;
-                            _logContext.Log.TotalTokens = (int)(pTok + cTok);
-                            Response.ContentType = "application/json";
-                            await Response.WriteAsync(respNode.ToJsonString(), HttpContext.RequestAborted);
-                        }
-                    }
-                    catch
-                    {
+                        using var directMs = new MemoryStream();
+                        await directStream.CopyToAsync(directMs, HttpContext.RequestAborted);
                         directMs.Seek(0, SeekOrigin.Begin);
-                        var rawResp = await new StreamReader(directMs).ReadToEndAsync(HttpContext.RequestAborted);
-                        _logContext.Log.Answer = rawResp;
-                        Response.ContentType = "application/json";
-                        await Response.WriteAsync(rawResp, HttpContext.RequestAborted);
+                        try
+                        {
+                            var respNode = await JsonNode.ParseAsync(directMs, cancellationToken: HttpContext.RequestAborted);
+                            if (respNode != null)
+                            {
+                                respNode["model"] = virtualModel.Name;
+                                var respContent = respNode["choices"]?[0]?["message"]?["content"]?.ToString() ?? string.Empty;
+                                var respReasoning = respNode["choices"]?[0]?["message"]?["reasoning_content"]?.ToString() ?? string.Empty;
+                                var pTok = respNode["usage"]?["prompt_tokens"]?.GetValue<long>() ?? 0;
+                                var cTok = respNode["usage"]?["completion_tokens"]?.GetValue<long>() ?? 0;
+                                _logContext.Log.Answer = respContent;
+                                _logContext.Log.Thinking = respReasoning;
+                                _logContext.Log.PromptTokens = (int)pTok;
+                                _logContext.Log.CompletionTokens = (int)cTok;
+                                _logContext.Log.TotalTokens = (int)(pTok + cTok);
+                                Response.ContentType = "application/json";
+                                await Response.WriteAsync(respNode.ToJsonString(), HttpContext.RequestAborted);
+                            }
+                        }
+                        catch
+                        {
+                            directMs.Seek(0, SeekOrigin.Begin);
+                            var rawResp = await new StreamReader(directMs).ReadToEndAsync(HttpContext.RequestAborted);
+                            _logContext.Log.Answer = rawResp;
+                            Response.ContentType = "application/json";
+                            await Response.WriteAsync(rawResp, HttpContext.RequestAborted);
+                        }
                     }
                 }
-            }
                 return;
             }
             // =========================================================================================
@@ -383,7 +383,7 @@ public class OpenAIController : ControllerBase
                             {
                                 var oFunc = new JsonObject();
                                 oFunc["name"] = funcNode["name"]?.ToString();
-                                
+
                                 var argsStr = funcNode["arguments"]?.ToString();
                                 if (!string.IsNullOrWhiteSpace(argsStr))
                                 {
@@ -409,7 +409,7 @@ public class OpenAIController : ControllerBase
 
                     translatedMessages.Add(newMsg);
                 }
-                
+
                 ollamaRequest["messages"] = translatedMessages;
             }
 
@@ -469,48 +469,48 @@ public class OpenAIController : ControllerBase
                 }
 
                 await using var responseStream = await response.Content.ReadAsStreamAsync(HttpContext.RequestAborted);
-            var chatId = "chatcmpl-" + Guid.NewGuid().ToString("N").Substring(0, 12);
-            var created = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                var chatId = "chatcmpl-" + Guid.NewGuid().ToString("N").Substring(0, 12);
+                var created = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 
-            // =========================================================================================
-            // 3. 响应翻译阶段 (Streaming)
-            // =========================================================================================
-            if (isStream)
-            {
-                Response.ContentType = "text/event-stream";
-                
-                var answerBuilder = new StringBuilder();
-                var thinkBuilder = new StringBuilder();
-                bool isFirstChunk = true;
-                bool streamHasToolCalls = false;
-                using var reader = new StreamReader(responseStream);
-                string? line;
-                
-                while ((line = await reader.ReadLineAsync(HttpContext.RequestAborted)) != null)
+                // =========================================================================================
+                // 3. 响应翻译阶段 (Streaming)
+                // =========================================================================================
+                if (isStream)
                 {
-                    if (string.IsNullOrWhiteSpace(line)) continue;
+                    Response.ContentType = "text/event-stream";
 
-                    try
+                    var answerBuilder = new StringBuilder();
+                    var thinkBuilder = new StringBuilder();
+                    bool isFirstChunk = true;
+                    bool streamHasToolCalls = false;
+                    using var reader = new StreamReader(responseStream);
+                    string? line;
+
+                    while ((line = await reader.ReadLineAsync(HttpContext.RequestAborted)) != null)
                     {
-                        var ollamaChunk = JsonNode.Parse(line);
-                        if (ollamaChunk == null) continue;
+                        if (string.IsNullOrWhiteSpace(line)) continue;
 
-                        var content = ollamaChunk["message"]?["content"]?.ToString() ?? string.Empty;
-                        var reasoning = ollamaChunk["message"]?["thinking"]?.ToString() 
-                                     ?? ollamaChunk["message"]?["think"]?.ToString() 
-                                     ?? string.Empty;
-                        var isDone = ollamaChunk["done"]?.GetValue<bool>() ?? false;
-
-                        if (!string.IsNullOrEmpty(content)) answerBuilder.Append(content);
-                        if (!string.IsNullOrEmpty(reasoning)) thinkBuilder.Append(reasoning);
-
-                        var openAiChunk = new JsonObject
+                        try
                         {
-                            ["id"] = chatId,
-                            ["object"] = "chat.completion.chunk",
-                            ["created"] = created,
-                            ["model"] = virtualModel.Name,
-                            ["choices"] = new JsonArray
+                            var ollamaChunk = JsonNode.Parse(line);
+                            if (ollamaChunk == null) continue;
+
+                            var content = ollamaChunk["message"]?["content"]?.ToString() ?? string.Empty;
+                            var reasoning = ollamaChunk["message"]?["thinking"]?.ToString()
+                                         ?? ollamaChunk["message"]?["think"]?.ToString()
+                                         ?? string.Empty;
+                            var isDone = ollamaChunk["done"]?.GetValue<bool>() ?? false;
+
+                            if (!string.IsNullOrEmpty(content)) answerBuilder.Append(content);
+                            if (!string.IsNullOrEmpty(reasoning)) thinkBuilder.Append(reasoning);
+
+                            var openAiChunk = new JsonObject
+                            {
+                                ["id"] = chatId,
+                                ["object"] = "chat.completion.chunk",
+                                ["created"] = created,
+                                ["model"] = virtualModel.Name,
+                                ["choices"] = new JsonArray
                             {
                                 new JsonObject
                                 {
@@ -519,117 +519,117 @@ public class OpenAIController : ControllerBase
                                     ["finish_reason"] = null
                                 }
                             }
-                        };
+                            };
 
-                        var delta = openAiChunk["choices"]![0]!["delta"]!.AsObject();
-                        if (isFirstChunk)
-                        {
-                            delta["role"] = "assistant";
-                            isFirstChunk = false;
-                        }
-                        if (!string.IsNullOrEmpty(content)) delta["content"] = content;
-                        if (!string.IsNullOrEmpty(reasoning)) delta["reasoning_content"] = reasoning;
-
-                        // 【补丁 C：翻译模型下发的工具调用指令】Ollama 对象 -> OpenAI 字符串
-                        var toolCalls = ollamaChunk["message"]?["tool_calls"]?.AsArray();
-                        if (toolCalls != null && toolCalls.Count > 0)
-                        {
-                            streamHasToolCalls = true;
-                            var openAiToolCalls = new JsonArray();
-                            for (int i = 0; i < toolCalls.Count; i++)
+                            var delta = openAiChunk["choices"]![0]!["delta"]!.AsObject();
+                            if (isFirstChunk)
                             {
-                                var tc = toolCalls[i];
-                                openAiToolCalls.Add(new JsonObject
+                                delta["role"] = "assistant";
+                                isFirstChunk = false;
+                            }
+                            if (!string.IsNullOrEmpty(content)) delta["content"] = content;
+                            if (!string.IsNullOrEmpty(reasoning)) delta["reasoning_content"] = reasoning;
+
+                            // 【补丁 C：翻译模型下发的工具调用指令】Ollama 对象 -> OpenAI 字符串
+                            var toolCalls = ollamaChunk["message"]?["tool_calls"]?.AsArray();
+                            if (toolCalls != null && toolCalls.Count > 0)
+                            {
+                                streamHasToolCalls = true;
+                                var openAiToolCalls = new JsonArray();
+                                for (int i = 0; i < toolCalls.Count; i++)
                                 {
-                                    ["index"] = i,
-                                    ["id"] = "call_" + Guid.NewGuid().ToString("N").Substring(0, 8),
-                                    ["type"] = "function",
-                                    ["function"] = new JsonObject
+                                    var tc = toolCalls[i];
+                                    openAiToolCalls.Add(new JsonObject
                                     {
-                                        ["name"] = tc?["function"]?["name"]?.ToString(),
-                                        ["arguments"] = tc?["function"]?["arguments"]?.ToJsonString() ?? "{}"
-                                    }
-                                });
+                                        ["index"] = i,
+                                        ["id"] = "call_" + Guid.NewGuid().ToString("N").Substring(0, 8),
+                                        ["type"] = "function",
+                                        ["function"] = new JsonObject
+                                        {
+                                            ["name"] = tc?["function"]?["name"]?.ToString(),
+                                            ["arguments"] = tc?["function"]?["arguments"]?.ToJsonString() ?? "{}"
+                                        }
+                                    });
+                                }
+                                delta["tool_calls"] = openAiToolCalls;
                             }
-                            delta["tool_calls"] = openAiToolCalls;
-                        }
 
-                        // 如果这一行真的是空包（没有文本、没有思考、没有工具、也没有结束标志），则跳过
-                        if (delta.Count == 0 && !isDone) continue;
+                            // 如果这一行真的是空包（没有文本、没有思考、没有工具、也没有结束标志），则跳过
+                            if (delta.Count == 0 && !isDone) continue;
 
-                        if (isDone)
-                        {
-                            openAiChunk["choices"]![0]!["finish_reason"] = streamHasToolCalls ? "tool_calls" : "stop";
-
-                            var pTokens = ollamaChunk["prompt_eval_count"]?.GetValue<long>() ?? 0;
-                            var cTokens = ollamaChunk["eval_count"]?.GetValue<long>() ?? 0;
-                            if (pTokens > 0 || cTokens > 0)
+                            if (isDone)
                             {
-                                openAiChunk["usage"] = new JsonObject
+                                openAiChunk["choices"]![0]!["finish_reason"] = streamHasToolCalls ? "tool_calls" : "stop";
+
+                                var pTokens = ollamaChunk["prompt_eval_count"]?.GetValue<long>() ?? 0;
+                                var cTokens = ollamaChunk["eval_count"]?.GetValue<long>() ?? 0;
+                                if (pTokens > 0 || cTokens > 0)
                                 {
-                                    ["prompt_tokens"] = pTokens,
-                                    ["completion_tokens"] = cTokens,
-                                    ["total_tokens"] = pTokens + cTokens
-                                };
-                                _logContext.Log.PromptTokens = (int)pTokens;
-                                _logContext.Log.CompletionTokens = (int)cTokens;
-                                _logContext.Log.TotalTokens = (int)(pTokens + cTokens);
+                                    openAiChunk["usage"] = new JsonObject
+                                    {
+                                        ["prompt_tokens"] = pTokens,
+                                        ["completion_tokens"] = cTokens,
+                                        ["total_tokens"] = pTokens + cTokens
+                                    };
+                                    _logContext.Log.PromptTokens = (int)pTokens;
+                                    _logContext.Log.CompletionTokens = (int)cTokens;
+                                    _logContext.Log.TotalTokens = (int)(pTokens + cTokens);
+                                }
+                            }
+
+                            await Response.WriteAsync($"data: {openAiChunk.ToJsonString()}\n\n", HttpContext.RequestAborted);
+                            await Response.Body.FlushAsync(HttpContext.RequestAborted);
+
+                            if (isDone)
+                            {
+                                await Response.WriteAsync("data: [DONE]\n\n", HttpContext.RequestAborted);
+                                await Response.Body.FlushAsync(HttpContext.RequestAborted);
                             }
                         }
-
-                        await Response.WriteAsync($"data: {openAiChunk.ToJsonString()}\n\n", HttpContext.RequestAborted);
-                        await Response.Body.FlushAsync(HttpContext.RequestAborted);
-
-                        if (isDone)
-                        {
-                            await Response.WriteAsync("data: [DONE]\n\n", HttpContext.RequestAborted);
-                            await Response.Body.FlushAsync(HttpContext.RequestAborted);
-                        }
+                        catch { /* 忽略脏数据 */ }
                     }
-                    catch { /* 忽略脏数据 */ }
+
+                    _logContext.Log.Answer = answerBuilder.ToString();
+                    _logContext.Log.Thinking = thinkBuilder.ToString();
                 }
-
-                _logContext.Log.Answer = answerBuilder.ToString();
-                _logContext.Log.Thinking = thinkBuilder.ToString();
-            }
-            // =========================================================================================
-            // 4. 响应翻译阶段 (Non-Streaming)
-            // =========================================================================================
-            else
-            {
-                using var ms = new MemoryStream();
-                await responseStream.CopyToAsync(ms, HttpContext.RequestAborted);
-                ms.Seek(0, SeekOrigin.Begin);
-
-                try
+                // =========================================================================================
+                // 4. 响应翻译阶段 (Non-Streaming)
+                // =========================================================================================
+                else
                 {
-                    var ollamaResponse = await JsonNode.ParseAsync(ms, cancellationToken: HttpContext.RequestAborted);
-                    if (ollamaResponse != null)
+                    using var ms = new MemoryStream();
+                    await responseStream.CopyToAsync(ms, HttpContext.RequestAborted);
+                    ms.Seek(0, SeekOrigin.Begin);
+
+                    try
                     {
-                        var content = ollamaResponse["message"]?["content"]?.ToString() ?? string.Empty;
-                        var reasoning = ollamaResponse["message"]?["thinking"]?.ToString() 
-                                     ?? ollamaResponse["message"]?["think"]?.ToString() 
-                                     ?? string.Empty;
-                        var pTokens = ollamaResponse["prompt_eval_count"]?.GetValue<long>() ?? 0;
-                        var cTokens = ollamaResponse["eval_count"]?.GetValue<long>() ?? 0;
-
-                        _logContext.Log.Answer = content;
-                        _logContext.Log.Thinking = reasoning;
-                        _logContext.Log.PromptTokens = (int)pTokens;
-                        _logContext.Log.CompletionTokens = (int)cTokens;
-                        _logContext.Log.TotalTokens = (int)(pTokens + cTokens);
-
-                        // 【补丁 D：翻译非流式模型下发的工具调用指令】
-                        var toolCalls = ollamaResponse["message"]?["tool_calls"]?.AsArray();
-                        var hasToolCalls = toolCalls != null && toolCalls.Count > 0;
-
-                        var openAiResponse = new JsonObject
+                        var ollamaResponse = await JsonNode.ParseAsync(ms, cancellationToken: HttpContext.RequestAborted);
+                        if (ollamaResponse != null)
                         {
-                            ["id"] = chatId,
-                            ["object"] = "chat.completion",
-                            ["created"] = created,
-                            ["model"] = virtualModel.Name,
-                            ["choices"] = new JsonArray
+                            var content = ollamaResponse["message"]?["content"]?.ToString() ?? string.Empty;
+                            var reasoning = ollamaResponse["message"]?["thinking"]?.ToString()
+                                         ?? ollamaResponse["message"]?["think"]?.ToString()
+                                         ?? string.Empty;
+                            var pTokens = ollamaResponse["prompt_eval_count"]?.GetValue<long>() ?? 0;
+                            var cTokens = ollamaResponse["eval_count"]?.GetValue<long>() ?? 0;
+
+                            _logContext.Log.Answer = content;
+                            _logContext.Log.Thinking = reasoning;
+                            _logContext.Log.PromptTokens = (int)pTokens;
+                            _logContext.Log.CompletionTokens = (int)cTokens;
+                            _logContext.Log.TotalTokens = (int)(pTokens + cTokens);
+
+                            // 【补丁 D：翻译非流式模型下发的工具调用指令】
+                            var toolCalls = ollamaResponse["message"]?["tool_calls"]?.AsArray();
+                            var hasToolCalls = toolCalls != null && toolCalls.Count > 0;
+
+                            var openAiResponse = new JsonObject
+                            {
+                                ["id"] = chatId,
+                                ["object"] = "chat.completion",
+                                ["created"] = created,
+                                ["model"] = virtualModel.Name,
+                                ["choices"] = new JsonArray
                             {
                                 new JsonObject
                                 {
@@ -642,53 +642,53 @@ public class OpenAIController : ControllerBase
                                     ["finish_reason"] = hasToolCalls ? "tool_calls" : "stop"
                                 }
                             },
-                            ["usage"] = new JsonObject
-                            {
-                                ["prompt_tokens"] = pTokens,
-                                ["completion_tokens"] = cTokens,
-                                ["total_tokens"] = pTokens + cTokens
-                            }
-                        };
-
-                        if (!string.IsNullOrEmpty(reasoning))
-                        {
-                            openAiResponse["choices"]![0]!["message"]!["reasoning_content"] = reasoning;
-                        }
-
-                        if (toolCalls != null && toolCalls.Count > 0)
-                        {
-                            var openAiToolCalls = new JsonArray();
-                            for (int i = 0; i < toolCalls.Count; i++)
-                            {
-                                var tc = toolCalls[i];
-                                openAiToolCalls.Add(new JsonObject
+                                ["usage"] = new JsonObject
                                 {
-                                    ["id"] = "call_" + Guid.NewGuid().ToString("N").Substring(0, 8),
-                                    ["type"] = "function",
-                                    ["function"] = new JsonObject
-                                    {
-                                        ["name"] = tc?["function"]?["name"]?.ToString(),
-                                        ["arguments"] = tc?["function"]?["arguments"]?.ToJsonString() ?? "{}"
-                                    }
-                                });
-                            }
-                            openAiResponse["choices"]![0]!["message"]!["tool_calls"] = openAiToolCalls;
-                        }
+                                    ["prompt_tokens"] = pTokens,
+                                    ["completion_tokens"] = cTokens,
+                                    ["total_tokens"] = pTokens + cTokens
+                                }
+                            };
 
+                            if (!string.IsNullOrEmpty(reasoning))
+                            {
+                                openAiResponse["choices"]![0]!["message"]!["reasoning_content"] = reasoning;
+                            }
+
+                            if (toolCalls != null && toolCalls.Count > 0)
+                            {
+                                var openAiToolCalls = new JsonArray();
+                                for (int i = 0; i < toolCalls.Count; i++)
+                                {
+                                    var tc = toolCalls[i];
+                                    openAiToolCalls.Add(new JsonObject
+                                    {
+                                        ["id"] = "call_" + Guid.NewGuid().ToString("N").Substring(0, 8),
+                                        ["type"] = "function",
+                                        ["function"] = new JsonObject
+                                        {
+                                            ["name"] = tc?["function"]?["name"]?.ToString(),
+                                            ["arguments"] = tc?["function"]?["arguments"]?.ToJsonString() ?? "{}"
+                                        }
+                                    });
+                                }
+                                openAiResponse["choices"]![0]!["message"]!["tool_calls"] = openAiToolCalls;
+                            }
+
+                            Response.ContentType = "application/json";
+                            await Response.WriteAsync(openAiResponse.ToJsonString(), HttpContext.RequestAborted);
+                        }
+                    }
+                    catch
+                    {
+                        ms.Seek(0, SeekOrigin.Begin);
+                        using var sReader = new StreamReader(ms, Encoding.UTF8, false, 1024, true);
+                        var rawErr = await sReader.ReadToEndAsync(HttpContext.RequestAborted);
+                        _logContext.Log.Answer = rawErr;
                         Response.ContentType = "application/json";
-                        await Response.WriteAsync(openAiResponse.ToJsonString(), HttpContext.RequestAborted);
+                        await Response.WriteAsync(rawErr, HttpContext.RequestAborted);
                     }
                 }
-                catch
-                {
-                    ms.Seek(0, SeekOrigin.Begin);
-                    using var sReader = new StreamReader(ms, Encoding.UTF8, false, 1024, true);
-                    var rawErr = await sReader.ReadToEndAsync(HttpContext.RequestAborted);
-                    _logContext.Log.Answer = rawErr;
-                    Response.ContentType = "application/json";
-                    await Response.WriteAsync(rawErr, HttpContext.RequestAborted);
-                }
-            }
             }
         }
         catch (OperationCanceledException ex)
@@ -714,7 +714,8 @@ public class OpenAIController : ControllerBase
                 _activeRequestTracker.EndRequest(
                     _logContext.Log.Model,
                     _logContext.Log.ProviderId ?? 0,
-                    _logContext.Log.UnderlyingModelName);
+                    _logContext.Log.UnderlyingModelName,
+                    _logContext.Log.Success);
         }
     }
 
@@ -885,72 +886,72 @@ public class OpenAIController : ControllerBase
             {
                 var response = result.Response;
                 _logContext.Log.BackendId = result.Backend.Id;
-            
-            Response.StatusCode = (int)response.StatusCode;
-            _logContext.Log.StatusCode = Response.StatusCode;
-            _logContext.Log.Success = response.IsSuccessStatusCode;
 
-            if (!response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync(HttpContext.RequestAborted);
-                _logContext.Log.Answer = content;
-                Response.ContentType = "application/json";
-                await Response.WriteAsync(content, HttpContext.RequestAborted);
-                return;
-            }
+                Response.StatusCode = (int)response.StatusCode;
+                _logContext.Log.StatusCode = Response.StatusCode;
+                _logContext.Log.Success = response.IsSuccessStatusCode;
 
-            // =========================================================================================
-            // 2. 响应翻译阶段 (Non-Streaming)：Ollama JSON -> OpenAI JSON
-            // =========================================================================================
-            var responseContent = await response.Content.ReadAsStringAsync(HttpContext.RequestAborted);
-            try
-            {
-                var ollamaResponse = JsonNode.Parse(responseContent);
-                if (ollamaResponse != null)
+                if (!response.IsSuccessStatusCode)
                 {
-                    var embeddings = ollamaResponse["embeddings"]?.AsArray();
-                    var openAiData = new JsonArray();
-                    if (embeddings != null)
-                    {
-                        for (int i = 0; i < embeddings.Count; i++)
-                        {
-                            openAiData.Add(new JsonObject
-                            {
-                                ["object"] = "embedding",
-                                ["index"] = i,
-                                ["embedding"] = embeddings[i]!.DeepClone()
-                            });
-                        }
-                    }
-
-                    var pTokens = ollamaResponse["prompt_eval_count"]?.GetValue<long>() ?? 0;
-                    _logContext.Log.PromptTokens = (int)pTokens;
-                    _logContext.Log.TotalTokens = (int)pTokens;
-
-                    var openAiResponse = new JsonObject
-                    {
-                        ["object"] = "list",
-                        ["data"] = openAiData,
-                        ["model"] = virtualModel.Name,
-                        ["usage"] = new JsonObject
-                        {
-                            ["prompt_tokens"] = pTokens,
-                            ["total_tokens"] = pTokens
-                        }
-                    };
-
-                    Response.ContentType = "application/json"; // 强制接管 Content-Type
-                    await Response.WriteAsync(openAiResponse.ToJsonString(), HttpContext.RequestAborted);
+                    var content = await response.Content.ReadAsStringAsync(HttpContext.RequestAborted);
+                    _logContext.Log.Answer = content;
+                    Response.ContentType = "application/json";
+                    await Response.WriteAsync(content, HttpContext.RequestAborted);
+                    return;
                 }
-                else
+
+                // =========================================================================================
+                // 2. 响应翻译阶段 (Non-Streaming)：Ollama JSON -> OpenAI JSON
+                // =========================================================================================
+                var responseContent = await response.Content.ReadAsStringAsync(HttpContext.RequestAborted);
+                try
+                {
+                    var ollamaResponse = JsonNode.Parse(responseContent);
+                    if (ollamaResponse != null)
+                    {
+                        var embeddings = ollamaResponse["embeddings"]?.AsArray();
+                        var openAiData = new JsonArray();
+                        if (embeddings != null)
+                        {
+                            for (int i = 0; i < embeddings.Count; i++)
+                            {
+                                openAiData.Add(new JsonObject
+                                {
+                                    ["object"] = "embedding",
+                                    ["index"] = i,
+                                    ["embedding"] = embeddings[i]!.DeepClone()
+                                });
+                            }
+                        }
+
+                        var pTokens = ollamaResponse["prompt_eval_count"]?.GetValue<long>() ?? 0;
+                        _logContext.Log.PromptTokens = (int)pTokens;
+                        _logContext.Log.TotalTokens = (int)pTokens;
+
+                        var openAiResponse = new JsonObject
+                        {
+                            ["object"] = "list",
+                            ["data"] = openAiData,
+                            ["model"] = virtualModel.Name,
+                            ["usage"] = new JsonObject
+                            {
+                                ["prompt_tokens"] = pTokens,
+                                ["total_tokens"] = pTokens
+                            }
+                        };
+
+                        Response.ContentType = "application/json"; // 强制接管 Content-Type
+                        await Response.WriteAsync(openAiResponse.ToJsonString(), HttpContext.RequestAborted);
+                    }
+                    else
+                    {
+                        await Response.WriteAsync(responseContent, HttpContext.RequestAborted);
+                    }
+                }
+                catch
                 {
                     await Response.WriteAsync(responseContent, HttpContext.RequestAborted);
                 }
-            }
-            catch
-            {
-                await Response.WriteAsync(responseContent, HttpContext.RequestAborted);
-            }
             }
         }
         catch (OperationCanceledException ex)
@@ -976,7 +977,8 @@ public class OpenAIController : ControllerBase
                 _activeRequestTracker.EndRequest(
                     _logContext.Log.Model,
                     _logContext.Log.ProviderId ?? 0,
-                    _logContext.Log.UnderlyingModelName);
+                    _logContext.Log.UnderlyingModelName,
+                    _logContext.Log.Success);
         }
     }
 
@@ -984,7 +986,7 @@ public class OpenAIController : ControllerBase
     public async Task<IActionResult> Models()
     {
         var virtualModels = await _dbContext.VirtualModels.ToListAsync();
-        
+
         var data = virtualModels.Select(vm => new
         {
             id = vm.Name,

@@ -25,7 +25,7 @@ public class ClickhouseDbContext : Aiursoft.ClickhouseSdk.ClickhouseDbContext, I
 
     public ClickhouseDbContext(IOptionsMonitor<ClickhouseOptions> options) : base(options)
     {
-        RequestLogs = new ClickhouseSet<RequestLog>(GetConnection, options.CurrentValue.TableName, log => new object[] 
+        RequestLogs = new ClickhouseSet<RequestLog>(GetConnection, options.CurrentValue.TableName, log => new object[]
         {
             log.IP,
             log.ConversationMessageCount,

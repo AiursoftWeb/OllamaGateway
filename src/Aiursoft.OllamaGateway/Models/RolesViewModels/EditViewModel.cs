@@ -6,8 +6,9 @@ using Aiursoft.UiStack.Layout;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.OllamaGateway.Models.RolesViewModels;
+
 [ExcludeFromCodeCoverage]
-public class EditViewModel: UiStackLayoutViewModel
+public class EditViewModel : UiStackLayoutViewModel
 {
     public EditViewModel()
     {

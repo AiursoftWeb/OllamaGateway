@@ -72,7 +72,7 @@ public class TestStartup : Startup
     public override void ConfigureServices(IConfiguration configuration, IWebHostEnvironment environment, IServiceCollection services)
     {
         base.ConfigureServices(configuration, environment, services);
-        
+
         // Use TryAdd to ensure our mocks take precedence if possible, or RemoveAll then Add
         services.RemoveAll<OllamaService>();
         services.AddScoped(_ => MockOllamaService.Object);

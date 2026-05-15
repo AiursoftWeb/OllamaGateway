@@ -42,6 +42,12 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>Chính sách Giữ Kết Nối</value>
   </data>
+  <data name="Max Concurrent Requests" xml:space="preserve">
+    <value>Số lượng yêu cầu đồng thời tối đa</value>
+  </data>
+  <data name="Maximum number of concurrent requests sent to this provider. 0 = unlimited (default). Set to 1 to serialize requests and prevent the backend from being overwhelmed." xml:space="preserve">
+    <value>Số lượng tối đa các yêu cầu đồng thời gửi đến nhà cung cấp này. 0 = không giới hạn (mặc định). Đặt thành 1 để tuần tự hóa các yêu cầu và ngăn backend bị quá tải.</value>
+  </data>
   <data name="Models found:" xml:space="preserve">
     <value>Đã tìm thấy mô hình:</value>
   </data>

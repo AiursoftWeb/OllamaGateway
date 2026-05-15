@@ -42,6 +42,12 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>Polityka utrzymania połączenia</value>
   </data>
+  <data name="Max Concurrent Requests" xml:space="preserve">
+    <value>Maksymalna liczba równoległych żądań</value>
+  </data>
+  <data name="Maximum number of concurrent requests sent to this provider. 0 = unlimited (default). Set to 1 to serialize requests and prevent the backend from being overwhelmed." xml:space="preserve">
+    <value>Maksymalna liczba jednoczesnych żądań wysyłanych do tego dostawcy. 0 = bez limitu (domyślnie). Ustaw na 1, aby zserializować żądania i zapobiec przeciążeniu backendu.</value>
+  </data>
   <data name="Models found:" xml:space="preserve">
     <value>Znaleziono modele:</value>
   </data>

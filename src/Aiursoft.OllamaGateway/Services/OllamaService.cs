@@ -32,7 +32,7 @@ public class OllamaService(
             var json = await response.Content.ReadAsStringAsync();
             var result = System.Text.Json.JsonSerializer.Deserialize<OllamaTagsResponse>(json);
             var models = result?.Models ?? new List<OllamaModel>();
-            
+
             memoryCache.Set(cacheKey, models, TimeSpan.FromMinutes(1));
             return models;
         }
@@ -127,7 +127,7 @@ public class OllamaService(
             var json = await response.Content.ReadAsStringAsync();
             var result = System.Text.Json.JsonSerializer.Deserialize<OllamaVersionResponse>(json);
             var version = result?.Version;
-            
+
             if (version != null)
             {
                 memoryCache.Set(cacheKey, version, TimeSpan.FromMinutes(10));

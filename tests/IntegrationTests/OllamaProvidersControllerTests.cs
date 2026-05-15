@@ -8,9 +8,9 @@ public class OllamaProvidersControllerTests : TestBase
     {
         await LoginAsAdmin();
         var url = "/OllamaProviders/Index";
-        
+
         var response = await Http.GetAsync(url);
-        
+
         // Assert
         response.EnsureSuccessStatusCode();
         var content = await response.Content.ReadAsStringAsync();
@@ -22,9 +22,9 @@ public class OllamaProvidersControllerTests : TestBase
     {
         await LoginAsAdmin();
         var url = "/OllamaProviders/Create";
-        
+
         var response = await Http.GetAsync(url);
-        
+
         // Assert
         response.EnsureSuccessStatusCode();
     }

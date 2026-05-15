@@ -55,7 +55,7 @@ public class VirtualModelsController(
                     modelWarnings.Add($"Backend {backend.Id}: Underlying model '{backend.UnderlyingModelName}' missing.");
                 }
             }
-            
+
             if (modelWarnings.Any())
             {
                 warnings[model.Id] = string.Join(" ", modelWarnings);
@@ -167,7 +167,7 @@ public class VirtualModelsController(
         {
             if (string.IsNullOrEmpty(model.UnderlyingModel)) ModelState.AddModelError(nameof(model.UnderlyingModel), "The Underlying Model field is required.");
             if (model.ProviderId == 0) ModelState.AddModelError(nameof(model.ProviderId), "The Provider field is required.");
-            
+
             model.AvailableProviders = await dbContext.OllamaProviders.ToListAsync();
             var provider = model.AvailableProviders.FirstOrDefault(p => p.Id == model.ProviderId);
             if (provider != null)
@@ -242,7 +242,7 @@ public class VirtualModelsController(
         var virtualModel = await dbContext.VirtualModels
             .Include(m => m.VirtualModelBackends)
             .FirstOrDefaultAsync(m => m.Id == id);
-            
+
         if (virtualModel == null)
         {
             return NotFound();
@@ -252,7 +252,7 @@ public class VirtualModelsController(
 
         var providers = await dbContext.OllamaProviders.ToListAsync();
         providerId ??= firstBackend?.ProviderId;
-        
+
         var provider = providers.FirstOrDefault(p => p.Id == providerId);
         var underlyingModels = provider != null ? await GetModelsForProviderAsync(provider) : new List<string>();
 
@@ -335,7 +335,7 @@ public class VirtualModelsController(
         var virtualModel = await dbContext.VirtualModels
             .Include(m => m.VirtualModelBackends)
             .FirstOrDefaultAsync(m => m.Id == id);
-            
+
         if (virtualModel == null)
         {
             return NotFound();

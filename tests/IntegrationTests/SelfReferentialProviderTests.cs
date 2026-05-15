@@ -168,9 +168,9 @@ public class SelfReferentialProviderTests : TestBase
         var response = await Http.GetAsync("/api/tags");
         var content = await response.Content.ReadAsStringAsync();
 
-        Assert.IsTrue(content.Contains("\"name\""),        "Expected snake_case 'name' property");
+        Assert.IsTrue(content.Contains("\"name\""), "Expected snake_case 'name' property");
         Assert.IsTrue(content.Contains("\"modified_at\""), "Expected snake_case 'modified_at' property");
-        Assert.IsFalse(content.Contains("\"Name\""),       "Must not contain PascalCase 'Name'");
+        Assert.IsFalse(content.Contains("\"Name\""), "Must not contain PascalCase 'Name'");
         Assert.IsFalse(content.Contains("\"ModifiedAt\""), "Must not contain PascalCase 'ModifiedAt'");
     }
 }

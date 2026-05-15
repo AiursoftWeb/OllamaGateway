@@ -45,9 +45,9 @@ public class VirtualModel
     public float? TopP { get; set; }
 
     public int? TopK { get; set; }
-    
+
     public int? NumPredict { get; set; }
-    
+
     public float? RepeatPenalty { get; set; }
 
     public bool UseRawOutput { get; set; }

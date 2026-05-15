@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Aiursoft.UiStack.Layout;
 
 namespace Aiursoft.OllamaGateway.Models.RolesViewModels;
+
 [ExcludeFromCodeCoverage]
 public class IndexViewModel : UiStackLayoutViewModel
 {

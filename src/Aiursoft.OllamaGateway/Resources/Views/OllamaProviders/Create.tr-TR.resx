@@ -42,6 +42,12 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>Canlı Tutma Politikası</value>
   </data>
+  <data name="Max Concurrent Requests" xml:space="preserve">
+    <value>Maks Eşzamanlı İstek</value>
+  </data>
+  <data name="Maximum number of concurrent requests sent to this provider. 0 = unlimited (default). Set to 1 to serialize requests and prevent the backend from being overwhelmed." xml:space="preserve">
+    <value>Bu sağlayıcıya gönderilen eşzamanlı isteklerin maksimum sayısı. 0 = sınırsız (varsayılan). İstekleri sıralamak ve arka ucu aşırı yüklenmekten korumak için 1 olarak ayarlayın.</value>
+  </data>
   <data name="Models found:" xml:space="preserve">
     <value>Model bulundu:</value>
   </data>

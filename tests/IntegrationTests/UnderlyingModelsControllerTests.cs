@@ -8,9 +8,9 @@ public class UnderlyingModelsControllerTests : TestBase
     {
         await LoginAsAdmin();
         var url = "/UnderlyingModels/Index";
-        
+
         var response = await Http.GetAsync(url);
-        
+
         // Assert
         response.EnsureSuccessStatusCode();
         var content = await response.Content.ReadAsStringAsync();

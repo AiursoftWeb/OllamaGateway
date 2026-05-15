@@ -17,11 +17,11 @@ public class OllamaApiCompatibilityTests : TestBase
     {
         TestStartup.MockOllamaService.Reset();
         TestStartup.MockOllamaService.Setup(s => s.GetDetailedModelsAsync(It.IsAny<string>(), It.IsAny<string>()))
-            .ReturnsAsync(new List<OllamaService.OllamaModel> 
-            { 
-                new OllamaService.OllamaModel 
-                { 
-                    Name = "llama3.2", 
+            .ReturnsAsync(new List<OllamaService.OllamaModel>
+            {
+                new OllamaService.OllamaModel
+                {
+                    Name = "llama3.2",
                     Model = "llama3.2",
                     Size = 1024,
                     Digest = "sha256:123",
@@ -85,10 +85,10 @@ public class OllamaApiCompatibilityTests : TestBase
             var provider = new OllamaProvider { Name = "Default", BaseUrl = "http://localhost:11434" };
             db.OllamaProviders.Add(provider);
             await db.SaveChangesAsync();
-            
-            var virtualModel = new VirtualModel 
-            { 
-                Name = "my-model", 
+
+            var virtualModel = new VirtualModel
+            {
+                Name = "my-model",
                 Type = ModelType.Chat
             };
             virtualModel.VirtualModelBackends.Add(new VirtualModelBackend
@@ -105,13 +105,13 @@ public class OllamaApiCompatibilityTests : TestBase
         var response = await Http.GetAsync("/api/tags");
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         var content = await response.Content.ReadAsStringAsync();
-        
+
         // Check for snake_case properties in the JSON string
         Assert.Contains("\"name\"", content);
         Assert.Contains("\"modified_at\"", content);
         Assert.Contains("\"parameter_size\"", content);
         Assert.Contains("\"quantization_level\"", content);
-        
+
         // Ensure NO PascalCase properties of OllamaModel are present in the serialized output
         Assert.IsFalse(content.Contains("\"Name\""));
         Assert.IsFalse(content.Contains("\"ModifiedAt\""));

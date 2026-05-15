@@ -304,10 +304,10 @@ public class BackgroundJobsTests : TestBase
 
         // Step 5: 验证两个队列都有任务
         var tasks = queue.GetAllTasks().ToList();
-        var dummyTasks   = tasks.Where(t => t.QueueName == "DummyJob").ToList();
-        var orphanTasks  = tasks.Where(t => t.QueueName == "OrphanAvatarCleanupJob").ToList();
+        var dummyTasks = tasks.Where(t => t.QueueName == "DummyJob").ToList();
+        var orphanTasks = tasks.Where(t => t.QueueName == "OrphanAvatarCleanupJob").ToList();
 
-        Assert.IsNotEmpty(dummyTasks,  "DummyJob queue should have at least one task");
+        Assert.IsNotEmpty(dummyTasks, "DummyJob queue should have at least one task");
         Assert.IsNotEmpty(orphanTasks, "OrphanAvatarCleanupJob queue should have at least one task");
     }
 
@@ -337,7 +337,7 @@ public class BackgroundJobsTests : TestBase
     {
         var queue = Server!.Services.GetRequiredService<ServiceTaskQueue>();
         var jobId = queue.QueueWithDependency<ILogger<BackgroundJobsTests>>(async (_) => await Task.CompletedTask);
-        
+
         var job = queue.GetAllTasks().FirstOrDefault(j => j.TaskId == jobId);
         Assert.IsNotNull(job);
         Assert.AreEqual(typeof(ILogger<BackgroundJobsTests>).Name, job.QueueName);

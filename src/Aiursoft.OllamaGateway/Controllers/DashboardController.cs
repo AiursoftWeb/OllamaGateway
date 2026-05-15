@@ -38,7 +38,7 @@ public class DashboardController(
             TotalVirtualModels = await dbContext.VirtualModels.CountAsync(),
             ChatModelsCount = await dbContext.VirtualModels.CountAsync(m => m.Type == ModelType.Chat),
             EmbeddingModelsCount = await dbContext.VirtualModels.CountAsync(m => m.Type == ModelType.Embedding),
-            
+
             RecentUsers = await dbContext.Users
                 .OrderByDescending(u => u.CreationTime)
                 .Take(5)
@@ -111,6 +111,20 @@ public class DashboardController(
                 ApiKeyName = kv.Value.ApiKeyName,
                 LastStartedAt = kv.Value.LastStartedAt,
                 LastCompletedAt = kv.Value.LastCompletedAt
+            })
+            .ToList();
+
+        // Last 10 completed requests from ring buffer
+        model.RecentRequests = activeRequestTracker.GetRecentRequests()
+            .Select(r => new RecentRequestInfo
+            {
+                Status = r.Status,
+                ModelName = r.ModelName,
+                BackendModelName = r.BackendModelName,
+                ApiKeyName = r.ApiKeyName,
+                Question = r.Question,
+                CompletedAt = r.CompletedAt,
+                DurationMs = r.DurationMs
             })
             .ToList();
 

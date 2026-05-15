@@ -42,6 +42,12 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>Pidä elossa -politiikka</value>
   </data>
+  <data name="Max Concurrent Requests" xml:space="preserve">
+    <value>Maksimäärä samanaikaisia pyyntöjä</value>
+  </data>
+  <data name="Maximum number of concurrent requests sent to this provider. 0 = unlimited (default). Set to 1 to serialize requests and prevent the backend from being overwhelmed." xml:space="preserve">
+    <value>Maksimimäärä samanaikaisia pyyntöjä, jotka lähetetään tälle palveluntarjoajalle. 0 = rajaton (oletus). Aseta arvoon 1 järjestämään pyynnöt peräkkäin ja estääksesi taustajärjestelmän kuormittumisen.</value>
+  </data>
   <data name="Models found:" xml:space="preserve">
     <value>Mallit löytyivät:</value>
   </data>

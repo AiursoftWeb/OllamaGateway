@@ -3,8 +3,9 @@ using System.ComponentModel.DataAnnotations;
 using Aiursoft.UiStack.Layout;
 
 namespace Aiursoft.OllamaGateway.Models.RolesViewModels;
+
 [ExcludeFromCodeCoverage]
-public class CreateViewModel: UiStackLayoutViewModel
+public class CreateViewModel : UiStackLayoutViewModel
 {
     public CreateViewModel()
     {

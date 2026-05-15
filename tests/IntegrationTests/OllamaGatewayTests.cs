@@ -23,10 +23,10 @@ public class OllamaGatewayTests : TestBase
         TestStartup.MockOllamaService.Reset();
         TestStartup.MockOllamaService.Setup(s => s.GetUnderlyingModelsAsync(It.IsAny<string>(), It.IsAny<string>()))
             .ReturnsAsync(new List<string> { "llama3.2", "nomic-embed-text" });
-        
+
         TestStartup.MockOllamaService.Setup(s => s.GetDetailedModelsAsync(It.IsAny<string>(), It.IsAny<string>()))
-            .ReturnsAsync(new List<OllamaService.OllamaModel> 
-            { 
+            .ReturnsAsync(new List<OllamaService.OllamaModel>
+            {
                 new OllamaService.OllamaModel { Name = "llama3.2", Size = 1024 * 1024 * 1024L },
                 new OllamaService.OllamaModel { Name = "nomic-embed-text", Size = 512 * 1024 * 1024L }
             });
@@ -74,7 +74,7 @@ public class OllamaGatewayTests : TestBase
         var request = new HttpRequestMessage(HttpMethod.Get, "/api/tags");
         request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKeyStr);
         var authResponse = await Http.SendAsync(request);
-        
+
         Assert.AreEqual(HttpStatusCode.OK, authResponse.StatusCode);
     }
 
@@ -158,7 +158,7 @@ public class OllamaGatewayTests : TestBase
             db.OllamaProviders.Add(new OllamaProvider { Name = "Default", BaseUrl = "http://localhost:11434" });
             await db.SaveChangesAsync();
         }
-        
+
         var provider = await GetService<TemplateDbContext>().OllamaProviders.FirstAsync();
 
         // 2. Create Virtual Chat Model
@@ -197,30 +197,30 @@ public class OllamaGatewayTests : TestBase
         var response = await Http.GetAsync("/UnderlyingModels/Index");
         response.EnsureSuccessStatusCode();
         var html = await response.Content.ReadAsStringAsync();
-        
+
         Assert.Contains("llama3.2", html);
         Assert.Contains("nomic-embed-text", html);
-        Assert.Contains("Running", html); 
-        Assert.Contains("Idle", html);    
+        Assert.Contains("Running", html);
+        Assert.Contains("Idle", html);
     }
 
     [TestMethod]
     public async Task TestApiKeyManagement()
     {
-        var (email, password) = await RegisterAndLoginAsync(); 
-        
+        var (email, password) = await RegisterAndLoginAsync();
+
         // Grant permissions to this test user
         using (var scope = Server!.Services.CreateScope())
         {
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var user = await userManager.FindByEmailAsync(email);
-            
+
             var roleName = "TestUserRole";
             await roleManager.CreateAsync(new IdentityRole(roleName));
-            await roleManager.AddClaimAsync(await roleManager.FindByNameAsync(roleName) ?? throw new Exception(), 
+            await roleManager.AddClaimAsync(await roleManager.FindByNameAsync(roleName) ?? throw new Exception(),
                 new Claim(Authorization.AppPermissions.Type, Authorization.AppPermissionNames.CanManageApiKeys));
-            
+
             await userManager.AddToRoleAsync(user!, roleName);
         }
 
@@ -245,7 +245,7 @@ public class OllamaGatewayTests : TestBase
         var db = GetService<TemplateDbContext>();
         var key = await db.ApiKeys.OrderByDescending(k => k.Id).FirstAsync();
         Assert.Contains(key.Key, html); // Shown once from TempData
-        
+
         var secondIndexResponse = await Http.GetAsync("/ApiKeys");
         var secondHtml = await secondIndexResponse.Content.ReadAsStringAsync();
         Assert.IsFalse(secondHtml.Contains(key.Key)); // Gone after refresh
@@ -294,9 +294,9 @@ public class OllamaGatewayTests : TestBase
             var provider = new OllamaProvider { Name = "Provider", BaseUrl = "http://localhost:11434" };
             db.OllamaProviders.Add(provider);
             await db.SaveChangesAsync();
-            var virtualModel = new VirtualModel 
-            { 
-                Name = "chat-model:latest", 
+            var virtualModel = new VirtualModel
+            {
+                Name = "chat-model:latest",
                 Type = ModelType.Chat
             };
             virtualModel.VirtualModelBackends.Add(new VirtualModelBackend
@@ -314,7 +314,7 @@ public class OllamaGatewayTests : TestBase
         var response = await Http.GetAsync("/ChatPlayground");
         response.EnsureSuccessStatusCode();
         var html = await response.Content.ReadAsStringAsync();
-        
+
         Assert.Contains("chat-model:latest", html);
         Assert.Contains("Chatting with", html);
         Assert.Contains("chat-model:latest", html);
@@ -332,9 +332,9 @@ public class OllamaGatewayTests : TestBase
             var provider = new OllamaProvider { Name = "Provider", BaseUrl = "http://localhost:11434" };
             db.OllamaProviders.Add(provider);
             await db.SaveChangesAsync();
-            var virtualModel = new VirtualModel 
-            { 
-                Name = "embed-model:latest", 
+            var virtualModel = new VirtualModel
+            {
+                Name = "embed-model:latest",
                 Type = ModelType.Embedding
             };
             virtualModel.VirtualModelBackends.Add(new VirtualModelBackend
@@ -352,7 +352,7 @@ public class OllamaGatewayTests : TestBase
         var response = await Http.GetAsync("/ChatPlayground/EmbeddingLab");
         response.EnsureSuccessStatusCode();
         var html = await response.Content.ReadAsStringAsync();
-        
+
         Assert.Contains("Embedding Lab", html);
         Assert.Contains("Generate Embeddings with", html);
         Assert.Contains("embed-model:latest", html);
@@ -389,12 +389,12 @@ public class OllamaGatewayTests : TestBase
         bool headerFound = false;
         MockUpstreamState.Handler = (req, _) =>
         {
-            if (req.Headers.Authorization?.Scheme == "Bearer" && 
+            if (req.Headers.Authorization?.Scheme == "Bearer" &&
                 req.Headers.Authorization?.Parameter == providerToken)
             {
                 headerFound = true;
             }
-            
+
             var body = """{"model":"llama3.2","message":{"role":"assistant","content":"ok"},"done":true}""";
             return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
             {

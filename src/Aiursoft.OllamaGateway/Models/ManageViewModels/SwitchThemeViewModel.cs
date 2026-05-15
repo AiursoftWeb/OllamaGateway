@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.OllamaGateway.Models.ManageViewModels;
+
 [ExcludeFromCodeCoverage]
 public class SwitchThemeViewModel
 {

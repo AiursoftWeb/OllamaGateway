@@ -6,6 +6,7 @@ using Aiursoft.UiStack.Layout;
 using Microsoft.AspNetCore.Identity;
 
 namespace Aiursoft.OllamaGateway.Models.PermissionsViewModels;
+
 [ExcludeFromCodeCoverage]
 public class DetailsViewModel : UiStackLayoutViewModel
 {

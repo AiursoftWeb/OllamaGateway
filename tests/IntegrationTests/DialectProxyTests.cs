@@ -692,7 +692,7 @@ public class DialectProxyTests : TestBase
             var ndjson =
                 """{"model":"llama3.2","message":{"role":"assistant","content":"","think":"Thinking..."},"done":false}""" + "\n" +
                 """{"model":"llama3.2","message":{"role":"assistant","content":"Hello!"},"done":true,"prompt_eval_count":10,"eval_count":5}""" + "\n";
-            
+
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(ndjson, Encoding.UTF8, "application/x-ndjson")
@@ -726,7 +726,7 @@ public class DialectProxyTests : TestBase
             var ndjson =
                 """{"model":"llama3.2","message":{"role":"assistant","content":"","thinking":"Thinking..."},"done":false}""" + "\n" +
                 """{"model":"llama3.2","message":{"role":"assistant","content":"Hello!"},"done":true,"prompt_eval_count":10,"eval_count":5}""" + "\n";
-            
+
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(ndjson, Encoding.UTF8, "application/x-ndjson")
@@ -820,7 +820,7 @@ public class DialectProxyTests : TestBase
         Assert.IsNotNull(MockUpstreamState.LastRequestBody);
         var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody);
         var message = upstreamBody?["messages"]?[0];
-        
+
         Assert.AreEqual("What is in this image?", message?["content"]?.ToString());
         var images = message?["images"]?.AsArray();
         Assert.IsNotNull(images);
@@ -871,7 +871,7 @@ public class DialectProxyTests : TestBase
         Assert.IsNotNull(MockUpstreamState.LastRequestBody);
         var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody);
         var toolCall = upstreamBody?["messages"]?[0]?["tool_calls"]?[0];
-        
+
         Assert.AreEqual("get_weather", toolCall?["function"]?["name"]?.ToString());
         Assert.AreEqual("call_123", toolCall?["id"]?.ToString());
         Assert.AreEqual("function", toolCall?["type"]?.ToString());
@@ -919,7 +919,7 @@ public class DialectProxyTests : TestBase
         // 3. Assert: Gateway should return OpenAI-style tool calls (STRING arguments)
         var json = JsonNode.Parse(responseBody);
         var toolCall = json?["choices"]?[0]?["message"]?["tool_calls"]?[0];
-        
+
         Assert.AreEqual("run_command", toolCall?["function"]?["name"]?.ToString());
         var args = toolCall?["function"]?["arguments"]?.ToString();
         Assert.AreEqual("{\"command\":\"ls -la\"}", args);
@@ -957,7 +957,7 @@ public class DialectProxyTests : TestBase
         // 1. Arrange: Two chunks. First chunk has tool calls. Second chunk is empty and says "done: true".
         MockUpstreamState.Handler = (_, _) =>
         {
-            var ndjson = 
+            var ndjson =
                 """{"model":"llama3.2","message":{"role":"assistant","content":"","tool_calls":[{"function":{"name":"test","arguments":{}}}]},"done":false}""" + "\n" +
                 """{"model":"llama3.2","done":true}""" + "\n";
             return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
@@ -1022,7 +1022,7 @@ public class DialectProxyTests : TestBase
         {
             Assert.IsNotNull(scope);
             var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
-            
+
             var provider2 = new OllamaProvider { Name = "FallbackProvider", BaseUrl = "http://fallback-ollama:11434" };
             db.OllamaProviders.Add(provider2);
             await db.SaveChangesAsync();
@@ -1069,7 +1069,7 @@ public class DialectProxyTests : TestBase
         // Act 2: Second request hits the fallback node because Node 1 is now in circuit breaker ban.
         var response2 = await Http.SendAsync(AuthedPost("/api/chat", payload));
         Assert.AreEqual(HttpStatusCode.OK, response2.StatusCode);
-        
+
         var body2 = await response2.Content.ReadAsStringAsync();
         var json2 = JsonNode.Parse(body2);
         Assert.AreEqual("Fallback success!", json2?["message"]?["content"]?.ToString());

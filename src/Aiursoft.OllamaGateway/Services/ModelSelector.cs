@@ -112,8 +112,8 @@ public class ModelSelector : IModelSelector, ISingletonDependency
 
         if (index >= backends.Count)
         {
-             index = 0;
-             _roundRobinStates[virtualModelId] = 0;
+            index = 0;
+            _roundRobinStates[virtualModelId] = 0;
         }
 
         return backends[index];

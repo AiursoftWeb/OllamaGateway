@@ -79,7 +79,7 @@ public abstract class TestBase
         Assert.AreEqual(HttpStatusCode.Found, response.StatusCode);
         var actualLocation = response.Headers.Location?.OriginalString ?? string.Empty;
         var baseUri = Http.BaseAddress?.ToString() ?? "____";
-        
+
         if (actualLocation.StartsWith(baseUri))
         {
             actualLocation = actualLocation.Substring(baseUri.Length - 1); // Keep the leading slash

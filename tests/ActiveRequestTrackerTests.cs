@@ -26,11 +26,11 @@ public class ActiveRequestTrackerTests
         Assert.AreEqual(1, busyPhysical.Count);
         Assert.IsTrue(busyPhysical.Contains((providerId, backendModelName)));
 
-        tracker.EndRequest(modelName, providerId, backendModelName);
+        tracker.EndRequest(modelName, providerId, backendModelName, true);
 
         Assert.AreEqual(0, all[modelName].ActiveCount);
         Assert.IsNotNull(all[modelName].LastCompletedAt);
-        
+
         busyPhysical = tracker.GetBusyPhysicalModels();
         Assert.AreEqual(0, busyPhysical.Count);
     }
@@ -52,15 +52,15 @@ public class ActiveRequestTrackerTests
         var busyPhysical = tracker.GetBusyPhysicalModels();
         Assert.AreEqual(1, busyPhysical.Count);
 
-        tracker.EndRequest(modelName, providerId, backendModelName);
+        tracker.EndRequest(modelName, providerId, backendModelName, true);
         Assert.AreEqual(1, all[modelName].ActiveCount);
-        
+
         busyPhysical = tracker.GetBusyPhysicalModels();
         Assert.AreEqual(1, busyPhysical.Count);
 
-        tracker.EndRequest(modelName, providerId, backendModelName);
+        tracker.EndRequest(modelName, providerId, backendModelName, true);
         Assert.AreEqual(0, all[modelName].ActiveCount);
-        
+
         busyPhysical = tracker.GetBusyPhysicalModels();
         Assert.AreEqual(0, busyPhysical.Count);
     }

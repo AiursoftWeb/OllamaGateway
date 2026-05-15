@@ -16,10 +16,10 @@ public abstract class TemplateDbContext(DbContextOptions options) : IdentityDbCo
     public DbSet<OllamaProvider> OllamaProviders => Set<OllamaProvider>();
     public DbSet<UnderlyingModelUsage> UnderlyingModelUsages => Set<UnderlyingModelUsage>();
 
-    public virtual  Task MigrateAsync(CancellationToken cancellationToken) =>
+    public virtual Task MigrateAsync(CancellationToken cancellationToken) =>
         Database.MigrateAsync(cancellationToken);
 
-    public virtual  Task<bool> CanConnectAsync() =>
+    public virtual Task<bool> CanConnectAsync() =>
         Database.CanConnectAsync();
 
     protected override void OnModelCreating(ModelBuilder builder)

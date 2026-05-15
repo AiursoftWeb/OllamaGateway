@@ -11,9 +11,9 @@ public class VirtualModelsControllerTests : TestBase
     {
         await LoginAsAdmin();
         var url = "/VirtualModels/Index";
-        
+
         var response = await Http.GetAsync(url);
-        
+
         // Assert
         response.EnsureSuccessStatusCode();
         var content = await response.Content.ReadAsStringAsync();
@@ -25,9 +25,9 @@ public class VirtualModelsControllerTests : TestBase
     {
         await LoginAsAdmin();
         var url = "/VirtualModels/EmbeddingIndex";
-        
+
         var response = await Http.GetAsync(url);
-        
+
         // Assert
         response.EnsureSuccessStatusCode();
         var content = await response.Content.ReadAsStringAsync();
@@ -39,9 +39,9 @@ public class VirtualModelsControllerTests : TestBase
     {
         await LoginAsAdmin();
         var url = "/VirtualModels/Create";
-        
+
         var response = await Http.GetAsync(url);
-        
+
         // Assert
         response.EnsureSuccessStatusCode();
     }
@@ -56,7 +56,7 @@ public class VirtualModelsControllerTests : TestBase
         using (var scope = Server!.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
-            
+
             // 1. Create a provider
             var provider = new OllamaProvider
             {

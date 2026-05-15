@@ -10,7 +10,7 @@ public class GlobalSettingsIntegrationTests : TestBase
     public async Task TestSettingWorkflow()
     {
         var settingsService = GetService<GlobalSettingsService>();
-        
+
         // 1. Get default value
         var projectName = await settingsService.GetProjectNameAsync();
         Assert.IsNotNull(projectName);
@@ -28,7 +28,7 @@ public class GlobalSettingsIntegrationTests : TestBase
     public async Task TestBoolSetting()
     {
         var settingsService = GetService<GlobalSettingsService>();
-        
+
         await settingsService.SetAllowUserAdjustNicknameAsync(true);
         Assert.IsTrue(await settingsService.GetAllowUserAdjustNicknameAsync());
 
@@ -55,7 +55,7 @@ public class GlobalSettingsIntegrationTests : TestBase
     public async Task TestRequestTimeout()
     {
         var settingsService = GetService<GlobalSettingsService>();
-        
+
         await settingsService.UpdateSettingAsync(SettingsMap.RequestTimeoutInMinutes, "15");
         var timeout = await settingsService.GetRequestTimeoutAsync();
         Assert.AreEqual(TimeSpan.FromMinutes(15), timeout);

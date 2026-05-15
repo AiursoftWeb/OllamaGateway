@@ -54,6 +54,12 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>KEEP ALIVE 정책</value>
   </data>
+  <data name="Max Concurrent Requests" xml:space="preserve">
+    <value>최대 동시 요청 수</value>
+  </data>
+  <data name="Maximum number of concurrent requests sent to this provider. 0 = unlimited (default). Set to 1 to serialize requests and prevent the backend from being overwhelmed." xml:space="preserve">
+    <value>이 제공자에게 보내지는 동시 요청의 최대 개수입니다. 0 = 제한 없음(기본값). 1로 설정하면 요청을 직렬화하여 백엔드가 과부하되는 것을 방지합니다.</value>
+  </data>
   <data name="Model" xml:space="preserve">
     <value>Model</value>
   </data>

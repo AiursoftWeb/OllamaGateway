@@ -31,7 +31,7 @@ public class ModelWarmupServiceTests
     {
         var service = new ModelWarmupService(_dbContext, _httpClientFactoryMock.Object, _loggerMock.Object);
         await service.ExecuteAsync();
-        
+
         _httpClientFactoryMock.Verify(x => x.CreateClient(It.IsAny<string>()), Times.Never);
     }
 
@@ -72,8 +72,8 @@ public class ModelWarmupServiceTests
         handlerMock.Protected().Verify(
             "SendAsync",
             Times.Once(),
-            ItExpr.Is<HttpRequestMessage>(req => 
-                req.Method == HttpMethod.Post && 
+            ItExpr.Is<HttpRequestMessage>(req =>
+                req.Method == HttpMethod.Post &&
                 req.RequestUri!.ToString().Contains("/api/chat")),
             ItExpr.IsAny<CancellationToken>()
         );
@@ -116,8 +116,8 @@ public class ModelWarmupServiceTests
         handlerMock.Protected().Verify(
             "SendAsync",
             Times.Once(),
-            ItExpr.Is<HttpRequestMessage>(req => 
-                req.Method == HttpMethod.Post && 
+            ItExpr.Is<HttpRequestMessage>(req =>
+                req.Method == HttpMethod.Post &&
                 req.RequestUri!.ToString().Contains("/api/embeddings")),
             ItExpr.IsAny<CancellationToken>()
         );

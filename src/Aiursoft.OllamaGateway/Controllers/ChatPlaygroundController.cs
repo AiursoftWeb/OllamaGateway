@@ -154,7 +154,7 @@ public class ChatPlaygroundController(
     [Authorize(Policy = AppPermissionNames.CanChatWithUnderlyingModels)]
     [HttpGet]
     public async Task<IActionResult> PhysicalChat(
-        int providerId, 
+        int providerId,
         string modelName,
         bool? thinking,
         int? numCtx,
@@ -176,7 +176,7 @@ public class ChatPlaygroundController(
 
         var baseUrl = $"{Request.Scheme}://{Request.Host}";
         var physicalModelName = $"physical_{providerId}_{modelName}";
-        
+
         var viewModel = new IndexViewModel
         {
             Name = physicalModelName,

@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.OllamaGateway.Models.GlobalSettingsViewModels;
+
 [ExcludeFromCodeCoverage]
 public class SettingViewModel
 {
@@ -28,7 +29,7 @@ public class SettingViewModel
 
     [Display(Name = "Choice options")]
     public Dictionary<string, string>? ChoiceOptions { get; set; }
-    
+
     // File upload settings (for SettingType.File)
     [Display(Name = "Subfolder")]
     public string? Subfolder { get; set; }

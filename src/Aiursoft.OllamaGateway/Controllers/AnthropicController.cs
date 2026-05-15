@@ -48,7 +48,7 @@ public class AnthropicController : ControllerBase
     private string ExtractTextFromBlocks(object? content)
     {
         if (content == null) return string.Empty;
-        
+
         // Handle Newtonsoft.Json.Linq types if they arrive from the binder
         if (content is Newtonsoft.Json.Linq.JToken jToken)
         {
@@ -79,7 +79,7 @@ public class AnthropicController : ControllerBase
                 }
                 return string.Join("\n", parts);
             }
-            
+
             return jToken.ToString(Newtonsoft.Json.Formatting.None);
         }
 
@@ -225,7 +225,7 @@ public class AnthropicController : ControllerBase
 
             foreach (var msg in request.Messages)
             {
-                var contentNode = msg.Content is Newtonsoft.Json.Linq.JToken jt 
+                var contentNode = msg.Content is Newtonsoft.Json.Linq.JToken jt
                     ? JsonNode.Parse(jt.ToString(Newtonsoft.Json.Formatting.None))
                     : JsonSerializer.SerializeToNode(msg.Content);
 
@@ -251,11 +251,11 @@ public class AnthropicController : ControllerBase
                                         openaiMessages.Add(new JsonObject { ["role"] = "user", ["content"] = string.Join("\n", textParts) });
                                         textParts.Clear();
                                     }
-                                    
+
                                     var toolUseId = obj["tool_use_id"]?.ToString() ?? string.Empty;
                                     var innerContent = ExtractTextFromBlocks(obj["content"]);
                                     var isError = obj["is_error"]?.GetValue<bool>() == true;
-                                    
+
                                     openaiMessages.Add(new JsonObject
                                     {
                                         ["role"] = "tool",
@@ -279,7 +279,7 @@ public class AnthropicController : ControllerBase
                         var textParts = new List<string>();
                         var toolCalls = new JsonArray();
                         string? reasoningContent = null;
-                        
+
                         foreach (var item in arr)
                         {
                             if (item is JsonObject obj)
@@ -300,7 +300,7 @@ public class AnthropicController : ControllerBase
                                     var name = obj["name"]?.ToString() ?? string.Empty;
                                     var inputNode = obj["input"];
                                     var inputStr = inputNode?.ToJsonString() ?? "{}";
-                                    
+
                                     toolCalls.Add(new JsonObject
                                     {
                                         ["id"] = id,
@@ -318,7 +318,7 @@ public class AnthropicController : ControllerBase
                                 textParts.Add(str);
                             }
                         }
-                        
+
                         var fullText = string.Join("\n", textParts);
                         if (string.IsNullOrEmpty(reasoningContent))
                         {
@@ -338,7 +338,7 @@ public class AnthropicController : ControllerBase
                                 }
                             }
                         }
-                        
+
                         var assistantMsg = new JsonObject { ["role"] = "assistant", ["content"] = fullText };
                         if (!string.IsNullOrEmpty(reasoningContent))
                         {
@@ -449,12 +449,12 @@ public class AnthropicController : ControllerBase
                     ["stream"] = isStream
                 };
                 if (openaiBody["tools"] != null) requestBody["tools"] = openaiBody["tools"]!.DeepClone();
-                
+
                 var options = new JsonObject();
                 if (openaiBody["temperature"] != null) options["temperature"] = openaiBody["temperature"]!.DeepClone();
                 if (openaiBody["top_p"] != null) options["top_p"] = openaiBody["top_p"]!.DeepClone();
                 if (openaiBody["max_tokens"] != null) options["num_predict"] = openaiBody["max_tokens"]!.DeepClone();
-                
+
                 if (virtualModel.TopK.HasValue) options["top_k"] = virtualModel.TopK.Value;
                 if (virtualModel.NumCtx.HasValue) options["num_ctx"] = virtualModel.NumCtx.Value;
                 if (virtualModel.Thinking.HasValue) requestBody["think"] = virtualModel.Thinking.Value;
@@ -501,328 +501,329 @@ public class AnthropicController : ControllerBase
 
                 await using var upstreamStream = await upstreamResponse.Content.ReadAsStreamAsync(HttpContext.RequestAborted);
 
-            if (isStream)
-            {
-                Response.ContentType = "text/event-stream";
-                Response.Headers.CacheControl = "no-cache";
-                var answerBuilder = new StringBuilder();
-                using var reader = new StreamReader(upstreamStream);
-                string? sLine;
-                var msgId = $"msg_{Guid.NewGuid():N}";
-                
-                // Emitting message_start
-                var messageStart = new JsonObject
+                if (isStream)
                 {
-                    ["type"] = "message_start",
-                    ["message"] = new JsonObject
+                    Response.ContentType = "text/event-stream";
+                    Response.Headers.CacheControl = "no-cache";
+                    var answerBuilder = new StringBuilder();
+                    using var reader = new StreamReader(upstreamStream);
+                    string? sLine;
+                    var msgId = $"msg_{Guid.NewGuid():N}";
+
+                    // Emitting message_start
+                    var messageStart = new JsonObject
                     {
-                        ["id"] = msgId,
-                        ["type"] = "message",
-                        ["role"] = "assistant",
-                        ["model"] = virtualModel.Name,
-                        ["content"] = new JsonArray(),
-                        ["usage"] = new JsonObject { ["input_tokens"] = 0, ["output_tokens"] = 0 }
-                    }
-                };
-                await Response.WriteAsync($"event: message_start\ndata: {messageStart.ToJsonString()}\n\n", HttpContext.RequestAborted);
-                
-                var contentBlockStart = new JsonObject
-                {
-                    ["type"] = "content_block_start",
-                    ["index"] = 0,
-                    ["content_block"] = new JsonObject { ["type"] = "text", ["text"] = "" }
-                };
-                await Response.WriteAsync($"event: content_block_start\ndata: {contentBlockStart.ToJsonString()}\n\n", HttpContext.RequestAborted);
-
-                var activeToolBlocks = new HashSet<int>();
-                var currentStopReason = "end_turn";
-                var localToolIndexCounter = 0;
-                var hasStartedReasoning = false;
-                var hasEndedReasoning = false;
-
-                while ((sLine = await reader.ReadLineAsync(HttpContext.RequestAborted)) != null)
-                {
-                    if (string.IsNullOrWhiteSpace(sLine)) continue;
-                    
-                    string deltaText = "";
-                    JsonArray? toolCalls = null;
-
-                    if (isOllamaDirect)
-                    {
-                        try
+                        ["type"] = "message_start",
+                        ["message"] = new JsonObject
                         {
-                            var chunk = JsonNode.Parse(sLine);
-                            if (chunk != null)
-                            {
-                                deltaText = chunk["message"]?["content"]?.ToString() ?? "";
-                                toolCalls = chunk["message"]?["tool_calls"]?.AsArray();
-                                if (toolCalls != null && toolCalls.Count > 0) currentStopReason = "tool_use";
-
-                                if (chunk["done"]?.GetValue<bool>() == true)
-                                {
-                                    var pTok = chunk["prompt_eval_count"]?.GetValue<long>() ?? 0;
-                                    var cTok = chunk["eval_count"]?.GetValue<long>() ?? 0;
-                                    _logContext.Log.PromptTokens = (int)pTok;
-                                    _logContext.Log.CompletionTokens = (int)cTok;
-
-                                    var doneReason = chunk["done_reason"]?.ToString();
-                                    if (doneReason == "length") currentStopReason = "max_tokens";
-                                }
-                            }
+                            ["id"] = msgId,
+                            ["type"] = "message",
+                            ["role"] = "assistant",
+                            ["model"] = virtualModel.Name,
+                            ["content"] = new JsonArray(),
+                            ["usage"] = new JsonObject { ["input_tokens"] = 0, ["output_tokens"] = 0 }
                         }
-                        catch (JsonException) { }
-                    }
-                    else
+                    };
+                    await Response.WriteAsync($"event: message_start\ndata: {messageStart.ToJsonString()}\n\n", HttpContext.RequestAborted);
+
+                    var contentBlockStart = new JsonObject
                     {
-                        if (sLine.StartsWith("data: ") && sLine != "data: [DONE]")
+                        ["type"] = "content_block_start",
+                        ["index"] = 0,
+                        ["content_block"] = new JsonObject { ["type"] = "text", ["text"] = "" }
+                    };
+                    await Response.WriteAsync($"event: content_block_start\ndata: {contentBlockStart.ToJsonString()}\n\n", HttpContext.RequestAborted);
+
+                    var activeToolBlocks = new HashSet<int>();
+                    var currentStopReason = "end_turn";
+                    var localToolIndexCounter = 0;
+                    var hasStartedReasoning = false;
+                    var hasEndedReasoning = false;
+
+                    while ((sLine = await reader.ReadLineAsync(HttpContext.RequestAborted)) != null)
+                    {
+                        if (string.IsNullOrWhiteSpace(sLine)) continue;
+
+                        string deltaText = "";
+                        JsonArray? toolCalls = null;
+
+                        if (isOllamaDirect)
                         {
                             try
                             {
-                                var chunk = JsonNode.Parse(sLine["data: ".Length..]);
+                                var chunk = JsonNode.Parse(sLine);
                                 if (chunk != null)
                                 {
-                                    var choice = chunk["choices"]?[0];
-                                    deltaText = choice?["delta"]?["content"]?.ToString() ?? "";
-                                    
-                                    // DeepSeek reasoning content mapping
-                                    var reasoningNode = choice?["delta"]?["reasoning_content"];
-                                    if (reasoningNode != null)
-                                    {
-                                        var reasoningStr = reasoningNode.ToString();
-                                        if (!hasStartedReasoning)
-                                        {
-                                            deltaText = "<think>\n" + reasoningStr;
-                                            hasStartedReasoning = true;
-                                        }
-                                        else
-                                        {
-                                            deltaText = reasoningStr;
-                                        }
-                                    }
-                                    else if (hasStartedReasoning && !hasEndedReasoning)
-                                    {
-                                        deltaText = "\n</think>\n" + deltaText;
-                                        hasEndedReasoning = true;
-                                    }
+                                    deltaText = chunk["message"]?["content"]?.ToString() ?? "";
+                                    toolCalls = chunk["message"]?["tool_calls"]?.AsArray();
+                                    if (toolCalls != null && toolCalls.Count > 0) currentStopReason = "tool_use";
 
-                                    toolCalls = choice?["delta"]?["tool_calls"]?.AsArray();
-                                    var finishReason = choice?["finish_reason"]?.ToString();
-                                    if (finishReason == "length") currentStopReason = "max_tokens";
-                                    else if (finishReason == "tool_calls" || finishReason == "function_call") currentStopReason = "tool_use";
-                                    else if (finishReason == "stop") currentStopReason = "end_turn";
-
-                                    if (chunk["usage"] != null)
+                                    if (chunk["done"]?.GetValue<bool>() == true)
                                     {
-                                        var pTok = chunk["usage"]!["prompt_tokens"]?.GetValue<long>() ?? 0;
-                                        var cTok = chunk["usage"]!["completion_tokens"]?.GetValue<long>() ?? 0;
+                                        var pTok = chunk["prompt_eval_count"]?.GetValue<long>() ?? 0;
+                                        var cTok = chunk["eval_count"]?.GetValue<long>() ?? 0;
                                         _logContext.Log.PromptTokens = (int)pTok;
                                         _logContext.Log.CompletionTokens = (int)cTok;
+
+                                        var doneReason = chunk["done_reason"]?.ToString();
+                                        if (doneReason == "length") currentStopReason = "max_tokens";
                                     }
                                 }
                             }
                             catch (JsonException) { }
                         }
-                    }
-
-                    if (!string.IsNullOrEmpty(deltaText))
-                    {
-                        answerBuilder.Append(deltaText);
-                        var deltaObj = new JsonObject
-                        {
-                            ["type"] = "content_block_delta",
-                            ["index"] = 0,
-                            ["delta"] = new JsonObject { ["type"] = "text_delta", ["text"] = deltaText }
-                        };
-                        await Response.WriteAsync($"event: content_block_delta\ndata: {deltaObj.ToJsonString()}\n\n", HttpContext.RequestAborted);
-                    }
-
-                    if (toolCalls != null)
-                    {
-                        foreach (var tc in toolCalls)
-                        {
-                            var tcIndexNode = tc?["index"];
-                            var index = tcIndexNode != null ? tcIndexNode.GetValue<int>() : localToolIndexCounter++;
-                            var id = tc?["id"]?.ToString();
-                            var funcName = tc?["function"]?["name"]?.ToString();
-                            var argsDelta = tc?["function"]?["arguments"]?.ToString();
-
-                            // Start a new tool block if we haven't seen this index yet
-                            if (!activeToolBlocks.Contains(index) && !string.IsNullOrEmpty(id))
-                            {
-                                activeToolBlocks.Add(index);
-                                var toolStart = new JsonObject
-                                {
-                                    ["type"] = "content_block_start",
-                                    ["index"] = index + 1, // Text is at 0
-                                    ["content_block"] = new JsonObject
-                                    {
-                                        ["type"] = "tool_use",
-                                        ["id"] = id,
-                                        ["name"] = funcName ?? "unknown",
-                                        ["input"] = new JsonObject()
-                                    }
-                                };
-                                await Response.WriteAsync($"event: content_block_start\ndata: {toolStart.ToJsonString()}\n\n", HttpContext.RequestAborted);
-                            }
-
-                            if (!string.IsNullOrEmpty(argsDelta))
-                            {
-                                var toolDelta = new JsonObject
-                                {
-                                    ["type"] = "content_block_delta",
-                                    ["index"] = index + 1,
-                                    ["delta"] = new JsonObject
-                                    {
-                                        ["type"] = "input_json_delta",
-                                        ["partial_json"] = argsDelta
-                                    }
-                                };
-                                await Response.WriteAsync($"event: content_block_delta\ndata: {toolDelta.ToJsonString()}\n\n", HttpContext.RequestAborted);
-                            }
-                        }
-                    }
-                    await Response.Body.FlushAsync(HttpContext.RequestAborted);
-                }
-
-                // Close all blocks
-                var contentBlockStop = new JsonObject { ["type"] = "content_block_stop", ["index"] = 0 };
-                await Response.WriteAsync($"event: content_block_stop\ndata: {contentBlockStop.ToJsonString()}\n\n", HttpContext.RequestAborted);
-                foreach (var idx in activeToolBlocks)
-                {
-                    var stop = new JsonObject { ["type"] = "content_block_stop", ["index"] = idx + 1 };
-                    await Response.WriteAsync($"event: content_block_stop\ndata: {stop.ToJsonString()}\n\n", HttpContext.RequestAborted);
-                }
-
-                var messageDelta = new JsonObject
-                {
-                    ["type"] = "message_delta",
-                    ["delta"] = new JsonObject { ["stop_reason"] = currentStopReason },
-                    ["usage"] = new JsonObject { ["output_tokens"] = _logContext.Log.CompletionTokens }
-                };
-                await Response.WriteAsync($"event: message_delta\ndata: {messageDelta.ToJsonString()}\n\n", HttpContext.RequestAborted);
-                
-                var messageStop = new JsonObject { ["type"] = "message_stop" };
-                await Response.WriteAsync($"event: message_stop\ndata: {messageStop.ToJsonString()}\n\n", HttpContext.RequestAborted);
-                await Response.Body.FlushAsync(HttpContext.RequestAborted);
-
-                _logContext.Log.Answer = answerBuilder.ToString();
-            }
-            else
-            {
-                using var directMs = new MemoryStream();
-                await upstreamStream.CopyToAsync(directMs, HttpContext.RequestAborted);
-                directMs.Seek(0, SeekOrigin.Begin);
-                try
-                {
-                    var respNode = await JsonNode.ParseAsync(directMs, cancellationToken: HttpContext.RequestAborted);
-                    if (respNode != null)
-                    {
-                        string respContent;
-                        string stopReason = "end_turn";
-                        var contentBlocks = new List<AnthropicContentBlock>();
-                        long pTok, cTok;
-
-                        if (isOllamaDirect)
-                        {
-                            respContent = respNode["message"]?["content"]?.ToString() ?? "";
-                            pTok = respNode["prompt_eval_count"]?.GetValue<long>() ?? 0;
-                            cTok = respNode["eval_count"]?.GetValue<long>() ?? 0;
-                            
-                            var doneReason = respNode["done_reason"]?.ToString();
-                            if (doneReason == "length") stopReason = "max_tokens";
-
-                            // Handle Ollama tool calls if present
-                            var toolCalls = respNode["message"]?["tool_calls"]?.AsArray();
-                            if (toolCalls != null && toolCalls.Count > 0)
-                            {
-                                stopReason = "tool_use";
-                                foreach (var tc in toolCalls)
-                                {
-                                    if (tc == null) continue;
-                                    contentBlocks.Add(new AnthropicContentBlock
-                                    {
-                                        Type = "tool_use",
-                                        Id = tc["id"]?.ToString() ?? $"toolu_{Guid.NewGuid():N}",
-                                        Name = tc["function"]?["name"]?.ToString() ?? "unknown",
-                                        Input = tc["function"]?["arguments"]?.DeepClone()
-                                    });
-                                }
-                            }
-                        }
                         else
                         {
-                            var message = respNode["choices"]?[0]?["message"];
-                            respContent = message?["content"]?.ToString() ?? "";
-                            var oaiFinish = respNode["choices"]?[0]?["finish_reason"]?.ToString();
-                            if (oaiFinish == "length") stopReason = "max_tokens";
-                            else if (oaiFinish == "tool_calls" || oaiFinish == "function_call") stopReason = "tool_use";
-                            else if (oaiFinish == "stop") stopReason = "end_turn";
-                            
-                            pTok = respNode["usage"]?["prompt_tokens"]?.GetValue<long>() ?? 0;
-                            cTok = respNode["usage"]?["completion_tokens"]?.GetValue<long>() ?? 0;
-
-                            var toolCalls = message?["tool_calls"]?.AsArray();
-                            if (toolCalls != null && toolCalls.Count > 0)
+                            if (sLine.StartsWith("data: ") && sLine != "data: [DONE]")
                             {
-                                stopReason = "tool_use";
-                                foreach (var tc in toolCalls)
+                                try
                                 {
-                                    if (tc == null) continue;
-                                    JsonNode? args;
-                                    try
+                                    var chunk = JsonNode.Parse(sLine["data: ".Length..]);
+                                    if (chunk != null)
                                     {
-                                        args = JsonNode.Parse(tc["function"]?["arguments"]?.ToString() ?? "{}");
-                                    }
-                                    catch { args = new JsonObject(); }
+                                        var choice = chunk["choices"]?[0];
+                                        deltaText = choice?["delta"]?["content"]?.ToString() ?? "";
 
-                                    contentBlocks.Add(new AnthropicContentBlock
-                                    {
-                                        Type = "tool_use",
-                                        Id = tc["id"]?.ToString() ?? $"toolu_{Guid.NewGuid():N}",
-                                        Name = tc["function"]?["name"]?.ToString() ?? "unknown",
-                                        Input = args
-                                    });
+                                        // DeepSeek reasoning content mapping
+                                        var reasoningNode = choice?["delta"]?["reasoning_content"];
+                                        if (reasoningNode != null)
+                                        {
+                                            var reasoningStr = reasoningNode.ToString();
+                                            if (!hasStartedReasoning)
+                                            {
+                                                deltaText = "<think>\n" + reasoningStr;
+                                                hasStartedReasoning = true;
+                                            }
+                                            else
+                                            {
+                                                deltaText = reasoningStr;
+                                            }
+                                        }
+                                        else if (hasStartedReasoning && !hasEndedReasoning)
+                                        {
+                                            deltaText = "\n</think>\n" + deltaText;
+                                            hasEndedReasoning = true;
+                                        }
+
+                                        toolCalls = choice?["delta"]?["tool_calls"]?.AsArray();
+                                        var finishReason = choice?["finish_reason"]?.ToString();
+                                        if (finishReason == "length") currentStopReason = "max_tokens";
+                                        else if (finishReason == "tool_calls" || finishReason == "function_call") currentStopReason = "tool_use";
+                                        else if (finishReason == "stop") currentStopReason = "end_turn";
+
+                                        if (chunk["usage"] != null)
+                                        {
+                                            var pTok = chunk["usage"]!["prompt_tokens"]?.GetValue<long>() ?? 0;
+                                            var cTok = chunk["usage"]!["completion_tokens"]?.GetValue<long>() ?? 0;
+                                            _logContext.Log.PromptTokens = (int)pTok;
+                                            _logContext.Log.CompletionTokens = (int)cTok;
+                                        }
+                                    }
                                 }
+                                catch (JsonException) { }
                             }
                         }
 
-                        if (!string.IsNullOrEmpty(respContent))
+                        if (!string.IsNullOrEmpty(deltaText))
                         {
-                            contentBlocks.Insert(0, new AnthropicContentBlock { Type = "text", Text = respContent });
+                            answerBuilder.Append(deltaText);
+                            var deltaObj = new JsonObject
+                            {
+                                ["type"] = "content_block_delta",
+                                ["index"] = 0,
+                                ["delta"] = new JsonObject { ["type"] = "text_delta", ["text"] = deltaText }
+                            };
+                            await Response.WriteAsync($"event: content_block_delta\ndata: {deltaObj.ToJsonString()}\n\n", HttpContext.RequestAborted);
                         }
 
-                        _logContext.Log.Answer = respContent;
-                        _logContext.Log.PromptTokens = (int)pTok;
-                        _logContext.Log.CompletionTokens = (int)cTok;
-                        _logContext.Log.TotalTokens = (int)(pTok + cTok);
-
-                        var anthropicResponse = new AnthropicResponse
+                        if (toolCalls != null)
                         {
-                            Id = $"msg_{Guid.NewGuid():N}",
-                            Model = virtualModel.Name,
-                            StopReason = stopReason,
-                            Usage = new AnthropicUsage { InputTokens = (int)pTok, OutputTokens = (int)cTok },
-                            Content = contentBlocks
-                        };
+                            foreach (var tc in toolCalls)
+                            {
+                                var tcIndexNode = tc?["index"];
+                                var index = tcIndexNode != null ? tcIndexNode.GetValue<int>() : localToolIndexCounter++;
+                                var id = tc?["id"]?.ToString();
+                                var funcName = tc?["function"]?["name"]?.ToString();
+                                var argsDelta = tc?["function"]?["arguments"]?.ToString();
 
+                                // Start a new tool block if we haven't seen this index yet
+                                if (!activeToolBlocks.Contains(index) && !string.IsNullOrEmpty(id))
+                                {
+                                    activeToolBlocks.Add(index);
+                                    var toolStart = new JsonObject
+                                    {
+                                        ["type"] = "content_block_start",
+                                        ["index"] = index + 1, // Text is at 0
+                                        ["content_block"] = new JsonObject
+                                        {
+                                            ["type"] = "tool_use",
+                                            ["id"] = id,
+                                            ["name"] = funcName ?? "unknown",
+                                            ["input"] = new JsonObject()
+                                        }
+                                    };
+                                    await Response.WriteAsync($"event: content_block_start\ndata: {toolStart.ToJsonString()}\n\n", HttpContext.RequestAborted);
+                                }
+
+                                if (!string.IsNullOrEmpty(argsDelta))
+                                {
+                                    var toolDelta = new JsonObject
+                                    {
+                                        ["type"] = "content_block_delta",
+                                        ["index"] = index + 1,
+                                        ["delta"] = new JsonObject
+                                        {
+                                            ["type"] = "input_json_delta",
+                                            ["partial_json"] = argsDelta
+                                        }
+                                    };
+                                    await Response.WriteAsync($"event: content_block_delta\ndata: {toolDelta.ToJsonString()}\n\n", HttpContext.RequestAborted);
+                                }
+                            }
+                        }
+                        await Response.Body.FlushAsync(HttpContext.RequestAborted);
+                    }
+
+                    // Close all blocks
+                    var contentBlockStop = new JsonObject { ["type"] = "content_block_stop", ["index"] = 0 };
+                    await Response.WriteAsync($"event: content_block_stop\ndata: {contentBlockStop.ToJsonString()}\n\n", HttpContext.RequestAborted);
+                    foreach (var idx in activeToolBlocks)
+                    {
+                        var stop = new JsonObject { ["type"] = "content_block_stop", ["index"] = idx + 1 };
+                        await Response.WriteAsync($"event: content_block_stop\ndata: {stop.ToJsonString()}\n\n", HttpContext.RequestAborted);
+                    }
+
+                    var messageDelta = new JsonObject
+                    {
+                        ["type"] = "message_delta",
+                        ["delta"] = new JsonObject { ["stop_reason"] = currentStopReason },
+                        ["usage"] = new JsonObject { ["output_tokens"] = _logContext.Log.CompletionTokens }
+                    };
+                    await Response.WriteAsync($"event: message_delta\ndata: {messageDelta.ToJsonString()}\n\n", HttpContext.RequestAborted);
+
+                    var messageStop = new JsonObject { ["type"] = "message_stop" };
+                    await Response.WriteAsync($"event: message_stop\ndata: {messageStop.ToJsonString()}\n\n", HttpContext.RequestAborted);
+                    await Response.Body.FlushAsync(HttpContext.RequestAborted);
+
+                    _logContext.Log.Answer = answerBuilder.ToString();
+                }
+                else
+                {
+                    using var directMs = new MemoryStream();
+                    await upstreamStream.CopyToAsync(directMs, HttpContext.RequestAborted);
+                    directMs.Seek(0, SeekOrigin.Begin);
+                    try
+                    {
+                        var respNode = await JsonNode.ParseAsync(directMs, cancellationToken: HttpContext.RequestAborted);
+                        if (respNode != null)
+                        {
+                            string respContent;
+                            string stopReason = "end_turn";
+                            var contentBlocks = new List<AnthropicContentBlock>();
+                            long pTok, cTok;
+
+                            if (isOllamaDirect)
+                            {
+                                respContent = respNode["message"]?["content"]?.ToString() ?? "";
+                                pTok = respNode["prompt_eval_count"]?.GetValue<long>() ?? 0;
+                                cTok = respNode["eval_count"]?.GetValue<long>() ?? 0;
+
+                                var doneReason = respNode["done_reason"]?.ToString();
+                                if (doneReason == "length") stopReason = "max_tokens";
+
+                                // Handle Ollama tool calls if present
+                                var toolCalls = respNode["message"]?["tool_calls"]?.AsArray();
+                                if (toolCalls != null && toolCalls.Count > 0)
+                                {
+                                    stopReason = "tool_use";
+                                    foreach (var tc in toolCalls)
+                                    {
+                                        if (tc == null) continue;
+                                        contentBlocks.Add(new AnthropicContentBlock
+                                        {
+                                            Type = "tool_use",
+                                            Id = tc["id"]?.ToString() ?? $"toolu_{Guid.NewGuid():N}",
+                                            Name = tc["function"]?["name"]?.ToString() ?? "unknown",
+                                            Input = tc["function"]?["arguments"]?.DeepClone()
+                                        });
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                var message = respNode["choices"]?[0]?["message"];
+                                respContent = message?["content"]?.ToString() ?? "";
+                                var oaiFinish = respNode["choices"]?[0]?["finish_reason"]?.ToString();
+                                if (oaiFinish == "length") stopReason = "max_tokens";
+                                else if (oaiFinish == "tool_calls" || oaiFinish == "function_call") stopReason = "tool_use";
+                                else if (oaiFinish == "stop") stopReason = "end_turn";
+
+                                pTok = respNode["usage"]?["prompt_tokens"]?.GetValue<long>() ?? 0;
+                                cTok = respNode["usage"]?["completion_tokens"]?.GetValue<long>() ?? 0;
+
+                                var toolCalls = message?["tool_calls"]?.AsArray();
+                                if (toolCalls != null && toolCalls.Count > 0)
+                                {
+                                    stopReason = "tool_use";
+                                    foreach (var tc in toolCalls)
+                                    {
+                                        if (tc == null) continue;
+                                        JsonNode? args;
+                                        try
+                                        {
+                                            args = JsonNode.Parse(tc["function"]?["arguments"]?.ToString() ?? "{}");
+                                        }
+                                        catch { args = new JsonObject(); }
+
+                                        contentBlocks.Add(new AnthropicContentBlock
+                                        {
+                                            Type = "tool_use",
+                                            Id = tc["id"]?.ToString() ?? $"toolu_{Guid.NewGuid():N}",
+                                            Name = tc["function"]?["name"]?.ToString() ?? "unknown",
+                                            Input = args
+                                        });
+                                    }
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(respContent))
+                            {
+                                contentBlocks.Insert(0, new AnthropicContentBlock { Type = "text", Text = respContent });
+                            }
+
+                            _logContext.Log.Answer = respContent;
+                            _logContext.Log.PromptTokens = (int)pTok;
+                            _logContext.Log.CompletionTokens = (int)cTok;
+                            _logContext.Log.TotalTokens = (int)(pTok + cTok);
+
+                            var anthropicResponse = new AnthropicResponse
+                            {
+                                Id = $"msg_{Guid.NewGuid():N}",
+                                Model = virtualModel.Name,
+                                StopReason = stopReason,
+                                Usage = new AnthropicUsage { InputTokens = (int)pTok, OutputTokens = (int)cTok },
+                                Content = contentBlocks
+                            };
+
+                            Response.ContentType = "application/json";
+                            await Response.WriteAsync(JsonSerializer.Serialize(anthropicResponse), HttpContext.RequestAborted);
+                        }
+                    }
+                    catch
+                    {
+                        directMs.Seek(0, SeekOrigin.Begin);
+                        var rawResp = await new StreamReader(directMs).ReadToEndAsync(HttpContext.RequestAborted);
+                        _logContext.Log.Answer = rawResp;
                         Response.ContentType = "application/json";
-                        await Response.WriteAsync(JsonSerializer.Serialize(anthropicResponse), HttpContext.RequestAborted);
+                        await Response.WriteAsync(rawResp, HttpContext.RequestAborted);
                     }
                 }
-                catch
-                {
-                    directMs.Seek(0, SeekOrigin.Begin);
-                    var rawResp = await new StreamReader(directMs).ReadToEndAsync(HttpContext.RequestAborted);
-                    _logContext.Log.Answer = rawResp;
-                    Response.ContentType = "application/json";
-                    await Response.WriteAsync(rawResp, HttpContext.RequestAborted);
-                }
-            }
             }
         }
         catch (Exception e)
         {
             _logger.LogError(e, "Error processing Anthropic request");
+            _logContext.Log.Success = false;
             Response.StatusCode = 500;
             var errObj = new JsonObject
             {
@@ -833,7 +834,8 @@ public class AnthropicController : ControllerBase
         }
         finally
         {
-            _activeRequestTracker.EndRequest(_logContext.Log.Model, backend?.Provider?.Id ?? 0, backend?.UnderlyingModelName ?? string.Empty);
+            if (!string.IsNullOrEmpty(_logContext.Log.Model))
+                _activeRequestTracker.EndRequest(_logContext.Log.Model, backend?.Provider?.Id ?? 0, backend?.UnderlyingModelName ?? string.Empty, _logContext.Log.Success);
         }
     }
 }

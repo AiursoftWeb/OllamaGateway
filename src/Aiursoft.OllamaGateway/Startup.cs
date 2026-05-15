@@ -31,7 +31,7 @@ public class Startup : IWebStartup
         // AppSettings.
         services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
         services.Configure<ClickhouseOptions>(configuration.GetSection("Clickhouse"));
-        services.AddLogging(builder => 
+        services.AddLogging(builder =>
         {
             builder.AddClickhouse(options => configuration.GetSection("Logging:Clickhouse").Bind(options));
         });
