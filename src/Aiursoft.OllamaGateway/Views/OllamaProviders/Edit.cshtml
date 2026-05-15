@@ -53,6 +53,15 @@
                             <span asp-validation-for="KeepAlive" class="text-danger"></span>
                         </div>
 
+                        <div class="mb-3">
+                            <label asp-for="MaxParallelism" class="form-label">@Localizer["Max Concurrent Requests"]</label>
+                            <input asp-for="MaxParallelism" class="form-control" type="number" min="0" max="1000" />
+                            <div class="form-text small">
+                                @Localizer["Maximum number of concurrent requests sent to this provider. 0 = unlimited (default). Set to 1 to serialize requests and prevent the backend from being overwhelmed."]
+                            </div>
+                            <span asp-validation-for="MaxParallelism" class="text-danger"></span>
+                        </div>
+
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <button type="button" class="btn btn-outline-info me-md-2" onclick="testConnection()">@Localizer["Test Connection"]</button>
                             <a asp-action="Index" class="btn btn-outline-secondary me-md-2">@Localizer["Back to List"]</a>

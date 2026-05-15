@@ -28,4 +28,7 @@ public class CreateViewModel : UiStackLayoutViewModel
     public string KeepAlive { get; set; } = "5m";
 
     public ProviderType ProviderType { get; set; } = ProviderType.Ollama;
+
+    [Range(0, 1000)]
+    public int MaxParallelism { get; set; } = 0;
 }

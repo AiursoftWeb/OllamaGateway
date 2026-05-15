@@ -17,7 +17,7 @@ namespace Aiursoft.OllamaGateway.MySql.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.6")
+                .HasAnnotation("ProductVersion", "10.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
@@ -112,6 +112,9 @@ namespace Aiursoft.OllamaGateway.MySql.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
+
+                    b.Property<int>("MaxParallelism")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -526,7 +529,7 @@ namespace Aiursoft.OllamaGateway.MySql.Migrations
             modelBuilder.Entity("Aiursoft.OllamaGateway.Entities.VirtualModelBackend", b =>
                 {
                     b.HasOne("Aiursoft.OllamaGateway.Entities.OllamaProvider", "Provider")
-                        .WithMany()
+                        .WithMany("VirtualModelBackends")
                         .HasForeignKey("ProviderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -595,6 +598,8 @@ namespace Aiursoft.OllamaGateway.MySql.Migrations
 
             modelBuilder.Entity("Aiursoft.OllamaGateway.Entities.OllamaProvider", b =>
                 {
+                    b.Navigation("VirtualModelBackends");
+
                     b.Navigation("VirtualModels");
                 });
 

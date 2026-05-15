@@ -71,13 +71,13 @@ public class OllamaRequestOptions
 [RequiresUserOrApiKeyAuth]
 public class ProxyController(
     TemplateDbContext dbContext,
-    IHttpClientFactory httpClientFactory,
     RequestLogContext logContext,
     GlobalSettingsService globalSettingsService,
     ILogger<ProxyController> logger,
     MemoryUsageTracker memoryUsageTracker,
     ActiveRequestTracker activeRequestTracker,
-    IModelSelector modelSelector) : ControllerBase
+    IModelSelector modelSelector,
+    IBackendInvoker backendInvoker) : ControllerBase
 {
     private static readonly HashSet<string> HeaderBlacklist = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -104,8 +104,8 @@ public class ProxyController(
 
         try
         {
-            var modelToUse = string.IsNullOrWhiteSpace(input.Model) 
-                ? await globalSettingsService.GetDefaultChatModelAsync() 
+            var modelToUse = string.IsNullOrWhiteSpace(input.Model)
+                ? await globalSettingsService.GetDefaultChatModelAsync()
                 : input.Model;
 
             VirtualModel? virtualModel = null;
@@ -230,52 +230,37 @@ public class ProxyController(
                     if (input.Options.NumPredict.HasValue) openAiReqBody["max_tokens"] = input.Options.NumPredict.Value;
                 }
 
-                HttpResponseMessage? oaiResponse = null;
-                for (var i = 0; i < virtualModel.MaxRetries; i++)
+                var oaiResult = await backendInvoker.SendAsync(
+                    virtualModel,
+                    backend,
+                    b =>
+                    {
+                        openAiReqBody["model"] = b.UnderlyingModelName;
+                        return new HttpRequestMessage(HttpMethod.Post, $"{b.Provider!.BaseUrl.TrimEnd('/')}/v1/chat/completions")
+                        {
+                            Content = new StringContent(openAiReqBody.ToJsonString(), Encoding.UTF8, "application/json")
+                        };
+                    },
+                    HttpContext.RequestAborted);
+
+                if (oaiResult == null)
                 {
-                    var client = httpClientFactory.CreateClient();
-                    client.Timeout = await globalSettingsService.GetRequestTimeoutAsync();
-                    var oaiRequest = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/v1/chat/completions")
-                    {
-                        Content = new StringContent(openAiReqBody.ToJsonString(), Encoding.UTF8, "application/json")
-                    };
-                    if (!string.IsNullOrWhiteSpace(backend.Provider.BearerToken))
-                        oaiRequest.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", backend.Provider.BearerToken);
-
-                    using var ctsoai = CancellationTokenSource.CreateLinkedTokenSource(HttpContext.RequestAborted);
-                    ctsoai.CancelAfter(TimeSpan.FromSeconds(virtualModel.HealthCheckTimeout));
-
-                    logger.LogInformation("[{TraceId}] Translating Ollama→OpenAI chat for model {Model} to {UnderlyingUrl}, attempt {Attempt}", HttpContext.TraceIdentifier, virtualModel.Name, underlyingUrl, i + 1);
-
-                    try
-                    {
-                        oaiResponse = await client.SendAsync(oaiRequest, HttpCompletionOption.ResponseHeadersRead, ctsoai.Token);
-                        if (oaiResponse.IsSuccessStatusCode) { modelSelector.ReportSuccess(backend.Id); logContext.Log.BackendId = backend.Id; break; }
-                        if ((int)oaiResponse.StatusCode >= 500 && !Response.HasStarted)
-                            throw new HttpRequestException($"Received {oaiResponse.StatusCode} from OpenAI upstream.");
-                        modelSelector.ReportSuccess(backend.Id); logContext.Log.BackendId = backend.Id; break;
-                    }
-                    catch (Exception ex) when (!Response.HasStarted)
-                    {
-                        modelSelector.ReportFailure(backend.Id);
-                        logger.LogWarning(ex, "Attempt {Attempt} failed for OpenAI model {Model} to {UnderlyingUrl}", i + 1, virtualModel.Name, underlyingUrl);
-                        if (i == virtualModel.MaxRetries - 1) throw;
-                        backend = modelSelector.SelectBackend(virtualModel);
-                        if (backend?.Provider == null) { Response.StatusCode = 503; await Response.WriteAsync($"No available backend for model '{virtualModel.Name}'."); return; }
-                        underlyingUrl = backend.Provider.BaseUrl.TrimEnd('/');
-                        openAiReqBody["model"] = backend.UnderlyingModelName;
-                        memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
-                    }
+                    Response.StatusCode = 503;
+                    await Response.WriteAsync($"No available backend for model '{virtualModel.Name}'.");
+                    return;
                 }
 
-                if (oaiResponse == null) return;
+                await using (oaiResult)
+                {
+                    var oaiResponse = oaiResult.Response;
+                    logContext.Log.BackendId = oaiResult.Backend.Id;
 
-                Response.StatusCode = (int)oaiResponse.StatusCode;
-                logContext.Log.StatusCode = Response.StatusCode;
-                logContext.Log.Success = oaiResponse.IsSuccessStatusCode;
-                logger.LogInformation("[{TraceId}] Received OpenAI response: {StatusCode} for chat model {Model}", HttpContext.TraceIdentifier, (int)oaiResponse.StatusCode, virtualModel.Name);
+                    Response.StatusCode = (int)oaiResponse.StatusCode;
+                    logContext.Log.StatusCode = Response.StatusCode;
+                    logContext.Log.Success = oaiResponse.IsSuccessStatusCode;
+                    logger.LogInformation("[{TraceId}] Received OpenAI response: {StatusCode} for chat model {Model}", HttpContext.TraceIdentifier, (int)oaiResponse.StatusCode, virtualModel.Name);
 
-                await using var oaiStream = await oaiResponse.Content.ReadAsStreamAsync(HttpContext.RequestAborted);
+                    await using var oaiStream = await oaiResponse.Content.ReadAsStreamAsync(HttpContext.RequestAborted);
 
                 if (input.Stream == true && oaiResponse.IsSuccessStatusCode)
                 {
@@ -427,77 +412,39 @@ public class ProxyController(
                         await oaiMs.CopyToAsync(Response.Body, HttpContext.RequestAborted);
                     }
                 }
+                }
                 return;
             }
             // ====================================================================
             // End OpenAI Backend Path — Ollama Backend Path continues below
             // ====================================================================
 
-            HttpResponseMessage? response = null;
-            for (var i = 0; i < virtualModel.MaxRetries; i++)
+            var result = await backendInvoker.SendAsync(
+                virtualModel,
+                backend,
+                b =>
+                {
+                    input.Model = b.UnderlyingModelName;
+                    return new HttpRequestMessage(HttpMethod.Post, $"{b.Provider!.BaseUrl.TrimEnd('/')}/api/chat")
+                    {
+                        Content = new StringContent(JsonSerializer.Serialize(input, OllamaJsonOptions), Encoding.UTF8, "application/json")
+                    };
+                },
+                HttpContext.RequestAborted);
+
+            if (result == null)
             {
-                var client = httpClientFactory.CreateClient();
-                client.Timeout = await globalSettingsService.GetRequestTimeoutAsync();
-                if (!string.IsNullOrWhiteSpace(backend.Provider.BearerToken))
-                {
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", backend.Provider.BearerToken);
-                }
-                
-                var json = JsonSerializer.Serialize(input, OllamaJsonOptions);
-                var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/chat")
-                {
-                    Content = new StringContent(json, Encoding.UTF8, "application/json")
-                };
-
-                using var cts = CancellationTokenSource.CreateLinkedTokenSource(HttpContext.RequestAborted);
-                cts.CancelAfter(TimeSpan.FromSeconds(virtualModel.HealthCheckTimeout));
-
-                logger.LogInformation("[{TraceId}] Proxying chat request for model {Model} to {UnderlyingUrl}, attempt {Attempt}", HttpContext.TraceIdentifier, virtualModel.Name, underlyingUrl, i + 1);
-                
-                try
-                {
-                    response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cts.Token);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        modelSelector.ReportSuccess(backend.Id);
-                        logContext.Log.BackendId = backend.Id;
-                        break;
-                    }
-                    if (!response.IsSuccessStatusCode && (int)response.StatusCode >= 500 && !Response.HasStarted)
-                    {
-                        throw new HttpRequestException($"Received {response.StatusCode} from upstream.");
-                    }
-                    else
-                    {
-                        modelSelector.ReportSuccess(backend.Id);
-                        logContext.Log.BackendId = backend.Id;
-                        break;
-                    }
-                }
-                catch (Exception ex) when (!Response.HasStarted)
-                {
-                    modelSelector.ReportFailure(backend.Id);
-                    logger.LogWarning(ex, "Attempt {Attempt} failed for model {Model} to {UnderlyingUrl}", i + 1, virtualModel.Name, underlyingUrl);
-                    if (i == virtualModel.MaxRetries - 1)
-                    {
-                        throw;
-                    }
-                    
-                    backend = modelSelector.SelectBackend(virtualModel);
-                    if (backend == null || backend.Provider == null)
-                    {
-                        Response.StatusCode = 503;
-                        await Response.WriteAsync($"No available backend for model '{virtualModel.Name}'.");
-                        return;
-                    }
-                    underlyingUrl = backend.Provider.BaseUrl.TrimEnd('/');
-                    input.Model = backend.UnderlyingModelName;
-                    memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
-                }
+                Response.StatusCode = 503;
+                await Response.WriteAsync($"No available backend for model '{virtualModel.Name}'.");
+                return;
             }
-            
-            if (response == null) return;
-            
+
+            await using (result)
+            {
+                var response = result.Response;
+                backend = result.Backend;
+                logContext.Log.BackendId = backend.Id;
+
             Response.StatusCode = (int)response.StatusCode;
             CopyHeaders(response);
 
@@ -604,10 +551,11 @@ public class ProxyController(
                         using var sReader = new StreamReader(ms, Encoding.UTF8, false, 1024, true);
                         logContext.Log.Answer = await sReader.ReadToEndAsync(HttpContext.RequestAborted);
                     }
-                    
+
                     ms.Seek(0, SeekOrigin.Begin);
                     await ms.CopyToAsync(Response.Body, HttpContext.RequestAborted);
                 }
+            }
             }
         }
         catch (OperationCanceledException ex)
@@ -631,8 +579,8 @@ public class ProxyController(
         {
             if (!string.IsNullOrEmpty(logContext.Log.Model))
                 activeRequestTracker.EndRequest(
-                    logContext.Log.Model, 
-                    logContext.Log.ProviderId ?? 0, 
+                    logContext.Log.Model,
+                    logContext.Log.ProviderId ?? 0,
                     logContext.Log.UnderlyingModelName);
         }
     }
@@ -645,8 +593,8 @@ public class ProxyController(
 
         try
         {
-            var modelToUse = string.IsNullOrWhiteSpace(input.Model) 
-                ? await globalSettingsService.GetDefaultChatModelAsync() 
+            var modelToUse = string.IsNullOrWhiteSpace(input.Model)
+                ? await globalSettingsService.GetDefaultChatModelAsync()
                 : input.Model;
 
             VirtualModel? virtualModel = null;
@@ -711,8 +659,6 @@ public class ProxyController(
                 return;
             }
 
-            var underlyingUrl = backend.Provider.BaseUrl.TrimEnd('/');
-            
             var apiKeyIdClaim = User.FindFirst("ApiKeyId");
             if (apiKeyIdClaim != null && int.TryParse(apiKeyIdClaim.Value, out var apiKeyId))
             {
@@ -740,7 +686,7 @@ public class ProxyController(
             input.Model = backend.UnderlyingModelName;
             if (virtualModel.Thinking.HasValue) input.Think = virtualModel.Thinking.Value;
             input.KeepAlive ??= backend.Provider.KeepAlive;
-            
+
             input.Options ??= new OllamaRequestOptions();
             if (virtualModel.NumCtx.HasValue) input.Options.NumCtx = virtualModel.NumCtx;
             if (virtualModel.Temperature.HasValue) input.Options.Temperature = virtualModel.Temperature;
@@ -749,81 +695,42 @@ public class ProxyController(
             if (virtualModel.NumPredict.HasValue) input.Options.NumPredict = virtualModel.NumPredict;
             if (virtualModel.RepeatPenalty.HasValue) input.Options.RepeatPenalty = virtualModel.RepeatPenalty;
 
-            HttpResponseMessage? response = null;
-            for (var i = 0; i < virtualModel.MaxRetries; i++)
+            var result = await backendInvoker.SendAsync(
+                virtualModel,
+                backend,
+                b =>
+                {
+                    input.Model = b.UnderlyingModelName;
+                    return new HttpRequestMessage(HttpMethod.Post, $"{b.Provider!.BaseUrl.TrimEnd('/')}/api/generate")
+                    {
+                        Content = new StringContent(JsonSerializer.Serialize(input, OllamaJsonOptions), Encoding.UTF8, "application/json")
+                    };
+                },
+                HttpContext.RequestAborted);
+
+            if (result == null)
             {
-                var client = httpClientFactory.CreateClient();
-                client.Timeout = await globalSettingsService.GetRequestTimeoutAsync();
-                if (!string.IsNullOrWhiteSpace(backend.Provider.BearerToken))
-                {
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", backend.Provider.BearerToken);
-                }
-                
-                var json = JsonSerializer.Serialize(input, OllamaJsonOptions);
-                var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/generate")
-                {
-                    Content = new StringContent(json, Encoding.UTF8, "application/json")
-                };
-
-                using var cts = CancellationTokenSource.CreateLinkedTokenSource(HttpContext.RequestAborted);
-                cts.CancelAfter(TimeSpan.FromSeconds(virtualModel.HealthCheckTimeout));
-
-                logger.LogInformation("[{TraceId}] Proxying generate request for model {Model} to {UnderlyingUrl}, attempt {Attempt}", HttpContext.TraceIdentifier, virtualModel.Name, underlyingUrl, i + 1);
-                
-                try
-                {
-                    response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cts.Token);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        modelSelector.ReportSuccess(backend.Id);
-                        logContext.Log.BackendId = backend.Id;
-                        break;
-                    }
-                    if (!response.IsSuccessStatusCode && (int)response.StatusCode >= 500 && !Response.HasStarted)
-                    {
-                        throw new HttpRequestException($"Received {response.StatusCode} from upstream.");
-                    }
-                    else
-                    {
-                        modelSelector.ReportSuccess(backend.Id);
-                        logContext.Log.BackendId = backend.Id;
-                        break;
-                    }
-                }
-                catch (Exception ex) when (!Response.HasStarted)
-                {
-                    modelSelector.ReportFailure(backend.Id);
-                    logger.LogWarning(ex, "Attempt {Attempt} failed for model {Model} to {UnderlyingUrl}", i + 1, virtualModel.Name, underlyingUrl);
-                    if (i == virtualModel.MaxRetries - 1)
-                    {
-                        throw;
-                    }
-                    
-                    backend = modelSelector.SelectBackend(virtualModel);
-                    if (backend == null || backend.Provider == null)
-                    {
-                        Response.StatusCode = 503;
-                        await Response.WriteAsync($"No available backend for model '{virtualModel.Name}'.");
-                        return;
-                    }
-                    underlyingUrl = backend.Provider.BaseUrl.TrimEnd('/');
-                    input.Model = backend.UnderlyingModelName;
-                    memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
-                }
+                Response.StatusCode = 503;
+                await Response.WriteAsync($"No available backend for model '{virtualModel.Name}'.");
+                return;
             }
-            
-            if (response == null) return;
-            
-            Response.StatusCode = (int)response.StatusCode;
-            CopyHeaders(response);
 
-            logContext.Log.StatusCode = Response.StatusCode;
-            logContext.Log.Success = response.IsSuccessStatusCode;
-            logger.LogInformation("[{TraceId}] Received response from upstream: {StatusCode} for generate request for model {Model}", HttpContext.TraceIdentifier, (int)response.StatusCode, virtualModel.Name);
+            await using (result)
+            {
+                var response = result.Response;
+                backend = result.Backend;
+                logContext.Log.BackendId = backend.Id;
 
-            await using var responseStream = await response.Content.ReadAsStreamAsync(HttpContext.RequestAborted);
-            
-            if (input.Stream != false && response.IsSuccessStatusCode)
+                Response.StatusCode = (int)response.StatusCode;
+                CopyHeaders(response);
+
+                logContext.Log.StatusCode = Response.StatusCode;
+                logContext.Log.Success = response.IsSuccessStatusCode;
+                logger.LogInformation("[{TraceId}] Received response from upstream: {StatusCode} for generate request for model {Model}", HttpContext.TraceIdentifier, (int)response.StatusCode, virtualModel.Name);
+
+                await using var responseStream = await response.Content.ReadAsStreamAsync(HttpContext.RequestAborted);
+
+                if (input.Stream != false && response.IsSuccessStatusCode)
             {
                 // Ollama native streaming: NDJSON (one JSON object per line)
                 var answerBuilder = new StringBuilder();
@@ -913,6 +820,7 @@ public class ProxyController(
                     await ms.CopyToAsync(Response.Body, HttpContext.RequestAborted);
                 }
             }
+            }
         }
         catch (OperationCanceledException ex)
         {
@@ -935,8 +843,8 @@ public class ProxyController(
         {
             if (!string.IsNullOrEmpty(logContext.Log.Model))
                 activeRequestTracker.EndRequest(
-                    logContext.Log.Model, 
-                    logContext.Log.ProviderId ?? 0, 
+                    logContext.Log.Model,
+                    logContext.Log.ProviderId ?? 0,
                     logContext.Log.UnderlyingModelName);
         }
     }
@@ -1016,91 +924,77 @@ public class ProxyController(
             {
                 var openAiEmbedReq = new JsonObject
                 {
-                    ["model"] = backend.UnderlyingModelName,
                     ["input"] = inputNode["input"]?.DeepClone() ?? inputNode["prompt"]?.DeepClone()
                 };
 
-                HttpResponseMessage? oaiEmbedResponse = null;
-                for (var i = 0; i < virtualModel.MaxRetries; i++)
+                var oaiResult = await backendInvoker.SendAsync(
+                    virtualModel,
+                    backend,
+                    b =>
+                    {
+                        openAiEmbedReq["model"] = b.UnderlyingModelName;
+                        return new HttpRequestMessage(HttpMethod.Post, $"{b.Provider!.BaseUrl.TrimEnd('/')}/v1/embeddings")
+                        {
+                            Content = new StringContent(openAiEmbedReq.ToJsonString(), Encoding.UTF8, "application/json")
+                        };
+                    },
+                    HttpContext.RequestAborted);
+
+                if (oaiResult == null)
                 {
-                    var client = httpClientFactory.CreateClient();
-                    client.Timeout = await globalSettingsService.GetRequestTimeoutAsync();
-                    var oaiEmbedRequest = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/v1/embeddings")
-                    {
-                        Content = new StringContent(openAiEmbedReq.ToJsonString(), Encoding.UTF8, "application/json")
-                    };
-                    if (!string.IsNullOrWhiteSpace(backend.Provider.BearerToken))
-                        oaiEmbedRequest.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", backend.Provider.BearerToken);
-
-                    using var ctsEmbed = CancellationTokenSource.CreateLinkedTokenSource(HttpContext.RequestAborted);
-                    ctsEmbed.CancelAfter(TimeSpan.FromSeconds(virtualModel.HealthCheckTimeout));
-
-                    logger.LogInformation("[{TraceId}] Translating Ollama→OpenAI embed for model {Model} to {UnderlyingUrl}, attempt {Attempt}", HttpContext.TraceIdentifier, virtualModel.Name, underlyingUrl, i + 1);
-
-                    try
-                    {
-                        oaiEmbedResponse = await client.SendAsync(oaiEmbedRequest, HttpCompletionOption.ResponseHeadersRead, ctsEmbed.Token);
-                        if (oaiEmbedResponse.IsSuccessStatusCode) { modelSelector.ReportSuccess(backend.Id); logContext.Log.BackendId = backend.Id; break; }
-                        if ((int)oaiEmbedResponse.StatusCode >= 500 && !Response.HasStarted)
-                            throw new HttpRequestException($"Received {oaiEmbedResponse.StatusCode} from OpenAI embedding upstream.");
-                        modelSelector.ReportSuccess(backend.Id); logContext.Log.BackendId = backend.Id; break;
-                    }
-                    catch (Exception ex) when (!Response.HasStarted)
-                    {
-                        modelSelector.ReportFailure(backend.Id);
-                        logger.LogWarning(ex, "Attempt {Attempt} failed for OpenAI embed model {Model} to {UnderlyingUrl}", i + 1, virtualModel.Name, underlyingUrl);
-                        if (i == virtualModel.MaxRetries - 1) throw;
-                        backend = modelSelector.SelectBackend(virtualModel);
-                        if (backend?.Provider == null) { Response.StatusCode = 503; await Response.WriteAsync($"No available backend for model '{virtualModel.Name}'."); return; }
-                        underlyingUrl = backend.Provider.BaseUrl.TrimEnd('/');
-                        openAiEmbedReq["model"] = backend.UnderlyingModelName;
-                        memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
-                    }
-                }
-
-                if (oaiEmbedResponse == null) return;
-
-                Response.StatusCode = (int)oaiEmbedResponse.StatusCode;
-                logContext.Log.StatusCode = Response.StatusCode;
-                logContext.Log.Success = oaiEmbedResponse.IsSuccessStatusCode;
-
-                if (!oaiEmbedResponse.IsSuccessStatusCode)
-                {
-                    var errContent = await oaiEmbedResponse.Content.ReadAsStringAsync(HttpContext.RequestAborted);
-                    logContext.Log.Answer = errContent;
-                    await Response.WriteAsync(errContent, HttpContext.RequestAborted);
+                    Response.StatusCode = 503;
+                    await Response.WriteAsync($"No available backend for model '{virtualModel.Name}'.");
                     return;
                 }
 
-                // Translate: OpenAI response { data: [{ embedding: [...] }] } → Ollama { embeddings: [[...]] }
-                var oaiEmbedContent = await oaiEmbedResponse.Content.ReadAsStringAsync(HttpContext.RequestAborted);
-                try
+                await using (oaiResult)
                 {
-                    var oaiRespNode = JsonNode.Parse(oaiEmbedContent);
-                    if (oaiRespNode != null)
+                    var oaiEmbedResponse = oaiResult.Response;
+                    backend = oaiResult.Backend;
+                    logContext.Log.BackendId = backend.Id;
+
+                    Response.StatusCode = (int)oaiEmbedResponse.StatusCode;
+                    logContext.Log.StatusCode = Response.StatusCode;
+                    logContext.Log.Success = oaiEmbedResponse.IsSuccessStatusCode;
+
+                    if (!oaiEmbedResponse.IsSuccessStatusCode)
                     {
-                        var dataArr = oaiRespNode["data"]?.AsArray();
-                        var embeddingsArr = new JsonArray();
-                        if (dataArr != null)
-                            foreach (var item in dataArr)
-                                embeddingsArr.Add(item?["embedding"]?.DeepClone());
-
-                        var pTokens = oaiRespNode["usage"]?["prompt_tokens"]?.GetValue<long>() ?? 0;
-                        logContext.Log.PromptTokens = (int)pTokens;
-                        logContext.Log.TotalTokens = (int)pTokens;
-
-                        var ollamaEmbedResp = new JsonObject
-                        {
-                            ["model"] = virtualModel.Name,
-                            ["embeddings"] = embeddingsArr
-                        };
-                        Response.ContentType = "application/json";
-                        await Response.WriteAsync(ollamaEmbedResp.ToJsonString(), HttpContext.RequestAborted);
+                        var errContent = await oaiEmbedResponse.Content.ReadAsStringAsync(HttpContext.RequestAborted);
+                        logContext.Log.Answer = errContent;
+                        await Response.WriteAsync(errContent, HttpContext.RequestAborted);
+                        return;
                     }
-                }
-                catch
-                {
-                    await Response.WriteAsync(oaiEmbedContent, HttpContext.RequestAborted);
+
+                    // Translate: OpenAI response { data: [{ embedding: [...] }] } → Ollama { embeddings: [[...]] }
+                    var oaiEmbedContent = await oaiEmbedResponse.Content.ReadAsStringAsync(HttpContext.RequestAborted);
+                    try
+                    {
+                        var oaiRespNode = JsonNode.Parse(oaiEmbedContent);
+                        if (oaiRespNode != null)
+                        {
+                            var dataArr = oaiRespNode["data"]?.AsArray();
+                            var embeddingsArr = new JsonArray();
+                            if (dataArr != null)
+                                foreach (var item in dataArr)
+                                    embeddingsArr.Add(item?["embedding"]?.DeepClone());
+
+                            var pTokens = oaiRespNode["usage"]?["prompt_tokens"]?.GetValue<long>() ?? 0;
+                            logContext.Log.PromptTokens = (int)pTokens;
+                            logContext.Log.TotalTokens = (int)pTokens;
+
+                            var ollamaEmbedResp = new JsonObject
+                            {
+                                ["model"] = virtualModel.Name,
+                                ["embeddings"] = embeddingsArr
+                            };
+                            Response.ContentType = "application/json";
+                            await Response.WriteAsync(ollamaEmbedResp.ToJsonString(), HttpContext.RequestAborted);
+                        }
+                    }
+                    catch
+                    {
+                        await Response.WriteAsync(oaiEmbedContent, HttpContext.RequestAborted);
+                    }
                 }
                 return;
             }
@@ -1108,7 +1002,6 @@ public class ProxyController(
             // End OpenAI Embed Path — Ollama Embed Path continues below
             // ====================================================================
 
-            inputNode["model"] = backend.UnderlyingModelName;
             inputNode["keep_alive"] = backend.Provider.KeepAlive;
 
             if (virtualModel.NumCtx.HasValue || virtualModel.Temperature.HasValue || virtualModel.TopP.HasValue || virtualModel.TopK.HasValue || virtualModel.RepeatPenalty.HasValue)
@@ -1122,91 +1015,53 @@ public class ProxyController(
                 inputNode["options"] = optionsNode;
             }
 
-            HttpResponseMessage? response = null;
-            for (var i = 0; i < virtualModel.MaxRetries; i++)
+            var result = await backendInvoker.SendAsync(
+                virtualModel,
+                backend,
+                b =>
+                {
+                    inputNode["model"] = b.UnderlyingModelName;
+                    return new HttpRequestMessage(HttpMethod.Post, $"{b.Provider!.BaseUrl.TrimEnd('/')}/api/embed")
+                    {
+                        Content = new StringContent(inputNode.ToJsonString(), Encoding.UTF8, "application/json")
+                    };
+                },
+                HttpContext.RequestAborted);
+
+            if (result == null)
             {
-                var client = httpClientFactory.CreateClient();
-                client.Timeout = await globalSettingsService.GetRequestTimeoutAsync();
-                if (!string.IsNullOrWhiteSpace(backend.Provider.BearerToken))
-                {
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", backend.Provider.BearerToken);
-                }
-                
-                var json = inputNode.ToJsonString();
-                var request = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}/api/embed")
-                {
-                    Content = new StringContent(json, Encoding.UTF8, "application/json")
-                };
-
-                using var cts = CancellationTokenSource.CreateLinkedTokenSource(HttpContext.RequestAborted);
-                cts.CancelAfter(TimeSpan.FromSeconds(virtualModel.HealthCheckTimeout));
-
-                logger.LogInformation("[{TraceId}] Proxying embedding request for model {Model} to {UnderlyingUrl}, attempt {Attempt}", HttpContext.TraceIdentifier, virtualModel.Name, underlyingUrl, i + 1);
-                
-                try
-                {
-                    response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cts.Token);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        modelSelector.ReportSuccess(backend.Id);
-                        logContext.Log.BackendId = backend.Id;
-                        break;
-                    }
-                    if (!response.IsSuccessStatusCode && (int)response.StatusCode >= 500 && !Response.HasStarted)
-                    {
-                        throw new HttpRequestException($"Received {response.StatusCode} from upstream.");
-                    }
-                    else
-                    {
-                        modelSelector.ReportSuccess(backend.Id);
-                        logContext.Log.BackendId = backend.Id;
-                        break;
-                    }
-                }
-                catch (Exception ex) when (!Response.HasStarted)
-                {
-                    modelSelector.ReportFailure(backend.Id);
-                    logger.LogWarning(ex, "Attempt {Attempt} failed for embedding model {Model} to {UnderlyingUrl}", i + 1, virtualModel.Name, underlyingUrl);
-                    if (i == virtualModel.MaxRetries - 1)
-                    {
-                        throw;
-                    }
-                    
-                    backend = modelSelector.SelectBackend(virtualModel);
-                    if (backend == null || backend.Provider == null)
-                    {
-                        Response.StatusCode = 503;
-                        await Response.WriteAsync($"No available backend for model '{virtualModel.Name}'.");
-                        return;
-                    }
-                    underlyingUrl = backend.Provider.BaseUrl.TrimEnd('/');
-                    inputNode["model"] = backend.UnderlyingModelName;
-                    memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
-                }
+                Response.StatusCode = 503;
+                await Response.WriteAsync($"No available backend for model '{virtualModel.Name}'.");
+                return;
             }
 
-            if (response == null) return;
-            
-            Response.StatusCode = (int)response.StatusCode;
-            CopyHeaders(response);
-
-            logContext.Log.StatusCode = Response.StatusCode;
-            logContext.Log.Success = response.IsSuccessStatusCode;
-            logger.LogInformation("[{TraceId}] Received response from upstream: {StatusCode} for embedding request for model {Model}", HttpContext.TraceIdentifier, (int)response.StatusCode, virtualModel.Name);
-
-            if (!response.IsSuccessStatusCode)
+            await using (result)
             {
-                var content = await response.Content.ReadAsStringAsync(HttpContext.RequestAborted);
-                logContext.Log.Answer = content;
-                await Response.WriteAsync(content, HttpContext.RequestAborted);
-            }
-            else
-            {
-                var resultNode = await JsonNode.ParseAsync(await response.Content.ReadAsStreamAsync(HttpContext.RequestAborted), cancellationToken: HttpContext.RequestAborted);
-                if (resultNode != null)
+                var response = result.Response;
+                backend = result.Backend;
+                logContext.Log.BackendId = backend.Id;
+
+                Response.StatusCode = (int)response.StatusCode;
+                CopyHeaders(response);
+
+                logContext.Log.StatusCode = Response.StatusCode;
+                logContext.Log.Success = response.IsSuccessStatusCode;
+                logger.LogInformation("[{TraceId}] Received response from upstream: {StatusCode} for embedding request for model {Model}", HttpContext.TraceIdentifier, (int)response.StatusCode, virtualModel.Name);
+
+                if (!response.IsSuccessStatusCode)
                 {
-                    resultNode["model"] = virtualModel.Name;
-                    await Response.WriteAsync(resultNode.ToJsonString(), HttpContext.RequestAborted);
+                    var content = await response.Content.ReadAsStringAsync(HttpContext.RequestAborted);
+                    logContext.Log.Answer = content;
+                    await Response.WriteAsync(content, HttpContext.RequestAborted);
+                }
+                else
+                {
+                    var resultNode = await JsonNode.ParseAsync(await response.Content.ReadAsStreamAsync(HttpContext.RequestAborted), cancellationToken: HttpContext.RequestAborted);
+                    if (resultNode != null)
+                    {
+                        resultNode["model"] = virtualModel.Name;
+                        await Response.WriteAsync(resultNode.ToJsonString(), HttpContext.RequestAborted);
+                    }
                 }
             }
         }
@@ -1231,8 +1086,8 @@ public class ProxyController(
         {
             if (!string.IsNullOrEmpty(logContext.Log.Model))
                 activeRequestTracker.EndRequest(
-                    logContext.Log.Model, 
-                    logContext.Log.ProviderId ?? 0, 
+                    logContext.Log.Model,
+                    logContext.Log.ProviderId ?? 0,
                     logContext.Log.UnderlyingModelName);
         }
     }

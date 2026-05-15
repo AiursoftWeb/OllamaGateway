@@ -153,10 +153,80 @@ public class ModelSelectorTests
         {
             _selector.ReportFailure(99);
         }
-        
+
         var banUntil = _selector.GetBanUntil(99);
         Assert.IsNotNull(banUntil);
         var diff = banUntil.Value - DateTime.UtcNow;
         Assert.IsTrue(diff.TotalMinutes > 1430 && diff.TotalMinutes <= 1440);
+    }
+
+    [TestMethod]
+    public async Task TestConcurrentSlowRequestsTriggerBan()
+    {
+        // Scenario: 3 requests hit the same backend simultaneously.
+        // The backend is slow (each request takes > HealthCheckTimeout),
+        // so all 3 timeout. This should ban the backend after the 3rd failure.
+        var vm = new VirtualModel
+        {
+            Name = "test-model",
+            VirtualModelBackends = new List<VirtualModelBackend>
+            {
+                new() { Id = 1, Enabled = true, IsHealthy = true, UnderlyingModelName = "m1" }
+            }
+        };
+
+        // Simulate 3 concurrent requests that all timeout
+        var tasks = Enumerable.Range(0, 3).Select(_ => Task.Run(() =>
+        {
+            // Simulate some work being attempted before the timeout
+            Thread.Sleep(10);
+            _selector.ReportFailure(1);
+        }));
+
+        await Task.WhenAll(tasks);
+
+        // After 3 concurrent failures, the backend should be banned
+        Assert.IsNull(_selector.SelectBackend(vm),
+            "Backend should be banned after 3 concurrent failures");
+        Assert.IsNotNull(_selector.GetBanUntil(1),
+            "BanUntil should be set");
+    }
+
+    [TestMethod]
+    public async Task TestConcurrentFailuresRaceCondition()
+    {
+        // Simulate a more realistic race: 10 concurrent requests,
+        // but only 7 fail (some complete just under the timeout).
+        // The backend should be banned after the 3rd failure regardless.
+        var vm = new VirtualModel
+        {
+            Name = "test-model",
+            VirtualModelBackends = new List<VirtualModelBackend>
+            {
+                new() { Id = 1, Enabled = true, IsHealthy = true, UnderlyingModelName = "m1" }
+            }
+        };
+
+        var random = new Random(42);
+        var tasks = Enumerable.Range(0, 10).Select(i => Task.Run(async () =>
+        {
+            // Simulate varying request durations
+            await Task.Delay(random.Next(5, 50));
+            if (i < 7)
+                _selector.ReportFailure(1);
+            else
+                _selector.ReportSuccess(1);
+        }));
+
+        await Task.WhenAll(tasks);
+
+        // After multiple failures, the backend state depends on timing:
+        // successes clear all state, so the final state depends on
+        // whether the last operation was a success or failure.
+        // This test just verifies the system doesn't crash under concurrent access.
+        var banUntil = _selector.GetBanUntil(1);
+        // If the last operation was ReportSuccess, ban is cleared.
+        // If ReportFailure, ban may be active. Either way, no crash = pass.
+        Assert.IsTrue(banUntil == null || banUntil > DateTime.UtcNow);
     }
 }

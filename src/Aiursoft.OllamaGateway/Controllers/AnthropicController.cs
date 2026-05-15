@@ -17,32 +17,32 @@ namespace Aiursoft.OllamaGateway.Controllers;
 public class AnthropicController : ControllerBase
 {
     private readonly TemplateDbContext _dbContext;
-    private readonly IHttpClientFactory _httpClientFactory;
     private readonly RequestLogContext _logContext;
     private readonly GlobalSettingsService _globalSettingsService;
     private readonly ILogger<AnthropicController> _logger;
     private readonly MemoryUsageTracker _memoryUsageTracker;
     private readonly IModelSelector _modelSelector;
     private readonly ActiveRequestTracker _activeRequestTracker;
+    private readonly IBackendInvoker _backendInvoker;
 
     public AnthropicController(
         TemplateDbContext dbContext,
-        IHttpClientFactory httpClientFactory,
         RequestLogContext logContext,
         GlobalSettingsService globalSettingsService,
         ILogger<AnthropicController> logger,
         MemoryUsageTracker memoryUsageTracker,
         IModelSelector modelSelector,
-        ActiveRequestTracker activeRequestTracker)
+        ActiveRequestTracker activeRequestTracker,
+        IBackendInvoker backendInvoker)
     {
         _dbContext = dbContext;
-        _httpClientFactory = httpClientFactory;
         _logContext = logContext;
         _globalSettingsService = globalSettingsService;
         _logger = logger;
         _memoryUsageTracker = memoryUsageTracker;
         _modelSelector = modelSelector;
         _activeRequestTracker = activeRequestTracker;
+        _backendInvoker = backendInvoker;
     }
 
     private string ExtractTextFromBlocks(object? content)
@@ -410,7 +410,6 @@ public class AnthropicController : ControllerBase
                 openaiBody["tools"] = toolsArray;
             }
 
-            HttpResponseMessage? upstreamResponse = null;
             var isOllamaDirect = backend.Provider.ProviderType == ProviderType.Ollama;
             var targetEndpoint = "/v1/chat/completions";
 
@@ -464,58 +463,45 @@ public class AnthropicController : ControllerBase
                 if (options.Count > 0) requestBody["options"] = options;
             }
 
-            var client = _httpClientFactory.CreateClient();
-            client.Timeout = await _globalSettingsService.GetRequestTimeoutAsync();
-            
-            for (var i = 0; i < virtualModel.MaxRetries; i++)
+            var result = await _backendInvoker.SendAsync(
+                virtualModel,
+                backend,
+                b =>
+                {
+                    requestBody["model"] = b.UnderlyingModelName;
+                    return new HttpRequestMessage(HttpMethod.Post, $"{b.Provider!.BaseUrl.TrimEnd('/')}{targetEndpoint}")
+                    {
+                        Content = new StringContent(requestBody.ToJsonString(), Encoding.UTF8, "application/json")
+                    };
+                },
+                HttpContext.RequestAborted);
+
+            if (result == null)
             {
-                var req = new HttpRequestMessage(HttpMethod.Post, $"{underlyingUrl}{targetEndpoint}")
-                {
-                    Content = new StringContent(requestBody.ToJsonString(), Encoding.UTF8, "application/json")
-                };
-                if (!string.IsNullOrWhiteSpace(backend.Provider.BearerToken))
-                    req.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", backend.Provider.BearerToken);
-
-                using var cts = CancellationTokenSource.CreateLinkedTokenSource(HttpContext.RequestAborted);
-                cts.CancelAfter(TimeSpan.FromSeconds(virtualModel.HealthCheckTimeout));
-
-                try
-                {
-                    upstreamResponse = await client.SendAsync(req, HttpCompletionOption.ResponseHeadersRead, cts.Token);
-                    if (upstreamResponse.IsSuccessStatusCode) { _modelSelector.ReportSuccess(backend.Id); _logContext.Log.BackendId = backend.Id; break; }
-                    if ((int)upstreamResponse.StatusCode >= 500 && !Response.HasStarted)
-                        throw new HttpRequestException($"Received {upstreamResponse.StatusCode} from upstream.");
-                    _modelSelector.ReportSuccess(backend.Id); _logContext.Log.BackendId = backend.Id; break;
-                }
-                catch (Exception ex) when (!Response.HasStarted)
-                {
-                    _modelSelector.ReportFailure(backend.Id);
-                    _logger.LogWarning(ex, "Attempt {Attempt} failed", i + 1);
-                    if (i == virtualModel.MaxRetries - 1) throw;
-                    backend = _modelSelector.SelectBackend(virtualModel);
-                    if (backend?.Provider == null) { Response.StatusCode = 503; await Response.WriteAsync($"No available backend."); return; }
-                    underlyingUrl = backend.Provider.BaseUrl.TrimEnd('/');
-                    requestBody["model"] = backend.UnderlyingModelName;
-                    _memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
-                }
-            }
-
-            if (upstreamResponse == null) return;
-
-            Response.StatusCode = (int)upstreamResponse.StatusCode;
-            _logContext.Log.StatusCode = Response.StatusCode;
-            _logContext.Log.Success = upstreamResponse.IsSuccessStatusCode;
-
-            if (!upstreamResponse.IsSuccessStatusCode)
-            {
-                var errContent = await upstreamResponse.Content.ReadAsStringAsync(HttpContext.RequestAborted);
-                _logContext.Log.Answer = errContent;
-                Response.ContentType = "application/json";
-                await Response.WriteAsync(errContent, HttpContext.RequestAborted);
+                Response.StatusCode = 503;
+                await Response.WriteAsync("No available backend.");
                 return;
             }
 
-            await using var upstreamStream = await upstreamResponse.Content.ReadAsStreamAsync(HttpContext.RequestAborted);
+            await using (result)
+            {
+                var upstreamResponse = result.Response;
+                _logContext.Log.BackendId = result.Backend.Id;
+
+                Response.StatusCode = (int)upstreamResponse.StatusCode;
+                _logContext.Log.StatusCode = Response.StatusCode;
+                _logContext.Log.Success = upstreamResponse.IsSuccessStatusCode;
+
+                if (!upstreamResponse.IsSuccessStatusCode)
+                {
+                    var errContent = await upstreamResponse.Content.ReadAsStringAsync(HttpContext.RequestAborted);
+                    _logContext.Log.Answer = errContent;
+                    Response.ContentType = "application/json";
+                    await Response.WriteAsync(errContent, HttpContext.RequestAborted);
+                    return;
+                }
+
+                await using var upstreamStream = await upstreamResponse.Content.ReadAsStreamAsync(HttpContext.RequestAborted);
 
             if (isStream)
             {
@@ -833,6 +819,7 @@ public class AnthropicController : ControllerBase
                     Response.ContentType = "application/json";
                     await Response.WriteAsync(rawResp, HttpContext.RequestAborted);
                 }
+            }
             }
         }
         catch (Exception e)

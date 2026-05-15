@@ -142,7 +142,8 @@ public class OllamaProvidersController(
             BaseUrl = model.BaseUrl,
             BearerToken = model.BearerToken,
             KeepAlive = model.KeepAlive,
-            ProviderType = model.ProviderType
+            ProviderType = model.ProviderType,
+            MaxParallelism = model.MaxParallelism
         };
 
         dbContext.OllamaProviders.Add(provider);
@@ -169,7 +170,8 @@ public class OllamaProvidersController(
             BaseUrl = provider.BaseUrl,
             BearerToken = provider.BearerToken,
             KeepAlive = provider.KeepAlive,
-            ProviderType = provider.ProviderType
+            ProviderType = provider.ProviderType,
+            MaxParallelism = provider.MaxParallelism
         };
         ViewData["Id"] = id;
         ViewData["PhysicalModels"] = physicalModels;
@@ -243,6 +245,7 @@ public class OllamaProvidersController(
         provider.BearerToken = model.BearerToken;
         provider.KeepAlive = model.KeepAlive;
         provider.ProviderType = model.ProviderType;
+        provider.MaxParallelism = model.MaxParallelism;
 
         await dbContext.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
