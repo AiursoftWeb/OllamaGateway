@@ -129,8 +129,6 @@ public class OpenAIController : ControllerBase
                 return;
             }
 
-            var underlyingUrl = backend.Provider.BaseUrl.TrimEnd('/');
-
             var apiKeyIdClaim = User.FindFirst("ApiKeyId");
             if (apiKeyIdClaim != null && int.TryParse(apiKeyIdClaim.Value, out var apiKeyId))
             {
@@ -761,8 +759,6 @@ public class OpenAIController : ControllerBase
                 return;
             }
 
-            var underlyingUrl = backend.Provider.BaseUrl.TrimEnd('/');
-            
             var apiKeyIdClaim = User.FindFirst("ApiKeyId");
             if (apiKeyIdClaim != null && int.TryParse(apiKeyIdClaim.Value, out var apiKeyId))
             {

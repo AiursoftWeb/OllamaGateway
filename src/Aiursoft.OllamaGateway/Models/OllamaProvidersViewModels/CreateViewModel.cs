@@ -30,5 +30,5 @@ public class CreateViewModel : UiStackLayoutViewModel
     public ProviderType ProviderType { get; set; } = ProviderType.Ollama;
 
     [Range(0, 1000)]
-    public int MaxParallelism { get; set; } = 0;
+    public int MaxParallelism { get; set; }
 }

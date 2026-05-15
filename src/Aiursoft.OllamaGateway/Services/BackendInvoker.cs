@@ -69,7 +69,7 @@ public class BackendInvoker(
                     logger.LogWarning("Backend request attempt {Attempt} returned {StatusCode}", i + 1, (int)response.StatusCode);
                     if (i == virtualModel.MaxRetries - 1)
                         return new BackendInvocationResult(response, backend, concurrencySlot);
-                    if (concurrencySlot != null) { await concurrencySlot.DisposeAsync(); concurrencySlot = null; }
+                    await concurrencySlot.DisposeAsync();
                     response.Dispose();
                     backend = modelSelector.SelectBackend(virtualModel);
                     if (backend?.Provider == null) break;
@@ -82,11 +82,7 @@ public class BackendInvoker(
             }
             catch (Exception ex) when (ex is not OperationCanceledException || !clientCancellation.IsCancellationRequested)
             {
-                if (concurrencySlot != null)
-                {
-                    await concurrencySlot.DisposeAsync();
-                    concurrencySlot = null;
-                }
+                await concurrencySlot.DisposeAsync();
                 modelSelector.ReportFailure(backend!.Id);
                 logger.LogWarning(ex, "Backend request attempt {Attempt} failed", i + 1);
 

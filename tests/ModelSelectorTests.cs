@@ -198,15 +198,6 @@ public class ModelSelectorTests
         // Simulate a more realistic race: 10 concurrent requests,
         // but only 7 fail (some complete just under the timeout).
         // The backend should be banned after the 3rd failure regardless.
-        var vm = new VirtualModel
-        {
-            Name = "test-model",
-            VirtualModelBackends = new List<VirtualModelBackend>
-            {
-                new() { Id = 1, Enabled = true, IsHealthy = true, UnderlyingModelName = "m1" }
-            }
-        };
-
         var random = new Random(42);
         var tasks = Enumerable.Range(0, 10).Select(i => Task.Run(async () =>
         {

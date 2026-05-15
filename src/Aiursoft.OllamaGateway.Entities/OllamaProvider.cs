@@ -32,7 +32,7 @@ public class OllamaProvider
 
     public ProviderType ProviderType { get; set; } = ProviderType.Ollama;
 
-    public int MaxParallelism { get; set; } = 0;
+    public int MaxParallelism { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

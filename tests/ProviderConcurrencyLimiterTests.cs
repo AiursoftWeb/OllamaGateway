@@ -54,7 +54,7 @@ public class ProviderConcurrencyLimiterTests
         var maxConcurrentObserved = 0;
         var completedCount = 0;
 
-        async Task SimulateRequest(int requestId, CancellationToken ct)
+        async Task SimulateRequest(CancellationToken ct)
         {
             // Queue for a slot — waiting here does NOT count as request timeout.
             // Only 1 request enters the critical section at a time.
@@ -78,8 +78,9 @@ public class ProviderConcurrencyLimiterTests
 
         // 10 concurrent requests against MaxParallelism=1
         using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+        var token = cts.Token;
         var tasks = Enumerable.Range(0, 10)
-            .Select(i => SimulateRequest(i, cts.Token));
+            .Select(_ => SimulateRequest(token));
         await Task.WhenAll(tasks);
 
         // Only 1 request ever ran concurrently — the limiter serialized them
