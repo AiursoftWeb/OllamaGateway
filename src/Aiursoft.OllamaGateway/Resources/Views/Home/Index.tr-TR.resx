@@ -168,6 +168,9 @@
   <data name="Bilingual Tutorials" xml:space="preserve">
     <value>Çift Dilli Eğitimler</value>
   </data>
+  <data name="Blend multiple models from entirely different providers into a single virtual model. Mix Ollama backends with OpenAI-compatible services — your clients see one unified endpoint while the gateway handles all routing and translation behind the scenes." xml:space="preserve">
+    <value>Farklı sağlayıcılardan gelen birden fazla modeli tek bir sanal modelde birleştirin. Ollama arka uçlarını OpenAI uyumlu hizmetlerle karıştırın — istemcileriniz tek bir birleşik uç nokta görürken, ağ geçidi tüm yönlendirmeleri ve çevirileri arka planda yönetir.</value>
+  </data>
   <data name="Build once, run anywhere. Fully containerized architecture." xml:space="preserve">
     <value>Bir kez derle, her yerde çalıştır. Tamamen konteynerli mimari.</value>
   </data>
@@ -291,6 +294,9 @@
   <data name="Default SQLite database, no configuration needed." xml:space="preserve">
     <value>Varsayılan SQLite veritabanı, yapılandırma gerekmez.</value>
   </data>
+  <data name="Define fallback chains for your models. If the primary provider fails or times out, OllamaGateway automatically steps down to the next available backend — ensuring maximum uptime without manual intervention." xml:space="preserve">
+    <value>Modelleriniz için yedekleme zincirleri tanımlayın. Birincil sağlayıcı başarısız olursa veya zaman aşımına uğrarsa, OllamaGateway otomatik olarak bir sonraki kullanılabilir arka uca geçer — manuel müdahale olmadan maksimum çalışma süresi sağlar.</value>
+  </data>
   <data name="Deployment Guide" xml:space="preserve">
     <value>Dağıtım Kılavuzu</value>
   </data>
@@ -317,6 +323,9 @@
   </data>
   <data name="Discussions page" xml:space="preserve">
     <value>Tartışmalar sayfası</value>
+  </data>
+  <data name="Distribute API requests across multiple underlying Ollama instances or OpenAI-compatible providers. Configure weights and priorities for each backend to optimize throughput and resource utilization." xml:space="preserve">
+    <value>API isteklerini birden fazla alt Ollama örneği veya OpenAI uyumlu sağlayıcı arasında dağıtın. Veri iletimini ve kaynak kullanımını optimize etmek için her arka uç için ağırlıklar ve öncelikler yapılandırın.</value>
   </data>
   <data name="Docker Native" xml:space="preserve">
     <value>Docker Native</value>
@@ -471,6 +480,9 @@
   <data name="Here&apos;s what developers from our community have to say." xml:space="preserve">
     <value>Topluluğumuzdaki geliştiricilerin söyledikleri.</value>
   </data>
+  <data name="High Availability" xml:space="preserve">
+    <value>Yüksek Erişilebilirlik</value>
+  </data>
   <data name="High Quality" xml:space="preserve">
     <value>Yüksek Kalite</value>
   </data>
@@ -537,6 +549,9 @@
   <data name="Load Balancing" xml:space="preserve">
     <value>Yük Dengeleme</value>
   </data>
+  <data name="Load Balancing, Tiered Fallback &amp; Mixed Providers" xml:space="preserve">
+    <value>Yük Dengeleme, Aşamalı Yedekleme ve Karma Sağlayıcılar</value>
+  </data>
   <data name="Maintain High Code Quality" xml:space="preserve">
     <value>Yüksek Kod Kalitesini Koruyun</value>
   </data>
@@ -572,6 +587,9 @@
   </data>
   <data name="Multi-backend Support" xml:space="preserve">
     <value>Çoklu-Arka Uç Desteği</value>
+  </data>
+  <data name="Multi-Provider Virtual Models" xml:space="preserve">
+    <value>Çoklu-Sağlayıcı Sanal Modeller</value>
   </data>
   <data name="Multi-timezone Handling" xml:space="preserve">
     <value>Çoklu Saat Dilimi Yönetimi</value>
@@ -687,11 +705,17 @@
   <data name="OllamaGateway" xml:space="preserve">
     <value>OllamaGateway</value>
   </data>
+  <data name="OllamaGateway goes beyond simple proxying. It intelligently distributes requests across multiple underlying models, automatically falls back when a provider is unavailable, and lets you combine models from different providers into a single virtual model." xml:space="preserve">
+    <value>OllamaGateway, basit bir vekil sunucudan öteye gider. İstekleri birden fazla alt model arasında akıllıca dağıtır, bir sağlayıcı kullanılamadığında otomatik olarak yedek bir yola geçer ve farklı sağlayıcılardan gelen modelleri tek bir sanal modelde birleştirmenize olanak tanır.</value>
+  </data>
   <data name="OllamaGateway has been officially tested and is fully compatible with popular ecosystem tools including Claude Code, Open-WebUI, Opencode, and Roocode. Its robust API translation makes it the ideal choice for deploying autonomous AI agents." xml:space="preserve">
     <value>OllamaGateway, Claude Code, Open-WebUI, Opencode ve Roocode dahil olmak üzere popüler ekosistem araçlarıyla resmi olarak test edilmiş ve tamamen uyumludur. Güçlü API çevirisi, otonom AI ajanlarının dağıtılması için ideal bir seçim yapar.</value>
   </data>
   <data name="OllamaGateway has been officially tested and is fully compatible with popular ecosystem tools including Open-WebUI, Opencode, and Roocode. Its robust API translation makes it the ideal choice for deploying autonomous AI agents." xml:space="preserve">
     <value>OllamaGateway resmi olarak test edilmiş ve Open-WebUI, Opencode ve Roocode dahil olmak üzere popüler ekosistem araçlarıyla tam uyumludur. Güçlü API çevirisi, otonom AI ajanlarını dağıtmak için ideal bir seçim olmasını sağlar.</value>
+  </data>
+  <data name="OllamaGateway High Availability Routing" xml:space="preserve">
+    <value>OllamaGateway Yüksek Erişilebilirlik Yönlendirmesi</value>
   </data>
   <data name="OllamaGateway seamlessly connects your local Ollama capabilities to professional AI development tools. Whether you are using Claude Code, Opencode or Qwen Code, you can now leverage your own hardware for automated coding and development tasks—all verified and officially supported by our team." xml:space="preserve">
     <value>OllamaGateway, yerel Ollama yeteneklerinizi profesyonel AI geliştirme araçlarıyla sorunsuz şekilde bağlar. Claude Code, Opencode veya Qwen Code kullanıyor olun, artık otomatik kodlama ve geliştirme görevleri için kendi donanımınızı kullanabilirsiniz—hepsi ekibimiz tarafından doğrulanmış ve resmi olarak desteklenmektedir.</value>
@@ -842,6 +866,9 @@
   </data>
   <data name="Smart dark mode that automatically adapts to the user&apos;s system settings." xml:space="preserve">
     <value>Kullanıcının sistem ayarlarına otomatik olarak uyum sağlayan akıllı karanlık mod.</value>
+  </data>
+  <data name="Smart Load Balancing" xml:space="preserve">
+    <value>Akıllı Yük Dengeleme</value>
   </data>
   <data name="Smart Mapping" xml:space="preserve">
     <value>Akıllı Eşleştirme</value>
