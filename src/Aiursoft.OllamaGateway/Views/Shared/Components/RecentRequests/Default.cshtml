@@ -20,6 +20,7 @@
                     <th>@Localizer["API Key"]</th>
                     <th>@Localizer["Last Question (first 30 chars)"]</th>
                     <th>@Localizer["Duration"]</th>
+                    <th>@Localizer["Error"]</th>
                     <th>@Localizer["Time"]</th>
                 </tr>
             </thead>
@@ -40,7 +41,11 @@
                                 }
                                 else
                                 {
-                                    <span class="badge bg-danger">@Localizer["Failed"]</span>
+                                    <span class="badge bg-danger"
+                                          @if (!string.IsNullOrWhiteSpace(req.ErrorMessage))
+                                          {
+                                              <text>data-bs-toggle="tooltip" data-bs-placement="top" title="@req.ErrorMessage"</text>
+                                          }>@Localizer["Failed"]</span>
                                 }
                             </td>
                             <td>@req.ModelName</td>
@@ -75,6 +80,17 @@
                                 }
                             </td>
                             <td data-sort="@req.DurationMs" class="text-muted small">@durationStr</td>
+                            <td class="text-muted small">
+                                @if (!string.IsNullOrWhiteSpace(req.ErrorMessage))
+                                {
+                                    var shortError = req.ErrorMessage.Length > 60 ? req.ErrorMessage[..60] + "..." : req.ErrorMessage;
+                                    <span class="text-danger font-monospace" data-bs-toggle="tooltip" data-bs-placement="top" title="@req.ErrorMessage">@shortError</span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">-</span>
+                                }
+                            </td>
                             <td data-sort="@req.CompletedAt.Ticks" class="text-muted small"><label data-utc-time="@req.CompletedAt.ToHtmlDateTime()" class="mb-0"></label></td>
                         </tr>
                     }
@@ -82,7 +98,7 @@
                 else
                 {
                     <tr>
-                        <td colspan="7" class="text-center text-muted py-3">
+                        <td colspan="8" class="text-center text-muted py-3">
                             <i data-lucide="inbox" class="me-1" style="width:16px;height:16px;"></i>
                             @Localizer["No recent requests — data will appear once requests complete"]
                         </td>
@@ -102,12 +118,12 @@
             "pageLength": 10,
             "searching": false,
             "info": false,
-            "order": [[6, "desc"]],
+            "order": [[7, "desc"]],
             "columnDefs": [
-                { "orderable": false, "targets": [2, 3, 4] }
+                { "orderable": false, "targets": [2, 3, 4, 6] }
             ],
             "drawCallback": function () {
-                $('[data-toggle="tooltip"]').tooltip({
+                $('[data-bs-toggle="tooltip"]').tooltip({
                     trigger: 'hover'
                 });
             }

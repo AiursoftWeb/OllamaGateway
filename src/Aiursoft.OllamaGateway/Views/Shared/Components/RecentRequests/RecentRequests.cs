@@ -16,7 +16,8 @@ public class RecentRequests(ActiveRequestTracker activeRequestTracker) : ViewCom
             ApiKeyName = r.ApiKeyName,
             Question = r.Question,
             CompletedAt = r.CompletedAt,
-            DurationMs = r.DurationMs
+            DurationMs = r.DurationMs,
+            ErrorMessage = r.ErrorMessage
         }).ToList();
 
         return View(new RecentRequestsViewModel { Items = items });
