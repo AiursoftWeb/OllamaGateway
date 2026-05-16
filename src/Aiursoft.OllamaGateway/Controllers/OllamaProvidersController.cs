@@ -242,7 +242,10 @@ public class OllamaProvidersController(
 
         provider.Name = model.Name;
         provider.BaseUrl = model.BaseUrl;
-        provider.BearerToken = model.BearerToken;
+        if (!string.IsNullOrWhiteSpace(model.BearerToken))
+        {
+            provider.BearerToken = model.BearerToken;
+        }
         provider.KeepAlive = model.KeepAlive;
         provider.ProviderType = model.ProviderType;
         provider.MaxParallelism = model.MaxParallelism;
