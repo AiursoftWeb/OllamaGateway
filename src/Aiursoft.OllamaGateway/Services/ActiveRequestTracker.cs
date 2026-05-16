@@ -29,6 +29,7 @@ public class RecentRequestEntry
     public string Question { get; init; } = string.Empty;
     public DateTime CompletedAt { get; init; }
     public double DurationMs { get; init; }
+    public string ErrorMessage { get; init; } = string.Empty;
 }
 
 /// <summary>
@@ -67,7 +68,7 @@ public class ActiveRequestTracker : ISingletonDependency
     /// <summary>
     /// Call in a finally block once the upstream response has been fully streamed.
     /// </summary>
-    public void EndRequest(string modelName, int providerId, string backendModelName, bool success)
+    public void EndRequest(string modelName, int providerId, string backendModelName, bool success, string errorMessage = "")
     {
         if (_state.TryGetValue(modelName, out var info))
         {
@@ -95,7 +96,8 @@ public class ActiveRequestTracker : ISingletonDependency
             ApiKeyName = info?.ApiKeyName ?? string.Empty,
             Question = info?.LastQuestion ?? string.Empty,
             CompletedAt = now,
-            DurationMs = duration
+            DurationMs = duration,
+            ErrorMessage = errorMessage
         };
 
         lock (_recentLock)
@@ -133,5 +135,15 @@ public class ActiveRequestTracker : ISingletonDependency
             }
             return result;
         }
+    }
+
+    /// <summary>
+    /// Extracts the first line of an error answer for dashboard display.
+    /// </summary>
+    public static string GetErrorSummary(string? answer)
+    {
+        if (string.IsNullOrWhiteSpace(answer)) return string.Empty;
+        var firstLine = answer.Split('\n')[0].Trim();
+        return firstLine.Length > 200 ? firstLine[..200] : firstLine;
     }
 }

@@ -104,4 +104,55 @@ public class ActiveRequestTrackerTests
         var all = tracker.GetAll();
         Assert.AreEqual("", all["test-model"].ApiKeyName);
     }
+
+    [TestMethod]
+    public void TestEndRequestStoresErrorMessage()
+    {
+        var tracker = new ActiveRequestTracker();
+        var modelName = "test-model";
+        var errorMessage = "System.TimeoutException: The request timed out.";
+
+        tracker.StartRequest(modelName, "hello", 1, "llama2");
+        tracker.EndRequest(modelName, 1, "llama2", false, errorMessage);
+
+        var recent = tracker.GetRecentRequests();
+        Assert.AreEqual(1, recent.Count);
+        Assert.AreEqual("Failed", recent[0].Status);
+        Assert.AreEqual(errorMessage, recent[0].ErrorMessage);
+    }
+
+    [TestMethod]
+    public void TestEndRequestEmptyErrorMessageOnSuccess()
+    {
+        var tracker = new ActiveRequestTracker();
+
+        tracker.StartRequest("test-model", "hello", 1, "llama2");
+        tracker.EndRequest("test-model", 1, "llama2", true, "should be ignored");
+
+        var recent = tracker.GetRecentRequests();
+        Assert.AreEqual("Completed", recent[0].Status);
+        Assert.AreEqual("should be ignored", recent[0].ErrorMessage);
+    }
+
+    [TestMethod]
+    public void TestGetErrorSummaryExtractsFirstLine()
+    {
+        var answer = "System.OperationCanceledException: The operation was canceled.\n   at Foo.Bar()\n   at Baz.Qux()";
+        var summary = ActiveRequestTracker.GetErrorSummary(answer);
+        Assert.AreEqual("System.OperationCanceledException: The operation was canceled.", summary);
+    }
+
+    [TestMethod]
+    public void TestGetErrorSummaryHandlesNull()
+    {
+        var summary = ActiveRequestTracker.GetErrorSummary(null);
+        Assert.AreEqual("", summary);
+    }
+
+    [TestMethod]
+    public void TestGetErrorSummaryHandlesEmpty()
+    {
+        var summary = ActiveRequestTracker.GetErrorSummary("");
+        Assert.AreEqual("", summary);
+    }
 }

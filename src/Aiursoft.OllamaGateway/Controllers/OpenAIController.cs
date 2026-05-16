@@ -715,7 +715,8 @@ public class OpenAIController : ControllerBase
                     _logContext.Log.Model,
                     _logContext.Log.ProviderId ?? 0,
                     _logContext.Log.UnderlyingModelName,
-                    _logContext.Log.Success);
+                    _logContext.Log.Success,
+                    ActiveRequestTracker.GetErrorSummary(_logContext.Log.Answer));
         }
     }
 
@@ -978,7 +979,8 @@ public class OpenAIController : ControllerBase
                     _logContext.Log.Model,
                     _logContext.Log.ProviderId ?? 0,
                     _logContext.Log.UnderlyingModelName,
-                    _logContext.Log.Success);
+                    _logContext.Log.Success,
+                    ActiveRequestTracker.GetErrorSummary(_logContext.Log.Answer));
         }
     }
 

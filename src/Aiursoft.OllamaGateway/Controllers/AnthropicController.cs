@@ -835,7 +835,7 @@ public class AnthropicController : ControllerBase
         finally
         {
             if (!string.IsNullOrEmpty(_logContext.Log.Model))
-                _activeRequestTracker.EndRequest(_logContext.Log.Model, backend?.Provider?.Id ?? 0, backend?.UnderlyingModelName ?? string.Empty, _logContext.Log.Success);
+                _activeRequestTracker.EndRequest(_logContext.Log.Model, backend?.Provider?.Id ?? 0, backend?.UnderlyingModelName ?? string.Empty, _logContext.Log.Success, ActiveRequestTracker.GetErrorSummary(_logContext.Log.Answer));
         }
     }
 }
