@@ -168,6 +168,9 @@
   <data name="Bilingual Tutorials" xml:space="preserve">
     <value>Hướng dẫn song ngữ</value>
   </data>
+  <data name="Blend multiple models from entirely different providers into a single virtual model. Mix Ollama backends with OpenAI-compatible services — your clients see one unified endpoint while the gateway handles all routing and translation behind the scenes." xml:space="preserve">
+    <value>Kết hợp nhiều mô hình từ các nhà cung cấp hoàn toàn khác nhau thành một mô hình ảo duy nhất. Hỗn hợp các backend Ollama với các dịch vụ tương thích OpenAI — khách hàng của bạn thấy một điểm cuối thống nhất trong khi gateway xử lý tất cả việc định tuyến và dịch chuyển ở hậu trường.</value>
+  </data>
   <data name="Build once, run anywhere. Fully containerized architecture." xml:space="preserve">
     <value>Xây dựng một lần, chạy ở bất kỳ đâu. Kiến trúc được đóng gói hoàn toàn trong container.</value>
   </data>
@@ -291,6 +294,9 @@
   <data name="Default SQLite database, no configuration needed." xml:space="preserve">
     <value>Cơ sở dữ liệu SQLite mặc định, không cần cấu hình</value>
   </data>
+  <data name="Define fallback chains for your models. If the primary provider fails or times out, OllamaGateway automatically steps down to the next available backend — ensuring maximum uptime without manual intervention." xml:space="preserve">
+    <value>Định nghĩa chuỗi dự phòng cho các mô hình của bạn. Nếu nhà cung cấp chính gặp sự cố hoặc hết thời gian chờ, OllamaGateway sẽ tự động chuyển sang backend tiếp theo có sẵn — đảm bảo thời gian hoạt động tối đa mà không cần can thiệp thủ công.</value>
+  </data>
   <data name="Deployment Guide" xml:space="preserve">
     <value>Hướng dẫn Triển khai</value>
   </data>
@@ -317,6 +323,9 @@
   </data>
   <data name="Discussions page" xml:space="preserve">
     <value>Trang Thảo luận</value>
+  </data>
+  <data name="Distribute API requests across multiple underlying Ollama instances or OpenAI-compatible providers. Configure weights and priorities for each backend to optimize throughput and resource utilization." xml:space="preserve">
+    <value>Phân phối các yêu cầu API trên nhiều phiên bản Ollama hoặc các nhà cung cấp tương thích OpenAI ở lớp nền. Cấu hình trọng số và mức độ ưu tiên cho mỗi backend để tối ưu hóa thông lượng và việc sử dụng tài nguyên.</value>
   </data>
   <data name="Docker Native" xml:space="preserve">
     <value>Native Docker</value>
@@ -471,6 +480,9 @@
   <data name="Here&apos;s what developers from our community have to say." xml:space="preserve">
     <value>Đây là những gì các nhà phát triển từ cộng đồng của chúng tôi nói.</value>
   </data>
+  <data name="High Availability" xml:space="preserve">
+    <value>Khả dụng cao</value>
+  </data>
   <data name="High Quality" xml:space="preserve">
     <value>Chất lượng cao</value>
   </data>
@@ -537,6 +549,9 @@
   <data name="Load Balancing" xml:space="preserve">
     <value>Cân tải</value>
   </data>
+  <data name="Load Balancing, Tiered Fallback &amp; Mixed Providers" xml:space="preserve">
+    <value>Cân bằng tải, Dự phòng theo tầng &amp; Nhà cung cấp hỗn hợp</value>
+  </data>
   <data name="Maintain High Code Quality" xml:space="preserve">
     <value>Duy trì chất lượng mã nguồn cao</value>
   </data>
@@ -572,6 +587,9 @@
   </data>
   <data name="Multi-backend Support" xml:space="preserve">
     <value>Hỗ trợ nhiều nền tảng</value>
+  </data>
+  <data name="Multi-Provider Virtual Models" xml:space="preserve">
+    <value>Mô hình Ảo Đa Nhà Cung Cấp</value>
   </data>
   <data name="Multi-timezone Handling" xml:space="preserve">
     <value>Xử lý đa múi giờ</value>
@@ -687,11 +705,17 @@
   <data name="OllamaGateway" xml:space="preserve">
     <value>OllamaGateway</value>
   </data>
+  <data name="OllamaGateway goes beyond simple proxying. It intelligently distributes requests across multiple underlying models, automatically falls back when a provider is unavailable, and lets you combine models from different providers into a single virtual model." xml:space="preserve">
+    <value>OllamaGateway vượt xa việc chỉ đơn thuần là proxy. Nó phân phối thông minh các yêu cầu đến nhiều mô hình nền tảng, tự động chuyển sang dự phòng khi một nhà cung cấp không khả dụng, và cho phép bạn kết hợp các mô hình từ nhiều nhà cung cấp khác nhau thành một mô hình ảo duy nhất.</value>
+  </data>
   <data name="OllamaGateway has been officially tested and is fully compatible with popular ecosystem tools including Claude Code, Open-WebUI, Opencode, and Roocode. Its robust API translation makes it the ideal choice for deploying autonomous AI agents." xml:space="preserve">
     <value>OllamaGateway đã được kiểm thử chính thức và tương thích hoàn toàn với các công cụ hệ sinh thái phổ biến bao gồm Claude Code, Open-WebUI, Opencode và Roocode. Khả năng chuyển đổi API mạnh mẽ của nó khiến nó trở thành lựa chọn lý tưởng để triển khai các tác nhân AI tự động.</value>
   </data>
   <data name="OllamaGateway has been officially tested and is fully compatible with popular ecosystem tools including Open-WebUI, Opencode, and Roocode. Its robust API translation makes it the ideal choice for deploying autonomous AI agents." xml:space="preserve">
     <value>OllamaGateway đã được kiểm tra chính thức và hoàn toàn tương thích với các công cụ hệ sinh thái phổ biến bao gồm Open-WebUI, Opencode và Roocode. Khả năng dịch API mạnh mẽ của nó khiến nó trở thành lựa chọn lý tưởng để triển khai các tác nhân AI tự động.</value>
+  </data>
+  <data name="OllamaGateway High Availability Routing" xml:space="preserve">
+    <value>OllamaGateway Cân bằng tải cao khả dụng</value>
   </data>
   <data name="OllamaGateway seamlessly connects your local Ollama capabilities to professional AI development tools. Whether you are using Claude Code, Opencode or Qwen Code, you can now leverage your own hardware for automated coding and development tasks—all verified and officially supported by our team." xml:space="preserve">
     <value>OllamaGateway kết nối liền mạch các khả năng Ollama cục bộ của bạn với các công cụ phát triển AI chuyên nghiệp. Dù bạn đang sử dụng Claude Code, Opencode hay Qwen Code, bạn giờ đây có thể tận dụng phần cứng của mình cho các tác vụ lập trình và phát triển tự động—tất cả đều đã được xác minh và hỗ trợ chính thức bởi đội ngũ của chúng tôi.</value>
@@ -845,6 +869,9 @@
   </data>
   <data name="Smart dark mode that automatically adapts to the user&apos;s system settings." xml:space="preserve">
     <value>Chế độ tối thông minh tự động điều chỉnh theo cài đặt hệ thống của người dùng.</value>
+  </data>
+  <data name="Smart Load Balancing" xml:space="preserve">
+    <value>Cân bằng tải thông minh</value>
   </data>
   <data name="Smart Mapping" xml:space="preserve">
     <value>ánh xạ thông minh</value>

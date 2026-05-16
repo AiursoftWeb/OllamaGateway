@@ -168,6 +168,9 @@
   <data name="Bilingual Tutorials" xml:space="preserve">
     <value>雙語教程</value>
   </data>
+  <data name="Blend multiple models from entirely different providers into a single virtual model. Mix Ollama backends with OpenAI-compatible services — your clients see one unified endpoint while the gateway handles all routing and translation behind the scenes." xml:space="preserve">
+    <value>將來自不同供應商的多個模型整合為單一虛擬模型。混合使用 Ollama 後端與 OpenAI 兼容服務——客戶看到的是統一端點，而閘道器在後台處理所有路由和轉換工作。</value>
+  </data>
   <data name="Build once, run anywhere. Fully containerized architecture." xml:space="preserve">
     <value>一次建構，随处執行。完全容器化架構。</value>
   </data>
@@ -291,6 +294,9 @@
   <data name="Default SQLite database, no configuration needed." xml:space="preserve">
     <value>預設 SQLite 資料庫，無需設定</value>
   </data>
+  <data name="Define fallback chains for your models. If the primary provider fails or times out, OllamaGateway automatically steps down to the next available backend — ensuring maximum uptime without manual intervention." xml:space="preserve">
+    <value>為您的模型定義後備鏈。如果主要供應商失敗或超時，OllamaGateway 會自動切換至下一個可用的後端 — 確保在無需人工干預的情況下實現最高可用性。</value>
+  </data>
   <data name="Deployment Guide" xml:space="preserve">
     <value>部署指南</value>
   </data>
@@ -317,6 +323,9 @@
   </data>
   <data name="Discussions page" xml:space="preserve">
     <value>討論頁面</value>
+  </data>
+  <data name="Distribute API requests across multiple underlying Ollama instances or OpenAI-compatible providers. Configure weights and priorities for each backend to optimize throughput and resource utilization." xml:space="preserve">
+    <value>將 API 請求分發至多個底層 Ollama 實例或 OpenAI 兼容服務商。為每個後端配置權重和優先級，以優化吞吐量及資源利用率。</value>
   </data>
   <data name="Docker Native" xml:space="preserve">
     <value>Docker Native</value>
@@ -471,6 +480,9 @@
   <data name="Here&apos;s what developers from our community have to say." xml:space="preserve">
     <value>等我哋社群嘅開發者同你分享下。</value>
   </data>
+  <data name="High Availability" xml:space="preserve">
+    <value>高可用性</value>
+  </data>
   <data name="High Quality" xml:space="preserve">
     <value>高質素</value>
   </data>
@@ -537,6 +549,9 @@
   <data name="Load Balancing" xml:space="preserve">
     <value>負載平衡</value>
   </data>
+  <data name="Load Balancing, Tiered Fallback &amp; Mixed Providers" xml:space="preserve">
+    <value>負載平衡、分層故障轉移及混合供應商</value>
+  </data>
   <data name="Maintain High Code Quality" xml:space="preserve">
     <value>維持高程式碼質素</value>
   </data>
@@ -572,6 +587,9 @@
   </data>
   <data name="Multi-backend Support" xml:space="preserve">
     <value>多後台支援</value>
+  </data>
+  <data name="Multi-Provider Virtual Models" xml:space="preserve">
+    <value>多供應商虛擬模型</value>
   </data>
   <data name="Multi-timezone Handling" xml:space="preserve">
     <value>多時區處理</value>
@@ -687,11 +705,17 @@
   <data name="OllamaGateway" xml:space="preserve">
     <value>OllamaGateway</value>
   </data>
+  <data name="OllamaGateway goes beyond simple proxying. It intelligently distributes requests across multiple underlying models, automatically falls back when a provider is unavailable, and lets you combine models from different providers into a single virtual model." xml:space="preserve">
+    <value>OllamaGateway 超越了簡單的代理功能。它能智能地在多個底層模型之間分發請求，在提供者不可用時自動回退，並允許您將來自不同提供者的模型合併為單一虛擬模型。</value>
+  </data>
   <data name="OllamaGateway has been officially tested and is fully compatible with popular ecosystem tools including Claude Code, Open-WebUI, Opencode, and Roocode. Its robust API translation makes it the ideal choice for deploying autonomous AI agents." xml:space="preserve">
     <value>OllamaGateway 已通過官方測試，並完全兼容 Claude Code、Open-WebUI、Opencode 及 Roocode 等主流生態系工具。其強大的 API 轉換能力，使其成為部署自主 AI 代理的理想選擇。</value>
   </data>
   <data name="OllamaGateway has been officially tested and is fully compatible with popular ecosystem tools including Open-WebUI, Opencode, and Roocode. Its robust API translation makes it the ideal choice for deploying autonomous AI agents." xml:space="preserve">
     <value>OllamaGateway 已正式通過測試，完全兼容包括 Open-WebUI、Opencode 和 Roocode 在內的主流生態系統工具。其強大的 API 轉換功能使其成為部署自主 AI 代理的理想選擇。</value>
+  </data>
+  <data name="OllamaGateway High Availability Routing" xml:space="preserve">
+    <value>OllamaGateway 高可用性路由</value>
   </data>
   <data name="OllamaGateway seamlessly connects your local Ollama capabilities to professional AI development tools. Whether you are using Claude Code, Opencode or Qwen Code, you can now leverage your own hardware for automated coding and development tasks—all verified and officially supported by our team." xml:space="preserve">
     <value>OllamaGateway 將您的本地 Ollama 能力與專業 AI 開發工具無縫連接。無論您使用的是 Claude Code、Opencode 還是 Qwen Code，現在都可以利用自己的硬件進行自動化編碼和開發任務——全部經過我們團隊驗證並獲得官方支持。</value>
@@ -845,6 +869,9 @@
   </data>
   <data name="Smart dark mode that automatically adapts to the user&apos;s system settings." xml:space="preserve">
     <value>智能深色模式，會自動適應使用者嘅系統設定。</value>
+  </data>
+  <data name="Smart Load Balancing" xml:space="preserve">
+    <value>智能負載平衡</value>
   </data>
   <data name="Smart Mapping" xml:space="preserve">
     <value>智能映射</value>

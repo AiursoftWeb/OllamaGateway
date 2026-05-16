@@ -168,6 +168,9 @@
   <data name="Bilingual Tutorials" xml:space="preserve">
     <value>Tutorial Berbahasa Ganda</value>
   </data>
+  <data name="Blend multiple models from entirely different providers into a single virtual model. Mix Ollama backends with OpenAI-compatible services — your clients see one unified endpoint while the gateway handles all routing and translation behind the scenes." xml:space="preserve">
+    <value>Gabungkan beberapa model dari penyedia yang sama sekali berbeda menjadi satu model virtual. Campurkan backend Ollama dengan layanan yang kompatibel dengan OpenAI — klien Anda melihat satu endpoint yang terpadu sementara gateway menangani semua pengalihan dan terjemahan di balik layar.</value>
+  </data>
   <data name="Build once, run anywhere. Fully containerized architecture." xml:space="preserve">
     <value>Bangun sekali, jalankan di mana saja. Arsitektur yang sepenuhnya terkontainerisasi.</value>
   </data>
@@ -291,6 +294,9 @@
   <data name="Default SQLite database, no configuration needed." xml:space="preserve">
     <value>Database SQLite bawaan, tidak perlu konfigurasi</value>
   </data>
+  <data name="Define fallback chains for your models. If the primary provider fails or times out, OllamaGateway automatically steps down to the next available backend — ensuring maximum uptime without manual intervention." xml:space="preserve">
+    <value>Tentukan rantai fallback untuk model Anda. Jika penyedia utama gagal atau waktu habis, OllamaGateway secara otomatis beralih ke backend berikutnya yang tersedia — memastikan uptime maksimal tanpa intervensi manual.</value>
+  </data>
   <data name="Deployment Guide" xml:space="preserve">
     <value>Panduan Deployment</value>
   </data>
@@ -317,6 +323,9 @@
   </data>
   <data name="Discussions page" xml:space="preserve">
     <value>Halaman Diskusi</value>
+  </data>
+  <data name="Distribute API requests across multiple underlying Ollama instances or OpenAI-compatible providers. Configure weights and priorities for each backend to optimize throughput and resource utilization." xml:space="preserve">
+    <value>Distribusikan permintaan API ke berbagai instance Ollama atau penyedia yang kompatibel dengan OpenAI di bawahnya. Konfigurasi bobot dan prioritas untuk setiap backend guna mengoptimalkan throughput dan pemanfaatan sumber daya.</value>
   </data>
   <data name="Docker Native" xml:space="preserve">
     <value>Native Docker</value>
@@ -471,6 +480,9 @@
   <data name="Here&apos;s what developers from our community have to say." xml:space="preserve">
     <value>Inilah yang dikatakan para pengembang dari komunitas kami.</value>
   </data>
+  <data name="High Availability" xml:space="preserve">
+    <value>Ketersediaan Tinggi</value>
+  </data>
   <data name="High Quality" xml:space="preserve">
     <value>Kualitas Tinggi</value>
   </data>
@@ -537,6 +549,9 @@
   <data name="Load Balancing" xml:space="preserve">
     <value>Load Balancing</value>
   </data>
+  <data name="Load Balancing, Tiered Fallback &amp; Mixed Providers" xml:space="preserve">
+    <value>Penyeimbangan Beban, Fallback Bertingkat &amp; Penyedia Campuran</value>
+  </data>
   <data name="Maintain High Code Quality" xml:space="preserve">
     <value>Jaga Kualitas Kode yang Tinggi</value>
   </data>
@@ -572,6 +587,9 @@
   </data>
   <data name="Multi-backend Support" xml:space="preserve">
     <value>Dukungan Multi-backend</value>
+  </data>
+  <data name="Multi-Provider Virtual Models" xml:space="preserve">
+    <value>Model Virtual Multi-Penyedia</value>
   </data>
   <data name="Multi-timezone Handling" xml:space="preserve">
     <value>Penanganan Multi-Zona Waktu</value>
@@ -687,11 +705,17 @@
   <data name="OllamaGateway" xml:space="preserve">
     <value>OllamaGateway</value>
   </data>
+  <data name="OllamaGateway goes beyond simple proxying. It intelligently distributes requests across multiple underlying models, automatically falls back when a provider is unavailable, and lets you combine models from different providers into a single virtual model." xml:space="preserve">
+    <value>OllamaGateway melampaui fungsi proxy sederhana. OllamaGateway secara cerdas mendistribusikan permintaan ke berbagai model dasar, secara otomatis melakukan fallback ketika penyedia tidak tersedia, dan memungkinkan Anda menggabungkan model dari berbagai penyedia menjadi satu model virtual.</value>
+  </data>
   <data name="OllamaGateway has been officially tested and is fully compatible with popular ecosystem tools including Claude Code, Open-WebUI, Opencode, and Roocode. Its robust API translation makes it the ideal choice for deploying autonomous AI agents." xml:space="preserve">
     <value>OllamaGateway telah diuji secara resmi dan sepenuhnya kompatibel dengan alat ekosistem populer termasuk Claude Code, Open-WebUI, Opencode, dan Roocode. Terjemahan API yang tangguh menjadikannya pilihan ideal untuk menerapkan agen AI otonom.</value>
   </data>
   <data name="OllamaGateway has been officially tested and is fully compatible with popular ecosystem tools including Open-WebUI, Opencode, and Roocode. Its robust API translation makes it the ideal choice for deploying autonomous AI agents." xml:space="preserve">
     <value>OllamaGateway telah resmi diuji dan sepenuhnya kompatibel dengan alat ekosistem populer termasuk Open-WebUI, Opencode, dan Roocode. Terjemahan API yang kuat menjadikannya pilihan ideal untuk menerapkan agen AI otonom.</value>
+  </data>
+  <data name="OllamaGateway High Availability Routing" xml:space="preserve">
+    <value>OllamaGateway Rute Ketersediaan Tinggi</value>
   </data>
   <data name="OllamaGateway seamlessly connects your local Ollama capabilities to professional AI development tools. Whether you are using Claude Code, Opencode or Qwen Code, you can now leverage your own hardware for automated coding and development tasks—all verified and officially supported by our team." xml:space="preserve">
     <value>OllamaGateway menghubungkan secara mulus kemampuan Ollama lokal Anda ke alat pengembangan AI profesional. Baik Anda menggunakan Claude Code, Opencode, atau Qwen Code, kini Anda dapat memanfaatkan perangkat keras Anda sendiri untuk tugas pengodean dan pengembangan otomatis—semuanya telah diverifikasi dan didukung secara resmi oleh tim kami.</value>
@@ -842,6 +866,9 @@
   </data>
   <data name="Smart dark mode that automatically adapts to the user&apos;s system settings." xml:space="preserve">
     <value>Mode gelap cerdas yang secara otomatis menyesuaikan dengan pengaturan sistem pengguna.</value>
+  </data>
+  <data name="Smart Load Balancing" xml:space="preserve">
+    <value>Penyeimbangan Beban Cerdas</value>
   </data>
   <data name="Smart Mapping" xml:space="preserve">
     <value>Pemetaan Cerdas</value>

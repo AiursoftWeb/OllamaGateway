@@ -168,6 +168,9 @@
   <data name="Bilingual Tutorials" xml:space="preserve">
     <value>Tutoriais Bilingues</value>
   </data>
+  <data name="Blend multiple models from entirely different providers into a single virtual model. Mix Ollama backends with OpenAI-compatible services — your clients see one unified endpoint while the gateway handles all routing and translation behind the scenes." xml:space="preserve">
+    <value>Combine múltiplos modelos de provedores completamente diferentes em um único modelo virtual. Integre backends do Ollama com serviços compatíveis com OpenAI — seus clientes veem um único endpoint unificado, enquanto o gateway gerencia todo o roteamento e a tradução nos bastidores.</value>
+  </data>
   <data name="Build once, run anywhere. Fully containerized architecture." xml:space="preserve">
     <value>Construa uma vez, execute em qualquer lugar. Arquitetura totalmente containerizada.</value>
   </data>
@@ -291,6 +294,9 @@
   <data name="Default SQLite database, no configuration needed." xml:space="preserve">
     <value>Banco de dados SQLite padrão, sem necessidade de configuração.</value>
   </data>
+  <data name="Define fallback chains for your models. If the primary provider fails or times out, OllamaGateway automatically steps down to the next available backend — ensuring maximum uptime without manual intervention." xml:space="preserve">
+    <value>Defina cadeias de fallback para seus modelos. Se o provedor principal falhar ou tiver tempo limite, o OllamaGateway automaticamente reverterá para o próximo backend disponível — garantindo máxima disponibilidade sem intervenção manual.</value>
+  </data>
   <data name="Deployment Guide" xml:space="preserve">
     <value>Guia de Implantação</value>
   </data>
@@ -317,6 +323,9 @@
   </data>
   <data name="Discussions page" xml:space="preserve">
     <value>Página de Discussões</value>
+  </data>
+  <data name="Distribute API requests across multiple underlying Ollama instances or OpenAI-compatible providers. Configure weights and priorities for each backend to optimize throughput and resource utilization." xml:space="preserve">
+    <value>Distribua solicitações de API entre várias instâncias subjacentes do Ollama ou provedores compatíveis com OpenAI. Configure pesos e prioridades para cada backend para otimizar a capacidade de processamento e a utilização de recursos.</value>
   </data>
   <data name="Docker Native" xml:space="preserve">
     <value>Native do Docker</value>
@@ -471,6 +480,9 @@
   <data name="Here&apos;s what developers from our community have to say." xml:space="preserve">
     <value>Veja o que os desenvolvedores da nossa comunidade têm a dizer.</value>
   </data>
+  <data name="High Availability" xml:space="preserve">
+    <value>Alta Disponibilidade</value>
+  </data>
   <data name="High Quality" xml:space="preserve">
     <value>Alta Qualidade</value>
   </data>
@@ -537,6 +549,9 @@
   <data name="Load Balancing" xml:space="preserve">
     <value>Balanceamento de Carga</value>
   </data>
+  <data name="Load Balancing, Tiered Fallback &amp; Mixed Providers" xml:space="preserve">
+    <value>Balanceamento de Carga, Fallback em Camadas e Provedores Mistos</value>
+  </data>
   <data name="Maintain High Code Quality" xml:space="preserve">
     <value>Mantenha Alta Qualidade de Código</value>
   </data>
@@ -572,6 +587,9 @@
   </data>
   <data name="Multi-backend Support" xml:space="preserve">
     <value>Suporte a múltiplos back-ends</value>
+  </data>
+  <data name="Multi-Provider Virtual Models" xml:space="preserve">
+    <value>Modelos Virtuais Multi-Provedores</value>
   </data>
   <data name="Multi-timezone Handling" xml:space="preserve">
     <value>Gerenciamento de Múltiplos Fuso Horários</value>
@@ -687,11 +705,17 @@
   <data name="OllamaGateway" xml:space="preserve">
     <value>OllamaGateway</value>
   </data>
+  <data name="OllamaGateway goes beyond simple proxying. It intelligently distributes requests across multiple underlying models, automatically falls back when a provider is unavailable, and lets you combine models from different providers into a single virtual model." xml:space="preserve">
+    <value>O OllamaGateway vai além do simples proxy. Ele distribui inteligentemente as solicitações entre vários modelos subjacentes, faz fallback automaticamente quando um provedor está indisponível e permite combinar modelos de diferentes provedores em um único modelo virtual.</value>
+  </data>
   <data name="OllamaGateway has been officially tested and is fully compatible with popular ecosystem tools including Claude Code, Open-WebUI, Opencode, and Roocode. Its robust API translation makes it the ideal choice for deploying autonomous AI agents." xml:space="preserve">
     <value>OllamaGateway foi oficialmente testado e é totalmente compatível com ferramentas populares do ecossistema, incluindo Claude Code, Open-WebUI, Opencode e Roocode. Sua robusta tradução de API a torna a escolha ideal para a implantação de agentes de IA autônomos.</value>
   </data>
   <data name="OllamaGateway has been officially tested and is fully compatible with popular ecosystem tools including Open-WebUI, Opencode, and Roocode. Its robust API translation makes it the ideal choice for deploying autonomous AI agents." xml:space="preserve">
     <value>OllamaGateway foi oficialmente testado e é totalmente compatível com ferramentas populares do ecossistema, incluindo Open-WebUI, Opencode e Roocode. Sua tradução robusta de API o torna a escolha ideal para implantar agentes de IA autônomos.</value>
+  </data>
+  <data name="OllamaGateway High Availability Routing" xml:space="preserve">
+    <value>Roteamento de Alta Disponibilidade do OllamaGateway</value>
   </data>
   <data name="OllamaGateway seamlessly connects your local Ollama capabilities to professional AI development tools. Whether you are using Claude Code, Opencode or Qwen Code, you can now leverage your own hardware for automated coding and development tasks—all verified and officially supported by our team." xml:space="preserve">
     <value>O OllamaGateway conecta perfeitamente suas capacidades locais do Ollama a ferramentas profissionais de desenvolvimento de IA. Seja você usando Claude Code, Opencode ou Qwen Code, agora pode aproveitar seu próprio hardware para tarefas automatizadas de codificação e desenvolvimento — tudo verificado e oficialmente suportado pela nossa equipe.</value>
@@ -842,6 +866,9 @@
   </data>
   <data name="Smart dark mode that automatically adapts to the user&apos;s system settings." xml:space="preserve">
     <value>Modo escuro inteligente que se adapta automaticamente às configurações do sistema do usuário.</value>
+  </data>
+  <data name="Smart Load Balancing" xml:space="preserve">
+    <value>Balanceamento de Carga Inteligente</value>
   </data>
   <data name="Smart Mapping" xml:space="preserve">
     <value>Mapeamento Inteligente</value>

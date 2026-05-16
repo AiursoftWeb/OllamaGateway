@@ -168,6 +168,9 @@
   <data name="Bilingual Tutorials" xml:space="preserve">
     <value>द्विभाषी पाठ्यचर्या</value>
   </data>
+  <data name="Blend multiple models from entirely different providers into a single virtual model. Mix Ollama backends with OpenAI-compatible services — your clients see one unified endpoint while the gateway handles all routing and translation behind the scenes." xml:space="preserve">
+    <value>एकल आभासी मॉडल बनाने के लिए पूरी तरह से अलग प्रदाताओं से कई मॉडल को मिलाएं। Ollama बैकएंड को OpenAI-अनुकूल सेवाओं के साथ मिक्स करें — आपके क्लाइंट एक एकीकृत एंडपॉइंट देखते हैं, जबकि गेटवे सभी रूटिंग और अनुवाद को पृष्ठभूमि में संभालता है।</value>
+  </data>
   <data name="Build once, run anywhere. Fully containerized architecture." xml:space="preserve">
     <value>एक बार बनाएं, कहीं भी चलाएं। पूरी तरह से कंटेनरीकृत आर्किटेक्चर।</value>
   </data>
@@ -291,6 +294,9 @@
   <data name="Default SQLite database, no configuration needed." xml:space="preserve">
     <value>डिफ़ॉल्ट SQLite डेटाबेस, कोई कॉन्फ़िगरेशन की आवश्यकता नहीं है।</value>
   </data>
+  <data name="Define fallback chains for your models. If the primary provider fails or times out, OllamaGateway automatically steps down to the next available backend — ensuring maximum uptime without manual intervention." xml:space="preserve">
+    <value>अपने मॉडलों के लिए फॉलबैक चेन परिभाषित करें। यदि प्राथमिक प्रदाता विफल हो जाता है या टाइमआउट हो जाता है, तो OllamaGateway स्वचालित रूप से उपलब्ध अगले बैकएंड पर स्विच कर देता है — जिससे बिना किसी मैन्युअल हस्तक्षेप के अधिकतम अपटाइम सुनिश्चित होता है।</value>
+  </data>
   <data name="Deployment Guide" xml:space="preserve">
     <value>डिप्लॉयमेंट गाइड</value>
   </data>
@@ -317,6 +323,9 @@
   </data>
   <data name="Discussions page" xml:space="preserve">
     <value>चर्चा पृष्ठ</value>
+  </data>
+  <data name="Distribute API requests across multiple underlying Ollama instances or OpenAI-compatible providers. Configure weights and priorities for each backend to optimize throughput and resource utilization." xml:space="preserve">
+    <value>API अनुरोधों को कई अंतर्निहित Ollama इंस्टेंस या OpenAI-संगत प्रदाताओं के बीच वितरित करें। थ्रूपुट और संसाधन उपयोग को अनुकूलित करने के लिए प्रत्येक बैकएंड के लिए वजन और प्राथमिकताएं कॉन्फ़िगर करें।</value>
   </data>
   <data name="Docker Native" xml:space="preserve">
     <value>डॉकर नेटिव</value>
@@ -471,6 +480,9 @@
   <data name="Here&apos;s what developers from our community have to say." xml:space="preserve">
     <value>हमारे समुदाय के डेवलपर्स का क्या कहना है, यहाँ देखें।</value>
   </data>
+  <data name="High Availability" xml:space="preserve">
+    <value>उच्च उपलब्धता</value>
+  </data>
   <data name="High Quality" xml:space="preserve">
     <value>उच्च गुणवत्ता</value>
   </data>
@@ -537,6 +549,9 @@
   <data name="Load Balancing" xml:space="preserve">
     <value>लोड बैलेंसिंग</value>
   </data>
+  <data name="Load Balancing, Tiered Fallback &amp; Mixed Providers" xml:space="preserve">
+    <value>लोड बैलेंसिंग, स्तरित फॉलबैक और मिक्स्ड प्रोवाइडर्स</value>
+  </data>
   <data name="Maintain High Code Quality" xml:space="preserve">
     <value>उच्च कोड गुणवत्ता बनाए रखें</value>
   </data>
@@ -572,6 +587,9 @@
   </data>
   <data name="Multi-backend Support" xml:space="preserve">
     <value>एकाधिक-बैकएंड समर्थन</value>
+  </data>
+  <data name="Multi-Provider Virtual Models" xml:space="preserve">
+    <value>बहु-प्रदाता आभासी मॉडल</value>
   </data>
   <data name="Multi-timezone Handling" xml:space="preserve">
     <value>बहु-समय क्षेत्र संभाल</value>
@@ -687,11 +705,17 @@
   <data name="OllamaGateway" xml:space="preserve">
     <value>OllamaGateway</value>
   </data>
+  <data name="OllamaGateway goes beyond simple proxying. It intelligently distributes requests across multiple underlying models, automatically falls back when a provider is unavailable, and lets you combine models from different providers into a single virtual model." xml:space="preserve">
+    <value>OllamaGateway साधारण प्रॉक्सी से आगे जाता है। यह कई मॉडलों के बीच अनुरोधों को समझदारी से वितरित करता है, जब कोई प्रदाता अनुपलब्ध हो तो स्वचालित रूप से फॉलबैक करता है, और आपको विभिन्न प्रदाताओं के मॉडलों को एकल आभासी मॉडल में संयोजित करने की अनुमति देता है।</value>
+  </data>
   <data name="OllamaGateway has been officially tested and is fully compatible with popular ecosystem tools including Claude Code, Open-WebUI, Opencode, and Roocode. Its robust API translation makes it the ideal choice for deploying autonomous AI agents." xml:space="preserve">
     <value>OllamaGateway को आधिकारिक रूप से परीक्षण किया गया है और यह Claude Code, Open-WebUI, Opencode, और Roocode सहित लोकप्रिय इकोसिस्टम टूल्स के साथ पूरी तरह से संगत है। इसकी मजबूत API अनुवाद क्षमता इसे स्वतंत्र AI एजेंट्स को तैनात करने के लिए आदर्श विकल्प बनाती है।</value>
   </data>
   <data name="OllamaGateway has been officially tested and is fully compatible with popular ecosystem tools including Open-WebUI, Opencode, and Roocode. Its robust API translation makes it the ideal choice for deploying autonomous AI agents." xml:space="preserve">
     <value>ओलामागेटवे को आधिकारिक रूप से परीक्षण किया गया है और यह ओपन-वेबयू, ओपencode, और रूकोड जैसे लोकप्रिय पारिस्थितिकी तंत्र उपकरणों के साथ पूर्ण रूप से संगत है। इसकी मजबूत एपीआई अनुवाद इसे स्वायत्त एआई एजेंटों को तैनात करने के लिए आदर्श विकल्प बनाता है।</value>
+  </data>
+  <data name="OllamaGateway High Availability Routing" xml:space="preserve">
+    <value>ओलामागेटवे उच्च उपलब्धता रूटिंग</value>
   </data>
   <data name="OllamaGateway seamlessly connects your local Ollama capabilities to professional AI development tools. Whether you are using Claude Code, Opencode or Qwen Code, you can now leverage your own hardware for automated coding and development tasks—all verified and officially supported by our team." xml:space="preserve">
     <value>OllamaGateway आपकी स्थानीय Ollama क्षमताओं को पेशेवर AI विकास उपकरणों के साथ सहजता से जोड़ता है। चाहे आप Claude Code, Opencode या Qwen Code का उपयोग कर रहे हों, अब आप स्वचालित कोडिंग और विकास कार्यों के लिए अपने खुद के हार्डवेयर का लाभ उठा सकते हैं—जिसे हमारी टीम द्वारा सत्यापित और आधिकारिक रूप से समर्थित किया गया है।</value>
@@ -842,6 +866,9 @@
   </data>
   <data name="Smart dark mode that automatically adapts to the user&apos;s system settings." xml:space="preserve">
     <value>स्मार्ट डार्क मोड जो स्वचालित रूप से उपयोगकर्ता की सिस्टम सेटिंग्स के अनुकूल हो जाता है।</value>
+  </data>
+  <data name="Smart Load Balancing" xml:space="preserve">
+    <value>स्मार्ट लोड बैलेंसिंग</value>
   </data>
   <data name="Smart Mapping" xml:space="preserve">
     <value>स्मार्ट मैपिंग</value>
