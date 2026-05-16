@@ -8,10 +8,10 @@
             <i class="align-middle me-1" data-lucide="clock"></i>
             @Localizer["Recent Requests"]
         </h5>
-        <span class="badge bg-info">@Localizer["Last 10"]</span>
+        <span class="badge bg-info">@Localizer["Last 50"]</span>
     </div>
     <div class="card-body p-0">
-        <table class="table table-hover mb-0">
+        <table class="table table-hover mb-0" id="recentRequestsTable">
             <thead>
                 <tr>
                     <th>@Localizer["Status"]</th>
@@ -19,8 +19,8 @@
                     <th>@Localizer["Backend Model"]</th>
                     <th>@Localizer["API Key"]</th>
                     <th>@Localizer["Last Question (first 30 chars)"]</th>
-                    <th class="text-end">@Localizer["Duration"]</th>
-                    <th class="text-end">@Localizer["Time"]</th>
+                    <th>@Localizer["Duration"]</th>
+                    <th>@Localizer["Time"]</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,7 +33,7 @@
                             ? $"{(int)req.DurationMs}ms"
                             : $"{req.DurationMs / 1000:F1}s";
                         <tr>
-                            <td>
+                            <td data-sort="@(isSuccess ? 0 : 1)">
                                 @if (isSuccess)
                                 {
                                     <span class="badge bg-success">@Localizer["Completed"]</span>
@@ -43,7 +43,7 @@
                                     <span class="badge bg-danger">@Localizer["Failed"]</span>
                                 }
                             </td>
-                            <td><strong>@req.ModelName</strong></td>
+                            <td>@req.ModelName</td>
                             <td class="text-muted small font-monospace">
                                 @if (!string.IsNullOrWhiteSpace(req.BackendModelName))
                                 {
@@ -66,7 +66,7 @@
                                     @req.Question
                                     @if (req.Question.Length >= 30)
                                     {
-                                        <text>…</text>
+                                        <text>...</text>
                                     }
                                 }
                                 else
@@ -74,8 +74,8 @@
                                     <em>@Localizer["(no content)"]</em>
                                 }
                             </td>
-                            <td class="text-end text-muted small">@durationStr</td>
-                            <td class="text-end text-muted small"><label data-utc-time="@req.CompletedAt.ToHtmlDateTime()" class="mb-0"></label></td>
+                            <td data-sort="@req.DurationMs" class="text-muted small">@durationStr</td>
+                            <td data-sort="@req.CompletedAt.Ticks" class="text-muted small"><label data-utc-time="@req.CompletedAt.ToHtmlDateTime()" class="mb-0"></label></td>
                         </tr>
                     }
                 }
@@ -92,3 +92,25 @@
         </table>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        $('#recentRequestsTable').DataTable({
+            "destroy": true,
+            "responsive": true,
+            "paging": true,
+            "pageLength": 10,
+            "searching": false,
+            "info": false,
+            "order": [[6, "desc"]],
+            "columnDefs": [
+                { "orderable": false, "targets": [2, 3, 4] }
+            ],
+            "drawCallback": function () {
+                $('[data-toggle="tooltip"]').tooltip({
+                    trigger: 'hover'
+                });
+            }
+        });
+    });
+</script>
