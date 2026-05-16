@@ -415,6 +415,66 @@
     </div>
 </section>
 
+<section class="py-6">
+    <div class="container">
+        <div class="mb-5 text-center">
+            <span class="text-uppercase text-primary text-sm fw-medium mb-1 d-block">@Localizer["High Availability"]</span>
+            <h2 class="h1">@Localizer["Load Balancing, Tiered Fallback & Mixed Providers"]</h2>
+            <div class="row justify-content-center mt-3">
+                <div class="col-lg-8">
+                    <p class="text-muted fs-lg">
+                        @Localizer["OllamaGateway goes beyond simple proxying. It intelligently distributes requests across multiple underlying models, automatically falls back when a provider is unavailable, and lets you combine models from different providers into a single virtual model."]
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4 d-flex">
+                <div class="d-flex align-items-start py-3">
+                    <div class="landing-feature">
+                        <i data-lucide="network"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h4 class="mt-0">@Localizer["Smart Load Balancing"]</h4>
+                        <p class="fs-lg">@Localizer["Distribute API requests across multiple underlying Ollama instances or OpenAI-compatible providers. Configure weights and priorities for each backend to optimize throughput and resource utilization."]</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 d-flex">
+                <div class="d-flex align-items-start py-3">
+                    <div class="landing-feature">
+                        <i data-lucide="layers"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h4 class="mt-0">@Localizer["Tiered Fallback"]</h4>
+                        <p class="fs-lg">@Localizer["Define fallback chains for your models. If the primary provider fails or times out, OllamaGateway automatically steps down to the next available backend — ensuring maximum uptime without manual intervention."]</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 d-flex">
+                <div class="d-flex align-items-start py-3">
+                    <div class="landing-feature">
+                        <i data-lucide="shuffle"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h4 class="mt-0">@Localizer["Multi-Provider Virtual Models"]</h4>
+                        <p class="fs-lg">@Localizer["Blend multiple models from entirely different providers into a single virtual model. Mix Ollama backends with OpenAI-compatible services — your clients see one unified endpoint while the gateway handles all routing and translation behind the scenes."]</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-5">
+            <div class="col-lg-10">
+                <div class="landing-intro-screenshot shadow-lg">
+                    <img src="~/images/ha-routing.png" alt="@Localizer["OllamaGateway High Availability Routing"]" class="img-fluid rounded" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section class="py-6 bg-light">
     <div class="container">
         <div class="mb-5 text-center px-4">
