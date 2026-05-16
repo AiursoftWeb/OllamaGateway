@@ -123,7 +123,7 @@ Native Ollama is great for personal use, but it lacks the enterprise features re
 | Function Call | ✅ | ✅ |
 | Streaming | ✅ | ✅ |
 | OpenAI API Translation | ⚠️ Partial[^1] | ✅ |
-| Anthropic API Translation | ❌ | ✅ |
+| Anthropic API Translation | ✅ | ✅ |
 | API Authentication (Bearer Token) | ❌ | ✅ |
 | Multiple API Keys Management | ❌ | ✅ |
 | Request & Response Auditing | ❌ | ✅ |
