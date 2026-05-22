@@ -273,6 +273,9 @@
   <data name="DB injects the value but it is dropped before the OpenAI request is sent" xml:space="preserve">
     <value>DB, değeri enjekte eder ancak OpenAI isteği gönderilmeden önce atılır</value>
   </data>
+  <data name="DB injects the value but it is dropped before the OpenAI request is sent. Consider using frequency_penalty or presence_penalty instead." xml:space="preserve">
+    <value>Veritabanı değeri enjekte eder ancak OpenAI isteği gönderilmeden önce atılır. Bunun yerine frequency_penalty veya presence_penalty kullanmayı düşünün.</value>
+  </data>
   <data name="DB override" xml:space="preserve">
     <value>Veritabanı geçersiz kılma</value>
   </data>
@@ -470,6 +473,12 @@
   </data>
   <data name="Handwritten based on Policies" xml:space="preserve">
     <value>Politikalar temelinde elle yazılmış</value>
+  </data>
+  <data name="Hard override from DB. Anthropic has no native penalty parameters." xml:space="preserve">
+    <value>Veritabanından zorunlu geçersiz kılma. Anthropic&apos;ın yerel ceza parametreleri yoktur.</value>
+  </data>
+  <data name="Hard override from DB. Client-supplied frequency_penalty and presence_penalty are not mapped to repeat_penalty." xml:space="preserve">
+    <value>Veritabanından zorunlu geçersiz kılma. İstemci tarafından sağlanan frequency_penalty ve presence_penalty, repeat_penalty&apos;ye eşlenmez.</value>
   </data>
   <data name="Hello World!" xml:space="preserve">
     <value>Merhaba Dünya!</value>
@@ -699,6 +708,9 @@
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: Yerel Ollama&apos;nızı kurumsal düzeyde API kimlik doğrulama, istek denetimi, hız sınırlama ve sanal model yönetimi ile güçlendirin—güvenli, özel AI geçidiniz.</value>
   </data>
+  <data name="Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently." xml:space="preserve">
+    <value>Ollama&apos;ya özgü parametre. OpenAI, bunun yerine frequency_penalty ve presence_penalty&apos;yi doğrudan destekler ve bunlar bağımsız olarak iletilir.</value>
+  </data>
   <data name="Ollama." xml:space="preserve">
     <value>Ollama.</value>
   </data>
@@ -812,6 +824,9 @@
   </data>
   <data name="Recommended Models" xml:space="preserve">
     <value>Önerilen Modeller</value>
+  </data>
+  <data name="Repeat Penalty" xml:space="preserve">
+    <value>Tekrar Cezası</value>
   </data>
   <data name="Request &amp; Response Auditing" xml:space="preserve">
     <value>İstek &amp; Yanıt Denetimi</value>

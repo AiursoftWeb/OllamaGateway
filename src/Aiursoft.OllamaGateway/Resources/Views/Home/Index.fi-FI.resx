@@ -273,6 +273,9 @@
   <data name="DB injects the value but it is dropped before the OpenAI request is sent" xml:space="preserve">
     <value>DB injektoi arvon, mutta se poistetaan ennen kuin OpenAI-pyyntö lähetetään</value>
   </data>
+  <data name="DB injects the value but it is dropped before the OpenAI request is sent. Consider using frequency_penalty or presence_penalty instead." xml:space="preserve">
+    <value>Tietokanta syöttää arvon, mutta se hylätään ennen kuin OpenAI-pyyntö lähetetään. Harkitse frequency_penalty- tai presence_penalty-parametrien käyttöä sen sijaan.</value>
+  </data>
   <data name="DB override" xml:space="preserve">
     <value>Tietokannan ohitus</value>
   </data>
@@ -470,6 +473,12 @@
   </data>
   <data name="Handwritten based on Policies" xml:space="preserve">
     <value>Käsin kirjoitettu perustuen Policies-käytäntöihin</value>
+  </data>
+  <data name="Hard override from DB. Anthropic has no native penalty parameters." xml:space="preserve">
+    <value>Kova ohitus tietokannasta. Anthropicilla ei ole alkuperäisiä rangaistusparametreja.</value>
+  </data>
+  <data name="Hard override from DB. Client-supplied frequency_penalty and presence_penalty are not mapped to repeat_penalty." xml:space="preserve">
+    <value>Tiukka ohjaus tietokannasta. Asiakkaan toimittamia frequency_penalty- ja presence_penalty-arvoja ei muuteta repeat_penaltyksi.</value>
   </data>
   <data name="Hello World!" xml:space="preserve">
     <value>Hei maailma!</value>
@@ -699,6 +708,9 @@
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: Tehdästä kotimainen Ollamaasi yritystason API-todennuksella, pyyntöjen tarkastuksella, nopeusrajoituksella ja virtuaalimallien hallinnalla – turvallinen, yksityinen tekoälyportti.</value>
   </data>
+  <data name="Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently." xml:space="preserve">
+    <value>Ollamalle spesifinen parametri. OpenAI tukee frequency_penalty- ja presence_penalty-parametreja alkuperäisesti, ja ne välitetään itsenäisesti.</value>
+  </data>
   <data name="Ollama." xml:space="preserve">
     <value>Ollama.</value>
   </data>
@@ -812,6 +824,9 @@
   </data>
   <data name="Recommended Models" xml:space="preserve">
     <value>Suositellut mallit</value>
+  </data>
+  <data name="Repeat Penalty" xml:space="preserve">
+    <value>Toistojen rangaistus</value>
   </data>
   <data name="Request &amp; Response Auditing" xml:space="preserve">
     <value>Pyyntö- ja vastausrekisteröinti</value>

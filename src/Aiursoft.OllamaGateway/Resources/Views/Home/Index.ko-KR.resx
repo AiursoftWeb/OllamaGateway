@@ -273,6 +273,9 @@
   <data name="DB injects the value but it is dropped before the OpenAI request is sent" xml:space="preserve">
     <value>DB에서 값을 주입하지만 OpenAI 요청이 전송되기 전에 버려집니다</value>
   </data>
+  <data name="DB injects the value but it is dropped before the OpenAI request is sent. Consider using frequency_penalty or presence_penalty instead." xml:space="preserve">
+    <value>DB가 값을 주입하지만 OpenAI 요청이 전송되기 전에 버려집니다. 대신 frequency_penalty 또는 presence_penalty를 사용하십시오.</value>
+  </data>
   <data name="DB override" xml:space="preserve">
     <value>DB 오버라이드</value>
   </data>
@@ -470,6 +473,12 @@
   </data>
   <data name="Handwritten based on Policies" xml:space="preserve">
     <value>정책 기반으로 수동 작성</value>
+  </data>
+  <data name="Hard override from DB. Anthropic has no native penalty parameters." xml:space="preserve">
+    <value>DB에서 강제 적용. Anthropic에는 기본 페널티 매개변수가 없습니다.</value>
+  </data>
+  <data name="Hard override from DB. Client-supplied frequency_penalty and presence_penalty are not mapped to repeat_penalty." xml:space="preserve">
+    <value>DB에서 하드 오버라이드됨. 클라이언트가 제공한 frequency_penalty 및 presence_penalty는 repeat_penalty로 매핑되지 않음.</value>
   </data>
   <data name="Hello World!" xml:space="preserve">
     <value>안녕하세요 세계!</value>
@@ -699,6 +708,9 @@
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: 엔터프라이즈급 API 인증, 요청 감사, 속도 제한 및 가상 모델 관리로 네이티브 Ollama를 강화하세요—안전하고 프라이빗한 AI 게이트웨이입니다.</value>
   </data>
+  <data name="Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently." xml:space="preserve">
+    <value>Ollama 전용 매개변수입니다. OpenAI는 frequency_penalty와 presence_penalty를 기본적으로 지원하며, 이는 별도로 전달됩니다.</value>
+  </data>
   <data name="Ollama." xml:space="preserve">
     <value>Ollama.</value>
   </data>
@@ -815,6 +827,9 @@
   </data>
   <data name="Recommended Models" xml:space="preserve">
     <value>추천 모델</value>
+  </data>
+  <data name="Repeat Penalty" xml:space="preserve">
+    <value>반복 패널티</value>
   </data>
   <data name="Request &amp; Response Auditing" xml:space="preserve">
     <value>요청 및 응답 감사</value>

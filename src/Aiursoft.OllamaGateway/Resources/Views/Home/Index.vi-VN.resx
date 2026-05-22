@@ -273,6 +273,9 @@
   <data name="DB injects the value but it is dropped before the OpenAI request is sent" xml:space="preserve">
     <value>Cơ sở dữ liệu chèn giá trị nhưng nó bị loại bỏ trước khi yêu cầu OpenAI được gửi đi</value>
   </data>
+  <data name="DB injects the value but it is dropped before the OpenAI request is sent. Consider using frequency_penalty or presence_penalty instead." xml:space="preserve">
+    <value>DB chèn giá trị nhưng nó bị loại bỏ trước khi yêu cầu OpenAI được gửi. Hãy cân nhắc sử dụng frequency_penalty hoặc presence_penalty thay thế.</value>
+  </data>
   <data name="DB override" xml:space="preserve">
     <value>DB ghi đè</value>
   </data>
@@ -470,6 +473,12 @@
   </data>
   <data name="Handwritten based on Policies" xml:space="preserve">
     <value>Viết tay dựa trên Chính sách</value>
+  </data>
+  <data name="Hard override from DB. Anthropic has no native penalty parameters." xml:space="preserve">
+    <value>Ghi đè cứng từ DB. Anthropic không có các tham số phạt gốc.</value>
+  </data>
+  <data name="Hard override from DB. Client-supplied frequency_penalty and presence_penalty are not mapped to repeat_penalty." xml:space="preserve">
+    <value>Ghi đè cứng từ cơ sở dữ liệu. Client-supplied frequency_penalty và presence_penalty không được ánh xạ sang repeat_penalty.</value>
   </data>
   <data name="Hello World!" xml:space="preserve">
     <value>Xin chào thế giới!</value>
@@ -699,6 +708,9 @@
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: Tăng cường sức mạnh cho Ollama của bạn với xác thực API, kiểm toán yêu cầu, giới hạn tốc độ và quản lý mô hình ảo ở cấp độ doanh nghiệp—cổng AI an toàn, riêng tư của bạn.</value>
   </data>
+  <data name="Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently." xml:space="preserve">
+    <value>Tham số chỉ dành riêng cho Ollama. OpenAI hỗ trợ native frequency_penalty và presence_penalty thay thế, các tham số này được truyền độc lập.</value>
+  </data>
   <data name="Ollama." xml:space="preserve">
     <value>Ollama.</value>
   </data>
@@ -815,6 +827,9 @@
   </data>
   <data name="Recommended Models" xml:space="preserve">
     <value>Mô hình được đề xuất</value>
+  </data>
+  <data name="Repeat Penalty" xml:space="preserve">
+    <value>Hình phạt lặp lại</value>
   </data>
   <data name="Request &amp; Response Auditing" xml:space="preserve">
     <value>Kiểm toán Yêu cầu &amp; Phản hồi</value>

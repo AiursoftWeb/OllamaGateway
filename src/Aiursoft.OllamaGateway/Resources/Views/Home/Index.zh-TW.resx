@@ -273,6 +273,9 @@
   <data name="DB injects the value but it is dropped before the OpenAI request is sent" xml:space="preserve">
     <value>DB 注入該值，但在發送 OpenAI 請求前會被捨棄</value>
   </data>
+  <data name="DB injects the value but it is dropped before the OpenAI request is sent. Consider using frequency_penalty or presence_penalty instead." xml:space="preserve">
+    <value>資料庫會注入該值，但在發送 OpenAI 請求前會被捨棄。建議改用 frequency_penalty 或 presence_penalty。</value>
+  </data>
   <data name="DB override" xml:space="preserve">
     <value>資料庫覆寫</value>
   </data>
@@ -470,6 +473,12 @@
   </data>
   <data name="Handwritten based on Policies" xml:space="preserve">
     <value>基於策略手寫</value>
+  </data>
+  <data name="Hard override from DB. Anthropic has no native penalty parameters." xml:space="preserve">
+    <value>由資料庫強制覆寫。Anthropic 沒有原生的懲罰參數。</value>
+  </data>
+  <data name="Hard override from DB. Client-supplied frequency_penalty and presence_penalty are not mapped to repeat_penalty." xml:space="preserve">
+    <value>來自資料庫的強制覆寫。客戶端提供的 frequency_penalty 和 presence_penalty 不會對應到 repeat_penalty。</value>
   </data>
   <data name="Hello World!" xml:space="preserve">
     <value>哈囉世界！</value>
@@ -699,6 +708,9 @@
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway：為您的原生 Ollama 注入企業級 API 認證、請求審計、速率限制與虛擬模型管理功能——您的安全、私有 AI 閘道。</value>
   </data>
+  <data name="Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently." xml:space="preserve">
+    <value>Ollama 專屬參數。OpenAI 原生支援 frequency_penalty 和 presence_penalty，這些參數會獨立傳遞。</value>
+  </data>
   <data name="Ollama." xml:space="preserve">
     <value>Ollama.</value>
   </data>
@@ -815,6 +827,9 @@
   </data>
   <data name="Recommended Models" xml:space="preserve">
     <value>推薦模型</value>
+  </data>
+  <data name="Repeat Penalty" xml:space="preserve">
+    <value>重複懲罰</value>
   </data>
   <data name="Request &amp; Response Auditing" xml:space="preserve">
     <value>請求與回應審計</value>
