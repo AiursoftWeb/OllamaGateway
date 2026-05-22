@@ -273,6 +273,9 @@
   <data name="DB injects the value but it is dropped before the OpenAI request is sent" xml:space="preserve">
     <value>DB に値が注入されますが、OpenAI リクエストが送信される前に破棄されます</value>
   </data>
+  <data name="DB injects the value but it is dropped before the OpenAI request is sent. Consider using frequency_penalty or presence_penalty instead." xml:space="preserve">
+    <value>DB が値を注入しても、OpenAI リクエスト送信前に破棄されます。代わりに frequency_penalty または presence_penalty の使用を検討してください。</value>
+  </data>
   <data name="DB override" xml:space="preserve">
     <value>DB 上書き</value>
   </data>
@@ -470,6 +473,12 @@
   </data>
   <data name="Handwritten based on Policies" xml:space="preserve">
     <value>ポリシーに基づく手動実装</value>
+  </data>
+  <data name="Hard override from DB. Anthropic has no native penalty parameters." xml:space="preserve">
+    <value>DBからの強制上書き。Anthropicにはネイティブなペナルティパラメータがありません。</value>
+  </data>
+  <data name="Hard override from DB. Client-supplied frequency_penalty and presence_penalty are not mapped to repeat_penalty." xml:space="preserve">
+    <value>DBからの強制的な上書き。クライアントが指定した frequency_penalty および presence_penalty は repeat_penalty にマッピングされません。</value>
   </data>
   <data name="Hello World!" xml:space="preserve">
     <value>こんにちは、世界！</value>
@@ -699,6 +708,9 @@
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: エンタープライズグレードのAPI認証、リクエスト監査、レート制限、仮想モデル管理により、ネイティブのOllamaを強化します—安全でプライベートなAIゲートウェイ。</value>
   </data>
+  <data name="Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently." xml:space="preserve">
+    <value>Ollama固有のパラメータです。OpenAIは代わりにfrequency_penaltyとpresence_penaltyをネイティブにサポートしており、これらは独立して渡されます。</value>
+  </data>
   <data name="Ollama." xml:space="preserve">
     <value>Ollama.</value>
   </data>
@@ -815,6 +827,9 @@
   </data>
   <data name="Recommended Models" xml:space="preserve">
     <value>推奨モデル</value>
+  </data>
+  <data name="Repeat Penalty" xml:space="preserve">
+    <value>繰り返しペナルティ</value>
   </data>
   <data name="Request &amp; Response Auditing" xml:space="preserve">
     <value>リクエストとレスポンスの監査</value>

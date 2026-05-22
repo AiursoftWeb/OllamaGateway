@@ -273,6 +273,9 @@
   <data name="DB injects the value but it is dropped before the OpenAI request is sent" xml:space="preserve">
     <value>DB вставляє значення, але воно відкидається до надсилання запиту до OpenAI</value>
   </data>
+  <data name="DB injects the value but it is dropped before the OpenAI request is sent. Consider using frequency_penalty or presence_penalty instead." xml:space="preserve">
+    <value>База даних вставляє значення, але воно відкидається надсилання запиту до OpenAI. Замість цього рекомендується використовувати frequency_penalty або presence_penalty.</value>
+  </data>
   <data name="DB override" xml:space="preserve">
     <value>перезаписування БД</value>
   </data>
@@ -470,6 +473,12 @@
   </data>
   <data name="Handwritten based on Policies" xml:space="preserve">
     <value>Ручна реалізація на основі політик</value>
+  </data>
+  <data name="Hard override from DB. Anthropic has no native penalty parameters." xml:space="preserve">
+    <value>Жорстке перевизначення з БД. Anthropic не має рідних параметрів штрафу.</value>
+  </data>
+  <data name="Hard override from DB. Client-supplied frequency_penalty and presence_penalty are not mapped to repeat_penalty." xml:space="preserve">
+    <value>Жорстке перевизначення з БД. Параметри frequency_penalty та presence_penalty, надані клієнтом, не відображаються на repeat_penalty.</value>
   </data>
   <data name="Hello World!" xml:space="preserve">
     <value>Привіт, Світе!</value>
@@ -699,6 +708,9 @@
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: Розширте можливості вашого рідного Ollama за допомогою корпоративної аутентифікації API, аудиту запитів, лімітування швидкості та віртуального керування моделями — ваш безпечний, приватний шлюз для штучного інтелекту.</value>
   </data>
+  <data name="Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently." xml:space="preserve">
+    <value>Спеціальний параметр Ollama. OpenAI нативно підтримує frequency_penalty та presence_penalty, які передаються незалежно.</value>
+  </data>
   <data name="Ollama." xml:space="preserve">
     <value>Ollama.</value>
   </data>
@@ -812,6 +824,9 @@
   </data>
   <data name="Recommended Models" xml:space="preserve">
     <value>Рекомендовані моделі</value>
+  </data>
+  <data name="Repeat Penalty" xml:space="preserve">
+    <value>Штраф за повторення</value>
   </data>
   <data name="Request &amp; Response Auditing" xml:space="preserve">
     <value>Аудит запиту та відповіді</value>

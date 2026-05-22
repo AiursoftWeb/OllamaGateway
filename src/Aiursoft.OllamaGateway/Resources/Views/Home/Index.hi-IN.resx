@@ -273,6 +273,9 @@
   <data name="DB injects the value but it is dropped before the OpenAI request is sent" xml:space="preserve">
     <value>डेटाबेस मान इंजेक्ट करता है, लेकिन ओपनएआई अनुरोध भेजने से पहले उसे हटा दिया जाता है</value>
   </data>
+  <data name="DB injects the value but it is dropped before the OpenAI request is sent. Consider using frequency_penalty or presence_penalty instead." xml:space="preserve">
+    <value>DB मान डालता है लेकिन यह OpenAI अनुरोध भेजे जाने से पहले छोड़ दिया जाता है। इसके बजाय frequency_penalty या presence_penalty का उपयोग करने पर विचार करें।</value>
+  </data>
   <data name="DB override" xml:space="preserve">
     <value>डेटाबेस ओवरराइड</value>
   </data>
@@ -470,6 +473,12 @@
   </data>
   <data name="Handwritten based on Policies" xml:space="preserve">
     <value>नीतियों के आधार पर हस्तलिखित</value>
+  </data>
+  <data name="Hard override from DB. Anthropic has no native penalty parameters." xml:space="preserve">
+    <value>DB से कठोर अधिरोपण। Anthropic के पास कोई स्वदेशी पेनल्टी पैरामीटर नहीं है।</value>
+  </data>
+  <data name="Hard override from DB. Client-supplied frequency_penalty and presence_penalty are not mapped to repeat_penalty." xml:space="preserve">
+    <value>DB से कठोर ओवरराइड। क्लाइंट द्वारा प्रदान किया गया frequency_penalty और presence_penalty, repeat_penalty में मैप नहीं किए गए हैं।</value>
   </data>
   <data name="Hello World!" xml:space="preserve">
     <value>नमस्ते दुनिया!</value>
@@ -699,6 +708,9 @@
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>ओलामा गेटवे: अपने स्थानीय ओलामा को एंटरप्राइज़-ग्रेड एपीआई प्रमाणीकरण, अनुरोध ऑडिटिंग, दर सीमांकन और आभासी मॉडल प्रबंधन के साथ सुपरचार्ज करें—आपका सुरक्षित, निजी एआई गेटवे।</value>
   </data>
+  <data name="Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently." xml:space="preserve">
+    <value>ओलामा-विशिष्ट पैरामीटर। ओपनएआई मूल रूप से frequency_penalty और presence_penalty का समर्थन करता है, जो स्वतंत्र रूप से पास किए जाते हैं।</value>
+  </data>
   <data name="Ollama." xml:space="preserve">
     <value>Ollama.</value>
   </data>
@@ -812,6 +824,9 @@
   </data>
   <data name="Recommended Models" xml:space="preserve">
     <value>सुझाए गए मॉडल</value>
+  </data>
+  <data name="Repeat Penalty" xml:space="preserve">
+    <value>पुनरावृत्ति दंड</value>
   </data>
   <data name="Request &amp; Response Auditing" xml:space="preserve">
     <value>अनुरोध और प्रतिक्रिया ऑडिटिंग</value>
