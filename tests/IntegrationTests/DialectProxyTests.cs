@@ -1378,7 +1378,6 @@ public class DialectProxyTests : TestBase
         using (var scope = Server!.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
-            var provider = await db.OllamaProviders.FirstAsync();
             // Create a NEW OpenAI provider instead of mutating the shared TestProvider
             var oaiProvider = new OllamaProvider
             {
