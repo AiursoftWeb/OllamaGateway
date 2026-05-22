@@ -52,7 +52,7 @@ Paths 5 & 6 share the same method, branching on `isOllamaDirect`.
 
 1. **Tool call arrives in fragments**: OpenAI streams `index`, `id`, `function.name`, `function.arguments` in separate delta chunks. Must use `Dictionary<int, (string Name, StringBuilder Args)>` to accumulate across chunks. Only emit Ollama-format tool call when `finish_reason` signals completion.
 2. **Arguments type conversion**: OpenAI sends `"arguments": "{\"city\": \"Beijing\"}"` (JSON string), Ollama expects `"arguments": {"city": "Beijing"}` (JSON object). Trivial for non-streaming (`JsonNode.Parse`), impossible mid-stream since arguments are incomplete.
-3. **Silent parameter drop**: Ollama's `top_k`, `num_ctx`, `repeat_penalty` have no OpenAI equivalent. Dropped without warning.
+3. **Silent parameter drop**: Ollama's `top_k`, `num_ctx`, `repeat_penalty` have no OpenAI equivalent. Dropped without warning. DB-configured `repeat_penalty` is injected into the request model but discarded in the OpenAI translation step.
 4. **Usage field mapping**: `prompt_tokens` → `prompt_eval_count`, `completion_tokens` → `eval_count`.
 
 ---
@@ -76,7 +76,7 @@ Paths 5 & 6 share the same method, branching on `isOllamaDirect`.
 
 **~375 lines** (`OpenAIController:315-691`) — largest single path.
 
-- Request: OpenAI multimodal content (`[{type: "text"}, {type: "image_url"}]`) → Ollama `content` (string) + `images` (base64 array). Tool call arguments string→object. `max_tokens` → `num_predict`. Inject Ollama-only params (`top_k`, `num_ctx`, `thinking`).
+- Request: OpenAI multimodal content (`[{type: "text"}, {type: "image_url"}]`) → Ollama `content` (string) + `images` (base64 array). Tool call arguments string→object. `max_tokens` → `num_predict`. Inject Ollama-only params (`top_k`, `num_ctx`, `repeat_penalty`, `thinking`).
 - Streaming response: Ollama NDJSON → OpenAI SSE (`chat.completion.chunk`). Generate `id`, `object`, `created`. Tool call object→string. `thinking`/`think` → `reasoning_content`.
 - Non-streaming: same, constructing full `chat.completion` object.
 
@@ -143,7 +143,8 @@ Paths 5 & 6 share the same method, branching on `isOllamaDirect`.
 | Streaming tool call cross-chunk accumulation | 2, 4, 5, 6 | High |
 | Content structure differences (string vs array vs blocks) | 4, 5, 6 | High |
 | Reasoning/thinking format incompatibility | 3, 4, 5, 6 | Medium |
-| Silent parameter drop (`top_k`, `num_ctx`, etc.) | 1, 2, 3, 4 | Medium |
+| Silent parameter drop (`top_k`, `num_ctx`, `repeat_penalty` on OpenAI backends) | 1, 2, 3, 4 | Medium |
+| `repeat_penalty` ↔ `frequency_penalty`/`presence_penalty` asymmetry | 2, 3, 5 | Low |
 | Usage token field names differ per dialect | All 6 | Medium |
 | SSE/NDJSON event structure completely different | 2, 4, 5, 6 | High |
 | Serialization framework split (Newtonsoft vs STJ) | 1, 5, 6 | Low |

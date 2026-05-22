@@ -405,6 +405,15 @@
                         <td><i class="fas fa-times-circle text-danger"></i> @Localizer["Not supported"]</td>
                         <td><i class="fas fa-check-circle text-success"></i> @Localizer["DB override"]</td>
                     </tr>
+                    <tr>
+                        <td class="text-start fw-medium ps-3">@Localizer["Repeat Penalty"]</td>
+                        <td><i class="fas fa-times-circle text-danger" data-bs-toggle="tooltip" title="@Localizer["Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently."]"></i> @Localizer["Not supported"]</td>
+                        <td><i class="fas fa-exclamation-triangle text-warning" data-bs-toggle="tooltip" title="@Localizer["DB injects the value but it is dropped before the OpenAI request is sent. Consider using frequency_penalty or presence_penalty instead."]"></i> @Localizer["DB override discarded"]</td>
+                        <td><i class="fas fa-check-circle text-success" data-bs-toggle="tooltip" title="@Localizer["Hard override from DB. Client-supplied frequency_penalty and presence_penalty are not mapped to repeat_penalty."]"></i> @Localizer["DB override"]</td>
+                        <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
+                        <td><i class="fas fa-times-circle text-danger"></i> @Localizer["Not supported"]</td>
+                        <td><i class="fas fa-check-circle text-success" data-bs-toggle="tooltip" title="@Localizer["Hard override from DB. Anthropic has no native penalty parameters."]"></i> @Localizer["DB override"]</td>
+                    </tr>
                 </tbody>
             </table>
         </div>

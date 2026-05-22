@@ -1235,4 +1235,256 @@ public class DialectProxyTests : TestBase
         // Assert
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
     }
+
+    // ========================================================================
+    // G. Penalty Parameter Tests
+    // ========================================================================
+
+    [TestMethod]
+    public async Task Penalty_OpenAIToOllama_RepeatPenaltyInjectedFromDb()
+    {
+        // Path ③: OpenAI client → Ollama backend — DB RepeatPenalty must be injected into options
+        const string penaltyModelName = "penalty-oai2ollama:latest";
+
+        using (var scope = Server!.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+            var provider = await db.OllamaProviders.FirstAsync();
+
+            var model = new VirtualModel
+            {
+                Name = penaltyModelName,
+                Type = ModelType.Chat,
+                RepeatPenalty = 1.5f
+            };
+            model.VirtualModelBackends.Add(new VirtualModelBackend
+            {
+                ProviderId = provider.Id,
+                UnderlyingModelName = PhysicalModelName,
+                Enabled = true,
+                IsHealthy = true
+            });
+            db.VirtualModels.Add(model);
+            await db.SaveChangesAsync();
+        }
+
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            const string body =
+                """{"model":"llama3.2","message":{"role":"assistant","content":"ok"},"done":true,"prompt_eval_count":1,"eval_count":1}""";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body, Encoding.UTF8, "application/json")
+            });
+        };
+
+        var payload = $$"""{ "model":"{{penaltyModelName}}","messages":[{"role":"user","content":"test"}],"stream":false}""";
+        await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
+
+        Assert.IsNotNull(MockUpstreamState.LastRequestBody);
+        var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody);
+        var options = upstreamBody?["options"];
+        Assert.IsNotNull(options, "Ollama format must have 'options' object when DB params are set");
+        var penalty = options["repeat_penalty"]?.GetValue<double>() ?? 0;
+        Assert.IsTrue(Math.Abs(penalty - 1.5) < 0.01,
+            $"Expected repeat_penalty 1.5 from DB override, but was {penalty}");
+    }
+
+    [TestMethod]
+    public async Task Penalty_OllamaToOllama_DbOverrideWinsOverClient()
+    {
+        // Path ④: Ollama client → Ollama backend — DB RepeatPenalty must override client value
+        const string penaltyModelName = "penalty-ollama2ollama:latest";
+
+        using (var scope = Server!.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+            var provider = await db.OllamaProviders.FirstAsync();
+
+            var model = new VirtualModel
+            {
+                Name = penaltyModelName,
+                Type = ModelType.Chat,
+                RepeatPenalty = 1.8f
+            };
+            model.VirtualModelBackends.Add(new VirtualModelBackend
+            {
+                ProviderId = provider.Id,
+                UnderlyingModelName = PhysicalModelName,
+                Enabled = true,
+                IsHealthy = true
+            });
+            db.VirtualModels.Add(model);
+            await db.SaveChangesAsync();
+        }
+
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            const string body =
+                """{"model":"llama3.2","message":{"role":"assistant","content":"ok"},"done":true,"prompt_eval_count":1,"eval_count":1}""";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body, Encoding.UTF8, "application/json")
+            });
+        };
+
+        // Client sends repeat_penalty=1.1, but DB has 1.8 — DB must win
+        var payload = $$$"""{"model":"{{{penaltyModelName}}}","messages":[{"role":"user","content":"test"}],"stream":false,"options":{"repeat_penalty":1.1}}""";
+        await Http.SendAsync(AuthedPost("/api/chat", payload));
+
+        Assert.IsNotNull(MockUpstreamState.LastRequestBody);
+        var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody);
+        var options = upstreamBody?["options"];
+        Assert.IsNotNull(options, "Ollama format must have 'options' object");
+        var penalty = options["repeat_penalty"]?.GetValue<double>() ?? 0;
+        Assert.IsTrue(Math.Abs(penalty - 1.8) < 0.01,
+            $"Expected repeat_penalty 1.8 (DB override), but was {penalty}. Client value 1.1 should be overridden.");
+    }
+
+    [TestMethod]
+    public async Task Penalty_OllamaToOllama_ClientValuePassesThroughWhenDbUnset()
+    {
+        // Path ④: Ollama client → Ollama backend — client repeat_penalty passes through when DB is unset
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            const string body =
+                """{"model":"llama3.2","message":{"role":"assistant","content":"ok"},"done":true,"prompt_eval_count":1,"eval_count":1}""";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body, Encoding.UTF8, "application/json")
+            });
+        };
+
+        // The default test-chat:latest model has no RepeatPenalty set
+        var payload = $$$"""{"model":"{{{VirtualModelName}}}","messages":[{"role":"user","content":"test"}],"stream":false,"options":{"repeat_penalty":1.3}}""";
+        await Http.SendAsync(AuthedPost("/api/chat", payload));
+
+        Assert.IsNotNull(MockUpstreamState.LastRequestBody);
+        var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody);
+        var options = upstreamBody?["options"];
+        Assert.IsNotNull(options);
+        var penalty = options["repeat_penalty"]?.GetValue<double>() ?? 0;
+        Assert.IsTrue(Math.Abs(penalty - 1.3) < 0.01,
+            $"Expected client repeat_penalty 1.3 to pass through, but was {penalty}");
+    }
+
+    [TestMethod]
+    public async Task Penalty_OllamaToOpenAI_RepeatPenaltySilentlyDropped()
+    {
+        // Path ②: Ollama client → OpenAI backend — repeat_penalty has no OpenAI equivalent, silently dropped.
+        // This test documents the expected behavior: repeat_penalty is not forwarded to OpenAI.
+        const string penaltyModelName = "penalty2openai:latest";
+
+        using (var scope = Server!.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+            // Create a NEW OpenAI provider instead of mutating the shared TestProvider
+            var oaiProvider = new OllamaProvider
+            {
+                Name = "OpenAIProvider-PenaltyTest",
+                BaseUrl = "http://fake-openai:11434",
+                ProviderType = ProviderType.OpenAI
+            };
+            db.OllamaProviders.Add(oaiProvider);
+            await db.SaveChangesAsync();
+
+            var model = new VirtualModel
+            {
+                Name = penaltyModelName,
+                Type = ModelType.Chat,
+                RepeatPenalty = 1.5f
+            };
+            model.VirtualModelBackends.Add(new VirtualModelBackend
+            {
+                ProviderId = oaiProvider.Id,
+                UnderlyingModelName = "gpt-4",
+                Enabled = true,
+                IsHealthy = true
+            });
+            db.VirtualModels.Add(model);
+            await db.SaveChangesAsync();
+        }
+
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            const string body =
+                """{"choices":[{"message":{"role":"assistant","content":"ok"},"finish_reason":"stop"}],"usage":{"prompt_tokens":1,"completion_tokens":1}}""";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body, Encoding.UTF8, "application/json")
+            });
+        };
+
+        var payload = $$$"""{"model":"{{{penaltyModelName}}}","messages":[{"role":"user","content":"test"}],"stream":false,"options":{"repeat_penalty":1.5}}""";
+        await Http.SendAsync(AuthedPost("/api/chat", payload));
+
+        Assert.IsNotNull(MockUpstreamState.LastRequestBody);
+        var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody);
+        // OpenAI format has no repeat_penalty, frequency_penalty, or presence_penalty from this request
+        Assert.IsNull(upstreamBody?["repeat_penalty"],
+            "repeat_penalty must NOT appear in OpenAI upstream request body");
+        Assert.IsNull(upstreamBody?["frequency_penalty"],
+            "repeat_penalty is not mapped to frequency_penalty for OpenAI backends");
+    }
+
+    [TestMethod]
+    public async Task Penalty_AnthropicToOllama_RepeatPenaltyInjectedFromDb()
+    {
+        // Path ⑥: Anthropic client → Ollama backend — DB RepeatPenalty must be injected into options
+        const string penaltyModelName = "penalty-anthro2ollama:latest";
+        var token = Guid.NewGuid().ToString();
+
+        using (var scope = Server!.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+            var provider = await db.OllamaProviders.FirstAsync();
+            var user = await db.Users.FirstAsync();
+
+            db.ApiKeys.Add(new ApiKey { Name = "PenaltyTestKey", Key = token, UserId = user.Id });
+            await db.SaveChangesAsync();
+
+            var model = new VirtualModel
+            {
+                Name = penaltyModelName,
+                Type = ModelType.Chat,
+                RepeatPenalty = 1.6f
+            };
+            model.VirtualModelBackends.Add(new VirtualModelBackend
+            {
+                ProviderId = provider.Id,
+                UnderlyingModelName = PhysicalModelName,
+                Enabled = true,
+                IsHealthy = true
+            });
+            db.VirtualModels.Add(model);
+            await db.SaveChangesAsync();
+        }
+
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            const string body =
+                """{"model":"llama3.2","message":{"role":"assistant","content":"ok"},"done":true,"prompt_eval_count":1,"eval_count":1}""";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body, Encoding.UTF8, "application/json")
+            });
+        };
+
+        var payload = $$"""{"model":"{{penaltyModelName}}","messages":[{"role":"user","content":"test"}],"max_tokens":100,"stream":false}""";
+        var request = new HttpRequestMessage(HttpMethod.Post, "/v1/messages")
+        {
+            Content = new StringContent(payload, Encoding.UTF8, "application/json")
+        };
+        request.Headers.Add("x-api-key", token);
+
+        await Http.SendAsync(request);
+
+        Assert.IsNotNull(MockUpstreamState.LastRequestBody);
+        var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody);
+        var options = upstreamBody?["options"];
+        Assert.IsNotNull(options, "Ollama format must have 'options' object when DB params are set");
+        var penalty = options["repeat_penalty"]?.GetValue<double>() ?? 0;
+        Assert.IsTrue(Math.Abs(penalty - 1.6) < 0.01,
+            $"Expected repeat_penalty 1.6 from DB override in Anthropic→Ollama path, but was {penalty}");
+    }
 }
