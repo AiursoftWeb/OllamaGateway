@@ -423,6 +423,7 @@ public class OpenAIController : ControllerBase
             if (virtualModel.TopK.HasValue) options["top_k"] = virtualModel.TopK.Value;
             if (virtualModel.NumPredict.HasValue) options["num_predict"] = virtualModel.NumPredict.Value;
             if (virtualModel.NumCtx.HasValue) options["num_ctx"] = virtualModel.NumCtx.Value;
+            if (virtualModel.RepeatPenalty.HasValue) options["repeat_penalty"] = virtualModel.RepeatPenalty.Value;
 
             if (options.Count > 0) ollamaRequest["options"] = options;
             if (virtualModel.Thinking.HasValue) ollamaRequest["think"] = virtualModel.Thinking.Value;

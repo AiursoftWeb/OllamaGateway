@@ -457,6 +457,7 @@ public class AnthropicController : ControllerBase
 
                 if (virtualModel.TopK.HasValue) options["top_k"] = virtualModel.TopK.Value;
                 if (virtualModel.NumCtx.HasValue) options["num_ctx"] = virtualModel.NumCtx.Value;
+                if (virtualModel.RepeatPenalty.HasValue) options["repeat_penalty"] = virtualModel.RepeatPenalty.Value;
                 if (virtualModel.Thinking.HasValue) requestBody["think"] = virtualModel.Thinking.Value;
                 if (options.Count > 0) requestBody["options"] = options;
             }
