@@ -140,7 +140,7 @@
                                                     var banTime = Model.BackendBanStatuses.GetValueOrDefault(b.Id);
                                                 }
                                                 @if (!b.Enabled) { <span class="badge bg-secondary">Disabled</span> }
-                                                else if (banTime.HasValue && banTime.Value > DateTime.UtcNow) { <span class="badge bg-danger">Banned (Till <label data-utc-time="@banTime.Value.ToHtmlDateTime()" class="d-inline mb-0"></label>)</span> }
+                                                else if (banTime.HasValue && banTime.Value > DateTime.UtcNow) { <span class="badge bg-danger me-1">Banned (Till <label data-utc-time="@banTime.Value.ToHtmlDateTime()" class="d-inline mb-0"></label>)</span> <form asp-action="UnbanBackend" asp-route-id="@b.Id" method="post" style="display:inline;"><button type="submit" class="btn btn-sm btn-outline-warning" title="@Localizer["Manual Unban"]"><i data-lucide="shield-off" style="width:14px;"></i></button></form> }
                                                 else if (b.IsReady) { <span class="badge bg-success">Ready</span> }
                                                 else if (b.IsHealthy) { <span class="badge bg-info">Healthy</span> }
                                                 else { <span class="badge bg-danger">Down</span> }
