@@ -71,6 +71,11 @@ public class ModelSelector : IModelSelector, ISingletonDependency
         );
     }
 
+    public void UnbanBackend(int backendId)
+    {
+        _circuitBreakerStates.TryRemove(backendId, out _);
+    }
+
     public DateTime? GetBanUntil(int backendId)
     {
         if (_circuitBreakerStates.TryGetValue(backendId, out var state))

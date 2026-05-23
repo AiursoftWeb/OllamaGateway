@@ -437,6 +437,16 @@ public class VirtualModelsController(
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    public IActionResult UnbanBackend(int id)
+    {
+        modelSelector.UnbanBackend(id);
+        var backend = dbContext.VirtualModelBackends.Find(id);
+        var virtualModelId = backend?.VirtualModelId ?? 0;
+        return RedirectToAction(nameof(Edit), new { id = virtualModelId });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Delete(int id)
     {
         var virtualModel = await dbContext.VirtualModels.FindAsync(id);
