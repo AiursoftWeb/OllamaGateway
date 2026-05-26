@@ -34,7 +34,7 @@
             <h5 class="card-title mb-0">@Localizer["Manage your API keys for accessing Ollama Gateway"]</h5>
         </div>
         <div class="table-responsive">
-            <table class="table table-hover mb-0">
+            <table class="table table-hover mb-0" id="apiKeysTable">
                 <thead>
                     <tr>
                         <th>@Localizer["Name"]</th>
@@ -64,7 +64,7 @@
                                 <td>
                                     <code>@key.Key[..4]...</code>
                                 </td>
-                                <td>
+                                <td data-sort="@key.ExpirationTime.Ticks">
                                     @if (key.ExpirationTime < DateTime.UtcNow)
                                     {
                                         <span class="badge bg-danger">@Localizer["Expired"]</span>
@@ -74,7 +74,7 @@
                                         <label data-utc-time="@key.ExpirationTime.ToHtmlDateTime()" class="mb-0"></label>
                                     }
                                 </td>
-                                <td>
+                                <td data-sort="@(Model.LastUsedTimes[key.Id]?.Ticks ?? 0)">
                                     @if (Model.LastUsedTimes[key.Id].HasValue)
                                     {
                                         <label data-utc-time="@Model.LastUsedTimes[key.Id]!.Value.ToHtmlDateTime()" class="mb-0"></label>
@@ -84,7 +84,7 @@
                                         @Localizer["Never"]
                                     }
                                 </td>
-                                <td>@Model.TotalCalls[key.Id]</td>
+                                <td data-sort="@Model.TotalCalls[key.Id]">@Model.TotalCalls[key.Id]</td>
                                 <td style="min-width:180px;">
                                     @if (Model.TopModels.TryGetValue(key.Id, out var topModel) && Model.TopModelPercentages.TryGetValue(key.Id, out var pct))
                                     {
@@ -93,7 +93,7 @@
                                             <div class="progress flex-grow-1 me-2" style="height:6px;" title="@pctRounded%">
                                                 <div class="progress-bar bg-info" style="width:@pctRounded%;"></div>
                                             </div>
-                                            <small class="text-muted text-nowrap">@topModel</small>
+                                            <small class="text-muted text-nowrap" data-sort-value="@topModel">@topModel</small>
                                         </div>
                                     }
                                     else
@@ -126,3 +126,23 @@
         </div>
     </div>
 </div>
+
+@* ReSharper disable once Razor.SectionNotResolved *@
+@section scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            $('#apiKeysTable').DataTable({
+                "destroy": true,
+                "responsive": true,
+                "paging": true,
+                "pageLength": 50,
+                "searching": true,
+                "info": true,
+                "order": [[2, "asc"]],
+                "columnDefs": [
+                    { "orderable": false, "targets": [6] }
+                ]
+            });
+        });
+    </script>
+}
