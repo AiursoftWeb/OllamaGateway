@@ -533,4 +533,93 @@ public class OpenAIBackendProviderTests : TestBase
         Assert.AreEqual(true, upstreamBody["chat_template_kwargs"]?["enable_thinking"]?.GetValue<bool>(),
             "chat_template_kwargs.enable_thinking must be true when VM.Thinking = true (Ollama→OpenAI)");
     }
+
+    // ========================================================================
+    // D. Multimodal image translation: Ollama images → OpenAI content array
+    // ========================================================================
+
+    [TestMethod]
+    public async Task OllamaToOpenAIBackend_WithImages_ConvertsToMultimodalContent()
+    {
+        // Ollama sends images as a separate array; the gateway must convert them
+        // to OpenAI multimodal content parts (text + image_url).
+        var capturedRequestBody = string.Empty;
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            capturedRequestBody = MockUpstreamState.LastRequestBody ?? string.Empty;
+            const string body =
+                """{"id":"img1","object":"chat.completion","choices":[{"message":{"role":"assistant","content":"I see a tiny 1x1 image!"},"finish_reason":"stop"}],"usage":{"prompt_tokens":10,"completion_tokens":5,"total_tokens":15}}""";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body, Encoding.UTF8, "application/json")
+            });
+        };
+
+        var testImageBase64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==";
+        var payload = $$"""{"model":"{{ChatModelName}}","messages":[{"role":"user","content":"What is in this image?","images":["{{testImageBase64}}"]}],"stream":false}""";
+        await Http.SendAsync(AuthedPost("/api/chat", payload));
+
+        Assert.IsTrue(
+            MockUpstreamState.LastRequest?.RequestUri?.PathAndQuery.Contains("/v1/chat/completions") ?? false,
+            "Upstream should call /v1/chat/completions for OpenAI backend");
+
+        var upstreamBody = JsonNode.Parse(capturedRequestBody);
+        Assert.IsNotNull(upstreamBody);
+
+        var messages = upstreamBody["messages"]?.AsArray();
+        Assert.IsNotNull(messages);
+        Assert.AreEqual(1, messages.Count);
+
+        var content = messages[0]!["content"];
+        Assert.IsNotNull(content);
+        Assert.IsTrue(content is JsonArray,
+            "When images are present, content must be a multimodal array, not a plain string");
+
+        var contentParts = content.AsArray();
+        Assert.AreEqual(2, contentParts.Count, "Should have 2 parts: text + image_url");
+
+        // Part 0: text
+        Assert.AreEqual("text", contentParts[0]!["type"]?.ToString());
+        Assert.AreEqual("What is in this image?", contentParts[0]!["text"]?.ToString());
+
+        // Part 1: image_url
+        Assert.AreEqual("image_url", contentParts[1]!["type"]?.ToString());
+        var imageUrl = contentParts[1]!["image_url"]?["url"]?.ToString();
+        Assert.IsNotNull(imageUrl);
+        StringAssert.Contains(imageUrl, "data:image/png;base64,",
+            "Image URL must be prefixed with data URI scheme");
+        StringAssert.Contains(imageUrl, testImageBase64,
+            "Image URL must contain the base64 payload");
+    }
+
+    [TestMethod]
+    public async Task OllamaToOpenAIBackend_WithoutImages_StillSendsPlainString()
+    {
+        // Regression: messages without images must still use plain string content (not multimodal array)
+        var capturedRequestBody = string.Empty;
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            capturedRequestBody = MockUpstreamState.LastRequestBody ?? string.Empty;
+            const string body =
+                """{"id":"noimg","object":"chat.completion","choices":[{"message":{"role":"assistant","content":"Hello!"},"finish_reason":"stop"}],"usage":{"prompt_tokens":2,"completion_tokens":1,"total_tokens":3}}""";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body, Encoding.UTF8, "application/json")
+            });
+        };
+
+        var payload = $$"""{"model":"{{ChatModelName}}","messages":[{"role":"user","content":"Hi"}],"stream":false}""";
+        await Http.SendAsync(AuthedPost("/api/chat", payload));
+
+        var upstreamBody = JsonNode.Parse(capturedRequestBody);
+        Assert.IsNotNull(upstreamBody);
+
+        var messages = upstreamBody["messages"]?.AsArray();
+        Assert.IsNotNull(messages);
+        var content = messages[0]!["content"];
+        Assert.IsNotNull(content);
+        Assert.IsTrue(content is not JsonArray,
+            "Without images, content must remain a plain string, not a multimodal array (regression check)");
+        Assert.AreEqual("Hi", content?.ToString());
+    }
 }

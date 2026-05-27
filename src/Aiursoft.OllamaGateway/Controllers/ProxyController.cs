@@ -216,7 +216,37 @@ public class ProxyController(
                 {
                     var msgs = new JsonArray();
                     foreach (var msg in input.Messages)
-                        msgs.Add(new JsonObject { ["role"] = msg.Role, ["content"] = msg.Content });
+                    {
+                        var newMsg = new JsonObject { ["role"] = msg.Role };
+                        if (msg.Images is { Count: > 0 })
+                        {
+                            var contentParts = new JsonArray
+                            {
+                                new JsonObject
+                                {
+                                    ["type"] = "text",
+                                    ["text"] = msg.Content ?? string.Empty
+                                }
+                            };
+                            foreach (var img in msg.Images)
+                            {
+                                contentParts.Add(new JsonObject
+                                {
+                                    ["type"] = "image_url",
+                                    ["image_url"] = new JsonObject
+                                    {
+                                        ["url"] = $"data:image/png;base64,{img}"
+                                    }
+                                });
+                            }
+                            newMsg["content"] = contentParts;
+                        }
+                        else
+                        {
+                            newMsg["content"] = msg.Content;
+                        }
+                        msgs.Add(newMsg);
+                    }
                     openAiReqBody["messages"] = msgs;
                 }
 
