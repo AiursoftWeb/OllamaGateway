@@ -378,6 +378,8 @@ public class AnthropicController : ControllerBase
             if (virtualModel.Temperature.HasValue) openaiBody["temperature"] = virtualModel.Temperature.Value;
             if (virtualModel.TopP.HasValue) openaiBody["top_p"] = virtualModel.TopP.Value;
             if (virtualModel.NumPredict.HasValue) openaiBody["max_tokens"] = virtualModel.NumPredict.Value;
+            if (virtualModel.Thinking.HasValue)
+                openaiBody["chat_template_kwargs"] = new JsonObject { ["enable_thinking"] = virtualModel.Thinking.Value };
 
             if (request.Tools != null && request.Tools.Count > 0)
             {

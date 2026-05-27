@@ -160,6 +160,8 @@ public class OpenAIController : ControllerBase
                 if (virtualModel.TopP.HasValue) clientJson["top_p"] = virtualModel.TopP.Value;
                 if (virtualModel.NumPredict.HasValue) clientJson["max_tokens"] = virtualModel.NumPredict.Value;
                 if (isStream) clientJson["stream_options"] = new JsonObject { ["include_usage"] = true };
+                if (virtualModel.Thinking.HasValue)
+                    clientJson["chat_template_kwargs"] = new JsonObject { ["enable_thinking"] = virtualModel.Thinking.Value };
 
                 // [Patch E] Ensure content is never null in messages for Ollama OpenAI compatibility
                 if (messagesArray != null)

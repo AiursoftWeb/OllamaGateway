@@ -228,6 +228,9 @@ public class ProxyController(
                     if (input.Options.NumPredict.HasValue) openAiReqBody["max_tokens"] = input.Options.NumPredict.Value;
                 }
 
+                if (input.Think.HasValue)
+                    openAiReqBody["chat_template_kwargs"] = new JsonObject { ["enable_thinking"] = input.Think.Value };
+
                 var oaiResult = await backendInvoker.SendAsync(
                     virtualModel,
                     backend,
