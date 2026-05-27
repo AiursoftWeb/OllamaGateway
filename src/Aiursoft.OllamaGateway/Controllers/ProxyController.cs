@@ -34,6 +34,7 @@ public class OllamaMessage
 {
     public string Role { get; set; } = string.Empty;
     public string Content { get; set; } = string.Empty;
+    [SuppressMessage("ReSharper", "CollectionNeverUpdated.Global")]
     public List<string>? Images { get; set; }
 }
 
@@ -225,7 +226,7 @@ public class ProxyController(
                                 new JsonObject
                                 {
                                     ["type"] = "text",
-                                    ["text"] = msg.Content ?? string.Empty
+                                    ["text"] = msg.Content
                                 }
                             };
                             foreach (var img in msg.Images)
