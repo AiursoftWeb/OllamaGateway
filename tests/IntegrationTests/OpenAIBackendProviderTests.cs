@@ -374,7 +374,7 @@ public class OpenAIBackendProviderTests : TestBase
             await db.SaveChangesAsync();
         }
 
-        MockUpstreamState.Handler = (req, _) =>
+        MockUpstreamState.Handler = (_, _) =>
         {
             capturedRequestBody = MockUpstreamState.LastRequestBody ?? string.Empty;
             const string body =
@@ -390,7 +390,7 @@ public class OpenAIBackendProviderTests : TestBase
 
         var upstreamBody = JsonNode.Parse(capturedRequestBody);
         Assert.IsNotNull(upstreamBody, "Upstream request body must be captured");
-        Assert.AreEqual(true, upstreamBody!["chat_template_kwargs"]?["enable_thinking"]?.GetValue<bool>(),
+        Assert.AreEqual(true, upstreamBody["chat_template_kwargs"]?["enable_thinking"]?.GetValue<bool>(),
             "chat_template_kwargs.enable_thinking must be true when VM.Thinking = true");
     }
 
@@ -408,7 +408,7 @@ public class OpenAIBackendProviderTests : TestBase
             await db.SaveChangesAsync();
         }
 
-        MockUpstreamState.Handler = (req, _) =>
+        MockUpstreamState.Handler = (_, _) =>
         {
             capturedRequestBody = MockUpstreamState.LastRequestBody ?? string.Empty;
             const string body =
@@ -424,7 +424,7 @@ public class OpenAIBackendProviderTests : TestBase
 
         var upstreamBody = JsonNode.Parse(capturedRequestBody);
         Assert.IsNotNull(upstreamBody);
-        Assert.AreEqual(false, upstreamBody!["chat_template_kwargs"]?["enable_thinking"]?.GetValue<bool>(),
+        Assert.AreEqual(false, upstreamBody["chat_template_kwargs"]?["enable_thinking"]?.GetValue<bool>(),
             "chat_template_kwargs.enable_thinking must be false when VM.Thinking = false");
     }
 
@@ -442,7 +442,7 @@ public class OpenAIBackendProviderTests : TestBase
             await db.SaveChangesAsync();
         }
 
-        MockUpstreamState.Handler = (req, _) =>
+        MockUpstreamState.Handler = (_, _) =>
         {
             capturedRequestBody = MockUpstreamState.LastRequestBody ?? string.Empty;
             const string body =
@@ -458,7 +458,7 @@ public class OpenAIBackendProviderTests : TestBase
 
         var upstreamBody = JsonNode.Parse(capturedRequestBody);
         Assert.IsNotNull(upstreamBody);
-        Assert.AreEqual(true, upstreamBody!["chat_template_kwargs"]?["enable_thinking"]?.GetValue<bool>(),
+        Assert.AreEqual(true, upstreamBody["chat_template_kwargs"]?["enable_thinking"]?.GetValue<bool>(),
             "When VM.Thinking is null, client-supplied chat_template_kwargs must pass through unchanged");
     }
 
@@ -476,7 +476,7 @@ public class OpenAIBackendProviderTests : TestBase
             await db.SaveChangesAsync();
         }
 
-        MockUpstreamState.Handler = (req, _) =>
+        MockUpstreamState.Handler = (_, _) =>
         {
             capturedRequestBody = MockUpstreamState.LastRequestBody ?? string.Empty;
             const string body =
@@ -492,7 +492,7 @@ public class OpenAIBackendProviderTests : TestBase
 
         var upstreamBody = JsonNode.Parse(capturedRequestBody);
         Assert.IsNotNull(upstreamBody);
-        Assert.AreEqual(false, upstreamBody!["chat_template_kwargs"]?["enable_thinking"]?.GetValue<bool>(),
+        Assert.AreEqual(false, upstreamBody["chat_template_kwargs"]?["enable_thinking"]?.GetValue<bool>(),
             "VM.Thinking = false must override client-supplied enable_thinking = true");
     }
 
@@ -510,7 +510,7 @@ public class OpenAIBackendProviderTests : TestBase
             await db.SaveChangesAsync();
         }
 
-        MockUpstreamState.Handler = (req, _) =>
+        MockUpstreamState.Handler = (_, _) =>
         {
             capturedRequestBody = MockUpstreamState.LastRequestBody ?? string.Empty;
             const string body =
@@ -530,7 +530,7 @@ public class OpenAIBackendProviderTests : TestBase
 
         var upstreamBody = JsonNode.Parse(capturedRequestBody);
         Assert.IsNotNull(upstreamBody);
-        Assert.AreEqual(true, upstreamBody!["chat_template_kwargs"]?["enable_thinking"]?.GetValue<bool>(),
+        Assert.AreEqual(true, upstreamBody["chat_template_kwargs"]?["enable_thinking"]?.GetValue<bool>(),
             "chat_template_kwargs.enable_thinking must be true when VM.Thinking = true (Ollama→OpenAI)");
     }
 }
