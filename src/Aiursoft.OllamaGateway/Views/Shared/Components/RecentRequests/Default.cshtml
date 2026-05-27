@@ -109,24 +109,27 @@
     </div>
 </div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        $('#recentRequestsTable').DataTable({
-            "destroy": true,
-            "responsive": true,
-            "paging": true,
-            "pageLength": 10,
-            "searching": false,
-            "info": false,
-            "order": [[7, "desc"]],
-            "columnDefs": [
-                { "orderable": false, "targets": [2, 3, 4, 6] }
-            ],
-            "drawCallback": function () {
-                $('[data-bs-toggle="tooltip"]').tooltip({
-                    trigger: 'hover'
-                });
-            }
+@if (Model.Items.Count > 0)
+{
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            $('#recentRequestsTable').DataTable({
+                "destroy": true,
+                "responsive": true,
+                "paging": true,
+                "pageLength": 10,
+                "searching": false,
+                "info": false,
+                "order": [[7, "desc"]],
+                "columnDefs": [
+                    { "orderable": false, "targets": [2, 3, 4, 6] }
+                ],
+                "drawCallback": function () {
+                    $('[data-bs-toggle="tooltip"]').tooltip({
+                        trigger: 'hover'
+                    });
+                }
+            });
         });
-    });
-</script>
+    </script>
+}
