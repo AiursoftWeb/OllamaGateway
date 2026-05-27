@@ -24,8 +24,8 @@ OllamaGateway has been officially tested and is fully compatible with popular ec
 ### Recommended Models for Agents
 
 For the best experience with AI agents, we recommend the following models:
-- `qwen3.5:27b-q8_0`
-- `qwen3.5:35b-a3b-q4_K_M`
+- `qwen3.6:27b-q8_0`
+- `qwen3.6:35b-a3b-q4_K_M`
 
 ## Run in Ubuntu
 
