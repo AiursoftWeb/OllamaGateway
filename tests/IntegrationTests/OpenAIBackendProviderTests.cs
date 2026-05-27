@@ -620,6 +620,6 @@ public class OpenAIBackendProviderTests : TestBase
         Assert.IsNotNull(content);
         Assert.IsTrue(content is not JsonArray,
             "Without images, content must remain a plain string, not a multimodal array (regression check)");
-        Assert.AreEqual("Hi", content?.ToString());
+        Assert.AreEqual("Hi", content.ToString());
     }
 }
