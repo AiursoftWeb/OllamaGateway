@@ -99,6 +99,12 @@
   <data name="Anthropic Client" xml:space="preserve">
     <value>Klien Anthropic</value>
   </data>
+  <data name="Anthropic image content blocks are not yet translated to Ollama format." xml:space="preserve">
+    <value>Blok konten gambar Anthropic belum diterjemahkan ke format Ollama.</value>
+  </data>
+  <data name="Anthropic image content blocks are not yet translated to OpenAI format." xml:space="preserve">
+    <value>Blok konten gambar Anthropic belum diterjemahkan ke format OpenAI.</value>
+  </data>
   <data name="API Authentication (Bearer)" xml:space="preserve">
     <value>Autentikasi API (Bearer)</value>
   </data>
@@ -231,6 +237,9 @@
   <data name="Consistency Validation" xml:space="preserve">
     <value>Validasi Konsistensi</value>
   </data>
+  <data name="Converted" xml:space="preserve">
+    <value>Dikonversi</value>
+  </data>
   <data name="Coordinate Comfortably" xml:space="preserve">
     <value>Berkordinasi dengan Nyaman</value>
   </data>
@@ -281,6 +290,9 @@
   </data>
   <data name="DB override discarded" xml:space="preserve">
     <value>Pembatalan override DB</value>
+  </data>
+  <data name="DB overrides via chat_template_kwargs. When DB is unset, client can pass chat_template_kwargs freely." xml:space="preserve">
+    <value>DB melakukan override melalui chat_template_kwargs. Saat DB tidak diatur, klien dapat memberikan chat_template_kwargs secara bebas.</value>
   </data>
   <data name="Dedicated management for embedding models for RAG applications." xml:space="preserve">
     <value>Pengelolaan khusus untuk model embedding untuk aplikasi RAG.</value>
@@ -513,6 +525,12 @@
   <data name="If DB has a value, it overrides the client value. If DB is unset, the client value passes through." xml:space="preserve">
     <value>Jika DB memiliki nilai, nilai tersebut akan mengesampingkan nilai klien. Jika DB tidak disetel, nilai klien akan diteruskan.</value>
   </data>
+  <data name="Images / Multimodal" xml:space="preserve">
+    <value>Gambar / Multimodal</value>
+  </data>
+  <data name="Images array passes through as-is to native Ollama." xml:space="preserve">
+    <value>Array gambar diteruskan apa adanya ke Ollama native.</value>
+  </data>
   <data name="Included" xml:space="preserve">
     <value>Termasuk</value>
   </data>
@@ -605,6 +623,9 @@
   </data>
   <data name="Multimodal" xml:space="preserve">
     <value>Multimodal</value>
+  </data>
+  <data name="Multimodal content array passes through as-is to the OpenAI backend." xml:space="preserve">
+    <value>Array konten multimodal diteruskan apa adanya ke backend OpenAI.</value>
   </data>
   <data name="Multiple API Keys Management" xml:space="preserve">
     <value>Manajemen Beberapa Kunci API</value>
@@ -708,6 +729,9 @@
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: Tingkatkan Ollama asli Anda dengan autentikasi API tingkat perusahaan, audit permintaan, pembatasan laju, dan manajemen model virtual—gerbang AI aman dan pribadi Anda.</value>
   </data>
+  <data name="Ollama images array is converted to OpenAI multimodal content parts (text + image_url with data URI)." xml:space="preserve">
+    <value>Array gambar Ollama diubah menjadi bagian konten multimodal OpenAI (teks + image_url dengan data URI).</value>
+  </data>
   <data name="Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently." xml:space="preserve">
     <value>Parameter khusus Ollama. OpenAI secara native mendukung frequency_penalty dan presence_penalty, yang diteruskan secara independen.</value>
   </data>
@@ -759,6 +783,9 @@
   <data name="OpenAI Client" xml:space="preserve">
     <value>Klien OpenAI</value>
   </data>
+  <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
+    <value>Array konten multimodal OpenAI diekstrak: data image_url masuk ke array gambar Ollama, teks menjadi konten.</value>
+  </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>Integrasi OpenID Connect</value>
   </data>
@@ -788,6 +815,9 @@
   </data>
   <data name="Partially supported. Lacks advanced system prompt mapping, parameter overriding, and role translation." xml:space="preserve">
     <value>Sebagian didukung. Tidak memiliki pemetaan prompt sistem lanjutan, penggantian parameter, dan terjemahan peran.</value>
+  </data>
+  <data name="Passthrough" xml:space="preserve">
+    <value>Passthrough</value>
   </data>
   <data name="Perfect for Agent Deployment" xml:space="preserve">
     <value>Sempurna untuk Deployment Agen</value>

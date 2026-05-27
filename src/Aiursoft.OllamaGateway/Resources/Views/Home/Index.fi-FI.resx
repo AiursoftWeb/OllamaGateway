@@ -99,6 +99,12 @@
   <data name="Anthropic Client" xml:space="preserve">
     <value>Anthropic Client</value>
   </data>
+  <data name="Anthropic image content blocks are not yet translated to Ollama format." xml:space="preserve">
+    <value>Anthropic-kuvasisältölohkoja ei ole vielä käännetty Ollama-muotoon.</value>
+  </data>
+  <data name="Anthropic image content blocks are not yet translated to OpenAI format." xml:space="preserve">
+    <value>Anthropic-kuva-sisältölohkoja ei ole vielä käännetty OpenAI-muotoon.</value>
+  </data>
   <data name="API Authentication (Bearer)" xml:space="preserve">
     <value>API-todennus (Bearer)</value>
   </data>
@@ -231,6 +237,9 @@
   <data name="Consistency Validation" xml:space="preserve">
     <value>Johdonmukaisuustarkistus</value>
   </data>
+  <data name="Converted" xml:space="preserve">
+    <value>Muunnettu</value>
+  </data>
   <data name="Coordinate Comfortably" xml:space="preserve">
     <value>Koordinoi mukavasti</value>
   </data>
@@ -281,6 +290,9 @@
   </data>
   <data name="DB override discarded" xml:space="preserve">
     <value>DB-ohitus hylätty</value>
+  </data>
+  <data name="DB overrides via chat_template_kwargs. When DB is unset, client can pass chat_template_kwargs freely." xml:space="preserve">
+    <value>DB ylikirjoittaa chat_template_kwargs:n kautta. Kun DB:tä ei ole asetettu, asiakas voi välittää chat_template_kwargs:n vapaasti.</value>
   </data>
   <data name="Dedicated management for embedding models for RAG applications." xml:space="preserve">
     <value>Erittäin suunniteltu hallinta upotusmalleille RAG-sovelluksissa.</value>
@@ -513,6 +525,12 @@
   <data name="If DB has a value, it overrides the client value. If DB is unset, the client value passes through." xml:space="preserve">
     <value>Jos tietokannassa on arvo, se ohittaa asiakkaan arvon. Jos tietokantaa ei ole asetettu, asiakkaan arvo kulkee läpi.</value>
   </data>
+  <data name="Images / Multimodal" xml:space="preserve">
+    <value>Kuvat / Multimodaalinen</value>
+  </data>
+  <data name="Images array passes through as-is to native Ollama." xml:space="preserve">
+    <value>Kuvataulukko välitetään sellaisenaan natiiville Ollamalle.</value>
+  </data>
   <data name="Included" xml:space="preserve">
     <value>Sisältyy</value>
   </data>
@@ -605,6 +623,9 @@
   </data>
   <data name="Multimodal" xml:space="preserve">
     <value>Monimodaalinen</value>
+  </data>
+  <data name="Multimodal content array passes through as-is to the OpenAI backend." xml:space="preserve">
+    <value>Monimuotoinen sisältötaulukko välitetään sellaisenaan OpenAI-taustaohjelmistoon.</value>
   </data>
   <data name="Multiple API Keys Management" xml:space="preserve">
     <value>Useut API-avainten hallinta</value>
@@ -708,6 +729,9 @@
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: Tehdästä kotimainen Ollamaasi yritystason API-todennuksella, pyyntöjen tarkastuksella, nopeusrajoituksella ja virtuaalimallien hallinnalla – turvallinen, yksityinen tekoälyportti.</value>
   </data>
+  <data name="Ollama images array is converted to OpenAI multimodal content parts (text + image_url with data URI)." xml:space="preserve">
+    <value>Ollama-kuvataulukko muunnetaan OpenAI-monimuotoisiksi sisältöosiksi (teksti + image_url data-URI:lla).</value>
+  </data>
   <data name="Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently." xml:space="preserve">
     <value>Ollamalle spesifinen parametri. OpenAI tukee frequency_penalty- ja presence_penalty-parametreja alkuperäisesti, ja ne välitetään itsenäisesti.</value>
   </data>
@@ -759,6 +783,9 @@
   <data name="OpenAI Client" xml:space="preserve">
     <value>OpenAI-asiakas</value>
   </data>
+  <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
+    <value>OpenAI monimuotoinen sisältötaulukko puretaan: image_url-tiedot siirtyvät Ollama-kuvataulukkoon, tekstistä tulee sisältöä.</value>
+  </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>OpenID Connect -integraatio</value>
   </data>
@@ -788,6 +815,9 @@
   </data>
   <data name="Partially supported. Lacks advanced system prompt mapping, parameter overriding, and role translation." xml:space="preserve">
     <value>Osittain tuettu. Puuttuu edistyneet järjestelmäohjeistuksen kartoitukset, parametrien ylikirjoitukset ja roolien käännökset.</value>
+  </data>
+  <data name="Passthrough" xml:space="preserve">
+    <value>Läpivienti</value>
   </data>
   <data name="Perfect for Agent Deployment" xml:space="preserve">
     <value>Täydellinen agenttien käyttöönottoon</value>

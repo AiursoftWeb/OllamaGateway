@@ -99,6 +99,12 @@
   <data name="Anthropic Client" xml:space="preserve">
     <value>Khách hàng Anthropic</value>
   </data>
+  <data name="Anthropic image content blocks are not yet translated to Ollama format." xml:space="preserve">
+    <value>Các khối nội dung hình ảnh của Anthropic chưa được dịch sang định dạng Ollama.</value>
+  </data>
+  <data name="Anthropic image content blocks are not yet translated to OpenAI format." xml:space="preserve">
+    <value>Khối nội dung hình ảnh Anthropic chưa được dịch sang định dạng OpenAI.</value>
+  </data>
   <data name="API Authentication (Bearer)" xml:space="preserve">
     <value>Xác thực API (Bearer)</value>
   </data>
@@ -231,6 +237,9 @@
   <data name="Consistency Validation" xml:space="preserve">
     <value>Xác thực tính nhất quán</value>
   </data>
+  <data name="Converted" xml:space="preserve">
+    <value>Đã chuyển đổi</value>
+  </data>
   <data name="Coordinate Comfortably" xml:space="preserve">
     <value>Hợp tác một cách thoải mái</value>
   </data>
@@ -281,6 +290,9 @@
   </data>
   <data name="DB override discarded" xml:space="preserve">
     <value>DB bị loại bỏ</value>
+  </data>
+  <data name="DB overrides via chat_template_kwargs. When DB is unset, client can pass chat_template_kwargs freely." xml:space="preserve">
+    <value>DB ghi đè qua chat_template_kwargs. Khi DB không được thiết lập, client có thể truyền chat_template_kwargs một cách tự do.</value>
   </data>
   <data name="Dedicated management for embedding models for RAG applications." xml:space="preserve">
     <value>Quản lý chuyên biệt cho các mô hình nhúng dùng cho ứng dụng RAG.</value>
@@ -513,6 +525,12 @@
   <data name="If DB has a value, it overrides the client value. If DB is unset, the client value passes through." xml:space="preserve">
     <value>Nếu DB có giá trị, nó sẽ ghi đè giá trị của client. Nếu DB không được đặt, giá trị của client sẽ được truyền qua.</value>
   </data>
+  <data name="Images / Multimodal" xml:space="preserve">
+    <value>Hình ảnh / Đa phương thức</value>
+  </data>
+  <data name="Images array passes through as-is to native Ollama." xml:space="preserve">
+    <value>Mảng hình ảnh được truyền qua nguyên trạng đến Ollama gốc.</value>
+  </data>
   <data name="Included" xml:space="preserve">
     <value>Đã bao gồm</value>
   </data>
@@ -605,6 +623,9 @@
   </data>
   <data name="Multimodal" xml:space="preserve">
     <value>Đa phương thức</value>
+  </data>
+  <data name="Multimodal content array passes through as-is to the OpenAI backend." xml:space="preserve">
+    <value>Mảng nội dung đa phương thức được chuyển tiếp nguyên trạng đến backend OpenAI.</value>
   </data>
   <data name="Multiple API Keys Management" xml:space="preserve">
     <value>Quản lý nhiều khóa API</value>
@@ -708,6 +729,9 @@
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: Tăng cường sức mạnh cho Ollama của bạn với xác thực API, kiểm toán yêu cầu, giới hạn tốc độ và quản lý mô hình ảo ở cấp độ doanh nghiệp—cổng AI an toàn, riêng tư của bạn.</value>
   </data>
+  <data name="Ollama images array is converted to OpenAI multimodal content parts (text + image_url with data URI)." xml:space="preserve">
+    <value>Mảng hình ảnh Ollama được chuyển đổi thành các phần nội dung đa phương thức của OpenAI (văn bản + image_url với data URI).</value>
+  </data>
   <data name="Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently." xml:space="preserve">
     <value>Tham số chỉ dành riêng cho Ollama. OpenAI hỗ trợ native frequency_penalty và presence_penalty thay thế, các tham số này được truyền độc lập.</value>
   </data>
@@ -762,6 +786,9 @@
   <data name="OpenAI Client" xml:space="preserve">
     <value>Trình khách OpenAI</value>
   </data>
+  <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
+    <value>Mảng nội dung đa phương thức của OpenAI được trích xuất: dữ liệu image_url chuyển vào mảng images của Ollama, văn bản trở thành content.</value>
+  </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>Tích hợp OpenID Connect</value>
   </data>
@@ -791,6 +818,9 @@
   </data>
   <data name="Partially supported. Lacks advanced system prompt mapping, parameter overriding, and role translation." xml:space="preserve">
     <value>Được hỗ trợ một phần. Thiếu ánh xạ hệ thống prompt nâng cao, ghi đè tham số và dịch vai trò.</value>
+  </data>
+  <data name="Passthrough" xml:space="preserve">
+    <value>Truyền trực tiếp</value>
   </data>
   <data name="Perfect for Agent Deployment" xml:space="preserve">
     <value>Phù hợp hoàn hảo cho triển khai Agent</value>

@@ -99,6 +99,12 @@
   <data name="Anthropic Client" xml:space="preserve">
     <value>ไคลเอนต์แอนโทรปิก</value>
   </data>
+  <data name="Anthropic image content blocks are not yet translated to Ollama format." xml:space="preserve">
+    <value>บล็อกเนื้อหารูปภาพของ Anthropic ยังไม่ได้ถูกแปลเป็นรูปแบบ Ollama</value>
+  </data>
+  <data name="Anthropic image content blocks are not yet translated to OpenAI format." xml:space="preserve">
+    <value>บล็อกเนื้อหารูปภาพของ Anthropic ยังไม่ถูกแปลเป็นรูปแบบ OpenAI</value>
+  </data>
   <data name="API Authentication (Bearer)" xml:space="preserve">
     <value>การตรวจสอบสิทธิ์ API (Bearer)</value>
   </data>
@@ -231,6 +237,9 @@
   <data name="Consistency Validation" xml:space="preserve">
     <value>การตรวจสอบความสอดคล้อง</value>
   </data>
+  <data name="Converted" xml:space="preserve">
+    <value>แปลงแล้ว</value>
+  </data>
   <data name="Coordinate Comfortably" xml:space="preserve">
     <value>ประสานงานได้อย่างสะดวกสบาย</value>
   </data>
@@ -281,6 +290,9 @@
   </data>
   <data name="DB override discarded" xml:space="preserve">
     <value>ละเลยการแทนค่าจากฐานข้อมูล</value>
+  </data>
+  <data name="DB overrides via chat_template_kwargs. When DB is unset, client can pass chat_template_kwargs freely." xml:space="preserve">
+    <value>DB overrides via chat_template_kwargs. เมื่อ DB ไม่ได้ตั้งค่า ไคลเอนต์สามารถส่ง chat_template_kwargs ได้อย่างอิสระ</value>
   </data>
   <data name="Dedicated management for embedding models for RAG applications." xml:space="preserve">
     <value>การจัดการแบบเฉพาะสำหรับโมเดลการฝังตัวสำหรับแอปพลิเคชัน RAG</value>
@@ -513,6 +525,12 @@
   <data name="If DB has a value, it overrides the client value. If DB is unset, the client value passes through." xml:space="preserve">
     <value>หากฐานข้อมูลมีค่า ค่าดังกล่าวจะแทนที่ค่าจากไคลเอนต์ หากฐานข้อมูลไม่ได้กำหนด ค่าจากไคลเอนต์จะถูกส่งต่อ</value>
   </data>
+  <data name="Images / Multimodal" xml:space="preserve">
+    <value>รูปภาพ / หลายรูปแบบ</value>
+  </data>
+  <data name="Images array passes through as-is to native Ollama." xml:space="preserve">
+    <value>อาร์เรย์รูปภาพจะถูกส่งผ่านไปยัง Ollama ดั้งเดิมตามที่เป็นอยู่</value>
+  </data>
   <data name="Included" xml:space="preserve">
     <value>รวมไว้แล้ว</value>
   </data>
@@ -605,6 +623,9 @@
   </data>
   <data name="Multimodal" xml:space="preserve">
     <value>มัลติโมดัล</value>
+  </data>
+  <data name="Multimodal content array passes through as-is to the OpenAI backend." xml:space="preserve">
+    <value>อาร์เรย์เนื้อหาหลายรูปแบบจะถูกส่งผ่านไปยังแบ็กเอนด์ของ OpenAI โดยไม่เปลี่ยนแปลง</value>
   </data>
   <data name="Multiple API Keys Management" xml:space="preserve">
     <value>การจัดการคีย์ API หลายคีย์</value>
@@ -708,6 +729,9 @@
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: เพิ่มประสิทธิภาพ Ollama ในท้องถิ่นของคุณด้วย API authentication ระดับองค์กร การตรวจสอบคำขอ การจำกัดอัตรา และการจัดการแบบจำลองเสมือน — เกตเวย์ AI ที่ปลอดภัยและเป็นส่วนตัวของคุณ</value>
   </data>
+  <data name="Ollama images array is converted to OpenAI multimodal content parts (text + image_url with data URI)." xml:space="preserve">
+    <value>อาร์เรย์รูปภาพของ Ollama ถูกแปลงเป็นส่วนเนื้อหา multimodal ของ OpenAI (ข้อความ + image_url พร้อม data URI)</value>
+  </data>
   <data name="Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently." xml:space="preserve">
     <value>พารามิเตอร์เฉพาะของ Ollama OpenAI รองรับ frequency_penalty และ presence_penalty ในตัวแทน ซึ่งจะถูกส่งผ่านแยกกัน</value>
   </data>
@@ -759,6 +783,9 @@
   <data name="OpenAI Client" xml:space="preserve">
     <value>OpenAI Client</value>
   </data>
+  <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
+    <value>สารบัญเนื้อหาหลายรูปแบบของ OpenAI ถูกแยกออก: ข้อมูล image_url ถูกส่งไปยังอาร์เรย์รูปภาพของ Ollama ส่วนข้อความจะกลายเป็นเนื้อหา</value>
+  </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>การผสานรวม OpenID Connect</value>
   </data>
@@ -788,6 +815,9 @@
   </data>
   <data name="Partially supported. Lacks advanced system prompt mapping, parameter overriding, and role translation." xml:space="preserve">
     <value>รองรับบางส่วน ขาดการแมปคำสั่งระบบขั้นสูง การทับซ้อนพารามิเตอร์ และการแปลบทบาท</value>
+  </data>
+  <data name="Passthrough" xml:space="preserve">
+    <value>การส่งผ่าน</value>
   </data>
   <data name="Perfect for Agent Deployment" xml:space="preserve">
     <value>เหมาะสำหรับการติดตั้ง Agent</value>

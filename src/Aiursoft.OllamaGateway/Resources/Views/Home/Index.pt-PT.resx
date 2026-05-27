@@ -99,6 +99,12 @@
   <data name="Anthropic Client" xml:space="preserve">
     <value>Cliente Anthropic</value>
   </data>
+  <data name="Anthropic image content blocks are not yet translated to Ollama format." xml:space="preserve">
+    <value>Os blocos de conteúdo de imagem da Anthropic ainda não foram traduzidos para o formato Ollama.</value>
+  </data>
+  <data name="Anthropic image content blocks are not yet translated to OpenAI format." xml:space="preserve">
+    <value>Os blocos de conteúdo de imagem da Anthropic ainda não foram traduzidos para o formato OpenAI.</value>
+  </data>
   <data name="API Authentication (Bearer)" xml:space="preserve">
     <value>Autenticação da API (Bearer)</value>
   </data>
@@ -231,6 +237,9 @@
   <data name="Consistency Validation" xml:space="preserve">
     <value>Validação de Consistência</value>
   </data>
+  <data name="Converted" xml:space="preserve">
+    <value>Convertido</value>
+  </data>
   <data name="Coordinate Comfortably" xml:space="preserve">
     <value>Coordene com Comodidade</value>
   </data>
@@ -281,6 +290,9 @@
   </data>
   <data name="DB override discarded" xml:space="preserve">
     <value>Sobrescrita da base de dados ignorada</value>
+  </data>
+  <data name="DB overrides via chat_template_kwargs. When DB is unset, client can pass chat_template_kwargs freely." xml:space="preserve">
+    <value>DB substitui via chat_template_kwargs. Quando DB não está definido, o cliente pode passar chat_template_kwargs livremente.</value>
   </data>
   <data name="Dedicated management for embedding models for RAG applications." xml:space="preserve">
     <value>Gestão dedicada de modelos de embedding para aplicações RAG.</value>
@@ -513,6 +525,12 @@
   <data name="If DB has a value, it overrides the client value. If DB is unset, the client value passes through." xml:space="preserve">
     <value>Se a base de dados tiver um valor, este sobrepõe o valor do cliente. Se a base de dados não estiver definida, o valor do cliente é transmitido.</value>
   </data>
+  <data name="Images / Multimodal" xml:space="preserve">
+    <value>Imagens / Multimodal</value>
+  </data>
+  <data name="Images array passes through as-is to native Ollama." xml:space="preserve">
+    <value>O array de imagens é transmitido tal como está para o Ollama nativo.</value>
+  </data>
   <data name="Included" xml:space="preserve">
     <value>Incluído</value>
   </data>
@@ -605,6 +623,9 @@
   </data>
   <data name="Multimodal" xml:space="preserve">
     <value>Multimodal</value>
+  </data>
+  <data name="Multimodal content array passes through as-is to the OpenAI backend." xml:space="preserve">
+    <value>O array de conteúdo multimodal passa tal como está para o backend da OpenAI.</value>
   </data>
   <data name="Multiple API Keys Management" xml:space="preserve">
     <value>Gestão de múltiplas chaves de API</value>
@@ -708,6 +729,9 @@
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Gateway Ollama: Potencialize o seu Ollama nativo com autenticação de API de nível empresarial, auditoria de pedidos, limitação de taxa e gestão de modelos virtuais — o seu gateway de IA seguro e privado.</value>
   </data>
+  <data name="Ollama images array is converted to OpenAI multimodal content parts (text + image_url with data URI)." xml:space="preserve">
+    <value>O array de imagens do Ollama é convertido em partes de conteúdo multimodal do OpenAI (texto + image_url com data URI).</value>
+  </data>
   <data name="Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently." xml:space="preserve">
     <value>Parâmetro específico do Ollama. A OpenAI suporta nativamente frequency_penalty e presence_penalty em vez disso, que são transmitidos independentemente.</value>
   </data>
@@ -759,6 +783,9 @@
   <data name="OpenAI Client" xml:space="preserve">
     <value>Cliente OpenAI</value>
   </data>
+  <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
+    <value>O conteúdo do array multimodal do OpenAI é extraído: os dados de image_url vão para o array de imagens do Ollama, e o texto torna-se conteúdo.</value>
+  </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>Integração OpenID Connect</value>
   </data>
@@ -788,6 +815,9 @@
   </data>
   <data name="Partially supported. Lacks advanced system prompt mapping, parameter overriding, and role translation." xml:space="preserve">
     <value>Parcialmente suportado. Falta mapeamento avançado de prompts de sistema, substituição de parâmetros e tradução de papéis.</value>
+  </data>
+  <data name="Passthrough" xml:space="preserve">
+    <value>Passagem direta</value>
   </data>
   <data name="Perfect for Agent Deployment" xml:space="preserve">
     <value>Perfeito para Implantação de Agentes</value>

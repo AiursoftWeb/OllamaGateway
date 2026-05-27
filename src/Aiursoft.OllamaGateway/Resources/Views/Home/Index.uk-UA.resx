@@ -99,6 +99,12 @@
   <data name="Anthropic Client" xml:space="preserve">
     <value>Клієнт Anthropic</value>
   </data>
+  <data name="Anthropic image content blocks are not yet translated to Ollama format." xml:space="preserve">
+    <value>Блоки зображень Anthropic ще не перекладено у формат Ollama.</value>
+  </data>
+  <data name="Anthropic image content blocks are not yet translated to OpenAI format." xml:space="preserve">
+    <value>Блоки зображення Anthropic ще не перекладено у формат OpenAI.</value>
+  </data>
   <data name="API Authentication (Bearer)" xml:space="preserve">
     <value>Аутентифікація API (Bearer)</value>
   </data>
@@ -231,6 +237,9 @@
   <data name="Consistency Validation" xml:space="preserve">
     <value>Перевірка узгодженості</value>
   </data>
+  <data name="Converted" xml:space="preserve">
+    <value>Конвертовано</value>
+  </data>
   <data name="Coordinate Comfortably" xml:space="preserve">
     <value>Координуйте зручно</value>
   </data>
@@ -281,6 +290,9 @@
   </data>
   <data name="DB override discarded" xml:space="preserve">
     <value>Перезапис бази даних відкинуто</value>
+  </data>
+  <data name="DB overrides via chat_template_kwargs. When DB is unset, client can pass chat_template_kwargs freely." xml:space="preserve">
+    <value>DB перевизначає через chat_template_kwargs. Коли DB не встановлено, клієнт може передавати chat_template_kwargs вільно.</value>
   </data>
   <data name="Dedicated management for embedding models for RAG applications." xml:space="preserve">
     <value>Спеціалізоване керування моделями вбудовування для застосунків RAG.</value>
@@ -513,6 +525,12 @@
   <data name="If DB has a value, it overrides the client value. If DB is unset, the client value passes through." xml:space="preserve">
     <value>Якщо в базі даних є значення, воно перевищує значення клієнта. Якщо в базі даних значення не вказано, значення клієнта передається далі.</value>
   </data>
+  <data name="Images / Multimodal" xml:space="preserve">
+    <value>Зображення / Мультимодальність</value>
+  </data>
+  <data name="Images array passes through as-is to native Ollama." xml:space="preserve">
+    <value>Масив зображень передається без змін до рідного Ollama.</value>
+  </data>
   <data name="Included" xml:space="preserve">
     <value>Включено</value>
   </data>
@@ -605,6 +623,9 @@
   </data>
   <data name="Multimodal" xml:space="preserve">
     <value>Мультимодальність</value>
+  </data>
+  <data name="Multimodal content array passes through as-is to the OpenAI backend." xml:space="preserve">
+    <value>Масив мультимодального вмісту передається без змін до бекенду OpenAI.</value>
   </data>
   <data name="Multiple API Keys Management" xml:space="preserve">
     <value>Керування кількома API-ключами</value>
@@ -708,6 +729,9 @@
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: Розширте можливості вашого рідного Ollama за допомогою корпоративної аутентифікації API, аудиту запитів, лімітування швидкості та віртуального керування моделями — ваш безпечний, приватний шлюз для штучного інтелекту.</value>
   </data>
+  <data name="Ollama images array is converted to OpenAI multimodal content parts (text + image_url with data URI)." xml:space="preserve">
+    <value>Масив зображень Ollama перетворюється на мультимодальні частини вмісту OpenAI (текст + image_url з data URI).</value>
+  </data>
   <data name="Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently." xml:space="preserve">
     <value>Спеціальний параметр Ollama. OpenAI нативно підтримує frequency_penalty та presence_penalty, які передаються незалежно.</value>
   </data>
@@ -759,6 +783,9 @@
   <data name="OpenAI Client" xml:space="preserve">
     <value>Клієнт OpenAI</value>
   </data>
+  <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
+    <value>Масив мультимодального вмісту OpenAI витягується: дані image_url переходять до масиву зображень Ollama, текст стає вмістом.</value>
+  </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>Інтеграція OpenID Connect</value>
   </data>
@@ -788,6 +815,9 @@
   </data>
   <data name="Partially supported. Lacks advanced system prompt mapping, parameter overriding, and role translation." xml:space="preserve">
     <value>Частково підтримується. Відсутнє розширене відображення системного промпту, перевизначення параметрів та переклад ролей.</value>
+  </data>
+  <data name="Passthrough" xml:space="preserve">
+    <value>Прямий прохід</value>
   </data>
   <data name="Perfect for Agent Deployment" xml:space="preserve">
     <value>Ідеально для розгортання агентів</value>
