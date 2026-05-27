@@ -406,6 +406,15 @@
                         <td><i class="fas fa-check-circle text-success"></i> @Localizer["DB override"]</td>
                     </tr>
                     <tr>
+                        <td class="text-start fw-medium ps-3">@Localizer["Images / Multimodal"]</td>
+                        <td><span data-bs-toggle="tooltip" title="@Localizer["Multimodal content array passes through as-is to the OpenAI backend."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Passthrough"]</span></td>
+                        <td><span data-bs-toggle="tooltip" title="@Localizer["Ollama images array is converted to OpenAI multimodal content parts (text + image_url with data URI)."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Converted"]</span></td>
+                        <td><span data-bs-toggle="tooltip" title="@Localizer["OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Converted"]</span></td>
+                        <td><span data-bs-toggle="tooltip" title="@Localizer["Images array passes through as-is to native Ollama."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Passthrough"]</span></td>
+                        <td><i class="fas fa-times-circle text-danger" data-bs-toggle="tooltip" title="@Localizer["Anthropic image content blocks are not yet translated to OpenAI format."]"></i> @Localizer["Not supported"]</td>
+                        <td><i class="fas fa-times-circle text-danger" data-bs-toggle="tooltip" title="@Localizer["Anthropic image content blocks are not yet translated to Ollama format."]"></i> @Localizer["Not supported"]</td>
+                    </tr>
+                    <tr>
                         <td class="text-start fw-medium ps-3">@Localizer["Repeat Penalty"]</td>
                         <td><i class="fas fa-times-circle text-danger" data-bs-toggle="tooltip" title="@Localizer["Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently."]"></i> @Localizer["Not supported"]</td>
                         <td><i class="fas fa-exclamation-triangle text-warning" data-bs-toggle="tooltip" title="@Localizer["DB injects the value but it is dropped before the OpenAI request is sent. Consider using frequency_penalty or presence_penalty instead."]"></i> @Localizer["DB override discarded"]</td>
