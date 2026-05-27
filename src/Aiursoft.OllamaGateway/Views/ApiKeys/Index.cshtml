@@ -129,20 +129,23 @@
 
 @* ReSharper disable once Razor.SectionNotResolved *@
 @section scripts {
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            $('#apiKeysTable').DataTable({
-                "destroy": true,
-                "responsive": true,
-                "paging": true,
-                "pageLength": 50,
-                "searching": true,
-                "info": true,
-                "order": [[2, "asc"]],
-                "columnDefs": [
-                    { "orderable": false, "targets": [6] }
-                ]
+    @if (Model.ApiKeys.Count > 0)
+    {
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                $('#apiKeysTable').DataTable({
+                    "destroy": true,
+                    "responsive": true,
+                    "paging": true,
+                    "pageLength": 50,
+                    "searching": true,
+                    "info": true,
+                    "order": [[2, "asc"]],
+                    "columnDefs": [
+                        { "orderable": false, "targets": [6] }
+                    ]
+                });
             });
-        });
-    </script>
+        </script>
+    }
 }
