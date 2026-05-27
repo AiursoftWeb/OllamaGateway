@@ -99,6 +99,12 @@
   <data name="Anthropic Client" xml:space="preserve">
     <value>Anthropic Client</value>
   </data>
+  <data name="Anthropic image content blocks are not yet translated to Ollama format." xml:space="preserve">
+    <value>Anthropic 影像內容區塊尚未轉換為 Ollama 格式。</value>
+  </data>
+  <data name="Anthropic image content blocks are not yet translated to OpenAI format." xml:space="preserve">
+    <value>Anthropic 圖片內容區塊尚未轉換為 OpenAI 格式。</value>
+  </data>
   <data name="API Authentication (Bearer)" xml:space="preserve">
     <value>API 驗證 (Bearer)</value>
   </data>
@@ -231,6 +237,9 @@
   <data name="Consistency Validation" xml:space="preserve">
     <value>一致性驗證</value>
   </data>
+  <data name="Converted" xml:space="preserve">
+    <value>已轉換</value>
+  </data>
   <data name="Coordinate Comfortably" xml:space="preserve">
     <value>協調得宜</value>
   </data>
@@ -281,6 +290,9 @@
   </data>
   <data name="DB override discarded" xml:space="preserve">
     <value>DB 覆蓋值遭棄置</value>
+  </data>
+  <data name="DB overrides via chat_template_kwargs. When DB is unset, client can pass chat_template_kwargs freely." xml:space="preserve">
+    <value>DB 透過 chat_template_kwargs 進行覆蓋。當 DB 未設定時，客戶端可以自由傳遞 chat_template_kwargs。</value>
   </data>
   <data name="Dedicated management for embedding models for RAG applications." xml:space="preserve">
     <value>專為 RAG 應用程式打造的嵌入模型管理功能。</value>
@@ -513,6 +525,12 @@
   <data name="If DB has a value, it overrides the client value. If DB is unset, the client value passes through." xml:space="preserve">
     <value>若資料庫有值，則優先使用該值；若資料庫未設定，則保留客戶端值。</value>
   </data>
+  <data name="Images / Multimodal" xml:space="preserve">
+    <value>影像 / 多模態</value>
+  </data>
+  <data name="Images array passes through as-is to native Ollama." xml:space="preserve">
+    <value>圖片陣列原封不動地傳遞給原生 Ollama。</value>
+  </data>
   <data name="Included" xml:space="preserve">
     <value>包含在內</value>
   </data>
@@ -605,6 +623,9 @@
   </data>
   <data name="Multimodal" xml:space="preserve">
     <value>多模態</value>
+  </data>
+  <data name="Multimodal content array passes through as-is to the OpenAI backend." xml:space="preserve">
+    <value>多模態內容陣列會原樣傳遞給 OpenAI 後端。</value>
   </data>
   <data name="Multiple API Keys Management" xml:space="preserve">
     <value>多 API 金鑰管理</value>
@@ -708,6 +729,9 @@
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway：為您的原生 Ollama 注入企業級 API 認證、請求審計、速率限制與虛擬模型管理功能——您的安全、私有 AI 閘道。</value>
   </data>
+  <data name="Ollama images array is converted to OpenAI multimodal content parts (text + image_url with data URI)." xml:space="preserve">
+    <value>Ollama images array 被轉換為 OpenAI 多模態內容部分（text + image_url with data URI）。</value>
+  </data>
   <data name="Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently." xml:space="preserve">
     <value>Ollama 專屬參數。OpenAI 原生支援 frequency_penalty 和 presence_penalty，這些參數會獨立傳遞。</value>
   </data>
@@ -762,6 +786,9 @@
   <data name="OpenAI Client" xml:space="preserve">
     <value>OpenAI 客戶端</value>
   </data>
+  <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
+    <value>OpenAI 多模態內容陣列被提取：image_url 資料傳入 Ollama images 陣列，文字成為 content。</value>
+  </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>OpenID Connect 整合</value>
   </data>
@@ -791,6 +818,9 @@
   </data>
   <data name="Partially supported. Lacks advanced system prompt mapping, parameter overriding, and role translation." xml:space="preserve">
     <value>部分支援。缺乏進階系統提示映射、參數覆寫及角色轉換。</value>
+  </data>
+  <data name="Passthrough" xml:space="preserve">
+    <value>透傳</value>
   </data>
   <data name="Perfect for Agent Deployment" xml:space="preserve">
     <value>適用於 Agent 部署</value>

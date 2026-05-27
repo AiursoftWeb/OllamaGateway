@@ -99,6 +99,12 @@
   <data name="Anthropic Client" xml:space="preserve">
     <value>Πελάτης Anthropic</value>
   </data>
+  <data name="Anthropic image content blocks are not yet translated to Ollama format." xml:space="preserve">
+    <value>Τα μπλοκ περιεχομένου εικόνας του Anthropic δεν έχουν μεταφραστεί ακόμα σε μορφή Ollama.</value>
+  </data>
+  <data name="Anthropic image content blocks are not yet translated to OpenAI format." xml:space="preserve">
+    <value>Τα μπλοκ περιεχομένου εικόνας του Anthropic δεν έχουν ακόμη μεταφραστεί στη μορφή OpenAI.</value>
+  </data>
   <data name="API Authentication (Bearer)" xml:space="preserve">
     <value>API Authentication (Bearer)</value>
   </data>
@@ -231,6 +237,9 @@
   <data name="Consistency Validation" xml:space="preserve">
     <value>Έλεγχος Συνοχής</value>
   </data>
+  <data name="Converted" xml:space="preserve">
+    <value>Μετατράπηκε</value>
+  </data>
   <data name="Coordinate Comfortably" xml:space="preserve">
     <value>Συντονίστε Άνετα</value>
   </data>
@@ -281,6 +290,9 @@
   </data>
   <data name="DB override discarded" xml:space="preserve">
     <value>Απόρριψη παρέμβασης βάσης δεδομένων</value>
+  </data>
+  <data name="DB overrides via chat_template_kwargs. When DB is unset, client can pass chat_template_kwargs freely." xml:space="preserve">
+    <value>DB παρακάμπτει μέσω chat_template_kwargs. Όταν το DB δεν έχει οριστεί, ο client μπορεί να περάσει chat_template_kwargs ελεύθερα.</value>
   </data>
   <data name="Dedicated management for embedding models for RAG applications." xml:space="preserve">
     <value>Εξειδικευμένη διαχείριση μοντέλων ενσωμάτωσης για εφαρμογές RAG.</value>
@@ -513,6 +525,12 @@
   <data name="If DB has a value, it overrides the client value. If DB is unset, the client value passes through." xml:space="preserve">
     <value>Αν η βάση δεδομένων περιέχει τιμή, αυτή υπερισχύει της τιμής του πελάτη. Αν η τιμή της βάσης δεδομένων δεν έχει οριστεί, η τιμή του πελάτη μεταβιβάζεται ως έχει.</value>
   </data>
+  <data name="Images / Multimodal" xml:space="preserve">
+    <value>Εικόνες / Πολυτροπικό</value>
+  </data>
+  <data name="Images array passes through as-is to native Ollama." xml:space="preserve">
+    <value>Ο πίνακας εικόνων περνάει ως έχει στο εγγενές Ollama.</value>
+  </data>
   <data name="Included" xml:space="preserve">
     <value>Συμπεριλαμβανόμενο</value>
   </data>
@@ -605,6 +623,9 @@
   </data>
   <data name="Multimodal" xml:space="preserve">
     <value>Πολυτροπικό</value>
+  </data>
+  <data name="Multimodal content array passes through as-is to the OpenAI backend." xml:space="preserve">
+    <value>Το πολυτροπικό περιεχόμενο πίνακα περνάει αυτούσιο στο backend του OpenAI.</value>
   </data>
   <data name="Multiple API Keys Management" xml:space="preserve">
     <value>Διαχείριση πολλαπλών κλειδιών API</value>
@@ -708,6 +729,9 @@
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: Ενισχύστε το τοπικό Ollama με πιστοποίηση API επιπέδου επιχειρήσεων, έλεγχο αιτημάτων, περιορισμό ρυθμών και διαχείριση εικονικών μοντέλων—ο ασφαλής, ιδιωτικός σας πυλώνας τεχνητής νοημοσύνης.</value>
   </data>
+  <data name="Ollama images array is converted to OpenAI multimodal content parts (text + image_url with data URI)." xml:space="preserve">
+    <value>Ο πίνακας εικόνων του Ollama μετατρέπεται σε πολυτροπικά τμήματα περιεχομένου του OpenAI (κείμενο + image_url με data URI).</value>
+  </data>
   <data name="Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently." xml:space="preserve">
     <value>Παράμετρος συγκεκριμένη για το Ollama. Το OpenAI υποστηρίζει εγγενώς τα frequency_penalty και presence_penalty, τα οποία μεταδίδονται ανεξάρτητα.</value>
   </data>
@@ -759,6 +783,9 @@
   <data name="OpenAI Client" xml:space="preserve">
     <value>Πελάτης OpenAI</value>
   </data>
+  <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
+    <value>Το πολυτροπικό πίνακα περιεχομένου του OpenAI εξάγεται: τα δεδομένα image_url πηγαίνουν στον πίνακα εικόνων του Ollama, το κείμενο γίνεται περιεχόμενο.</value>
+  </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>Ενσωμάτωση OpenID Connect</value>
   </data>
@@ -788,6 +815,9 @@
   </data>
   <data name="Partially supported. Lacks advanced system prompt mapping, parameter overriding, and role translation." xml:space="preserve">
     <value>Μερικώς υποστηρίζεται. Λείπει η προηγμένη αντιστοίχιση συστημικού προτροπής, η υπέρβαση παραμέτρων και η μετάφραση ρόλου.</value>
+  </data>
+  <data name="Passthrough" xml:space="preserve">
+    <value>Διέλευση</value>
   </data>
   <data name="Perfect for Agent Deployment" xml:space="preserve">
     <value>Ιδανικό για την ανάπτυξη πράκτορα</value>

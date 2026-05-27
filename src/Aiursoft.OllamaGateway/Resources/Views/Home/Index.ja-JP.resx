@@ -99,6 +99,12 @@
   <data name="Anthropic Client" xml:space="preserve">
     <value>Anthropic クライアント</value>
   </data>
+  <data name="Anthropic image content blocks are not yet translated to Ollama format." xml:space="preserve">
+    <value>Anthropic画像コンテンツブロックはまだOllama形式に変換されていません。</value>
+  </data>
+  <data name="Anthropic image content blocks are not yet translated to OpenAI format." xml:space="preserve">
+    <value>Anthropic の画像コンテンツブロックはまだOpenAI形式に変換されていません。</value>
+  </data>
   <data name="API Authentication (Bearer)" xml:space="preserve">
     <value>API 認証 (ベアラー)</value>
   </data>
@@ -231,6 +237,9 @@
   <data name="Consistency Validation" xml:space="preserve">
     <value>整合性検証</value>
   </data>
+  <data name="Converted" xml:space="preserve">
+    <value>変換済み</value>
+  </data>
   <data name="Coordinate Comfortably" xml:space="preserve">
     <value>快適に連携する</value>
   </data>
@@ -281,6 +290,9 @@
   </data>
   <data name="DB override discarded" xml:space="preserve">
     <value>DB 値が無効化されました</value>
+  </data>
+  <data name="DB overrides via chat_template_kwargs. When DB is unset, client can pass chat_template_kwargs freely." xml:space="preserve">
+    <value>DB overrides via chat_template_kwargs. When DB is unset, client can pass chat_template_kwargs freely.</value>
   </data>
   <data name="Dedicated management for embedding models for RAG applications." xml:space="preserve">
     <value>RAG アプリケーション用の埋め込みモデル専用の管理</value>
@@ -513,6 +525,12 @@
   <data name="If DB has a value, it overrides the client value. If DB is unset, the client value passes through." xml:space="preserve">
     <value>DB に値が設定されている場合、クライアントの値を上書きします。DB が未設定の場合は、クライアントの値がそのまま引き継がれます。</value>
   </data>
+  <data name="Images / Multimodal" xml:space="preserve">
+    <value>画像 / マルチモーダル</value>
+  </data>
+  <data name="Images array passes through as-is to native Ollama." xml:space="preserve">
+    <value>画像配列はそのままネイティブOllamaに渡されます。</value>
+  </data>
   <data name="Included" xml:space="preserve">
     <value>含まれる</value>
   </data>
@@ -605,6 +623,9 @@
   </data>
   <data name="Multimodal" xml:space="preserve">
     <value>マルチモーダル</value>
+  </data>
+  <data name="Multimodal content array passes through as-is to the OpenAI backend." xml:space="preserve">
+    <value>マルチモーダルコンテンツ配列はそのままOpenAIバックエンドに渡されます。</value>
   </data>
   <data name="Multiple API Keys Management" xml:space="preserve">
     <value>複数APIキーの管理</value>
@@ -708,6 +729,9 @@
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: エンタープライズグレードのAPI認証、リクエスト監査、レート制限、仮想モデル管理により、ネイティブのOllamaを強化します—安全でプライベートなAIゲートウェイ。</value>
   </data>
+  <data name="Ollama images array is converted to OpenAI multimodal content parts (text + image_url with data URI)." xml:space="preserve">
+    <value>Ollama 画像配列は、OpenAI マルチモーダルコンテンツパーツ（テキスト + data URI 付き image_url）に変換されます。</value>
+  </data>
   <data name="Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently." xml:space="preserve">
     <value>Ollama固有のパラメータです。OpenAIは代わりにfrequency_penaltyとpresence_penaltyをネイティブにサポートしており、これらは独立して渡されます。</value>
   </data>
@@ -762,6 +786,9 @@
   <data name="OpenAI Client" xml:space="preserve">
     <value>OpenAI Client</value>
   </data>
+  <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
+    <value>OpenAIマルチモーダルコンテンツ配列が抽出されます：image_urlデータはOllama images配列に移動し、テキストはcontentになります。</value>
+  </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>OpenID Connect 連携</value>
   </data>
@@ -791,6 +818,9 @@
   </data>
   <data name="Partially supported. Lacks advanced system prompt mapping, parameter overriding, and role translation." xml:space="preserve">
     <value>部分的にサポートされています。高度なシステムプロンプトマッピング、パラメータのオーバーライド、ロール変換が不足しています。</value>
+  </data>
+  <data name="Passthrough" xml:space="preserve">
+    <value>パススルー</value>
   </data>
   <data name="Perfect for Agent Deployment" xml:space="preserve">
     <value>エージェント展開に最適</value>

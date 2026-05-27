@@ -99,6 +99,12 @@
   <data name="Anthropic Client" xml:space="preserve">
     <value>Anthropic 클라이언트</value>
   </data>
+  <data name="Anthropic image content blocks are not yet translated to Ollama format." xml:space="preserve">
+    <value>Anthropic 이미지 콘텐츠 블록이 아직 Ollama 형식으로 변환되지 않았습니다.</value>
+  </data>
+  <data name="Anthropic image content blocks are not yet translated to OpenAI format." xml:space="preserve">
+    <value>Anthropic 이미지 콘텐츠 블록은 아직 OpenAI 형식으로 변환되지 않았습니다.</value>
+  </data>
   <data name="API Authentication (Bearer)" xml:space="preserve">
     <value>API 인증 (Bearer)</value>
   </data>
@@ -231,6 +237,9 @@
   <data name="Consistency Validation" xml:space="preserve">
     <value>일관성 검증</value>
   </data>
+  <data name="Converted" xml:space="preserve">
+    <value>변환됨</value>
+  </data>
   <data name="Coordinate Comfortably" xml:space="preserve">
     <value>편안하게 조율하세요</value>
   </data>
@@ -281,6 +290,9 @@
   </data>
   <data name="DB override discarded" xml:space="preserve">
     <value>DB 오버라이드 폐기됨</value>
+  </data>
+  <data name="DB overrides via chat_template_kwargs. When DB is unset, client can pass chat_template_kwargs freely." xml:space="preserve">
+    <value>DB overrides via chat_template_kwargs. DB가 설정되지 않은 경우 클라이언트가 자유롭게 chat_template_kwargs를 전달할 수 있습니다.</value>
   </data>
   <data name="Dedicated management for embedding models for RAG applications." xml:space="preserve">
     <value>RAG 애플리케이션용 임베딩 모델 전용 관리</value>
@@ -513,6 +525,12 @@
   <data name="If DB has a value, it overrides the client value. If DB is unset, the client value passes through." xml:space="preserve">
     <value>DB 에 값이 있으면 클라이언트 값을 우선합니다. DB 에 값이 설정되지 않으면 클라이언트 값이 그대로 전달됩니다.</value>
   </data>
+  <data name="Images / Multimodal" xml:space="preserve">
+    <value>이미지 / 멀티모달</value>
+  </data>
+  <data name="Images array passes through as-is to native Ollama." xml:space="preserve">
+    <value>이미지 배열이 변경 없이 기본 Ollama로 전달됩니다.</value>
+  </data>
   <data name="Included" xml:space="preserve">
     <value>포함됨</value>
   </data>
@@ -605,6 +623,9 @@
   </data>
   <data name="Multimodal" xml:space="preserve">
     <value>다중 모달</value>
+  </data>
+  <data name="Multimodal content array passes through as-is to the OpenAI backend." xml:space="preserve">
+    <value>멀티모달 콘텐츠 배열이 OpenAI 백엔드로 그대로 전달됩니다.</value>
   </data>
   <data name="Multiple API Keys Management" xml:space="preserve">
     <value>여러 API 키 관리</value>
@@ -708,6 +729,9 @@
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: 엔터프라이즈급 API 인증, 요청 감사, 속도 제한 및 가상 모델 관리로 네이티브 Ollama를 강화하세요—안전하고 프라이빗한 AI 게이트웨이입니다.</value>
   </data>
+  <data name="Ollama images array is converted to OpenAI multimodal content parts (text + image_url with data URI)." xml:space="preserve">
+    <value>Ollama 이미지 배열이 OpenAI 멀티모달 콘텐츠 파트(텍스트 + data URI를 포함한 image_url)로 변환됩니다.</value>
+  </data>
   <data name="Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently." xml:space="preserve">
     <value>Ollama 전용 매개변수입니다. OpenAI는 frequency_penalty와 presence_penalty를 기본적으로 지원하며, 이는 별도로 전달됩니다.</value>
   </data>
@@ -762,6 +786,9 @@
   <data name="OpenAI Client" xml:space="preserve">
     <value>OpenAI 클라이언트</value>
   </data>
+  <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
+    <value>OpenAI 다중 모드 콘텐츠 배열이 추출됩니다: image_url 데이터는 Ollama 이미지 배열로 이동하고, 텍스트는 콘텐츠가 됩니다.</value>
+  </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>OpenID Connect 연동</value>
   </data>
@@ -791,6 +818,9 @@
   </data>
   <data name="Partially supported. Lacks advanced system prompt mapping, parameter overriding, and role translation." xml:space="preserve">
     <value>부분적으로 지원됩니다. 고급 시스템 프롬프트 매핑, 매개변수 재정의 및 역할 변환이 누락되었습니다.</value>
+  </data>
+  <data name="Passthrough" xml:space="preserve">
+    <value>패스스루</value>
   </data>
   <data name="Perfect for Agent Deployment" xml:space="preserve">
     <value>에이전트 배포에 완벽합니다</value>

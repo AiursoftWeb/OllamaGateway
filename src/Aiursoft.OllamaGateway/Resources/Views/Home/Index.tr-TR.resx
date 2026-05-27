@@ -99,6 +99,12 @@
   <data name="Anthropic Client" xml:space="preserve">
     <value>Anthropic Client</value>
   </data>
+  <data name="Anthropic image content blocks are not yet translated to Ollama format." xml:space="preserve">
+    <value>Anthropic görüntü içerik blokları henüz Ollama formatına çevrilmedi.</value>
+  </data>
+  <data name="Anthropic image content blocks are not yet translated to OpenAI format." xml:space="preserve">
+    <value>Anthropic görüntü içerik blokları henüz OpenAI formatına çevrilmedi.</value>
+  </data>
   <data name="API Authentication (Bearer)" xml:space="preserve">
     <value>API Kimlik Doğrulama (Bearer)</value>
   </data>
@@ -231,6 +237,9 @@
   <data name="Consistency Validation" xml:space="preserve">
     <value>Tutarlılık Doğrulama</value>
   </data>
+  <data name="Converted" xml:space="preserve">
+    <value>Dönüştürüldü</value>
+  </data>
   <data name="Coordinate Comfortably" xml:space="preserve">
     <value>Konforlu Koordinasyon</value>
   </data>
@@ -281,6 +290,9 @@
   </data>
   <data name="DB override discarded" xml:space="preserve">
     <value>Veri tabanı geçersiz kılma atlandı</value>
+  </data>
+  <data name="DB overrides via chat_template_kwargs. When DB is unset, client can pass chat_template_kwargs freely." xml:space="preserve">
+    <value>DB, chat_template_kwargs aracılığıyla geçersiz kılar. DB ayarlanmadığında, istemci chat_template_kwargs&apos;ı serbestçe iletebilir.</value>
   </data>
   <data name="Dedicated management for embedding models for RAG applications." xml:space="preserve">
     <value>RAG uygulamaları için gömme modellerine özel yönetim.</value>
@@ -513,6 +525,12 @@
   <data name="If DB has a value, it overrides the client value. If DB is unset, the client value passes through." xml:space="preserve">
     <value>Eğer veritabanında bir değer varsa, bu değer istemci değerini geçersiz kılar. Veritabanı ayarlanmamışsa, istemci değeri olduğu gibi geçer.</value>
   </data>
+  <data name="Images / Multimodal" xml:space="preserve">
+    <value>Görseller / Çoklu Ortam</value>
+  </data>
+  <data name="Images array passes through as-is to native Ollama." xml:space="preserve">
+    <value>Görüntü dizisi olduğu gibi yerel Ollama&apos;ya geçer.</value>
+  </data>
   <data name="Included" xml:space="preserve">
     <value>Dahil</value>
   </data>
@@ -605,6 +623,9 @@
   </data>
   <data name="Multimodal" xml:space="preserve">
     <value>Çok Modlu</value>
+  </data>
+  <data name="Multimodal content array passes through as-is to the OpenAI backend." xml:space="preserve">
+    <value>Çok modlu içerik dizisi, olduğu gibi OpenAI arka ucuna iletilir.</value>
   </data>
   <data name="Multiple API Keys Management" xml:space="preserve">
     <value>Çoklu API Anahtar Yönetimi</value>
@@ -708,6 +729,9 @@
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: Yerel Ollama&apos;nızı kurumsal düzeyde API kimlik doğrulama, istek denetimi, hız sınırlama ve sanal model yönetimi ile güçlendirin—güvenli, özel AI geçidiniz.</value>
   </data>
+  <data name="Ollama images array is converted to OpenAI multimodal content parts (text + image_url with data URI)." xml:space="preserve">
+    <value>Ollama görüntü dizisi, OpenAI çoklu ortam içerik parçalarına (metin + veri URI&apos;si ile image_url) dönüştürülür.</value>
+  </data>
   <data name="Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently." xml:space="preserve">
     <value>Ollama&apos;ya özgü parametre. OpenAI, bunun yerine frequency_penalty ve presence_penalty&apos;yi doğrudan destekler ve bunlar bağımsız olarak iletilir.</value>
   </data>
@@ -759,6 +783,9 @@
   <data name="OpenAI Client" xml:space="preserve">
     <value>OpenAI Client</value>
   </data>
+  <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
+    <value>OpenAI çok modlu içerik dizisi çıkarılır: image_url verileri Ollama görseller dizisine gider, metin içerik haline gelir.</value>
+  </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>OpenID Connect Entegrasyonu</value>
   </data>
@@ -788,6 +815,9 @@
   </data>
   <data name="Partially supported. Lacks advanced system prompt mapping, parameter overriding, and role translation." xml:space="preserve">
     <value>Kısmen destekleniyor. Gelişmiş sistem istemi eşleme, parametre geçersiz kılma ve rol çevirisi eksik.</value>
+  </data>
+  <data name="Passthrough" xml:space="preserve">
+    <value>Geçiş</value>
   </data>
   <data name="Perfect for Agent Deployment" xml:space="preserve">
     <value>Agent Dağıtımı İçin Mükemmel</value>

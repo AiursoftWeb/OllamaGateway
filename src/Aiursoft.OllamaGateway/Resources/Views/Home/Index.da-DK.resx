@@ -99,6 +99,12 @@
   <data name="Anthropic Client" xml:space="preserve">
     <value>Anthropic-klient</value>
   </data>
+  <data name="Anthropic image content blocks are not yet translated to Ollama format." xml:space="preserve">
+    <value>Anthropic billedindholdsblokke er endnu ikke oversat til Ollama-format.</value>
+  </data>
+  <data name="Anthropic image content blocks are not yet translated to OpenAI format." xml:space="preserve">
+    <value>Anthropic-billedindholdsblokke er endnu ikke oversat til OpenAI-format.</value>
+  </data>
   <data name="API Authentication (Bearer)" xml:space="preserve">
     <value>API-godkendelse (Bearer)</value>
   </data>
@@ -231,6 +237,9 @@
   <data name="Consistency Validation" xml:space="preserve">
     <value>Konsistensvalidering</value>
   </data>
+  <data name="Converted" xml:space="preserve">
+    <value>Konverteret</value>
+  </data>
   <data name="Coordinate Comfortably" xml:space="preserve">
     <value>Sammenlign bekvemt</value>
   </data>
@@ -281,6 +290,9 @@
   </data>
   <data name="DB override discarded" xml:space="preserve">
     <value>DB-overskrivning forkastet</value>
+  </data>
+  <data name="DB overrides via chat_template_kwargs. When DB is unset, client can pass chat_template_kwargs freely." xml:space="preserve">
+    <value>DB tilsidesætter via chat_template_kwargs. Når DB ikke er angivet, kan klienten frit sende chat_template_kwargs.</value>
   </data>
   <data name="Dedicated management for embedding models for RAG applications." xml:space="preserve">
     <value>Dedikeret styring af indlejringmodeller til RAG-applikationer.</value>
@@ -513,6 +525,12 @@
   <data name="If DB has a value, it overrides the client value. If DB is unset, the client value passes through." xml:space="preserve">
     <value>Hvis DB har en værdi, tilsidesætter den klientværdien. Hvis DB ikke er indstillet, går klientværdien videre.</value>
   </data>
+  <data name="Images / Multimodal" xml:space="preserve">
+    <value>Billeder / Multimodal</value>
+  </data>
+  <data name="Images array passes through as-is to native Ollama." xml:space="preserve">
+    <value>Billedarray overføres uændret til native Ollama.</value>
+  </data>
   <data name="Included" xml:space="preserve">
     <value>Inkluderet</value>
   </data>
@@ -605,6 +623,9 @@
   </data>
   <data name="Multimodal" xml:space="preserve">
     <value>Multimodal</value>
+  </data>
+  <data name="Multimodal content array passes through as-is to the OpenAI backend." xml:space="preserve">
+    <value>Multimodalt indholdsarray sendes uændret til OpenAI-backenden.</value>
   </data>
   <data name="Multiple API Keys Management" xml:space="preserve">
     <value>Flere API-nøgler-styring</value>
@@ -708,6 +729,9 @@
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: Forbedr din native Ollama med API-autentificering af erhvervskvalitet, granskning af anmodninger, hastighedsbegrænsning og virtuel modelstyring — dit sikre, private AI-gateway.</value>
   </data>
+  <data name="Ollama images array is converted to OpenAI multimodal content parts (text + image_url with data URI)." xml:space="preserve">
+    <value>Ollama billedarray konverteres til OpenAI multimodale indholdsdele (tekst + image_url med data URI).</value>
+  </data>
   <data name="Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently." xml:space="preserve">
     <value>Ollama-specifik parameter. OpenAI understøtter frequency_penalty og presence_penalty nativt i stedet, som videregives uafhængigt.</value>
   </data>
@@ -759,6 +783,9 @@
   <data name="OpenAI Client" xml:space="preserve">
     <value>OpenAI-klient</value>
   </data>
+  <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
+    <value>OpenAI multimodal content array udtrækkes: image_url-data går til Ollama images array, tekst bliver til content.</value>
+  </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>OpenID Connect-integration</value>
   </data>
@@ -788,6 +815,9 @@
   </data>
   <data name="Partially supported. Lacks advanced system prompt mapping, parameter overriding, and role translation." xml:space="preserve">
     <value>Delvist understøttet. Mangler avanceret systemprompt-mapping, parameter-overriding og rolle-translation.</value>
+  </data>
+  <data name="Passthrough" xml:space="preserve">
+    <value>Gennemgang</value>
   </data>
   <data name="Perfect for Agent Deployment" xml:space="preserve">
     <value>Perfekt til agentudfyldning</value>
