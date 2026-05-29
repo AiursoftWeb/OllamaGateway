@@ -9,7 +9,7 @@ public class BackendInvoker(
     IModelSelector modelSelector,
     IProviderConcurrencyLimiter concurrencyLimiter,
     MemoryUsageTracker memoryUsageTracker,
-    ILogger<BackendInvoker> logger) : IBackendInvoker, IScopedDependency
+    ILogger<BackendInvoker> logger) : IBackendInvoker
 {
     public async Task<BackendInvocationResult?> SendAsync(
         VirtualModel virtualModel,
