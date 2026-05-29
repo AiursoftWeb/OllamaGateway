@@ -56,7 +56,7 @@ public class Startup : IWebStartup
         services.AddHttpClient();
         services.AddSingleton<Services.IModelSelector, Services.ModelSelector>();
         services.AddSingleton<Services.IProviderConcurrencyLimiter, Services.ProviderConcurrencyLimiter>();
-        services.AddSingleton<Services.IBackendInvoker, Services.BackendInvoker>();
+        services.AddScoped<Services.IBackendInvoker, Services.BackendInvoker>();
         services.AddAssemblyDependencies(typeof(Startup).Assembly);
         services.AddSingleton<NavigationState<Startup>>();
         services.AddScoped<Models.RequestLogContext>();
