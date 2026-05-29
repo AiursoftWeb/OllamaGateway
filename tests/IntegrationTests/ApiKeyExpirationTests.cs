@@ -1,6 +1,9 @@
 using System.Net;
+using Aiursoft.OllamaGateway.Configuration;
 using Aiursoft.OllamaGateway.Entities;
+using Aiursoft.OllamaGateway.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
 
@@ -8,6 +11,18 @@ namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
 public class ApiKeyExpirationTests : TestBase
 {
     private static readonly HttpClient CleanHttp = new HttpClient();
+
+    [TestInitialize]
+    public override async Task CreateServer()
+    {
+        await base.CreateServer();
+
+        // Explicitly disable anonymous access — API key expiration tests must verify
+        // that expired keys are rejected regardless of the global anonymous setting.
+        using var scope = Server!.Services.CreateScope();
+        var settings = scope.ServiceProvider.GetRequiredService<GlobalSettingsService>();
+        await settings.UpdateSettingAsync(Configuration.SettingsMap.AllowAnonymousApiCall, "False");
+    }
 
     [TestMethod]
     public async Task TestExpiredApiKey()
@@ -86,7 +101,8 @@ public class ApiKeyExpirationTests : TestBase
         AssertRedirect(createResponse, "/ApiKeys", exact: false);
 
         // 2. Verify key exists and check expiration
-        var db = GetService<TemplateDbContext>();
+        using var dbScope = Server!.Services.CreateScope();
+        var db = dbScope.ServiceProvider.GetRequiredService<TemplateDbContext>();
         var key = await db.ApiKeys.OrderByDescending(k => k.Id).FirstAsync();
         Assert.IsTrue(key.ExpirationTime > DateTime.UtcNow);
         Assert.IsTrue(key.ExpirationTime < DateTime.UtcNow.AddHours(25));
