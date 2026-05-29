@@ -1,5 +1,4 @@
 using Aiursoft.OllamaGateway.Entities;
-using Aiursoft.Scanner.Abstractions;
 
 namespace Aiursoft.OllamaGateway.Services;
 

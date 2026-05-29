@@ -3,7 +3,6 @@ using Aiursoft.OllamaGateway.Configuration;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
 
@@ -21,7 +20,7 @@ public class ApiKeyExpirationTests : TestBase
         // that expired keys are rejected regardless of the global anonymous setting.
         using var scope = Server!.Services.CreateScope();
         var settings = scope.ServiceProvider.GetRequiredService<GlobalSettingsService>();
-        await settings.UpdateSettingAsync(Configuration.SettingsMap.AllowAnonymousApiCall, "False");
+        await settings.UpdateSettingAsync(SettingsMap.AllowAnonymousApiCall, "False");
     }
 
     [TestMethod]

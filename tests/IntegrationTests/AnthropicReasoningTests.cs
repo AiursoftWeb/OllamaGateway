@@ -103,7 +103,7 @@ public class AnthropicReasoningTests : TestBase
     public async Task BackendReasoning_ShouldAppearInAnthropicResponse()
     {
         // Arrange: Mock backend to return reasoning_content in OpenAI format
-        MockUpstreamState.Handler = (req, _) =>
+        MockUpstreamState.Handler = (_, _) =>
         {
             var backendResponse = new JsonObject
             {
@@ -166,19 +166,19 @@ public class AnthropicReasoningTests : TestBase
         var contentArray = responseJson["content"]?.AsArray();
         Assert.IsNotNull(contentArray, "Response should have a content array");
 
-        var thinkingBlock = contentArray!
+        var thinkingBlock = contentArray
             .FirstOrDefault(c => c?["type"]?.ToString() == "thinking");
         Assert.IsNotNull(thinkingBlock,
             "Response should include a thinking content block with the reasoning_content from the backend");
 
-        var thinkingText = thinkingBlock!["thinking"]?.ToString();
+        var thinkingText = thinkingBlock["thinking"]?.ToString();
         Assert.IsNotNull(thinkingText, "Thinking block should have thinking text");
         StringAssert.Contains(thinkingText, "step by step",
             "Thinking content should match the backend's reasoning_content");
 
         // Signature is required by the official Anthropic API for multi-turn continuity.
         // The gateway generates an opaque token since the backend does not provide one.
-        var signature = thinkingBlock!["signature"]?.ToString();
+        var signature = thinkingBlock["signature"]?.ToString();
         Assert.IsFalse(string.IsNullOrEmpty(signature),
             "Thinking block should have a non-empty signature for Anthropic API compatibility");
 
@@ -186,7 +186,7 @@ public class AnthropicReasoningTests : TestBase
         var textBlock = contentArray
             .FirstOrDefault(c => c?["type"]?.ToString() == "text");
         Assert.IsNotNull(textBlock, "Response should still include the text content block");
-        Assert.AreEqual("The answer is 42.", textBlock!["text"]?.ToString());
+        Assert.AreEqual("The answer is 42.", textBlock["text"]?.ToString());
     }
 
     /// <summary>
@@ -198,7 +198,7 @@ public class AnthropicReasoningTests : TestBase
     [TestMethod]
     public async Task ThinkingBlocks_ShouldBecomeReasoningContent_ForBackend()
     {
-        MockUpstreamState.Handler = (req, _) =>
+        MockUpstreamState.Handler = (_, _) =>
         {
             var backendResponse = new JsonObject
             {
@@ -273,14 +273,14 @@ public class AnthropicReasoningTests : TestBase
         var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody ?? "{}");
         Assert.IsNotNull(upstreamBody, "Upstream body should exist");
 
-        var messages = upstreamBody!["messages"]?.AsArray();
+        var messages = upstreamBody["messages"]?.AsArray();
         Assert.IsNotNull(messages, "Upstream request should have messages array");
 
         // Find the assistant message (index 1)
-        var assistantMsg = messages!.ElementAtOrDefault(1);
+        var assistantMsg = messages.ElementAtOrDefault(1);
         Assert.IsNotNull(assistantMsg, "Second message should be the assistant message");
 
-        var reasoningContent = assistantMsg!["reasoning_content"]?.ToString();
+        var reasoningContent = assistantMsg["reasoning_content"]?.ToString();
         Assert.IsNotNull(reasoningContent,
             "Upstream assistant message should have reasoning_content from the thinking block");
         Assert.AreEqual("I need to analyze this puzzle carefully.", reasoningContent);
@@ -296,7 +296,7 @@ public class AnthropicReasoningTests : TestBase
     public async Task MultiTurn_RoundTrip_PreservesReasoning()
     {
         // First call: backend returns reasoning_content
-        MockUpstreamState.Handler = (req, _) =>
+        MockUpstreamState.Handler = (_, _) =>
         {
             var backendResponse = new JsonObject
             {
@@ -357,7 +357,7 @@ public class AnthropicReasoningTests : TestBase
         Assert.IsNotNull(assistantContent, "First response should have content array");
 
         // Verify it includes a thinking block
-        var thinkingBlock = assistantContent!
+        var thinkingBlock = assistantContent
             .FirstOrDefault(c => c?["type"]?.ToString() == "thinking");
         Assert.IsNotNull(thinkingBlock,
             "First response should include thinking block from backend reasoning_content");
@@ -365,7 +365,7 @@ public class AnthropicReasoningTests : TestBase
         // Now make a second request using the thinking blocks from the first response
         // This simulates a multi-turn conversation where the client echoes the thinking
         MockUpstreamState.Reset();
-        MockUpstreamState.Handler = (req, _) =>
+        MockUpstreamState.Handler = (_, _) =>
         {
             var backendResponse = new JsonObject
             {
