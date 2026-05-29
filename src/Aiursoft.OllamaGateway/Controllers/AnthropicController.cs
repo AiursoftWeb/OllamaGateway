@@ -756,6 +756,7 @@ public class AnthropicController : ControllerBase
                             {
                                 var message = respNode["choices"]?[0]?["message"];
                                 respContent = message?["content"]?.ToString() ?? "";
+                                var respReasoningContent = message?["reasoning_content"]?.ToString() ?? "";
                                 var oaiFinish = respNode["choices"]?[0]?["finish_reason"]?.ToString();
                                 if (oaiFinish == "length") stopReason = "max_tokens";
                                 else if (oaiFinish == "tool_calls" || oaiFinish == "function_call") stopReason = "tool_use";
@@ -786,6 +787,21 @@ public class AnthropicController : ControllerBase
                                             Input = args
                                         });
                                     }
+                                }
+
+                                // Preserve reasoning_content as a thinking block in the Anthropic response.
+                                // The official Anthropic API requires thinking blocks with a non-empty signature
+                                // to be passed back in subsequent requests for multi-turn continuity.
+                                // Since the backend (Ollama/OpenAI) does not provide an Anthropic signature,
+                                // we generate an opaque token that the gateway will pass through unchanged.
+                                if (!string.IsNullOrEmpty(respReasoningContent))
+                                {
+                                    contentBlocks.Insert(0, new AnthropicContentBlock
+                                    {
+                                        Type = "thinking",
+                                        Thinking = respReasoningContent,
+                                        Signature = Convert.ToBase64String(Guid.NewGuid().ToByteArray())
+                                    });
                                 }
                             }
 

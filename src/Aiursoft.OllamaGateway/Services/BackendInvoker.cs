@@ -1,5 +1,4 @@
 using Aiursoft.OllamaGateway.Entities;
-using Aiursoft.Scanner.Abstractions;
 
 namespace Aiursoft.OllamaGateway.Services;
 
@@ -9,7 +8,7 @@ public class BackendInvoker(
     IModelSelector modelSelector,
     IProviderConcurrencyLimiter concurrencyLimiter,
     MemoryUsageTracker memoryUsageTracker,
-    ILogger<BackendInvoker> logger) : IBackendInvoker, ISingletonDependency
+    ILogger<BackendInvoker> logger) : IBackendInvoker
 {
     public async Task<BackendInvocationResult?> SendAsync(
         VirtualModel virtualModel,
