@@ -1,0 +1,145 @@
+@model Aiursoft.OllamaGateway.Models.AllApiKeysViewModels.IndexViewModel
+@using Aiursoft.WebTools
+
+<div class="container-fluid p-0">
+    <div class="row mb-3">
+        <div class="col-auto">
+            <h1 class="h3 mb-3">@Model.PageTitle</h1>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">@Localizer["Manage all API keys across the system"]</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover mb-0" id="allApiKeysTable">
+                <thead>
+                    <tr>
+                        <th>@Localizer["Name"]</th>
+                        <th>@Localizer["Creator"]</th>
+                        <th>@Localizer["Key"]</th>
+                        <th>@Localizer["Expires"]</th>
+                        <th>@Localizer["Created"]</th>
+                        <th>@Localizer["Last Used"]</th>
+                        <th>@Localizer["Total Calls"]</th>
+                        <th>@Localizer["Top Model"]</th>
+                        <th>@Localizer["Actions"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.ApiKeys.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="9" class="text-center text-muted py-4">
+                                @Localizer["No API keys found in the system."]
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var key in Model.ApiKeys)
+                        {
+                            <tr>
+                                <td>@key.Name</td>
+                                <td>
+                                    @if (key.User != null)
+                                    {
+                                        <a asp-controller="Users" asp-action="Details" asp-route-id="@key.User.Id">@key.User.DisplayName</a>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">@Localizer["Unknown"]</span>
+                                    }
+                                </td>
+                                <td>
+                                    <code>@key.Key[..4]...</code>
+                                </td>
+                                <td data-sort="@key.ExpirationTime.Ticks">
+                                    @if (key.ExpirationTime < DateTime.UtcNow)
+                                    {
+                                        <span class="badge bg-danger">@Localizer["Expired"]</span>
+                                    }
+                                    else
+                                    {
+                                        <label data-utc-time="@key.ExpirationTime.ToHtmlDateTime()" class="mb-0"></label>
+                                    }
+                                </td>
+                                <td data-sort="@key.CreatedAt.Ticks">
+                                    <label data-utc-time="@key.CreatedAt.ToHtmlDateTime()" class="mb-0"></label>
+                                </td>
+                                <td data-sort="@(Model.LastUsedTimes[key.Id]?.Ticks ?? 0)">
+                                    @if (Model.LastUsedTimes[key.Id].HasValue)
+                                    {
+                                        <label data-utc-time="@Model.LastUsedTimes[key.Id]!.Value.ToHtmlDateTime()" class="mb-0"></label>
+                                    }
+                                    else
+                                    {
+                                        @Localizer["Never"]
+                                    }
+                                </td>
+                                <td data-sort="@Model.TotalCalls[key.Id]">@Model.TotalCalls[key.Id]</td>
+                                <td style="min-width:180px;">
+                                    @if (Model.TopModels.TryGetValue(key.Id, out var topModel) && Model.TopModelPercentages.TryGetValue(key.Id, out var pct))
+                                    {
+                                        var pctRounded = (int)Math.Round(pct);
+                                        <div class="d-flex align-items-center">
+                                            <div class="progress flex-grow-1 me-2" style="height:6px;" title="@pctRounded%">
+                                                <div class="progress-bar bg-info" style="width:@pctRounded%;"></div>
+                                            </div>
+                                            <small class="text-muted text-nowrap" data-sort-value="@topModel">@topModel</small>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <small class="text-muted">-</small>
+                                    }
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a asp-action="Usage" asp-route-id="@key.Id" class="btn btn-sm btn-outline-primary">
+                                            <i class="align-middle me-1" data-lucide="terminal"></i>
+                                            @Localizer["Use"]
+                                        </a>
+                                        <a asp-action="Edit" asp-route-id="@key.Id" class="btn btn-sm btn-outline-secondary">
+                                            <i class="align-middle me-1" data-lucide="edit"></i>
+                                            @Localizer["Edit"]
+                                        </a>
+                                        <form asp-action="Delete" asp-route-id="@key.Id" method="post" onsubmit="return confirm('@Localizer["Are you sure you want to delete this API key?"]');">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                <i class="align-middle" data-lucide="trash-2"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@* ReSharper disable once Razor.SectionNotResolved *@
+@section scripts {
+    @if (Model.ApiKeys.Count > 0)
+    {
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                $('#allApiKeysTable').DataTable({
+                    "destroy": true,
+                    "responsive": true,
+                    "paging": true,
+                    "pageLength": 50,
+                    "searching": true,
+                    "info": true,
+                    "order": [[4, "desc"]],
+                    "columnDefs": [
+                        { "orderable": false, "targets": [8] }
+                    ]
+                });
+            });
+        </script>
+    }
+}

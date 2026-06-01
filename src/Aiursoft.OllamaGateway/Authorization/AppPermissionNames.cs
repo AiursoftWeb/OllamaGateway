@@ -29,6 +29,7 @@ public static class AppPermissionNames
 
     // Ollama Gateway Management
     public const string CanManageApiKeys = nameof(CanManageApiKeys);
+    public const string CanManageAnyApiKey = nameof(CanManageAnyApiKey);
     public const string CanManageModels = nameof(CanManageModels);
     public const string CanManageProviders = nameof(CanManageProviders);
     public const string CanChatWithVirtualModels = nameof(CanChatWithVirtualModels);
