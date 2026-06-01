@@ -116,6 +116,8 @@ public class ViewModelArgsInjector(
         _ = localizer["Manage Roles"];
         _ = localizer["Manage Users"];
         _ = localizer["Your API Keys"];
+    
+        _ = localizer["All API Keys"];
     }
 
     public void InjectSimple(
