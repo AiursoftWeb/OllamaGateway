@@ -182,6 +182,27 @@ claude --model @Model.DefaultChatModel</code></pre>
             </div>
             <p>@Localizer["To make this permanent, you can add the export commands to your shell profile (e.g., ~/.bashrc or ~/.zshrc)."]</p>
 
+            <h4 class="mt-4">@Localizer["9. GitHub Copilot CLI"]</h4>
+            <p>@Localizer["GitHub Copilot CLI supports using your own LLM provider (BYOK). You can configure it to use Ollama Gateway as an OpenAI-compatible endpoint. The model must support tool calling and streaming."]</p>
+            <p>@Localizer["Set the following environment variables before starting Copilot CLI:"]</p>
+            <div class="position-relative">
+                <pre class="bg-dark text-light p-3 rounded"><code>export COPILOT_PROVIDER_BASE_URL="@(Model.BaseUrl)/v1"
+export COPILOT_PROVIDER_API_KEY="@Model.ApiKey"
+export COPILOT_MODEL="@Model.DefaultChatModel"
+
+# Start Copilot CLI
+copilot</code></pre>
+            </div>
+            <p>
+                @Localizer["The provider type defaults to"] <code>openai</code>.
+                @Localizer["If you need to run in offline mode (preventing Copilot from contacting GitHub's servers), also set:"]
+                <code>export COPILOT_OFFLINE=true</code>.
+            </p>
+            <p>
+                @Localizer["To make this permanent, you can add the export commands to your shell profile (e.g., ~/.bashrc or ~/.zshrc)."]
+                <a href="https://docs.github.com/en/copilot/using-github-copilot/using-your-own-llm" target="_blank">@Localizer["Learn more about GitHub Copilot BYOK."]</a>
+            </p>
+
             <p class="text-muted mt-4">
                 <i data-lucide="info" class="me-1"></i>
                 @Localizer["Note: Replace '{0}' or '{1}' with other available models if needed.", Model.DefaultChatModel, Model.DefaultEmbeddingModel]
