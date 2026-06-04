@@ -54,6 +54,9 @@
   <data name="8. Claude Code &amp; CC Switch (Recommended)" xml:space="preserve">
     <value>8. Claude Code &amp; CC Switch (Direkomendasikan)</value>
   </data>
+  <data name="9. GitHub Copilot CLI" xml:space="preserve">
+    <value>9. GitHub Copilot CLI</value>
+  </data>
   <data name="After creating an API Key, you can edit your Opencode configuration file at" xml:space="preserve">
     <value>Setelah membuat API Key, Anda dapat mengedit file konfigurasi Opencode Anda di</value>
   </data>
@@ -90,8 +93,17 @@
   <data name="Fill in the following configuration:" xml:space="preserve">
     <value>Isi konfigurasi berikut:</value>
   </data>
+  <data name="GitHub Copilot CLI supports using your own LLM provider (BYOK). You can configure it to use Ollama Gateway as an OpenAI-compatible endpoint. The model must support tool calling and streaming." xml:space="preserve">
+    <value>GitHub Copilot CLI mendukung penggunaan penyedia LLM Anda sendiri (BYOK). Anda dapat mengonfigurasinya untuk menggunakan Ollama Gateway sebagai endpoint yang kompatibel dengan OpenAI. Model harus mendukung pemanggilan alat (tool calling) dan streaming.</value>
+  </data>
+  <data name="If you need to run in offline mode (preventing Copilot from contacting GitHub&apos;s servers), also set:" xml:space="preserve">
+    <value>Jika Anda perlu menjalankan dalam mode offline (mencegah Copilot menghubungi server GitHub), atur juga:</value>
+  </data>
   <data name="Learn more about CC Switch." xml:space="preserve">
     <value>Pelajari lebih lanjut tentang CC Switch.</value>
+  </data>
+  <data name="Learn more about GitHub Copilot BYOK." xml:space="preserve">
+    <value>Pelajari lebih lanjut tentang GitHub Copilot BYOK.</value>
   </data>
   <data name="Learn more about Opencode." xml:space="preserve">
     <value>Pelajari lebih lanjut tentang Opencode.</value>
@@ -113,6 +125,12 @@
   </data>
   <data name="Provider Name" xml:space="preserve">
     <value>Nama Penyedia</value>
+  </data>
+  <data name="Set the following environment variables before starting Copilot CLI:" xml:space="preserve">
+    <value>Setel variabel lingkungan berikut sebelum memulai Copilot CLI:</value>
+  </data>
+  <data name="The provider type defaults to" xml:space="preserve">
+    <value>Tipe penyedia secara default adalah</value>
   </data>
   <data name="Then you can enjoy using OllamaGateway in Opencode." xml:space="preserve">
     <value>Kemudian Anda dapat menikmati penggunaan OllamaGateway di Opencode.</value>

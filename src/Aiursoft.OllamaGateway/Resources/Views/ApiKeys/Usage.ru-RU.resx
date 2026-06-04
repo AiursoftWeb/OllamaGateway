@@ -54,6 +54,9 @@
   <data name="8. Claude Code &amp; CC Switch (Recommended)" xml:space="preserve">
     <value>8. Claude Code и CC Switch (Рекомендуется)</value>
   </data>
+  <data name="9. GitHub Copilot CLI" xml:space="preserve">
+    <value>9. GitHub Copilot CLI</value>
+  </data>
   <data name="After creating an API Key, you can edit your Opencode configuration file at" xml:space="preserve">
     <value>После создания ключа API вы можете отредактировать файл конфигурации Opencode по адресу</value>
   </data>
@@ -90,8 +93,17 @@
   <data name="Fill in the following configuration:" xml:space="preserve">
     <value>Заполните следующую конфигурацию:</value>
   </data>
+  <data name="GitHub Copilot CLI supports using your own LLM provider (BYOK). You can configure it to use Ollama Gateway as an OpenAI-compatible endpoint. The model must support tool calling and streaming." xml:space="preserve">
+    <value>GitHub Copilot CLI поддерживает использование собственного провайдера LLM (BYOK). Вы можете настроить его на использование Ollama Gateway в качестве конечной точки, совместимой с OpenAI. Модель должна поддерживать вызов инструментов (tool calling) и потоковую передачу (streaming).</value>
+  </data>
+  <data name="If you need to run in offline mode (preventing Copilot from contacting GitHub&apos;s servers), also set:" xml:space="preserve">
+    <value>Если вам необходимо работать в автономном режиме (чтобы Copilot не связывался с серверами GitHub), также установите:</value>
+  </data>
   <data name="Learn more about CC Switch." xml:space="preserve">
     <value>Подробнее о CC Switch.</value>
+  </data>
+  <data name="Learn more about GitHub Copilot BYOK." xml:space="preserve">
+    <value>Узнать больше о функции GitHub Copilot BYOK.</value>
   </data>
   <data name="Learn more about Opencode." xml:space="preserve">
     <value>Узнать больше об Opencode.</value>
@@ -113,6 +125,12 @@
   </data>
   <data name="Provider Name" xml:space="preserve">
     <value>Название провайдера</value>
+  </data>
+  <data name="Set the following environment variables before starting Copilot CLI:" xml:space="preserve">
+    <value>Перед запуском CLI Copilot установите следующие переменные среды:</value>
+  </data>
+  <data name="The provider type defaults to" xml:space="preserve">
+    <value>Тип провайдера по умолчанию —</value>
   </data>
   <data name="Then you can enjoy using OllamaGateway in Opencode." xml:space="preserve">
     <value>Теперь вы можете наслаждаться использованием OllamaGateway в Opencode.</value>

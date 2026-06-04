@@ -54,6 +54,9 @@
   <data name="8. Claude Code &amp; CC Switch (Recommended)" xml:space="preserve">
     <value>8. Claude Code &amp; CC Switch（推奨）</value>
   </data>
+  <data name="9. GitHub Copilot CLI" xml:space="preserve">
+    <value>9. GitHub Copilot CLI</value>
+  </data>
   <data name="After creating an API Key, you can edit your Opencode configuration file at" xml:space="preserve">
     <value>API キーを作成した後、Opencode の設定ファイルを次の場所で編集できます。</value>
   </data>
@@ -90,8 +93,17 @@
   <data name="Fill in the following configuration:" xml:space="preserve">
     <value>以下の設定を入力してください：</value>
   </data>
+  <data name="GitHub Copilot CLI supports using your own LLM provider (BYOK). You can configure it to use Ollama Gateway as an OpenAI-compatible endpoint. The model must support tool calling and streaming." xml:space="preserve">
+    <value>GitHub Copilot CLI は、独自の LLM プロバイダー（BYOK）の使用をサポートしています。OpenAI 互換のエンドポイントとして Ollama Gateway を使用するように構成することができます。モデルはツールの呼び出しとストリーミングをサポートしている必要があります。</value>
+  </data>
+  <data name="If you need to run in offline mode (preventing Copilot from contacting GitHub&apos;s servers), also set:" xml:space="preserve">
+    <value>オフラインモードで実行する場合（Copilot が GitHub サーバーに接続しないようにする場合）は、次の設定も行ってください：</value>
+  </data>
   <data name="Learn more about CC Switch." xml:space="preserve">
     <value>CC Switch について詳しくはこちら</value>
+  </data>
+  <data name="Learn more about GitHub Copilot BYOK." xml:space="preserve">
+    <value>GitHub Copilot BYOKについて詳しくはこちらをご覧ください。</value>
   </data>
   <data name="Learn more about Opencode." xml:space="preserve">
     <value>Opencodeの詳細はこちらをご覧ください。</value>
@@ -113,6 +125,12 @@
   </data>
   <data name="Provider Name" xml:space="preserve">
     <value>プロバイダー名</value>
+  </data>
+  <data name="Set the following environment variables before starting Copilot CLI:" xml:space="preserve">
+    <value>Copilot CLIを起動する前に、以下の環境変数を設定してください：</value>
+  </data>
+  <data name="The provider type defaults to" xml:space="preserve">
+    <value>プロバイダーのタイプはデフォルトで</value>
   </data>
   <data name="Then you can enjoy using OllamaGateway in Opencode." xml:space="preserve">
     <value>これで、OpencodeでOllamaGatewayを快適に利用できるようになります。</value>

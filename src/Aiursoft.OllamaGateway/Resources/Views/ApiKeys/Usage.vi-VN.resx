@@ -54,6 +54,9 @@
   <data name="8. Claude Code &amp; CC Switch (Recommended)" xml:space="preserve">
     <value>8. Claude Code &amp; CC Switch (Khuyến nghị)</value>
   </data>
+  <data name="9. GitHub Copilot CLI" xml:space="preserve">
+    <value>9. GitHub Copilot CLI</value>
+  </data>
   <data name="After creating an API Key, you can edit your Opencode configuration file at" xml:space="preserve">
     <value>Sau khi tạo API Key, bạn có thể chỉnh sửa tệp cấu hình Opencode của mình tại</value>
   </data>
@@ -90,8 +93,17 @@
   <data name="Fill in the following configuration:" xml:space="preserve">
     <value>Điền vào cấu hình sau:</value>
   </data>
+  <data name="GitHub Copilot CLI supports using your own LLM provider (BYOK). You can configure it to use Ollama Gateway as an OpenAI-compatible endpoint. The model must support tool calling and streaming." xml:space="preserve">
+    <value>GitHub Copilot CLI hỗ trợ sử dụng nhà cung cấp LLM của riêng bạn (BYOK). Bạn có thể cấu hình nó để sử dụng Ollama Gateway như một điểm cuối tương thích OpenAI. Mô hình phải hỗ trợ việc gọi công cụ (tool calling) và streaming.</value>
+  </data>
+  <data name="If you need to run in offline mode (preventing Copilot from contacting GitHub&apos;s servers), also set:" xml:space="preserve">
+    <value>Nếu bạn cần chạy ở chế độ ngoại tuyến (ngăn Copilot liên hệ với máy chủ của GitHub), hãy đặt thêm:</value>
+  </data>
   <data name="Learn more about CC Switch." xml:space="preserve">
     <value>Tìm hiểu thêm về CC Switch.</value>
+  </data>
+  <data name="Learn more about GitHub Copilot BYOK." xml:space="preserve">
+    <value>Tìm hiểu thêm về GitHub Copilot BYOK.</value>
   </data>
   <data name="Learn more about Opencode." xml:space="preserve">
     <value>Tìm hiểu thêm về Opencode.</value>
@@ -113,6 +125,12 @@
   </data>
   <data name="Provider Name" xml:space="preserve">
     <value>Tên nhà cung cấp</value>
+  </data>
+  <data name="Set the following environment variables before starting Copilot CLI:" xml:space="preserve">
+    <value>Đặt các biến môi trường sau trước khi khởi động Copilot CLI:</value>
+  </data>
+  <data name="The provider type defaults to" xml:space="preserve">
+    <value>Loại nhà cung cấp mặc định là</value>
   </data>
   <data name="Then you can enjoy using OllamaGateway in Opencode." xml:space="preserve">
     <value>Sau đó, bạn có thể tận hưởng việc sử dụng OllamaGateway trong Opencode.</value>
