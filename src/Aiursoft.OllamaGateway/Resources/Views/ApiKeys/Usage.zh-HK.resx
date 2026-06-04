@@ -54,6 +54,9 @@
   <data name="8. Claude Code &amp; CC Switch (Recommended)" xml:space="preserve">
     <value>8. Claude Code 及 CC Switch（推薦）</value>
   </data>
+  <data name="9. GitHub Copilot CLI" xml:space="preserve">
+    <value>9. GitHub Copilot CLI</value>
+  </data>
   <data name="After creating an API Key, you can edit your Opencode configuration file at" xml:space="preserve">
     <value>建立 API Key 後，您可以編輯位於的 Opencode 設定檔案</value>
   </data>
@@ -90,8 +93,17 @@
   <data name="Fill in the following configuration:" xml:space="preserve">
     <value>填寫以下配置：</value>
   </data>
+  <data name="GitHub Copilot CLI supports using your own LLM provider (BYOK). You can configure it to use Ollama Gateway as an OpenAI-compatible endpoint. The model must support tool calling and streaming." xml:space="preserve">
+    <value>GitHub Copilot CLI 支援使用自帶 LLM 供應商（BYOK）。您可以將其配置為使用 Ollama Gateway 作為相容 OpenAI 的端點。該模型必須支援工具呼叫和串流輸出。</value>
+  </data>
+  <data name="If you need to run in offline mode (preventing Copilot from contacting GitHub&apos;s servers), also set:" xml:space="preserve">
+    <value>如需使用離線模式（阻止 Copilot 連接到 GitHub 伺服器），請同時設置：</value>
+  </data>
   <data name="Learn more about CC Switch." xml:space="preserve">
     <value>瞭解更多關於 CC Switch。</value>
+  </data>
+  <data name="Learn more about GitHub Copilot BYOK." xml:space="preserve">
+    <value>了解更多有關 GitHub Copilot BYOK 嘅資料。</value>
   </data>
   <data name="Learn more about Opencode." xml:space="preserve">
     <value>了解更多關於 Opencode 的資訊。</value>
@@ -113,6 +125,12 @@
   </data>
   <data name="Provider Name" xml:space="preserve">
     <value>供應商名稱</value>
+  </data>
+  <data name="Set the following environment variables before starting Copilot CLI:" xml:space="preserve">
+    <value>喎啟動 Copilot CLI 之前，請設定以下環境變數：</value>
+  </data>
+  <data name="The provider type defaults to" xml:space="preserve">
+    <value>供應商類型預設為</value>
   </data>
   <data name="Then you can enjoy using OllamaGateway in Opencode." xml:space="preserve">
     <value>然後您就可以在 Opencode 中盡情使用 OllamaGateway。</value>

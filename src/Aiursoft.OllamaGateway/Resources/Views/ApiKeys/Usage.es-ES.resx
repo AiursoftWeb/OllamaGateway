@@ -54,6 +54,9 @@
   <data name="8. Claude Code &amp; CC Switch (Recommended)" xml:space="preserve">
     <value>8. Claude Code y CC Switch (Recomendado)</value>
   </data>
+  <data name="9. GitHub Copilot CLI" xml:space="preserve">
+    <value>9. GitHub Copilot CLI</value>
+  </data>
   <data name="After creating an API Key, you can edit your Opencode configuration file at" xml:space="preserve">
     <value>Después de crear una clave API, puede editar su archivo de configuración de Opencode en</value>
   </data>
@@ -90,8 +93,17 @@
   <data name="Fill in the following configuration:" xml:space="preserve">
     <value>Rellene la siguiente configuración:</value>
   </data>
+  <data name="GitHub Copilot CLI supports using your own LLM provider (BYOK). You can configure it to use Ollama Gateway as an OpenAI-compatible endpoint. The model must support tool calling and streaming." xml:space="preserve">
+    <value>GitHub Copilot CLI es compatible con el uso de tu propio proveedor de LLM (BYOK). Puedes configurarlo para utilizar Ollama Gateway como un punto de conexión compatible con OpenAI. El modelo debe ser compatible con las llamadas a herramientas y la transmisión.</value>
+  </data>
+  <data name="If you need to run in offline mode (preventing Copilot from contacting GitHub&apos;s servers), also set:" xml:space="preserve">
+    <value>Si necesita ejecutar en modo sin conexión (evitando que Copilot se comunique con los servidores de GitHub), configure también:</value>
+  </data>
   <data name="Learn more about CC Switch." xml:space="preserve">
     <value>Más información sobre CC Switch.</value>
+  </data>
+  <data name="Learn more about GitHub Copilot BYOK." xml:space="preserve">
+    <value>Obtén más información sobre GitHub Copilot BYOK.</value>
   </data>
   <data name="Learn more about Opencode." xml:space="preserve">
     <value>Más información sobre Opencode.</value>
@@ -113,6 +125,12 @@
   </data>
   <data name="Provider Name" xml:space="preserve">
     <value>Nombre del proveedor</value>
+  </data>
+  <data name="Set the following environment variables before starting Copilot CLI:" xml:space="preserve">
+    <value>Establezca las siguientes variables de entorno antes de iniciar Copilot CLI:</value>
+  </data>
+  <data name="The provider type defaults to" xml:space="preserve">
+    <value>El tipo de proveedor se establece en</value>
   </data>
   <data name="Then you can enjoy using OllamaGateway in Opencode." xml:space="preserve">
     <value>Entonces podrás disfrutar usando OllamaGateway en Opencode.</value>
