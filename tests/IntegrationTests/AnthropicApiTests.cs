@@ -1,4 +1,5 @@
 using System.Net;
+using System.Text;
 using System.Text.Json.Nodes;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Models.AnthropicViewModels;
@@ -189,6 +190,117 @@ public class AnthropicApiTests : TestBase
 
         var response = await Http.SendAsync(request);
         Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [TestMethod]
+    public async Task Anthropic_Messages_MidConversationSystemMessages_AreMergedIntoFirstOpenAiSystemMessage()
+    {
+        MockUpstreamState.Reset();
+        var token = await CreateApiKey();
+        var modelName = "mid-system-model";
+
+        using (var scope = Server!.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+            var provider = new OllamaProvider
+            {
+                Name = "Mid-System Provider",
+                BaseUrl = "http://localhost:11434",
+                ProviderType = ProviderType.OpenAI
+            };
+            db.OllamaProviders.Add(provider);
+            await db.SaveChangesAsync();
+
+            var vm = new VirtualModel
+            {
+                Name = modelName,
+                Type = ModelType.Chat,
+                MaxRetries = 1
+            };
+            db.VirtualModels.Add(vm);
+            await db.SaveChangesAsync();
+
+            db.VirtualModelBackends.Add(new VirtualModelBackend
+            {
+                VirtualModelId = vm.Id,
+                ProviderId = provider.Id,
+                UnderlyingModelName = "gpt-oss",
+                Enabled = true,
+                IsHealthy = true
+            });
+            await db.SaveChangesAsync();
+        }
+
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            var backendResponse = new JsonObject
+            {
+                ["id"] = "chatcmpl-mid-system",
+                ["object"] = "chat.completion",
+                ["created"] = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
+                ["model"] = "gpt-oss",
+                ["choices"] = new JsonArray
+                {
+                    new JsonObject
+                    {
+                        ["index"] = 0,
+                        ["message"] = new JsonObject
+                        {
+                            ["role"] = "assistant",
+                            ["content"] = "ok"
+                        },
+                        ["finish_reason"] = "stop"
+                    }
+                },
+                ["usage"] = new JsonObject
+                {
+                    ["prompt_tokens"] = 10,
+                    ["completion_tokens"] = 1,
+                    ["total_tokens"] = 11
+                }
+            };
+
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(backendResponse.ToJsonString(), Encoding.UTF8, "application/json")
+            });
+        };
+
+        var anthropicRequest = new
+        {
+            model = modelName,
+            max_tokens = 16,
+            system = "Top-level instruction.",
+            messages = new[]
+            {
+                new { role = "user", content = "Initial question." },
+                new { role = "system", content = "Mid-conversation instruction." },
+                new { role = "user", content = "Follow-up question." }
+            }
+        };
+
+        var request = new HttpRequestMessage(HttpMethod.Post, "/v1/messages")
+        {
+            Content = JsonContent.Create(anthropicRequest)
+        };
+        request.Headers.Add("x-api-key", token);
+
+        var response = await Http.SendAsync(request);
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+
+        Assert.IsNotNull(MockUpstreamState.LastRequestBody, "Upstream should have received a request body");
+        var forwarded = JsonNode.Parse(MockUpstreamState.LastRequestBody);
+        var messages = forwarded?["messages"]?.AsArray();
+        Assert.IsNotNull(messages, "Forwarded request must contain messages");
+
+        Assert.AreEqual(3, messages.Count);
+        Assert.AreEqual("system", messages[0]?["role"]?.ToString());
+        StringAssert.Contains(messages[0]?["content"]?.ToString(), "Top-level instruction.");
+        StringAssert.Contains(messages[0]?["content"]?.ToString(), "Mid-conversation instruction.");
+        Assert.AreEqual("user", messages[1]?["role"]?.ToString());
+        Assert.AreEqual("user", messages[2]?["role"]?.ToString());
+        Assert.IsFalse(messages.Skip(1).Any(m => m?["role"]?.ToString() == "system"),
+            "Anthropic mid-conversation system messages must not be forwarded as non-leading OpenAI system messages");
     }
 
     [TestMethod]

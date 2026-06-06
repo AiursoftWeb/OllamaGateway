@@ -217,14 +217,21 @@ public class AnthropicController : ControllerBase
 
             // Translate Anthropic -> OpenAI Format for the backend
             var openaiMessages = new JsonArray();
+            var systemMessages = new List<string>();
             if (request.System != null)
             {
                 var sysText = ExtractTextFromBlocks(request.System);
-                openaiMessages.Add(new JsonObject { ["role"] = "system", ["content"] = sysText });
+                systemMessages.Add(sysText);
             }
 
             foreach (var msg in request.Messages)
             {
+                if (string.Equals(msg.Role, "system", StringComparison.OrdinalIgnoreCase))
+                {
+                    systemMessages.Add(ExtractTextFromBlocks(msg.Content));
+                    continue;
+                }
+
                 var contentNode = msg.Content is Newtonsoft.Json.Linq.JToken jt
                     ? JsonNode.Parse(jt.ToString(Newtonsoft.Json.Formatting.None))
                     : JsonSerializer.SerializeToNode(msg.Content);
@@ -361,6 +368,11 @@ public class AnthropicController : ControllerBase
                     var text = ExtractTextFromBlocks(msg.Content);
                     openaiMessages.Add(new JsonObject { ["role"] = msg.Role, ["content"] = text });
                 }
+            }
+
+            if (systemMessages.Count > 0)
+            {
+                openaiMessages.Insert(0, new JsonObject { ["role"] = "system", ["content"] = string.Join("\n\n", systemMessages) });
             }
 
             var openaiBody = new JsonObject
