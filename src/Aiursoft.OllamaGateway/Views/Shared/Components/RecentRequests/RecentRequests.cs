@@ -15,6 +15,7 @@ public class RecentRequests(ActiveRequestTracker activeRequestTracker) : ViewCom
             BackendModelName = r.BackendModelName,
             ApiKeyName = r.ApiKeyName,
             Question = r.Question,
+            FullQuestion = r.FullQuestion,
             CompletedAt = r.CompletedAt,
             DurationMs = r.DurationMs,
             ErrorMessage = r.ErrorMessage

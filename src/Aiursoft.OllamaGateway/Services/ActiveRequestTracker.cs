@@ -11,6 +11,7 @@ public class ActiveModelRequestInfo
 {
     public int ActiveCount;
     public string LastQuestion = string.Empty;
+    public string LastFullQuestion = string.Empty;
     public string BackendModelName = string.Empty;
     public string ApiKeyName = string.Empty;
     public DateTime LastStartedAt = DateTime.UtcNow;
@@ -27,6 +28,7 @@ public class RecentRequestEntry
     public string BackendModelName { get; init; } = string.Empty;
     public string ApiKeyName { get; init; } = string.Empty;
     public string Question { get; init; } = string.Empty;
+    public string FullQuestion { get; init; } = string.Empty;
     public DateTime CompletedAt { get; init; }
     public double DurationMs { get; init; }
     public string ErrorMessage { get; init; } = string.Empty;
@@ -57,6 +59,7 @@ public class ActiveRequestTracker : ISingletonDependency
         {
             info.ActiveCount++;
             info.LastQuestion = question.Length > 30 ? question[..30] : question;
+            info.LastFullQuestion = question;
             info.BackendModelName = backendModelName;
             info.ApiKeyName = apiKeyName;
             info.LastStartedAt = DateTime.UtcNow;
@@ -95,6 +98,7 @@ public class ActiveRequestTracker : ISingletonDependency
             BackendModelName = backendModelName,
             ApiKeyName = info?.ApiKeyName ?? string.Empty,
             Question = info?.LastQuestion ?? string.Empty,
+            FullQuestion = info?.LastFullQuestion ?? string.Empty,
             CompletedAt = now,
             DurationMs = duration,
             ErrorMessage = errorMessage

@@ -18,7 +18,8 @@
                     <th>@Localizer["Virtual Model"]</th>
                     <th>@Localizer["Backend Model"]</th>
                     <th>@Localizer["API Key"]</th>
-                    <th>@Localizer["Last Question (first 30 chars)"]</th>
+                    <th>@Localizer["Last Question"]</th>
+                    <th class="text-center" style="width:40px;"></th>
                     <th>@Localizer["Duration"]</th>
                     <th>@Localizer["Error"]</th>
                     <th>@Localizer["Time"]</th>
@@ -79,6 +80,16 @@
                                     <em>@Localizer["(no content)"]</em>
                                 }
                             </td>
+                            <td class="text-center">
+                                @if (!string.IsNullOrWhiteSpace(req.FullQuestion) && req.FullQuestion.Length > 30)
+                                {
+                                    <button type="button" class="btn btn-sm btn-outline-secondary btn-view-message"
+                                            data-full-message="@req.FullQuestion"
+                                            title="@Localizer["View full message"]">
+                                        <i data-lucide="maximize-2" style="width:14px;height:14px;"></i>
+                                    </button>
+                                }
+                            </td>
                             <td data-sort="@req.DurationMs" class="text-muted small">@durationStr</td>
                             <td class="text-muted small">
                                 @if (!string.IsNullOrWhiteSpace(req.ErrorMessage))
@@ -98,7 +109,7 @@
                 else
                 {
                     <tr>
-                        <td colspan="8" class="text-center text-muted py-3">
+                        <td colspan="9" class="text-center text-muted py-3">
                             <i data-lucide="inbox" class="me-1" style="width:16px;height:16px;"></i>
                             @Localizer["No recent requests — data will appear once requests complete"]
                         </td>
@@ -109,26 +120,53 @@
     </div>
 </div>
 
+<!-- Full Message Modal -->
+<div class="modal fade" id="fullMessageModal" tabindex="-1" aria-labelledby="fullMessageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="fullMessageModalLabel">@Localizer["Full Request Message"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <pre class="bg-body-tertiary p-3 rounded mb-0" id="fullMessageContent" style="white-space: pre-wrap; word-break: break-word;"></pre>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Localizer["Close"]</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @if (Model.Items.Count > 0)
 {
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            $('#recentRequestsTable').DataTable({
+            var table = $('#recentRequestsTable').DataTable({
                 "destroy": true,
                 "responsive": true,
                 "paging": true,
                 "pageLength": 10,
                 "searching": false,
                 "info": false,
-                "order": [[7, "desc"]],
+                "order": [[8, "desc"]],
                 "columnDefs": [
-                    { "orderable": false, "targets": [2, 3, 4, 6] }
+                    { "orderable": false, "targets": [2, 3, 4, 5, 7] }
                 ],
                 "drawCallback": function () {
                     $('[data-bs-toggle="tooltip"]').tooltip({
                         trigger: 'hover'
                     });
+                    lucide.createIcons();
                 }
+            });
+
+            // Delegate click handler for view message buttons
+            $('#recentRequestsTable').on('click', '.btn-view-message', function() {
+                var fullMessage = this.getAttribute('data-full-message');
+                document.getElementById('fullMessageContent').textContent = fullMessage;
+                var modal = new bootstrap.Modal(document.getElementById('fullMessageModal'));
+                modal.show();
             });
         });
     </script>
