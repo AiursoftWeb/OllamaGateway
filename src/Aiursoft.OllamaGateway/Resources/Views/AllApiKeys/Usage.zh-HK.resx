@@ -90,6 +90,9 @@
   <data name="Model Name" xml:space="preserve">
     <value>模型名稱</value>
   </data>
+  <data name="Only available for Ollama underlying models. This feature is exclusive to Ollama. OpenAI and VLLM underlying models do not support this feature." xml:space="preserve">
+    <value>仅限Ollama底层模型。此功能为Ollama独有，OpenAI和VLLM的底层模型完全不支持此特性。</value>
+  </data>
   <data name="Option A: Using CC Switch (GUI)" xml:space="preserve">
     <value>選項 A：使用 CC Switch（GUI）</value>
   </data>
@@ -133,7 +136,4 @@
     <value>你可使用此 API 金鑰存取 Ollama Gateway API。Base URL 為：</value>
   </data>
 
-  <data name="Only available for Ollama underlying models. This feature is exclusive to Ollama. OpenAI and VLLM underlying models do not support this feature." xml:space="preserve">
-    <value>仅限Ollama底层模型。此功能为Ollama独有，OpenAI和VLLM的底层模型完全不支持此特性。</value>
-  </data>
 </root>

@@ -117,6 +117,9 @@
   <data name="Note: Replace &apos;{0}&apos; or &apos;{1}&apos; with other available models if needed." xml:space="preserve">
     <value>注意：如有需要，请将 &apos;{0}&apos; 或 &apos;{1}&apos; 替换为其他可用模型。</value>
   </data>
+  <data name="Only available for Ollama underlying models. This feature is exclusive to Ollama. OpenAI and VLLM underlying models do not support this feature." xml:space="preserve">
+    <value>仅限Ollama底层模型。此功能为Ollama独有，OpenAI和VLLM的底层模型完全不支持此特性。</value>
+  </data>
   <data name="Option A: Using CC Switch (GUI)" xml:space="preserve">
     <value>选项 A：使用 CC Switch（图形界面）</value>
   </data>
@@ -166,7 +169,4 @@
     <value>您可以使用此 API Key 访问 Ollama Gateway API。基础 URL 为：</value>
   </data>
 
-  <data name="Only available for Ollama underlying models. This feature is exclusive to Ollama. OpenAI and VLLM underlying models do not support this feature." xml:space="preserve">
-    <value>仅限Ollama底层模型。此功能为Ollama独有，OpenAI和VLLM的底层模型完全不支持此特性。</value>
-  </data>
 </root>
