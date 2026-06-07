@@ -117,6 +117,9 @@
   <data name="Note: Replace &apos;{0}&apos; or &apos;{1}&apos; with other available models if needed." xml:space="preserve">
     <value>หมายเหตุ: หากจำเป็น ให้แทนที่ &apos;{0}&apos; หรือ &apos;{1}&apos; ด้วยโมเดลอื่นที่มีอยู่</value>
   </data>
+  <data name="Only available for Ollama underlying models. This feature is exclusive to Ollama. OpenAI and VLLM underlying models do not support this feature." xml:space="preserve">
+    <value>Only available for Ollama underlying models. This feature is exclusive to Ollama. OpenAI and VLLM underlying models do not support this feature.</value>
+  </data>
   <data name="Option A: Using CC Switch (GUI)" xml:space="preserve">
     <value>ตัวเลือก A: ใช้ CC Switch (GUI)</value>
   </data>
@@ -166,7 +169,4 @@
     <value>คุณสามารถใช้คีย์ API นี้เพื่อเข้าถึง API ของ Ollama Gateway พื้นฐาน URL คือ:</value>
   </data>
 
-  <data name="Only available for Ollama underlying models. This feature is exclusive to Ollama. OpenAI and VLLM underlying models do not support this feature." xml:space="preserve">
-    <value>Only available for Ollama underlying models. This feature is exclusive to Ollama. OpenAI and VLLM underlying models do not support this feature.</value>
-  </data>
 </root>
