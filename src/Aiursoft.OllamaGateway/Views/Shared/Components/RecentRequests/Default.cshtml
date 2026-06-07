@@ -154,8 +154,10 @@
                     { "orderable": false, "targets": [2, 3, 4, 5, 7] }
                 ],
                 "drawCallback": function () {
-                    $('[data-bs-toggle="tooltip"]').tooltip({
-                        trigger: 'hover'
+                    [].slice.call(document.querySelectorAll('#recentRequestsTable [data-bs-toggle="tooltip"]')).map(function (tooltipTriggerEl) {
+                        var existing = bootstrap.Tooltip.getInstance(tooltipTriggerEl);
+                        if (existing) existing.dispose();
+                        return new bootstrap.Tooltip(tooltipTriggerEl, { trigger: 'hover' });
                     });
                     lucide.createIcons();
                 }
