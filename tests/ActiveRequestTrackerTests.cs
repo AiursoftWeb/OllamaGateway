@@ -155,4 +155,21 @@ public class ActiveRequestTrackerTests
         var summary = ActiveRequestTracker.GetErrorSummary("");
         Assert.AreEqual("", summary);
     }
+
+    [TestMethod]
+    public void TestEndRequestStoresAnswer()
+    {
+        var tracker = new ActiveRequestTracker();
+        var modelName = "test-model";
+        var answer = "Hello, this is a successful response from the model.";
+
+        tracker.StartRequest(modelName, "hello", 1, "llama2");
+        tracker.EndRequest(modelName, 1, "llama2", true, "", answer);
+
+        var recent = tracker.GetRecentRequests();
+        Assert.AreEqual(1, recent.Count);
+        Assert.AreEqual("Completed", recent[0].Status);
+        Assert.AreEqual(answer, recent[0].Answer);
+        Assert.AreEqual("", recent[0].ErrorMessage);
+    }
 }

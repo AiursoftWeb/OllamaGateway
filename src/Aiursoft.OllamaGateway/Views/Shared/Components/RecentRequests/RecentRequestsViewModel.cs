@@ -16,4 +16,5 @@ public class RecentRequestItem
     public DateTime CompletedAt { get; init; }
     public double DurationMs { get; init; }
     public string ErrorMessage { get; init; } = string.Empty;
+    public string Answer { get; init; } = string.Empty;
 }

@@ -27,6 +27,7 @@
                     <th class="text-center">@Localizer["Concurrent Requests"]</th>
                     <th>@Localizer["API Key"]</th>
                     <th>@Localizer["Last Question (first 30 chars)"]</th>
+                    <th class="text-center" style="width:40px;"></th>
                     <th class="text-end">@Localizer["Time"]</th>
                 </tr>
             </thead>
@@ -81,6 +82,16 @@
                                         <em>@Localizer["(no content)"]</em>
                                     }
                                 </td>
+                                <td class="text-center">
+                                    @if (!string.IsNullOrWhiteSpace(req.FullQuestion) && req.FullQuestion.Length > 30)
+                                    {
+                                        <button type="button" class="btn btn-sm btn-outline-secondary btn-view-live-message"
+                                                data-full-message="@req.FullQuestion"
+                                                title="@Localizer["View full message"]">
+                                            <i data-lucide="maximize-2" style="width:14px;height:14px;"></i>
+                                        </button>
+                                    }
+                                </td>
                                 <td class="text-end text-muted small">@Localizer["Running for"] @elapsedStr</td>
                             </tr>
                         }
@@ -124,6 +135,16 @@
                                         <em>@Localizer["(no content)"]</em>
                                     }
                                 </td>
+                                <td class="text-center">
+                                    @if (!string.IsNullOrWhiteSpace(req.FullQuestion) && req.FullQuestion.Length > 30)
+                                    {
+                                        <button type="button" class="btn btn-sm btn-outline-secondary btn-view-live-message"
+                                                data-full-message="@req.FullQuestion"
+                                                title="@Localizer["View full message"]">
+                                            <i data-lucide="maximize-2" style="width:14px;height:14px;"></i>
+                                        </button>
+                                    }
+                                </td>
                                 <td class="text-end small">
                                     @if (req.LastCompletedAt.HasValue)
                                     {
@@ -137,7 +158,7 @@
                 else
                 {
                     <tr>
-                        <td colspan="7" class="text-center text-muted py-3">
+                        <td colspan="8" class="text-center text-muted py-3">
                             <i data-lucide="moon" class="me-1" style="width:16px;height:16px;"></i>
                             @Localizer["No active inference requests — all models are idle"]
                         </td>
@@ -147,3 +168,37 @@
         </table>
     </div>
 </div>
+
+<!-- Full Message Modal for Live Inference -->
+<div class="modal fade" id="liveInferenceFullMessageModal" tabindex="-1" aria-labelledby="liveInferenceFullMessageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="liveInferenceFullMessageModalLabel">@Localizer["Full Request Message"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <pre class="bg-body-tertiary p-3 rounded mb-0" id="liveInferenceFullMessageContent" style="white-space: pre-wrap; word-break: break-word;"></pre>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Localizer["Close"]</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.Items.Count > 0)
+{
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll('.btn-view-live-message').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var fullMessage = this.getAttribute('data-full-message');
+                    document.getElementById('liveInferenceFullMessageContent').textContent = fullMessage;
+                    var modal = new bootstrap.Modal(document.getElementById('liveInferenceFullMessageModal'));
+                    modal.show();
+                });
+            });
+        });
+    </script>
+}

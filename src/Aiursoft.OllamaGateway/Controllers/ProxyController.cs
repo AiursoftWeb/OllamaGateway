@@ -615,7 +615,8 @@ public class ProxyController(
                     logContext.Log.ProviderId ?? 0,
                     logContext.Log.UnderlyingModelName,
                     logContext.Log.Success,
-                    logContext.Log.Success ? string.Empty : ActiveRequestTracker.GetErrorSummary(logContext.Log.Answer));
+                    logContext.Log.Success ? string.Empty : ActiveRequestTracker.GetErrorSummary(logContext.Log.Answer),
+                    logContext.Log.Answer);
         }
     }
 
@@ -881,7 +882,8 @@ public class ProxyController(
                     logContext.Log.ProviderId ?? 0,
                     logContext.Log.UnderlyingModelName,
                     logContext.Log.Success,
-                    logContext.Log.Success ? string.Empty : ActiveRequestTracker.GetErrorSummary(logContext.Log.Answer));
+                    logContext.Log.Success ? string.Empty : ActiveRequestTracker.GetErrorSummary(logContext.Log.Answer),
+                    logContext.Log.Answer);
         }
     }
 
@@ -1124,7 +1126,8 @@ public class ProxyController(
                     logContext.Log.ProviderId ?? 0,
                     logContext.Log.UnderlyingModelName,
                     logContext.Log.Success,
-                    logContext.Log.Success ? string.Empty : ActiveRequestTracker.GetErrorSummary(logContext.Log.Answer));
+                    logContext.Log.Success ? string.Empty : ActiveRequestTracker.GetErrorSummary(logContext.Log.Answer),
+                    logContext.Log.Answer);
         }
     }
 

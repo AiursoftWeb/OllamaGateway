@@ -21,7 +21,7 @@
                     <th>@Localizer["Last Question"]</th>
                     <th class="text-center" style="width:40px;"></th>
                     <th>@Localizer["Duration"]</th>
-                    <th>@Localizer["Error"]</th>
+                    <th>@Localizer["答案或异常"]</th>
                     <th>@Localizer["Time"]</th>
                 </tr>
             </thead>
@@ -94,8 +94,18 @@
                             <td class="text-muted small">
                                 @if (!string.IsNullOrWhiteSpace(req.ErrorMessage))
                                 {
-                                    var shortError = req.ErrorMessage.Length > 60 ? req.ErrorMessage[..60] + "..." : req.ErrorMessage;
-                                    <span class="text-danger font-monospace" data-bs-toggle="tooltip" data-bs-placement="top" title="@req.ErrorMessage">@shortError</span>
+                                    var shortText = req.ErrorMessage.Length > 20 ? req.ErrorMessage[..20] + "..." : req.ErrorMessage;
+                                    <span class="text-danger font-monospace" style="cursor:pointer;"
+                                          data-full-content="@req.ErrorMessage"
+                                          data-bs-toggle="tooltip" data-bs-placement="top" title="@req.ErrorMessage"
+                                          onclick="showAnswerModal(this)">@shortText</span>
+                                }
+                                else if (!string.IsNullOrWhiteSpace(req.Answer))
+                                {
+                                    var shortText = req.Answer.Length > 20 ? req.Answer[..20] + "..." : req.Answer;
+                                    <span class="text-dark font-monospace" style="cursor:pointer;"
+                                          data-full-content="@req.Answer"
+                                          onclick="showAnswerModal(this)">@shortText</span>
                                 }
                                 else
                                 {
@@ -138,9 +148,34 @@
     </div>
 </div>
 
+<!-- Full Answer/Error Modal -->
+<div class="modal fade" id="fullAnswerModal" tabindex="-1" aria-labelledby="fullAnswerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="fullAnswerModalLabel">@Localizer["答案或异常"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <pre class="bg-body-tertiary p-3 rounded mb-0" id="fullAnswerContent" style="white-space: pre-wrap; word-break: break-word;"></pre>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Localizer["Close"]</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @if (Model.Items.Count > 0)
 {
     <script>
+        function showAnswerModal(el) {
+            var fullContent = el.getAttribute('data-full-content');
+            document.getElementById('fullAnswerContent').textContent = fullContent;
+            var modal = new bootstrap.Modal(document.getElementById('fullAnswerModal'));
+            modal.show();
+        }
+
         document.addEventListener("DOMContentLoaded", function() {
             var table = $('#recentRequestsTable').DataTable({
                 "destroy": true,

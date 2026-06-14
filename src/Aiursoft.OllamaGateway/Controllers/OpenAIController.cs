@@ -719,7 +719,8 @@ public class OpenAIController : ControllerBase
                     _logContext.Log.ProviderId ?? 0,
                     _logContext.Log.UnderlyingModelName,
                     _logContext.Log.Success,
-                    _logContext.Log.Success ? string.Empty : ActiveRequestTracker.GetErrorSummary(_logContext.Log.Answer));
+                    _logContext.Log.Success ? string.Empty : ActiveRequestTracker.GetErrorSummary(_logContext.Log.Answer),
+                    _logContext.Log.Answer);
         }
     }
 
@@ -983,7 +984,8 @@ public class OpenAIController : ControllerBase
                     _logContext.Log.ProviderId ?? 0,
                     _logContext.Log.UnderlyingModelName,
                     _logContext.Log.Success,
-                    _logContext.Log.Success ? string.Empty : ActiveRequestTracker.GetErrorSummary(_logContext.Log.Answer));
+                    _logContext.Log.Success ? string.Empty : ActiveRequestTracker.GetErrorSummary(_logContext.Log.Answer),
+                    _logContext.Log.Answer);
         }
     }
 

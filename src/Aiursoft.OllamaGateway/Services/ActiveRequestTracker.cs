@@ -32,6 +32,7 @@ public class RecentRequestEntry
     public DateTime CompletedAt { get; init; }
     public double DurationMs { get; init; }
     public string ErrorMessage { get; init; } = string.Empty;
+    public string Answer { get; init; } = string.Empty;
 }
 
 /// <summary>
@@ -71,7 +72,7 @@ public class ActiveRequestTracker : ISingletonDependency
     /// <summary>
     /// Call in a finally block once the upstream response has been fully streamed.
     /// </summary>
-    public void EndRequest(string modelName, int providerId, string backendModelName, bool success, string errorMessage = "")
+    public void EndRequest(string modelName, int providerId, string backendModelName, bool success, string errorMessage = "", string answer = "")
     {
         if (_state.TryGetValue(modelName, out var info))
         {
@@ -101,7 +102,8 @@ public class ActiveRequestTracker : ISingletonDependency
             FullQuestion = info?.LastFullQuestion ?? string.Empty,
             CompletedAt = now,
             DurationMs = duration,
-            ErrorMessage = errorMessage
+            ErrorMessage = errorMessage,
+            Answer = answer
         };
 
         lock (_recentLock)
