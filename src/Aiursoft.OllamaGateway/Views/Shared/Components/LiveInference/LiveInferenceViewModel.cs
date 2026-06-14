@@ -12,6 +12,7 @@ public class LiveInferenceItem
     public bool IsActive { get; init; }
     public int ConcurrentCount { get; init; }
     public string LastQuestion { get; init; } = string.Empty;
+    public string FullQuestion { get; init; } = string.Empty;
     public string BackendModelName { get; init; } = string.Empty;
     public string ApiKeyName { get; init; } = string.Empty;
     public DateTime LastStartedAt { get; init; }

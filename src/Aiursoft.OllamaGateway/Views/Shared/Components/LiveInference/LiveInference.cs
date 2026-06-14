@@ -17,6 +17,7 @@ public class LiveInference(ActiveRequestTracker activeRequestTracker) : ViewComp
                 IsActive = kv.Value.ActiveCount > 0,
                 ConcurrentCount = kv.Value.ActiveCount,
                 LastQuestion = kv.Value.LastQuestion,
+                FullQuestion = kv.Value.LastFullQuestion,
                 BackendModelName = kv.Value.BackendModelName,
                 ApiKeyName = kv.Value.ApiKeyName,
                 LastStartedAt = kv.Value.LastStartedAt,
