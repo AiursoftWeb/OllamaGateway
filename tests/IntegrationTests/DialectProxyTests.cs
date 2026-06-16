@@ -1487,4 +1487,177 @@ public class DialectProxyTests : TestBase
         Assert.IsTrue(Math.Abs(penalty - 1.6) < 0.01,
             $"Expected repeat_penalty 1.6 from DB override in Anthropic→Ollama path, but was {penalty}");
     }
+
+    // ========================================================================
+    // F. Ollama Tool Call Preservation Tests — /api/chat → Ollama backend
+    // ========================================================================
+
+    /// <summary>
+    /// When a client sends tool definitions to the Ollama-compatible /api/chat endpoint,
+    /// the gateway MUST forward them to the Ollama backend so the model can make
+    /// structured tool calls (not XML-in-content fallback).
+    /// </summary>
+    [TestMethod]
+    public async Task Ollama_Tools_InRequest_ForwardedToBackend()
+    {
+        // Arrange: upstream returns a simple response
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            var body = """
+            {
+                "model": "llama3.2",
+                "created_at": "2024-01-01T00:00:00Z",
+                "message": { "role": "assistant", "content": "I'll read the file." },
+                "done": true,
+                "prompt_eval_count": 20,
+                "eval_count": 10
+            }
+            """;
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body, Encoding.UTF8, "application/json")
+            });
+        };
+
+        // Act: send a request with tools and tool_choice
+        var payload = $$"""
+        {
+            "model": "{{VirtualModelName}}",
+            "messages": [
+                { "role": "user", "content": "Read hooks/rtk-rewrite.sh" }
+            ],
+            "stream": false,
+            "tools": [
+                {
+                    "type": "function",
+                    "function": {
+                        "name": "file_read",
+                        "description": "Read a file",
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "path": { "type": "string" }
+                            },
+                            "required": ["path"]
+                        }
+                    }
+                }
+            ],
+            "tool_choice": "auto"
+        }
+        """;
+
+        var response = await Http.SendAsync(AuthedPost("/api/chat", payload));
+
+        // Assert: HTTP 200
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+
+        // Assert: upstream request preserved tools and tool_choice
+        Assert.IsNotNull(MockUpstreamState.LastRequestBody);
+        var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody);
+        Assert.IsNotNull(upstreamBody);
+
+        var tools = upstreamBody["tools"]?.AsArray();
+        Assert.IsNotNull(tools, "tools array MUST be forwarded to the Ollama backend");
+        Assert.IsTrue(tools.Count > 0, "tools array must contain at least one tool definition");
+        Assert.AreEqual("file_read", tools[0]?["function"]?["name"]?.ToString());
+
+        var toolChoice = upstreamBody["tool_choice"]?.ToString();
+        Assert.AreEqual("auto", toolChoice,
+            "tool_choice field MUST be forwarded to the Ollama backend");
+
+        // Verify the upstream URI is /api/chat (Ollama→Ollama path, not OpenAI)
+        Assert.IsTrue(MockUpstreamState.LastRequest?.RequestUri?.AbsolutePath.EndsWith("/api/chat") ?? false);
+    }
+
+    /// <summary>
+    /// When a client sends multi-turn conversation history containing tool_calls on
+    /// assistant messages and tool_call_id on tool messages, the gateway MUST preserve
+    /// them in the upstream request so the backend model sees the full tool context.
+    /// </summary>
+    [TestMethod]
+    public async Task Ollama_ToolCalls_InHistory_PreservedInUpstream()
+    {
+        // Arrange
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            var body = """
+            {
+                "model": "llama3.2",
+                "created_at": "2024-01-01T00:00:00Z",
+                "message": { "role": "assistant", "content": "The file contains the hook configuration." },
+                "done": true,
+                "prompt_eval_count": 30,
+                "eval_count": 15
+            }
+            """;
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body, Encoding.UTF8, "application/json")
+            });
+        };
+
+        // Act: send a multi-turn conversation with tool_calls and tool_call_id
+        var payload = $$"""
+        {
+            "model": "{{VirtualModelName}}",
+            "messages": [
+                { "role": "user", "content": "Read hooks/rtk-rewrite.sh" },
+                {
+                    "role": "assistant",
+                    "content": "",
+                    "tool_calls": [
+                        {
+                            "function": {
+                                "name": "file_read",
+                                "arguments": { "path": "hooks/rtk-rewrite.sh" }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "role": "tool",
+                    "content": "#!/bin/bash\\necho hello",
+                    "tool_call_id": "call_abc123"
+                },
+                { "role": "user", "content": "What does this script do?" }
+            ],
+            "stream": false
+        }
+        """;
+
+        var response = await Http.SendAsync(AuthedPost("/api/chat", payload));
+
+        // Assert: HTTP 200
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+
+        // Assert: upstream request preserved tool_calls in message history
+        Assert.IsNotNull(MockUpstreamState.LastRequestBody);
+        var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody);
+        Assert.IsNotNull(upstreamBody);
+
+        var messages = upstreamBody["messages"]?.AsArray();
+        Assert.IsNotNull(messages, "messages array must be present in upstream request");
+        Assert.AreEqual(4, messages.Count);
+
+        // Message index 1 (assistant): should have tool_calls
+        var assistantMsg = messages[1];
+        Assert.AreEqual("assistant", assistantMsg?["role"]?.ToString());
+        var toolCalls = assistantMsg?["tool_calls"]?.AsArray();
+        Assert.IsNotNull(toolCalls,
+            "tool_calls in assistant message MUST be preserved in upstream request");
+        Assert.AreEqual(1, toolCalls.Count);
+        Assert.AreEqual("file_read", toolCalls[0]?["function"]?["name"]?.ToString());
+        Assert.AreEqual("hooks/rtk-rewrite.sh",
+            toolCalls[0]?["function"]?["arguments"]?["path"]?.ToString());
+
+        // Message index 2 (tool): should have tool_call_id
+        var toolMsg = messages[2];
+        Assert.AreEqual("tool", toolMsg?["role"]?.ToString());
+        Assert.AreEqual("call_abc123", toolMsg?["tool_call_id"]?.ToString(),
+            "tool_call_id on tool message MUST be preserved in upstream request");
+
+        // Verify upstream URI
+        Assert.IsTrue(MockUpstreamState.LastRequest?.RequestUri?.AbsolutePath.EndsWith("/api/chat") ?? false);
+    }
 }
