@@ -8,6 +8,7 @@ using Aiursoft.OllamaGateway.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Aiursoft.OllamaGateway.Middlewares;
 using Aiursoft.OllamaGateway.Models;
 
 namespace Aiursoft.OllamaGateway.Controllers;
@@ -98,6 +99,7 @@ public class ProxyController(
     };
 
     [HttpPost("chat")]
+    [EnableBodyBuffering]
     public async Task Chat([FromBody] OllamaRequestModel input)
     {
         logContext.Log.UserId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "Anonymous";
@@ -451,15 +453,43 @@ public class ProxyController(
             // End OpenAI Backend Path — Ollama Backend Path continues below
             // ====================================================================
 
+            // Re-read raw request body to preserve unknown fields (tools, tool_calls,
+            // tool_choice, tool_call_id) that the typed OllamaRequestModel drops during
+            // [FromBody] deserialization. Without this, the Ollama backend never sees
+            // tool definitions and produces XML-like text instead of structured tool_calls.
+            Request.Body.Position = 0;
+            using var bodyReader = new StreamReader(Request.Body, Encoding.UTF8, leaveOpen: true);
+            var rawBody = await bodyReader.ReadToEndAsync(HttpContext.RequestAborted);
+
+            var forwardNode = JsonNode.Parse(rawBody) ?? new JsonObject();
+            forwardNode["model"] = backend.UnderlyingModelName;
+            if (virtualModel.Thinking.HasValue)
+                forwardNode["think"] = virtualModel.Thinking.Value;
+            forwardNode["keep_alive"] ??= backend.Provider.KeepAlive;
+
+            if (virtualModel.NumCtx.HasValue || virtualModel.Temperature.HasValue ||
+                virtualModel.TopP.HasValue || virtualModel.TopK.HasValue ||
+                virtualModel.NumPredict.HasValue || virtualModel.RepeatPenalty.HasValue)
+            {
+                var opts = forwardNode["options"]?.AsObject() ?? new JsonObject();
+                if (virtualModel.NumCtx.HasValue) opts["num_ctx"] = virtualModel.NumCtx.Value;
+                if (virtualModel.Temperature.HasValue) opts["temperature"] = virtualModel.Temperature.Value;
+                if (virtualModel.TopP.HasValue) opts["top_p"] = virtualModel.TopP.Value;
+                if (virtualModel.TopK.HasValue) opts["top_k"] = virtualModel.TopK.Value;
+                if (virtualModel.NumPredict.HasValue) opts["num_predict"] = virtualModel.NumPredict.Value;
+                if (virtualModel.RepeatPenalty.HasValue) opts["repeat_penalty"] = virtualModel.RepeatPenalty.Value;
+                forwardNode["options"] = opts;
+            }
+
             var result = await backendInvoker.SendAsync(
                 virtualModel,
                 backend,
                 b =>
                 {
-                    input.Model = b.UnderlyingModelName;
+                    forwardNode["model"] = b.UnderlyingModelName;
                     return new HttpRequestMessage(HttpMethod.Post, $"{b.Provider!.BaseUrl.TrimEnd('/')}/api/chat")
                     {
-                        Content = new StringContent(JsonSerializer.Serialize(input, OllamaJsonOptions), Encoding.UTF8, "application/json")
+                        Content = new StringContent(forwardNode.ToJsonString(), Encoding.UTF8, "application/json")
                     };
                 },
                 HttpContext.RequestAborted);
