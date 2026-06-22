@@ -338,6 +338,13 @@ public class AnthropicController : ControllerBase
                                 }
                             }
                         }
+                        // Fallback: use top-level reasoning_content on the message if thinking
+                        // blocks and <think> tags weren't found. Some clients (Open WebUI, etc.)
+                        // send reasoning_content this way for multi-turn continuity.
+                        if (string.IsNullOrEmpty(reasoningContent) && !string.IsNullOrEmpty(msg.ReasoningContent))
+                        {
+                            reasoningContent = msg.ReasoningContent;
+                        }
 
                         var assistantMsg = new JsonObject { ["role"] = "assistant", ["content"] = fullText };
                         if (!string.IsNullOrEmpty(reasoningContent))
@@ -529,19 +536,19 @@ public class AnthropicController : ControllerBase
                     };
                     await Response.WriteAsync($"event: message_start\ndata: {messageStart.ToJsonString()}\n\n", HttpContext.RequestAborted);
 
-                    var contentBlockStart = new JsonObject
-                    {
-                        ["type"] = "content_block_start",
-                        ["index"] = 0,
-                        ["content_block"] = new JsonObject { ["type"] = "text", ["text"] = "" }
-                    };
-                    await Response.WriteAsync($"event: content_block_start\ndata: {contentBlockStart.ToJsonString()}\n\n", HttpContext.RequestAborted);
-
                     var activeToolBlocks = new HashSet<int>();
                     var currentStopReason = "end_turn";
                     var localToolIndexCounter = 0;
-                    var hasStartedReasoning = false;
-                    var hasEndedReasoning = false;
+
+                    // Thinking block state – we defer content_block_start until the first
+                    // chunk so we can emit a thinking block when the backend sends
+                    // reasoning_content, and a text block otherwise.
+                    var thinkingBlockStarted = false;
+                    var thinkingBlockStopped = false;
+                    var thinkingSignature = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+                    const int thinkingBlockIndex = 0;
+                    var textBlockIndex = 0; // 0 when no thinking, shifts to 1 after thinking stops
+                    var textBlockStarted = false;
 
                     while ((sLine = await reader.ReadLineAsync(HttpContext.RequestAborted)) != null)
                     {
@@ -549,6 +556,8 @@ public class AnthropicController : ControllerBase
 
                         string deltaText = "";
                         JsonArray? toolCalls = null;
+
+                        string? thinkingDelta = null;
 
                         if (isOllamaDirect)
                         {
@@ -587,25 +596,46 @@ public class AnthropicController : ControllerBase
                                         var choice = chunk["choices"]?[0];
                                         deltaText = choice?["delta"]?["content"]?.ToString() ?? "";
 
-                                        // DeepSeek reasoning content mapping
+                                        // Translate OpenAI reasoning_content → Anthropic thinking block.
+                                        // We emit content_block_start/delta/stop for thinking instead of
+                                        // wrapping in <think> tags inside text_delta events.
                                         var reasoningNode = choice?["delta"]?["reasoning_content"];
                                         if (reasoningNode != null)
                                         {
-                                            var reasoningStr = reasoningNode.ToString();
-                                            if (!hasStartedReasoning)
+                                            if (!thinkingBlockStarted)
                                             {
-                                                deltaText = "<think>\n" + reasoningStr;
-                                                hasStartedReasoning = true;
+                                                thinkingBlockStarted = true;
+                                                textBlockIndex = 1; // text block shifts to index 1
+                                                var thinkingStart = new JsonObject
+                                                {
+                                                    ["type"] = "content_block_start",
+                                                    ["index"] = thinkingBlockIndex,
+                                                    ["content_block"] = new JsonObject
+                                                    {
+                                                        ["type"] = "thinking",
+                                                        ["thinking"] = "",
+                                                        ["signature"] = thinkingSignature
+                                                    }
+                                                };
+                                                await Response.WriteAsync(
+                                                    $"event: content_block_start\ndata: {thinkingStart.ToJsonString()}\n\n",
+                                                    HttpContext.RequestAborted);
                                             }
-                                            else
-                                            {
-                                                deltaText = reasoningStr;
-                                            }
+
+                                            thinkingDelta = reasoningNode.ToString();
                                         }
-                                        else if (hasStartedReasoning && !hasEndedReasoning)
+                                        else if (thinkingBlockStarted && !thinkingBlockStopped)
                                         {
-                                            deltaText = "\n</think>\n" + deltaText;
-                                            hasEndedReasoning = true;
+                                            // Reasoning stream ended — close the thinking block.
+                                            thinkingBlockStopped = true;
+                                            var thinkingStop = new JsonObject
+                                            {
+                                                ["type"] = "content_block_stop",
+                                                ["index"] = thinkingBlockIndex
+                                            };
+                                            await Response.WriteAsync(
+                                                $"event: content_block_stop\ndata: {thinkingStop.ToJsonString()}\n\n",
+                                                HttpContext.RequestAborted);
                                         }
 
                                         toolCalls = choice?["delta"]?["tool_calls"]?.AsArray();
@@ -627,13 +657,43 @@ public class AnthropicController : ControllerBase
                             }
                         }
 
+                        // Start a text block lazily when text first appears (but not yet started).
+                        if (!textBlockStarted && !string.IsNullOrEmpty(deltaText))
+                        {
+                            textBlockStarted = true;
+                            var textStart = new JsonObject
+                            {
+                                ["type"] = "content_block_start",
+                                ["index"] = textBlockIndex,
+                                ["content_block"] = new JsonObject { ["type"] = "text", ["text"] = "" }
+                            };
+                            await Response.WriteAsync(
+                                $"event: content_block_start\ndata: {textStart.ToJsonString()}\n\n",
+                                HttpContext.RequestAborted);
+                        }
+
+                        // Emit thinking delta (separate from text delta).
+                        if (!string.IsNullOrEmpty(thinkingDelta))
+                        {
+                            var thinkingDeltaObj = new JsonObject
+                            {
+                                ["type"] = "content_block_delta",
+                                ["index"] = thinkingBlockIndex,
+                                ["delta"] = new JsonObject { ["type"] = "thinking_delta", ["thinking"] = thinkingDelta }
+                            };
+                            await Response.WriteAsync(
+                                $"event: content_block_delta\ndata: {thinkingDeltaObj.ToJsonString()}\n\n",
+                                HttpContext.RequestAborted);
+                        }
+
+                        // Emit text delta.
                         if (!string.IsNullOrEmpty(deltaText))
                         {
                             answerBuilder.Append(deltaText);
                             var deltaObj = new JsonObject
                             {
                                 ["type"] = "content_block_delta",
-                                ["index"] = 0,
+                                ["index"] = textBlockIndex,
                                 ["delta"] = new JsonObject { ["type"] = "text_delta", ["text"] = deltaText }
                             };
                             await Response.WriteAsync($"event: content_block_delta\ndata: {deltaObj.ToJsonString()}\n\n", HttpContext.RequestAborted);
@@ -656,7 +716,7 @@ public class AnthropicController : ControllerBase
                                     var toolStart = new JsonObject
                                     {
                                         ["type"] = "content_block_start",
-                                        ["index"] = index + 1, // Text is at 0
+                                        ["index"] = textBlockIndex + 1 + index,
                                         ["content_block"] = new JsonObject
                                         {
                                             ["type"] = "tool_use",
@@ -673,7 +733,7 @@ public class AnthropicController : ControllerBase
                                     var toolDelta = new JsonObject
                                     {
                                         ["type"] = "content_block_delta",
-                                        ["index"] = index + 1,
+                                        ["index"] = textBlockIndex + 1 + index,
                                         ["delta"] = new JsonObject
                                         {
                                             ["type"] = "input_json_delta",
@@ -688,11 +748,22 @@ public class AnthropicController : ControllerBase
                     }
 
                     // Close all blocks
-                    var contentBlockStop = new JsonObject { ["type"] = "content_block_stop", ["index"] = 0 };
-                    await Response.WriteAsync($"event: content_block_stop\ndata: {contentBlockStop.ToJsonString()}\n\n", HttpContext.RequestAborted);
+                    // Thinking block (if started and not already stopped mid-stream)
+                    if (thinkingBlockStarted && !thinkingBlockStopped)
+                    {
+                        var thinkingStop = new JsonObject { ["type"] = "content_block_stop", ["index"] = thinkingBlockIndex };
+                        await Response.WriteAsync($"event: content_block_stop\ndata: {thinkingStop.ToJsonString()}\n\n", HttpContext.RequestAborted);
+                    }
+                    // Text block
+                    if (textBlockStarted)
+                    {
+                        var textStop = new JsonObject { ["type"] = "content_block_stop", ["index"] = textBlockIndex };
+                        await Response.WriteAsync($"event: content_block_stop\ndata: {textStop.ToJsonString()}\n\n", HttpContext.RequestAborted);
+                    }
+                    // Tool blocks
                     foreach (var idx in activeToolBlocks)
                     {
-                        var stop = new JsonObject { ["type"] = "content_block_stop", ["index"] = idx + 1 };
+                        var stop = new JsonObject { ["type"] = "content_block_stop", ["index"] = textBlockIndex + 1 + idx };
                         await Response.WriteAsync($"event: content_block_stop\ndata: {stop.ToJsonString()}\n\n", HttpContext.RequestAborted);
                     }
 
@@ -789,25 +860,28 @@ public class AnthropicController : ControllerBase
                                     }
                                 }
 
-                                // Preserve reasoning_content as a thinking block in the Anthropic response.
-                                // The official Anthropic API requires thinking blocks with a non-empty signature
-                                // to be passed back in subsequent requests for multi-turn continuity.
-                                // Since the backend (Ollama/OpenAI) does not provide an Anthropic signature,
-                                // we generate an opaque token that the gateway will pass through unchanged.
-                                if (!string.IsNullOrEmpty(respReasoningContent))
-                                {
-                                    contentBlocks.Insert(0, new AnthropicContentBlock
-                                    {
-                                        Type = "thinking",
-                                        Thinking = respReasoningContent,
-                                        Signature = Convert.ToBase64String(Guid.NewGuid().ToByteArray())
-                                    });
-                                }
-                            }
-
+                            // Insert content blocks in reverse order so the final array is:
+                            //   [thinking, text, ...tool_calls...]
+                            // First: text (if present).
                             if (!string.IsNullOrEmpty(respContent))
                             {
                                 contentBlocks.Insert(0, new AnthropicContentBlock { Type = "text", Text = respContent });
+                            }
+                            // Second: thinking (if present) — Insert(0) puts it before text.
+                            // The official Anthropic API requires thinking blocks with a non-empty
+                            // signature to be passed back in subsequent requests for multi-turn
+                            // continuity. Since the backend (OpenAI) does not provide an Anthropic
+                            // signature, we generate an opaque token that the gateway passes through
+                            // unchanged.
+                            if (!string.IsNullOrEmpty(respReasoningContent))
+                            {
+                                contentBlocks.Insert(0, new AnthropicContentBlock
+                                {
+                                    Type = "thinking",
+                                    Thinking = respReasoningContent,
+                                    Signature = Convert.ToBase64String(Guid.NewGuid().ToByteArray())
+                                });
+                            }
                             }
 
                             _logContext.Log.Answer = respContent;

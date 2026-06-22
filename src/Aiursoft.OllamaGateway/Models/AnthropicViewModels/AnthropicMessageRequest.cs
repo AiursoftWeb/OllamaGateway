@@ -47,6 +47,10 @@ public class AnthropicMessage
     [JsonPropertyName("content")]
     [Newtonsoft.Json.JsonProperty("content")]
     public object? Content { get; set; }
+
+    [JsonPropertyName("reasoning_content")]
+    [Newtonsoft.Json.JsonProperty("reasoning_content")]
+    public string? ReasoningContent { get; set; }
 }
 
 public class AnthropicTool
