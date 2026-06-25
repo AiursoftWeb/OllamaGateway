@@ -225,6 +225,27 @@ public class AnthropicController : ControllerBase
 
             foreach (var msg in request.Messages)
             {
+                // Anthropic Messages API does not support `role: "system"` in the
+                // messages array — system prompts belong in the top-level `system`
+                // parameter. When a client mistakenly sends a system-role message,
+                // merge its content into the (single) system message at position 0
+                // so the backend receives exactly one system message at the beginning.
+                if (msg.Role == "system")
+                {
+                    var sysText = ExtractTextFromBlocks(msg.Content);
+                    if (openaiMessages.Count > 0 && openaiMessages[0]?["role"]?.ToString() == "system")
+                    {
+                        openaiMessages[0]!["content"] =
+                            openaiMessages[0]!["content"]!.ToString() + "\n\n" + sysText;
+                    }
+                    else
+                    {
+                        openaiMessages.Insert(0,
+                            new JsonObject { ["role"] = "system", ["content"] = sysText });
+                    }
+                    continue;
+                }
+
                 var contentNode = msg.Content is Newtonsoft.Json.Linq.JToken jt
                     ? JsonNode.Parse(jt.ToString(Newtonsoft.Json.Formatting.None))
                     : JsonSerializer.SerializeToNode(msg.Content);
