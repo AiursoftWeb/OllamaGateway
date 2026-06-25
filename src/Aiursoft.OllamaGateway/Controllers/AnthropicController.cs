@@ -236,7 +236,7 @@ public class AnthropicController : ControllerBase
                     if (openaiMessages.Count > 0 && openaiMessages[0]?["role"]?.ToString() == "system")
                     {
                         openaiMessages[0]!["content"] =
-                            openaiMessages[0]!["content"]!.ToString() + "\n\n" + sysText;
+                            $"{openaiMessages[0]!["content"]}\n\n{sysText}";
                     }
                     else
                     {
