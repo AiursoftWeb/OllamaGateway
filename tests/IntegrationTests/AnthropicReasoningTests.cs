@@ -444,4 +444,318 @@ public class AnthropicReasoningTests : TestBase
         StringAssert.Contains(upstreamReasoning, "multiple angles",
             "Upstream reasoning_content should contain the original thinking text");
     }
+
+    // ========================================================================
+    // Ollama backend non-streaming regression tests
+    // ========================================================================
+
+    /// <summary>
+    /// Regression test: when the backend is Ollama and returns a non-streaming
+    /// response with text content, the Anthropic response MUST include a text
+    /// content block (not an empty content array).
+    /// </summary>
+    [TestMethod]
+    public async Task OllamaBackend_NonStreaming_TextContent_InResponse()
+    {
+        // Create a separate Ollama-backed model for this test
+        const string ollamaModelName = "ollama-text-model";
+        using (var scope = Server!.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+            var ollamaProvider = new OllamaProvider
+            {
+                Name = "OllamaTextProvider",
+                BaseUrl = "http://fake-ollama:11434",
+                ProviderType = ProviderType.Ollama
+            };
+            db.OllamaProviders.Add(ollamaProvider);
+            await db.SaveChangesAsync();
+
+            var vm = new VirtualModel
+            {
+                Name = ollamaModelName,
+                Type = ModelType.Chat,
+                MaxRetries = 1
+            };
+            db.VirtualModels.Add(vm);
+            await db.SaveChangesAsync();
+
+            db.VirtualModelBackends.Add(new VirtualModelBackend
+            {
+                VirtualModelId = vm.Id,
+                ProviderId = ollamaProvider.Id,
+                UnderlyingModelName = "llama3.2",
+                Enabled = true,
+                IsHealthy = true
+            });
+            await db.SaveChangesAsync();
+        }
+
+        // Arrange: mock Ollama backend returns a non-streaming response with text
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            var ollamaResponse = new JsonObject
+            {
+                ["model"] = "llama3.2",
+                ["created_at"] = DateTime.UtcNow.ToString("O"),
+                ["message"] = new JsonObject
+                {
+                    ["role"] = "assistant",
+                    ["content"] = "Hello from Ollama backend!"
+                },
+                ["done"] = true,
+                ["prompt_eval_count"] = 10,
+                ["eval_count"] = 5
+            };
+
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(ollamaResponse.ToJsonString(), Encoding.UTF8, "application/json")
+            });
+        };
+
+        // Act
+        var request = new HttpRequestMessage(HttpMethod.Post, "/v1/messages")
+        {
+            Content = JsonContent.Create(new
+            {
+                model = ollamaModelName,
+                max_tokens = 1024,
+                messages = new[]
+                {
+                    new { role = "user", content = "Say hello." }
+                }
+            })
+        };
+        request.Headers.Add("x-api-key", TestApiKey);
+
+        var response = await Http.SendAsync(request);
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        var responseBody = await response.Content.ReadAsStringAsync();
+
+        // Assert: response must include a text content block with the actual text
+        var responseJson = JsonNode.Parse(responseBody);
+        Assert.IsNotNull(responseJson, "Response should be valid JSON");
+
+        var contentArray = responseJson["content"]?.AsArray();
+        Assert.IsNotNull(contentArray, "Response must have a content array");
+        Assert.IsTrue(contentArray.Count > 0,
+            "Content array must not be empty for Ollama backend non-streaming responses");
+
+        var textBlock = contentArray
+            .FirstOrDefault(c => c?["type"]?.ToString() == "text");
+        Assert.IsNotNull(textBlock,
+            "Response must include a text content block");
+        Assert.AreEqual("Hello from Ollama backend!", textBlock["text"]?.ToString(),
+            "Text content must match the Ollama backend response");
+    }
+
+    /// <summary>
+    /// Regression test: when the backend is Ollama and returns a non-streaming
+    /// response with both text and tool_calls, both must appear in the Anthropic
+    /// response content array.
+    /// </summary>
+    [TestMethod]
+    public async Task OllamaBackend_NonStreaming_TextAndToolCalls_InResponse()
+    {
+        const string ollamaModelName = "ollama-tool-text-model";
+        using (var scope = Server!.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+            var ollamaProvider = new OllamaProvider
+            {
+                Name = "OllamaToolTextProvider",
+                BaseUrl = "http://fake-ollama2:11434",
+                ProviderType = ProviderType.Ollama
+            };
+            db.OllamaProviders.Add(ollamaProvider);
+            await db.SaveChangesAsync();
+
+            var vm = new VirtualModel
+            {
+                Name = ollamaModelName,
+                Type = ModelType.Chat,
+                MaxRetries = 1
+            };
+            db.VirtualModels.Add(vm);
+            await db.SaveChangesAsync();
+
+            db.VirtualModelBackends.Add(new VirtualModelBackend
+            {
+                VirtualModelId = vm.Id,
+                ProviderId = ollamaProvider.Id,
+                UnderlyingModelName = "qwen2.5",
+                Enabled = true,
+                IsHealthy = true
+            });
+            await db.SaveChangesAsync();
+        }
+
+        // Arrange: Ollama backend returns text + tool_calls
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            var ollamaResponse = new JsonObject
+            {
+                ["model"] = "qwen2.5",
+                ["created_at"] = DateTime.UtcNow.ToString("O"),
+                ["message"] = new JsonObject
+                {
+                    ["role"] = "assistant",
+                    ["content"] = "Let me check the weather.",
+                    ["tool_calls"] = new JsonArray
+                    {
+                        new JsonObject
+                        {
+                            ["function"] = new JsonObject
+                            {
+                                ["name"] = "get_weather",
+                                ["arguments"] = new JsonObject { ["city"] = "Beijing" }
+                            }
+                        }
+                    }
+                },
+                ["done"] = true,
+                ["prompt_eval_count"] = 15,
+                ["eval_count"] = 8
+            };
+
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(ollamaResponse.ToJsonString(), Encoding.UTF8, "application/json")
+            });
+        };
+
+        // Act
+        var request = new HttpRequestMessage(HttpMethod.Post, "/v1/messages")
+        {
+            Content = JsonContent.Create(new
+            {
+                model = ollamaModelName,
+                max_tokens = 1024,
+                messages = new[]
+                {
+                    new { role = "user", content = "What's the weather?" }
+                }
+            })
+        };
+        request.Headers.Add("x-api-key", TestApiKey);
+
+        var response = await Http.SendAsync(request);
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        var responseBody = await response.Content.ReadAsStringAsync();
+
+        // Assert: both text and tool_use blocks must be present
+        var responseJson = JsonNode.Parse(responseBody);
+        Assert.IsNotNull(responseJson);
+
+        var contentArray = responseJson["content"]?.AsArray();
+        Assert.IsNotNull(contentArray);
+        Assert.IsTrue(contentArray.Count >= 2,
+            "Response must have at least text + tool_use content blocks");
+
+        var textBlock = contentArray
+            .FirstOrDefault(c => c?["type"]?.ToString() == "text");
+        Assert.IsNotNull(textBlock, "Text block must be present");
+        Assert.AreEqual("Let me check the weather.", textBlock["text"]?.ToString());
+
+        var toolBlock = contentArray
+            .FirstOrDefault(c => c?["type"]?.ToString() == "tool_use");
+        Assert.IsNotNull(toolBlock, "Tool use block must be present");
+        Assert.AreEqual("get_weather", toolBlock["name"]?.ToString());
+
+        Assert.AreEqual("tool_use", responseJson["stop_reason"]?.ToString(),
+            "Stop reason must be tool_use when tool calls are present");
+    }
+
+    /// <summary>
+    /// When a client mistakenly sends a message with role:"system" inside the
+    /// messages array, the gateway should merge its content into the top-level
+    /// system prompt instead of forwarding it as a separate system message.
+    /// </summary>
+    [TestMethod]
+    public async Task SystemRoleInMessages_MergedIntoSystemPrompt()
+    {
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            var backendResponse = new JsonObject
+            {
+                ["id"] = "chatcmpl-sys-merge",
+                ["object"] = "chat.completion",
+                ["created"] = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
+                ["model"] = PhysicalModelName,
+                ["choices"] = new JsonArray
+                {
+                    new JsonObject
+                    {
+                        ["index"] = 0,
+                        ["message"] = new JsonObject
+                        {
+                            ["role"] = "assistant",
+                            ["content"] = "System merged OK."
+                        },
+                        ["finish_reason"] = "stop"
+                    }
+                },
+                ["usage"] = new JsonObject
+                {
+                    ["prompt_tokens"] = 20,
+                    ["completion_tokens"] = 10,
+                    ["total_tokens"] = 30
+                }
+            };
+
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(backendResponse.ToJsonString(), Encoding.UTF8, "application/json")
+            });
+        };
+
+        // Act: send a request with BOTH top-level system AND a system-role message
+        var request = new HttpRequestMessage(HttpMethod.Post, "/v1/messages")
+        {
+            Content = JsonContent.Create(new
+            {
+                model = VirtualModelName,
+                max_tokens = 1024,
+                system = "Top-level system prompt.",
+                messages = new object[]
+                {
+                    new { role = "system", content = "System-in-messages prompt." },
+                    new { role = "user", content = "Hello." }
+                }
+            })
+        };
+        request.Headers.Add("x-api-key", TestApiKey);
+
+        var response = await Http.SendAsync(request);
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+
+        // Assert: upstream must have exactly ONE system message with both contents merged
+        var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody ?? "{}");
+        Assert.IsNotNull(upstreamBody, "Upstream body should exist");
+
+        var messages = upstreamBody["messages"]?.AsArray();
+        Assert.IsNotNull(messages, "Upstream request must have messages array");
+
+        // Count system messages — should be exactly 1 at position 0
+        var systemMessages = messages
+            .Where(m => m?["role"]?.ToString() == "system")
+            .ToList();
+        Assert.AreEqual(1, systemMessages.Count,
+            "There must be exactly one system message in the upstream request");
+
+        var systemContent = systemMessages[0]?["content"]?.ToString();
+        Assert.IsNotNull(systemContent);
+        StringAssert.Contains(systemContent, "Top-level system prompt.",
+            "System message must contain the top-level system content");
+        StringAssert.Contains(systemContent, "System-in-messages prompt.",
+            "System message must contain the merged content from the system-role message");
+
+        // The user message should still be present
+        var userMessages = messages
+            .Where(m => m?["role"]?.ToString() == "user")
+            .ToList();
+        Assert.AreEqual(1, userMessages.Count,
+            "The user message must still be present after system merge");
+    }
 }
