@@ -813,6 +813,7 @@ public class AnthropicController : ControllerBase
                         if (respNode != null)
                         {
                             string respContent;
+                            string respReasoningContent = "";
                             string stopReason = "end_turn";
                             var contentBlocks = new List<AnthropicContentBlock>();
                             long pTok, cTok;
@@ -848,7 +849,7 @@ public class AnthropicController : ControllerBase
                             {
                                 var message = respNode["choices"]?[0]?["message"];
                                 respContent = message?["content"]?.ToString() ?? "";
-                                var respReasoningContent = message?["reasoning_content"]?.ToString() ?? "";
+                                respReasoningContent = message?["reasoning_content"]?.ToString() ?? "";
                                 var oaiFinish = respNode["choices"]?[0]?["finish_reason"]?.ToString();
                                 if (oaiFinish == "length") stopReason = "max_tokens";
                                 else if (oaiFinish == "tool_calls" || oaiFinish == "function_call") stopReason = "tool_use";
@@ -880,21 +881,20 @@ public class AnthropicController : ControllerBase
                                         });
                                     }
                                 }
+                            }
 
-                            // Insert content blocks in reverse order so the final array is:
-                            //   [thinking, text, ...tool_calls...]
-                            // First: text (if present).
+                            // Shared: insert text block (applies to both Ollama and OpenAI backends).
+                            // Insert(0) puts it before any tool_calls already added via .Add().
                             if (!string.IsNullOrEmpty(respContent))
                             {
                                 contentBlocks.Insert(0, new AnthropicContentBlock { Type = "text", Text = respContent });
                             }
-                            // Second: thinking (if present) — Insert(0) puts it before text.
+                            // OpenAI only: insert thinking block before text.
                             // The official Anthropic API requires thinking blocks with a non-empty
                             // signature to be passed back in subsequent requests for multi-turn
-                            // continuity. Since the backend (OpenAI) does not provide an Anthropic
-                            // signature, we generate an opaque token that the gateway passes through
-                            // unchanged.
-                            if (!string.IsNullOrEmpty(respReasoningContent))
+                            // continuity. Since the backend does not provide an Anthropic signature,
+                            // we generate an opaque token that the gateway passes through unchanged.
+                            if (!isOllamaDirect && !string.IsNullOrEmpty(respReasoningContent))
                             {
                                 contentBlocks.Insert(0, new AnthropicContentBlock
                                 {
@@ -902,7 +902,6 @@ public class AnthropicController : ControllerBase
                                     Thinking = respReasoningContent,
                                     Signature = Convert.ToBase64String(Guid.NewGuid().ToByteArray())
                                 });
-                            }
                             }
 
                             _logContext.Log.Answer = respContent;
