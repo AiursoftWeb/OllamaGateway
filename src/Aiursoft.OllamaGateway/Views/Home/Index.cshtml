@@ -17,7 +17,7 @@
                     @Localizer["Supercharge Your Native"] <span class='text-primary'>@Localizer["Ollama."]</span>
                 </h1>
                 <p class="text-lg text-white-50">@Localizer["Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway."]</p>
-                <div class="my-4">
+                <div class="my-4 d-flex gap-2 flex-wrap">
                     <a asp-controller="Dashboard" asp-action="Index" class="btn btn-primary btn-lg btn-pill">
                         <i class="align-middle" data-lucide="grid"></i> @Localizer["Go to Dashboard"]
                     </a>
@@ -626,18 +626,20 @@
                 <h2 class="h1 mb-3">
                     @Localizer["Ready to secure your AI gateway?"]
                 </h2>
-                <a asp-controller="Dashboard" asp-action="Index" class="btn btn-primary btn-pill btn-lg mt-n1">
-                    <i class="fa-solid fa-rocket"></i>
-                    <span class="ms-1">@Localizer["Go to Dashboard"]</span>
-                </a>
-                <a asp-controller="Home" asp-action="SelfHost" class="btn btn-outline-primary btn-pill btn-lg mt-n1">
-                    <i class="fa-solid fa-server"></i>
-                    <span class="ms-1">@Localizer["Deployment Guide"]</span>
-                </a>
-                <a href="https://github.com/aiursoftweb/OllamaGateway" class="btn btn-dark btn-pill btn-lg mt-n1" target="_blank">
-                    <i class="fa-brands fa-github"></i>
-                    <span class="ms-1">@Localizer["View on GitHub"]</span>
-                </a>
+                <div class="d-flex gap-2 flex-wrap justify-content-center">
+                    <a asp-controller="Dashboard" asp-action="Index" class="btn btn-primary btn-pill btn-lg">
+                        <i class="fa-solid fa-rocket"></i>
+                        <span class="ms-1">@Localizer["Go to Dashboard"]</span>
+                    </a>
+                    <a asp-controller="Home" asp-action="SelfHost" class="btn btn-outline-primary btn-pill btn-lg">
+                        <i class="fa-solid fa-server"></i>
+                        <span class="ms-1">@Localizer["Deployment Guide"]</span>
+                    </a>
+                    <a href="https://github.com/aiursoftweb/OllamaGateway" class="btn btn-dark btn-pill btn-lg" target="_blank">
+                        <i class="fa-brands fa-github"></i>
+                        <span class="ms-1">@Localizer["View on GitHub"]</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
