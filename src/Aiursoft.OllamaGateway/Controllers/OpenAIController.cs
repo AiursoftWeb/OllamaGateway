@@ -250,8 +250,36 @@ public class OpenAIController : ControllerBase
                                     {
                                         var deltaContent = chunk["choices"]?[0]?["delta"]?["content"]?.ToString();
                                         var deltaReasoning = chunk["choices"]?[0]?["delta"]?["reasoning_content"]?.ToString();
+                                        var deltaToolCalls = chunk["choices"]?[0]?["delta"]?["tool_calls"];
+                                        var finishReason = chunk["choices"]?[0]?["finish_reason"]?.ToString();
+
                                         if (!string.IsNullOrEmpty(deltaContent)) answerBuilderDirect.Append(deltaContent);
                                         if (!string.IsNullOrEmpty(deltaReasoning)) thinkBuilderDirect.Append(deltaReasoning);
+
+                                        // ── Debug: log upstream SSE chunks related to tool calls ──
+                                        if (deltaToolCalls != null)
+                                        {
+                                            // Tool call correctly placed in delta.tool_calls
+                                            _logger.LogInformation("[SSE DEBUG] Upstream tool_call chunk (model={Model}): {RawLine}",
+                                                virtualModel.Name, sLine);
+                                        }
+                                        if (!string.IsNullOrEmpty(deltaContent) &&
+                                            (deltaContent.Contains("<tool_call") ||
+                                             deltaContent.Contains("minimax:tool_call") ||
+                                             deltaContent.Contains("<function_call") ||
+                                             deltaContent.Contains("</tool_call>")))
+                                        {
+                                            // POSSIBLE PARSER FAILURE: tool call markers leaked into content!
+                                            _logger.LogWarning("[SSE DEBUG] ⚠️ POSSIBLE PARSER FAILURE: tool call markers in content (model={Model}): {RawLine}",
+                                                virtualModel.Name, sLine);
+                                        }
+                                        if (finishReason == "tool_calls")
+                                        {
+                                            _logger.LogInformation("[SSE DEBUG] Upstream finish_reason=tool_calls (model={Model}): {RawLine}",
+                                                virtualModel.Name, sLine);
+                                        }
+                                        // ── End debug logging ──
+
                                         if (chunk["usage"] != null)
                                         {
                                             var pTok = chunk["usage"]!["prompt_tokens"]?.GetValue<long>() ?? 0;
