@@ -607,11 +607,14 @@ public class AnthropicController : ControllerBase
                         }
                         else
                         {
-                            if (sLine.StartsWith("data: ") && sLine != "data: [DONE]")
+                            if (sLine.StartsWith("data:") && sLine != "data: [DONE]")
                             {
                                 try
                                 {
-                                    var chunk = JsonNode.Parse(sLine["data: ".Length..]);
+                                    var jsonData = sLine["data:".Length..];
+                                    if (jsonData.Length > 0 && jsonData[0] == ' ')
+                                        jsonData = jsonData[1..];
+                                    var chunk = JsonNode.Parse(jsonData);
                                     if (chunk != null)
                                     {
                                         var choice = chunk["choices"]?[0];

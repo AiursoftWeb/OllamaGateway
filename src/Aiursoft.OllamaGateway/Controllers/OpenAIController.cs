@@ -230,14 +230,24 @@ public class OpenAIController : ControllerBase
                         while ((sLine = await directReader.ReadLineAsync(HttpContext.RequestAborted)) != null)
                         {
                             if (string.IsNullOrWhiteSpace(sLine)) continue;
-                            if (sLine.StartsWith("data: ") && sLine != "data: [DONE]")
+
+                            // Match "data:" with or without a space after the colon.
+                            // The OpenAI SSE spec requires a space, but some backends omit it.
+                            if (sLine.StartsWith("data:") && sLine != "data: [DONE]")
                             {
+                                // Extract JSON payload — skip "data:" and optional leading space
+                                var jsonData = sLine["data:".Length..];
+                                if (jsonData.Length > 0 && jsonData[0] == ' ')
+                                    jsonData = jsonData[1..];
+
+                                // Parse for logging only (best-effort). Output uses string-level
+                                // model replacement so the exact upstream JSON formatting is
+                                // preserved (field order, number precision, Unicode escaping).
                                 try
                                 {
-                                    var chunk = JsonNode.Parse(sLine["data: ".Length..]);
+                                    var chunk = JsonNode.Parse(jsonData);
                                     if (chunk != null)
                                     {
-                                        chunk["model"] = virtualModel.Name;
                                         var deltaContent = chunk["choices"]?[0]?["delta"]?["content"]?.ToString();
                                         var deltaReasoning = chunk["choices"]?[0]?["delta"]?["reasoning_content"]?.ToString();
                                         if (!string.IsNullOrEmpty(deltaContent)) answerBuilderDirect.Append(deltaContent);
@@ -250,20 +260,28 @@ public class OpenAIController : ControllerBase
                                             _logContext.Log.CompletionTokens = (int)cTok;
                                             _logContext.Log.TotalTokens = (int)(pTok + cTok);
                                         }
-                                        await Response.WriteAsync($"data: {chunk.ToJsonString()}\n\n", HttpContext.RequestAborted);
-                                        await Response.Body.FlushAsync(HttpContext.RequestAborted);
-                                        continue;
                                     }
                                 }
-                                catch { /* fall through to raw write */ }
+                                catch { /* logging best-effort */ }
+
+                                // Replace model name via string to preserve upstream JSON exactly.
+                                // This avoids the System.Text.Json round-trip that can reorder
+                                // fields and change encoding, which breaks strict JSON parsers
+                                // (e.g. the Rust serde_json parser used by Copilot CLI).
+                                var modifiedData = ReplaceModelField(jsonData, virtualModel.Name);
+                                await Response.WriteAsync($"data: {modifiedData}\n\n", HttpContext.RequestAborted);
+                                await Response.Body.FlushAsync(HttpContext.RequestAborted);
                             }
-                            if (sLine == "data: [DONE]")
+                            else if (sLine == "data: [DONE]")
                             {
                                 await Response.WriteAsync("data: [DONE]\n\n", HttpContext.RequestAborted);
                                 await Response.Body.FlushAsync(HttpContext.RequestAborted);
                             }
-                            else if (!string.IsNullOrWhiteSpace(sLine))
+                            else
                             {
+                                // Non-data SSE lines (comments, event:, id:, retry: fields).
+                                // Forward with a single \n so they stay in the same SSE event
+                                // as the following data line (per SSE spec).
                                 await Response.WriteAsync(sLine + "\n", HttpContext.RequestAborted);
                                 await Response.Body.FlushAsync(HttpContext.RequestAborted);
                             }
@@ -1031,5 +1049,22 @@ public class OpenAIController : ControllerBase
             PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.SnakeCaseLower
         });
         return Content(json, "application/json");
+    }
+
+    /// <summary>
+    /// Replace the value of the top-level "model" field in a JSON string while
+    /// preserving all other formatting (whitespace, field order, number precision,
+    /// Unicode escaping). This avoids a full parse–re-serialize round-trip that
+    /// can introduce subtle differences and break strict stream parsers.
+    /// </summary>
+    private static string ReplaceModelField(string json, string newModelName)
+    {
+        // Match "model":"<any non-quote chars>", allowing optional whitespace around the colon.
+        // Only the first occurrence is replaced (the top-level model field).
+        var regex = new System.Text.RegularExpressions.Regex(
+            @"""model""\s*:\s*""[^""]*""",
+            System.Text.RegularExpressions.RegexOptions.CultureInvariant);
+        var escaped = newModelName.Replace("\\", "\\\\").Replace("$", "$$");
+        return regex.Replace(json, $"\"model\":\"{escaped}\"", 1);
     }
 }

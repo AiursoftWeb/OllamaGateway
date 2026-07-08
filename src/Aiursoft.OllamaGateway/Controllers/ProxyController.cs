@@ -306,8 +306,8 @@ public class ProxyController(
 
                         while ((sseLine = await sseReader.ReadLineAsync(HttpContext.RequestAborted)) != null)
                         {
-                            if (!sseLine.StartsWith("data: ")) continue;
-                            var sseData = sseLine["data: ".Length..].Trim();
+                            if (!sseLine.StartsWith("data:")) continue;
+                            var sseData = sseLine["data:".Length..].TrimStart(' ').Trim();
                             if (sseData == "[DONE]") break;
 
                             try

@@ -622,4 +622,244 @@ public class OpenAIBackendProviderTests : TestBase
             "Without images, content must remain a plain string, not a multimodal array (regression check)");
         Assert.AreEqual("Hi", content.ToString());
     }
+
+    // ========================================================================
+    // E. SSE passthrough fidelity — Regression tests for ReplaceModelField
+    //    (string-based model replacement vs. JsonNode parse–re-serialize)
+    // ========================================================================
+
+    [TestMethod]
+    public async Task OpenAIToOpenAIBackend_Streaming_PreservesJsonFieldOrder()
+    {
+        // Regression: the old JsonNode.Parse → modify → ToJsonString() round-trip
+        // reordered JSON fields (model moved to the end). The ReplaceModelField
+        // string-based approach must preserve exact upstream field order.
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            // Deliberately put "model" as the FIRST field — this is the natural
+            // OpenAI API order.  After the old round-trip it would move to the end.
+            var sse =
+                "data: {\"model\":\"gpt-4o-mini\",\"id\":\"chatcmpl-001\",\"object\":\"chat.completion.chunk\",\"created\":1720000000,\"choices\":[{\"index\":0,\"delta\":{\"content\":\"Hi\"},\"finish_reason\":null}]}\n\n" +
+                "data: [DONE]\n\n";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(sse, Encoding.UTF8, "text/event-stream")
+            });
+        };
+
+        var payload = $$"""{"model":"{{ChatModelName}}","messages":[{"role":"user","content":"Hi"}],"stream":true}""";
+        var response = await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
+
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        var body = await response.Content.ReadAsStringAsync();
+
+        // Find the first data line and check field order
+        var firstDataLine = body.Split('\n')
+            .First(l => l.StartsWith("data: ") && l != "data: [DONE]");
+        var jsonPayload = firstDataLine["data: ".Length..];
+
+        // "model" must still be the FIRST field (preserving upstream order)
+        var modelFieldIndex = jsonPayload.IndexOf("\"model\"", StringComparison.Ordinal);
+        var idFieldIndex = jsonPayload.IndexOf("\"id\"", StringComparison.Ordinal);
+        Assert.IsTrue(modelFieldIndex < idFieldIndex,
+            $"Model field should appear BEFORE id field (preserving upstream order).\nGot: {jsonPayload}");
+    }
+
+    [TestMethod]
+    public async Task OpenAIToOpenAIBackend_Streaming_PreservesNumberPrecision()
+    {
+        // Regression: JsonNode stores numbers as double, which can lose precision
+        // for large integers (e.g. 64-bit timestamps). String-based replacement
+        // must preserve the exact numeric representation.
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            // "created" is a Unix timestamp that should survive round-trip exactly
+            var sse =
+                "data: {\"id\":\"x\",\"object\":\"chat.completion.chunk\",\"created\":1735689600000,\"model\":\"gpt-4o-mini\",\"choices\":[{\"index\":0,\"delta\":{},\"finish_reason\":\"stop\"}]}\n\n" +
+                "data: [DONE]\n\n";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(sse, Encoding.UTF8, "text/event-stream")
+            });
+        };
+
+        var payload = $$"""{"model":"{{ChatModelName}}","messages":[{"role":"user","content":"Hi"}],"stream":true}""";
+        var response = await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
+
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        var body = await response.Content.ReadAsStringAsync();
+
+        var firstDataLine = body.Split('\n')
+            .First(l => l.StartsWith("data: ") && l != "data: [DONE]");
+        // The timestamp must appear exactly as provided, not as scientific notation
+        Assert.IsTrue(firstDataLine.Contains("1735689600000"),
+            $"Large integer timestamp must survive passthrough intact.\nGot: {firstDataLine}");
+    }
+
+    [TestMethod]
+    public async Task OpenAIToOpenAIBackend_Streaming_PreservesJsonNullValues()
+    {
+        // Regression: the default JsonSerializerOptions may drop null values
+        // depending on configuration. String-based replacement must preserve them.
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            var sse =
+                "data: {\"id\":\"x\",\"object\":\"chat.completion.chunk\",\"model\":\"gpt-4o-mini\",\"choices\":[{\"index\":0,\"delta\":{\"content\":null},\"logprobs\":null,\"finish_reason\":null}]}\n\n" +
+                "data: [DONE]\n\n";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(sse, Encoding.UTF8, "text/event-stream")
+            });
+        };
+
+        var payload = $$"""{"model":"{{ChatModelName}}","messages":[{"role":"user","content":"Hi"}],"stream":true}""";
+        var response = await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
+
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        var body = await response.Content.ReadAsStringAsync();
+
+        // Verify null values are preserved
+        Assert.IsTrue(body.Contains("\"content\":null"), "null JSON values must be preserved");
+        Assert.IsTrue(body.Contains("\"logprobs\":null"), "null JSON values must be preserved");
+        Assert.IsTrue(body.Contains("\"finish_reason\":null"), "null JSON values must be preserved");
+    }
+
+    [TestMethod]
+    public async Task OpenAIToOpenAIBackend_Streaming_PreservesUnicodeInContent()
+    {
+        // Regression: System.Text.Json JavaScriptEncoder escapes certain characters
+        // (like '+', '<', '>', '&') as \\uXXXX by default. String-based passthrough
+        // must keep the original encoding.
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            var sse =
+                "data: {\"id\":\"x\",\"object\":\"chat.completion.chunk\",\"model\":\"gpt-4o-mini\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"Hello \\u003cworld\\u003e & \\u0026 friends\"},\"finish_reason\":null}]}\n\n" +
+                "data: [DONE]\n\n";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(sse, Encoding.UTF8, "text/event-stream")
+            });
+        };
+
+        var payload = $$"""{"model":"{{ChatModelName}}","messages":[{"role":"user","content":"Hi"}],"stream":true}""";
+        var response = await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
+
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        var body = await response.Content.ReadAsStringAsync();
+
+        // The exact \\u003c / \\u0026 sequences from upstream MUST survive.
+        // The old JsonNode→ToJsonString path would re-encode these differently.
+        Assert.IsTrue(body.Contains("\\u003c"), "Unicode escape \\u003c must be preserved as-is");
+        Assert.IsTrue(body.Contains("\\u0026"), "Unicode escape \\u0026 must be preserved as-is");
+    }
+
+    [TestMethod]
+    public async Task OpenAIToOpenAIBackend_Streaming_OnlyModelFieldChanged()
+    {
+        // The replaced JSON line must be IDENTICAL to the original except for the
+        // quoted value of the "model" field.  Everything else — whitespace, colons,
+        // field order — must remain byte-for-byte identical.
+        var originalChunkJson = (string?)null;
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            originalChunkJson =
+                "{\"id\":\"chatcmpl-002\",\"object\":\"chat.completion.chunk\",\"created\":1720000000,\"model\":\"gpt-4o-mini\",\"system_fingerprint\":\"fp_abc123\",\"choices\":[{\"index\":0,\"delta\":{\"role\":\"assistant\",\"content\":\"Hello\"},\"finish_reason\":null}]}";
+            var sse = $"data: {originalChunkJson}\n\ndata: [DONE]\n\n";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(sse, Encoding.UTF8, "text/event-stream")
+            });
+        };
+
+        var payload = $$"""{"model":"{{ChatModelName}}","messages":[{"role":"user","content":"Hi"}],"stream":true}""";
+        var response = await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
+
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        var body = await response.Content.ReadAsStringAsync();
+        Assert.IsNotNull(originalChunkJson);
+
+        var firstDataLine = body.Split('\n')
+            .First(l => l.StartsWith("data: ") && l != "data: [DONE]");
+        var outputJson = firstDataLine["data: ".Length..];
+
+        // Manual diff: only the model name should differ
+        var expectedJson = originalChunkJson.Replace("gpt-4o-mini", ChatModelName);
+        Assert.AreEqual(expectedJson, outputJson,
+            $"Output JSON must be byte-identical to input except for the model field value.\n" +
+            $"Expected: {expectedJson}\nActual:   {outputJson}");
+    }
+
+    [TestMethod]
+    public async Task OpenAIToOpenAIBackend_Streaming_HandlesDataWithoutSpace()
+    {
+        // Regression: some OpenAI-compatible backends omit the space after "data:"
+        // (i.e. "data:{" instead of "data: {"). The gateway must handle both.
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            // No space after "data:" — a common variation in non-OpenAI SSE servers
+            var sse =
+                "data:{\"model\":\"gpt-4o-mini\",\"id\":\"x\",\"object\":\"chat.completion.chunk\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"NoSpace\"},\"finish_reason\":\"stop\"}]}\n\n" +
+                "data:[DONE]\n\n";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(sse, Encoding.UTF8, "text/event-stream")
+            });
+        };
+
+        var payload = $$"""{"model":"{{ChatModelName}}","messages":[{"role":"user","content":"Hi"}],"stream":true}""";
+        var response = await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
+
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        var body = await response.Content.ReadAsStringAsync();
+
+        // Response must still be valid SSE with model masked
+        Assert.IsTrue(body.Contains("data: "), "Response should normalise to 'data: ' (with space)");
+        Assert.IsTrue(body.Contains(ChatModelName), "Virtual model name must appear in response");
+        Assert.IsTrue(body.Contains("NoSpace"), "Content must be preserved");
+
+        // Verify the data line is valid JSON
+        var firstDataLine = body.Split('\n')
+            .First(l => l.StartsWith("data: ") && l != "data: [DONE]");
+        var jsonPayload = firstDataLine["data: ".Length..];
+        var chunk = JsonNode.Parse(jsonPayload);
+        Assert.IsNotNull(chunk, "Output must be valid JSON");
+        Assert.AreEqual(ChatModelName, chunk["model"]?.ToString());
+    }
+
+    [TestMethod]
+    public async Task OpenAIToOpenAIBackend_Streaming_ReplaceModelFieldHandlesRegexCharsSafely()
+    {
+        // The ReplaceModelField method uses Regex.Replace internally. The physical
+        // model name (the pattern to match) and the virtual model name (the
+        // replacement) are both injected into regex patterns. Verify end-to-end
+        // that model names containing characters used by regex (e.g. dots, which
+        // are common in OpenAI model names like "gpt-4o-mini") are handled safely.
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            // Physical model "gpt-4o-mini" contains hyphens, and the regex must
+            // match it literally (no character-class interpretation).
+            var sse = $"data: {{\"model\":\"{PhysicalModelName}\",\"id\":\"x\",\"object\":\"chat.completion.chunk\",\"choices\":[{{\"index\":0,\"delta\":{{\"content\":\"ok\"}},\"finish_reason\":\"stop\"}}]}}\n\ndata: [DONE]\n\n";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(sse, Encoding.UTF8, "text/event-stream")
+            });
+        };
+
+        var payload = $$"""{"model":"{{ChatModelName}}","messages":[{"role":"user","content":"Hi"}],"stream":true}""";
+        var response = await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
+
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        var body = await response.Content.ReadAsStringAsync();
+
+        // The physical model name "gpt-4o-mini" must be replaced with the virtual
+        // model name.  Neither the hyphen nor the dot should interfere with the
+        // regex-based replacement.
+        var firstDataLine = body.Split('\n')
+            .First(l => l.StartsWith("data: ") && l != "data: [DONE]");
+        var chunk = JsonNode.Parse(firstDataLine["data: ".Length..]);
+        Assert.AreEqual(ChatModelName, chunk?["model"]?.ToString(),
+            "Model name with hyphens/dots must be replaced correctly");
+        Assert.IsFalse(firstDataLine.Contains($"\"{PhysicalModelName}\""),
+            "Physical model name must not appear in the response");
+    }
 }
