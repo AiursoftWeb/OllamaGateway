@@ -656,7 +656,7 @@
           },
           "format": 1,
           "queryType": "table",
-          "rawSql": "SELECT\n  $__timeInterval(RequestTime) as \"time\",\n  avg(Duration) as \"Avg Latency\",\n  quantile(0.95)(Duration) as \"P95 Latency\"\nFROM default.RequestLogs\nWHERE (RequestTime >= $__fromTime AND RequestTime <= $__toTime)\nAND Success = 1\nAND Model LIKE '%${Model}%'\nAND IP LIKE '%${IP}%'\nGROUP BY time\n\nAND ApiKeyName LIKE '%${ApiKeyName}%'\nORDER BY time",
+          "rawSql": "SELECT\n  $__timeInterval(RequestTime) as \"time\",\n  avg(Duration) as \"Avg Latency\",\n  quantile(0.95)(Duration) as \"P95 Latency\"\nFROM default.RequestLogs\nWHERE (RequestTime >= $__fromTime AND RequestTime <= $__toTime)\nAND Success = 1\nAND Model LIKE '%${Model}%'\nAND IP LIKE '%${IP}%'\n\nAND ApiKeyName LIKE '%${ApiKeyName}%'\nGROUP BY time\n\nORDER BY time",
           "refId": "A"
         }
       ],
@@ -753,7 +753,7 @@
           "meta": {},
           "pluginVersion": "4.14.0",
           "queryType": "table",
-          "rawSql": "SELECT \n  $__timeInterval(RequestTime) as \"time\",\n  sum(lengthUTF8(LastQuestion)) AS \"Total Question Length\"\nFROM default.RequestLogs\nWHERE (RequestTime >= $__fromTime AND RequestTime <= $__toTime)\nAND Model LIKE '%${Model}%'\nAND IP LIKE '%${IP}%'\nGROUP BY time\n\nAND ApiKeyName LIKE '%${ApiKeyName}%'\nORDER BY time\n",
+          "rawSql": "SELECT \n  $__timeInterval(RequestTime) as \"time\",\n  sum(lengthUTF8(LastQuestion)) AS \"Total Question Length\"\nFROM default.RequestLogs\nWHERE (RequestTime >= $__fromTime AND RequestTime <= $__toTime)\nAND Model LIKE '%${Model}%'\nAND IP LIKE '%${IP}%'\n\nAND ApiKeyName LIKE '%${ApiKeyName}%'\nGROUP BY time\n\nORDER BY time\n",
           "refId": "A"
         }
       ],
@@ -850,7 +850,7 @@
           "meta": {},
           "pluginVersion": "4.14.0",
           "queryType": "table",
-          "rawSql": "SELECT \n  $__timeInterval(RequestTime) as \"time\",\n  sum(lengthUTF8(Answer)) AS \"Total Answer Length\"\nFROM default.RequestLogs\nWHERE (RequestTime >= $__fromTime AND RequestTime <= $__toTime)\nAND Model LIKE '%${Model}%'\nAND IP LIKE '%${IP}%'\nGROUP BY time\n\nAND ApiKeyName LIKE '%${ApiKeyName}%'\nORDER BY time\n",
+          "rawSql": "SELECT \n  $__timeInterval(RequestTime) as \"time\",\n  sum(lengthUTF8(Answer)) AS \"Total Answer Length\"\nFROM default.RequestLogs\nWHERE (RequestTime >= $__fromTime AND RequestTime <= $__toTime)\nAND Model LIKE '%${Model}%'\nAND IP LIKE '%${IP}%'\n\nAND ApiKeyName LIKE '%${ApiKeyName}%'\nGROUP BY time\n\nORDER BY time\n",
           "refId": "A"
         }
       ],
@@ -947,7 +947,7 @@
           "meta": {},
           "pluginVersion": "4.14.0",
           "queryType": "table",
-          "rawSql": "SELECT\n  $__timeInterval(RequestTime) as \"time\",\n  count() / $__interval_s as \"QPS (Requests/sec)\"\nFROM default.RequestLogs\nWHERE (RequestTime >= $__fromTime AND RequestTime <= $__toTime)\nAND Model LIKE '%${Model}%'\nAND IP LIKE '%${IP}%'\nGROUP BY time\n\nAND ApiKeyName LIKE '%${ApiKeyName}%'\nORDER BY time",
+          "rawSql": "SELECT\n  $__timeInterval(RequestTime) as \"time\",\n  count() / $__interval_s as \"QPS (Requests/sec)\"\nFROM default.RequestLogs\nWHERE (RequestTime >= $__fromTime AND RequestTime <= $__toTime)\nAND Model LIKE '%${Model}%'\nAND IP LIKE '%${IP}%'\n\nAND ApiKeyName LIKE '%${ApiKeyName}%'\nGROUP BY time\n\nORDER BY time",
           "refId": "A"
         }
       ],
@@ -1021,7 +1021,7 @@
           },
           "format": 1,
           "queryType": "table",
-          "rawSql": "SELECT\n  $__timeInterval(RequestTime) as \"time\",\n  count() / $__interval_s as \"QPS (Requests/sec)\"\nFROM default.RequestLogs\nWHERE (RequestTime >= $__fromTime AND RequestTime <= $__toTime)\nAND Model LIKE '%${Model}%'\nAND IP LIKE '%${IP}%'\nGROUP BY time\n\nAND ApiKeyName LIKE '%${ApiKeyName}%'\nORDER BY time",
+          "rawSql": "SELECT\n  $__timeInterval(RequestTime) as \"time\",\n  count() / $__interval_s as \"QPS (Requests/sec)\"\nFROM default.RequestLogs\nWHERE (RequestTime >= $__fromTime AND RequestTime <= $__toTime)\nAND Model LIKE '%${Model}%'\nAND IP LIKE '%${IP}%'\n\nAND ApiKeyName LIKE '%${ApiKeyName}%'\nGROUP BY time\n\nORDER BY time",
           "refId": "A"
         }
       ],
@@ -1090,7 +1090,7 @@
           },
           "format": 1,
           "queryType": "table",
-          "rawSql": "SELECT\n  Model,\n  count() as requests\nFROM default.RequestLogs\nWHERE (RequestTime >= $__fromTime AND RequestTime <= $__toTime)\nAND IP LIKE '%${IP}%'\nGROUP BY Model\n\nAND ApiKeyName LIKE '%${ApiKeyName}%'\nORDER BY requests DESC\nLIMIT 15",
+          "rawSql": "SELECT\n  Model,\n  count() as requests\nFROM default.RequestLogs\nWHERE (RequestTime >= $__fromTime AND RequestTime <= $__toTime)\nAND IP LIKE '%${IP}%'\n\nAND ApiKeyName LIKE '%${ApiKeyName}%'\nGROUP BY Model\n\nORDER BY requests DESC\nLIMIT 15",
           "refId": "A"
         }
       ],
@@ -1158,7 +1158,7 @@
           },
           "format": 1,
           "queryType": "table",
-          "rawSql": "SELECT\n  toString(StatusCode) as Status,\n  count() as count\nFROM default.RequestLogs\nWHERE (RequestTime >= $__fromTime AND RequestTime <= $__toTime)\nAND Model LIKE '%${Model}%'\nAND IP LIKE '%${IP}%'\nGROUP BY Status\n\nAND ApiKeyName LIKE '%${ApiKeyName}%'\nORDER BY count DESC",
+          "rawSql": "SELECT\n  toString(StatusCode) as Status,\n  count() as count\nFROM default.RequestLogs\nWHERE (RequestTime >= $__fromTime AND RequestTime <= $__toTime)\nAND Model LIKE '%${Model}%'\nAND IP LIKE '%${IP}%'\n\nAND ApiKeyName LIKE '%${ApiKeyName}%'\nGROUP BY Status\n\nORDER BY count DESC",
           "refId": "A"
         }
       ],
@@ -1228,7 +1228,7 @@
           },
           "format": 1,
           "queryType": "table",
-          "rawSql": "SELECT\n  IP,\n  count() as Requests\nFROM default.RequestLogs\nWHERE (RequestTime >= $__fromTime AND RequestTime <= $__toTime)\nAND Model LIKE '%${Model}%'\nGROUP BY IP\n\nAND ApiKeyName LIKE '%${ApiKeyName}%'\nORDER BY Requests DESC\nLIMIT 10",
+          "rawSql": "SELECT\n  IP,\n  count() as Requests\nFROM default.RequestLogs\nWHERE (RequestTime >= $__fromTime AND RequestTime <= $__toTime)\nAND Model LIKE '%${Model}%'\n\nAND ApiKeyName LIKE '%${ApiKeyName}%'\nGROUP BY IP\n\nORDER BY Requests DESC\nLIMIT 10",
           "refId": "A"
         }
       ],
@@ -1430,7 +1430,7 @@
           },
           "format": 1,
           "queryType": "table",
-          "rawSql": "SELECT\n  RequestTime,\n  IP,\n  Model,\n  StatusCode,\n  Duration,\n  LastQuestion,\n  TraceId\nFROM default.RequestLogs\nWHERE (RequestTime >= $__fromTime AND RequestTime <= $__toTime)\nAND Success = 0\nAND Model LIKE '%${Model}%'\nAND IP LIKE '%${IP}%'\n\nAND ApiKeyName LIKE '%${ApiKeyName}%'\nORDER BY RequestTime DESC\nLIMIT 50",
+          "rawSql": "SELECT\n  RequestTime,\n  IP,\n  Model,\n  StatusCode,\n  Duration,\n  LastQuestion,\n  TraceId\nFROM default.RequestLogs\nWHERE (RequestTime >= $__fromTime AND RequestTime <= $__toTime)\nAND Success = 0\nAND Model LIKE '%${Model}%'\nAND IP LIKE '%${IP}%'\n\n\nAND ApiKeyName LIKE '%${ApiKeyName}%'\nORDER BY RequestTime DESC\nLIMIT 50",
           "refId": "A"
         }
       ],
@@ -1501,7 +1501,7 @@
           },
           "format": 1,
           "queryType": "table",
-          "rawSql": "SELECT\n  ApiKeyName,\n  count() as Requests\nFROM default.RequestLogs\nWHERE (RequestTime >= $__fromTime AND RequestTime <= $__toTime)\nAND Model LIKE '%${Model}%'\nAND IP LIKE '%${IP}%'\nAND ApiKeyName LIKE '%${ApiKeyName}%'\nGROUP BY ApiKeyName\nORDER BY Requests DESC\nLIMIT 10",
+          "rawSql": "SELECT\n  ApiKeyName,\n  count() as Requests\nFROM default.RequestLogs\nWHERE (RequestTime >= $__fromTime AND RequestTime <= $__toTime)\nAND Model LIKE '%${Model}%'\nAND IP LIKE '%${IP}%'\n\nAND ApiKeyName LIKE '%${ApiKeyName}%'\nGROUP BY ApiKeyName\nORDER BY Requests DESC\nLIMIT 10",
           "refId": "A"
         }
       ],
@@ -1604,7 +1604,7 @@
           "meta": {},
           "pluginVersion": "4.14.0",
           "queryType": "table",
-          "rawSql": "SELECT\n  $__timeInterval(RequestTime) as \"time\",\n  ApiKeyName,\n  count() as \"Requests\"\nFROM default.RequestLogs\nWHERE (RequestTime >= $__fromTime AND RequestTime <= $__toTime)\nAND Model LIKE '%${Model}%'\nAND IP LIKE '%${IP}%'\nAND ApiKeyName LIKE '%${ApiKeyName}%'\nGROUP BY time, ApiKeyName\nORDER BY time",
+          "rawSql": "SELECT\n  $__timeInterval(RequestTime) as \"time\",\n  ApiKeyName,\n  count() as \"Requests\"\nFROM default.RequestLogs\nWHERE (RequestTime >= $__fromTime AND RequestTime <= $__toTime)\nAND Model LIKE '%${Model}%'\nAND IP LIKE '%${IP}%'\n\nAND ApiKeyName LIKE '%${ApiKeyName}%'\nGROUP BY time, ApiKeyName\nORDER BY time",
           "refId": "A"
         }
       ],
