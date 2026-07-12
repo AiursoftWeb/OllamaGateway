@@ -143,7 +143,6 @@
                   ]
                 },
                 "unit": "short",
-                "mappings": [],
                 "custom": {}
               },
               "overrides": []
@@ -229,7 +228,6 @@
                   ]
                 },
                 "unit": "reqps",
-                "mappings": [],
                 "custom": {}
               },
               "overrides": []
@@ -323,7 +321,6 @@
                   ]
                 },
                 "unit": "percent",
-                "mappings": [],
                 "custom": {}
               },
               "overrides": []
@@ -417,7 +414,6 @@
                   ]
                 },
                 "unit": "ms",
-                "mappings": [],
                 "custom": {}
               },
               "overrides": []
@@ -511,7 +507,6 @@
                   ]
                 },
                 "unit": "ms",
-                "mappings": [],
                 "custom": {}
               },
               "overrides": []
@@ -597,7 +592,6 @@
                   ]
                 },
                 "unit": "string",
-                "mappings": [],
                 "custom": {}
               },
               "overrides": []
@@ -683,7 +677,6 @@
                   ]
                 },
                 "unit": "string",
-                "mappings": [],
                 "custom": {}
               },
               "overrides": []
@@ -769,7 +762,6 @@
                   ]
                 },
                 "unit": "ms",
-                "mappings": [],
                 "custom": {
                   "axisBorderShow": false,
                   "axisCenteredZero": false,
@@ -891,7 +883,6 @@
                   ]
                 },
                 "unit": "string",
-                "mappings": [],
                 "custom": {
                   "axisBorderShow": false,
                   "axisCenteredZero": false,
@@ -1010,7 +1001,6 @@
                   ]
                 },
                 "unit": "string",
-                "mappings": [],
                 "custom": {
                   "axisBorderShow": false,
                   "axisCenteredZero": false,
@@ -1129,7 +1119,6 @@
                   ]
                 },
                 "unit": "reqps",
-                "mappings": [],
                 "custom": {
                   "axisBorderShow": false,
                   "axisCenteredZero": false,
@@ -1248,7 +1237,6 @@
                   ]
                 },
                 "unit": "reqps",
-                "mappings": [],
                 "custom": {
                   "fillOpacity": 32,
                   "gradientMode": "none",
@@ -1337,7 +1325,6 @@
                 "color": {
                   "mode": "palette-classic"
                 },
-                "mappings": [],
                 "custom": {
                   "hideFrom": {
                     "legend": false,
@@ -1427,7 +1414,6 @@
                 "color": {
                   "mode": "palette-classic"
                 },
-                "mappings": [],
                 "custom": {
                   "hideFrom": {
                     "legend": false,
@@ -1525,7 +1511,6 @@
                     }
                   ]
                 },
-                "mappings": [],
                 "custom": {}
               },
               "overrides": []
@@ -1630,7 +1615,6 @@
                     }
                   ]
                 },
-                "mappings": [],
                 "custom": {
                   "align": "auto",
                   "cellOptions": {
@@ -1746,7 +1730,6 @@
                     }
                   ]
                 },
-                "mappings": [],
                 "custom": {
                   "align": "auto",
                   "cellOptions": {
@@ -1794,126 +1777,6 @@
             "options": {
               "cellHeight": "sm",
               "showHeader": true
-            }
-          },
-          "version": "13.1.0"
-        }
-      }
-    },
-    "panel-18": {
-      "kind": "Panel",
-      "spec": {
-        "data": {
-          "kind": "QueryGroup",
-          "spec": {
-            "queries": [
-              {
-                "kind": "PanelQuery",
-                "spec": {
-                  "hidden": false,
-                  "query": {
-                    "datasource": {
-                      "type": "grafana-clickhouse-datasource",
-                      "uid": "${DS_GRAFANA-CLICKHOUSE-DATASOURCE}"
-                    },
-                    "group": "grafana-clickhouse-datasource",
-                    "kind": "DataQuery",
-                    "spec": {
-                      "editorType": "sql",
-                      "format": 1,
-                      "meta": {},
-                      "pluginVersion": "4.14.0",
-                      "queryType": "table",
-                      "rawSql": "SELECT\n  $__timeInterval(RequestTime) as \"time\",\n  ApiKeyName,\n  count() as \"Requests\"\nFROM default.RequestLogs\nWHERE (RequestTime >= $__fromTime AND RequestTime <= $__toTime)\nAND Model LIKE '%${Model}%'\nAND IP LIKE '%${IP}%'\nAND ApiKeyName LIKE '%${ApiKeyName}%'\nGROUP BY time, ApiKeyName\nORDER BY time"
-                    },
-                    "version": "v0"
-                  },
-                  "refId": "A"
-                }
-              }
-            ],
-            "queryOptions": {},
-            "transformations": []
-          }
-        },
-        "description": "Stacked bar chart showing API call count over time, split by API key. Use the Model and API Key dropdowns to filter.",
-        "id": 18,
-        "links": [],
-        "title": "API Key Usage Over Time",
-        "vizConfig": {
-          "group": "timeseries",
-          "kind": "VizConfig",
-          "spec": {
-            "fieldConfig": {
-              "defaults": {
-                "color": {
-                  "mode": "palette-classic"
-                },
-                "custom": {
-                  "axisBorderShow": false,
-                  "axisCenteredZero": false,
-                  "axisColorMode": "text",
-                  "axisLabel": "",
-                  "axisPlacement": "auto",
-                  "barAlignment": 0,
-                  "barWidthFactor": 0.6,
-                  "drawStyle": "bars",
-                  "fillOpacity": 100,
-                  "gradientMode": "none",
-                  "hideFrom": {
-                    "legend": false,
-                    "tooltip": false,
-                    "viz": false
-                  },
-                  "insertNulls": false,
-                  "lineInterpolation": "linear",
-                  "lineWidth": 1,
-                  "pointSize": 5,
-                  "scaleDistribution": {
-                    "type": "linear"
-                  },
-                  "showPoints": "auto",
-                  "showValues": false,
-                  "spanNulls": false,
-                  "stacking": {
-                    "group": "A",
-                    "mode": "normal"
-                  },
-                  "thresholdsStyle": {
-                    "mode": "off"
-                  }
-                },
-                "thresholds": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": 0
-                    }
-                  ]
-                },
-                "unit": "short"
-              },
-              "overrides": []
-            },
-            "options": {
-              "annotations": {
-                "clustering": -1,
-                "multiLane": false
-              },
-              "legend": {
-                "calcs": [],
-                "displayMode": "table",
-                "enableFacetedFilter": false,
-                "overflow": "ellipsis",
-                "placement": "right",
-                "showLegend": true
-              },
-              "tooltip": {
-                "hideZeros": false,
-                "mode": "multi",
-                "sort": "desc"
-              }
             }
           },
           "version": "13.1.0"
@@ -2001,6 +1864,126 @@
               "showUnfilled": true,
               "sizing": "auto",
               "valueMode": "color"
+            }
+          },
+          "version": "13.1.0"
+        }
+      }
+    },
+    "panel-18": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "type": "grafana-clickhouse-datasource",
+                      "uid": "${DS_GRAFANA-CLICKHOUSE-DATASOURCE}"
+                    },
+                    "group": "grafana-clickhouse-datasource",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorType": "sql",
+                      "format": 1,
+                      "meta": {},
+                      "pluginVersion": "4.14.0",
+                      "queryType": "table",
+                      "rawSql": "SELECT\n  $__timeInterval(RequestTime) as \"time\",\n  ApiKeyName,\n  count() as \"Requests\"\nFROM default.RequestLogs\nWHERE (RequestTime >= $__fromTime AND RequestTime <= $__toTime)\nAND Model LIKE '%${Model}%'\nAND IP LIKE '%${IP}%'\nAND ApiKeyName LIKE '%${ApiKeyName}%'\nGROUP BY time, ApiKeyName\nORDER BY time"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "Stacked bar chart of API call count over time, split by API key",
+        "id": 18,
+        "links": [],
+        "title": "API Key Usage Over Time",
+        "vizConfig": {
+          "group": "timeseries",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "axisBorderShow": false,
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "barWidthFactor": 0.6,
+                  "drawStyle": "bars",
+                  "fillOpacity": 100,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "insertNulls": false,
+                  "lineInterpolation": "linear",
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "showValues": false,
+                  "spanNulls": false,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "normal"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                },
+                "unit": "short"
+              },
+              "overrides": []
+            },
+            "options": {
+              "annotations": {
+                "clustering": -1,
+                "multiLane": false
+              },
+              "legend": {
+                "calcs": [],
+                "displayMode": "table",
+                "enableFacetedFilter": false,
+                "overflow": "ellipsis",
+                "placement": "right",
+                "showLegend": true
+              },
+              "tooltip": {
+                "hideZeros": false,
+                "mode": "multi",
+                "sort": "desc"
+              }
             }
           },
           "version": "13.1.0"
@@ -2238,12 +2221,12 @@
           "spec": {
             "element": {
               "kind": "ElementReference",
-              "name": "panel-18"
+              "name": "panel-19"
             },
-            "height": 12,
-            "width": 24,
+            "height": 5,
+            "width": 12,
             "x": 0,
-            "y": 66
+            "y": 26
           }
         },
         {
@@ -2251,12 +2234,12 @@
           "spec": {
             "element": {
               "kind": "ElementReference",
-              "name": "panel-19"
+              "name": "panel-18"
             },
-            "height": 5,
-            "width": 12,
+            "height": 12,
+            "width": 24,
             "x": 0,
-            "y": 26
+            "y": 66
           }
         }
       ]
@@ -2294,15 +2277,17 @@
     {
       "kind": "QueryVariable",
       "spec": {
-        "current": {},
-        "hide": "dontHide",
-        "label": "Model",
-        "name": "Model",
-        "skipUrlSync": false,
         "allowCustomValue": true,
+        "current": {
+          "text": "",
+          "value": ""
+        },
         "definition": "SELECT DISTINCT Model FROM default.RequestLogs",
+        "hide": "dontHide",
         "includeAll": true,
+        "label": "Model",
         "multi": false,
+        "name": "Model",
         "options": [],
         "query": {
           "datasource": {
@@ -2319,6 +2304,7 @@
         "refresh": "onTimeRangeChanged",
         "regex": "",
         "regexApplyTo": "value",
+        "skipUrlSync": false,
         "sort": "alphabeticalAsc"
       }
     },
@@ -2366,13 +2352,16 @@
         "hide": "dontHide",
         "label": "IP",
         "name": "IP",
-        "skipUrlSync": false,
-        "query": "%"
+        "query": "%",
+        "skipUrlSync": false
       }
     },
     {
       "kind": "IntervalVariable",
       "spec": {
+        "auto": true,
+        "auto_count": 30,
+        "auto_min": "10s",
         "current": {
           "text": "1m",
           "value": "1m"
@@ -2380,10 +2369,6 @@
         "hide": "dontHide",
         "label": "Interval",
         "name": "interval",
-        "skipUrlSync": false,
-        "auto": true,
-        "auto_count": 30,
-        "auto_min": "10s",
         "options": [
           {
             "selected": true,
@@ -2412,7 +2397,8 @@
           }
         ],
         "query": "1m,5m,10m,30m,1h",
-        "refresh": "onTimeRangeChanged"
+        "refresh": "onTimeRangeChanged",
+        "skipUrlSync": false
       }
     }
   ]
