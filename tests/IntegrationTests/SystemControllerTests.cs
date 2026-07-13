@@ -14,6 +14,19 @@ public class SystemControllerTests : TestBase
     }
 
     [TestMethod]
+    public async Task TestIndexContainsDatabaseVisibility()
+    {
+        await LoginAsAdmin();
+        var response = await Http.GetAsync("/System/Index");
+        response.EnsureSuccessStatusCode();
+
+        var html = await response.Content.ReadAsStringAsync();
+        Assert.Contains("Database Migrations", html);
+        Assert.Contains("Applied / Defined", html);
+        Assert.Contains("Database Table Counts", html);
+    }
+
+    [TestMethod]
     public async Task TestShutdown()
     {
         await LoginAsAdmin();
