@@ -64,13 +64,22 @@ public class SystemController(
     private async Task<List<TableCountEntry>> GetTableCountsAsync(CancellationToken cancellationToken)
     {
         var tables = GetDbSetTables();
-        using var limiter = new SemaphoreSlim(TableCountConcurrency);
-        var countTasks = tables.Select(table => CountTableRowsWithLimitAsync(table, limiter, cancellationToken));
-        var tableCounts = await Task.WhenAll(countTasks);
-        return tableCounts
-            .OfType<TableCountEntry>()
-            .OrderBy(table => table.Name)
-            .ToList();
+        var limiter = new SemaphoreSlim(TableCountConcurrency);
+        try
+        {
+            var countTasks = tables
+                .Select(table => CountTableRowsWithLimitAsync(table, limiter, cancellationToken))
+                .ToList();
+            var tableCounts = await Task.WhenAll(countTasks);
+            return tableCounts
+                .OfType<TableCountEntry>()
+                .OrderBy(table => table.Name)
+                .ToList();
+        }
+        finally
+        {
+            limiter.Dispose();
+        }
     }
 
     private List<DbSetTable> GetDbSetTables()
