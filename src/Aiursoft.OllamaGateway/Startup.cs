@@ -56,7 +56,7 @@ public class Startup : IWebStartup
         services.AddHttpClient();
         services.ConfigureHttpClientDefaults(builder =>
         {
-            builder.ConfigurePrimaryHttpMessageHandler(() => new System.Net.Http.SocketsHttpHandler
+            builder.ConfigurePrimaryHttpMessageHandler(() => new SocketsHttpHandler
             {
                 PooledConnectionLifetime = TimeSpan.FromMinutes(2),
                 PooledConnectionIdleTimeout = TimeSpan.FromMinutes(1),
