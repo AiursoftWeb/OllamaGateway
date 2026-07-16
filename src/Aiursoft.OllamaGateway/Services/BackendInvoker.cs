@@ -30,13 +30,17 @@ public class BackendInvoker(
             cts.CancelAfter(TimeSpan.FromSeconds(virtualModel.HealthCheckTimeout));
 
             // Queue for a concurrency slot — this wait does NOT count toward HealthCheckTimeout
+            logger.LogInformation("[Trace] Acquiring concurrency slot for provider {ProviderId} (MaxParallelism={MaxParallelism})",
+                backend.Provider.Id, backend.Provider.MaxParallelism);
             try
             {
                 concurrencySlot = await concurrencyLimiter.AcquireAsync(
                     backend.Provider.Id, backend.Provider.MaxParallelism, clientCancellation);
+                logger.LogInformation("[Trace] Concurrency slot acquired for provider {ProviderId}", backend.Provider.Id);
             }
             catch (OperationCanceledException)
             {
+                logger.LogWarning("[Trace] Concurrency slot acquisition canceled for provider {ProviderId}", backend.Provider.Id);
                 concurrencySlot = null;
                 if (i == virtualModel.MaxRetries - 1) break;
                 backend = modelSelector.SelectBackend(virtualModel);
@@ -55,9 +59,14 @@ public class BackendInvoker(
 
                 var request = requestFactory(backend);
 
-                logger.LogInformation("Backend request to {Url}, attempt {Attempt}", underlyingUrl, i + 1);
+                logger.LogInformation("Backend request to {Url}, attempt {Attempt}, timeout={Timeout}s",
+                    underlyingUrl, i + 1, virtualModel.HealthCheckTimeout);
 
+                var stopwatch = System.Diagnostics.Stopwatch.StartNew();
                 var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cts.Token);
+                stopwatch.Stop();
+                logger.LogInformation("[Trace] Backend response received in {Elapsed}ms, status={Status}",
+                    stopwatch.ElapsedMilliseconds, (int)response.StatusCode);
                 if (response.IsSuccessStatusCode)
                 {
                     modelSelector.ReportSuccess(backend.Id);
@@ -93,6 +102,8 @@ public class BackendInvoker(
             }
             catch (Exception ex)
             {
+                logger.LogWarning(ex, "[Trace] Backend request attempt {Attempt} FAILED after {RetryCount} retries: {ErrorType}",
+                    i + 1, i, ex.GetType().Name);
                 if (concurrencySlot != null)
                 {
                     await concurrencySlot.DisposeAsync();
