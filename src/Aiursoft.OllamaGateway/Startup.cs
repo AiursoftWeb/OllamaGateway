@@ -54,6 +54,14 @@ public class Startup : IWebStartup
         // Services
         services.AddMemoryCache();
         services.AddHttpClient();
+        services.ConfigureHttpClientDefaults(builder =>
+        {
+            builder.ConfigurePrimaryHttpMessageHandler(() => new System.Net.Http.SocketsHttpHandler
+            {
+                PooledConnectionLifetime = TimeSpan.FromMinutes(2),
+                PooledConnectionIdleTimeout = TimeSpan.FromMinutes(1),
+            });
+        });
         services.AddSingleton<Services.IModelSelector, Services.ModelSelector>();
         services.AddSingleton<Services.IProviderConcurrencyLimiter, Services.ProviderConcurrencyLimiter>();
         services.AddScoped<Services.IBackendInvoker, Services.BackendInvoker>();
