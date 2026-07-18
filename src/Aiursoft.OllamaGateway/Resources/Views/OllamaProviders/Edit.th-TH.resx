@@ -36,6 +36,9 @@
   <data name="Controls how long models stay in memory after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep forever." xml:space="preserve">
     <value>ควบคุมระยะเวลาที่โมเดลคงอยู่ในหน่วยความจำหลังจากคำขอ รูปแบบ Ollama (เช่น &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;) ใช้ &apos;0&apos; เพื่อกำจัดทันที หรือ &apos;-1&apos; เพื่อเก็บไว้ตลอดไป</value>
   </data>
+  <data name="Controls how long the AI model weights stay loaded in GPU VRAM after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep in VRAM forever." xml:space="preserve">
+    <value>ควบคุมระยะเวลาที่น้ำหนักของโมเดล AI จะยังคงถูกโหลดอยู่ใน VRAM ของ GPU หลังจากคำขอ รูปแบบ Ollama (เช่น &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;) ใช้ &apos;0&apos; เพื่อบันทึกลงทันที หรือ &apos;-1&apos; เพื่อคงไว้ใน VRAM ตลอดเวลา</value>
+  </data>
   <data name="e.g. Local Server" xml:space="preserve">
     <value>เช่น ใช้งานเซิร์ฟเวอร์ในท้องถิ่น</value>
   </data>

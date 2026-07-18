@@ -36,6 +36,9 @@
   <data name="Controls how long models stay in memory after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep forever." xml:space="preserve">
     <value>Kiểm soát thời gian các mô hình lưu trong bộ nhớ sau một yêu cầu. Định dạng Ollama (ví dụ: &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Sử dụng &apos;0&apos; để gỡ tải ngay lập tức, hoặc &apos;-1&apos; để giữ mãi mãi.</value>
   </data>
+  <data name="Controls how long the AI model weights stay loaded in GPU VRAM after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep in VRAM forever." xml:space="preserve">
+    <value>Kiểm soát thời gian trọng số mô hình AI được giữ trong VRAM GPU sau khi nhận yêu cầu. Định dạng Ollama (ví dụ: &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Sử dụng &apos;0&apos; để dỡ bỏ ngay lập tức, hoặc &apos;-1&apos; để giữ trong VRAM vĩnh viễn.</value>
+  </data>
   <data name="e.g. Local Server" xml:space="preserve">
     <value>ví dụ: máy chủ cục bộ</value>
   </data>
