@@ -36,6 +36,9 @@
   <data name="Controls how long models stay in memory after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep forever." xml:space="preserve">
     <value>控制模型在請求後於記憶體中保留的時間長度。Ollama 格式（例如，&apos;5 分鐘&apos;、&apos;1 小時&apos;、&apos;24 小時&apos;）。使用 &apos;0&apos; 立即卸載，或 &apos;-1&apos; 永久保留。</value>
   </data>
+  <data name="Controls how long the AI model weights stay loaded in GPU VRAM after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep in VRAM forever." xml:space="preserve">
+    <value>控制 AI 模型權重在請求完成後於 GPU VRAM 中保持載入的時間。採用 Ollama 格式（例如：&apos;5m&apos;、&apos;1h&apos;、&apos;24h&apos;）。使用 &apos;0&apos; 可立即卸載，或使用 &apos;-1&apos; 永久保留在 VRAM 中。</value>
+  </data>
   <data name="e.g. Local Server" xml:space="preserve">
     <value>例如：本地伺服器</value>
   </data>

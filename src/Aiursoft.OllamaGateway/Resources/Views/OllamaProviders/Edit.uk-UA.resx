@@ -36,6 +36,9 @@
   <data name="Controls how long models stay in memory after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep forever." xml:space="preserve">
     <value>Керує тривалістю перебування моделей у пам&apos;яті після запитом. Формат Ollama (наприклад, &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Використовуйте &apos;0&apos; для негайного вивантаження або &apos;-1&apos;, щоб залишити назавжди.</value>
   </data>
+  <data name="Controls how long the AI model weights stay loaded in GPU VRAM after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep in VRAM forever." xml:space="preserve">
+    <value>Керує тим, як довго ваги моделі ШІ залишаються завантаженими у відеопам&apos;яті GPU після запиту. Формат Ollama (напр., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Використовуйте &apos;0&apos; для негайного видалення з пам&apos;яті або &apos;-1&apos; для постійного збереження у відеопам&apos;яті.</value>
+  </data>
   <data name="e.g. Local Server" xml:space="preserve">
     <value>наприклад, локальний сервер</value>
   </data>
