@@ -4,7 +4,6 @@ using Aiursoft.OllamaGateway.Services.FileStorage;
 
 using Aiursoft.OllamaGateway.Entities;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
 namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
 
 [TestClass]
