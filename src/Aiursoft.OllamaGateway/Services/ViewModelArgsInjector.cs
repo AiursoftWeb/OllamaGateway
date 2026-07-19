@@ -118,6 +118,8 @@ public class ViewModelArgsInjector(
         _ = localizer["Your API Keys"];
     
         _ = localizer["All API Keys"];
+    
+        _ = localizer["Delete Account"];
     }
 
     public void InjectSimple(
