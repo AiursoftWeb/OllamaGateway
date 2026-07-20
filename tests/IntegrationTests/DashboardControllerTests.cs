@@ -18,6 +18,20 @@ public class DashboardControllerTests : TestBase
     }
 
     [TestMethod]
+    public async Task GetIndex_AuthenticatedWithoutPermission_RedirectsToAccessDenied()
+    {
+        await RegisterAndLoginAsync();
+        var url = "/Dashboard/Index";
+
+        var response = await Http.GetAsync(url);
+
+        // Assert — a regular user without CanViewSystemContext should be denied.
+        Assert.AreEqual(System.Net.HttpStatusCode.Redirect, response.StatusCode);
+        var location = response.Headers.Location?.OriginalString ?? string.Empty;
+        Assert.IsTrue(location.Contains("Code403"), $"Expected redirect to access denied, got: {location}");
+    }
+
+    [TestMethod]
     public async Task GetIndex_Authenticated_ReturnsSuccess()
     {
         await LoginAsAdmin();

@@ -18,6 +18,7 @@ public class DashboardController(
     ActiveRequestTracker activeRequestTracker,
     IModelSelector modelSelector) : Controller
 {
+    [Authorize(Policy = AppPermissionNames.CanViewSystemContext)]
     [RenderInNavBar(
         NavGroupName = "Dashboard",
         NavGroupOrder = 1,
@@ -113,6 +114,7 @@ public class DashboardController(
         return this.StackView(model);
     }
 
+    [Authorize(Policy = AppPermissionNames.CanViewSystemContext)]
     [RenderInNavBar(
         NavGroupName = "Dashboard",
         NavGroupOrder = 1,
