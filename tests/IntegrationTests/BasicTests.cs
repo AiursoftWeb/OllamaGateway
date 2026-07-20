@@ -29,7 +29,7 @@ public class BasicTests : TestBase
             { "Password", password },
             { "ConfirmPassword", password }
         });
-        AssertRedirect(registerResponse, "/Dashboard/Index");
+        AssertRedirect(registerResponse, "/");
 
         // Step 2: Log off the user and assert a successful redirect.
         var homePageResponse = await Http.GetAsync("/Manage/Index");
@@ -44,7 +44,7 @@ public class BasicTests : TestBase
             { "EmailOrUserName", email },
             { "Password", password }
         });
-        AssertRedirect(loginResponse, "/Dashboard/Index");
+        AssertRedirect(loginResponse, "/");
 
         // Step 4: Verify the final login state by checking the manage page content.
         var finalHomePageResponse = await Http.GetAsync("/Manage/Index");
@@ -213,7 +213,7 @@ public class BasicTests : TestBase
             { "EmailOrUserName", email },
             { "Password", newPassword }
         });
-        AssertRedirect(newLoginResponse, "/Dashboard/Index");
+        AssertRedirect(newLoginResponse, "/");
     }
 
     [TestMethod]
