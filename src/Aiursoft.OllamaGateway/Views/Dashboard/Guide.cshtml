@@ -1,5 +1,7 @@
 @using Aiursoft.OllamaGateway.Entities
+@using Aiursoft.OllamaGateway.Services
 @model Aiursoft.OllamaGateway.Models.DashboardViewModels.GuideViewModel
+@inject IProviderConcurrencyLimiter ConcurrencyLimiter
 
 <div class="container-fluid p-0">
 
@@ -237,41 +239,63 @@
                 <div class="card-body">
                     @if (Model.Providers.Any())
                     {
-                        <div class="table-responsive mb-3">
-                            <table class="table table-sm table-borderless small mb-0">
-                                <thead><tr><th>@Localizer["Provider"]</th><th>@Localizer["MaxParallelism"]</th><th>@Localizer["Health Check Timeout"]</th><th>@Localizer["Behavior"]</th></tr></thead>
-                                <tbody>
-                                    @foreach (var p in Model.Providers)
-                                    {
-                                        <tr>
-                                            <td><strong>@p.Name</strong></td>
-                                            <td>
-                                                @if (p.MaxParallelism == 0)
-                                                {
-                                                    <span class="badge bg-success">@Localizer["Unlimited"]</span>
-                                                }
-                                                else
-                                                {
-                                                    <span class="badge bg-warning text-dark">@p.MaxParallelism</span>
-                                                }
-                                            </td>
-                                            <td><code>@p.HealthCheckTimeoutSeconds s</code></td>
-                                            <td class="small text-muted">
-                                                @if (p.MaxParallelism == 1) { <span>@Localizer["One request at a time — others queue"]</span> }
-                                                else if (p.MaxParallelism == 0) { <span>@Localizer["No limit"]</span> }
-                                                else { <span>@Localizer["Up to"] @p.MaxParallelism @Localizer["concurrent requests"]</span> }
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
+                        <div class="row g-3">
+                            @foreach (var p in Model.Providers)
+                            {
+                                var active = ConcurrencyLimiter.GetActiveCount(p.Id);
+                                var waiting = ConcurrencyLimiter.GetWaitingCount(p.Id);
+                                var limit = p.MaxParallelism;
+                                var isBusy = limit > 0 && active <= 0;
+                                var hasQueue = waiting > 0;
+
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="border rounded p-3 text-center @(hasQueue ? "border-warning bg-warning-subtle bg-opacity-10" : "")">
+                                        <strong class="d-block mb-2">@p.Name</strong>
+                                        @if (limit == 0)
+                                        {
+                                            <span class="badge bg-success mb-2">@Localizer["Unlimited"]</span>
+                                            <div class="small text-muted">@Localizer["No concurrency limit — requests pass through immediately"]</div>
+                                        }
+                                        else
+                                        {
+                                            @* House + People visualization *@
+                                            <div class="d-flex justify-content-center align-items-end gap-3 mb-2" style="min-height:80px;">
+                                                @* Waiting queue — outside the house *@
+                                                <div class="text-center">
+                                                    @for (int i = 0; i < Math.Min(waiting, 8); i++)
+                                                    {
+                                                        <i data-lucide="user" class="text-secondary d-block mx-auto" style="width:14px;height:14px;"></i>
+                                                    }
+                                                    @if (waiting == 0) { <div style="width:14px;height:14px;"></div> }
+                                                    <span class="badge bg-warning text-dark mt-1">@waiting @Localizer["waiting"]</span>
+                                                </div>
+                                                @* House with active requests inside *@
+                                                <div class="text-center position-relative" style="width:80px;">
+                                                    <i data-lucide="home" style="width:40px;height:40px;" class="@(isBusy ? "text-danger" : "text-success")"></i>
+                                                    <div class="mt-1">
+                                                        @for (int i = 0; i < Math.Min(limit - active, 6); i++)
+                                                        {
+                                                            <i data-lucide="user-check" class="text-success d-inline" style="width:12px;height:12px;"></i>
+                                                        }
+                                                    </div>
+                                                    <span class="badge @(isBusy ? "bg-danger" : "bg-success") mt-1">@(limit - active) @Localizer["processing"]</span>
+                                                </div>
+                                            </div>
+                                            <div class="small text-muted">
+                                                @Localizer["Limit"]: <strong>@limit</strong> &middot;
+                                                @Localizer["Health Check"]: <code>@p.HealthCheckTimeoutSeconds s</code>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
                         </div>
                     }
                     else
                     {
                         <p class="text-muted mb-0">@Localizer["No providers configured yet."]</p>
                     }
-                    <div class="p-2 bg-light rounded border border-danger">
+                    <div class="mt-3 p-2 bg-light rounded border border-danger">
                         <small class="text-danger-emphasis">
                             <i data-lucide="info" style="width:14px;height:14px;" class="me-1"></i>
                             @Localizer["Waiting in the concurrency queue does NOT consume the virtual model timeout. The timeout clock only starts after the slot is acquired. A request will wait indefinitely for its slot — the only way it stops waiting is if the client (browser / SDK) disconnects. A busy GPU does not cause the virtual model to give up on this backend."]
@@ -512,7 +536,8 @@
                                 <td>
                                     @if (Model.Providers.Any())
                                     {
-                                        <span>@string.Join(", ", Model.Providers.Select(p => $"<strong>{p.Name}</strong>: {p.HealthCheckTimeoutSeconds}s"))</span>
+                                        @foreach (var p in Model.Providers)
+                                    {<strong>@p.Name</strong><span>: @p.HealthCheckTimeoutSeconds s</span>if (p != Model.Providers.Last()) { <span>, </span> }}
                                     }
                                     else
                                     {

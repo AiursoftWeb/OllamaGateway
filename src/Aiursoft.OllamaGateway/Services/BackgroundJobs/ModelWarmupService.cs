@@ -62,13 +62,12 @@ public class ModelWarmupService(
         var underlyingUrl = provider.BaseUrl.TrimEnd('/');
         logger.LogInformation("Starting warmup for {Count} models on provider {Provider}...", warmupModels.Count, provider.Name);
 
-        using var client = httpClientFactory.CreateClient();
-
         int successCount = 0;
         var swTotal = System.Diagnostics.Stopwatch.StartNew();
 
         foreach (var warmupModel in warmupModels)
         {
+            using var client = httpClientFactory.CreateClient();
             client.Timeout = warmupModel.TimeoutSeconds.HasValue
                 ? TimeSpan.FromSeconds(warmupModel.TimeoutSeconds.Value)
                 : TimeSpan.FromMinutes(30);
