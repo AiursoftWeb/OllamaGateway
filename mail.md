@@ -13,10 +13,10 @@ T+0s    第一个用户请求到达
         客户端 → OllamaGateway → Ollama 后端：POST /api/chat
         Ollama 收到请求：模型不在显存里！开始从磁盘读 27GB...
 
-        同时，Gateway 里两把刀开始倒计时：
-          • 刀 A: client.Timeout = RequestTimeoutInMinutes（全局设置，5 分钟）
-          • 刀 B: cts.CancelAfter = HealthCheckTimeout（虚拟模型字段，300 秒）
-        两个都是 5 分钟，同一个请求，两把刀同时砍。
+        同时，Gateway 里两个独立的计时器开始倒计时：
+          • 计时器 1: client.Timeout = 全局设置里的 RequestTimeoutInMinutes（5 分钟）
+          • 计时器 2: cts.CancelAfter = 虚拟模型字段 HealthCheckTimeout（300 秒）
+        两个都是 5 分钟，同一个请求，两个计时器同时倒数。
 
 T+1s    第二个请求来了 → MaxParallelism=1，没有空闲槽，排队
 T+2s    第三个请求来了 → 继续排队
@@ -26,7 +26,7 @@ T+2s    第三个请求来了 → 继续排队
 
 T+299s  就快加载完了！就差最后一点！
 
-T+300s  两把刀同时落下。
+T+300s  两个计时器同时到点。
         Gateway 主动断开 TCP 连接。
         Ollama 视角：客户端跑路了？那我白搬了 27GB？
         → aborting load，已加载的数据全废，显存清空。
@@ -35,11 +35,11 @@ T+300s  两把刀同时落下。
         但只有这一个 Provider，选出来的还是它。
 
 T+301s  重试！POST /api/chat → Ollama。
-        两把刀重新开始倒计时：300s...
+        两个计时器重新倒计时：300s...
         Ollama 重新从磁盘读 27GB...
 
-T+601s  又砍！ReportFailure 再 +1。
-T+901s  再砍！ReportFailure 攒够 3 票 → 熔断器 Ban 该后端 1 分钟。
+T+601s  又到点！ReportFailure 再 +1。
+T+901s  再到点！ReportFailure 攒够 3 票 → 熔断器 Ban 该后端 1 分钟。
         此刻所有请求全部失败。
 
         BackendHealthMonitor 后台探活也超时 → IsHealthy = false, IsReady = false。
@@ -72,7 +72,7 @@ T+901s  再砍！ReportFailure 攒够 3 票 → 熔断器 Ban 该后端 1 分钟
 
 ### 谎言 1：两个超时互不知情
 
-`BackendInvoker` 同时设置 `client.Timeout = 全局设置` 和 `cts.CancelAfter = 虚拟模型字段`。名字不同，位置不同，但掐的是同一个请求。**管理员在两个页面各改各的，没人知道有两把刀。**
+`BackendInvoker` 同时设置 `client.Timeout = 全局设置` 和 `cts.CancelAfter = 虚拟模型字段`。名字不同，位置不同，但掐的是同一个请求。**管理员在两个页面各改各的，没人知道有两个计时器在同时倒数。**
 
 ### 谎言 2："排队不扣超时"是假的
 
@@ -90,7 +90,7 @@ Provider 页面精心配置了 Warmup——选模型、设 NumCtx。但 `keep_al
 
 ## 重构后：现在捋顺了吗？
 
-**捋顺了。** 现在只有一把刀，一个地方改。
+**捋顺了。** 现在只有一个计时器，一个地方改。
 
 用户请求走过这些步骤：
 
@@ -116,11 +116,11 @@ Provider 页面精心配置了 Warmup——选模型、设 NumCtx。但 `keep_al
 | **预热面** | 提供商 → Warmup → 每个模型的 Timeout | 1800s | 预热加载等多久 |
 | **UI 面** | 硬编码 | 3s | 管理页面快速探活，不写数据库 |
 
-**一刀一个坑，谁也不砍谁。** 管理员只需要去一个地方改一个值。
+**一层一个计时器，各管各的，互不干扰。** 管理员只需要去一个地方改一个值。
 
 关键代码改动：
 - `HealthCheckTimeout` 重命名为 `RequestTimeoutSeconds`，默认 600s（用 `[Column]` 免迁移）
-- `BackendInvoker` 两刀合一，只读虚拟模型字段
+- `BackendInvoker` 两个计时器合并为一个，只读虚拟模型字段
 - 并发排队时 `cts.CancelAfter` 移到 acquire 之后——排多久都不扣超时
 - 全局设置里的 `RequestTimeoutInMinutes` 彻底删除
 - Provider 新增 `HealthCheckTimeoutSeconds`，默认 60s，归属实体而非全局设置
