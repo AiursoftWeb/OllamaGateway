@@ -4,18 +4,65 @@
 
 我们的 ollama.aiursoft.com 挂着一个 27GB 的 Qwen 大模型（qwen3.6:27b-q8_0）。某天用户反馈：**"模型永远用不了，一直转圈，服务器风扇狂转一晚上。"**
 
-排查后发现一个死亡螺旋：
+### 案发过程还原
 
 ```
-1. 客户端请求 → OllamaGateway → Ollama 后端
-2. 模型不在显存，Ollama 开始从磁盘读 27GB
-3. 5 分钟后，Gateway 两把超时刀同时落下 → 断开连接
-4. Ollama 看到客户端跑了 → 放弃加载，卸载模型
-5. 重试 → 又从磁盘重新读 27GB → 又超时 → 又卸载...
-6. GPU 整晚在加载→卸载→加载→卸载，白烧电，零服务
+时间线（每次循环一模一样）：
+
+T+0s    第一个用户请求到达
+        客户端 → OllamaGateway → Ollama 后端：POST /api/chat
+        Ollama 收到请求：模型不在显存里！开始从磁盘读 27GB...
+
+        同时，Gateway 里两把刀开始倒计时：
+          • 刀 A: client.Timeout = RequestTimeoutInMinutes（全局设置，5 分钟）
+          • 刀 B: cts.CancelAfter = HealthCheckTimeout（虚拟模型字段，300 秒）
+        两个都是 5 分钟，同一个请求，两把刀同时砍。
+
+T+1s    第二个请求来了 → MaxParallelism=1，没有空闲槽，排队
+T+2s    第三个请求来了 → 继续排队
+        ...后面所有请求全在排队...
+
+        此时 Ollama 还在读盘：24GB/27GB... 25GB/27GB... 26GB/27GB...
+
+T+299s  就快加载完了！就差最后一点！
+
+T+300s  两把刀同时落下。
+        Gateway 主动断开 TCP 连接。
+        Ollama 视角：客户端跑路了？那我白搬了 27GB？
+        → aborting load，已加载的数据全废，显存清空。
+
+        BackendInvoker 捕获超时异常 → ReportFailure → SelectBackend 选新后端。
+        但只有这一个 Provider，选出来的还是它。
+
+T+301s  重试！POST /api/chat → Ollama。
+        两把刀重新开始倒计时：300s...
+        Ollama 重新从磁盘读 27GB...
+
+T+601s  又砍！ReportFailure 再 +1。
+T+901s  再砍！ReportFailure 攒够 3 票 → 熔断器 Ban 该后端 1 分钟。
+        此刻所有请求全部失败。
+
+        BackendHealthMonitor 后台探活也超时 → IsHealthy = false, IsReady = false。
+        熔断器 + 健康监控，双重死刑。
+
+        用户视角：所有请求挂着转圈，最后全 503。
+        管理员视角：Dashboard 飘红，不知道原因。
+        Ollama 视角：我一晚上搬运了三次 27GB，全白干了。
+        GPU 视角：加载→卸载→加载→卸载→加载→卸载，风扇狂转，零服务。
 ```
 
-根因：**系统里有两个超时同时控制同一个请求**，各自独立倒计时，谁先到谁赢。一个是全局设置 `RequestTimeoutInMinutes`（当时设了 5 分钟），一个是虚拟模型字段 `HealthCheckTimeout`（当时设了 300 秒）。管理员可能以为改一个就够了，实际上两个都在杀。
+### 这个配置到底在哪？为什么这么乱？
+
+死亡螺旋的根本原因，是**两个不同位置的超时配置同时作用于同一个请求**：
+
+| 当时的配置 | 在哪改 | 当时的值 | 控制什么 |
+|-----------|--------|---------|---------|
+| `RequestTimeoutInMinutes` | 管理后台 → 全局设置 | 5 分钟 | HttpClient.Timeout |
+| `HealthCheckTimeout` | 管理后台 → 虚拟模型 → 编辑 | 300 秒 | CancellationToken.CancelAfter |
+
+**两个独立的配置页面，两个独立的值，掐的是同一件事。** 管理员改了虚拟模型的超时（以为够了），但全局设置的 5 分钟也同时在倒计时。改一个不够，得两个都改——而且没有人告诉管理员有两个。
+
+更糟的是，`MaxParallelism=1` 让后续请求全排队，没有 fallback（只有一个 Provider），所以一个请求卡住，全部卡住。Ollama 每次快要加载完的时候被掐断，前功尽弃，重试又从零开始。
 
 ---
 
@@ -41,9 +88,26 @@ Provider 页面精心配置了 Warmup——选模型、设 NumCtx。但 `keep_al
 
 ---
 
-## 重构：4 层超时，层清责明
+## 重构后：现在捋顺了吗？
 
-砍掉互相砍的两把刀，重新设计为互不干涉的 4 层：
+**捋顺了。** 现在只有一把刀，一个地方改。
+
+用户请求走过这些步骤：
+
+```
+客户端请求
+  → 认证 & API 限流（Hang 模式排队不扣超时）
+  → 虚拟模型选择（PriorityFallback 选出优先级最高的后端）
+  → Provider 并发槽排队（MaxParallelism=1 时排队，不扣超时）
+  → 槽到手！⏱️ 超时计时器启动（只在这里开始倒计时）
+  → POST /api/chat → 实体模型（收到响应头 = 超时解除，流式不限时）
+```
+
+**排队全部免费。** 无论是 API 限流排队还是并发槽排队，都在超时计时器启动之前。`RequestTimeoutSeconds` 只算真正发给 Ollama 之后的时间。
+
+**Fallback 也清楚了。** 第 1 个后端超时 → 换第 2 个 → 全新计时器，全新 600 秒 → 收到响应头，超时解除。
+
+### 新设计：4 层互不干涉
 
 | 层 | 在哪配置 | 默认值 | 控制什么 |
 |---|---------|--------|---------|
