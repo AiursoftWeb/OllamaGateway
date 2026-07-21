@@ -40,8 +40,8 @@ public class BackendHealthMonitor(
                 }
                 else
                 {
-                    var availableModels = await ollamaService.GetDetailedModelsAsync(provider.BaseUrl, provider.BearerToken);
-                    var runningModels = await ollamaService.GetRunningModelsAsync(provider.BaseUrl, provider.BearerToken);
+                    var availableModels = await ollamaService.GetDetailedModelsAsync(provider.BaseUrl, provider.BearerToken, provider.HealthCheckTimeoutSeconds);
+                    var runningModels = await ollamaService.GetRunningModelsAsync(provider.BaseUrl, provider.BearerToken, provider.HealthCheckTimeoutSeconds);
 
                     var availableModelNames = availableModels?.Select(m => m.Name).ToHashSet() ?? new HashSet<string>();
                     var runningModelNames = runningModels?.Select(m => m.Name).ToHashSet() ?? new HashSet<string>();

@@ -12,7 +12,9 @@ namespace Aiursoft.OllamaGateway.Controllers;
 [Authorize(Policy = AppPermissionNames.CanManageProviders)]
 public class OllamaProvidersController(
     TemplateDbContext dbContext,
-    OllamaService ollamaService) : Controller
+    OllamaService ollamaService,
+    IModelSelector modelSelector,
+    ILogger<OllamaProvidersController> logger) : Controller
 {
     [RenderInNavBar(
         NavGroupName = "Ollama Gateway",
@@ -43,7 +45,7 @@ public class OllamaProvidersController(
                 };
             }
 
-            var runningModels = await ollamaService.GetRunningModelsAsync(p.BaseUrl, p.BearerToken, TimeSpan.FromSeconds(3));
+            var runningModels = await ollamaService.GetRunningModelsAsync(p.BaseUrl, p.BearerToken, timeoutSeconds: 3);
             var version = await ollamaService.GetVersionAsync(p.BaseUrl, p.BearerToken);
             return new ProviderStatus
             {
@@ -71,6 +73,7 @@ public class OllamaProvidersController(
 
     public class TestRequest
     {
+        public int? ProviderId { get; set; }
         public string? BaseUrl { get; set; }
         public string? BearerToken { get; set; }
         public ProviderType ProviderType { get; set; } = ProviderType.Ollama;
@@ -84,18 +87,42 @@ public class OllamaProvidersController(
             return Json(new { success = false, message = "URL is empty." });
         }
 
+        List<string>? models;
         if (request.ProviderType == ProviderType.OpenAI)
         {
-            var oaiModels = await ollamaService.GetOpenAIAvailableModelsAsync(request.BaseUrl, request.BearerToken);
-            if (oaiModels == null)
-                return Json(new { success = false, message = "Failed to connect to the OpenAI-compatible server. Ensure the URL and token are correct." });
-            return Json(new { success = true, models = oaiModels });
+            models = await ollamaService.GetOpenAIAvailableModelsAsync(request.BaseUrl, request.BearerToken);
+        }
+        else
+        {
+            models = await ollamaService.GetUnderlyingModelsAsync(request.BaseUrl, request.BearerToken);
         }
 
-        var models = await ollamaService.GetUnderlyingModelsAsync(request.BaseUrl, request.BearerToken);
         if (models == null)
         {
-            return Json(new { success = false, message = "Failed to connect to Ollama. Ensure the URL is correct and Ollama is running." });
+            return Json(new { success = false, message = "Failed to connect to the provider or parse models." });
+        }
+
+        // Test succeeded — revive the provider if this is an existing one (editing, not creating)
+        if (request.ProviderId.HasValue)
+        {
+            var backends = await dbContext.VirtualModelBackends
+                .Where(b => b.ProviderId == request.ProviderId.Value)
+                .ToListAsync();
+
+            foreach (var backend in backends)
+            {
+                backend.IsHealthy = true;
+                backend.IsReady = true;
+                modelSelector.ReportSuccess(backend.Id);
+            }
+
+            if (backends.Any())
+            {
+                await dbContext.SaveChangesAsync();
+                logger.LogInformation(
+                    "Provider {ProviderId} tested successfully — manually revived: {Count} backends marked healthy and un-banned",
+                    request.ProviderId.Value, backends.Count);
+            }
         }
 
         return Json(new { success = true, models });
@@ -143,7 +170,8 @@ public class OllamaProvidersController(
             BearerToken = model.BearerToken,
             KeepAlive = model.KeepAlive,
             ProviderType = model.ProviderType,
-            MaxParallelism = model.MaxParallelism
+            MaxParallelism = model.MaxParallelism,
+            HealthCheckTimeoutSeconds = model.HealthCheckTimeoutSeconds
         };
 
         dbContext.OllamaProviders.Add(provider);
@@ -171,7 +199,8 @@ public class OllamaProvidersController(
             BearerToken = provider.BearerToken,
             KeepAlive = provider.KeepAlive,
             ProviderType = provider.ProviderType,
-            MaxParallelism = provider.MaxParallelism
+            MaxParallelism = provider.MaxParallelism,
+            HealthCheckTimeoutSeconds = provider.HealthCheckTimeoutSeconds
         };
         ViewData["Id"] = id;
         ViewData["PhysicalModels"] = physicalModels;
@@ -210,7 +239,7 @@ public class OllamaProvidersController(
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> UpdateWarmupOptions(int id, string modelName, int? numCtx, bool? isEmbedding)
+    public async Task<IActionResult> UpdateWarmupOptions(int id, string modelName, int? numCtx, bool? isEmbedding, int? timeoutSeconds)
     {
         var provider = await dbContext.OllamaProviders.FindAsync(id);
         if (provider == null) return NotFound();
@@ -221,6 +250,7 @@ public class OllamaProvidersController(
         {
             target.NumCtx = numCtx;
             target.IsEmbedding = isEmbedding ?? false;
+            target.TimeoutSeconds = timeoutSeconds;
             provider.WarmupModelsJson = System.Text.Json.JsonSerializer.Serialize(warmupModels);
             await dbContext.SaveChangesAsync();
         }
@@ -249,6 +279,7 @@ public class OllamaProvidersController(
         provider.KeepAlive = model.KeepAlive;
         provider.ProviderType = model.ProviderType;
         provider.MaxParallelism = model.MaxParallelism;
+        provider.HealthCheckTimeoutSeconds = model.HealthCheckTimeoutSeconds;
 
         await dbContext.SaveChangesAsync();
         return RedirectToAction(nameof(Index));

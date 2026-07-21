@@ -66,7 +66,7 @@ public class MockUpstreamHandler : HttpMessageHandler
 
 public class TestStartup : Startup
 {
-    public static Mock<OllamaService> MockOllamaService { get; } = new(null!, null!, null!);
+    public static Mock<OllamaService> MockOllamaService { get; } = new(null!, null!);
     public static Mock<ClickhouseDbContext> MockClickhouse { get; } = new();
 
     public override void ConfigureServices(IConfiguration configuration, IWebHostEnvironment environment, IServiceCollection services)

@@ -164,7 +164,7 @@ public class ModelSelectorTests
     public async Task TestConcurrentSlowRequestsTriggerBan()
     {
         // Scenario: 3 requests hit the same backend simultaneously.
-        // The backend is slow (each request takes > HealthCheckTimeout),
+        // The backend is slow (each request takes > RequestTimeoutSeconds),
         // so all 3 timeout. This should ban the backend after the 3rd failure.
         var vm = new VirtualModel
         {

@@ -121,16 +121,6 @@ public class GlobalSettingsService(
     public async Task<string> GetDefaultEmbeddingModelAsync() => await GetSettingValueAsync(SettingsMap.DefaultEmbeddingModel);
     public async Task<bool> GetAllowAnonymousApiCallAsync() => await GetBoolSettingAsync(SettingsMap.AllowAnonymousApiCall);
     public async Task<string> GetFakeOllamaVersionAsync() => await GetSettingValueAsync(SettingsMap.FakeOllamaVersion);
-    public async Task<TimeSpan> GetRequestTimeoutAsync()
-    {
-        var minutesStr = await GetSettingValueAsync(SettingsMap.RequestTimeoutInMinutes);
-        if (int.TryParse(minutesStr, out var minutes))
-        {
-            return TimeSpan.FromMinutes(minutes);
-        }
-        return TimeSpan.FromMinutes(10);
-    }
-
     public async Task SetProjectNameAsync(string value) => await UpdateSettingAsync(SettingsMap.ProjectName, value);
     public async Task SetBrandNameAsync(string value) => await UpdateSettingAsync(SettingsMap.BrandName, value);
     public async Task SetBrandHomeUrlAsync(string value) => await UpdateSettingAsync(SettingsMap.BrandHomeUrl, value);

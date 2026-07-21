@@ -50,14 +50,4 @@ public class GlobalSettingsIntegrationTests : TestBase
             // Success
         }
     }
-
-    [TestMethod]
-    public async Task TestRequestTimeout()
-    {
-        var settingsService = GetService<GlobalSettingsService>();
-
-        await settingsService.UpdateSettingAsync(SettingsMap.RequestTimeoutInMinutes, "15");
-        var timeout = await settingsService.GetRequestTimeoutAsync();
-        Assert.AreEqual(TimeSpan.FromMinutes(15), timeout);
-    }
 }

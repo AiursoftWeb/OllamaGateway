@@ -63,14 +63,15 @@ public class ModelWarmupService(
         logger.LogInformation("Starting warmup for {Count} models on provider {Provider}...", warmupModels.Count, provider.Name);
 
         using var client = httpClientFactory.CreateClient();
-        // Warmup may need to load large models into GPU/RAM, which can take minutes
-        client.Timeout = TimeSpan.FromMinutes(10);
 
         int successCount = 0;
         var swTotal = System.Diagnostics.Stopwatch.StartNew();
 
         foreach (var warmupModel in warmupModels)
         {
+            client.Timeout = warmupModel.TimeoutSeconds.HasValue
+                ? TimeSpan.FromSeconds(warmupModel.TimeoutSeconds.Value)
+                : TimeSpan.FromMinutes(30);
             try
             {
                 if (warmupModel.IsEmbedding)

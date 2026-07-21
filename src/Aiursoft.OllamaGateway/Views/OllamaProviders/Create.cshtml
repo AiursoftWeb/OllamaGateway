@@ -63,8 +63,21 @@
                             <input asp-for="MaxParallelism" class="form-control" type="number" min="0" max="1000" />
                             <div class="form-text small">
                                 @Localizer["Maximum number of concurrent requests sent to this provider. 0 = unlimited (default). Set to 1 to serialize requests and prevent the backend from being overwhelmed."]
+                                <span class="d-block mt-1 text-info-emphasis">
+                                    <i data-lucide="info" style="width:12px;height:12px;" class="me-1"></i>
+                                    @Localizer["Waiting in the concurrency queue does NOT consume the virtual model's Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy."]
+                                </span>
                             </div>
                             <span asp-validation-for="MaxParallelism" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="HealthCheckTimeoutSeconds" class="form-label">@Localizer["Health Check Timeout (s)"]</label>
+                            <input asp-for="HealthCheckTimeoutSeconds" class="form-control" type="number" min="1" max="3600" />
+                            <div class="form-text small">
+                                @Localizer["How long the background health monitor waits when probing this provider's /api/tags and /api/ps endpoints. Set higher for providers with slow storage (HDD/NAS) where scanning model directories may take tens of seconds."]
+                            </div>
+                            <span asp-validation-for="HealthCheckTimeoutSeconds" class="text-danger"></span>
                         </div>
 
                         <div id="testResult" class="alert d-none mb-3"></div>

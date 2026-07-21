@@ -40,7 +40,7 @@ public class DialectProxyTests : TestBase
                 new() { Name = PhysicalModelName, Size = 1024 * 1024 * 1024L },
                 new() { Name = PhysicalEmbeddingModel, Size = 512 * 1024 * 1024L }
             });
-        TestStartup.MockOllamaService.Setup(s => s.GetRunningModelsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<TimeSpan?>()))
+        TestStartup.MockOllamaService.Setup(s => s.GetRunningModelsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>()))
             .ReturnsAsync(new List<OllamaService.OllamaRunningModel>
             {
                 new() { Name = PhysicalModelName }

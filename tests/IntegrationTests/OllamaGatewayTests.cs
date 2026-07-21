@@ -31,7 +31,7 @@ public class OllamaGatewayTests : TestBase
                 new OllamaService.OllamaModel { Name = "nomic-embed-text", Size = 512 * 1024 * 1024L }
             });
 
-        TestStartup.MockOllamaService.Setup(s => s.GetRunningModelsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<TimeSpan?>()))
+        TestStartup.MockOllamaService.Setup(s => s.GetRunningModelsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>()))
             .ReturnsAsync(new List<OllamaService.OllamaRunningModel>
             {
                 new OllamaService.OllamaRunningModel { Name = "llama3.2" }

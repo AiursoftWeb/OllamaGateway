@@ -154,7 +154,7 @@ public class SelfReferentialProviderTests : TestBase
 
         // If this is called, the old recursive code path is still present
         TestStartup.MockOllamaService.Verify(
-            s => s.GetRunningModelsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<TimeSpan?>()),
+            s => s.GetRunningModelsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>()),
             Times.Never,
             "GET /api/ps must not call GetRunningModelsAsync on any upstream provider. " +
             "Doing so causes infinite recursion when a provider points back at this gateway.");

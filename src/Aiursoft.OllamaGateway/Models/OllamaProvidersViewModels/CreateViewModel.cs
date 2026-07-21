@@ -32,4 +32,7 @@ public class CreateViewModel : UiStackLayoutViewModel
 
     [Range(0, 1000)]
     public int MaxParallelism { get; set; }
+
+    [Range(1, 3600)]
+    public int HealthCheckTimeoutSeconds { get; set; } = 60;
 }

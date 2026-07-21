@@ -163,7 +163,7 @@ public class AnthropicController : ControllerBase
                     {
                         Name = modelToUse,
                         MaxRetries = 1,
-                        HealthCheckTimeout = 40,
+                        RequestTimeoutSeconds = 600,
                     };
                     backend = new VirtualModelBackend
                     {

@@ -38,8 +38,9 @@
                                 <input asp-for="MaxRetries" class="form-control" type="number" />
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label asp-for="HealthCheckTimeout" class="form-label">@Localizer["Try Timeout (s)"]</label>
-                                <input asp-for="HealthCheckTimeout" class="form-control" type="number" />
+                                <label asp-for="RequestTimeoutSeconds" class="form-label">@Localizer["Request Timeout (s)"]</label>
+                                <i data-lucide="help-circle" class="ms-1 text-muted" style="width:14px;height:14px;cursor:help;" title="@Localizer["This timeout ONLY applies to requests sent from the gateway to the underlying backend model (e.g. Ollama). It does NOT include time spent in authentication, API key rate-limit queuing, or concurrency slot waiting. The clock starts when the gateway actually sends the HTTP request to the backend. Once the backend starts responding (sends HTTP headers), the timeout is passed — streaming can continue as long as the client stays connected. For large models that must be loaded from disk into GPU VRAM, set this higher (e.g. 600–1800 seconds)."]"></i>
+                                <input asp-for="RequestTimeoutSeconds" class="form-control" type="number" placeholder="600" />
                             </div>
                         </div>
 

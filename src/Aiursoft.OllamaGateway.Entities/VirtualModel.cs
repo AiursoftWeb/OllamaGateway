@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Aiursoft.OllamaGateway.Entities;
@@ -34,7 +35,8 @@ public class VirtualModel
 
     public int MaxRetries { get; set; } = 3;
 
-    public int HealthCheckTimeout { get; set; } = 40;
+    [Column("HealthCheckTimeout")]
+    public int RequestTimeoutSeconds { get; set; } = 600;
 
     public bool? Thinking { get; set; }
 

@@ -207,7 +207,7 @@ public class VirtualModelsController(
             Type = model.Type,
             SelectionStrategy = model.SelectionStrategy,
             MaxRetries = model.MaxRetries,
-            HealthCheckTimeout = model.HealthCheckTimeout,
+            RequestTimeoutSeconds = model.RequestTimeoutSeconds,
             Thinking = model.Thinking,
             NumCtx = model.NumCtx,
             Temperature = model.Temperature,
@@ -264,7 +264,7 @@ public class VirtualModelsController(
             Type = virtualModel.Type,
             SelectionStrategy = virtualModel.SelectionStrategy,
             MaxRetries = virtualModel.MaxRetries,
-            HealthCheckTimeout = virtualModel.HealthCheckTimeout,
+            RequestTimeoutSeconds = virtualModel.RequestTimeoutSeconds,
             Thinking = virtualModel.Thinking,
             NumCtx = virtualModel.NumCtx,
             Temperature = virtualModel.Temperature,
@@ -345,7 +345,7 @@ public class VirtualModelsController(
         virtualModel.Type = model.Type;
         virtualModel.SelectionStrategy = model.SelectionStrategy;
         virtualModel.MaxRetries = model.MaxRetries;
-        virtualModel.HealthCheckTimeout = model.HealthCheckTimeout;
+        virtualModel.RequestTimeoutSeconds = model.RequestTimeoutSeconds;
         virtualModel.Thinking = model.Thinking;
         virtualModel.NumCtx = model.NumCtx;
         virtualModel.Temperature = model.Temperature;

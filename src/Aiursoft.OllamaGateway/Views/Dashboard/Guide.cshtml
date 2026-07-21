@@ -1,0 +1,542 @@
+@using Aiursoft.OllamaGateway.Entities
+@model Aiursoft.OllamaGateway.Models.DashboardViewModels.GuideViewModel
+
+<div class="container-fluid p-0">
+
+    @* === Error: Default model not found === *@
+    @if (Model.DefaultVirtualModel == null)
+    {
+        <div class="alert alert-danger d-flex align-items-center shadow-sm" role="alert">
+            <i data-lucide="alert-octagon" class="me-3 flex-shrink-0" style="width:28px;height:28px;"></i>
+            <div>
+                <h5 class="alert-heading mb-1">@Localizer["Default Chat Model Not Found!"]</h5>
+                <p class="mb-0">
+                    @Localizer["The global default chat model is set to"] <strong><code>@Model.DefaultChatModelName</code></strong>,
+                    @Localizer["but no virtual model with that name and type 'Chat' exists in the database."]
+                    <a href="/GlobalSettings" class="alert-link">@Localizer["Fix it here → Global Settings"]</a>
+                    @Localizer["or"]
+                    <a href="/VirtualModels/Create?type=Chat" class="alert-link">@Localizer["create it here → New Virtual Model"]</a>.
+                </p>
+            </div>
+        </div>
+    }
+
+    <div class="row mb-3">
+        <div class="col-auto">
+            <h1 class="h3 mb-0">@Localizer["Architecture Guide"]</h1>
+            <small class="text-muted">@Localizer["How a request flows through the Ollama Gateway — from client to backend"]</small>
+        </div>
+    </div>
+
+    @* === Step 1: Client === *@
+    <div class="row justify-content-center mb-3">
+        <div class="col-12 col-lg-10">
+            <div class="card border-primary shadow-sm">
+                <div class="card-body text-center py-4">
+                    <div class="d-inline-flex align-items-center justify-content-center bg-primary-subtle rounded-circle mb-3" style="width:64px;height:64px;">
+                        <i data-lucide="globe" style="width:32px;height:32px;" class="text-primary"></i>
+                    </div>
+                    <h4 class="text-primary">@Localizer["1. Client Request"]</h4>
+                    <p class="mb-1"><code class="fs-6">POST /api/chat</code>&nbsp;&nbsp;<code class="fs-6">POST /v1/chat/completions</code></p>
+                    <small class="text-muted">
+                        @Localizer["Any OpenAI-compatible or Ollama-native client sends a request."]
+                        @if (!string.IsNullOrEmpty(Model.DefaultChatModelName))
+                        {
+                            <span>@Localizer["Without specifying a model, the gateway uses"] <code>@Model.DefaultChatModelName</code>.</span>
+                        }
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mb-3">
+        <div class="col-auto text-center">
+            <i data-lucide="arrow-down" class="text-muted" style="width:28px;height:28px;"></i>
+        </div>
+    </div>
+
+    @* === Step 2: Auth & Rate Limit === *@
+    <div class="row justify-content-center mb-3">
+        <div class="col-12 col-lg-10">
+            <div class="card border-warning shadow-sm">
+                <div class="card-header bg-warning-subtle">
+                    <h5 class="card-title mb-0 text-warning-emphasis">
+                        <i data-lucide="shield-check" class="me-2" style="width:20px;height:20px;"></i>
+                        @Localizer["2. Authentication & Rate Limiting"]
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="border rounded p-3 h-100">
+                                <h6 class="fw-bold"><i data-lucide="key" class="me-1" style="width:16px;height:16px;"></i> @Localizer["API Key Verification"]</h6>
+                                <p class="small text-muted mb-0">
+                                    @Localizer["Bearer token or x-api-key is validated."]
+                                    <strong>@Model.TotalApiKeys</strong> @Localizer["keys in the system."]
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="border rounded p-3 h-100">
+                                <h6 class="fw-bold"><i data-lucide="gauge" class="me-1" style="width:16px;height:16px;"></i> @Localizer["Per-Key Rate Limiter"]</h6>
+                                <p class="small text-muted mb-2">@Localizer["Each API key has its own rate-limit window. Two modes:"]</p>
+                                <ul class="small text-muted mb-0 ps-3">
+                                    <li><strong>@Localizer["Hang mode"]</strong>: @Localizer["Queue until a slot opens — does NOT consume the virtual model timeout."]</li>
+                                    <li><strong>@Localizer["Reject mode"]</strong>: @Localizer["Immediately return HTTP 429."]</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-2 p-2 bg-light rounded border border-warning">
+                        <small class="text-warning-emphasis">
+                            <i data-lucide="info" style="width:14px;height:14px;" class="me-1"></i>
+                            @Localizer["Rate-limiting happens BEFORE the virtual model timeout starts. Queuing here is free."]
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mb-3">
+        <div class="col-auto text-center">
+            <i data-lucide="arrow-down" class="text-muted" style="width:28px;height:28px;"></i>
+        </div>
+    </div>
+
+    @* === Step 3: Virtual Model === *@
+    <div class="row justify-content-center mb-3">
+        <div class="col-12 col-lg-10">
+            <div class="card border-info shadow-sm">
+                <div class="card-header bg-info-subtle">
+                    <h5 class="card-title mb-0 text-info-emphasis">
+                        <i data-lucide="cpu" class="me-2" style="width:20px;height:20px;"></i>
+                        @Localizer["3. Virtual Model"]
+                        @if (Model.DefaultVirtualModel != null)
+                        {
+                            <span>— <code class="fs-5">@Model.DefaultVirtualModel.Name</code></span>
+                            <span class="badge bg-info ms-2">@Model.DefaultVirtualModel.Type</span>
+                        }
+                    </h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.DefaultVirtualModel != null)
+                    {
+                        var vm = Model.DefaultVirtualModel;
+                        <div class="row g-3">
+                            <div class="col-lg-4">
+                                <div class="border rounded p-3 h-100">
+                                    <h6 class="fw-bold"><i data-lucide="sliders-horizontal" class="me-1" style="width:16px;height:16px;"></i> @Localizer["Configuration"]</h6>
+                                    <table class="table table-sm small mb-0 mt-2">
+                                        <tr><td class="text-muted">@Localizer["Strategy"]</td><td><span class="badge bg-secondary">@vm.SelectionStrategy</span></td></tr>
+                                        <tr><td class="text-muted">@Localizer["Max Retries"]</td><td><strong>@vm.MaxRetries</strong></td></tr>
+                                        <tr>
+                                            <td class="text-muted">@Localizer["Request Timeout"]</td>
+                                            <td>
+                                                <strong>@vm.RequestTimeoutSeconds s</strong>
+                                                <i data-lucide="help-circle" class="ms-1 text-muted" style="width:12px;height:12px;cursor:help;" title="@Localizer["How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies."]"></i>
+                                            </td>
+                                        </tr>
+                                        <tr><td class="text-muted">@Localizer["Temperature"]</td><td>@(vm.Temperature?.ToString() ?? "—")</td></tr>
+                                        <tr><td class="text-muted">@Localizer["NumCtx"]</td><td>@(vm.NumCtx?.ToString() ?? "—")</td></tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="border rounded p-3 h-100">
+                                    <h6 class="fw-bold"><i data-lucide="server" class="me-1" style="width:16px;height:16px;"></i> @Localizer["Backends"] (@vm.VirtualModelBackends.Count)
+                                    </h6>
+                                    @if (vm.VirtualModelBackends.Any())
+                                    {
+                                        <table class="table table-sm small mb-0 mt-2">
+                                            <thead><tr><th>#</th><th>@Localizer["Model"]</th><th>@Localizer["Provider"]</th><th>@Localizer["Pri"]</th></tr></thead>
+                                            <tbody>
+                                                @{ int idx = 1; }
+                                                @foreach (var b in vm.VirtualModelBackends.OrderBy(b => b.Priority))
+                                                {
+                                                    <tr>
+                                                        <td>@idx</td>
+                                                        <td><code class="small">@b.UnderlyingModelName</code></td>
+                                                        <td><small>@(b.Provider?.Name ?? "—")</small></td>
+                                                        <td>@b.Priority</td>
+                                                    </tr>
+                                                    idx++;
+                                                }
+                                            </tbody>
+                                        </table>
+                                        <p class="small text-muted mt-2 mb-0">
+                                            @Localizer["Strategy"]: <strong>@vm.SelectionStrategy</strong> —
+                                            @if (vm.SelectionStrategy == SelectionStrategy.PriorityFallback)
+                                            {
+                                                <span>@Localizer["Tries backends from lowest priority to highest. If backend #1 fails or times out, falls back to #2, then #3."]</span>
+                                            }
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p class="small text-muted mb-0">@Localizer["No backends configured for this virtual model."]</p>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="border rounded p-3 h-100">
+                                    <h6 class="fw-bold"><i data-lucide="git-branch" class="me-1" style="width:16px;height:16px;"></i> @Localizer["Fallback Timeline"]
+                                    </h6>
+                                    <p class="small text-muted mb-2">
+                                        @Localizer["With"] @vm.MaxRetries @Localizer["retries and"] @vm.RequestTimeoutSeconds s @Localizer["timeout:"]
+                                    </p>
+                                    <div class="d-flex align-items-center small mb-1">
+                                        @for (int i = 0; i < Math.Min(vm.MaxRetries, vm.VirtualModelBackends.Count); i++)
+                                        {
+                                            <div class="bg-info-subtle border border-info rounded px-2 py-1 me-1 text-center" style="min-width:60px;">
+                                                <div class="fw-bold">@vm.RequestTimeoutSeconds s</div>
+                                                <div class="text-muted" style="font-size:10px;">后端 @(i+1)</div>
+                                            </div>
+                                            if (i < Math.Min(vm.MaxRetries, vm.VirtualModelBackends.Count) - 1)
+                                            {
+                                                <span class="me-1">→</span>
+                                            }
+                                        }
+                                        <div class="fw-bold ms-1 text-danger" style="font-size:11px;">
+                                            @Localizer["Max"] @(vm.MaxRetries * vm.RequestTimeoutSeconds) s
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted mb-0">
+                            <i data-lucide="alert-triangle" style="width:16px;height:16px;" class="me-1"></i>
+                            @Localizer["Virtual model"] <code>@Model.DefaultChatModelName</code> @Localizer["not found. Create it to see real configuration here."]
+                        </p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mb-3">
+        <div class="col-auto text-center">
+            <i data-lucide="arrow-down" class="text-muted" style="width:28px;height:28px;"></i>
+        </div>
+    </div>
+
+    @* === Step 4: Provider Concurrency Limiter === *@
+    <div class="row justify-content-center mb-3">
+        <div class="col-12 col-lg-10">
+            <div class="card border-danger shadow-sm">
+                <div class="card-header bg-danger-subtle">
+                    <h5 class="card-title mb-0 text-danger-emphasis">
+                        <i data-lucide="traffic-cone" class="me-2" style="width:20px;height:20px;"></i>
+                        @Localizer["4. Provider Concurrency Limiter"]
+                    </h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.Providers.Any())
+                    {
+                        <div class="table-responsive mb-3">
+                            <table class="table table-sm table-borderless small mb-0">
+                                <thead><tr><th>@Localizer["Provider"]</th><th>@Localizer["MaxParallelism"]</th><th>@Localizer["Health Check Timeout"]</th><th>@Localizer["Behavior"]</th></tr></thead>
+                                <tbody>
+                                    @foreach (var p in Model.Providers)
+                                    {
+                                        <tr>
+                                            <td><strong>@p.Name</strong></td>
+                                            <td>
+                                                @if (p.MaxParallelism == 0)
+                                                {
+                                                    <span class="badge bg-success">@Localizer["Unlimited"]</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-warning text-dark">@p.MaxParallelism</span>
+                                                }
+                                            </td>
+                                            <td><code>@p.HealthCheckTimeoutSeconds s</code></td>
+                                            <td class="small text-muted">
+                                                @if (p.MaxParallelism == 1) { <span>@Localizer["One request at a time — others queue"]</span> }
+                                                else if (p.MaxParallelism == 0) { <span>@Localizer["No limit"]</span> }
+                                                else { <span>@Localizer["Up to"] @p.MaxParallelism @Localizer["concurrent requests"]</span> }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted mb-0">@Localizer["No providers configured yet."]</p>
+                    }
+                    <div class="p-2 bg-light rounded border border-danger">
+                        <small class="text-danger-emphasis">
+                            <i data-lucide="info" style="width:14px;height:14px;" class="me-1"></i>
+                            @Localizer["Waiting in the concurrency queue does NOT consume the virtual model timeout. The timeout clock only starts after the slot is acquired. A request will wait indefinitely for its slot — the only way it stops waiting is if the client (browser / SDK) disconnects. A busy GPU does not cause the virtual model to give up on this backend."]
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mb-3">
+        <div class="col-auto text-center">
+            <i data-lucide="arrow-down" class="text-muted" style="width:28px;height:28px;"></i>
+        </div>
+    </div>
+
+    @* === Step 5: Timeout Clock Starts === *@
+    <div class="row justify-content-center mb-3">
+        <div class="col-12 col-lg-10">
+            <div class="card border-success shadow-sm">
+                <div class="card-header bg-success-subtle">
+                    <h5 class="card-title mb-0 text-success-emphasis">
+                        <i data-lucide="timer" class="me-2" style="width:20px;height:20px;"></i>
+                        @Localizer["5. ⏱️ Timeout Clock Starts"]
+                        @if (Model.DefaultVirtualModel != null)
+                        {
+                            <span class="ms-2 badge bg-success">cts.CancelAfter(@Model.DefaultVirtualModel.RequestTimeoutSeconds s)</span>
+                        }
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-lg-6">
+                            <div class="border rounded border-success p-3 h-100 bg-success-subtle bg-opacity-10">
+                                <h6 class="fw-bold text-success">@Localizer["What IS counted"]</h6>
+                                <ul class="small mb-0 mt-2">
+                                    <li>@Localizer["HTTP request to backend (DNS, TCP handshake, TLS)"]</li>
+                                    <li>@Localizer["Waiting for backend to send HTTP response headers"]</li>
+                                    <li>@Localizer["Model loading time (cold start on GPU)"]</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="border rounded p-3 h-100">
+                                <h6 class="fw-bold text-muted">@Localizer["What is NOT counted"]</h6>
+                                <ul class="small mb-0 mt-2 text-muted">
+                                    <li>@Localizer["Authentication & API key validation"]</li>
+                                    <li>@Localizer["Rate-limit queue waiting (Hang mode)"]</li>
+                                    <li>@Localizer["Provider concurrency slot queuing"]</li>
+                                    <li>@Localizer["Streaming response body (after headers received)"]</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3 p-3 bg-success-subtle rounded border border-success">
+                        <h6 class="text-success-emphasis mb-1">
+                            <i data-lucide="help-circle" style="width:16px;height:16px;" class="me-1"></i>
+                            @Localizer["Once the backend sends HTTP headers, the timeout is PASSED. The model can stream tokens for hours — only client disconnection stops it."]
+                        </h6>
+                        @if (Model.DefaultVirtualModel != null)
+                        {
+                            <small class="text-success">
+                                @Localizer["Example"]: @Model.DefaultVirtualModel.RequestTimeoutSeconds s @Localizer["timeout. Backend starts streaming at"] @(Model.DefaultVirtualModel.RequestTimeoutSeconds - 10) s,
+                                @Localizer["needs another 30 s to finish → completely fine ✅"]
+                            </small>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mb-3">
+        <div class="col-auto text-center">
+            <i data-lucide="arrow-down" class="text-muted" style="width:28px;height:28px;"></i>
+        </div>
+    </div>
+
+    @* === Step 6: Backend === *@
+    <div class="row justify-content-center mb-3">
+        <div class="col-12 col-lg-10">
+            <div class="card border-dark shadow-sm">
+                <div class="card-header bg-dark-subtle">
+                    <h5 class="card-title mb-0">
+                        <i data-lucide="server" class="me-2" style="width:20px;height:20px;"></i>
+                        @Localizer["6. Physical Backend"]
+                        @if (Model.DefaultVirtualModel?.VirtualModelBackends.FirstOrDefault()?.Provider != null)
+                        {
+                            var firstBackend = Model.DefaultVirtualModel.VirtualModelBackends.First();
+                            <span class="ms-2 small text-muted">
+                                @firstBackend.Provider!.Name —
+                                <code>@firstBackend.Provider.BaseUrl</code>
+                                —
+                                @Localizer["KeepAlive"]: <code>@firstBackend.Provider.KeepAlive</code>
+                            </span>
+                        }
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="text-center p-3">
+                                <div class="bg-primary-subtle rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width:48px;height:48px;">
+                                    <i data-lucide="hard-drive" class="text-primary" style="width:24px;height:24px;"></i>
+                                </div>
+                                <h6>@Localizer["Model Loading"]</h6>
+                                <small class="text-muted">@Localizer["Reads model weights from disk into GPU VRAM. 27GB on NVMe ≈ 5–15s; on HDD/NAS ≈ 3–10 min."]</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center p-3">
+                                <div class="bg-success-subtle rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width:48px;height:48px;">
+                                    <i data-lucide="zap" class="text-success" style="width:24px;height:24px;"></i>
+                                </div>
+                                <h6>@Localizer["Inference"]</h6>
+                                <small class="text-muted">@Localizer["GPU processes tokens. Once loaded, subsequent requests skip loading → straight to inference."]</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center p-3">
+                                <div class="bg-warning-subtle rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width:48px;height:48px;">
+                                    <i data-lucide="refresh-cw" class="text-warning" style="width:24px;height:24px;"></i>
+                                </div>
+                                <h6>@Localizer["Keep-Alive & Warmup"]</h6>
+                                <small class="text-muted">@Localizer["The warmup background job pings configured models every 5 min to prevent unloading."]</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* === Step 7: Observability Pipeline === *@
+    <div class="row justify-content-center mb-3">
+        <div class="col-12 col-lg-10">
+            <div class="card border-secondary shadow-sm">
+                <div class="card-header bg-secondary-subtle">
+                    <h5 class="card-title mb-0">
+                        <i data-lucide="bar-chart-3" class="me-2" style="width:20px;height:20px;"></i>
+                        @Localizer["7. Observability Pipeline — Dual Logging & Usage Tracking"]
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-lg-6">
+                            <div class="border rounded p-3 h-100">
+                                <h6 class="fw-bold">
+                                    <i data-lucide="database" class="me-1" style="width:16px;height:16px;"></i>
+                                    @Localizer["ClickHouse Log Pipeline"]
+                                </h6>
+                                <p class="small text-muted mb-2">@Localizer["Every request is logged asynchronously without blocking the hot path:"]</p>
+                                <div class="d-flex align-items-center small">
+                                    <span class="badge bg-primary me-2">@Localizer["Middleware"]</span>
+                                    <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+                                    <span class="badge bg-info me-2">RequestLogBuffer</span>
+                                    <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+                                    <span class="badge bg-success">ClickHouse</span>
+                                </div>
+                                <ul class="small text-muted mt-2 mb-0 ps-3">
+                                    <li>Channel&lt;RequestLog&gt; @Localizer["bounded to"] <strong>10,000</strong> @Localizer["entries, DropWrite when full"]</li>
+                                    <li>ClickhouseFlushService @Localizer["runs every"] <strong>2 min</strong>: @Localizer["drains buffer, batch-inserts into ClickHouse"]</li>
+                                    <li>@Localizer["Logs include: user, model, provider, tokens, latency, status code, conversation count"]</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="border rounded p-3 h-100">
+                                <h6 class="fw-bold">
+                                    <i data-lucide="layers" class="me-1" style="width:16px;height:16px;"></i>
+                                    @Localizer["In-Memory Usage Tracking"]
+                                </h6>
+                                <p class="small text-muted mb-2">@Localizer["Fast in-memory counters avoid DB writes on every request:"]</p>
+                                <ul class="small text-muted mb-0 ps-3">
+                                    <li><strong>MemoryUsageTracker</strong>: @Localizer["tracks API key usage, virtual model usage, underlying model usage — feeds the Dashboard charts in real-time"]</li>
+                                    <li><strong>UsageFlushService</strong> @Localizer["every"] <strong>3 min</strong>: @Localizer["swaps buffers and bulk-updates DB (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)"]</li>
+                                    <li><strong>ActiveRequestTracker</strong>: @Localizer["tracks live in-flight requests — powers the \"Live Inference\" table and Monitor page"]</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3 p-2 bg-light rounded border">
+                        <small class="text-muted">
+                            <i data-lucide="info" style="width:14px;height:14px;" class="me-1"></i>
+                            @Localizer["Both pipelines are fire-and-forget from the request hot-path. If ClickHouse is down or the buffer is full, requests still succeed — logs are simply dropped (DropWrite). The system never blocks a user request to write a log."]
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mb-3">
+        <div class="col-auto text-center">
+            <i data-lucide="arrow-down" class="text-muted" style="width:28px;height:28px;"></i>
+        </div>
+    </div>
+
+    @* === The 4-Layer Timeout Architecture === *@
+    <div class="row justify-content-center mb-3">
+        <div class="col-12 col-lg-10">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">
+                        <i data-lucide="clock" class="me-2" style="width:20px;height:20px;"></i>
+                        @Localizer["The 4-Layer Timeout Architecture"]
+                    </h5>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-striped mb-0">
+                        <thead>
+                            <tr>
+                                <th>@Localizer["Layer"]</th>
+                                <th>@Localizer["Where configured"]</th>
+                                <th>@Localizer["Current Value"]</th>
+                                <th>@Localizer["Controls"]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="badge bg-primary">@Localizer["Data Plane"]</span></td>
+                                <td>@Localizer["Virtual Model → Request Timeout (s)"]</td>
+                                <td>
+                                    @if (Model.DefaultVirtualModel != null)
+                                    {
+                                        <strong>@Model.DefaultVirtualModel.RequestTimeoutSeconds s</strong>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">—</span>
+                                    }
+                                </td>
+                                <td>@Localizer["How long the gateway waits for the backend to START responding to a user request"]</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge bg-info">@Localizer["Control Plane"]</span></td>
+                                <td>@Localizer["Provider → Health Check Timeout (s)"]</td>
+                                <td>
+                                    @if (Model.Providers.Any())
+                                    {
+                                        <span>@string.Join(", ", Model.Providers.Select(p => $"<strong>{p.Name}</strong>: {p.HealthCheckTimeoutSeconds}s"))</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">—</span>
+                                    }
+                                </td>
+                                <td>@Localizer["How long the background health monitor waits when probing /api/tags and /api/ps"]</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge bg-success">@Localizer["Warmup Plane"]</span></td>
+                                <td>@Localizer["Provider → Warmup Model → Timeout (s)"]</td>
+                                <td><strong>1800 s</strong> @Localizer["(fallback)"]</td>
+                                <td>@Localizer["How long the warmup job waits for each model to load. Per-model configurable."]</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge bg-secondary">@Localizer["Dashboard Plane"]</span></td>
+                                <td>@Localizer["Hardcoded"]</td>
+                                <td><strong>3 s</strong></td>
+                                <td>@Localizer["Quick admin dashboard ping. Does NOT write to DB — UI-only."]</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

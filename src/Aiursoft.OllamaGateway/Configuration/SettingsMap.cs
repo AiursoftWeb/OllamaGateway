@@ -12,7 +12,6 @@ public class SettingsMap
     public const string Icp = "Icp";
     public const string DefaultChatModel = "DefaultChatModel";
     public const string DefaultEmbeddingModel = "DefaultEmbeddingModel";
-    public const string RequestTimeoutInMinutes = "RequestTimeoutInMinutes";
     public const string AllowAnonymousApiCall = "AllowAnonymousApiCall";
     public const string FakeOllamaVersion = "FakeOllamaVersion";
 
@@ -94,14 +93,6 @@ public class SettingsMap
         },
         new GlobalSettingDefinition
         {
-            Key = RequestTimeoutInMinutes,
-            Name = Localizer["Request Timeout (Minutes)"],
-            Description = Localizer["The maximum time in minutes to wait for a response from the underlying Ollama server."],
-            Type = SettingType.Number,
-            DefaultValue = "10"
-        },
-        new GlobalSettingDefinition
-        {
             Key = AllowAnonymousApiCall,
             Name = Localizer["Allow Anonymous API Call"],
             Description = Localizer["Allow anyone to call the API without a Bearer token or authentication."],
@@ -115,6 +106,6 @@ public class SettingsMap
             Description = Localizer["The version reported by the gateway to clients (e.g., Open-WebUI)."],
             Type = SettingType.Text,
             DefaultValue = "0.18.3"
-        }
+        },
     };
 }

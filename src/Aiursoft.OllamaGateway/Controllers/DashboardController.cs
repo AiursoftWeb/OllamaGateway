@@ -16,7 +16,8 @@ public class DashboardController(
     TemplateDbContext dbContext,
     MemoryUsageTracker memoryUsageTracker,
     ActiveRequestTracker activeRequestTracker,
-    IModelSelector modelSelector) : Controller
+    IModelSelector modelSelector,
+    GlobalSettingsService globalSettingsService) : Controller
 {
     [Authorize(Policy = AppPermissionNames.CanViewSystemContext)]
     [RenderInNavBar(
@@ -142,6 +143,40 @@ public class DashboardController(
             BackendBanStatuses = virtualModels
                 .SelectMany(m => m.VirtualModelBackends)
                 .ToDictionary(b => b.Id, b => modelSelector.GetBanUntil(b.Id))
+        };
+
+        return this.StackView(model);
+    }
+
+    [Authorize(Policy = AppPermissionNames.CanViewSystemContext)]
+    [RenderInNavBar(
+        NavGroupName = "Dashboard",
+        NavGroupOrder = 1,
+        CascadedLinksGroupName = "Monitor",
+        CascadedLinksIcon = "monitor",
+        CascadedLinksOrder = 1,
+        LinkText = "Architecture Guide",
+        LinkOrder = 3)]
+    public async Task<IActionResult> Guide()
+    {
+        var defaultChatModelName = await globalSettingsService.GetDefaultChatModelAsync();
+
+        var virtualModel = await dbContext.VirtualModels
+            .Include(v => v.VirtualModelBackends)
+            .ThenInclude(b => b.Provider)
+            .FirstOrDefaultAsync(v => v.Name == defaultChatModelName && v.Type == ModelType.Chat);
+
+        var providers = await dbContext.OllamaProviders
+            .OrderBy(p => p.Name)
+            .ToListAsync();
+
+        var model = new GuideViewModel
+        {
+            DefaultChatModelName = defaultChatModelName,
+            DefaultVirtualModel = virtualModel,
+            Providers = providers,
+            TotalApiKeys = await dbContext.ApiKeys.CountAsync(),
+            TotalProviders = providers.Count
         };
 
         return this.StackView(model);

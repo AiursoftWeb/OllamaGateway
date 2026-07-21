@@ -4,7 +4,6 @@ namespace Aiursoft.OllamaGateway.Services;
 
 public class BackendInvoker(
     IHttpClientFactory httpClientFactory,
-    GlobalSettingsService globalSettingsService,
     IModelSelector modelSelector,
     IProviderConcurrencyLimiter concurrencyLimiter,
     MemoryUsageTracker memoryUsageTracker,
@@ -26,10 +25,7 @@ public class BackendInvoker(
 
             var underlyingUrl = backend.Provider.BaseUrl.TrimEnd('/');
 
-            using var cts = CancellationTokenSource.CreateLinkedTokenSource(clientCancellation);
-            cts.CancelAfter(TimeSpan.FromSeconds(virtualModel.HealthCheckTimeout));
-
-            // Queue for a concurrency slot — this wait does NOT count toward HealthCheckTimeout
+            // Queue for a concurrency slot — waiting here does NOT count toward the request timeout
             logger.LogInformation("[Trace] Acquiring concurrency slot for provider {ProviderId} (MaxParallelism={MaxParallelism})",
                 backend.Provider.Id, backend.Provider.MaxParallelism);
             try
@@ -47,10 +43,13 @@ public class BackendInvoker(
                 continue;
             }
 
+            using var cts = CancellationTokenSource.CreateLinkedTokenSource(clientCancellation);
+            cts.CancelAfter(TimeSpan.FromSeconds(virtualModel.RequestTimeoutSeconds));
+
             try
             {
                 var client = httpClientFactory.CreateClient();
-                client.Timeout = await globalSettingsService.GetRequestTimeoutAsync();
+                client.Timeout = TimeSpan.FromSeconds(virtualModel.RequestTimeoutSeconds);
                 if (!string.IsNullOrWhiteSpace(backend.Provider.BearerToken))
                 {
                     client.DefaultRequestHeaders.Authorization =
@@ -60,7 +59,7 @@ public class BackendInvoker(
                 var request = requestFactory(backend);
 
                 logger.LogInformation("Backend request to {Url}, attempt {Attempt}, timeout={Timeout}s",
-                    underlyingUrl, i + 1, virtualModel.HealthCheckTimeout);
+                    underlyingUrl, i + 1, virtualModel.RequestTimeoutSeconds);
 
                 var stopwatch = System.Diagnostics.Stopwatch.StartNew();
                 var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cts.Token);

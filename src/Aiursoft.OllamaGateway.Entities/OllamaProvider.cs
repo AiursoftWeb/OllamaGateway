@@ -34,6 +34,8 @@ public class OllamaProvider
 
     public int MaxParallelism { get; set; }
 
+    public int HealthCheckTimeoutSeconds { get; set; } = 60;
+
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     [Obsolete("Use VirtualModelBackends instead")]

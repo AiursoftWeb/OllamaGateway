@@ -17,7 +17,7 @@ namespace Aiursoft.OllamaGateway.MySql.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.7")
+                .HasAnnotation("ProductVersion", "10.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
@@ -107,6 +107,9 @@ namespace Aiursoft.OllamaGateway.MySql.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<int>("HealthCheckTimeoutSeconds")
+                        .HasColumnType("int");
 
                     b.Property<string>("KeepAlive")
                         .IsRequired()
@@ -252,9 +255,6 @@ namespace Aiursoft.OllamaGateway.MySql.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("HealthCheckTimeout")
-                        .HasColumnType("int");
-
                     b.Property<bool>("KeepAlive")
                         .HasColumnType("tinyint(1)");
 
@@ -277,6 +277,10 @@ namespace Aiursoft.OllamaGateway.MySql.Migrations
 
                     b.Property<float?>("RepeatPenalty")
                         .HasColumnType("float");
+
+                    b.Property<int>("RequestTimeoutSeconds")
+                        .HasColumnType("int")
+                        .HasColumnName("HealthCheckTimeout");
 
                     b.Property<int>("SelectionStrategy")
                         .HasColumnType("int");

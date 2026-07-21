@@ -6,10 +6,9 @@ namespace Aiursoft.OllamaGateway.Services;
 
 public class OllamaService(
     IHttpClientFactory httpClientFactory,
-    IMemoryCache memoryCache,
-    GlobalSettingsService globalSettingsService) : IScopedDependency
+    IMemoryCache memoryCache) : IScopedDependency
 {
-    public virtual async Task<List<OllamaModel>?> GetDetailedModelsAsync(string baseUrl, string? bearerToken = null)
+    public virtual async Task<List<OllamaModel>?> GetDetailedModelsAsync(string baseUrl, string? bearerToken = null, int timeoutSeconds = 60)
     {
         var cacheKey = $"ollama_detailed_models_{baseUrl}_{bearerToken}";
         if (memoryCache.TryGetValue(cacheKey, out List<OllamaModel>? cachedModels))
@@ -21,7 +20,7 @@ public class OllamaService(
         {
             var url = baseUrl.TrimEnd('/') + "/api/tags";
             using var client = httpClientFactory.CreateClient();
-            client.Timeout = await globalSettingsService.GetRequestTimeoutAsync();
+            client.Timeout = TimeSpan.FromSeconds(timeoutSeconds);
             if (!string.IsNullOrWhiteSpace(bearerToken))
             {
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", bearerToken);
@@ -42,13 +41,13 @@ public class OllamaService(
         }
     }
 
-    public virtual async Task<List<OllamaRunningModel>?> GetRunningModelsAsync(string baseUrl, string? bearerToken = null, TimeSpan? overrideTimeout = null)
+    public virtual async Task<List<OllamaRunningModel>?> GetRunningModelsAsync(string baseUrl, string? bearerToken = null, int timeoutSeconds = 60)
     {
         try
         {
             var url = baseUrl.TrimEnd('/') + "/api/ps";
             using var client = httpClientFactory.CreateClient();
-            client.Timeout = overrideTimeout ?? await globalSettingsService.GetRequestTimeoutAsync();
+            client.Timeout = TimeSpan.FromSeconds(timeoutSeconds);
             if (!string.IsNullOrWhiteSpace(bearerToken))
             {
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", bearerToken);
@@ -66,9 +65,9 @@ public class OllamaService(
         }
     }
 
-    public virtual async Task<List<string>?> GetUnderlyingModelsAsync(string baseUrl, string? bearerToken = null)
+    public virtual async Task<List<string>?> GetUnderlyingModelsAsync(string baseUrl, string? bearerToken = null, int timeoutSeconds = 60)
     {
-        var models = await GetDetailedModelsAsync(baseUrl, bearerToken);
+        var models = await GetDetailedModelsAsync(baseUrl, bearerToken, timeoutSeconds);
         return models?.Select(m => m.Name).ToList();
     }
 
