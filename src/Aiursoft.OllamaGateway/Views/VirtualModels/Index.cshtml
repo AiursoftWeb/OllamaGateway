@@ -108,7 +108,7 @@
                                     <div class="btn-group">
                                         @if (m.Type == ModelType.Chat)
                                         {
-                                            <a asp-action="Chat" asp-route-id="@m.Id" class="btn btn-sm btn-outline-success" title="@Localizer["Chat"]">
+                                            <a href="/ChatPlayground?id=@m.Id" class="btn btn-sm btn-outline-success" title="@Localizer["Open in Chat Playground"]">
                                                 <i class="align-middle" data-lucide="message-circle"></i>
                                             </a>
                                         }

@@ -53,7 +53,13 @@
                             <label asp-for="KeepAlive" class="form-label">@Localizer["Keep Alive Policy"]</label>
                             <input asp-for="KeepAlive" class="form-control" placeholder="5m" />
                             <div class="form-text small">
-                                @Localizer["Controls how long the AI model weights stay loaded in GPU VRAM after a request. Ollama format (e.g., '5m', '1h', '24h'). Use '0' to unload immediately, or '-1' to keep in VRAM forever."]
+                                @Localizer["How long model weights stay in GPU VRAM after the last request. Uses Ollama duration format: {number}{unit} — e.g."]
+                                <code>5m</code> @Localizer["(5 minutes),"] <code>1h</code> @Localizer["(1 hour),"] <code>24h</code> @Localizer["(24 hours)."]
+                                <code>0</code> @Localizer["= unload immediately."] <code>-1</code> @Localizer["= keep forever."]
+                                <span class="text-warning-emphasis d-block mt-1">
+                                    <i data-lucide="alert-triangle" style="width:12px;height:12px;" class="me-1"></i>
+                                    @Localizer["Do NOT use raw seconds like '300'. Write '5m' instead. Invalid formats are silently ignored by Ollama."]
+                                </span>
                             </div>
                             <span asp-validation-for="KeepAlive" class="text-danger"></span>
                         </div>
