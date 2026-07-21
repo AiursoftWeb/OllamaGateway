@@ -1,179 +1,148 @@
-# OllamaGateway 架构重构 — 2026-07-21
+# OllamaGateway 超时架构重构报告 — 2026-07-21
 
-## 起因：一个把 GPU 炸了一晚上的恶性 Bug
+## 一、故障分析
 
-我们的 ollama.aiursoft.com 挂着一个 27GB 的 Qwen 大模型（qwen3.6:27b-q8_0）。某天用户反馈：**"模型永远用不了，一直转圈，服务器风扇狂转一晚上。"**
+2026 年 7 月 21 日，ollama.aiursoft.com 发生了一起持续性服务中断。部署于该节点的 Qwen3.6 27B 模型（qwen3.6:27b-q8_0，模型文件大小 29 GB）无法响应任何用户请求，且 GPU 整夜处于高负载状态，未产生有效推理。
 
-### 案发过程还原
+### 故障机理
+
+经代码审查与服务器日志交叉验证，故障根因定位为**双重超时控制**导致的**死锁式重试循环**。
+
+系统在处理单次后端请求时，同时应用了两套独立的超时机制：
+
+| 超时 | 配置位置 | 生效方式 | 实际值 |
+|------|---------|---------|--------|
+| `RequestTimeoutInMinutes` | 全局设置页 | `HttpClient.Timeout` | 5 分钟 |
+| `HealthCheckTimeout` | 虚拟模型编辑页 | `CancellationToken.CancelAfter` | 300 秒 |
+
+两套超时分别配置于不同的管理页面，作用于同一个 HTTP 请求，无优先级关系，先到期者胜出。
+
+故障过程如下：
 
 ```
-时间线（每次循环一模一样）：
+T+0      客户端发起请求。Ollama 后端开始从磁盘读取 29 GB 模型文件。
+         HttpClient.Timeout 与 CancellationToken 同时开始倒计时。
 
-T+0s    第一个用户请求到达
-        客户端 → OllamaGateway → Ollama 后端：POST /api/chat
-        Ollama 收到请求：模型不在显存里！开始从磁盘读 27GB...
+T+1..299 后续请求到达，因 MaxParallelism=1 进入并发队列排队。
+         所有请求阻塞于同一后端。
 
-        同时，Gateway 里两个独立的计时器开始倒计时：
-          • 计时器 1: client.Timeout = 全局设置里的 RequestTimeoutInMinutes（5 分钟）
-          • 计时器 2: cts.CancelAfter = 虚拟模型字段 HealthCheckTimeout（300 秒）
-        两个都是 5 分钟，同一个请求，两个计时器同时倒数。
+T+300    两套超时同时到期。Gateway 断开 TCP 连接。
+         Ollama 检测到客户端断开，终止加载，释放已申请之显存。
+         BackendInvoker 捕获异常，调用 ReportFailure，
+         然后 SelectBackend 重新选择后端——但仅有此 Provider，
+         故再次选中同一节点。
 
-T+1s    第二个请求来了 → MaxParallelism=1，没有空闲槽，排队
-T+2s    第三个请求来了 → 继续排队
-        ...后面所有请求全在排队...
+T+301    重试开始。超时重新设置。模型重新加载。
 
-        此时 Ollama 还在读盘：24GB/27GB... 25GB/27GB... 26GB/27GB...
-
-T+299s  就快加载完了！就差最后一点！
-
-T+300s  两个计时器同时到点。
-        Gateway 主动断开 TCP 连接。
-        Ollama 视角：客户端跑路了？那我白搬了 27GB？
-        → aborting load，已加载的数据全废，显存清空。
-
-        BackendInvoker 捕获超时异常 → ReportFailure → SelectBackend 选新后端。
-        但只有这一个 Provider，选出来的还是它。
-
-T+301s  重试！POST /api/chat → Ollama。
-        两个计时器重新倒计时：300s...
-        Ollama 重新从磁盘读 27GB...
-
-T+601s  又到点！ReportFailure 再 +1。
-T+901s  再到点！ReportFailure 攒够 3 票 → 熔断器 Ban 该后端 1 分钟。
-        此刻所有请求全部失败。
-
-        BackendHealthMonitor 后台探活也超时 → IsHealthy = false, IsReady = false。
-        熔断器 + 健康监控，双重死刑。
-
-        用户视角：所有请求挂着转圈，最后全 503。
-        管理员视角：Dashboard 飘红，不知道原因。
-        Ollama 视角：我一晚上搬运了三次 27GB，全白干了。
-        GPU 视角：加载→卸载→加载→卸载→加载→卸载，风扇狂转，零服务。
+T+601..901
+         重复上述过程。ReportFailure 累计 3 次，
+         触发熔断器限制（1 分钟→5 分钟→25 分钟指数退避）。
+         BackendHealthMonitor 同步探活超时，
+         将 IsHealthy 与 IsReady 均标记为 false。
+         此后所有路由均被拒绝，服务完全中断。
 ```
 
-### 这个配置到底在哪？为什么这么乱？
-
-死亡螺旋的根本原因，是**两个不同位置的超时配置同时作用于同一个请求**：
-
-| 当时的配置 | 在哪改 | 当时的值 | 控制什么 |
-|-----------|--------|---------|---------|
-| `RequestTimeoutInMinutes` | 管理后台 → 全局设置 | 5 分钟 | HttpClient.Timeout |
-| `HealthCheckTimeout` | 管理后台 → 虚拟模型 → 编辑 | 300 秒 | CancellationToken.CancelAfter |
-
-**两个独立的配置页面，两个独立的值，掐的是同一件事。** 管理员改了虚拟模型的超时（以为够了），但全局设置的 5 分钟也同时在倒计时。改一个不够，得两个都改——而且没有人告诉管理员有两个。
-
-更糟的是，`MaxParallelism=1` 让后续请求全排队，没有 fallback（只有一个 Provider），所以一个请求卡住，全部卡住。Ollama 每次快要加载完的时候被掐断，前功尽弃，重试又从零开始。
+**结论：管理员无法从任何单一配置页面获知两套超时的共存关系。修改其一不足以解除死锁，此为设计缺陷。**
 
 ---
 
-## 修 Bug 修出一座屎山
+## 二、重构方案
 
-修这个恶性 Bug 的过程中，我们发现整个超时体系已经腐烂到了骨头里。每一个"配置项"的背后都是一个谎言：
+### 设计原则
 
-### 谎言 1：两个超时互不知情
+将超时按请求性质严格分层，每层由唯一归属实体控制，消除多源冲突。
 
-`BackendInvoker` 同时设置 `client.Timeout = 全局设置` 和 `cts.CancelAfter = 虚拟模型字段`。名字不同，位置不同，但掐的是同一个请求。**管理员在两个页面各改各的，没人知道有两个计时器在同时倒数。**
+### 四层超时模型
 
-### 谎言 2："排队不扣超时"是假的
+| 层 | 定义 | 归属实体 | 默认值 | 控制范围 |
+|---|------|---------|--------|---------|
+| 数据面 | 用户请求等待后端开始响应的最大时长 | `VirtualModel.RequestTimeoutSeconds` | 600 s | `BackendInvoker` 内 `HttpClient.Timeout` 与 `CancellationToken.CancelAfter`，二者使用同一值 |
+| 控制面 | 后台探活等待 Provider 响应的最大时长 | `OllamaProvider.HealthCheckTimeoutSeconds` | 60 s | `BackendHealthMonitor` 调用 `/api/tags` 与 `/api/ps` |
+| 预热面 | 预热任务等待模型加载的最大时长 | `WarmupModel.TimeoutSeconds` | 1800 s（后备值） | `ModelWarmupService`，可按模型独立配置 |
+| 展示面 | 管理页面快速探活的最长等待时间 | 硬编码 | 3 s | `OllamaProvidersController`，仅影响 UI 展示，不写入数据库 |
 
-`MaxParallelism=1` 时，注释写着"排队不消耗超时"，但 `CancelAfter` 在抢并发槽之前就启动了。排队 300 秒→拿到槽→只剩 0 秒→直接超时。注释欺骗了每一个读代码的人。
+**关键性质：**
+- 数据面计时器在 Provider 并发槽获取之后启动。认证、API 限流排队、并发槽排队均不消耗数据面超时。
+- `HttpCompletionOption.ResponseHeadersRead`：后端发送 HTTP 响应头即视为超时条件满足，流式输出阶段不受超时限制。仅在客户端断开时终止。
+- 每个后端重试获得独立的、完整的超时配额，不共享、不累计。
 
-### 谎言 3：Test Connection 绿灯，但路由仍拒绝
+### 实体变更
 
-管理员点 Provider 的"Test Connection"，返回绿色成功。**但熔断器还在 Ban，数据库还是 `IsHealthy=false`，请求全部被拒绝。** 管理员看到绿灯以为修好了，用户还是用不了。这是最恶劣的 UI 欺骗。
-
-### 谎言 4：Warmup 配好了，模型还是冷的
-
-Provider 页面精心配置了 Warmup——选模型、设 NumCtx。但 `keep_alive=1m`，预热每 5 分钟跑一次，模型只活 1 分钟就卸载。**27GB 的模型，80% 时间在重复加载，白白搬运数据。**
-
----
-
-## 重构后：现在捋顺了吗？
-
-**捋顺了。** 现在只有一个计时器，一个地方改。
-
-用户请求走过这些步骤：
-
-```
-客户端请求
-  → 认证 & API 限流（Hang 模式排队不扣超时）
-  → 虚拟模型选择（PriorityFallback 选出优先级最高的后端）
-  → Provider 并发槽排队（MaxParallelism=1 时排队，不扣超时）
-  → 槽到手！⏱️ 超时计时器启动（只在这里开始倒计时）
-  → POST /api/chat → 实体模型（收到响应头 = 超时解除，流式不限时）
-```
-
-**排队全部免费。** 无论是 API 限流排队还是并发槽排队，都在超时计时器启动之前。`RequestTimeoutSeconds` 只算真正发给 Ollama 之后的时间。
-
-**Fallback 也清楚了。** 第 1 个后端超时 → 换第 2 个 → 全新计时器，全新 600 秒 → 收到响应头，超时解除。
-
-### 新设计：4 层互不干涉
-
-| 层 | 在哪配置 | 默认值 | 控制什么 |
-|---|---------|--------|---------|
-| **数据面** | 虚拟模型 → Request Timeout (s) | 600s | 等后端开始回答的最长时间 |
-| **控制面** | 提供商 → Health Check Timeout (s) | 60s | 后台探活 `/api/tags` 等多久 |
-| **预热面** | 提供商 → Warmup → 每个模型的 Timeout | 1800s | 预热加载等多久 |
-| **UI 面** | 硬编码 | 3s | 管理页面快速探活，不写数据库 |
-
-**一层一个计时器，各管各的，互不干扰。** 管理员只需要去一个地方改一个值。
-
-关键代码改动：
-- `HealthCheckTimeout` 重命名为 `RequestTimeoutSeconds`，默认 600s（用 `[Column]` 免迁移）
-- `BackendInvoker` 两个计时器合并为一个，只读虚拟模型字段
-- 并发排队时 `cts.CancelAfter` 移到 acquire 之后——排多久都不扣超时
-- 全局设置里的 `RequestTimeoutInMinutes` 彻底删除
-- Provider 新增 `HealthCheckTimeoutSeconds`，默认 60s，归属实体而非全局设置
+- `VirtualModel.HealthCheckTimeout`（40 s）→ `VirtualModel.RequestTimeoutSeconds`（600 s），使用 `[Column("HealthCheckTimeout")]` 保持数据库列名兼容。
+- `OllamaProvider` 新增 `HealthCheckTimeoutSeconds`（60 s），替代原全局设置 `RequestTimeoutInMinutes`。
+- `WarmupModel` 新增 `TimeoutSeconds`（可选），未配置时使用 1800 s 后备值。
+- 全局设置 `RequestTimeoutInMinutes` 及相关方法 `GetRequestTimeoutAsync()` 移除。
 
 ---
 
-## Bug 修复清单
+## 三、并发缺陷修复
 
-1. **Test Connection 成功→复活 Provider**：现在会在成功后自动清除熔断器 Ban + 恢复 `IsHealthy=true, IsReady=true`
-2. **并发排队不扣超时**（真的修了，不是改注释）
-3. **ModelWarmup 多模型崩溃**：复用同一个 HttpClient 导致 `InvalidOperationException`，改为每模型独立 Client
-4. **KeepAlive 帮助文本炸页面**：`{number}{unit}` 被 Localizer 误解析，Create/Edit 页 500
+### 缺陷 1：并发排队期间超时计时器错误启动
+
+`BackendInvoker.SendAsync()` 中，`CancellationTokenSource.CancelAfter()` 调用位于 `ProviderConcurrencyLimiter.AcquireAsync()` 之前。代码注释声称排队不计入超时，但 `CancelAfter` 在 `AcquireAsync` 阻塞期间持续倒计时。若排队耗时等于或超过超时值，请求在获得并发槽后立即超时。
+
+**修复：** 将 `CancellationTokenSource` 的创建与 `CancelAfter` 调用移至 `AcquireAsync` 返回之后。
+
+### 缺陷 2：Test Connection 成功后状态未同步
+
+Provider 编辑页的 Test Connection 功能验证了 Provider 可达性，但成功时不调用 `ModelSelector.ReportSuccess()` 亦不恢复 `IsHealthy`/`IsReady` 标记。管理员看到绿色成功提示后，路由层仍拒绝向该 Provider 转发请求。
+
+**修复：** Test 方法在成功时查询该 Provider 关联的所有 `VirtualModelBackend`，逐一恢复其健康状态并清除熔断器记录。
+
+### 缺陷 3：ModelWarmup 复用 HttpClient 导致后续模型超时赋值失败
+
+`HttpClient.Timeout` 仅在首次请求前可设置。原代码在 `foreach` 循环外创建单个 `HttpClient` 实例，循环内为每个模型重新赋值 `Timeout`，第二个模型即抛 `InvalidOperationException`。
+
+**修复：** 将 `HttpClient` 创建移入循环内，每个模型获得独立实例。
 
 ---
 
-## 为什么管理员以前天天在论坛骂我们？
-
-因为我们把"配置"和"真相"割裂了。UI 上有个输入框，底层的代码却读的是另一个值；UI 上显示绿标，底层路由却拒绝请求。**每发现一个问题，我们就加一个 help text、一个 tooltip、一个可视化卡片，直到管理员不用翻代码就能理解系统在干什么。**
+## 四、可观测性与用户体验改进
 
 ### 新增 Architecture Guide 页面
 
-**👉 https://ollama.aiursoft.com/Dashboard/Guide — 欢迎点进去亲自体验。**
+**https://ollama.aiursoft.com/Dashboard/Guide** 提供基于真实系统数据的可视化请求流，包含 8 个信息卡片：客户端入口、认证与限流、虚拟模型选择、Provider 并发排队（含实时队列深度）、超时启动条件、后端物理模型、ClickHouse 日志管线、四层超时体系总览。
 
-8 张 Bootstrap 卡片，用真实数据（从你的默认模型和提供商读出）可视化完整请求流：
+### 状态语义说明
 
-客户端 → 认证 & 限流 → 虚拟模型选择 → 并发排队（🏠 小人可视化）→ 超时启动 → 实体模型 → 日志管线 → 4 层超时总览
+VirtualModels 列表页右侧新增状态指南面板，定义四种后端状态的精确语义：
 
-### 其他 UI 修复
+| 状态 | 含义 | 是否接受路由 | 模型是否已加载至显存 |
+|------|------|:--:|:--:|
+| Ready | 模型在 `/api/ps` 中，已在显存 | 是 | 是，即时响应 |
+| Healthy | 模型在 `/api/tags` 中，未在显存 | 是 | 否，Ollama 按需加载 |
+| Down | 模型不在 Provider 上 | 否 | — |
+| Banned | 熔断器因连续失败禁止路由 | 否 | — |
 
-- **VirtualModels 列表**：右侧新增状态指南 Sidebar，解释 Ready / Healthy / Down / Banned 是啥、会不会发请求、模型是否已加载
-- **Request Timeout 输入框**：增加 tooltip — 建议值（小模型 60s / 大模型 600s / Embedding 30s）、不计排队和限流、流式不受限
-- **MaxParallelism 输入框**：增加提示 — 排队不消耗虚拟模型超时，不会因为 GPU 忙而放弃后端
-- **KeepAlive 输入框**：增加 Ollama 格式说明（`5m`、`1h`）和反例警告（不要写 `300`）
-- **Provider 列表**：新增并发列（Active/Max + 排队数黄色徽标）和健康检查超时列
-- **Chat 按钮**：改为直达 ChatPlayground 并自动预填模型名（之前得手动选模型）
+### 表单字段增强
+
+- `RequestTimeoutSeconds` 增加 tooltip，包含建议值范围（小模型 60–120 s，大模型 600–1800 s，Embedding 30–60 s）及不计入项说明（认证、限流排队、并发槽排队、流式输出阶段）。
+- `MaxParallelism` 增加提示：并发排队不消耗虚拟模型超时，不因后端忙碌而放弃重试。
+- `KeepAlive` 增加 Ollama 时间格式说明（`5m`、`1h`、`24h`），并警告不得使用原始秒数（如 `300`）。
+- Provider 列表新增两列：并发状态列（活跃数/上限 + 排队数）和健康检查超时列。
+- Chat 快捷按钮改为直接跳转 ChatPlayground 并自动填入模型名。
+
+### Provider 并发队列可视化
+
+`ProviderConcurrencyLimiter` 新增等待计数功能（原子操作，热路径开销可忽略），在 Guide 页面及 Provider 列表中以图形化方式呈现各 Provider 的实时并发状态。
 
 ---
 
-## 服务器摸排发现
+## 五、服务器巡检发现
 
-直接登上 proart 和 DGX Spark 确认了实际运行状态：
+对 proart 服务器及 DGX Spark 节点进行了实地检查，发现以下问题：
 
-1. **Warmup 之前纯属白跑** — `keep_alive=1m`，预热 5 分一次，模型只活 1 分，等于 80% 时间冷着。已改为 5m。
-2. **DGX Spark 大材小用** — vLLM 配了 `max-num-seqs=64`，Gateway 只设了 `MaxParallelism=4`，差了 16 倍。
-3. **两个虚拟模型超时没更新** — `aiursoft-moog:latest` 和 `aiursoft-super:latest` 的 RequestTimeoutSeconds 还是旧默认值 40s。
-4. **Gateway 部署时 Ollama 并没死** — 是容器重启→所有连接断开→keep_alive 到期→模型正常卸载。不是 bug，是行为理解偏差。
+1. **Warmup 配置不合理。** `keep_alive` 设为 1 分钟，预热周期为 5 分钟，导致模型在预热间隔的 80% 时间内处于卸载状态，每次均需重新加载 29 GB 数据。已调整为 5 分钟。
+2. **并发上限严重偏低。** DGX Spark（vLLM, minimax-m2.7）配置 `max-num-seqs=64`，但 Gateway 侧 `MaxParallelism` 仅设为 4，利用率不足 7%。
+3. **两个虚拟模型超时未更新。** `aiursoft-moog:latest` 与 `aiursoft-super:latest` 的 `RequestTimeoutSeconds` 仍为旧默认值 40 秒，远低于推荐的 600 秒。
+4. **Ollama 未发生崩溃。** Gateway 容器部署过程中，所有活跃连接断开，`keep_alive` 到期后模型正常卸载。属容器编排的正常行为，非 Ollama 故障。
 
 ---
 
-## 改动量
+## 六、变更统计
 
-- 35 个文件（含 2 个 EF 迁移、1 个新页面 Guide、1 个新 ViewModel）
-- 279 个测试全部通过
-- 6 次提交推送到 master
+- 修改文件：35 个（含 2 个 EF Core 数据库迁移、1 个新增页面、1 个新增 ViewModel）
+- 测试：279 项全部通过
+- 推送到 master 分支
 
 Anduin
