@@ -48,7 +48,7 @@
                             <label asp-for="KeepAlive" class="form-label">@Localizer["Keep Alive Policy"]</label>
                             <input asp-for="KeepAlive" class="form-control" placeholder="5m" />
                             <div class="form-text small">
-                                @Localizer["How long model weights stay in GPU VRAM after the last request. Uses Ollama duration format: {number}{unit} — e.g."]
+                                @Localizer["How long model weights stay in GPU VRAM after the last request. Uses Ollama duration format: (number)(unit) — e.g."]
                                 <code>5m</code> @Localizer["(5 minutes),"] <code>1h</code> @Localizer["(1 hour),"] <code>24h</code> @Localizer["(24 hours)."]
                                 <code>0</code> @Localizer["= unload immediately."] <code>-1</code> @Localizer["= keep forever."]
                                 <span class="text-warning-emphasis d-block mt-1">
