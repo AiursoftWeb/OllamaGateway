@@ -17,6 +17,8 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-12 col-lg-10">
     <div class="card">
         <div class="card-header">
             <h5 class="card-title mb-0">@Localizer["Manage virtual models that proxy to underlying Ollama models"]</h5>
@@ -125,6 +127,48 @@
                     }
                 </tbody>
             </table>
+        </div>
+    </div>
+        </div>
+        <div class="col-12 col-lg-2">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h6 class="card-title mb-0">
+                        <i data-lucide="info" class="me-1" style="width:16px;height:16px;"></i>
+                        @Localizer["Status Guide"]
+                    </h6>
+                </div>
+                <div class="card-body p-3">
+                    <div class="mb-3 pb-3 border-bottom">
+                        <span class="badge bg-success fs-6 mb-1">@Localizer["Ready"]</span>
+                        <p class="small text-muted mt-1 mb-0">
+                            <i data-lucide="check-circle" class="text-success me-1" style="width:12px;height:12px;"></i>
+                            @Localizer["Model is loaded in GPU VRAM. Requests are routed to this backend and respond instantly."]
+                        </p>
+                    </div>
+                    <div class="mb-3 pb-3 border-bottom">
+                        <span class="badge bg-info fs-6 mb-1">@Localizer["Healthy"]</span>
+                        <p class="small text-muted mt-1 mb-0">
+                            <i data-lucide="alert-circle" class="text-info me-1" style="width:12px;height:12px;"></i>
+                            @Localizer["Model exists on the provider, but is not currently loaded in memory. Requests ARE routed here — Ollama will automatically load the model on demand (cold start, may take seconds to minutes)."]
+                        </p>
+                    </div>
+                    <div class="mb-3 pb-3 border-bottom">
+                        <span class="badge bg-danger fs-6 mb-1">@Localizer["Down"]</span>
+                        <p class="small text-muted mt-1 mb-0">
+                            <i data-lucide="x-circle" class="text-danger me-1" style="width:12px;height:12px;"></i>
+                            @Localizer["Model not found on the provider. Requests are NOT routed here. Check that the underlying model name is correct and exists on the provider."]
+                        </p>
+                    </div>
+                    <div>
+                        <span class="badge bg-purple fs-6 mb-1" style="background-color:#6f42c1;">@Localizer["Banned"]</span>
+                        <p class="small text-muted mt-1 mb-0">
+                            <i data-lucide="shield-off" class="text-purple me-1" style="width:12px;height:12px;"></i>
+                            @Localizer["Circuit breaker has temporarily blocked this backend due to repeated failures. No requests are routed here until the ban expires. Use \"Test Connection\" on the Provider edit page to manually revive."]
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
