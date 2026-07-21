@@ -186,7 +186,7 @@
                                     <h6 class="fw-bold"><i data-lucide="git-branch" class="me-1" style="width:16px;height:16px;"></i> @Localizer["Fallback Timeline"]
                                     </h6>
                                     <p class="small text-muted mb-2">
-                                        @Localizer["With"] @vm.MaxRetries @Localizer["retries and"] @vm.RequestTimeoutSeconds s @Localizer["timeout:"]
+                                        @Localizer["With"] @vm.MaxRetries @Localizer["attempts and"] @vm.RequestTimeoutSeconds s @Localizer["timeout:"]
                                     </p>
                                     <div class="d-flex align-items-center small mb-1">
                                         @for (int i = 0; i < Math.Min(vm.MaxRetries, vm.VirtualModelBackends.Count); i++)
