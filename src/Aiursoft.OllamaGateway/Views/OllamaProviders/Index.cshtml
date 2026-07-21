@@ -1,5 +1,7 @@
 @model Aiursoft.OllamaGateway.Models.OllamaProvidersViewModels.IndexViewModel
 @using Aiursoft.WebTools
+@using Aiursoft.OllamaGateway.Services
+@inject IProviderConcurrencyLimiter ConcurrencyLimiter
 
 <div class="container-fluid p-0">
     <div class="row mb-3">
@@ -25,6 +27,8 @@
                         <th>@Localizer["Status"]</th>
                         <th>@Localizer["Name"]</th>
                         <th>@Localizer["Base URL"]</th>
+                        <th>@Localizer["Concurrency"]</th>
+                        <th>@Localizer["Health Check"]</th>
                         <th>@Localizer["Version"]</th>
                         <th>@Localizer["Running Models"]</th>
                         <th>@Localizer["Created"]</th>
@@ -35,7 +39,7 @@
                     @if (Model.ProviderStatuses.Count == 0)
                     {
                         <tr>
-                            <td colspan="7" class="text-center text-muted py-4">
+                            <td colspan="9" class="text-center text-muted py-4">
                                 @Localizer["No providers defined yet."]
                             </td>
                         </tr>
@@ -57,6 +61,30 @@
                                 </td>
                                 <td><strong>@p.Provider.Name</strong></td>
                                 <td><code>@p.Provider.BaseUrl</code></td>
+                                <td>
+                                    @{
+                                        var active = ConcurrencyLimiter.GetActiveCount(p.Provider.Id);
+                                        var waiting = ConcurrencyLimiter.GetWaitingCount(p.Provider.Id);
+                                        var limit = p.Provider.MaxParallelism;
+                                    }
+                                    @if (limit == 0)
+                                    {
+                                        <span class="badge bg-success">@Localizer["Unlimited"]</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="small">
+                                            <span class="text-success">@(limit - active)</span>
+                                            <span class="text-muted">/</span>
+                                            <span class="text-muted">@limit</span>
+                                            @if (waiting > 0)
+                                            {
+                                                <span class="badge bg-warning text-dark ms-1">+@waiting</span>
+                                            }
+                                        </span>
+                                    }
+                                </td>
+                                <td><code>@p.Provider.HealthCheckTimeoutSeconds s</code></td>
                                 <td>
                                     @if (!string.IsNullOrEmpty(p.Version))
                                     {
