@@ -18,7 +18,22 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Advanced Warmup Options" xml:space="preserve">
+      <data name="(1 hour)," xml:space="preserve">
+    <value>(1 heure),</value>
+  </data>
+  <data name="(24 hours)." xml:space="preserve">
+    <value>(24 heures).</value>
+  </data>
+  <data name="(5 minutes)," xml:space="preserve">
+    <value>(5 minutes),</value>
+  </data>
+  <data name="= keep forever." xml:space="preserve">
+    <value>= garder indéfiniment.</value>
+  </data>
+  <data name="= unload immediately." xml:space="preserve">
+    <value>= déchargement immédiat.</value>
+  </data>
+  <data name="Advanced Warmup Options" xml:space="preserve">
     <value>Options de réchauffage avancées</value>
   </data>
   <data name="Back to List" xml:space="preserve">
@@ -39,6 +54,9 @@
   <data name="Controls how long the AI model weights stay loaded in GPU VRAM after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep in VRAM forever." xml:space="preserve">
     <value>Détermine la durée pendant laquelle les poids du modèle IA restent chargés en mémoire VRAM du GPU après une requête. Format Ollama (par ex. « 5m », « 1h », « 24h »). Utilisez « 0 » pour décharger immédiatement, ou « -1 » pour conserver indéfiniment en VRAM.</value>
   </data>
+  <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
+    <value>N&apos;utilisez PAS de secondes brutes comme &apos;300&apos;. Écrivez &apos;5m&apos; à la place. Les formats non valides sont ignorés silencieusement par Ollama.</value>
+  </data>
   <data name="e.g. Local Server" xml:space="preserve">
     <value>p. ex. Local Server</value>
   </data>
@@ -47,6 +65,15 @@
   </data>
   <data name="Embed" xml:space="preserve">
     <value>Embed</value>
+  </data>
+  <data name="Health Check Timeout (s)" xml:space="preserve">
+    <value>Délai d&apos;expiration du contrôle de santé (s)</value>
+  </data>
+  <data name="How long model weights stay in GPU VRAM after the last request. Uses Ollama duration format: (number)(unit) — e.g." xml:space="preserve">
+    <value>Durée de maintien des poids du modèle en VRAM GPU après la dernière requête. Utilise le format de durée Ollama : (nombre)(unité) — ex.</value>
+  </data>
+  <data name="How long the background health monitor waits when probing this provider for model lists and running status. Set higher for providers with slow storage (HDD/NAS)." xml:space="preserve">
+    <value>Durée d&apos;attente du moniteur de santé en arrière-plan lors de l&apos;interrogation de ce fournisseur pour les listes de modèles et l&apos;état d&apos;exécution. Augmentez cette valeur pour les fournisseurs utilisant un stockage lent (HDD/NAS).</value>
   </data>
   <data name="Keep" xml:space="preserve">
     <value>Garder</value>
@@ -101,6 +128,9 @@
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>Nom du modèle sous-jacent</value>
+  </data>
+  <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
+    <value>L&apos;attente dans la file d&apos;attente de concurrence ne consomme PAS le délai d&apos;expiration de requête du modèle virtuel. Une requête attendra indéfiniment qu&apos;un slot soit disponible — seule la déconnexion du client (fermeture du navigateur, expiration du délai SDK) met fin à l&apos;attente. Le modèle virtuel n&apos;abandonne pas un backend simplement parce qu&apos;il est occupé.</value>
   </data>
   <data name="Warmup is not applicable to OpenAI-compatible providers. The upstream service manages model loading automatically." xml:space="preserve">
     <value>Le warmup ne s&apos;applique pas aux fournisseurs compatibles OpenAI. Le service amont gère automatiquement le chargement des modèles.</value>

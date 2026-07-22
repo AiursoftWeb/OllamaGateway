@@ -24,17 +24,38 @@
   <data name="Are you sure?" xml:space="preserve">
     <value>Êtes-vous sûr ?</value>
   </data>
+  <data name="Banned" xml:space="preserve">
+    <value>Interdit</value>
+  </data>
   <data name="Chat" xml:space="preserve">
     <value>Chat</value>
+  </data>
+  <data name="Circuit breaker has temporarily blocked this backend due to repeated failures. No requests are routed here until the ban expires. Use &quot;Test Connection&quot; on the Provider edit page to manually revive." xml:space="preserve">
+    <value>Le disjoncteur a temporairement bloqué ce backend en raison de défaillances répétées. Aucune requête n&apos;est routée ici jusqu&apos;à l&apos;expiration de l&apos;interdiction. Utilisez &quot;Tester la connexion&quot; sur la page de modification du fournisseur pour le réactiver manuellement.</value>
   </data>
   <data name="Created" xml:space="preserve">
     <value>Créé</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Hors ligne</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Modifier</value>
   </data>
+  <data name="Healthy" xml:space="preserve">
+    <value>Sain</value>
+  </data>
   <data name="Manage virtual models that proxy to underlying Ollama models" xml:space="preserve">
     <value>Gérer les modèles virtuels qui font office de proxy pour les modèles Ollama sous-jacents</value>
+  </data>
+  <data name="Model exists on the provider, but is not currently loaded in memory. Requests ARE routed here — Ollama will automatically load the model on demand (cold start, may take seconds to minutes)." xml:space="preserve">
+    <value>Le modèle existe sur le fournisseur, mais n&apos;est pas actuellement chargé en mémoire. Les requêtes SONT acheminées ici — Ollama chargera automatiquement le modèle à la demande (démarrage à froid, cela peut prendre de quelques secondes à quelques minutes).</value>
+  </data>
+  <data name="Model is loaded in GPU VRAM. Requests are routed to this backend and respond instantly." xml:space="preserve">
+    <value>Le modèle est chargé dans la VRAM du GPU. Les requêtes sont acheminées vers ce backend et répondent instantanément.</value>
+  </data>
+  <data name="Model not found on the provider. Requests are NOT routed here. Check that the underlying model name is correct and exists on the provider." xml:space="preserve">
+    <value>Modèle introuvable chez le fournisseur. Les requêtes ne sont PAS acheminées ici. Vérifiez que le nom du modèle sous-jacent est correct et existe bien chez le fournisseur.</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Nom</value>
@@ -45,11 +66,20 @@
   <data name="No models defined yet." xml:space="preserve">
     <value>Aucun modèle défini pour le moment.</value>
   </data>
+  <data name="Open in Chat Playground" xml:space="preserve">
+    <value>Ouvrir dans le Playground de Chat</value>
+  </data>
   <data name="Overrides" xml:space="preserve">
     <value>Définitions</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>Fournisseur</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Prêt</value>
+  </data>
+  <data name="Status Guide" xml:space="preserve">
+    <value>Guide des statuts</value>
   </data>
   <data name="Underlying" xml:space="preserve">
     <value>Modèle sous-jacent</value>
