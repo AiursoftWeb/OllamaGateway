@@ -18,7 +18,22 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Add New Ollama Provider" xml:space="preserve">
+      <data name="(1 hour)," xml:space="preserve">
+    <value>(1 giờ),</value>
+  </data>
+  <data name="(24 hours)." xml:space="preserve">
+    <value>(24 giờ).</value>
+  </data>
+  <data name="(5 minutes)," xml:space="preserve">
+    <value>(5 phút),</value>
+  </data>
+  <data name="= keep forever." xml:space="preserve">
+    <value>= giữ mãi.</value>
+  </data>
+  <data name="= unload immediately." xml:space="preserve">
+    <value>= giải phóng ngay lập tức.</value>
+  </data>
+  <data name="Add New Ollama Provider" xml:space="preserve">
     <value>Thêm nhà cung cấp Ollama mới</value>
   </data>
   <data name="Add Provider" xml:space="preserve">
@@ -39,8 +54,20 @@
   <data name="Controls how long the AI model weights stay loaded in GPU VRAM after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep in VRAM forever." xml:space="preserve">
     <value>Kiểm soát thời gian trọng số mô hình AI được giữ trong VRAM GPU sau khi nhận yêu cầu. Định dạng Ollama (ví dụ: &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Dùng &apos;0&apos; để tải xuống ngay lập tức, hoặc &apos;-1&apos; để giữ mãi trong VRAM.</value>
   </data>
+  <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
+    <value>KHÔNG sử dụng giây thô như &apos;300&apos;. Hãy viết &apos;5m&apos; thay vào đó. Các định dạng không hợp lệ sẽ bị Ollama bỏ qua im lặng.</value>
+  </data>
   <data name="e.g. My Local Ollama" xml:space="preserve">
     <value>ví dụ: Ollama địa phương của tôi</value>
+  </data>
+  <data name="Health Check Timeout (s)" xml:space="preserve">
+    <value>Thời gian chờ kiểm tra trạng thái (giây)</value>
+  </data>
+  <data name="How long model weights stay in GPU VRAM after the last request. Uses Ollama duration format: (number)(unit) — e.g." xml:space="preserve">
+    <value>Thời gian trọng số mô hình lưu trong VRAM GPU sau khi có yêu cầu cuối cùng. Sử dụng định dạng thời lượng của Ollama: (số)(đơn vị) — ví dụ:</value>
+  </data>
+  <data name="How long the background health monitor waits when probing this provider&apos;s /api/tags and /api/ps endpoints. Set higher for providers with slow storage (HDD/NAS) where scanning model directories may take tens of seconds." xml:space="preserve">
+    <value>Thời gian bộ giám sát sức khỏe nền chờ khi kiểm tra các endpoint /api/tags và /api/ps của nhà cung cấp này. Hãy đặt giá trị cao hơn đối với các nhà cung cấp có ổ lưu trữ chậm (HDD/NAS), nơi việc quét thư mục mô hình có thể mất hàng chục giây.</value>
   </data>
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>Chính sách Giữ Kết Nối</value>
@@ -95,6 +122,9 @@
   </data>
   <data name="The URL where Ollama is listening." xml:space="preserve">
     <value>URL mà Ollama đang lắng nghe.</value>
+  </data>
+  <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
+    <value>Việc chờ trong hàng đợi đồng thời KHÔNG tiêu thụ Thời gian chờ Yêu cầu của mô hình ảo. Một yêu cầu sẽ chờ vô hạn để có một khe — chỉ có việc ngắt kết nối từ phía máy khách (đóng trình duyệt, hết giờ SDK) mới dừng việc chờ. Mô hình ảo không bỏ cuộc với backend chỉ vì nó đang bận.</value>
   </data>
 
 </root>

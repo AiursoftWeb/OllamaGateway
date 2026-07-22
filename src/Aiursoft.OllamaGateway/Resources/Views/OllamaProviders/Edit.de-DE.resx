@@ -18,7 +18,22 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Advanced Warmup Options" xml:space="preserve">
+      <data name="(1 hour)," xml:space="preserve">
+    <value>(1 Stunde),</value>
+  </data>
+  <data name="(24 hours)." xml:space="preserve">
+    <value>(24 Stunden).</value>
+  </data>
+  <data name="(5 minutes)," xml:space="preserve">
+    <value>(5 Minuten),</value>
+  </data>
+  <data name="= keep forever." xml:space="preserve">
+    <value>= dauerhaft behalten.</value>
+  </data>
+  <data name="= unload immediately." xml:space="preserve">
+    <value>= sofort entladen.</value>
+  </data>
+  <data name="Advanced Warmup Options" xml:space="preserve">
     <value>Erweiterte Warmup-Optionen</value>
   </data>
   <data name="Back to List" xml:space="preserve">
@@ -39,6 +54,9 @@
   <data name="Controls how long the AI model weights stay loaded in GPU VRAM after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep in VRAM forever." xml:space="preserve">
     <value>Legt fest, wie lange die KI-Modellgewichte nach einer Anfrage im GPU-VRAM geladen bleiben. Ollama-Format (z. B. &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Verwenden Sie &apos;0&apos; für eine sofortige Entladung oder &apos;-1&apos;, um sie dauerhaft im VRAM zu behalten.</value>
   </data>
+  <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
+    <value>Verwenden Sie KEINE nackten Sekunden wie &apos;300&apos;. Schreiben Sie stattdessen &apos;5m&apos;. Ungültige Formate werden von Ollama stillschweigend ignoriert.</value>
+  </data>
   <data name="e.g. Local Server" xml:space="preserve">
     <value>z. B. Lokaler Server</value>
   </data>
@@ -47,6 +65,15 @@
   </data>
   <data name="Embed" xml:space="preserve">
     <value>Einbetten</value>
+  </data>
+  <data name="Health Check Timeout (s)" xml:space="preserve">
+    <value>Zeitüberschreitung der Integritätsprüfung (s)</value>
+  </data>
+  <data name="How long model weights stay in GPU VRAM after the last request. Uses Ollama duration format: (number)(unit) — e.g." xml:space="preserve">
+    <value>Wie lange die Modellgewichte nach der letzten Anfrage im GPU-VRAM verbleiben. Verwendet das Ollama-Dauerformat: (Zahl)(Einheit) — z. B.</value>
+  </data>
+  <data name="How long the background health monitor waits when probing this provider for model lists and running status. Set higher for providers with slow storage (HDD/NAS)." xml:space="preserve">
+    <value>Wie lange der Hintergrund-Health-Monitor wartet, wenn er diesen Anbieter auf Modelllisten und den Laufstatus überprüft. Bei Anbietern mit langsamen Speichermedien (HDD/NAS) einen höheren Wert einstellen.</value>
   </data>
   <data name="Keep" xml:space="preserve">
     <value>Behalten</value>
@@ -101,6 +128,9 @@
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>Name des zugrunde liegenden Modells</value>
+  </data>
+  <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
+    <value>Das Warten in der Koncurrentzwarteschlange verbraucht NICHT die Request-Timeout-Zeit des virtuellen Modells. Eine Anfrage wartet unbegrenzt auf einen Slot – nur eine Client-Trennung (Browser-Schließung, SDK-Timeout) beendet das Warten. Das virtuelle Modell gibt nicht einfach auf, weil ein Backend ausgelastet ist.</value>
   </data>
   <data name="Warmup is not applicable to OpenAI-compatible providers. The upstream service manages model loading automatically." xml:space="preserve">
     <value>Warmup ist für OpenAI-kompatible Anbieter nicht anwendbar. Der vorgelagerte Dienst verwaltet das Modell-Laden automatisch.</value>

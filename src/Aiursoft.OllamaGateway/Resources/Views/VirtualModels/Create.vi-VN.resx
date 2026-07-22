@@ -51,6 +51,9 @@
   <data name="Forces the upstream engine to allocate a specific window size." xml:space="preserve">
     <value>Buộc động cơ upstream phân bổ kích thước cửa sổ cụ thể.</value>
   </data>
+  <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies. SUGGESTED VALUES: small models (≤8B, NVMe SSD) → 60–120s; large models (≥27B or HDD/NAS storage) → 600–1800s; embedding models → 30–60s." xml:space="preserve">
+    <value>Thời gian gateway chờ backend BẮT ĐẦU phản hồi. KHÔNG bao gồm thời gian xác thực, hàng đợi giới hạn tốc độ, hoặc chờ slot đồng thời. Khi bắt đầu truyền dữ liệu trực tiếp (streaming), không áp dụng giới hạn thời gian. GIÁ TRỊ ĐỀ XUẤT: mô hình nhỏ (≤8B, NVMe SSD) → 60–120s; mô hình lớn (≥27B hoặc lưu trữ HDD/NAS) → 600–1800s; mô hình embedding → 30–60s.</value>
+  </data>
   <data name="Initial Backend Configuration" xml:space="preserve">
     <value>Cấu hình Backend ban đầu</value>
   </data>
@@ -77,6 +80,9 @@
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Hình phạt lặp lại</value>
+  </data>
+  <data name="Request Timeout (s)" xml:space="preserve">
+    <value>Thời gian chờ yêu cầu (giây)</value>
   </data>
   <data name="Selection Strategy" xml:space="preserve">
     <value>Chiến lược chọn lựa</value>

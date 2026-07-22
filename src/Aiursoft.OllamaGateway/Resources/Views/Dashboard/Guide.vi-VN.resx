@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="(fallback)" xml:space="preserve">
+    <value>(mặc định)</value>
+  </data>
+  <data name="1. Client Request" xml:space="preserve">
+    <value>1. Yêu cầu từ máy khách</value>
+  </data>
+  <data name="2. Authentication &amp; Rate Limiting" xml:space="preserve">
+    <value>2. Xác thực &amp; Giới hạn tốc độ</value>
+  </data>
+  <data name="3. Virtual Model" xml:space="preserve">
+    <value>3. Mô hình ảo</value>
+  </data>
+  <data name="4. Provider Concurrency Limiter" xml:space="preserve">
+    <value>4. Bộ giới hạn độ song song của nhà cung cấp</value>
+  </data>
+  <data name="5. ⏱️ Timeout Clock Starts" xml:space="preserve">
+    <value>5. ⏱️ Bắt đầu đếm thời gian chờ</value>
+  </data>
+  <data name="6. Physical Backend" xml:space="preserve">
+    <value>6. Backend Vật lý</value>
+  </data>
+  <data name="7. Observability Pipeline — Dual Logging &amp; Usage Tracking" xml:space="preserve">
+    <value>7. Đường ống Quan sát — Ghi nhật ký kép &amp; Theo dõi Sử dụng</value>
+  </data>
+  <data name="Any OpenAI-compatible or Ollama-native client sends a request." xml:space="preserve">
+    <value>Bất kỳ client nào tương thích với OpenAI hoặc nguyên gốc Ollama đều gửi yêu cầu.</value>
+  </data>
+  <data name="API Key Verification" xml:space="preserve">
+    <value>Xác thực Khóa API</value>
+  </data>
+  <data name="Architecture Guide" xml:space="preserve">
+    <value>Hướng dẫn Kiến trúc</value>
+  </data>
+  <data name="attempts and" xml:space="preserve">
+    <value>lần thử và</value>
+  </data>
+  <data name="Authentication &amp; API key validation" xml:space="preserve">
+    <value>Xác thực &amp; xác minh API key</value>
+  </data>
+  <data name="Backends" xml:space="preserve">
+    <value>Backend</value>
+  </data>
+  <data name="Bearer token or x-api-key is validated." xml:space="preserve">
+    <value>Token Bearer hoặc x-api-key được xác thực.</value>
+  </data>
+  <data name="Both pipelines are fire-and-forget from the request hot-path. If ClickHouse is down or the buffer is full, requests still succeed — logs are simply dropped (DropWrite). The system never blocks a user request to write a log." xml:space="preserve">
+    <value>Cả hai đường ống hoạt động theo cơ chế &quot;phóng và quên&quot; từ luồng xử lý yêu cầu chính. Nếu ClickHouse ngừng hoạt động hoặc bộ đệm đầy, các yêu cầu vẫn thành công — nhật ký chỉ đơn giản bị bỏ qua (DropWrite). Hệ thống không bao giờ chặn yêu cầu của người dùng để ghi nhật ký.</value>
+  </data>
+  <data name="bounded to" xml:space="preserve">
+    <value>giới hạn ở</value>
+  </data>
+  <data name="but no virtual model with that name and type &apos;Chat&apos; exists in the database." xml:space="preserve">
+    <value>nhưng không có mô hình ảo nào với tên và loại &apos;Chat&apos; đó tồn tại trong cơ sở dữ liệu.</value>
+  </data>
+  <data name="ClickHouse Log Pipeline" xml:space="preserve">
+    <value>Quản lý Nhật ký ClickHouse</value>
+  </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>Cấu hình</value>
+  </data>
+  <data name="Control Plane" xml:space="preserve">
+    <value>Mặt phẳng điều khiển</value>
+  </data>
+  <data name="Controls" xml:space="preserve">
+    <value>Điều khiển</value>
+  </data>
+  <data name="create it here → New Virtual Model" xml:space="preserve">
+    <value>tạo tại đây → Mô hình ảo mới</value>
+  </data>
+  <data name="Current Value" xml:space="preserve">
+    <value>Giá trị hiện tại</value>
+  </data>
+  <data name="Dashboard Plane" xml:space="preserve">
+    <value>Mặt Bảng Điều Khiển</value>
+  </data>
+  <data name="Data Plane" xml:space="preserve">
+    <value>Mặt phẳng dữ liệu</value>
+  </data>
+  <data name="Default Chat Model Not Found!" xml:space="preserve">
+    <value>Không tìm thấy Mô hình Trò chuyện Mặc định!</value>
+  </data>
+  <data name="drains buffer, batch-inserts into ClickHouse" xml:space="preserve">
+    <value>rỗng bộ đệm, chèn hàng loạt vào ClickHouse</value>
+  </data>
+  <data name="Each API key has its own rate-limit window. Two modes:" xml:space="preserve">
+    <value>Mỗi khóa API có cửa sổ giới hạn tốc độ riêng. Hai chế độ:</value>
+  </data>
+  <data name="entries, DropWrite when full" xml:space="preserve">
+    <value>mục, DropWrite khi đầy</value>
+  </data>
+  <data name="every" xml:space="preserve">
+    <value>mỗi</value>
+  </data>
+  <data name="Every request is logged asynchronously without blocking the hot path:" xml:space="preserve">
+    <value>Mọi yêu cầu đều được ghi nhật ký bất đồng bộ mà không chặn đường dẫn nóng:</value>
+  </data>
+  <data name="Example" xml:space="preserve">
+    <value>Ví dụ</value>
+  </data>
+  <data name="Fallback Timeline" xml:space="preserve">
+    <value>Thời gian chờ dự phòng</value>
+  </data>
+  <data name="Fast in-memory counters avoid DB writes on every request:" xml:space="preserve">
+    <value>Bộ đếm trong bộ nhớ nhanh tránh ghi DB cho mỗi yêu cầu:</value>
+  </data>
+  <data name="Fix it here → Global Settings" xml:space="preserve">
+    <value>Sửa ngay tại đây → Cài đặt toàn cầu</value>
+  </data>
+  <data name="GPU processes tokens. Once loaded, subsequent requests skip loading → straight to inference." xml:space="preserve">
+    <value>GPU xử lý các token. Sau khi tải xong, các yêu cầu tiếp theo sẽ bỏ qua bước tải → đi thẳng vào suy luận.</value>
+  </data>
+  <data name="Hang mode" xml:space="preserve">
+    <value>Chế độ chờ</value>
+  </data>
+  <data name="Hardcoded" xml:space="preserve">
+    <value>Đã mã hóa cứng</value>
+  </data>
+  <data name="Health Check" xml:space="preserve">
+    <value>Kiểm tra tình trạng hệ thống</value>
+  </data>
+  <data name="How a request flows through the Ollama Gateway — from client to backend" xml:space="preserve">
+    <value>Cách một yêu cầu di chuyển qua Ollama Gateway — từ máy khách đến máy chủ phía sau</value>
+  </data>
+  <data name="How long the background health monitor waits when probing /api/tags and /api/ps" xml:space="preserve">
+    <value>Thời gian trình giám sát sức khỏe nền chờ khi thăm dò /api/tags và /api/ps</value>
+  </data>
+  <data name="How long the gateway waits for the backend to START responding to a user request" xml:space="preserve">
+    <value>Thời gian gateway chờ backend BẮT ĐẦU phản hồi yêu cầu của người dùng</value>
+  </data>
+  <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies." xml:space="preserve">
+    <value>Thời gian gateway chờ backend BẮT ĐẦU phản hồi. KHÔNG bao gồm thời gian chờ xác thực, hàng đợi giới hạn tốc độ, hoặc khe đồng thời. Một khi bắt đầu truyền dữ liệu (streaming), không áp dụng giới hạn thời gian.</value>
+  </data>
+  <data name="How long the warmup job waits for each model to load. Per-model configurable." xml:space="preserve">
+    <value>Thời gian tác vụ khởi động chờ mỗi mô hình tải xong. Có thể cấu hình riêng cho từng mô hình.</value>
+  </data>
+  <data name="HTTP request to backend (DNS, TCP handshake, TLS)" xml:space="preserve">
+    <value>Yêu cầu HTTP đến backend (DNS, bắt tay TCP, TLS)</value>
+  </data>
+  <data name="Immediately return HTTP 429." xml:space="preserve">
+    <value>Trả về HTTP 429 ngay lập tức.</value>
+  </data>
+  <data name="In-Memory Usage Tracking" xml:space="preserve">
+    <value>Theo dõi Sử dụng Trong Bộ nhớ</value>
+  </data>
+  <data name="Inference" xml:space="preserve">
+    <value>Suy luận</value>
+  </data>
+  <data name="Keep-Alive &amp; Warmup" xml:space="preserve">
+    <value>Giữ kết nối &amp; Khởi động trước</value>
+  </data>
+  <data name="KeepAlive" xml:space="preserve">
+    <value>Giữ kết nối</value>
+  </data>
+  <data name="keys in the system." xml:space="preserve">
+    <value>khóa trong hệ thống.</value>
+  </data>
+  <data name="Layer" xml:space="preserve">
+    <value>Lớp</value>
+  </data>
+  <data name="Limit" xml:space="preserve">
+    <value>Giới hạn</value>
+  </data>
+  <data name="Logs include: user, model, provider, tokens, latency, status code, conversation count" xml:space="preserve">
+    <value>Nhật ký bao gồm: người dùng, mô hình, nhà cung cấp, token, độ trễ, mã trạng thái, số lượng cuộc trò chuyện</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>Tối đa</value>
+  </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>Số lần thử lại tối đa</value>
+  </data>
+  <data name="Middleware" xml:space="preserve">
+    <value>Phần mềm trung gian</value>
+  </data>
+  <data name="Model" xml:space="preserve">
+    <value>Mô hình</value>
+  </data>
+  <data name="Model Loading" xml:space="preserve">
+    <value>Đang tải mô hình</value>
+  </data>
+  <data name="Model loading time (cold start on GPU)" xml:space="preserve">
+    <value>Thời gian tải mô hình (khởi động lạnh trên GPU)</value>
+  </data>
+  <data name="needs another 30 s to finish → completely fine ✅" xml:space="preserve">
+    <value>cần thêm 30 giây để hoàn tất → hoàn toàn ổn ✅</value>
+  </data>
+  <data name="No backends configured for this virtual model." xml:space="preserve">
+    <value>Không có backend nào được cấu hình cho mô hình ảo này.</value>
+  </data>
+  <data name="No concurrency limit — requests pass through immediately" xml:space="preserve">
+    <value>Không giới hạn đồng thời — yêu cầu được xử lý ngay lập tức</value>
+  </data>
+  <data name="No providers configured yet." xml:space="preserve">
+    <value>Chưa có nhà cung cấp nào được cấu hình.</value>
+  </data>
+  <data name="not found. Create it to see real configuration here." xml:space="preserve">
+    <value>không tìm thấy. Hãy tạo nó để xem cấu hình thực tế tại đây.</value>
+  </data>
+  <data name="NumCtx" xml:space="preserve">
+    <value>Số ngữ cảnh</value>
+  </data>
+  <data name="Once the backend sends HTTP headers, the timeout is PASSED. The model can stream tokens for hours — only client disconnection stops it." xml:space="preserve">
+    <value>Sau khi backend gửi các tiêu đề HTTP, thời gian chờ được coi là ĐÃ HẾT HẠN. Mô hình có thể truyền token liên tục trong nhiều giờ — chỉ có việc ngắt kết nối của client mới dừng quá trình này lại.</value>
+  </data>
+  <data name="or" xml:space="preserve">
+    <value>hoặc</value>
+  </data>
+  <data name="Per-Key Rate Limiter" xml:space="preserve">
+    <value>Bộ giới hạn tốc độ theo từng khóa</value>
+  </data>
+  <data name="Pri" xml:space="preserve">
+    <value>Ưu tiên</value>
+  </data>
+  <data name="processing" xml:space="preserve">
+    <value>đang xử lý</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Nhà cung cấp</value>
+  </data>
+  <data name="Provider → Health Check Timeout (s)" xml:space="preserve">
+    <value>Nhà cung cấp → Thời gian chờ kiểm tra trạng thái (giây)</value>
+  </data>
+  <data name="Provider → Warmup Model → Timeout (s)" xml:space="preserve">
+    <value>Nhà cung cấp → Mô hình khởi động nóng → Thời gian chờ (giây)</value>
+  </data>
+  <data name="Provider concurrency slot queuing" xml:space="preserve">
+    <value>Xếp hàng chờ khe đồng thời của nhà cung cấp</value>
+  </data>
+  <data name="Queue until a slot opens — does NOT consume the virtual model timeout." xml:space="preserve">
+    <value>Đợi trong hàng cho đến khi có khe trống — KHÔNG tiêu tốn thời gian chờ hết hạn của mô hình ảo.</value>
+  </data>
+  <data name="Quick admin dashboard ping. Does NOT write to DB — UI-only." xml:space="preserve">
+    <value>Ping nhanh bảng điều khiển quản trị. KHÔNG ghi vào CSDL — chỉ giao diện người dùng.</value>
+  </data>
+  <data name="Rate-limit queue waiting (Hang mode)" xml:space="preserve">
+    <value>Chờ hàng đợi giới hạn tốc độ (Chế độ treo)</value>
+  </data>
+  <data name="Rate-limiting happens BEFORE the virtual model timeout starts. Queuing here is free." xml:space="preserve">
+    <value>Hạn tốc độ được thực hiện TRƯỚC khi thời gian chờ của mô hình ảo bắt đầu. Việc xếp hàng ở đây không mất phí.</value>
+  </data>
+  <data name="Reads model weights from disk into GPU VRAM. 27GB on NVMe ≈ 5–15s; on HDD/NAS ≈ 3–10 min." xml:space="preserve">
+    <value>Đọc trọng số mô hình từ ổ đĩa vào VRAM của GPU. 27GB trên NVMe ≈ 5–15 giây; trên HDD/NAS ≈ 3–10 phút.</value>
+  </data>
+  <data name="Reject mode" xml:space="preserve">
+    <value>Chế độ từ chối</value>
+  </data>
+  <data name="Request Timeout" xml:space="preserve">
+    <value>Thời gian chờ yêu cầu</value>
+  </data>
+  <data name="runs every" xml:space="preserve">
+    <value>chạy mỗi</value>
+  </data>
+  <data name="Strategy" xml:space="preserve">
+    <value>Chiến lược</value>
+  </data>
+  <data name="Streaming response body (after headers received)" xml:space="preserve">
+    <value>Phản hồi nội dung dạng stream (sau khi nhận được tiêu đề)</value>
+  </data>
+  <data name="swaps buffers and bulk-updates DB (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)" xml:space="preserve">
+    <value>hoán đổi bộ đệm và cập nhật hàng loạt vào CSDL (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)</value>
+  </data>
+  <data name="Temperature" xml:space="preserve">
+    <value>Nhiệt độ</value>
+  </data>
+  <data name="The 4-Layer Timeout Architecture" xml:space="preserve">
+    <value>Kiến trúc Thời gian chờ 4 lớp</value>
+  </data>
+  <data name="The global default chat model is set to" xml:space="preserve">
+    <value>Mô hình trò chuyện mặc định toàn cầu được đặt thành</value>
+  </data>
+  <data name="The warmup background job pings configured models every 5 min to prevent unloading." xml:space="preserve">
+    <value>Công việc nền khởi động sẽ kiểm tra các mô hình đã cấu hình mỗi 5 phút để ngăn chúng bị dỡ bỏ.</value>
+  </data>
+  <data name="timeout:" xml:space="preserve">
+    <value>thời gian chờ:</value>
+  </data>
+  <data name="timeout. Backend starts streaming at" xml:space="preserve">
+    <value>thời gian chờ. Backend bắt đầu truyền dữ liệu tại</value>
+  </data>
+  <data name="tracks API key usage, virtual model usage, underlying model usage — feeds the Dashboard charts in real-time" xml:space="preserve">
+    <value>theo dõi việc sử dụng API key, mô hình ảo, mô hình nền tảng — cung cấp dữ liệu cho biểu đồ Dashboard theo thời gian thực</value>
+  </data>
+  <data name="tracks live in-flight requests — powers the &quot;Live Inference&quot; table and Monitor page" xml:space="preserve">
+    <value>theo dõi các yêu cầu đang xử lý — cung cấp dữ liệu cho bảng &quot;Live Inference&quot; và trang Monitor</value>
+  </data>
+  <data name="Tries backends from lowest priority to highest. If backend #1 fails or times out, falls back to #2, then #3." xml:space="preserve">
+    <value>Thử các backend từ mức ưu tiên thấp nhất đến cao nhất. Nếu backend #1 thất bại hoặc hết thời gian chờ, sẽ chuyển sang #2, sau đó là #3.</value>
+  </data>
+  <data name="Unlimited" xml:space="preserve">
+    <value>Không giới hạn</value>
+  </data>
+  <data name="Virtual model" xml:space="preserve">
+    <value>Mô hình ảo</value>
+  </data>
+  <data name="Virtual Model → Request Timeout (s)" xml:space="preserve">
+    <value>Mô hình ảo → Thời gian chờ yêu cầu (giây)</value>
+  </data>
+  <data name="waiting" xml:space="preserve">
+    <value>đang chờ</value>
+  </data>
+  <data name="Waiting for backend to send HTTP response headers" xml:space="preserve">
+    <value>Đang chờ backend gửi các tiêu đề phản hồi HTTP</value>
+  </data>
+  <data name="Waiting in the concurrency queue does NOT consume the virtual model timeout. The timeout clock only starts after the slot is acquired. A request will wait indefinitely for its slot — the only way it stops waiting is if the client (browser / SDK) disconnects. A busy GPU does not cause the virtual model to give up on this backend." xml:space="preserve">
+    <value>Việc chờ trong hàng đợi đồng thời KHÔNG làm cạn kiệt thời gian chờ của mô hình ảo. Đồng hồ thời gian chờ chỉ bắt đầu chạy sau khi giành được khe xử lý. Một yêu cầu sẽ chờ vô hạn cho đến khi có khe — cách duy nhất để nó ngừng chờ là nếu máy khách (trình duyệt / SDK) ngắt kết nối. GPU bận rộn không khiến mô hình ảo từ bỏ backend này.</value>
+  </data>
+  <data name="Warmup Plane" xml:space="preserve">
+    <value>Mặt Phẳng Khởi Động</value>
+  </data>
+  <data name="What IS counted" xml:space="preserve">
+    <value>Những gì ĐƯỢC tính</value>
+  </data>
+  <data name="What is NOT counted" xml:space="preserve">
+    <value>Những gì KHÔNG được tính</value>
+  </data>
+  <data name="Where configured" xml:space="preserve">
+    <value>Cấu hình tại</value>
+  </data>
+  <data name="With" xml:space="preserve">
+    <value>Với</value>
+  </data>
+  <data name="Without specifying a model, the gateway uses" xml:space="preserve">
+    <value>Khi không chỉ định mô hình, gateway sẽ sử dụng</value>
+  </data>
+
+</root>
