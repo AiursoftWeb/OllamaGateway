@@ -18,7 +18,22 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Add New Ollama Provider" xml:space="preserve">
+      <data name="(1 hour)," xml:space="preserve">
+    <value>（1 小時），</value>
+  </data>
+  <data name="(24 hours)." xml:space="preserve">
+    <value>（24 小時）。</value>
+  </data>
+  <data name="(5 minutes)," xml:space="preserve">
+    <value>（5 分鐘），</value>
+  </data>
+  <data name="= keep forever." xml:space="preserve">
+    <value>= 永久保留。</value>
+  </data>
+  <data name="= unload immediately." xml:space="preserve">
+    <value>= 立即卸載。</value>
+  </data>
+  <data name="Add New Ollama Provider" xml:space="preserve">
     <value>新增 Ollama 提供者</value>
   </data>
   <data name="Add Provider" xml:space="preserve">
@@ -39,8 +54,20 @@
   <data name="Controls how long the AI model weights stay loaded in GPU VRAM after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep in VRAM forever." xml:space="preserve">
     <value>控制 AI 模型權重在請求完成後於 GPU VRAM 中保持載入的時間。採用 Ollama 格式（例如：&apos;5m&apos;、&apos;1h&apos;、&apos;24h&apos;）。使用 &apos;0&apos; 可立即卸載，或 &apos;-1&apos; 永久保留在 VRAM 中。</value>
   </data>
+  <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
+    <value>請勿直接使用原始秒數（例如 &apos;300&apos;）。請改為輸入 &apos;5m&apos;。Ollama 會無視無效的格式。</value>
+  </data>
   <data name="e.g. My Local Ollama" xml:space="preserve">
     <value>例如：My Local Ollama</value>
+  </data>
+  <data name="Health Check Timeout (s)" xml:space="preserve">
+    <value>健康檢查逾時（秒）</value>
+  </data>
+  <data name="How long model weights stay in GPU VRAM after the last request. Uses Ollama duration format: (number)(unit) — e.g." xml:space="preserve">
+    <value>模型權重在上次請求後於 GPU VRAM 中保留的時間。採用 Ollama 的持續時間格式：(數字)(單位) — 例如：</value>
+  </data>
+  <data name="How long the background health monitor waits when probing this provider&apos;s /api/tags and /api/ps endpoints. Set higher for providers with slow storage (HDD/NAS) where scanning model directories may take tens of seconds." xml:space="preserve">
+    <value>背景健康監控在偵測此供應商的 /api/tags 與 /api/ps 端點時的等待時間。對於儲存速度較慢（HDD/NAS）且掃描模型目錄可能需要數十秒的供應商，請將此值設高。</value>
   </data>
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>保持連線策略</value>
@@ -95,6 +122,9 @@
   </data>
   <data name="The URL where Ollama is listening." xml:space="preserve">
     <value>Ollama 正在監聽的 URL。</value>
+  </data>
+  <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
+    <value>在併發佇列中等待並不會消耗虛擬模型的請求逾時時間。請求將無限期地等待空位，只有客戶端斷開連線（關閉瀏覽器、SDK 逾時）才會停止等待。虛擬模型不會僅因為後端忙碌就放棄請求。</value>
   </data>
 
 </root>

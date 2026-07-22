@@ -18,7 +18,22 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Advanced Warmup Options" xml:space="preserve">
+      <data name="(1 hour)," xml:space="preserve">
+    <value>（1 小时），</value>
+  </data>
+  <data name="(24 hours)." xml:space="preserve">
+    <value>（24 小时）。</value>
+  </data>
+  <data name="(5 minutes)," xml:space="preserve">
+    <value>（5 分钟），</value>
+  </data>
+  <data name="= keep forever." xml:space="preserve">
+    <value>= 永久保留。</value>
+  </data>
+  <data name="= unload immediately." xml:space="preserve">
+    <value>= 立即卸载。</value>
+  </data>
+  <data name="Advanced Warmup Options" xml:space="preserve">
     <value>高级预热选项</value>
   </data>
   <data name="Back to List" xml:space="preserve">
@@ -36,6 +51,9 @@
   <data name="Controls how long the AI model weights stay loaded in GPU VRAM after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep in VRAM forever." xml:space="preserve">
     <value>控制大模型权重在完成请求后，继续在显存 (GPU VRAM) 中驻留的时间。支持 Ollama 时间格式（例如 &apos;5m&apos;、&apos;1h&apos;、&apos;24h&apos;）。设为 &apos;0&apos; 表示用完立即卸载，设为 &apos;-1&apos; 表示永久驻留显存。</value>
   </data>
+  <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
+    <value>请勿使用原始秒数（如 &apos;300&apos;）。请改为写入 &apos;5m&apos;。Ollama 将静默忽略无效格式。</value>
+  </data>
   <data name="e.g. Local Server" xml:space="preserve">
     <value>例如：本地服务器</value>
   </data>
@@ -44,6 +62,15 @@
   </data>
   <data name="Embed" xml:space="preserve">
     <value>嵌入</value>
+  </data>
+  <data name="Health Check Timeout (s)" xml:space="preserve">
+    <value>健康检查超时（秒）</value>
+  </data>
+  <data name="How long model weights stay in GPU VRAM after the last request. Uses Ollama duration format: (number)(unit) — e.g." xml:space="preserve">
+    <value>模型权重在最后一次请求后保留在 GPU 显存中的时长。使用 Ollama 持续时间格式：(数字)(单位) — 例如：</value>
+  </data>
+  <data name="How long the background health monitor waits when probing this provider for model lists and running status. Set higher for providers with slow storage (HDD/NAS)." xml:space="preserve">
+    <value>后台健康监控在探测此提供程序的模型列表和运行状态时的等待时间。对于存储速度较慢（HDD/NAS）的提供程序，请设置更高的值。</value>
   </data>
   <data name="Keep" xml:space="preserve">
     <value>保留</value>
@@ -98,6 +125,9 @@
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>底层模型名称</value>
+  </data>
+  <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
+    <value>在并发队列中等待不会消耗虚拟模型的请求超时时间。请求将无限期地等待可用槽位——只有客户端断开连接（浏览器关闭、SDK 超时）才会终止等待。虚拟模型不会因为后端繁忙而放弃处理请求。</value>
   </data>
   <data name="Warmup is not applicable to OpenAI-compatible providers. The upstream service manages model loading automatically." xml:space="preserve">
     <value>预热不适用于 OpenAI 兼容提供商。上游服务会自动管理模型加载。</value>

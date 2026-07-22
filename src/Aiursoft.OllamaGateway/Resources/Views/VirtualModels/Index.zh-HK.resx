@@ -24,17 +24,38 @@
   <data name="Are you sure?" xml:space="preserve">
     <value>確定嗎？</value>
   </data>
+  <data name="Banned" xml:space="preserve">
+    <value>已禁止</value>
+  </data>
   <data name="Chat" xml:space="preserve">
     <value>對話</value>
+  </data>
+  <data name="Circuit breaker has temporarily blocked this backend due to repeated failures. No requests are routed here until the ban expires. Use &quot;Test Connection&quot; on the Provider edit page to manually revive." xml:space="preserve">
+    <value>斷路器已因重複失敗而暫時封鎖此後端。在禁令到期前，不會將請求路由至此處。請在提供者編輯頁面使用「測試連線」手動恢復。</value>
   </data>
   <data name="Created" xml:space="preserve">
     <value>建立日期</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>離線</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>編輯</value>
   </data>
+  <data name="Healthy" xml:space="preserve">
+    <value>正常</value>
+  </data>
   <data name="Manage virtual models that proxy to underlying Ollama models" xml:space="preserve">
     <value>管理代理至底層 Ollama 模型的虛擬模型</value>
+  </data>
+  <data name="Model exists on the provider, but is not currently loaded in memory. Requests ARE routed here — Ollama will automatically load the model on demand (cold start, may take seconds to minutes)." xml:space="preserve">
+    <value>模型存在於服務提供者，但尚未載入記憶體。請求會路由至此——Ollama 將按需自動載入模型（冷啟動，可能需要數秒至數分鐘）。</value>
+  </data>
+  <data name="Model is loaded in GPU VRAM. Requests are routed to this backend and respond instantly." xml:space="preserve">
+    <value>模型已載入 GPU 顯示記憶體。請求會路由至此後端，並即時回應。</value>
+  </data>
+  <data name="Model not found on the provider. Requests are NOT routed here. Check that the underlying model name is correct and exists on the provider." xml:space="preserve">
+    <value>供應方未找到模型。請求不會路由至此。請檢查基礎模型名稱是否正確且存在於供應方上。</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>名稱</value>
@@ -45,11 +66,20 @@
   <data name="No models defined yet." xml:space="preserve">
     <value>尚未定義任何模型。</value>
   </data>
+  <data name="Open in Chat Playground" xml:space="preserve">
+    <value>於聊天遊樂場開啟</value>
+  </data>
   <data name="Overrides" xml:space="preserve">
     <value>覆寫</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>供應商</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>就緒</value>
+  </data>
+  <data name="Status Guide" xml:space="preserve">
+    <value>狀態指南</value>
   </data>
   <data name="Underlying" xml:space="preserve">
     <value>底層</value>
