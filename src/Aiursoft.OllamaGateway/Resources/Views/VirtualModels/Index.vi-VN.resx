@@ -24,17 +24,38 @@
   <data name="Are you sure?" xml:space="preserve">
     <value>Bạn có chắc chắn không?</value>
   </data>
+  <data name="Banned" xml:space="preserve">
+    <value>Bị cấm</value>
+  </data>
   <data name="Chat" xml:space="preserve">
     <value>Chat</value>
+  </data>
+  <data name="Circuit breaker has temporarily blocked this backend due to repeated failures. No requests are routed here until the ban expires. Use &quot;Test Connection&quot; on the Provider edit page to manually revive." xml:space="preserve">
+    <value>Circuit breaker tạm thời chặn backend này do lỗi lặp lại. Không có yêu cầu nào được chuyển đến đây cho đến khi hết thời gian cấm. Sử dụng &quot;Test Connection&quot; trên trang chỉnh sửa Provider để khôi phục thủ công.</value>
   </data>
   <data name="Created" xml:space="preserve">
     <value>Đã tạo</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Ngừng hoạt động</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Chỉnh sửa</value>
   </data>
+  <data name="Healthy" xml:space="preserve">
+    <value>Hoạt động ổn định</value>
+  </data>
   <data name="Manage virtual models that proxy to underlying Ollama models" xml:space="preserve">
     <value>Quản lý các mô hình ảo đóng vai trò trung gian cho các mô hình Ollama nền tảng</value>
+  </data>
+  <data name="Model exists on the provider, but is not currently loaded in memory. Requests ARE routed here — Ollama will automatically load the model on demand (cold start, may take seconds to minutes)." xml:space="preserve">
+    <value>Mô hình tồn tại trên nhà cung cấp, nhưng hiện chưa được tải vào bộ nhớ. Yêu cầu ĐƯỢC chuyển hướng đến đây — Ollama sẽ tự động tải mô hình theo yêu cầu (khởi động lạnh, có thể mất vài giây đến vài phút).</value>
+  </data>
+  <data name="Model is loaded in GPU VRAM. Requests are routed to this backend and respond instantly." xml:space="preserve">
+    <value>Mô hình đã được tải vào bộ nhớ VRAM của GPU. Yêu cầu được định tuyến đến máy chủ này và phản hồi ngay lập tức.</value>
+  </data>
+  <data name="Model not found on the provider. Requests are NOT routed here. Check that the underlying model name is correct and exists on the provider." xml:space="preserve">
+    <value>Không tìm thấy mô hình trên nhà cung cấp. Yêu cầu KHÔNG được định tuyến đến đây. Hãy kiểm tra xem tên mô hình cơ bản có chính xác và tồn tại trên nhà cung cấp hay không.</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Tên</value>
@@ -45,11 +66,20 @@
   <data name="No models defined yet." xml:space="preserve">
     <value>Chưa có mô hình nào được định nghĩa.</value>
   </data>
+  <data name="Open in Chat Playground" xml:space="preserve">
+    <value>Mở trong Chat Playground</value>
+  </data>
   <data name="Overrides" xml:space="preserve">
     <value>Ghi đè</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>Nhà cung cấp</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Sẵn sàng</value>
+  </data>
+  <data name="Status Guide" xml:space="preserve">
+    <value>Hướng dẫn trạng thái</value>
   </data>
   <data name="Underlying" xml:space="preserve">
     <value>Cơ sở</value>

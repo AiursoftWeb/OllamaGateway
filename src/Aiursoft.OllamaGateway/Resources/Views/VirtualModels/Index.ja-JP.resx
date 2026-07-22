@@ -24,17 +24,38 @@
   <data name="Are you sure?" xml:space="preserve">
     <value>本当に削除しますか？</value>
   </data>
+  <data name="Banned" xml:space="preserve">
+    <value>禁止済み</value>
+  </data>
   <data name="Chat" xml:space="preserve">
     <value>チャット</value>
+  </data>
+  <data name="Circuit breaker has temporarily blocked this backend due to repeated failures. No requests are routed here until the ban expires. Use &quot;Test Connection&quot; on the Provider edit page to manually revive." xml:space="preserve">
+    <value>サーキットブレーカーが繰り返し失敗したため、このバックエンドを一時的にブロックしました。禁止期限が過ぎるまで、ここにはリクエストはルーティングされません。プロバイダー編集ページで「接続テスト」を使用して手動で復旧してください。</value>
   </data>
   <data name="Created" xml:space="preserve">
     <value>作成日</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>停止中</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>編集</value>
   </data>
+  <data name="Healthy" xml:space="preserve">
+    <value>正常</value>
+  </data>
   <data name="Manage virtual models that proxy to underlying Ollama models" xml:space="preserve">
     <value>基盤となる Ollama モデルへのプロキシを行う仮想モデルを管理します</value>
+  </data>
+  <data name="Model exists on the provider, but is not currently loaded in memory. Requests ARE routed here — Ollama will automatically load the model on demand (cold start, may take seconds to minutes)." xml:space="preserve">
+    <value>モデルはプロバイダー上に存在しますが、現在メモリには読み込まれていません。リクエストはこのエンドポイントへルーティングされます。Ollama がオンデマンドでモデルを自動的に読み込みます（コールドスタートのため、数秒から数分かかる場合があります）。</value>
+  </data>
+  <data name="Model is loaded in GPU VRAM. Requests are routed to this backend and respond instantly." xml:space="preserve">
+    <value>モデルはGPU VRAMに読み込まれています。リクエストはこのバックエンドにルーティングされ、瞬時に応答します。</value>
+  </data>
+  <data name="Model not found on the provider. Requests are NOT routed here. Check that the underlying model name is correct and exists on the provider." xml:space="preserve">
+    <value>プロバイダー上にモデルが見つかりません。リクエストはここではルーティングされません。基盤となるモデル名が正しいか、かつプロバイダー上に存在するかを確認してください。</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>名前</value>
@@ -45,11 +66,20 @@
   <data name="No models defined yet." xml:space="preserve">
     <value>モデルがまだ定義されていません。</value>
   </data>
+  <data name="Open in Chat Playground" xml:space="preserve">
+    <value>チャットプレイグラウンドで開く</value>
+  </data>
   <data name="Overrides" xml:space="preserve">
     <value>上書き</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>プロバイダー</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>準備完了</value>
+  </data>
+  <data name="Status Guide" xml:space="preserve">
+    <value>ステータスガイド</value>
   </data>
   <data name="Underlying" xml:space="preserve">
     <value>基盤モデル</value>

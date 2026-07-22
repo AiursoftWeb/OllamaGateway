@@ -18,7 +18,22 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Advanced Warmup Options" xml:space="preserve">
+      <data name="(1 hour)," xml:space="preserve">
+    <value>(1시간),</value>
+  </data>
+  <data name="(24 hours)." xml:space="preserve">
+    <value>(24시간).</value>
+  </data>
+  <data name="(5 minutes)," xml:space="preserve">
+    <value>(5분),</value>
+  </data>
+  <data name="= keep forever." xml:space="preserve">
+    <value>= 영구 유지</value>
+  </data>
+  <data name="= unload immediately." xml:space="preserve">
+    <value>= 즉시 언로드합니다.</value>
+  </data>
+  <data name="Advanced Warmup Options" xml:space="preserve">
     <value>고급 워밍업 옵션</value>
   </data>
   <data name="Back to List" xml:space="preserve">
@@ -39,6 +54,9 @@
   <data name="Controls how long the AI model weights stay loaded in GPU VRAM after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep in VRAM forever." xml:space="preserve">
     <value>요청 후 AI 모델 가중치가 GPU VRAM에 유지되는 시간을 제어합니다. Ollama 형식(예: &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;)을 사용하십시오. 즉시 언로드하려면 &apos;0&apos;을, VRAM에 영구적으로 유지하려면 &apos;-1&apos;을 사용하십시오.</value>
   </data>
+  <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
+    <value>&apos;300&apos;과 같은 초 단위의 원시 값을 사용하지 마십시오. 대신 &apos;5m&apos;을 입력하세요. 유효하지 않은 형식은 Ollama에서 자동으로 무시됩니다.</value>
+  </data>
   <data name="e.g. Local Server" xml:space="preserve">
     <value>예: 로컬 서버</value>
   </data>
@@ -47,6 +65,15 @@
   </data>
   <data name="Embed" xml:space="preserve">
     <value>임베딩</value>
+  </data>
+  <data name="Health Check Timeout (s)" xml:space="preserve">
+    <value>상태 확인 타임아웃(초)</value>
+  </data>
+  <data name="How long model weights stay in GPU VRAM after the last request. Uses Ollama duration format: (number)(unit) — e.g." xml:space="preserve">
+    <value>마지막 요청 후 모델 가중치가 GPU VRAM에 유지되는 시간입니다. Ollama 기간 형식(숫자)(단위)을 사용합니다. 예:</value>
+  </data>
+  <data name="How long the background health monitor waits when probing this provider for model lists and running status. Set higher for providers with slow storage (HDD/NAS)." xml:space="preserve">
+    <value>모델 목록 및 실행 상태 확인을 위해 이 공급자를 폴링할 때 백그라운드 헬스 모니터가 대기하는 시간입니다. 느린 저장소(HDD/NAS)를 사용하는 공급자의 경우 이 값을 더 높게 설정하세요.</value>
   </data>
   <data name="Keep" xml:space="preserve">
     <value>유지</value>
@@ -101,6 +128,9 @@
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>기반 모델 이름</value>
+  </data>
+  <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
+    <value>동시성 대기열에서 기다리는 것은 가상 모델의 요청 시간 초과(Request Timeout)를 소모하지 않습니다. 요청은 슬롯이 생길 때까지 무기한 대기하며, 클라이언트 연결 끊김(브라우저 닫기, SDK 시간 초과)만 대기를 중단합니다. 가상 모델은 백엔드가 바쁘다는 이유만으로 처리를 포기하지 않습니다.</value>
   </data>
   <data name="Warmup is not applicable to OpenAI-compatible providers. The upstream service manages model loading automatically." xml:space="preserve">
     <value>Warmup은 OpenAI 호환 제공업체에는 적용되지 않습니다. 상위 서비스에서 모델 로딩을 자동으로 관리합니다.</value>

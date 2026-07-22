@@ -63,6 +63,9 @@
   <data name="Enabled" xml:space="preserve">
     <value>Bật</value>
   </data>
+  <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies. SUGGESTED VALUES: small models (≤8B, NVMe SSD) → 60–120s; large models (≥27B or HDD/NAS storage) → 600–1800s; embedding models → 30–60s." xml:space="preserve">
+    <value>Thời gian gateway chờ backend bắt đầu phản hồi. KHÔNG bao gồm thời gian chờ xác thực, hàng đợi giới hạn tốc độ hoặc khe đồng thời. Khi luồng dữ liệu bắt đầu, không áp dụng giới hạn thời gian. GIÁ TRỊ ĐỀ XUẤT: mô hình nhỏ (≤8B, NVMe SSD) → 60–120s; mô hình lớn (≥27B hoặc lưu trữ HDD/NAS) → 600–1800s; mô hình embedding → 30–60s.</value>
+  </data>
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>Giữ mô hình đã tải trong bộ nhớ</value>
   </data>
@@ -98,6 +101,9 @@
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Hình phạt lặp lại</value>
+  </data>
+  <data name="Request Timeout (s)" xml:space="preserve">
+    <value>Thời gian chờ yêu cầu (giây)</value>
   </data>
   <data name="Save Changes" xml:space="preserve">
     <value>Lưu thay đổi</value>
