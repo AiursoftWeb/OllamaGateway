@@ -63,6 +63,9 @@
   <data name="Enabled" xml:space="preserve">
     <value>Aktiviert</value>
   </data>
+  <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies. SUGGESTED VALUES: small models (≤8B, NVMe SSD) → 60–120s; large models (≥27B or HDD/NAS storage) → 600–1800s; embedding models → 30–60s." xml:space="preserve">
+    <value>Wie lange das Gateway auf die erste Antwort des Backends wartet. Enthält NICHT Auth, Rate-Limit-Warteschlange oder Wartezeit auf einen Concurrency-Slot. Sobald der Streaming-Modus beginnt, gilt keine Zeitbegrenzung mehr. EMPFOHLENE WERTE: kleine Modelle (≤8B, NVMe SSD) → 60–120s; große Modelle (≥27B oder HDD/NAS-Speicher) → 600–1800s; Embedding-Modelle → 30–60s.</value>
+  </data>
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>Modell im Speicher belassen</value>
   </data>
@@ -98,6 +101,9 @@
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Wiederholungsstrafe</value>
+  </data>
+  <data name="Request Timeout (s)" xml:space="preserve">
+    <value>Anfrage-Timeout (s)</value>
   </data>
   <data name="Save Changes" xml:space="preserve">
     <value>Änderungen speichern</value>
