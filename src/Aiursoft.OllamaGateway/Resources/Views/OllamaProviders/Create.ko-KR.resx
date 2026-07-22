@@ -18,7 +18,22 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Add New Ollama Provider" xml:space="preserve">
+      <data name="(1 hour)," xml:space="preserve">
+    <value>(1시간),</value>
+  </data>
+  <data name="(24 hours)." xml:space="preserve">
+    <value>(24시간).</value>
+  </data>
+  <data name="(5 minutes)," xml:space="preserve">
+    <value>(5분),</value>
+  </data>
+  <data name="= keep forever." xml:space="preserve">
+    <value>= 영구 유지.</value>
+  </data>
+  <data name="= unload immediately." xml:space="preserve">
+    <value>= 즉시 언로드</value>
+  </data>
+  <data name="Add New Ollama Provider" xml:space="preserve">
     <value>새로운 Ollama 공급자 추가</value>
   </data>
   <data name="Add Provider" xml:space="preserve">
@@ -39,8 +54,20 @@
   <data name="Controls how long the AI model weights stay loaded in GPU VRAM after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep in VRAM forever." xml:space="preserve">
     <value>요청 후 AI 모델 가중치가 GPU VRAM에 유지되는 시간을 제어합니다. Ollama 형식(예: &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;)을 사용합니다. 즉시 언로드하려면 &apos;0&apos;을, VRAM에 영구적으로 유지하려면 &apos;-1&apos;을 사용하세요.</value>
   </data>
+  <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
+    <value>&apos;300&apos;과 같은 순수 초수(raw seconds)를 사용하지 마십시오. 대신 &apos;5m&apos;을 작성하십시오. 유효하지 않은 형식은 Ollama에서 조용히 무시됩니다.</value>
+  </data>
   <data name="e.g. My Local Ollama" xml:space="preserve">
     <value>예: 내 로컬 Ollama</value>
+  </data>
+  <data name="Health Check Timeout (s)" xml:space="preserve">
+    <value>건강 상태 확인 시간 초과(초)</value>
+  </data>
+  <data name="How long model weights stay in GPU VRAM after the last request. Uses Ollama duration format: (number)(unit) — e.g." xml:space="preserve">
+    <value>마지막 요청 후 모델 가중치가 GPU VRAM에 머무르는 시간입니다. Ollama 지속 시간 형식(숫자+단위)을 사용합니다. 예:</value>
+  </data>
+  <data name="How long the background health monitor waits when probing this provider&apos;s /api/tags and /api/ps endpoints. Set higher for providers with slow storage (HDD/NAS) where scanning model directories may take tens of seconds." xml:space="preserve">
+    <value>배경 상태 모니터링이 이 공급자의 /api/tags 및 /api/ps 엔드포인트를 확인할 때 대기하는 시간입니다. HDD/NAS와 같은 느린 저장 장치를 사용하는 공급자의 경우 모델 디렉토리 스캔에 수십 초가 소요될 수 있으므로 이 값을 높게 설정하세요.</value>
   </data>
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>Keep Alive 정책</value>
@@ -95,6 +122,9 @@
   </data>
   <data name="The URL where Ollama is listening." xml:space="preserve">
     <value>Ollama 가 수신하는 URL</value>
+  </data>
+  <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
+    <value>동시성 대기열에서 대기하는 것은 가상 모델의 요청 시간 초과(Request Timeout)를 소모하지 않습니다. 요청은 슬롯이 생길 때까지 무한정 대기하며, 클라이언트 연결 해제(브라우저 닫기, SDK 시간 초과)만이 이 대기를 중단합니다. 가상 모델은 백엔드가 바쁘다고 해서 포기하지 않습니다.</value>
   </data>
 
 </root>

@@ -51,6 +51,9 @@
   <data name="Forces the upstream engine to allocate a specific window size." xml:space="preserve">
     <value>상단 엔진이 특정 창 크기를 할당하도록 강제합니다.</value>
   </data>
+  <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies. SUGGESTED VALUES: small models (≤8B, NVMe SSD) → 60–120s; large models (≥27B or HDD/NAS storage) → 600–1800s; embedding models → 30–60s." xml:space="preserve">
+    <value>게이트웨이가 백엔드의 응답 시작을 기다리는 시간입니다. 인증, 속도 제한 대기열 또는 동시성 슬롯 대기 시간은 포함되지 않습니다. 스트리밍이 시작된 후에는 시간 제한이 적용되지 않습니다. 권장 값: 소형 모델 (≤8B, NVMe SSD) → 60–120초; 대형 모델 (≥27B 또는 HDD/NAS 스토리지) → 600–1800초; 임베딩 모델 → 30–60초.</value>
+  </data>
   <data name="Initial Backend Configuration" xml:space="preserve">
     <value>초기 백엔드 설정</value>
   </data>
@@ -77,6 +80,9 @@
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>반복 패널티</value>
+  </data>
+  <data name="Request Timeout (s)" xml:space="preserve">
+    <value>요청 시간 초과(초)</value>
   </data>
   <data name="Selection Strategy" xml:space="preserve">
     <value>선택 전략</value>

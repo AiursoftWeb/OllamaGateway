@@ -63,6 +63,9 @@
   <data name="Enabled" xml:space="preserve">
     <value>有効</value>
   </data>
+  <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies. SUGGESTED VALUES: small models (≤8B, NVMe SSD) → 60–120s; large models (≥27B or HDD/NAS storage) → 600–1800s; embedding models → 30–60s." xml:space="preserve">
+    <value>ゲートウェイがバックエンドからの応答開始を待つ時間。認証、レート制限キュー、並行スロット待ちは含まれません。ストリーミング開始後はタイムリミットは適用されません。推奨値: 小規模モデル (≤8B, NVMe SSD) → 60–120秒; 大規模モデル (≥27B または HDD/NAS ストレージ) → 600–1800秒; 埋め込みモデル → 30–60秒。</value>
+  </data>
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>モデルをメモリに読み込んだまま保持する</value>
   </data>
@@ -98,6 +101,9 @@
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>繰り返しペナルティ</value>
+  </data>
+  <data name="Request Timeout (s)" xml:space="preserve">
+    <value>リクエストタイムアウト（秒）</value>
   </data>
   <data name="Save Changes" xml:space="preserve">
     <value>変更を保存</value>
