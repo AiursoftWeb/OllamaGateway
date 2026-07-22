@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="(fallback)" xml:space="preserve">
+    <value>（备用值）</value>
+  </data>
+  <data name="1. Client Request" xml:space="preserve">
+    <value>1. 客户端请求</value>
+  </data>
+  <data name="2. Authentication &amp; Rate Limiting" xml:space="preserve">
+    <value>2. 身份验证与速率限制</value>
+  </data>
+  <data name="3. Virtual Model" xml:space="preserve">
+    <value>3. 虚拟模型</value>
+  </data>
+  <data name="4. Provider Concurrency Limiter" xml:space="preserve">
+    <value>4. 提供商并发限制器</value>
+  </data>
+  <data name="5. ⏱️ Timeout Clock Starts" xml:space="preserve">
+    <value>5. ⏱️ 超时计时器启动</value>
+  </data>
+  <data name="6. Physical Backend" xml:space="preserve">
+    <value>6. 物理后端</value>
+  </data>
+  <data name="7. Observability Pipeline — Dual Logging &amp; Usage Tracking" xml:space="preserve">
+    <value>7. 可观测性流水线——双重日志记录与使用追踪</value>
+  </data>
+  <data name="Any OpenAI-compatible or Ollama-native client sends a request." xml:space="preserve">
+    <value>任何兼容 OpenAI 或原生 Ollama 的客户端都会发送请求。</value>
+  </data>
+  <data name="API Key Verification" xml:space="preserve">
+    <value>API 密钥验证</value>
+  </data>
+  <data name="Architecture Guide" xml:space="preserve">
+    <value>架构指南</value>
+  </data>
+  <data name="attempts and" xml:space="preserve">
+    <value>次重试，以及</value>
+  </data>
+  <data name="Authentication &amp; API key validation" xml:space="preserve">
+    <value>身份验证与 API 密钥校验</value>
+  </data>
+  <data name="Backends" xml:space="preserve">
+    <value>后端</value>
+  </data>
+  <data name="Bearer token or x-api-key is validated." xml:space="preserve">
+    <value>Bearer token 或 x-api-key 已通过验证。</value>
+  </data>
+  <data name="Both pipelines are fire-and-forget from the request hot-path. If ClickHouse is down or the buffer is full, requests still succeed — logs are simply dropped (DropWrite). The system never blocks a user request to write a log." xml:space="preserve">
+    <value>两条管道在请求热路径上均采用“发送即忘”模式。如果 ClickHouse 宕机或缓冲区已满，请求仍会成功——日志将被直接丢弃（DropWrite）。系统绝不会因写入日志而阻塞用户请求。</value>
+  </data>
+  <data name="bounded to" xml:space="preserve">
+    <value>限制为</value>
+  </data>
+  <data name="but no virtual model with that name and type &apos;Chat&apos; exists in the database." xml:space="preserve">
+    <value>但数据库中不存在具有该名称且类型为“Chat”的虚拟模型。</value>
+  </data>
+  <data name="ClickHouse Log Pipeline" xml:space="preserve">
+    <value>ClickHouse 日志管道</value>
+  </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>配置</value>
+  </data>
+  <data name="Control Plane" xml:space="preserve">
+    <value>控制平面</value>
+  </data>
+  <data name="Controls" xml:space="preserve">
+    <value>控制项</value>
+  </data>
+  <data name="create it here → New Virtual Model" xml:space="preserve">
+    <value>在此创建 → 新建虚拟模型</value>
+  </data>
+  <data name="Current Value" xml:space="preserve">
+    <value>当前值</value>
+  </data>
+  <data name="Dashboard Plane" xml:space="preserve">
+    <value>仪表盘平面</value>
+  </data>
+  <data name="Data Plane" xml:space="preserve">
+    <value>数据平面</value>
+  </data>
+  <data name="Default Chat Model Not Found!" xml:space="preserve">
+    <value>未找到默认聊天模型！</value>
+  </data>
+  <data name="drains buffer, batch-inserts into ClickHouse" xml:space="preserve">
+    <value>清空缓冲区，批量插入 ClickHouse</value>
+  </data>
+  <data name="Each API key has its own rate-limit window. Two modes:" xml:space="preserve">
+    <value>每个 API 密钥都有独立的速率限制窗口。两种模式：</value>
+  </data>
+  <data name="entries, DropWrite when full" xml:space="preserve">
+    <value>条目，满时丢弃写入</value>
+  </data>
+  <data name="every" xml:space="preserve">
+    <value>每</value>
+  </data>
+  <data name="Every request is logged asynchronously without blocking the hot path:" xml:space="preserve">
+    <value>每个请求都会异步记录日志，不会阻塞关键路径：</value>
+  </data>
+  <data name="Example" xml:space="preserve">
+    <value>示例</value>
+  </data>
+  <data name="Fallback Timeline" xml:space="preserve">
+    <value>回退时间线</value>
+  </data>
+  <data name="Fast in-memory counters avoid DB writes on every request:" xml:space="preserve">
+    <value>快速的内存计数器避免了每次请求时的数据库写入：</value>
+  </data>
+  <data name="Fix it here → Global Settings" xml:space="preserve">
+    <value>在此修复 → 全局设置</value>
+  </data>
+  <data name="GPU processes tokens. Once loaded, subsequent requests skip loading → straight to inference." xml:space="preserve">
+    <value>GPU 处理 Token。加载完成后，后续请求将跳过加载步骤，直接进入推理阶段。</value>
+  </data>
+  <data name="Hang mode" xml:space="preserve">
+    <value>挂起模式</value>
+  </data>
+  <data name="Hardcoded" xml:space="preserve">
+    <value>硬编码</value>
+  </data>
+  <data name="Health Check" xml:space="preserve">
+    <value>健康检查</value>
+  </data>
+  <data name="How a request flows through the Ollama Gateway — from client to backend" xml:space="preserve">
+    <value>请求如何流经 Ollama Gateway——从客户端到后端</value>
+  </data>
+  <data name="How long the background health monitor waits when probing /api/tags and /api/ps" xml:space="preserve">
+    <value>后台健康监控在探测 /api/tags 和 /api/ps 时的等待时间</value>
+  </data>
+  <data name="How long the gateway waits for the backend to START responding to a user request" xml:space="preserve">
+    <value>网关等待后端开始响应用户请求的时间长度</value>
+  </data>
+  <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies." xml:space="preserve">
+    <value>网关等待后端开始响应的时间。不包括身份验证、速率限制队列或并发槽位的等待时间。一旦流式传输开始，则不再受此时间限制。</value>
+  </data>
+  <data name="How long the warmup job waits for each model to load. Per-model configurable." xml:space="preserve">
+    <value>预热作业等待每个模型加载的时间。支持按模型配置。</value>
+  </data>
+  <data name="HTTP request to backend (DNS, TCP handshake, TLS)" xml:space="preserve">
+    <value>向后端发起 HTTP 请求（DNS、TCP 握手、TLS）</value>
+  </data>
+  <data name="Immediately return HTTP 429." xml:space="preserve">
+    <value>立即返回 HTTP 429。</value>
+  </data>
+  <data name="In-Memory Usage Tracking" xml:space="preserve">
+    <value>内存使用跟踪</value>
+  </data>
+  <data name="Inference" xml:space="preserve">
+    <value>推理</value>
+  </data>
+  <data name="Keep-Alive &amp; Warmup" xml:space="preserve">
+    <value>保持活跃与预热</value>
+  </data>
+  <data name="KeepAlive" xml:space="preserve">
+    <value>保持连接</value>
+  </data>
+  <data name="keys in the system." xml:space="preserve">
+    <value>系统中的密钥。</value>
+  </data>
+  <data name="Layer" xml:space="preserve">
+    <value>层</value>
+  </data>
+  <data name="Limit" xml:space="preserve">
+    <value>限制</value>
+  </data>
+  <data name="Logs include: user, model, provider, tokens, latency, status code, conversation count" xml:space="preserve">
+    <value>日志内容包括：用户、模型、提供商、令牌、延迟、状态码、会话次数</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>最大</value>
+  </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>最大重试次数</value>
+  </data>
+  <data name="Middleware" xml:space="preserve">
+    <value>中间件</value>
+  </data>
+  <data name="Model" xml:space="preserve">
+    <value>模型</value>
+  </data>
+  <data name="Model Loading" xml:space="preserve">
+    <value>模型加载</value>
+  </data>
+  <data name="Model loading time (cold start on GPU)" xml:space="preserve">
+    <value>模型加载时间（GPU 冷启动）</value>
+  </data>
+  <data name="needs another 30 s to finish → completely fine ✅" xml:space="preserve">
+    <value>还需 30 秒完成 → 完全没问题 ✅</value>
+  </data>
+  <data name="No backends configured for this virtual model." xml:space="preserve">
+    <value>未为此虚拟模型配置任何后端。</value>
+  </data>
+  <data name="No concurrency limit — requests pass through immediately" xml:space="preserve">
+    <value>无并发限制 — 请求立即通过</value>
+  </data>
+  <data name="No providers configured yet." xml:space="preserve">
+    <value>尚未配置任何提供者。</value>
+  </data>
+  <data name="not found. Create it to see real configuration here." xml:space="preserve">
+    <value>未找到。创建它以在此处查看实际配置。</value>
+  </data>
+  <data name="NumCtx" xml:space="preserve">
+    <value>上下文窗口大小</value>
+  </data>
+  <data name="Once the backend sends HTTP headers, the timeout is PASSED. The model can stream tokens for hours — only client disconnection stops it." xml:space="preserve">
+    <value>一旦后端发送 HTTP 响应头，即视为通过超时检查。模型可以持续流式传输 Token 数小时——只有客户端断开连接才会停止该过程。</value>
+  </data>
+  <data name="or" xml:space="preserve">
+    <value>或</value>
+  </data>
+  <data name="Per-Key Rate Limiter" xml:space="preserve">
+    <value>按密钥速率限制器</value>
+  </data>
+  <data name="Pri" xml:space="preserve">
+    <value>优先级</value>
+  </data>
+  <data name="processing" xml:space="preserve">
+    <value>处理中</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>提供商</value>
+  </data>
+  <data name="Provider → Health Check Timeout (s)" xml:space="preserve">
+    <value>提供程序 → 健康检查超时（秒）</value>
+  </data>
+  <data name="Provider → Warmup Model → Timeout (s)" xml:space="preserve">
+    <value>提供商 → 预热模型 → 超时（秒）</value>
+  </data>
+  <data name="Provider concurrency slot queuing" xml:space="preserve">
+    <value>提供商并发槽排队</value>
+  </data>
+  <data name="Queue until a slot opens — does NOT consume the virtual model timeout." xml:space="preserve">
+    <value>排队等待空位出现——不会消耗虚拟模型超时时间。</value>
+  </data>
+  <data name="Quick admin dashboard ping. Does NOT write to DB — UI-only." xml:space="preserve">
+    <value>快速的管理后台心跳检测。不写入数据库——仅用于界面展示。</value>
+  </data>
+  <data name="Rate-limit queue waiting (Hang mode)" xml:space="preserve">
+    <value>速率限制队列等待（挂起模式）</value>
+  </data>
+  <data name="Rate-limiting happens BEFORE the virtual model timeout starts. Queuing here is free." xml:space="preserve">
+    <value>速率限制在虚拟模型超时开始前生效。此处的排队不占用资源。</value>
+  </data>
+  <data name="Reads model weights from disk into GPU VRAM. 27GB on NVMe ≈ 5–15s; on HDD/NAS ≈ 3–10 min." xml:space="preserve">
+    <value>将模型权重从磁盘读取到 GPU 显存。27GB 数据在 NVMe 上耗时约 5–15 秒；在 HDD/NAS 上耗时约 3–10 分钟。</value>
+  </data>
+  <data name="Reject mode" xml:space="preserve">
+    <value>拒绝模式</value>
+  </data>
+  <data name="Request Timeout" xml:space="preserve">
+    <value>请求超时</value>
+  </data>
+  <data name="runs every" xml:space="preserve">
+    <value>每</value>
+  </data>
+  <data name="Strategy" xml:space="preserve">
+    <value>策略</value>
+  </data>
+  <data name="Streaming response body (after headers received)" xml:space="preserve">
+    <value>流式响应正文（接收标头后）</value>
+  </data>
+  <data name="swaps buffers and bulk-updates DB (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)" xml:space="preserve">
+    <value>交换缓冲区并批量更新数据库（ApiKeys.UsageCount、VirtualModels.UsageCount、UnderlyingModelUsages）</value>
+  </data>
+  <data name="Temperature" xml:space="preserve">
+    <value>温度</value>
+  </data>
+  <data name="The 4-Layer Timeout Architecture" xml:space="preserve">
+    <value>四层超时架构</value>
+  </data>
+  <data name="The global default chat model is set to" xml:space="preserve">
+    <value>全局默认聊天模型已设置为</value>
+  </data>
+  <data name="The warmup background job pings configured models every 5 min to prevent unloading." xml:space="preserve">
+    <value>预热后台任务每 5 分钟向已配置的模型发送一次心跳，以防止其被卸载。</value>
+  </data>
+  <data name="timeout:" xml:space="preserve">
+    <value>超时：</value>
+  </data>
+  <data name="timeout. Backend starts streaming at" xml:space="preserve">
+    <value>超时。后端在 处开始流式传输</value>
+  </data>
+  <data name="tracks API key usage, virtual model usage, underlying model usage — feeds the Dashboard charts in real-time" xml:space="preserve">
+    <value>追踪 API 密钥用量、虚拟模型用量及底层模型用量——实时为仪表盘图表提供数据</value>
+  </data>
+  <data name="tracks live in-flight requests — powers the &quot;Live Inference&quot; table and Monitor page" xml:space="preserve">
+    <value>跟踪实时飞行中的请求——为“实时推理”表和监控页面提供数据支持</value>
+  </data>
+  <data name="Tries backends from lowest priority to highest. If backend #1 fails or times out, falls back to #2, then #3." xml:space="preserve">
+    <value>按优先级从低到高尝试后端。如果后端 #1 失败或超时，则回退到 #2，再到 #3。</value>
+  </data>
+  <data name="Unlimited" xml:space="preserve">
+    <value>无限</value>
+  </data>
+  <data name="Virtual model" xml:space="preserve">
+    <value>虚拟模型</value>
+  </data>
+  <data name="Virtual Model → Request Timeout (s)" xml:space="preserve">
+    <value>虚拟模型 → 请求超时（秒）</value>
+  </data>
+  <data name="waiting" xml:space="preserve">
+    <value>等待</value>
+  </data>
+  <data name="Waiting for backend to send HTTP response headers" xml:space="preserve">
+    <value>等待后端发送 HTTP 响应头</value>
+  </data>
+  <data name="Waiting in the concurrency queue does NOT consume the virtual model timeout. The timeout clock only starts after the slot is acquired. A request will wait indefinitely for its slot — the only way it stops waiting is if the client (browser / SDK) disconnects. A busy GPU does not cause the virtual model to give up on this backend." xml:space="preserve">
+    <value>在并发队列中等待不会消耗虚拟模型的超时时间。只有获取到槽位后，超时计时才会开始。请求将无限期地等待其槽位——唯一的停止等待方式是客户端（浏览器 / SDK）断开连接。GPU 繁忙不会导致虚拟模型放弃该后端。</value>
+  </data>
+  <data name="Warmup Plane" xml:space="preserve">
+    <value>预热平面</value>
+  </data>
+  <data name="What IS counted" xml:space="preserve">
+    <value>计入的内容</value>
+  </data>
+  <data name="What is NOT counted" xml:space="preserve">
+    <value>不计入的内容</value>
+  </data>
+  <data name="Where configured" xml:space="preserve">
+    <value>配置位置</value>
+  </data>
+  <data name="With" xml:space="preserve">
+    <value>如果未指定模型，网关将使用</value>
+  </data>
+  <data name="Without specifying a model, the gateway uses" xml:space="preserve">
+    <value>未指定模型时，网关将使用</value>
+  </data>
+
+</root>

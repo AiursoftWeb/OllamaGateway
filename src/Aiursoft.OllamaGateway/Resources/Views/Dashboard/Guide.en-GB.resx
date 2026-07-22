@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="(fallback)" xml:space="preserve">
+    <value>(fallback)</value>
+  </data>
+  <data name="1. Client Request" xml:space="preserve">
+    <value>1. Client Request</value>
+  </data>
+  <data name="2. Authentication &amp; Rate Limiting" xml:space="preserve">
+    <value>2. Authentication &amp; Rate Limiting</value>
+  </data>
+  <data name="3. Virtual Model" xml:space="preserve">
+    <value>3. Virtual Model</value>
+  </data>
+  <data name="4. Provider Concurrency Limiter" xml:space="preserve">
+    <value>4. Provider Concurrency Limiter</value>
+  </data>
+  <data name="5. ⏱️ Timeout Clock Starts" xml:space="preserve">
+    <value>5. ⏱️ Timeout Clock Starts</value>
+  </data>
+  <data name="6. Physical Backend" xml:space="preserve">
+    <value>6. Physical Backend</value>
+  </data>
+  <data name="7. Observability Pipeline — Dual Logging &amp; Usage Tracking" xml:space="preserve">
+    <value>7. Observability Pipeline — Dual Logging &amp; Usage Tracking</value>
+  </data>
+  <data name="Any OpenAI-compatible or Ollama-native client sends a request." xml:space="preserve">
+    <value>Any OpenAI-compatible or Ollama-native client sends a request.</value>
+  </data>
+  <data name="API Key Verification" xml:space="preserve">
+    <value>API Key Verification</value>
+  </data>
+  <data name="Architecture Guide" xml:space="preserve">
+    <value>Architecture Guide</value>
+  </data>
+  <data name="attempts and" xml:space="preserve">
+    <value>attempts and</value>
+  </data>
+  <data name="Authentication &amp; API key validation" xml:space="preserve">
+    <value>Authentication &amp; API key validation</value>
+  </data>
+  <data name="Backends" xml:space="preserve">
+    <value>Backends</value>
+  </data>
+  <data name="Bearer token or x-api-key is validated." xml:space="preserve">
+    <value>Bearer token or x-api-key is validated.</value>
+  </data>
+  <data name="Both pipelines are fire-and-forget from the request hot-path. If ClickHouse is down or the buffer is full, requests still succeed — logs are simply dropped (DropWrite). The system never blocks a user request to write a log." xml:space="preserve">
+    <value>Both pipelines are fire-and-forget from the request hot-path. If ClickHouse is down or the buffer is full, requests still succeed — logs are simply dropped (DropWrite). The system never blocks a user request to write a log.</value>
+  </data>
+  <data name="bounded to" xml:space="preserve">
+    <value>bounded to</value>
+  </data>
+  <data name="but no virtual model with that name and type &apos;Chat&apos; exists in the database." xml:space="preserve">
+    <value>but no virtual model with that name and type &apos;Chat&apos; exists in the database.</value>
+  </data>
+  <data name="ClickHouse Log Pipeline" xml:space="preserve">
+    <value>ClickHouse Log Pipeline</value>
+  </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>Configuration</value>
+  </data>
+  <data name="Control Plane" xml:space="preserve">
+    <value>Control Plane</value>
+  </data>
+  <data name="Controls" xml:space="preserve">
+    <value>Controls</value>
+  </data>
+  <data name="create it here → New Virtual Model" xml:space="preserve">
+    <value>create it here → New Virtual Model</value>
+  </data>
+  <data name="Current Value" xml:space="preserve">
+    <value>Current Value</value>
+  </data>
+  <data name="Dashboard Plane" xml:space="preserve">
+    <value>Dashboard Plane</value>
+  </data>
+  <data name="Data Plane" xml:space="preserve">
+    <value>Data Plane</value>
+  </data>
+  <data name="Default Chat Model Not Found!" xml:space="preserve">
+    <value>Default Chat Model Not Found!</value>
+  </data>
+  <data name="drains buffer, batch-inserts into ClickHouse" xml:space="preserve">
+    <value>drains buffer, batch-inserts into ClickHouse</value>
+  </data>
+  <data name="Each API key has its own rate-limit window. Two modes:" xml:space="preserve">
+    <value>Each API key has its own rate-limit window. Two modes:</value>
+  </data>
+  <data name="entries, DropWrite when full" xml:space="preserve">
+    <value>entries, DropWrite when full</value>
+  </data>
+  <data name="every" xml:space="preserve">
+    <value>every</value>
+  </data>
+  <data name="Every request is logged asynchronously without blocking the hot path:" xml:space="preserve">
+    <value>Every request is logged asynchronously without blocking the hot path:</value>
+  </data>
+  <data name="Example" xml:space="preserve">
+    <value>Example</value>
+  </data>
+  <data name="Fallback Timeline" xml:space="preserve">
+    <value>Fallback Timeline</value>
+  </data>
+  <data name="Fast in-memory counters avoid DB writes on every request:" xml:space="preserve">
+    <value>Fast in-memory counters avoid DB writes on every request:</value>
+  </data>
+  <data name="Fix it here → Global Settings" xml:space="preserve">
+    <value>Fix it here → Global Settings</value>
+  </data>
+  <data name="GPU processes tokens. Once loaded, subsequent requests skip loading → straight to inference." xml:space="preserve">
+    <value>The GPU processes tokens. Once loaded, subsequent requests bypass loading → proceeding directly to inference.</value>
+  </data>
+  <data name="Hang mode" xml:space="preserve">
+    <value>Hold mode</value>
+  </data>
+  <data name="Hardcoded" xml:space="preserve">
+    <value>Hardcoded</value>
+  </data>
+  <data name="Health Check" xml:space="preserve">
+    <value>Health Check</value>
+  </data>
+  <data name="How a request flows through the Ollama Gateway — from client to backend" xml:space="preserve">
+    <value>How a request flows through the Ollama Gateway — from client to backend</value>
+  </data>
+  <data name="How long the background health monitor waits when probing /api/tags and /api/ps" xml:space="preserve">
+    <value>How long the background health monitor waits when probing /api/tags and /api/ps</value>
+  </data>
+  <data name="How long the gateway waits for the backend to START responding to a user request" xml:space="preserve">
+    <value>How long the gateway waits for the backend to START responding to a user request</value>
+  </data>
+  <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies." xml:space="preserve">
+    <value>The duration the gateway waits for the backend to begin responding. This excludes authentication, rate-limit queue, or concurrency-slot waiting times. Once streaming starts, no time limit applies.</value>
+  </data>
+  <data name="How long the warmup job waits for each model to load. Per-model configurable." xml:space="preserve">
+    <value>How long the warmup job waits for each model to load. Configurable per model.</value>
+  </data>
+  <data name="HTTP request to backend (DNS, TCP handshake, TLS)" xml:space="preserve">
+    <value>HTTP request to backend (DNS, TCP handshake, TLS)</value>
+  </data>
+  <data name="Immediately return HTTP 429." xml:space="preserve">
+    <value>Immediately return HTTP 429.</value>
+  </data>
+  <data name="In-Memory Usage Tracking" xml:space="preserve">
+    <value>In-Memory Usage Tracking</value>
+  </data>
+  <data name="Inference" xml:space="preserve">
+    <value>Inference</value>
+  </data>
+  <data name="Keep-Alive &amp; Warmup" xml:space="preserve">
+    <value>Keep-Alive &amp; Warm-up</value>
+  </data>
+  <data name="KeepAlive" xml:space="preserve">
+    <value>Keep-Alive</value>
+  </data>
+  <data name="keys in the system." xml:space="preserve">
+    <value>keys in the system.</value>
+  </data>
+  <data name="Layer" xml:space="preserve">
+    <value>Layer</value>
+  </data>
+  <data name="Limit" xml:space="preserve">
+    <value>Limit</value>
+  </data>
+  <data name="Logs include: user, model, provider, tokens, latency, status code, conversation count" xml:space="preserve">
+    <value>Logs include: user, model, provider, tokens, latency, status code, conversation count</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>Max Retries</value>
+  </data>
+  <data name="Middleware" xml:space="preserve">
+    <value>Middleware</value>
+  </data>
+  <data name="Model" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="Model Loading" xml:space="preserve">
+    <value>Model Loading</value>
+  </data>
+  <data name="Model loading time (cold start on GPU)" xml:space="preserve">
+    <value>Model loading time (cold start on GPU)</value>
+  </data>
+  <data name="needs another 30 s to finish → completely fine ✅" xml:space="preserve">
+    <value>requires a further 30 s to complete → perfectly acceptable ✅</value>
+  </data>
+  <data name="No backends configured for this virtual model." xml:space="preserve">
+    <value>No backends configured for this virtual model.</value>
+  </data>
+  <data name="No concurrency limit — requests pass through immediately" xml:space="preserve">
+    <value>No concurrency limit — requests pass through immediately</value>
+  </data>
+  <data name="No providers configured yet." xml:space="preserve">
+    <value>No providers configured yet.</value>
+  </data>
+  <data name="not found. Create it to see real configuration here." xml:space="preserve">
+    <value>not found. Create it to see the actual configuration here.</value>
+  </data>
+  <data name="NumCtx" xml:space="preserve">
+    <value>Context Size</value>
+  </data>
+  <data name="Once the backend sends HTTP headers, the timeout is PASSED. The model can stream tokens for hours — only client disconnection stops it." xml:space="preserve">
+    <value>Once the backend sends HTTP headers, the timeout has elapsed. The model can stream tokens for hours — only client disconnection stops it.</value>
+  </data>
+  <data name="or" xml:space="preserve">
+    <value>or</value>
+  </data>
+  <data name="Per-Key Rate Limiter" xml:space="preserve">
+    <value>Per-Key Rate Limiter</value>
+  </data>
+  <data name="Pri" xml:space="preserve">
+    <value>Priority</value>
+  </data>
+  <data name="processing" xml:space="preserve">
+    <value>processing</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Provider</value>
+  </data>
+  <data name="Provider → Health Check Timeout (s)" xml:space="preserve">
+    <value>Provider → Health Check Timeout (s)</value>
+  </data>
+  <data name="Provider → Warmup Model → Timeout (s)" xml:space="preserve">
+    <value>Provider → Warmup Model → Timeout (s)</value>
+  </data>
+  <data name="Provider concurrency slot queuing" xml:space="preserve">
+    <value>Provider concurrency slot queuing</value>
+  </data>
+  <data name="Queue until a slot opens — does NOT consume the virtual model timeout." xml:space="preserve">
+    <value>Queue until a slot opens — does NOT consume the virtual model timeout.</value>
+  </data>
+  <data name="Quick admin dashboard ping. Does NOT write to DB — UI-only." xml:space="preserve">
+    <value>Quick admin dashboard ping. Does NOT write to DB — UI-only.</value>
+  </data>
+  <data name="Rate-limit queue waiting (Hang mode)" xml:space="preserve">
+    <value>Rate-limit queue waiting (Hang mode)</value>
+  </data>
+  <data name="Rate-limiting happens BEFORE the virtual model timeout starts. Queuing here is free." xml:space="preserve">
+    <value>Rate limiting occurs BEFORE the virtual model timeout begins. Queuing here is free.</value>
+  </data>
+  <data name="Reads model weights from disk into GPU VRAM. 27GB on NVMe ≈ 5–15s; on HDD/NAS ≈ 3–10 min." xml:space="preserve">
+    <value>Reads model weights from disk into GPU VRAM. 27GB on NVMe ≈ 5–15s; on HDD/NAS ≈ 3–10 min.</value>
+  </data>
+  <data name="Reject mode" xml:space="preserve">
+    <value>Reject mode</value>
+  </data>
+  <data name="Request Timeout" xml:space="preserve">
+    <value>Request Timeout</value>
+  </data>
+  <data name="runs every" xml:space="preserve">
+    <value>runs every</value>
+  </data>
+  <data name="Strategy" xml:space="preserve">
+    <value>Strategy</value>
+  </data>
+  <data name="Streaming response body (after headers received)" xml:space="preserve">
+    <value>Streaming response body (after headers received)</value>
+  </data>
+  <data name="swaps buffers and bulk-updates DB (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)" xml:space="preserve">
+    <value>swaps buffers and bulk-updates DB (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)</value>
+  </data>
+  <data name="Temperature" xml:space="preserve">
+    <value>Temperature</value>
+  </data>
+  <data name="The 4-Layer Timeout Architecture" xml:space="preserve">
+    <value>The 4-Layer Timeout Architecture</value>
+  </data>
+  <data name="The global default chat model is set to" xml:space="preserve">
+    <value>The global default chat model is set to</value>
+  </data>
+  <data name="The warmup background job pings configured models every 5 min to prevent unloading." xml:space="preserve">
+    <value>The warmup background job pings configured models every 5 min to prevent unloading.</value>
+  </data>
+  <data name="timeout:" xml:space="preserve">
+    <value>timeout:</value>
+  </data>
+  <data name="timeout. Backend starts streaming at" xml:space="preserve">
+    <value>timeout. Backend starts streaming at</value>
+  </data>
+  <data name="tracks API key usage, virtual model usage, underlying model usage — feeds the Dashboard charts in real-time" xml:space="preserve">
+    <value>tracks API key usage, virtual model usage, underlying model usage — feeds the Dashboard charts in real-time</value>
+  </data>
+  <data name="tracks live in-flight requests — powers the &quot;Live Inference&quot; table and Monitor page" xml:space="preserve">
+    <value>tracks live in-flight requests — powers the &quot;Live Inference&quot; table and Monitor page</value>
+  </data>
+  <data name="Tries backends from lowest priority to highest. If backend #1 fails or times out, falls back to #2, then #3." xml:space="preserve">
+    <value>Tries backends from lowest priority to highest. If backend #1 fails or times out, falls back to #2, then #3.</value>
+  </data>
+  <data name="Unlimited" xml:space="preserve">
+    <value>Unlimited</value>
+  </data>
+  <data name="Virtual model" xml:space="preserve">
+    <value>Virtual model</value>
+  </data>
+  <data name="Virtual Model → Request Timeout (s)" xml:space="preserve">
+    <value>Virtual Model → Request Timeout (s)</value>
+  </data>
+  <data name="waiting" xml:space="preserve">
+    <value>waiting</value>
+  </data>
+  <data name="Waiting for backend to send HTTP response headers" xml:space="preserve">
+    <value>Waiting for the backend to send HTTP response headers</value>
+  </data>
+  <data name="Waiting in the concurrency queue does NOT consume the virtual model timeout. The timeout clock only starts after the slot is acquired. A request will wait indefinitely for its slot — the only way it stops waiting is if the client (browser / SDK) disconnects. A busy GPU does not cause the virtual model to give up on this backend." xml:space="preserve">
+    <value>Waiting in the concurrency queue does NOT consume the virtual model timeout. The timeout clock only starts after the slot is acquired. A request will wait indefinitely for its slot — the only way it stops waiting is if the client (browser / SDK) disconnects. A busy GPU does not cause the virtual model to give up on this backend.</value>
+  </data>
+  <data name="Warmup Plane" xml:space="preserve">
+    <value>Warmup Plane</value>
+  </data>
+  <data name="What IS counted" xml:space="preserve">
+    <value>What IS counted</value>
+  </data>
+  <data name="What is NOT counted" xml:space="preserve">
+    <value>What is NOT counted</value>
+  </data>
+  <data name="Where configured" xml:space="preserve">
+    <value>Where configured</value>
+  </data>
+  <data name="With" xml:space="preserve">
+    <value>With</value>
+  </data>
+  <data name="Without specifying a model, the gateway uses" xml:space="preserve">
+    <value>Without specifying a model, the gateway uses</value>
+  </data>
+
+</root>

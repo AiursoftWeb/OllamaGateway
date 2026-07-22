@@ -24,17 +24,38 @@
   <data name="Are you sure?" xml:space="preserve">
     <value>Are you sure?</value>
   </data>
+  <data name="Banned" xml:space="preserve">
+    <value>Banned</value>
+  </data>
   <data name="Chat" xml:space="preserve">
     <value>Chat</value>
+  </data>
+  <data name="Circuit breaker has temporarily blocked this backend due to repeated failures. No requests are routed here until the ban expires. Use &quot;Test Connection&quot; on the Provider edit page to manually revive." xml:space="preserve">
+    <value>The circuit breaker has temporarily blocked this backend due to repeated failures. No requests are routed here until the ban expires. Use &quot;Test Connection&quot; on the Provider edit page to manually revive it.</value>
   </data>
   <data name="Created" xml:space="preserve">
     <value>Created</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Down</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="Healthy" xml:space="preserve">
+    <value>Healthy</value>
+  </data>
   <data name="Manage virtual models that proxy to underlying Ollama models" xml:space="preserve">
     <value>Manage virtual models that proxy to underlying Ollama models</value>
+  </data>
+  <data name="Model exists on the provider, but is not currently loaded in memory. Requests ARE routed here — Ollama will automatically load the model on demand (cold start, may take seconds to minutes)." xml:space="preserve">
+    <value>The model exists on the provider but is not currently loaded into memory. Requests ARE routed here — Ollama will automatically load the model on demand (cold start, which may take seconds to minutes).</value>
+  </data>
+  <data name="Model is loaded in GPU VRAM. Requests are routed to this backend and respond instantly." xml:space="preserve">
+    <value>The model is loaded into GPU VRAM. Requests are routed to this backend and respond instantly.</value>
+  </data>
+  <data name="Model not found on the provider. Requests are NOT routed here. Check that the underlying model name is correct and exists on the provider." xml:space="preserve">
+    <value>Model not found on the provider. Requests are NOT routed here. Check that the underlying model name is correct and exists on the provider.</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
@@ -45,11 +66,20 @@
   <data name="No models defined yet." xml:space="preserve">
     <value>No models defined yet.</value>
   </data>
+  <data name="Open in Chat Playground" xml:space="preserve">
+    <value>Open in Chat Playground</value>
+  </data>
   <data name="Overrides" xml:space="preserve">
     <value>Overrides</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>Provider</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Ready</value>
+  </data>
+  <data name="Status Guide" xml:space="preserve">
+    <value>Status Guide</value>
   </data>
   <data name="Underlying" xml:space="preserve">
     <value>Underlying</value>

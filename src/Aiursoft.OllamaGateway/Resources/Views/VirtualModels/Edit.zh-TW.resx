@@ -63,6 +63,9 @@
   <data name="Enabled" xml:space="preserve">
     <value>已啟用</value>
   </data>
+  <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies. SUGGESTED VALUES: small models (≤8B, NVMe SSD) → 60–120s; large models (≥27B or HDD/NAS storage) → 600–1800s; embedding models → 30–60s." xml:space="preserve">
+    <value>閘道器等待後端開始回應的時間。不包括身分驗證、速率限制佇列或並行槽位的等待時間。一旦串流開始，將不再受時間限制。建議值：小型模型（≤8B，NVMe SSD）→ 60–120秒；大型模型（≥27B 或 HDD/NAS 儲存）→ 600–1800秒；嵌入模型 → 30–60秒。</value>
+  </data>
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>將模型載入記憶體中保持運行</value>
   </data>
@@ -98,6 +101,9 @@
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>重複懲罰</value>
+  </data>
+  <data name="Request Timeout (s)" xml:space="preserve">
+    <value>請求逾時（秒）</value>
   </data>
   <data name="Save Changes" xml:space="preserve">
     <value>儲存變更</value>
