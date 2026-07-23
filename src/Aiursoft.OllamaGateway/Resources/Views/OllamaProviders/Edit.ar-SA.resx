@@ -18,7 +18,22 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Advanced Warmup Options" xml:space="preserve">
+      <data name="(1 hour)," xml:space="preserve">
+    <value>(ساعة واحدة)،</value>
+  </data>
+  <data name="(24 hours)." xml:space="preserve">
+    <value>(24 ساعة).</value>
+  </data>
+  <data name="(5 minutes)," xml:space="preserve">
+    <value>(5 دقائق)،</value>
+  </data>
+  <data name="= keep forever." xml:space="preserve">
+    <value>= الإبقاء دائمًا.</value>
+  </data>
+  <data name="= unload immediately." xml:space="preserve">
+    <value>= إرجاع فوري.</value>
+  </data>
+  <data name="Advanced Warmup Options" xml:space="preserve">
     <value>خيارات التسخين المتقدم</value>
   </data>
   <data name="Back to List" xml:space="preserve">
@@ -39,6 +54,9 @@
   <data name="Controls how long the AI model weights stay loaded in GPU VRAM after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep in VRAM forever." xml:space="preserve">
     <value>يتحكم في مدة بقاء أوزان نموذج الذكاء الاصطناعي محمّلة في ذاكرة الوصول العشوائي للوحدة المركزية للمعالج الرسومي (GPU VRAM) بعد الطلب. بتنسيق Ollama (مثال: &apos;5m&apos;، &apos;1h&apos;، &apos;24h&apos;). استخدم &apos;0&apos; لإلغاء التحميل فوراً، أو &apos;-1&apos; للحفاظ عليها في الذاكرة إلى الأبد.</value>
   </data>
+  <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
+    <value>لا تستخدم الثواني الخام مثل &apos;300&apos;. اكتب &apos;5m&apos; بدلاً من ذلك. يتم تجاهل التنسيقات غير الصالحة بصمت بواسطة Ollama.</value>
+  </data>
   <data name="e.g. Local Server" xml:space="preserve">
     <value>مثال: خادم محلي</value>
   </data>
@@ -47,6 +65,15 @@
   </data>
   <data name="Embed" xml:space="preserve">
     <value>تضمين</value>
+  </data>
+  <data name="Health Check Timeout (s)" xml:space="preserve">
+    <value>مهلة فحص الصحة (ثانية)</value>
+  </data>
+  <data name="How long model weights stay in GPU VRAM after the last request. Uses Ollama duration format: (number)(unit) — e.g." xml:space="preserve">
+    <value>مدة بقاء أوزان النموذج في ذاكرة الوصول العشوائي للوحدة المركزية (VRAM) بعد آخر طلب. يستخدم تنسيق المدة الخاص بـ Ollama: (رقم)(وحدة) — على سبيل المثال،</value>
+  </data>
+  <data name="How long the background health monitor waits when probing this provider for model lists and running status. Set higher for providers with slow storage (HDD/NAS)." xml:space="preserve">
+    <value>المدة التي ينتظرها مراقب الصحة في الخلفية عند استكشاف هذا المزود للحصول على قوائم النماذج وحالة التشغيل. قم بزيادة القيمة للمزودين الذين يستخدمون تخزينًا بطيئًا (HDD/NAS).</value>
   </data>
   <data name="Keep" xml:space="preserve">
     <value>احتفظ</value>
@@ -101,6 +128,9 @@
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>اسم النموذج الأساسي</value>
+  </data>
+  <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
+    <value>انتظار في قائمة الانتظار للتزامن لا يستهلك مهلة الطلب الخاصة بالنموذج الافتراضي. سيظل الطلب في انتظار مخصص إلى أجل غير مسمى - فقط انقطاع اتصال العميل (إغلاق المتصفح، انتهاء مهلة SDK) يوقف الانتظار. النموذج الافتراضي لا يتخلى عن الخلفية لمجرد أنها مشغولة.</value>
   </data>
   <data name="Warmup is not applicable to OpenAI-compatible providers. The upstream service manages model loading automatically." xml:space="preserve">
     <value>لا ينطبق التسخين على مزودي واجهة OpenAI المتوافقة. تدير الخدمة العلوية تحميل النماذج تلقائيًا.</value>

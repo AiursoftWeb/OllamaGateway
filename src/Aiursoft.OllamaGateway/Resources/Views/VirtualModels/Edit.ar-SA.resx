@@ -63,6 +63,9 @@
   <data name="Enabled" xml:space="preserve">
     <value>مفعّل</value>
   </data>
+  <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies. SUGGESTED VALUES: small models (≤8B, NVMe SSD) → 60–120s; large models (≥27B or HDD/NAS storage) → 600–1800s; embedding models → 30–60s." xml:space="preserve">
+    <value>المدة التي ينتظرها البوابة حتى يبدأ الخادم الخلفي في الاستجابة. لا تشمل المصادقة، أو طابور حدود المعدل، أو انتظار فتحات التوازي. بمجرد بدء البث، لا ينطبق أي حد زمني. القيم المقترحة: النماذج الصغيرة (≤8B، NVMe SSD) → 60–120 ثانية؛ النماذج الكبيرة (≥27B أو تخزين HDD/NAS) → 600–1800 ثانية؛ نماذج التضمين → 30–60 ثانية.</value>
+  </data>
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>إبقاء النموذج محملاً في الذاكرة</value>
   </data>
@@ -98,6 +101,9 @@
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>عقوبة التكرار</value>
+  </data>
+  <data name="Request Timeout (s)" xml:space="preserve">
+    <value>مهلة الطلب (ثانية)</value>
   </data>
   <data name="Save Changes" xml:space="preserve">
     <value>حفظ التغييرات</value>
