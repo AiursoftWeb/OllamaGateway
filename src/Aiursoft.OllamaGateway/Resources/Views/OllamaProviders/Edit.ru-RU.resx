@@ -18,7 +18,22 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Advanced Warmup Options" xml:space="preserve">
+      <data name="(1 hour)," xml:space="preserve">
+    <value>(1 час),</value>
+  </data>
+  <data name="(24 hours)." xml:space="preserve">
+    <value>(24 часа).</value>
+  </data>
+  <data name="(5 minutes)," xml:space="preserve">
+    <value>(5 минут),</value>
+  </data>
+  <data name="= keep forever." xml:space="preserve">
+    <value>= сохранять постоянно.</value>
+  </data>
+  <data name="= unload immediately." xml:space="preserve">
+    <value>= выгрузить немедленно.</value>
+  </data>
+  <data name="Advanced Warmup Options" xml:space="preserve">
     <value>Дополнительные параметры предварительной загрузки</value>
   </data>
   <data name="Back to List" xml:space="preserve">
@@ -39,6 +54,9 @@
   <data name="Controls how long the AI model weights stay loaded in GPU VRAM after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep in VRAM forever." xml:space="preserve">
     <value>Определяет, как долго веса модели ИИ остаются загруженными в видеопамяти (VRAM) после запроса. Формат Ollama (например, &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Используйте &apos;0&apos; для немедленной разгрузки или &apos;-1&apos; для постоянного хранения в VRAM.</value>
   </data>
+  <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
+    <value>НЕ используйте необработанные секунды, например &apos;300&apos;. Вместо этого пишите &apos;5m&apos;. Неверные форматы будут тихо игнорироваться Ollama.</value>
+  </data>
   <data name="e.g. Local Server" xml:space="preserve">
     <value>напр. Локальный сервер</value>
   </data>
@@ -47,6 +65,15 @@
   </data>
   <data name="Embed" xml:space="preserve">
     <value>Встраивание</value>
+  </data>
+  <data name="Health Check Timeout (s)" xml:space="preserve">
+    <value>Тайм-аут проверки состояния (с)</value>
+  </data>
+  <data name="How long model weights stay in GPU VRAM after the last request. Uses Ollama duration format: (number)(unit) — e.g." xml:space="preserve">
+    <value>Как долго веса модели остаются в VRAM GPU после последнего запроса. Используется формат длительности Ollama: (число)(единица) — напр.</value>
+  </data>
+  <data name="How long the background health monitor waits when probing this provider for model lists and running status. Set higher for providers with slow storage (HDD/NAS)." xml:space="preserve">
+    <value>Время ожидания фонового монитора состояния при проверке этого провайдера на наличие списков моделей и статуса работы. Установите большее значение для провайдеров с медленным хранилищем (HDD/NAS).</value>
   </data>
   <data name="Keep" xml:space="preserve">
     <value>Keep</value>
@@ -101,6 +128,9 @@
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>Название базовой модели</value>
+  </data>
+  <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
+    <value>Ожидание в очереди параллелизма НЕ расходует тайм-аут запроса виртуальной модели. Запрос будет ждать слот неограниченно долго — ожидание прерывается только при отключении клиента (закрытие браузера, истечение тайм-аута SDK). Виртуальная модель не отказывается от бэкенда просто потому, что он занят.</value>
   </data>
   <data name="Warmup is not applicable to OpenAI-compatible providers. The upstream service manages model loading automatically." xml:space="preserve">
     <value>Warmup не применяется к провайдерам, совместимым с OpenAI. Загружку моделей автоматически управляет вышестоящий сервис.</value>
