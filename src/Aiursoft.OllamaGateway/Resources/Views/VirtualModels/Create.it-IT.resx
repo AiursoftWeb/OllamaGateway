@@ -51,6 +51,9 @@
   <data name="Forces the upstream engine to allocate a specific window size." xml:space="preserve">
     <value>Forza il motore upstream ad allocare una dimensione finestra specifica.</value>
   </data>
+  <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies. SUGGESTED VALUES: small models (≤8B, NVMe SSD) → 60–120s; large models (≥27B or HDD/NAS storage) → 600–1800s; embedding models → 30–60s." xml:space="preserve">
+    <value>Tempo di attesa del gateway prima che il backend INIZI a rispondere. NON include autenticazione, coda di limitazione della frequenza o attesa dello slot di concorrenza. Una volta iniziato lo streaming, non si applicano limiti di tempo. VALORI SUGGERITI: modelli piccoli (≤8B, NVMe SSD) → 60–120s; modelli grandi (≥27B o archiviazione HDD/NAS) → 600–1800s; modelli di embedding → 30–60s.</value>
+  </data>
   <data name="Initial Backend Configuration" xml:space="preserve">
     <value>Configurazione iniziale del backend</value>
   </data>
@@ -77,6 +80,9 @@
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Penalità ripetizione</value>
+  </data>
+  <data name="Request Timeout (s)" xml:space="preserve">
+    <value>Timeout della richiesta (s)</value>
   </data>
   <data name="Selection Strategy" xml:space="preserve">
     <value>Strategia di selezione</value>

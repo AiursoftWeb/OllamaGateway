@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="(fallback)" xml:space="preserve">
+    <value>(значение по умолчанию)</value>
+  </data>
+  <data name="1. Client Request" xml:space="preserve">
+    <value>1. Запрос клиента</value>
+  </data>
+  <data name="2. Authentication &amp; Rate Limiting" xml:space="preserve">
+    <value>2. Аутентификация и ограничение частоты запросов</value>
+  </data>
+  <data name="3. Virtual Model" xml:space="preserve">
+    <value>3. Виртуальная модель</value>
+  </data>
+  <data name="4. Provider Concurrency Limiter" xml:space="preserve">
+    <value>4. Ограничитель параллелизма провайдера</value>
+  </data>
+  <data name="5. ⏱️ Timeout Clock Starts" xml:space="preserve">
+    <value>5. ⏱️ Таймер начинает отсчёт</value>
+  </data>
+  <data name="6. Physical Backend" xml:space="preserve">
+    <value>6. Физический бэкенд</value>
+  </data>
+  <data name="7. Observability Pipeline — Dual Logging &amp; Usage Tracking" xml:space="preserve">
+    <value>7. Конвейер наблюдаемости — двойное ведение журналов и отслеживание использования</value>
+  </data>
+  <data name="Any OpenAI-compatible or Ollama-native client sends a request." xml:space="preserve">
+    <value>Любой клиент, совместимый с OpenAI или нативный для Ollama, отправляет запрос.</value>
+  </data>
+  <data name="API Key Verification" xml:space="preserve">
+    <value>Проверка ключа API</value>
+  </data>
+  <data name="Architecture Guide" xml:space="preserve">
+    <value>Руководство по архитектуре</value>
+  </data>
+  <data name="attempts and" xml:space="preserve">
+    <value>попыток и</value>
+  </data>
+  <data name="Authentication &amp; API key validation" xml:space="preserve">
+    <value>Аутентификация и проверка ключа API</value>
+  </data>
+  <data name="Backends" xml:space="preserve">
+    <value>Бэкенды</value>
+  </data>
+  <data name="Bearer token or x-api-key is validated." xml:space="preserve">
+    <value>Проверяется Bearer-токен или x-api-key.</value>
+  </data>
+  <data name="Both pipelines are fire-and-forget from the request hot-path. If ClickHouse is down or the buffer is full, requests still succeed — logs are simply dropped (DropWrite). The system never blocks a user request to write a log." xml:space="preserve">
+    <value>Обе конвейерные линии работают по принципу «отправил и забыл» вне критического пути запроса. Если ClickHouse недоступен или буфер заполнен, запросы всё равно завершаются успешно — логи просто отбрасываются (DropWrite). Система никогда не блокирует пользовательский запрос ради записи лога.</value>
+  </data>
+  <data name="bounded to" xml:space="preserve">
+    <value>с ограничением в</value>
+  </data>
+  <data name="but no virtual model with that name and type &apos;Chat&apos; exists in the database." xml:space="preserve">
+    <value>но виртуальной модели с таким именем и типом «Chat» не существует в базе данных.</value>
+  </data>
+  <data name="ClickHouse Log Pipeline" xml:space="preserve">
+    <value>Конвейер журналов ClickHouse</value>
+  </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>Конфигурация</value>
+  </data>
+  <data name="Control Plane" xml:space="preserve">
+    <value>Плоскость управления</value>
+  </data>
+  <data name="Controls" xml:space="preserve">
+    <value>Управляет</value>
+  </data>
+  <data name="create it here → New Virtual Model" xml:space="preserve">
+    <value>создайте его здесь → Новая виртуальная модель</value>
+  </data>
+  <data name="Current Value" xml:space="preserve">
+    <value>Текущее значение</value>
+  </data>
+  <data name="Dashboard Plane" xml:space="preserve">
+    <value>Планшет панели управления</value>
+  </data>
+  <data name="Data Plane" xml:space="preserve">
+    <value>Плоскость данных</value>
+  </data>
+  <data name="Default Chat Model Not Found!" xml:space="preserve">
+    <value>Модель чата по умолчанию не найдена!</value>
+  </data>
+  <data name="drains buffer, batch-inserts into ClickHouse" xml:space="preserve">
+    <value>опорожняет буфер и выполняет пакетную вставку в ClickHouse</value>
+  </data>
+  <data name="Each API key has its own rate-limit window. Two modes:" xml:space="preserve">
+    <value>У каждого API-ключа есть своё окно ограничения частоты запросов. Два режима:</value>
+  </data>
+  <data name="entries, DropWrite when full" xml:space="preserve">
+    <value>записей, отбрасывать запись при заполнении</value>
+  </data>
+  <data name="every" xml:space="preserve">
+    <value>каждый</value>
+  </data>
+  <data name="Every request is logged asynchronously without blocking the hot path:" xml:space="preserve">
+    <value>Каждый запрос регистрируется асинхронно, не блокируя критический путь выполнения:</value>
+  </data>
+  <data name="Example" xml:space="preserve">
+    <value>Пример</value>
+  </data>
+  <data name="Fallback Timeline" xml:space="preserve">
+    <value>Временная шкала резервного переключения</value>
+  </data>
+  <data name="Fast in-memory counters avoid DB writes on every request:" xml:space="preserve">
+    <value>Быстрые счетчики в памяти избегают записи в БД при каждом запросе:</value>
+  </data>
+  <data name="Fix it here → Global Settings" xml:space="preserve">
+    <value>Исправить здесь → Глобальные настройки</value>
+  </data>
+  <data name="GPU processes tokens. Once loaded, subsequent requests skip loading → straight to inference." xml:space="preserve">
+    <value>GPU обрабатывает токены. После загрузки последующие запросы пропускают этап загрузки → сразу переходят к инференсу.</value>
+  </data>
+  <data name="Hang mode" xml:space="preserve">
+    <value>Режим ожидания</value>
+  </data>
+  <data name="Hardcoded" xml:space="preserve">
+    <value>Захардкожено</value>
+  </data>
+  <data name="Health Check" xml:space="preserve">
+    <value>Проверка работоспособности</value>
+  </data>
+  <data name="How a request flows through the Ollama Gateway — from client to backend" xml:space="preserve">
+    <value>Как запрос проходит через Ollama Gateway — от клиента к бэкенду</value>
+  </data>
+  <data name="How long the background health monitor waits when probing /api/tags and /api/ps" xml:space="preserve">
+    <value>Как долго фоновый монитор состояния ожидает при проверке /api/tags и /api/ps</value>
+  </data>
+  <data name="How long the gateway waits for the backend to START responding to a user request" xml:space="preserve">
+    <value>Сколько времени шлюз ожидает начала ответа от бэкенда на запрос пользователя</value>
+  </data>
+  <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies." xml:space="preserve">
+    <value>Время ожидания шлюзом начала ответа от бэкенда. Не включает проверку подлинности, очередь ограничения скорости или ожидание слота параллелизма. После начала потоковой передачи временные ограничения не применяются.</value>
+  </data>
+  <data name="How long the warmup job waits for each model to load. Per-model configurable." xml:space="preserve">
+    <value>Время ожидания запуска задачи предварительной загрузки для каждой модели. Настраивается индивидуально для каждой модели.</value>
+  </data>
+  <data name="HTTP request to backend (DNS, TCP handshake, TLS)" xml:space="preserve">
+    <value>HTTP-запрос к бэкенду (DNS, TCP-рукопожатие, TLS)</value>
+  </data>
+  <data name="Immediately return HTTP 429." xml:space="preserve">
+    <value>Немедленно вернуть HTTP 429.</value>
+  </data>
+  <data name="In-Memory Usage Tracking" xml:space="preserve">
+    <value>Отслеживание использования в памяти</value>
+  </data>
+  <data name="Inference" xml:space="preserve">
+    <value>Инференс</value>
+  </data>
+  <data name="Keep-Alive &amp; Warmup" xml:space="preserve">
+    <value>Поддержание активности и разминка</value>
+  </data>
+  <data name="KeepAlive" xml:space="preserve">
+    <value>KeepAlive</value>
+  </data>
+  <data name="keys in the system." xml:space="preserve">
+    <value>ключей в системе.</value>
+  </data>
+  <data name="Layer" xml:space="preserve">
+    <value>Уровень</value>
+  </data>
+  <data name="Limit" xml:space="preserve">
+    <value>Лимит</value>
+  </data>
+  <data name="Logs include: user, model, provider, tokens, latency, status code, conversation count" xml:space="preserve">
+    <value>Логи включают: пользователя, модель, провайдера, токены, задержку, код состояния, количество разговоров</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>Максимум</value>
+  </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>Максимум повторных попыток</value>
+  </data>
+  <data name="Middleware" xml:space="preserve">
+    <value>Промежуточное ПО</value>
+  </data>
+  <data name="Model" xml:space="preserve">
+    <value>Модель</value>
+  </data>
+  <data name="Model Loading" xml:space="preserve">
+    <value>Загрузка модели</value>
+  </data>
+  <data name="Model loading time (cold start on GPU)" xml:space="preserve">
+    <value>Время загрузки модели (холодный запуск на GPU)</value>
+  </data>
+  <data name="needs another 30 s to finish → completely fine ✅" xml:space="preserve">
+    <value>нужно ещё 30 с для завершения → всё отлично ✅</value>
+  </data>
+  <data name="No backends configured for this virtual model." xml:space="preserve">
+    <value>Для этой виртуальной модели не настроены бэкенды.</value>
+  </data>
+  <data name="No concurrency limit — requests pass through immediately" xml:space="preserve">
+    <value>Без ограничения параллелизма — запросы обрабатываются немедленно</value>
+  </data>
+  <data name="No providers configured yet." xml:space="preserve">
+    <value>Провайдеры пока не настроены.</value>
+  </data>
+  <data name="not found. Create it to see real configuration here." xml:space="preserve">
+    <value>не найден. Создайте его, чтобы увидеть здесь реальную конфигурацию.</value>
+  </data>
+  <data name="NumCtx" xml:space="preserve">
+    <value>Размер контекста</value>
+  </data>
+  <data name="Once the backend sends HTTP headers, the timeout is PASSED. The model can stream tokens for hours — only client disconnection stops it." xml:space="preserve">
+    <value>Как только бэкенд отправит HTTP-заголовки, таймаут будет пройден. Модель может передавать токены потоком в течение нескольких часов — остановить это может только отключение клиента.</value>
+  </data>
+  <data name="or" xml:space="preserve">
+    <value>или</value>
+  </data>
+  <data name="Per-Key Rate Limiter" xml:space="preserve">
+    <value>Лимит частоты запросов для каждого ключа</value>
+  </data>
+  <data name="Pri" xml:space="preserve">
+    <value>Приоритет</value>
+  </data>
+  <data name="processing" xml:space="preserve">
+    <value>обработка</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Провайдер</value>
+  </data>
+  <data name="Provider → Health Check Timeout (s)" xml:space="preserve">
+    <value>Поставщик → Тайм-аут проверки состояния (с)</value>
+  </data>
+  <data name="Provider → Warmup Model → Timeout (s)" xml:space="preserve">
+    <value>Поставщик → Модель прогрева → Таймаут (с)</value>
+  </data>
+  <data name="Provider concurrency slot queuing" xml:space="preserve">
+    <value>Очередь слотов конкурентности провайдера</value>
+  </data>
+  <data name="Queue until a slot opens — does NOT consume the virtual model timeout." xml:space="preserve">
+    <value>Ожидание в очереди до освобождения слота — НЕ затрачивает время ожидания виртуальной модели.</value>
+  </data>
+  <data name="Quick admin dashboard ping. Does NOT write to DB — UI-only." xml:space="preserve">
+    <value>Быстрый пинг панели администратора. НЕ записывает данные в БД — только для интерфейса.</value>
+  </data>
+  <data name="Rate-limit queue waiting (Hang mode)" xml:space="preserve">
+    <value>Ожидание в очереди ограничения скорости (режим зависания)</value>
+  </data>
+  <data name="Rate-limiting happens BEFORE the virtual model timeout starts. Queuing here is free." xml:space="preserve">
+    <value>Ограничение скорости применяется ДО начала отсчета тайм-аута виртуальной модели. Ожидание в очереди здесь бесплатно.</value>
+  </data>
+  <data name="Reads model weights from disk into GPU VRAM. 27GB on NVMe ≈ 5–15s; on HDD/NAS ≈ 3–10 min." xml:space="preserve">
+    <value>Загрузка весов модели с диска в видеопамять GPU. 27 ГБ на NVMe ≈ 5–15 с; на HDD/NAS ≈ 3–10 мин.</value>
+  </data>
+  <data name="Reject mode" xml:space="preserve">
+    <value>Режим отклонения</value>
+  </data>
+  <data name="Request Timeout" xml:space="preserve">
+    <value>Таймаут запроса</value>
+  </data>
+  <data name="runs every" xml:space="preserve">
+    <value>запускается каждые</value>
+  </data>
+  <data name="Strategy" xml:space="preserve">
+    <value>Стратегия</value>
+  </data>
+  <data name="Streaming response body (after headers received)" xml:space="preserve">
+    <value>Потоковая передача тела ответа (после получения заголовков)</value>
+  </data>
+  <data name="swaps buffers and bulk-updates DB (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)" xml:space="preserve">
+    <value>обменивает буферы и выполняет пакетное обновление БД (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)</value>
+  </data>
+  <data name="Temperature" xml:space="preserve">
+    <value>Температура</value>
+  </data>
+  <data name="The 4-Layer Timeout Architecture" xml:space="preserve">
+    <value>Архитектура таймаутов из 4 уровней</value>
+  </data>
+  <data name="The global default chat model is set to" xml:space="preserve">
+    <value>Глобальная модель чата по умолчанию установлена на</value>
+  </data>
+  <data name="The warmup background job pings configured models every 5 min to prevent unloading." xml:space="preserve">
+    <value>Фоновый процесс разминки отправляет запросы настроенным моделям каждые 5 минут, чтобы предотвратить их выгрузку из памяти.</value>
+  </data>
+  <data name="timeout:" xml:space="preserve">
+    <value>таймаут:</value>
+  </data>
+  <data name="timeout. Backend starts streaming at" xml:space="preserve">
+    <value>тайм-аут. Бэкенд начинает потоковую передачу на</value>
+  </data>
+  <data name="tracks API key usage, virtual model usage, underlying model usage — feeds the Dashboard charts in real-time" xml:space="preserve">
+    <value>отслеживает использование ключей API, виртуальных моделей и базовых моделей — в реальном времени обновляет диаграммы на панели управления</value>
+  </data>
+  <data name="tracks live in-flight requests — powers the &quot;Live Inference&quot; table and Monitor page" xml:space="preserve">
+    <value>отслеживает активные запросы — обеспечивает работу таблицы «Живой инференс» и страницы Monitor</value>
+  </data>
+  <data name="Tries backends from lowest priority to highest. If backend #1 fails or times out, falls back to #2, then #3." xml:space="preserve">
+    <value>Попытки обращения к бэкендам от наименьшего приоритета к наибольшему. Если бэкенд №1 не отвечает или превышает время ожидания, происходит переход к №2, затем к №3.</value>
+  </data>
+  <data name="Unlimited" xml:space="preserve">
+    <value>Без ограничений</value>
+  </data>
+  <data name="Virtual model" xml:space="preserve">
+    <value>Виртуальная модель</value>
+  </data>
+  <data name="Virtual Model → Request Timeout (s)" xml:space="preserve">
+    <value>Виртуальная модель → Тайм-аут запроса (с)</value>
+  </data>
+  <data name="waiting" xml:space="preserve">
+    <value>ожидание</value>
+  </data>
+  <data name="Waiting for backend to send HTTP response headers" xml:space="preserve">
+    <value>Ожидание отправки заголовков HTTP-ответа бэкендом</value>
+  </data>
+  <data name="Waiting in the concurrency queue does NOT consume the virtual model timeout. The timeout clock only starts after the slot is acquired. A request will wait indefinitely for its slot — the only way it stops waiting is if the client (browser / SDK) disconnects. A busy GPU does not cause the virtual model to give up on this backend." xml:space="preserve">
+    <value>Ожидание в очереди конкурентности НЕ уменьшает тайм-аут виртуальной модели. Таймер тайм-аута запускается только после получения слота. Запрос будет ждать свой слот неограниченное время — он прекратит ожидание только в случае отключения клиента (браузера / SDK). Загруженный GPU не заставит виртуальную модель отказаться от этого бэкенда.</value>
+  </data>
+  <data name="Warmup Plane" xml:space="preserve">
+    <value>Плоскость разминки</value>
+  </data>
+  <data name="What IS counted" xml:space="preserve">
+    <value>Что учитывается</value>
+  </data>
+  <data name="What is NOT counted" xml:space="preserve">
+    <value>Что НЕ учитывается</value>
+  </data>
+  <data name="Where configured" xml:space="preserve">
+    <value>Где настроено</value>
+  </data>
+  <data name="With" xml:space="preserve">
+    <value>С</value>
+  </data>
+  <data name="Without specifying a model, the gateway uses" xml:space="preserve">
+    <value>Если модель не указана, шлюз использует</value>
+  </data>
+
+</root>
