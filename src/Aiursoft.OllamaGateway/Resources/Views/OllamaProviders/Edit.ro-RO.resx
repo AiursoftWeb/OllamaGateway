@@ -18,7 +18,22 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Advanced Warmup Options" xml:space="preserve">
+      <data name="(1 hour)," xml:space="preserve">
+    <value>(1 oră),</value>
+  </data>
+  <data name="(24 hours)." xml:space="preserve">
+    <value>(24 de ore).</value>
+  </data>
+  <data name="(5 minutes)," xml:space="preserve">
+    <value>(5 minute),</value>
+  </data>
+  <data name="= keep forever." xml:space="preserve">
+    <value>= păstrează pentru totdeauna.</value>
+  </data>
+  <data name="= unload immediately." xml:space="preserve">
+    <value>= debarează imediat.</value>
+  </data>
+  <data name="Advanced Warmup Options" xml:space="preserve">
     <value>Opțiuni avansate de încălzire</value>
   </data>
   <data name="Back to List" xml:space="preserve">
@@ -39,6 +54,9 @@
   <data name="Controls how long the AI model weights stay loaded in GPU VRAM after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep in VRAM forever." xml:space="preserve">
     <value>Controlează cât timp rămân încărcate greutățile modelului AI în VRAM-ul GPU după o solicitare. Format Ollama (de ex., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Folosiți &apos;0&apos; pentru a descărca imediat sau &apos;-1&apos; pentru a păstra în VRAM permanent.</value>
   </data>
+  <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
+    <value>NU folosiți secunde brute precum &apos;300&apos;. Scrieți &apos;5m&apos; în schimb. Formatele nevalide sunt ignorate silențios de Ollama.</value>
+  </data>
   <data name="e.g. Local Server" xml:space="preserve">
     <value>e.g. Server local</value>
   </data>
@@ -47,6 +65,15 @@
   </data>
   <data name="Embed" xml:space="preserve">
     <value>Încapsulare</value>
+  </data>
+  <data name="Health Check Timeout (s)" xml:space="preserve">
+    <value>Timeout verificare stare (s)</value>
+  </data>
+  <data name="How long model weights stay in GPU VRAM after the last request. Uses Ollama duration format: (number)(unit) — e.g." xml:space="preserve">
+    <value>Cât timp rămân ponderile modelului în memoria VRAM a GPU după ultima solicitare. Folosește formatul de durată Ollama: (număr)(unitate) — ex.</value>
+  </data>
+  <data name="How long the background health monitor waits when probing this provider for model lists and running status. Set higher for providers with slow storage (HDD/NAS)." xml:space="preserve">
+    <value>Cât așteaptă monitorul de sănătate din fundal la sondarea acestui furnizor pentru liste de modele și starea de funcționare. Setează o valoare mai mare pentru furnizorii cu stocare lentă (HDD/NAS).</value>
   </data>
   <data name="Keep" xml:space="preserve">
     <value>Menține</value>
@@ -101,6 +128,9 @@
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>Nume model subiacent</value>
+  </data>
+  <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
+    <value>Așteptarea în coada de concurență NU consumă timpul de expirare a solicitării (Request Timeout) al modelului virtual. O solicitare va aștepta indefinit un loc — doar deconectarea clientului (închiderea browserului, expirarea timpului SDK) oprește așteptarea. Modelul virtual nu renunță la un backend doar pentru că este ocupat.</value>
   </data>
   <data name="Warmup is not applicable to OpenAI-compatible providers. The upstream service manages model loading automatically." xml:space="preserve">
     <value>Warmup nu se aplică furnizorilor compatibili OpenAI. Serviciul upstream gestionează automat încărcarea modelelor.</value>

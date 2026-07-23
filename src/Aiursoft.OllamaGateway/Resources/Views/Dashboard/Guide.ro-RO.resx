@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="(fallback)" xml:space="preserve">
+    <value>(valoare implicită)</value>
+  </data>
+  <data name="1. Client Request" xml:space="preserve">
+    <value>1. Cerere de la client</value>
+  </data>
+  <data name="2. Authentication &amp; Rate Limiting" xml:space="preserve">
+    <value>2. Autentificare și limitare a ratei</value>
+  </data>
+  <data name="3. Virtual Model" xml:space="preserve">
+    <value>3. Model Virtual</value>
+  </data>
+  <data name="4. Provider Concurrency Limiter" xml:space="preserve">
+    <value>4. Limitator de concurență pentru furnizor</value>
+  </data>
+  <data name="5. ⏱️ Timeout Clock Starts" xml:space="preserve">
+    <value>5. ⏱️ Pornirea cronometrului de timeout</value>
+  </data>
+  <data name="6. Physical Backend" xml:space="preserve">
+    <value>6. Backend fizic</value>
+  </data>
+  <data name="7. Observability Pipeline — Dual Logging &amp; Usage Tracking" xml:space="preserve">
+    <value>7. Conductul de Observabilitate — Jurnalizare Duală și Urmărirea Utilizării</value>
+  </data>
+  <data name="Any OpenAI-compatible or Ollama-native client sends a request." xml:space="preserve">
+    <value>Orice client compatibil cu OpenAI sau nativ pentru Ollama trimite o solicitare.</value>
+  </data>
+  <data name="API Key Verification" xml:space="preserve">
+    <value>Verificarea cheii API</value>
+  </data>
+  <data name="Architecture Guide" xml:space="preserve">
+    <value>Ghid de arhitectură</value>
+  </data>
+  <data name="attempts and" xml:space="preserve">
+    <value>încercări și</value>
+  </data>
+  <data name="Authentication &amp; API key validation" xml:space="preserve">
+    <value>Autentificare și validare cheie API</value>
+  </data>
+  <data name="Backends" xml:space="preserve">
+    <value>Backend-uri</value>
+  </data>
+  <data name="Bearer token or x-api-key is validated." xml:space="preserve">
+    <value>Token-ul Bearer sau x-api-key este validat.</value>
+  </data>
+  <data name="Both pipelines are fire-and-forget from the request hot-path. If ClickHouse is down or the buffer is full, requests still succeed — logs are simply dropped (DropWrite). The system never blocks a user request to write a log." xml:space="preserve">
+    <value>Ambele conducte sunt de tip „trimite și uită” față de calea principală a cererii. Dacă ClickHouse este indisponibil sau tamponul este plin, cererile reușesc în continuare — jurnalele sunt pur și simplu abandonate (DropWrite). Sistemul nu blochează niciodată o cerere a utilizatorului pentru a scrie un jurnal.</value>
+  </data>
+  <data name="bounded to" xml:space="preserve">
+    <value>limitată la</value>
+  </data>
+  <data name="but no virtual model with that name and type &apos;Chat&apos; exists in the database." xml:space="preserve">
+    <value>dar nu există niciun model virtual cu acest nume și tipul „Chat” în baza de date.</value>
+  </data>
+  <data name="ClickHouse Log Pipeline" xml:space="preserve">
+    <value>Conduita de jurnale ClickHouse</value>
+  </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>Configurare</value>
+  </data>
+  <data name="Control Plane" xml:space="preserve">
+    <value>Planul de control</value>
+  </data>
+  <data name="Controls" xml:space="preserve">
+    <value>Controlează</value>
+  </data>
+  <data name="create it here → New Virtual Model" xml:space="preserve">
+    <value>creați-l aici → Model Virtual Nou</value>
+  </data>
+  <data name="Current Value" xml:space="preserve">
+    <value>Valoarea curentă</value>
+  </data>
+  <data name="Dashboard Plane" xml:space="preserve">
+    <value>Planșă de bord</value>
+  </data>
+  <data name="Data Plane" xml:space="preserve">
+    <value>Planul de date</value>
+  </data>
+  <data name="Default Chat Model Not Found!" xml:space="preserve">
+    <value>Modelul de chat implicit nu a fost găsit!</value>
+  </data>
+  <data name="drains buffer, batch-inserts into ClickHouse" xml:space="preserve">
+    <value>golește bufferul, inserează în loturi în ClickHouse</value>
+  </data>
+  <data name="Each API key has its own rate-limit window. Two modes:" xml:space="preserve">
+    <value>Fiecare cheie API are propria sa fereastră de limitare a ratei. Două moduri:</value>
+  </data>
+  <data name="entries, DropWrite when full" xml:space="preserve">
+    <value>înregistrări, DropWrite când este plin</value>
+  </data>
+  <data name="every" xml:space="preserve">
+    <value>fiecare</value>
+  </data>
+  <data name="Every request is logged asynchronously without blocking the hot path:" xml:space="preserve">
+    <value>Fiecare cerere este înregistrată asincron, fără a bloca calea critică:</value>
+  </data>
+  <data name="Example" xml:space="preserve">
+    <value>Exemplu</value>
+  </data>
+  <data name="Fallback Timeline" xml:space="preserve">
+    <value>Cronologie de Rezervă</value>
+  </data>
+  <data name="Fast in-memory counters avoid DB writes on every request:" xml:space="preserve">
+    <value>Contoare rapide în memorie evită scrierile în BD la fiecare cerere:</value>
+  </data>
+  <data name="Fix it here → Global Settings" xml:space="preserve">
+    <value>Remediați aici → Setări globale</value>
+  </data>
+  <data name="GPU processes tokens. Once loaded, subsequent requests skip loading → straight to inference." xml:space="preserve">
+    <value>GPU-ul prelucrează tokeni. După încărcare, cererile ulterioare omit etapa de încărcare → trec direct la inferență.</value>
+  </data>
+  <data name="Hang mode" xml:space="preserve">
+    <value>Modul de așteptare</value>
+  </data>
+  <data name="Hardcoded" xml:space="preserve">
+    <value>Codificat static</value>
+  </data>
+  <data name="Health Check" xml:space="preserve">
+    <value>Verificare stare</value>
+  </data>
+  <data name="How a request flows through the Ollama Gateway — from client to backend" xml:space="preserve">
+    <value>Cum curge o solicitare prin Ollama Gateway — de la client la backend</value>
+  </data>
+  <data name="How long the background health monitor waits when probing /api/tags and /api/ps" xml:space="preserve">
+    <value>Cât timp așteaptă monitorul de sănătate în fundal când verifică /api/tags și /api/ps</value>
+  </data>
+  <data name="How long the gateway waits for the backend to START responding to a user request" xml:space="preserve">
+    <value>Cât timp așteaptă gateway-ul ca backend-ul să ÎNCEAPĂ să răspundă la o solicitare de utilizator</value>
+  </data>
+  <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies." xml:space="preserve">
+    <value>Cât timp așteaptă gateway-ul ca backend-ul să ÎNCEAPĂ să răspundă. NU include autentificarea, coada de limitare a ratei sau așteptarea pentru sloturile de concurență. Odată ce streaming-ul începe, nu se aplică nicio limită de timp.</value>
+  </data>
+  <data name="How long the warmup job waits for each model to load. Per-model configurable." xml:space="preserve">
+    <value>Cât timp așteaptă sarcina de încălzire ca fiecare model să se încarce. Configurabil pe model.</value>
+  </data>
+  <data name="HTTP request to backend (DNS, TCP handshake, TLS)" xml:space="preserve">
+    <value>Solicitare HTTP către backend (DNS, handshake TCP, TLS)</value>
+  </data>
+  <data name="Immediately return HTTP 429." xml:space="preserve">
+    <value>Returnează imediat HTTP 429.</value>
+  </data>
+  <data name="In-Memory Usage Tracking" xml:space="preserve">
+    <value>Urmărire Utilizare în Memorie</value>
+  </data>
+  <data name="Inference" xml:space="preserve">
+    <value>Inferență</value>
+  </data>
+  <data name="Keep-Alive &amp; Warmup" xml:space="preserve">
+    <value>Menținere activă și Încălzire</value>
+  </data>
+  <data name="KeepAlive" xml:space="preserve">
+    <value>Păstrare conexiune</value>
+  </data>
+  <data name="keys in the system." xml:space="preserve">
+    <value>chei în sistem.</value>
+  </data>
+  <data name="Layer" xml:space="preserve">
+    <value>Strat</value>
+  </data>
+  <data name="Limit" xml:space="preserve">
+    <value>Limită</value>
+  </data>
+  <data name="Logs include: user, model, provider, tokens, latency, status code, conversation count" xml:space="preserve">
+    <value>Jurnalele includ: utilizator, model, furnizor, tokeni, latență, cod de stare, număr de conversații</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>Maxim</value>
+  </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>Număr maxim de încercări</value>
+  </data>
+  <data name="Middleware" xml:space="preserve">
+    <value>Middleware</value>
+  </data>
+  <data name="Model" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="Model Loading" xml:space="preserve">
+    <value>Încărcarea modelului</value>
+  </data>
+  <data name="Model loading time (cold start on GPU)" xml:space="preserve">
+    <value>Timpul de încărcare a modelului (pornire rece pe GPU)</value>
+  </data>
+  <data name="needs another 30 s to finish → completely fine ✅" xml:space="preserve">
+    <value>are nevoie de încă 30 s pentru a se finaliza → perfect ✅</value>
+  </data>
+  <data name="No backends configured for this virtual model." xml:space="preserve">
+    <value>Nu sunt configurați backend-uri pentru acest model virtual.</value>
+  </data>
+  <data name="No concurrency limit — requests pass through immediately" xml:space="preserve">
+    <value>Fără limită de concurență — cererile sunt procesate imediat</value>
+  </data>
+  <data name="No providers configured yet." xml:space="preserve">
+    <value>Niciun furnizor configurat încă.</value>
+  </data>
+  <data name="not found. Create it to see real configuration here." xml:space="preserve">
+    <value>nu a fost găsită. Creați-o pentru a vedea configurația reală aici.</value>
+  </data>
+  <data name="NumCtx" xml:space="preserve">
+    <value>NumCtx</value>
+  </data>
+  <data name="Once the backend sends HTTP headers, the timeout is PASSED. The model can stream tokens for hours — only client disconnection stops it." xml:space="preserve">
+    <value>Odată ce backend-ul trimite antetele HTTP, timeout-ul este PARCURS. Modelul poate stream-ui tokeni timp de ore întregi — doar deconectarea clientului îl oprește.</value>
+  </data>
+  <data name="or" xml:space="preserve">
+    <value>sau</value>
+  </data>
+  <data name="Per-Key Rate Limiter" xml:space="preserve">
+    <value>Limitator de rată pe cheie</value>
+  </data>
+  <data name="Pri" xml:space="preserve">
+    <value>Prioritate</value>
+  </data>
+  <data name="processing" xml:space="preserve">
+    <value>în curs de procesare</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Furnizor</value>
+  </data>
+  <data name="Provider → Health Check Timeout (s)" xml:space="preserve">
+    <value>Furnizor → Limită de timp pentru verificarea stării (s)</value>
+  </data>
+  <data name="Provider → Warmup Model → Timeout (s)" xml:space="preserve">
+    <value>Furnizor → Model de încălzire → Limită de timp (s)</value>
+  </data>
+  <data name="Provider concurrency slot queuing" xml:space="preserve">
+    <value>Așteptarea în coadă pentru sloturi de concurență ale furnizorului</value>
+  </data>
+  <data name="Queue until a slot opens — does NOT consume the virtual model timeout." xml:space="preserve">
+    <value>Așteaptă în coadă până când se eliberează un slot — NU consumă timeout-ul modelului virtual.</value>
+  </data>
+  <data name="Quick admin dashboard ping. Does NOT write to DB — UI-only." xml:space="preserve">
+    <value>Ping rapid de pe panoul de administrare. NU scrie în baza de date — doar interfață grafică.</value>
+  </data>
+  <data name="Rate-limit queue waiting (Hang mode)" xml:space="preserve">
+    <value>Așteptarea în coada de limitare a ratelor (Mod Hang)</value>
+  </data>
+  <data name="Rate-limiting happens BEFORE the virtual model timeout starts. Queuing here is free." xml:space="preserve">
+    <value>Limitarea ratei are loc ÎNAINTE ca timeout-ul modelului virtual să înceapă. Așteptarea în coadă aici este gratuită.</value>
+  </data>
+  <data name="Reads model weights from disk into GPU VRAM. 27GB on NVMe ≈ 5–15s; on HDD/NAS ≈ 3–10 min." xml:space="preserve">
+    <value>Încarcă ponderile modelului de pe disc în VRAM-ul GPU. 27GB pe NVMe ≈ 5–15s; pe HDD/NAS ≈ 3–10 min.</value>
+  </data>
+  <data name="Reject mode" xml:space="preserve">
+    <value>Modul de respingere</value>
+  </data>
+  <data name="Request Timeout" xml:space="preserve">
+    <value>Timeout solicitare</value>
+  </data>
+  <data name="runs every" xml:space="preserve">
+    <value>rulează la fiecare</value>
+  </data>
+  <data name="Strategy" xml:space="preserve">
+    <value>Strategie</value>
+  </data>
+  <data name="Streaming response body (after headers received)" xml:space="preserve">
+    <value>Transmiterea corpului răspunsului (după primirea antetelor)</value>
+  </data>
+  <data name="swaps buffers and bulk-updates DB (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)" xml:space="preserve">
+    <value>schimba bufferele și actualizează în bloc BD (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)</value>
+  </data>
+  <data name="Temperature" xml:space="preserve">
+    <value>Temperatură</value>
+  </data>
+  <data name="The 4-Layer Timeout Architecture" xml:space="preserve">
+    <value>Arhitectura de Timeout pe 4 Straturi</value>
+  </data>
+  <data name="The global default chat model is set to" xml:space="preserve">
+    <value>Modelul global implicit de chat este setat la</value>
+  </data>
+  <data name="The warmup background job pings configured models every 5 min to prevent unloading." xml:space="preserve">
+    <value>Sarcina de fundal de pregătire interoghează modelele configurate la fiecare 5 minute pentru a preveni descărcarea lor.</value>
+  </data>
+  <data name="timeout:" xml:space="preserve">
+    <value>timeout:</value>
+  </data>
+  <data name="timeout. Backend starts streaming at" xml:space="preserve">
+    <value>timeout-ul. Backend-ul începe streaming-ul la</value>
+  </data>
+  <data name="tracks API key usage, virtual model usage, underlying model usage — feeds the Dashboard charts in real-time" xml:space="preserve">
+    <value>urmărește utilizarea cheii API, utilizarea modelului virtual, utilizarea modelului de bază — alimentează graficele din Dashboard în timp real</value>
+  </data>
+  <data name="tracks live in-flight requests — powers the &quot;Live Inference&quot; table and Monitor page" xml:space="preserve">
+    <value>urmărește cererile active în timp real — alimentează tabelul „Live Inference” și pagina Monitor</value>
+  </data>
+  <data name="Tries backends from lowest priority to highest. If backend #1 fails or times out, falls back to #2, then #3." xml:space="preserve">
+    <value>Încearcă back-ends de la cea mai mică prioritate la cea mai mare. Dacă back-end-ul #1 eșuează sau depășește timeout-ul, trece la #2, apoi la #3.</value>
+  </data>
+  <data name="Unlimited" xml:space="preserve">
+    <value>Nelimitat</value>
+  </data>
+  <data name="Virtual model" xml:space="preserve">
+    <value>Model virtual</value>
+  </data>
+  <data name="Virtual Model → Request Timeout (s)" xml:space="preserve">
+    <value>Model virtual → Limită de timp solicitare (s)</value>
+  </data>
+  <data name="waiting" xml:space="preserve">
+    <value>așteptare</value>
+  </data>
+  <data name="Waiting for backend to send HTTP response headers" xml:space="preserve">
+    <value>Așteptarea ca backend-ul să trimită anteturile răspunsului HTTP</value>
+  </data>
+  <data name="Waiting in the concurrency queue does NOT consume the virtual model timeout. The timeout clock only starts after the slot is acquired. A request will wait indefinitely for its slot — the only way it stops waiting is if the client (browser / SDK) disconnects. A busy GPU does not cause the virtual model to give up on this backend." xml:space="preserve">
+    <value>Așteptarea în coada de concurență NU consumă timeout-ul modelului virtual. Ceasul timeout-ului începe să curgă doar după ce slotul este achiziționat. O cerere va aștepta indefinitely pentru slotul său — singurul mod în care se oprește din așteptare este dacă clientul (browser / SDK) se deconectează. Un GPU ocupat nu determină modelul virtual să renunțe la acest backend.</value>
+  </data>
+  <data name="Warmup Plane" xml:space="preserve">
+    <value>Plan de Încălzire</value>
+  </data>
+  <data name="What IS counted" xml:space="preserve">
+    <value>Ce SE ia în calcul</value>
+  </data>
+  <data name="What is NOT counted" xml:space="preserve">
+    <value>Ce NU este luat în calcul</value>
+  </data>
+  <data name="Where configured" xml:space="preserve">
+    <value>Unde este configurat</value>
+  </data>
+  <data name="With" xml:space="preserve">
+    <value>Cu</value>
+  </data>
+  <data name="Without specifying a model, the gateway uses" xml:space="preserve">
+    <value>Fără a specifica un model, gateway-ul utilizează</value>
+  </data>
+
+</root>

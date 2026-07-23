@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="(fallback)" xml:space="preserve">
+    <value>(yedek)</value>
+  </data>
+  <data name="1. Client Request" xml:space="preserve">
+    <value>1. İstemci İsteği</value>
+  </data>
+  <data name="2. Authentication &amp; Rate Limiting" xml:space="preserve">
+    <value>2. Kimlik Doğrulama ve Hız Sınırlaması</value>
+  </data>
+  <data name="3. Virtual Model" xml:space="preserve">
+    <value>3. Sanal Model</value>
+  </data>
+  <data name="4. Provider Concurrency Limiter" xml:space="preserve">
+    <value>4. Sağlayıcı Eş Zamanlılık Sınırlayıcısı</value>
+  </data>
+  <data name="5. ⏱️ Timeout Clock Starts" xml:space="preserve">
+    <value>5. ⏱️ Zaman Aşımı Saati Başlar</value>
+  </data>
+  <data name="6. Physical Backend" xml:space="preserve">
+    <value>6. Fiziksel Arka Uç</value>
+  </data>
+  <data name="7. Observability Pipeline — Dual Logging &amp; Usage Tracking" xml:space="preserve">
+    <value>7. Gözlemlenebilirlik Boru Hattı — Çift Kayıt ve Kullanım Takibi</value>
+  </data>
+  <data name="Any OpenAI-compatible or Ollama-native client sends a request." xml:space="preserve">
+    <value>Herhangi bir OpenAI uyumlu veya Ollama yerel istemcisi istek gönderir.</value>
+  </data>
+  <data name="API Key Verification" xml:space="preserve">
+    <value>API Anahtarı Doğrulaması</value>
+  </data>
+  <data name="Architecture Guide" xml:space="preserve">
+    <value>Mimari Rehberi</value>
+  </data>
+  <data name="attempts and" xml:space="preserve">
+    <value>deneme ve</value>
+  </data>
+  <data name="Authentication &amp; API key validation" xml:space="preserve">
+    <value>Kimlik doğrulama ve API anahtarı doğrulaması</value>
+  </data>
+  <data name="Backends" xml:space="preserve">
+    <value>Arka Uçlar</value>
+  </data>
+  <data name="Bearer token or x-api-key is validated." xml:space="preserve">
+    <value>Bearer token veya x-api-key doğrulanır.</value>
+  </data>
+  <data name="Both pipelines are fire-and-forget from the request hot-path. If ClickHouse is down or the buffer is full, requests still succeed — logs are simply dropped (DropWrite). The system never blocks a user request to write a log." xml:space="preserve">
+    <value>Her iki işlem hattı da istek kritik yolundan fire-and-forget (ateş et ve unut) mantığıyla çalışır. ClickHouse hizmet dışındaysa veya tampon bellek doluyse, istekler yine de başarılı olur; günlük kayıtları yalnızca düşürülür (DropWrite). Sistem, bir günlük yazmak için kullanıcı isteğini asla engellemez.</value>
+  </data>
+  <data name="bounded to" xml:space="preserve">
+    <value>10.000 girişe sınırlı, doluysa DropWrite kullanır</value>
+  </data>
+  <data name="but no virtual model with that name and type &apos;Chat&apos; exists in the database." xml:space="preserve">
+    <value>ancak veritabanında bu ada ve &apos;Chat&apos; türüne sahip bir sanal model bulunmamaktadır.</value>
+  </data>
+  <data name="ClickHouse Log Pipeline" xml:space="preserve">
+    <value>ClickHouse Günlük Hattı</value>
+  </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>Yapılandırma</value>
+  </data>
+  <data name="Control Plane" xml:space="preserve">
+    <value>Kontrol Düzlemi</value>
+  </data>
+  <data name="Controls" xml:space="preserve">
+    <value>Kontroller</value>
+  </data>
+  <data name="create it here → New Virtual Model" xml:space="preserve">
+    <value>burada oluşturun → Yeni Sanal Model</value>
+  </data>
+  <data name="Current Value" xml:space="preserve">
+    <value>Mevcut Değer</value>
+  </data>
+  <data name="Dashboard Plane" xml:space="preserve">
+    <value>Panel Düzlemi</value>
+  </data>
+  <data name="Data Plane" xml:space="preserve">
+    <value>Veri Düzlemi</value>
+  </data>
+  <data name="Default Chat Model Not Found!" xml:space="preserve">
+    <value>Varsayılan Sohbet Modeli Bulunamadı!</value>
+  </data>
+  <data name="drains buffer, batch-inserts into ClickHouse" xml:space="preserve">
+    <value>tamponu boşaltır, ClickHouse&apos;a toplu ekleme yapar</value>
+  </data>
+  <data name="Each API key has its own rate-limit window. Two modes:" xml:space="preserve">
+    <value>Her API anahtarının kendi hız sınırı penceresi vardır. İki mod:</value>
+  </data>
+  <data name="entries, DropWrite when full" xml:space="preserve">
+    <value>giriş, dolu olduğunda yazmayı bırak (DropWrite)</value>
+  </data>
+  <data name="every" xml:space="preserve">
+    <value>her</value>
+  </data>
+  <data name="Every request is logged asynchronously without blocking the hot path:" xml:space="preserve">
+    <value>Her istek, kritik yola engel olmaksızın eşzamansız olarak günlüğe kaydedilir:</value>
+  </data>
+  <data name="Example" xml:space="preserve">
+    <value>Örnek</value>
+  </data>
+  <data name="Fallback Timeline" xml:space="preserve">
+    <value>Yedekleme Zaman Çizelgesi</value>
+  </data>
+  <data name="Fast in-memory counters avoid DB writes on every request:" xml:space="preserve">
+    <value>Hızlı bellek içi sayaçlar her istekte DB yazmalarını önler:</value>
+  </data>
+  <data name="Fix it here → Global Settings" xml:space="preserve">
+    <value>Buradan düzeltin → Küresel Ayarlar</value>
+  </data>
+  <data name="GPU processes tokens. Once loaded, subsequent requests skip loading → straight to inference." xml:space="preserve">
+    <value>GPU belirteçleri işler. Yüklendikten sonra, sonraki istekler yükleme adımını atlar → doğrudan çıkarım aşamasına geçer.</value>
+  </data>
+  <data name="Hang mode" xml:space="preserve">
+    <value>Bekleme modu</value>
+  </data>
+  <data name="Hardcoded" xml:space="preserve">
+    <value>Sabit Kodlanmış</value>
+  </data>
+  <data name="Health Check" xml:space="preserve">
+    <value>Sağlık Kontrolü</value>
+  </data>
+  <data name="How a request flows through the Ollama Gateway — from client to backend" xml:space="preserve">
+    <value>Bir isteğin Ollama Gateway üzerinden nasıl aktığı — istemciden arka uca</value>
+  </data>
+  <data name="How long the background health monitor waits when probing /api/tags and /api/ps" xml:space="preserve">
+    <value>Arka plan sağlık izleyicisinin /api/tags ve /api/ps uç noktalarını sorgularken beklediği süre</value>
+  </data>
+  <data name="How long the gateway waits for the backend to START responding to a user request" xml:space="preserve">
+    <value>Ağ geçidinin kullanıcı isteğine yanıt vermeye BAŞLAMASI için arka uçtan beklediği süre</value>
+  </data>
+  <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies." xml:space="preserve">
+    <value>Geçidin arka uçtan YANIT VERMEYİ BAŞLAMASINI beklediği süre. Kimlik doğrulama, hız sınırı sırası veya eşzamanlılık yuvası bekleme sürelerini içermez. Akış başladığında zaman sınırı uygulanmaz.</value>
+  </data>
+  <data name="How long the warmup job waits for each model to load. Per-model configurable." xml:space="preserve">
+    <value>Isınma işleminin her modelin yüklenmesini bekleme süresi. Model bazlı yapılandırılabilir.</value>
+  </data>
+  <data name="HTTP request to backend (DNS, TCP handshake, TLS)" xml:space="preserve">
+    <value>Arka uca HTTP isteği (DNS, TCP el sıkışması, TLS)</value>
+  </data>
+  <data name="Immediately return HTTP 429." xml:space="preserve">
+    <value>Derhal HTTP 429 döndür.</value>
+  </data>
+  <data name="In-Memory Usage Tracking" xml:space="preserve">
+    <value>Bellek İçi Kullanım İzleme</value>
+  </data>
+  <data name="Inference" xml:space="preserve">
+    <value>Çıkarım</value>
+  </data>
+  <data name="Keep-Alive &amp; Warmup" xml:space="preserve">
+    <value>Aktif Tutma &amp; Hazırlık</value>
+  </data>
+  <data name="KeepAlive" xml:space="preserve">
+    <value>Aktif Tutma</value>
+  </data>
+  <data name="keys in the system." xml:space="preserve">
+    <value>sistemdeki anahtarlar.</value>
+  </data>
+  <data name="Layer" xml:space="preserve">
+    <value>Katman</value>
+  </data>
+  <data name="Limit" xml:space="preserve">
+    <value>Sınır</value>
+  </data>
+  <data name="Logs include: user, model, provider, tokens, latency, status code, conversation count" xml:space="preserve">
+    <value>Günlükler şunları içerir: kullanıcı, model, sağlayıcı, jetonlar, gecikme, durum kodu, konuşma sayısı</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>Maks.</value>
+  </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>Maksimum Yeniden Deneme Sayısı</value>
+  </data>
+  <data name="Middleware" xml:space="preserve">
+    <value>Ara Yazılım</value>
+  </data>
+  <data name="Model" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="Model Loading" xml:space="preserve">
+    <value>Model Yükleme</value>
+  </data>
+  <data name="Model loading time (cold start on GPU)" xml:space="preserve">
+    <value>Model yükleme süresi (GPU&apos;da soğuk başlatma)</value>
+  </data>
+  <data name="needs another 30 s to finish → completely fine ✅" xml:space="preserve">
+    <value>tamamlanmak için 30 sn daha gerekiyor → tamamen sorun yok ✅</value>
+  </data>
+  <data name="No backends configured for this virtual model." xml:space="preserve">
+    <value>Bu sanal model için arka uç yapılandırılmadı.</value>
+  </data>
+  <data name="No concurrency limit — requests pass through immediately" xml:space="preserve">
+    <value>Eş zamanlılık sınırı yok — istekler anında iletilir</value>
+  </data>
+  <data name="No providers configured yet." xml:space="preserve">
+    <value>Henüz sağlayıcı yapılandırılmadı.</value>
+  </data>
+  <data name="not found. Create it to see real configuration here." xml:space="preserve">
+    <value>bulunamadı. Gerçek yapılandırmayı görmek için oluşturun.</value>
+  </data>
+  <data name="NumCtx" xml:space="preserve">
+    <value>NumCtx</value>
+  </data>
+  <data name="Once the backend sends HTTP headers, the timeout is PASSED. The model can stream tokens for hours — only client disconnection stops it." xml:space="preserve">
+    <value>Arka uç HTTP başlıklarını gönderdikten sonra zaman aşımı AŞILMIŞ olur. Model saatlerce belirteç akışı yapabilir — onu durduran tek şey istemci bağlantısının kesilmesidir.</value>
+  </data>
+  <data name="or" xml:space="preserve">
+    <value>veya</value>
+  </data>
+  <data name="Per-Key Rate Limiter" xml:space="preserve">
+    <value>Anahtar Başına Hız Sınırlayıcı</value>
+  </data>
+  <data name="Pri" xml:space="preserve">
+    <value>Öncelik</value>
+  </data>
+  <data name="processing" xml:space="preserve">
+    <value>işleniyor</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Sağlayıcı</value>
+  </data>
+  <data name="Provider → Health Check Timeout (s)" xml:space="preserve">
+    <value>Sağlayıcı → Sağlam Kontrol Zaman Aşımı (s)</value>
+  </data>
+  <data name="Provider → Warmup Model → Timeout (s)" xml:space="preserve">
+    <value>Sağlayıcı → Hazırlık Modeli → Zaman Aşımı (s)</value>
+  </data>
+  <data name="Provider concurrency slot queuing" xml:space="preserve">
+    <value>Sağlayıcı eşzamanlılık yuvası kuyruklama</value>
+  </data>
+  <data name="Queue until a slot opens — does NOT consume the virtual model timeout." xml:space="preserve">
+    <value>Boşluk açılana kadar kuyrukta bekle — sanal model zaman aşımını TÜKETMEZ.</value>
+  </data>
+  <data name="Quick admin dashboard ping. Does NOT write to DB — UI-only." xml:space="preserve">
+    <value>Hızlı yönetici paneli ping işlemi. Veritabanına YAZMAZ — yalnızca arayüz.</value>
+  </data>
+  <data name="Rate-limit queue waiting (Hang mode)" xml:space="preserve">
+    <value>Hız sınırı kuyruk bekleme (Askıya Alma modu)</value>
+  </data>
+  <data name="Rate-limiting happens BEFORE the virtual model timeout starts. Queuing here is free." xml:space="preserve">
+    <value>Hız sınırlaması sanal model zaman aşımı başlamadan ÖNCE gerçekleşir. Buradaki sıraya girme ücretsizdir.</value>
+  </data>
+  <data name="Reads model weights from disk into GPU VRAM. 27GB on NVMe ≈ 5–15s; on HDD/NAS ≈ 3–10 min." xml:space="preserve">
+    <value>Model ağırlıklarını diskten GPU VRAM&apos;ine okur. NVMe üzerinde 27GB ≈ 5–15s; HDD/NAS üzerinde ≈ 3–10 dk.</value>
+  </data>
+  <data name="Reject mode" xml:space="preserve">
+    <value>Reddetme modu</value>
+  </data>
+  <data name="Request Timeout" xml:space="preserve">
+    <value>İstek Zaman Aşımı</value>
+  </data>
+  <data name="runs every" xml:space="preserve">
+    <value>her</value>
+  </data>
+  <data name="Strategy" xml:space="preserve">
+    <value>Strateji</value>
+  </data>
+  <data name="Streaming response body (after headers received)" xml:space="preserve">
+    <value>Akışkan yanıt gövdesi (başlıklar alındıktan sonra)</value>
+  </data>
+  <data name="swaps buffers and bulk-updates DB (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)" xml:space="preserve">
+    <value>tamponları değiştirir ve veritabanını toplu olarak günceller (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)</value>
+  </data>
+  <data name="Temperature" xml:space="preserve">
+    <value>Sıcaklık</value>
+  </data>
+  <data name="The 4-Layer Timeout Architecture" xml:space="preserve">
+    <value>4 Katmanlı Zaman Aşımı Mimarisi</value>
+  </data>
+  <data name="The global default chat model is set to" xml:space="preserve">
+    <value>Küresel varsayılan sohbet modeli şuna ayarlandı:</value>
+  </data>
+  <data name="The warmup background job pings configured models every 5 min to prevent unloading." xml:space="preserve">
+    <value>Isınma arka plan işlemi, modellerin boşaltılmasını önlemek için yapılandırılan modelleri her 5 dakikada bir kontrol eder.</value>
+  </data>
+  <data name="timeout:" xml:space="preserve">
+    <value>zaman aşımı:</value>
+  </data>
+  <data name="timeout. Backend starts streaming at" xml:space="preserve">
+    <value>zaman aşımı. Arka uç akışı şu anda başlatır</value>
+  </data>
+  <data name="tracks API key usage, virtual model usage, underlying model usage — feeds the Dashboard charts in real-time" xml:space="preserve">
+    <value>API anahtarı kullanımını, sanal model kullanımını ve temel model kullanımını izler — Dashboard grafiklerini gerçek zamanlı olarak günceller</value>
+  </data>
+  <data name="tracks live in-flight requests — powers the &quot;Live Inference&quot; table and Monitor page" xml:space="preserve">
+    <value>canlı uçuşta olan istekleri izler — &quot;Live Inference&quot; tablosunu ve İzleme sayfasını destekler</value>
+  </data>
+  <data name="Tries backends from lowest priority to highest. If backend #1 fails or times out, falls back to #2, then #3." xml:space="preserve">
+    <value>En düşük öncelikten en yükseğe kadar arka uçları dener. Arka uç #1 başarısız olursa veya zaman aşımına uğrarsa, #2&apos;ye, ardından #3&apos;e geri döner.</value>
+  </data>
+  <data name="Unlimited" xml:space="preserve">
+    <value>Sınırsız</value>
+  </data>
+  <data name="Virtual model" xml:space="preserve">
+    <value>Sanal model</value>
+  </data>
+  <data name="Virtual Model → Request Timeout (s)" xml:space="preserve">
+    <value>Sanal Model → İstek Zaman Aşımı (s)</value>
+  </data>
+  <data name="waiting" xml:space="preserve">
+    <value>bekleme</value>
+  </data>
+  <data name="Waiting for backend to send HTTP response headers" xml:space="preserve">
+    <value>Backend&apos;in HTTP yanıt başlıklarını göndermesini bekleme</value>
+  </data>
+  <data name="Waiting in the concurrency queue does NOT consume the virtual model timeout. The timeout clock only starts after the slot is acquired. A request will wait indefinitely for its slot — the only way it stops waiting is if the client (browser / SDK) disconnects. A busy GPU does not cause the virtual model to give up on this backend." xml:space="preserve">
+    <value>Eşzamanlılık kuyruğunda beklemek sanal model zaman aşımını tüketmez. Zaman aşımı saati, slot tahsis edildikten sonra başlar. Bir istek, slotu için sınırsız süre boyunca bekleyecektir; bekleme durumundan çıkmanın tek yolu istemcinin (tarayıcı / SDK) bağlantısını kesmesidir. Yoğun bir GPU, sanal modelin bu arka uçtan vazgeçmesine neden olmaz.</value>
+  </data>
+  <data name="Warmup Plane" xml:space="preserve">
+    <value>Hazırlık Düzlemi</value>
+  </data>
+  <data name="What IS counted" xml:space="preserve">
+    <value>Neler SAYILIR</value>
+  </data>
+  <data name="What is NOT counted" xml:space="preserve">
+    <value>Hesaba ALINMAYANLAR</value>
+  </data>
+  <data name="Where configured" xml:space="preserve">
+    <value>Yapılandırıldığı Yer</value>
+  </data>
+  <data name="With" xml:space="preserve">
+    <value>İle</value>
+  </data>
+  <data name="Without specifying a model, the gateway uses" xml:space="preserve">
+    <value>Model belirtmeden, ağ geçidi şunu kullanır:</value>
+  </data>
+
+</root>

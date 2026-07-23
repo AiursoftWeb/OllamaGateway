@@ -18,7 +18,22 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Add New Ollama Provider" xml:space="preserve">
+      <data name="(1 hour)," xml:space="preserve">
+    <value>(1 oră),</value>
+  </data>
+  <data name="(24 hours)." xml:space="preserve">
+    <value>(24 de ore).</value>
+  </data>
+  <data name="(5 minutes)," xml:space="preserve">
+    <value>(5 minute),</value>
+  </data>
+  <data name="= keep forever." xml:space="preserve">
+    <value>= păstrează permanent.</value>
+  </data>
+  <data name="= unload immediately." xml:space="preserve">
+    <value>= descarcă imediat.</value>
+  </data>
+  <data name="Add New Ollama Provider" xml:space="preserve">
     <value>Adăugați un nou furnizor Ollama</value>
   </data>
   <data name="Add Provider" xml:space="preserve">
@@ -39,8 +54,20 @@
   <data name="Controls how long the AI model weights stay loaded in GPU VRAM after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep in VRAM forever." xml:space="preserve">
     <value>Controlează cât timp rămân încărcate ponderile modelului AI în VRAM-ul GPU după o cerere. Format Ollama (de ex., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Folosiți &apos;0&apos; pentru descărcare imediată sau &apos;-1&apos; pentru a le păstra în VRAM permanent.</value>
   </data>
+  <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
+    <value>Nu folosiți secunde brute precum &apos;300&apos;. Scrieți &apos;5m&apos; în schimb. Formatele nevalide sunt ignorate tacit de Ollama.</value>
+  </data>
   <data name="e.g. My Local Ollama" xml:space="preserve">
     <value>de ex. Ollama locală</value>
+  </data>
+  <data name="Health Check Timeout (s)" xml:space="preserve">
+    <value>Timpul de așteptare pentru verificarea stării (s)</value>
+  </data>
+  <data name="How long model weights stay in GPU VRAM after the last request. Uses Ollama duration format: (number)(unit) — e.g." xml:space="preserve">
+    <value>Cât timp rămân ponderile modelului în memoria VRAM a GPU-ului după ultima cerere. Folosește formatul de durată Ollama: (număr)(unitate) — ex.</value>
+  </data>
+  <data name="How long the background health monitor waits when probing this provider&apos;s /api/tags and /api/ps endpoints. Set higher for providers with slow storage (HDD/NAS) where scanning model directories may take tens of seconds." xml:space="preserve">
+    <value>Cât timp așteaptă monitorul de sănătate în fundal la sondarea punctelor finale /api/tags și /api/ps ale acestui furnizor. Setare mai mare pentru furnizorii cu stocare lentă (HDD/NAS), unde scanarea directorilor de modele poate dura zeci de secunde.</value>
   </data>
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>Politica de menținere activă</value>
@@ -95,6 +122,9 @@
   </data>
   <data name="The URL where Ollama is listening." xml:space="preserve">
     <value>URL-ul unde rulează Ollama.</value>
+  </data>
+  <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
+    <value>Așteptarea în coada de concurență NU consumă Timeout-ul de solicitare al modelului virtual. O solicitare va aștepta nelimitat pentru un slot — doar deconectarea clientului (închiderea browserului, timeout SDK) oprește așteptarea. Modelul virtual nu renunță la un backend doar pentru că este ocupat.</value>
   </data>
 
 </root>
