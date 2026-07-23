@@ -24,17 +24,38 @@
   <data name="Are you sure?" xml:space="preserve">
     <value>Är du säker?</value>
   </data>
+  <data name="Banned" xml:space="preserve">
+    <value>Bannad</value>
+  </data>
   <data name="Chat" xml:space="preserve">
     <value>Chatta</value>
+  </data>
+  <data name="Circuit breaker has temporarily blocked this backend due to repeated failures. No requests are routed here until the ban expires. Use &quot;Test Connection&quot; on the Provider edit page to manually revive." xml:space="preserve">
+    <value>Strömbrytaren har tillfälligt blockerat denna backend på grund av upprepade fel. Inga förfrågningar omdirigeras hit innan förbudet löper ut. Använd &quot;Testa anslutning&quot; på redigeringsidan för Provider för att manuellt återuppliva den.</value>
   </data>
   <data name="Created" xml:space="preserve">
     <value>Skapad</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Ned</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Redigera</value>
   </data>
+  <data name="Healthy" xml:space="preserve">
+    <value>Frisk</value>
+  </data>
   <data name="Manage virtual models that proxy to underlying Ollama models" xml:space="preserve">
     <value>Hantera virtuella modeller som fungerar som mellanhand för underliggande Ollama-modeller</value>
+  </data>
+  <data name="Model exists on the provider, but is not currently loaded in memory. Requests ARE routed here — Ollama will automatically load the model on demand (cold start, may take seconds to minutes)." xml:space="preserve">
+    <value>Modellen finns hos leverantören men är för närvarande inte laddad i minnet. Förfrågningar skickas HITANNA — Ollama laddar automatiskt modellen vid behov ( kallstart, kan ta sekunder till minuter).</value>
+  </data>
+  <data name="Model is loaded in GPU VRAM. Requests are routed to this backend and respond instantly." xml:space="preserve">
+    <value>Modellen är laddad i GPU:s VRAM. Begäranden skickas till denna backend och svarar omedelbart.</value>
+  </data>
+  <data name="Model not found on the provider. Requests are NOT routed here. Check that the underlying model name is correct and exists on the provider." xml:space="preserve">
+    <value>Modellen hittades inte hos leverantören. Förfrågningar skickas INTE hit. Kontrollera att det underliggande modellnamnet är korrekt och finns tillgängligt hos leverantören.</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Namn</value>
@@ -45,11 +66,20 @@
   <data name="No models defined yet." xml:space="preserve">
     <value>Inga modeller har definierats än.</value>
   </data>
+  <data name="Open in Chat Playground" xml:space="preserve">
+    <value>Öppna i chattspelplatsen</value>
+  </data>
   <data name="Overrides" xml:space="preserve">
     <value>Överskrider</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>Leverantör</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="Status Guide" xml:space="preserve">
+    <value>Statusguide</value>
   </data>
   <data name="Underlying" xml:space="preserve">
     <value>Underliggande</value>

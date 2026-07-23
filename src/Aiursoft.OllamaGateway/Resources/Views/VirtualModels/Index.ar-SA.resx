@@ -24,17 +24,38 @@
   <data name="Are you sure?" xml:space="preserve">
     <value>هل أنت متأكد؟</value>
   </data>
+  <data name="Banned" xml:space="preserve">
+    <value>محظور</value>
+  </data>
   <data name="Chat" xml:space="preserve">
     <value>دردشة</value>
+  </data>
+  <data name="Circuit breaker has temporarily blocked this backend due to repeated failures. No requests are routed here until the ban expires. Use &quot;Test Connection&quot; on the Provider edit page to manually revive." xml:space="preserve">
+    <value>قام قاطع الدائرة بقطع الاتصال مؤقتاً مع هذه النافذة الخلفية بسبب تكرار حالات الفشل. لن يتم توجيه أي طلبات إلى هنا حتى تنتهي مدة الحظر. استخدم &quot;اختبار الاتصال&quot; في صفحة تعديل المزوّد لإعادتها يدوياً.</value>
   </data>
   <data name="Created" xml:space="preserve">
     <value>تم الإنشاء</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>متوقف</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>تعديل</value>
   </data>
+  <data name="Healthy" xml:space="preserve">
+    <value>سليم</value>
+  </data>
   <data name="Manage virtual models that proxy to underlying Ollama models" xml:space="preserve">
     <value>إدارة النماذج الافتراضية التي تعمل كوسيط للنماذج الأساسية في Ollama</value>
+  </data>
+  <data name="Model exists on the provider, but is not currently loaded in memory. Requests ARE routed here — Ollama will automatically load the model on demand (cold start, may take seconds to minutes)." xml:space="preserve">
+    <value>النموذج موجود لدى المزود، لكنه غير محمّل حاليًا في الذاكرة. يتم توجيه الطلبات إلى هنا — سيقوم Ollama تلقائيًا بتحميل النموذج عند الطلب (بدء بارد، قد يستغرق ثوانٍ إلى دقائق).</value>
+  </data>
+  <data name="Model is loaded in GPU VRAM. Requests are routed to this backend and respond instantly." xml:space="preserve">
+    <value>تم تحميل النموذج في ذاكرة الفيديو الخاصة بوحدة المعالجة الرسومية (GPU VRAM). يتم توجيه الطلبات إلى هذا الخادم الأساسي والاستجابة لها فوراً.</value>
+  </data>
+  <data name="Model not found on the provider. Requests are NOT routed here. Check that the underlying model name is correct and exists on the provider." xml:space="preserve">
+    <value>لم يتم العثور على النموذج لدى المزود. لا يتم توجيه الطلبات إلى هنا. تحقق من أن اسم النموذج الأساسي صحيح ومتوفر لدى المزود.</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>الاسم</value>
@@ -45,11 +66,20 @@
   <data name="No models defined yet." xml:space="preserve">
     <value>لم يتم تعريف أي نماذج بعد.</value>
   </data>
+  <data name="Open in Chat Playground" xml:space="preserve">
+    <value>فتح في ساحة الدردشة التجريبية</value>
+  </data>
   <data name="Overrides" xml:space="preserve">
     <value>التعديلات</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>مزوّد</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>جاهز</value>
+  </data>
+  <data name="Status Guide" xml:space="preserve">
+    <value>دليل الحالة</value>
   </data>
   <data name="Underlying" xml:space="preserve">
     <value>النموذج الأساسي</value>

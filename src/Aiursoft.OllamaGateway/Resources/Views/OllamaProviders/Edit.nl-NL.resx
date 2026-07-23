@@ -18,7 +18,22 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Advanced Warmup Options" xml:space="preserve">
+      <data name="(1 hour)," xml:space="preserve">
+    <value>(1 uur),</value>
+  </data>
+  <data name="(24 hours)." xml:space="preserve">
+    <value>(24 uur).</value>
+  </data>
+  <data name="(5 minutes)," xml:space="preserve">
+    <value>(5 minuten),</value>
+  </data>
+  <data name="= keep forever." xml:space="preserve">
+    <value>= voor altijd behouden.</value>
+  </data>
+  <data name="= unload immediately." xml:space="preserve">
+    <value>= direct ontladen.</value>
+  </data>
+  <data name="Advanced Warmup Options" xml:space="preserve">
     <value>Geavanceerde warmup-opties</value>
   </data>
   <data name="Back to List" xml:space="preserve">
@@ -39,6 +54,9 @@
   <data name="Controls how long the AI model weights stay loaded in GPU VRAM after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep in VRAM forever." xml:space="preserve">
     <value>Bepaalt hoe lang de AI-modelgewichten in het GPU-VRAM geladen blijven na een verzoek. Ollama-indeling (bijv. &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Gebruik &apos;0&apos; om direct te ontladen, of &apos;-1&apos; om voor altijd in VRAM te houden.</value>
   </data>
+  <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
+    <value>Gebruik GEEN ruwe seconden zoals &apos;300&apos;. Schrijf in plaats daarvan &apos;5m&apos;. Ongeldige formaten worden door Ollama stil genegeerd.</value>
+  </data>
   <data name="e.g. Local Server" xml:space="preserve">
     <value>bijv. Lokale server</value>
   </data>
@@ -47,6 +65,15 @@
   </data>
   <data name="Embed" xml:space="preserve">
     <value>Embeddings</value>
+  </data>
+  <data name="Health Check Timeout (s)" xml:space="preserve">
+    <value>Time-out voor gezondheidscontrole (s)</value>
+  </data>
+  <data name="How long model weights stay in GPU VRAM after the last request. Uses Ollama duration format: (number)(unit) — e.g." xml:space="preserve">
+    <value>Hoe lang modelgewichtingen in GPU-VRAM blijven na de laatste aanvraag. Gebruikt Ollama-tijdsduurformaat: (getal)(eenheid) — bijv.</value>
+  </data>
+  <data name="How long the background health monitor waits when probing this provider for model lists and running status. Set higher for providers with slow storage (HDD/NAS)." xml:space="preserve">
+    <value>Hoe lang de achtergrondhealthmonitor wacht bij het controleren van deze provider op modellijsten en de actieve status. Stel een hogere waarde in voor providers met trage opslag (HDD/NAS).</value>
   </data>
   <data name="Keep" xml:space="preserve">
     <value>Bewaren</value>
@@ -101,6 +128,9 @@
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>Naam onderliggend model</value>
+  </data>
+  <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
+    <value>Wachten in de concurrentiewachtrij verbruikt NIET het aanvraagtime-out van het virtuele model. Een aanvraag wacht oneindig op een beschikbare plek — alleen een clientontkoppeling (browser sluiten, SDK-time-out) stopt het wachten. Het virtuele model geeft niet op bij een backend alleen omdat deze bezet is.</value>
   </data>
   <data name="Warmup is not applicable to OpenAI-compatible providers. The upstream service manages model loading automatically." xml:space="preserve">
     <value>Warmup is niet van toepassing op OpenAI-compatibele providers. De upstream-service beheert het laden van modellen automatisch.</value>
