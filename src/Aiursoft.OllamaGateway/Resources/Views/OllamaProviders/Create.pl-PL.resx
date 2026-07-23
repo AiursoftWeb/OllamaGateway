@@ -18,7 +18,22 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Add New Ollama Provider" xml:space="preserve">
+      <data name="(1 hour)," xml:space="preserve">
+    <value>(1 godzina),</value>
+  </data>
+  <data name="(24 hours)." xml:space="preserve">
+    <value>(24 godziny).</value>
+  </data>
+  <data name="(5 minutes)," xml:space="preserve">
+    <value>(5 minut),</value>
+  </data>
+  <data name="= keep forever." xml:space="preserve">
+    <value>= zachowaj na zawsze.</value>
+  </data>
+  <data name="= unload immediately." xml:space="preserve">
+    <value>= natychmiastowe wyładowanie.</value>
+  </data>
+  <data name="Add New Ollama Provider" xml:space="preserve">
     <value>Dodaj nowego dostawcę Ollama</value>
   </data>
   <data name="Add Provider" xml:space="preserve">
@@ -39,8 +54,20 @@
   <data name="Controls how long the AI model weights stay loaded in GPU VRAM after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep in VRAM forever." xml:space="preserve">
     <value>Kontroluje, jak długo wagi modelu AI pozostają załadowane w VRAM karty graficznej po zapytaniu. Format Ollama (np. &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Użyj &apos;0&apos;, aby od razu wyładować model, lub &apos;-1&apos;, aby utrzymać go w VRAM na stałe.</value>
   </data>
+  <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
+    <value>NIE używaj surowych sekund, takich jak „300”. Zamiast tego wpisz „5m”. Nieprawidłowe formaty są ignorowane przez Ollama.</value>
+  </data>
   <data name="e.g. My Local Ollama" xml:space="preserve">
     <value>np. Moja lokalna Ollama</value>
+  </data>
+  <data name="Health Check Timeout (s)" xml:space="preserve">
+    <value>Limit czasu sprawdzania stanu (s)</value>
+  </data>
+  <data name="How long model weights stay in GPU VRAM after the last request. Uses Ollama duration format: (number)(unit) — e.g." xml:space="preserve">
+    <value>Jak długo wagi modelu pozostają w pamięci VRAM karty graficznej po ostatnim żądaniu. Używa formatu czasu Ollama: (liczba)(jednostka) — np.</value>
+  </data>
+  <data name="How long the background health monitor waits when probing this provider&apos;s /api/tags and /api/ps endpoints. Set higher for providers with slow storage (HDD/NAS) where scanning model directories may take tens of seconds." xml:space="preserve">
+    <value>Czas oczekiwania tła monitora stanu podczas sprawdzania punktów końcowych /api/tags i /api/ps tego dostawcy. Ustaw wyższą wartość dla dostawców z wolnym magazynowaniem (HDD/NAS), gdzie skanowanie katalogów modeli może zajmować kilkadziesiąt sekund.</value>
   </data>
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>Polityka utrzymania połączenia</value>
@@ -95,6 +122,9 @@
   </data>
   <data name="The URL where Ollama is listening." xml:space="preserve">
     <value>Adres URL, na którym nasłuchuje Ollama.</value>
+  </data>
+  <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
+    <value>Czekanie w kolejce współbieżności NIE zużywa limitu czasu żądania modelu wirtualnego. Żądanie będzie czekało nieograniczenie na wolne miejsce — tylko rozłączenie klienta (zamknięcie przeglądarki, przekroczenie limitu czasu SDK) przerywa oczekiwanie. Model wirtualny nie rezygnuje z backendu tylko dlatego, że jest zajęty.</value>
   </data>
 
 </root>

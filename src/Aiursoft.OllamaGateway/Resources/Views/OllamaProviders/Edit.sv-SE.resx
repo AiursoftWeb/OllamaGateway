@@ -18,7 +18,22 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Advanced Warmup Options" xml:space="preserve">
+      <data name="(1 hour)," xml:space="preserve">
+    <value>(1 timme),</value>
+  </data>
+  <data name="(24 hours)." xml:space="preserve">
+    <value>(24 timmar).</value>
+  </data>
+  <data name="(5 minutes)," xml:space="preserve">
+    <value>(5 minuter),</value>
+  </data>
+  <data name="= keep forever." xml:space="preserve">
+    <value>= behåll för alltid.</value>
+  </data>
+  <data name="= unload immediately." xml:space="preserve">
+    <value>= ladda omedelbart.</value>
+  </data>
+  <data name="Advanced Warmup Options" xml:space="preserve">
     <value>Avancerade alternativ för förvärmning</value>
   </data>
   <data name="Back to List" xml:space="preserve">
@@ -39,6 +54,9 @@
   <data name="Controls how long the AI model weights stay loaded in GPU VRAM after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep in VRAM forever." xml:space="preserve">
     <value>Styr hur länge AI-modellens vikter förblir laddade i GPU:s VRAM efter en begäran. Ollama-format (t.ex. &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Använd &apos;0&apos; för att avladda omedelbart, eller &apos;-1&apos; för att behålla i VRAM permanent.</value>
   </data>
+  <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
+    <value>Använd INTE rå sekunder som &apos;300&apos;. Skriv &apos;5m&apos; istället. Ogiltiga format ignoreras tyst av Ollama.</value>
+  </data>
   <data name="e.g. Local Server" xml:space="preserve">
     <value>t.ex. Lokal server</value>
   </data>
@@ -47,6 +65,15 @@
   </data>
   <data name="Embed" xml:space="preserve">
     <value>Inbäddning</value>
+  </data>
+  <data name="Health Check Timeout (s)" xml:space="preserve">
+    <value>Timeout för hälsokontroll (s)</value>
+  </data>
+  <data name="How long model weights stay in GPU VRAM after the last request. Uses Ollama duration format: (number)(unit) — e.g." xml:space="preserve">
+    <value>Hur länge modellviktarna förblir i GPU:s VRAM efter den sista begäran. Använder Ollamas tidsformat: (nummer)(enhet) — t.ex.</value>
+  </data>
+  <data name="How long the background health monitor waits when probing this provider for model lists and running status. Set higher for providers with slow storage (HDD/NAS)." xml:space="preserve">
+    <value>Hur länge den bakgrundsövervakning för hälsa väntar vid utredning av denna leverantör efter modelllistor och körningsstatus. Ställ in högre för leverantörer med långsamt lagringsutrymme (HDD/NAS).</value>
   </data>
   <data name="Keep" xml:space="preserve">
     <value>Behåll</value>
@@ -101,6 +128,9 @@
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>Namn på underliggande modell</value>
+  </data>
+  <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
+    <value>Att vänta i koncurrenskön förbrukar INTE den virtuella modellens begäranstidsgräns. En begäran väntar oändligt länge på en ledig plats — endast en klientavkoppling (webbläsare stängs, SDK-tidsgräns) stoppar väntetiden. Den virtuella modellen ger inte upp på en backend bara för att den är upptagen.</value>
   </data>
   <data name="Warmup is not applicable to OpenAI-compatible providers. The upstream service manages model loading automatically." xml:space="preserve">
     <value>Värmning är inte tillämplig på OpenAI-kompatibla leverantörer. Den överliggande tjänsten hanterar modellladdning automatiskt.</value>
