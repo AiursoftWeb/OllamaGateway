@@ -24,17 +24,38 @@
   <data name="Are you sure?" xml:space="preserve">
     <value>Вы уверены?</value>
   </data>
+  <data name="Banned" xml:space="preserve">
+    <value>Заблокирован</value>
+  </data>
   <data name="Chat" xml:space="preserve">
     <value>Чат</value>
+  </data>
+  <data name="Circuit breaker has temporarily blocked this backend due to repeated failures. No requests are routed here until the ban expires. Use &quot;Test Connection&quot; on the Provider edit page to manually revive." xml:space="preserve">
+    <value>Автоматическое отключение временно заблокировало этот бэкенд из-за повторяющихся сбоев. Запросы не направляются сюда до истечения срока блокировки. Используйте «Тест подключения» на странице редактирования Провайдера для ручного восстановления.</value>
   </data>
   <data name="Created" xml:space="preserve">
     <value>Создано</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Недоступен</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Редактировать</value>
   </data>
+  <data name="Healthy" xml:space="preserve">
+    <value>Работает</value>
+  </data>
   <data name="Manage virtual models that proxy to underlying Ollama models" xml:space="preserve">
     <value>Управляйте виртуальными моделями, которые проксируют базовые модели Ollama</value>
+  </data>
+  <data name="Model exists on the provider, but is not currently loaded in memory. Requests ARE routed here — Ollama will automatically load the model on demand (cold start, may take seconds to minutes)." xml:space="preserve">
+    <value>Модель существует на провайдере, но в данный момент не загружена в память. Запросы НАПРАВЛЯЮТСЯ сюда — Ollama автоматически загрузит модель по требованию (холодный старт, может занять от секунд до минут).</value>
+  </data>
+  <data name="Model is loaded in GPU VRAM. Requests are routed to this backend and respond instantly." xml:space="preserve">
+    <value>Модель загружена в видеопамять GPU. Запросы направляются на этот бэкенд и обрабатываются мгновенно.</value>
+  </data>
+  <data name="Model not found on the provider. Requests are NOT routed here. Check that the underlying model name is correct and exists on the provider." xml:space="preserve">
+    <value>Модель не найдена у провайдера. Запросы НЕ направляются сюда. Убедитесь, что имя базовой модели указано верно и существует у провайдера.</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Имя</value>
@@ -45,11 +66,20 @@
   <data name="No models defined yet." xml:space="preserve">
     <value>Модели еще не определены.</value>
   </data>
+  <data name="Open in Chat Playground" xml:space="preserve">
+    <value>Открыть в песочнице чата</value>
+  </data>
   <data name="Overrides" xml:space="preserve">
     <value>Переопределения</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>Поставщик</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Готово</value>
+  </data>
+  <data name="Status Guide" xml:space="preserve">
+    <value>Руководство по статусам</value>
   </data>
   <data name="Underlying" xml:space="preserve">
     <value>Основная</value>
