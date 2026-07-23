@@ -24,17 +24,38 @@
   <data name="Are you sure?" xml:space="preserve">
     <value>Emin misiniz?</value>
   </data>
+  <data name="Banned" xml:space="preserve">
+    <value>Yasaklı</value>
+  </data>
   <data name="Chat" xml:space="preserve">
     <value>Sohbet</value>
+  </data>
+  <data name="Circuit breaker has temporarily blocked this backend due to repeated failures. No requests are routed here until the ban expires. Use &quot;Test Connection&quot; on the Provider edit page to manually revive." xml:space="preserve">
+    <value>Devre kesici, tekrarlanan hatalar nedeniyle bu arka ucu geçici olarak engelledi. Yasağı süresi dolana kadar buraya istek yönlendirilmez. Manuel olarak canlandırmak için Sağlayıcı düzenleme sayfasındaki &quot;Bağlantıyı Test Et&quot; özelliğini kullanın.</value>
   </data>
   <data name="Created" xml:space="preserve">
     <value>Oluşturulma</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Aşağı</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Düzenle</value>
   </data>
+  <data name="Healthy" xml:space="preserve">
+    <value>Sağlıklı</value>
+  </data>
   <data name="Manage virtual models that proxy to underlying Ollama models" xml:space="preserve">
     <value>Altta yatan Ollama modellerine proxy olarak hizmet eden sanal modelleri yönetin</value>
+  </data>
+  <data name="Model exists on the provider, but is not currently loaded in memory. Requests ARE routed here — Ollama will automatically load the model on demand (cold start, may take seconds to minutes)." xml:space="preserve">
+    <value>Model sağlayıcıda mevcut ancak şu anda belleğe yüklenmemiş. İstekler BURAYA yönlendiriliyor — Ollama modeli talep üzerine otomatik olarak yükleyecektir (soğuk başlatma, saniyeler veya dakikalar sürebilir).</value>
+  </data>
+  <data name="Model is loaded in GPU VRAM. Requests are routed to this backend and respond instantly." xml:space="preserve">
+    <value>Model GPU VRAM&apos;ına yüklendi. İstekler bu arka uçta yönlendirilir ve anında yanıt verir.</value>
+  </data>
+  <data name="Model not found on the provider. Requests are NOT routed here. Check that the underlying model name is correct and exists on the provider." xml:space="preserve">
+    <value>Sağlayıcıda model bulunamadı. İstekler BURAYA yönlendirilmez. Altta yatan model adının doğru olduğunu ve sağlayıcıda mevcut olduğunu kontrol edin.</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>İsim</value>
@@ -45,11 +66,20 @@
   <data name="No models defined yet." xml:space="preserve">
     <value>Henüz model tanımlanmadı.</value>
   </data>
+  <data name="Open in Chat Playground" xml:space="preserve">
+    <value>Sohbet Oyun Alanında Aç</value>
+  </data>
   <data name="Overrides" xml:space="preserve">
     <value>Geçersiz Kılma</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>Sağlayıcı</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Hazır</value>
+  </data>
+  <data name="Status Guide" xml:space="preserve">
+    <value>Durum Kılavuzu</value>
   </data>
   <data name="Underlying" xml:space="preserve">
     <value>Temel</value>

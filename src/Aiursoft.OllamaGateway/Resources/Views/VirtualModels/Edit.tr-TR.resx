@@ -63,6 +63,9 @@
   <data name="Enabled" xml:space="preserve">
     <value>Etkin</value>
   </data>
+  <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies. SUGGESTED VALUES: small models (≤8B, NVMe SSD) → 60–120s; large models (≥27B or HDD/NAS storage) → 600–1800s; embedding models → 30–60s." xml:space="preserve">
+    <value>Ağ geçidinin arka uçtan YANIT VERMEYİ BAŞLAMASINI beklediği süre. Kimlik doğrulama, hız sınırı kuyruğu veya eşzamanlılık yuvası bekleme sürelerini içermez. Akış başladığında herhangi bir zaman sınırı uygulanmaz. ÖNERİLEN DEĞERLER: küçük modeller (≤8B, NVMe SSD) → 60–120s; büyük modeller (≥27B veya HDD/NAS depolama) → 600–1800s; gömme modelleri → 30–60s.</value>
+  </data>
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>Modeli bellekte tut</value>
   </data>
@@ -98,6 +101,9 @@
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Tekrar Cezası</value>
+  </data>
+  <data name="Request Timeout (s)" xml:space="preserve">
+    <value>İstek Zaman Aşımı (s)</value>
   </data>
   <data name="Save Changes" xml:space="preserve">
     <value>Değişiklikleri Kaydet</value>
