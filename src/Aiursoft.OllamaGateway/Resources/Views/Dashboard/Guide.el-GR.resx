@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="(fallback)" xml:space="preserve">
+    <value>(εφεδρική τιμή)</value>
+  </data>
+  <data name="1. Client Request" xml:space="preserve">
+    <value>1. Αίτημα πελάτη</value>
+  </data>
+  <data name="2. Authentication &amp; Rate Limiting" xml:space="preserve">
+    <value>2. Επαλήθευση &amp; Περιορισμός Ρυθμού</value>
+  </data>
+  <data name="3. Virtual Model" xml:space="preserve">
+    <value>3. Εικονικό Μοντέλο</value>
+  </data>
+  <data name="4. Provider Concurrency Limiter" xml:space="preserve">
+    <value>4. Περιορισμός Ταυτόχρονης Πρόσβασης Παρόχου</value>
+  </data>
+  <data name="5. ⏱️ Timeout Clock Starts" xml:space="preserve">
+    <value>5. ⏱️ Ξεκινά ο Χρονόμετρος Λήξης</value>
+  </data>
+  <data name="6. Physical Backend" xml:space="preserve">
+    <value>6. Φυσικό Backend</value>
+  </data>
+  <data name="7. Observability Pipeline — Dual Logging &amp; Usage Tracking" xml:space="preserve">
+    <value>7. Δίαυλος Παρατηρησιμότητας — Διπλή Καταγραφή &amp; Παρακολούθηση Χρήσης</value>
+  </data>
+  <data name="Any OpenAI-compatible or Ollama-native client sends a request." xml:space="preserve">
+    <value>Οποιοσδήποτε συμβατός με το OpenAI ή αυτόχθων πελάτης Ollama στέλνει ένα αίτημα.</value>
+  </data>
+  <data name="API Key Verification" xml:space="preserve">
+    <value>Επαλήθευση Κλειδιού API</value>
+  </data>
+  <data name="Architecture Guide" xml:space="preserve">
+    <value>Οδηγός Αρχιτεκτονικής</value>
+  </data>
+  <data name="attempts and" xml:space="preserve">
+    <value>προσπαθειών και</value>
+  </data>
+  <data name="Authentication &amp; API key validation" xml:space="preserve">
+    <value>Επαλήθευση &amp; έλεγχος κλειδιού API</value>
+  </data>
+  <data name="Backends" xml:space="preserve">
+    <value>Πηγαδιές</value>
+  </data>
+  <data name="Bearer token or x-api-key is validated." xml:space="preserve">
+    <value>Επαληθεύεται το Bearer token ή το x-api-key.</value>
+  </data>
+  <data name="Both pipelines are fire-and-forget from the request hot-path. If ClickHouse is down or the buffer is full, requests still succeed — logs are simply dropped (DropWrite). The system never blocks a user request to write a log." xml:space="preserve">
+    <value>Και οι δύο σωλήνες είναι τύπου fire-and-forget από την κρίσιμη διαδρομή αιτήσεων. Αν το ClickHouse είναι εκτός λειτουργίας ή ο búfer είναι γεμάτος, τα αιτήματα εξακολουθούν να πετυχαίνουν — τα αρχεία καταγραφής απλώς παραλείπονται (DropWrite). Το σύστημα ποτέ δεν μπλοκάρει ένα αίτημα χρήστη για εγγραφή αρχείου καταγραφής.</value>
+  </data>
+  <data name="bounded to" xml:space="preserve">
+    <value>περιορισμένο σε</value>
+  </data>
+  <data name="but no virtual model with that name and type &apos;Chat&apos; exists in the database." xml:space="preserve">
+    <value>αλλά δεν υπάρχει εικονικό μοντέλο με αυτό το όνομα και τύπο &apos;Chat&apos; στη βάση δεδομένων.</value>
+  </data>
+  <data name="ClickHouse Log Pipeline" xml:space="preserve">
+    <value>Διαδρομή Καταγραφής ClickHouse</value>
+  </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>Διαμόρφωση</value>
+  </data>
+  <data name="Control Plane" xml:space="preserve">
+    <value>Επίπεδο Ελέγχου</value>
+  </data>
+  <data name="Controls" xml:space="preserve">
+    <value>Έλεγχος</value>
+  </data>
+  <data name="create it here → New Virtual Model" xml:space="preserve">
+    <value>δημιουργήστε το εδώ → Νέο Εικονικό Μοντέλο</value>
+  </data>
+  <data name="Current Value" xml:space="preserve">
+    <value>Τρέχουσα Τιμή</value>
+  </data>
+  <data name="Dashboard Plane" xml:space="preserve">
+    <value>Επίπεδο Πίνακα Ελέγχου</value>
+  </data>
+  <data name="Data Plane" xml:space="preserve">
+    <value>Επίπεδο Δεδομένων</value>
+  </data>
+  <data name="Default Chat Model Not Found!" xml:space="preserve">
+    <value>Δεν βρέθηκε το προεπιλεγμένο μοντέλο συνομιλίας!</value>
+  </data>
+  <data name="drains buffer, batch-inserts into ClickHouse" xml:space="preserve">
+    <value>αδειάζει το buffer, κάνει batch-inserts στο ClickHouse</value>
+  </data>
+  <data name="Each API key has its own rate-limit window. Two modes:" xml:space="preserve">
+    <value>Κάθε κλειδί API έχει το δικό του παράθυρο ορίου ρυθμού. Δύο λειτουργίες:</value>
+  </data>
+  <data name="entries, DropWrite when full" xml:space="preserve">
+    <value>εγγραφές, απορρίπτεται η εγγραφή όταν είναι γεμάτο</value>
+  </data>
+  <data name="every" xml:space="preserve">
+    <value>κάθε</value>
+  </data>
+  <data name="Every request is logged asynchronously without blocking the hot path:" xml:space="preserve">
+    <value>Κάθε αίτημα καταγράφεται ασύγχρονα χωρίς να μπλοκάρει την κρίσιμη διαδρομή εκτέλεσης:</value>
+  </data>
+  <data name="Example" xml:space="preserve">
+    <value>Παράδειγμα</value>
+  </data>
+  <data name="Fallback Timeline" xml:space="preserve">
+    <value>Χρονική Διάρκεια Εναλλακτικής Επιλογής</value>
+  </data>
+  <data name="Fast in-memory counters avoid DB writes on every request:" xml:space="preserve">
+    <value>Οι γρήγοροι μετρητές στο μνήμη αποφεύγουν εγγραφές στη ΒΔ σε κάθε αίτημα:</value>
+  </data>
+  <data name="Fix it here → Global Settings" xml:space="preserve">
+    <value>Διορθώστε το εδώ → Παγκόσμιες Ρυθμίσεις</value>
+  </data>
+  <data name="GPU processes tokens. Once loaded, subsequent requests skip loading → straight to inference." xml:space="preserve">
+    <value>Η κάρτα γραφικών επεξεργάζεται tokens. Μόλις φορτωθεί, οι επακόλουθες αιτήσεις παρακάμπτουν τη φόρτωση → πηγαίνουν απευθείας στην συμπερασματολογία.</value>
+  </data>
+  <data name="Hang mode" xml:space="preserve">
+    <value>Λειτουργία αναμονής</value>
+  </data>
+  <data name="Hardcoded" xml:space="preserve">
+    <value>Σταθερά ορισμένο</value>
+  </data>
+  <data name="Health Check" xml:space="preserve">
+    <value>Έλεγχος Κατάστασης</value>
+  </data>
+  <data name="How a request flows through the Ollama Gateway — from client to backend" xml:space="preserve">
+    <value>Πώς διακινείται ένα αίτημα μέσω του Ollama Gateway — από τον πελάτη στο backend</value>
+  </data>
+  <data name="How long the background health monitor waits when probing /api/tags and /api/ps" xml:space="preserve">
+    <value>Πόσο καιρό περιμένει ο παρασκήνιος ελεγκτής υγείας κατά την αναζήτηση των /api/tags και /api/ps</value>
+  </data>
+  <data name="How long the gateway waits for the backend to START responding to a user request" xml:space="preserve">
+    <value>Πόσο χρόνο περιμένει το gateway από το backend για να ξεκινήσει να ανταποκρίνεται σε ένα αίτημα χρήστη</value>
+  </data>
+  <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies." xml:space="preserve">
+    <value>Πόσο καιρό περιμένει το gateway για να ξεκινήσει η απάντηση του backend. Δεν περιλαμβάνει την ταυτοποίηση, την ουρά περιορισμού ρυθμού ή την αναμονή για θέση ταυτόχρονης πρόσβασης. Μόλις ξεκινήσει η ροή δεδομένων, δεν ισχύει χρονικό όριο.</value>
+  </data>
+  <data name="How long the warmup job waits for each model to load. Per-model configurable." xml:space="preserve">
+    <value>Πόσο χρόνο περιμένει η εργασία προθέρμανσης για να φορτώσει κάθε μοντέλο. Ρυθμιζόμενο ανά μοντέλο.</value>
+  </data>
+  <data name="HTTP request to backend (DNS, TCP handshake, TLS)" xml:space="preserve">
+    <value>Αίτημα HTTP στο backend (DNS, TCP handshake, TLS)</value>
+  </data>
+  <data name="Immediately return HTTP 429." xml:space="preserve">
+    <value>Επιστροφή άμεσα HTTP 429.</value>
+  </data>
+  <data name="In-Memory Usage Tracking" xml:space="preserve">
+    <value>Παρακολούθηση Χρήσης στη Μνήμη</value>
+  </data>
+  <data name="Inference" xml:space="preserve">
+    <value>Επαγωγή</value>
+  </data>
+  <data name="Keep-Alive &amp; Warmup" xml:space="preserve">
+    <value>Διατήρηση Ζωντάνιας &amp; Προθέρμανση</value>
+  </data>
+  <data name="KeepAlive" xml:space="preserve">
+    <value>Διατήρηση Ζωντανής Συνδέσης</value>
+  </data>
+  <data name="keys in the system." xml:space="preserve">
+    <value>κλειδιά στο σύστημα.</value>
+  </data>
+  <data name="Layer" xml:space="preserve">
+    <value>Στρώση</value>
+  </data>
+  <data name="Limit" xml:space="preserve">
+    <value>Όριο</value>
+  </data>
+  <data name="Logs include: user, model, provider, tokens, latency, status code, conversation count" xml:space="preserve">
+    <value>Τα αρχεία καταγραφής περιλαμβάνουν: χρήστη, μοντέλο, πάροχο, tokens, καθυστέρηση, κωδικό κατάστασης, αριθμό συνομιλιών</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>Μέγιστο</value>
+  </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>Μέγιστες Επαναλήψεις</value>
+  </data>
+  <data name="Middleware" xml:space="preserve">
+    <value>Ενδιάμεσος Λογισμικό</value>
+  </data>
+  <data name="Model" xml:space="preserve">
+    <value>Μοντέλο</value>
+  </data>
+  <data name="Model Loading" xml:space="preserve">
+    <value>Φόρτωση μοντέλου</value>
+  </data>
+  <data name="Model loading time (cold start on GPU)" xml:space="preserve">
+    <value>Χρόνος φόρτωσης μοντέλου (κρύα εκκίνηση σε GPU)</value>
+  </data>
+  <data name="needs another 30 s to finish → completely fine ✅" xml:space="preserve">
+    <value>χρειάζεται άλλα 30 δευτερόλεπτα για να ολοκληρωθεί → απολύτως εντάξει ✅</value>
+  </data>
+  <data name="No backends configured for this virtual model." xml:space="preserve">
+    <value>Δεν έχουν οριστεί backends για αυτό το εικονικό μοντέλο.</value>
+  </data>
+  <data name="No concurrency limit — requests pass through immediately" xml:space="preserve">
+    <value>Χωρίς όριο ταυτόχρονης επεξεργασίας — τα αιτήματα περνούν άμεσα</value>
+  </data>
+  <data name="No providers configured yet." xml:space="preserve">
+    <value>Δεν έχουν οριστεί ακόμη πάροχοι.</value>
+  </data>
+  <data name="not found. Create it to see real configuration here." xml:space="preserve">
+    <value>δεν βρέθηκε. Δημιουργήστε το για να δείτε την πραγματική ρύθμιση εδώ.</value>
+  </data>
+  <data name="NumCtx" xml:space="preserve">
+    <value>Μέγεθος Πλαισίου</value>
+  </data>
+  <data name="Once the backend sends HTTP headers, the timeout is PASSED. The model can stream tokens for hours — only client disconnection stops it." xml:space="preserve">
+    <value>Μόλις το backend στείλει τις HTTP κεφαλίδες, το όριο χρόνου λήξης έχει ΠΕΡΑΣΕΙ. Το μοντέλο μπορεί να μεταδίδει tokens για ώρες — μόνο η αποσύνδεση του πελάτη το σταματά.</value>
+  </data>
+  <data name="or" xml:space="preserve">
+    <value>ή</value>
+  </data>
+  <data name="Per-Key Rate Limiter" xml:space="preserve">
+    <value>Περιορισμός ρυθμού ανά κλειδί</value>
+  </data>
+  <data name="Pri" xml:space="preserve">
+    <value>Προτεραιότητα</value>
+  </data>
+  <data name="processing" xml:space="preserve">
+    <value>επεξεργασία</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Πάροχος</value>
+  </data>
+  <data name="Provider → Health Check Timeout (s)" xml:space="preserve">
+    <value>Πάροχος → Χρονικό Όριο Ελέγχου Κατάστασης (s)</value>
+  </data>
+  <data name="Provider → Warmup Model → Timeout (s)" xml:space="preserve">
+    <value>Πάροχος → Μοντέλο Προθέρμανσης → Χρονικό Όριο (δευτ)</value>
+  </data>
+  <data name="Provider concurrency slot queuing" xml:space="preserve">
+    <value>Αναμονή σε ουρά θέσης ταυτόχρονης χρήσης παρόχου</value>
+  </data>
+  <data name="Queue until a slot opens — does NOT consume the virtual model timeout." xml:space="preserve">
+    <value>Αναμονή στην ουρά μέχρι να ελευθερωθεί θέση — ΔΕΝ καταναλώνει το χρονικό όριο του εικονικού μοντέλου.</value>
+  </data>
+  <data name="Quick admin dashboard ping. Does NOT write to DB — UI-only." xml:space="preserve">
+    <value>Γρήγορο ping πίνακα ελέγχου διαχειριστή. Δεν γράφει στη ΒΔ — μόνο UI.</value>
+  </data>
+  <data name="Rate-limit queue waiting (Hang mode)" xml:space="preserve">
+    <value>Αναμονή σε ουρά ορίου ρυθμού (Λειτουργία Hang)</value>
+  </data>
+  <data name="Rate-limiting happens BEFORE the virtual model timeout starts. Queuing here is free." xml:space="preserve">
+    <value>Η επιβολή ορίων ρυθμού γίνεται ΠΡΙΝ ξεκινήσει το όριο χρόνου του εικονικού μοντέλου. Η αναμονή σε ουρά εδώ είναι δωρεάν.</value>
+  </data>
+  <data name="Reads model weights from disk into GPU VRAM. 27GB on NVMe ≈ 5–15s; on HDD/NAS ≈ 3–10 min." xml:space="preserve">
+    <value>Ανάγνωση βαρών μοντέλου από το δίσκο στη μνήμη VRAM της κάρτας γραφικών. 27GB σε NVMe ≈ 5–15 δευτ.; σε HDD/NAS ≈ 3–10 λεπτά.</value>
+  </data>
+  <data name="Reject mode" xml:space="preserve">
+    <value>Λειτουργία απόρριψης</value>
+  </data>
+  <data name="Request Timeout" xml:space="preserve">
+    <value>Χρονικό όριο αιτήματος</value>
+  </data>
+  <data name="runs every" xml:space="preserve">
+    <value>εκτελείται κάθε</value>
+  </data>
+  <data name="Strategy" xml:space="preserve">
+    <value>Στρατηγική</value>
+  </data>
+  <data name="Streaming response body (after headers received)" xml:space="preserve">
+    <value>Ροή σώματος απάντησης (μετά τη λήψη των κεφαλίδων)</value>
+  </data>
+  <data name="swaps buffers and bulk-updates DB (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)" xml:space="preserve">
+    <value>ανταλλάσσει τους buffers και ενημερώνει μαζικά τη ΒΔ (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)</value>
+  </data>
+  <data name="Temperature" xml:space="preserve">
+    <value>Θερμοκρασία</value>
+  </data>
+  <data name="The 4-Layer Timeout Architecture" xml:space="preserve">
+    <value>Η Αρχιτεκτονική Time-out 4 Επιπέδων</value>
+  </data>
+  <data name="The global default chat model is set to" xml:space="preserve">
+    <value>Το παγκόσμιο προεπιλεγμένο μοντέλο συνομιλίας είναι ορισμένο ως</value>
+  </data>
+  <data name="The warmup background job pings configured models every 5 min to prevent unloading." xml:space="preserve">
+    <value>Η εργασία παρασκηνίου προθέρμανσης ελέγχει τα διαμορφωμένα μοντέλα κάθε 5 λεπτά για να αποτρέψει την εκφόρτωσή τους.</value>
+  </data>
+  <data name="timeout:" xml:space="preserve">
+    <value>χρόνου:</value>
+  </data>
+  <data name="timeout. Backend starts streaming at" xml:space="preserve">
+    <value>χρόνος αναμονής. Το Backend ξεκινά τη ροή στο</value>
+  </data>
+  <data name="tracks API key usage, virtual model usage, underlying model usage — feeds the Dashboard charts in real-time" xml:space="preserve">
+    <value>κολάει τη χρήση του API key, τη χρήση εικονικών μοντέλων και τη χρήση των υποκείμενων μοντέλων — τροφοδοτεί τα διαγράμματα του Dashboard σε πραγματικό χρόνο</value>
+  </data>
+  <data name="tracks live in-flight requests — powers the &quot;Live Inference&quot; table and Monitor page" xml:space="preserve">
+    <value>καταγράφει τις ενεργές αιτήσεις σε πραγματικό χρόνο — τροφοδοτεί τον πίνακα «Live Inference» και τη σελίδα παρακολούθησης Monitor</value>
+  </data>
+  <data name="Tries backends from lowest priority to highest. If backend #1 fails or times out, falls back to #2, then #3." xml:space="preserve">
+    <value>Δοκιμάζει τα backends από τη χαμηλότερη προς την υψηλότερη προτεραιότητα. Αν το backend #1 αποτύχει ή λήξει ο χρόνος, γίνεται εναλλαγή στο #2 και στη συνέχεια στο #3.</value>
+  </data>
+  <data name="Unlimited" xml:space="preserve">
+    <value>Απεριόριστο</value>
+  </data>
+  <data name="Virtual model" xml:space="preserve">
+    <value>Εικονικό μοντέλο</value>
+  </data>
+  <data name="Virtual Model → Request Timeout (s)" xml:space="preserve">
+    <value>Εικονικό Μοντέλο → Χρόνος Λήξης Αίτησης (δλ)</value>
+  </data>
+  <data name="waiting" xml:space="preserve">
+    <value>αναμονή</value>
+  </data>
+  <data name="Waiting for backend to send HTTP response headers" xml:space="preserve">
+    <value>Αναμονή αποστολής κεφαλίδων HTTP από το backend</value>
+  </data>
+  <data name="Waiting in the concurrency queue does NOT consume the virtual model timeout. The timeout clock only starts after the slot is acquired. A request will wait indefinitely for its slot — the only way it stops waiting is if the client (browser / SDK) disconnects. A busy GPU does not cause the virtual model to give up on this backend." xml:space="preserve">
+    <value>Η αναμονή στην ουρά ταυτόχρονης εκτέλεσης ΔΕΝ καταναλώνει το χρονικό όριο του εικονικού μοντέλου. Ο μετρητής του χρονικού ορίου ξεκινά μόνο αφού αποκτηθεί η θέση. Ένα αίτημα θα περιμένει απεριόριστα για τη θέση του — ο μόνος τρόπος να σταματήσει να περιμένει είναι αν ο πελάτης (browser / SDK) αποσυνδεθεί. Μια κατειλημμένη GPU δεν προκαλεί την εγκατάλειψη της αίτησης από το εικονικό μοντέλο προς αυτό το backend.</value>
+  </data>
+  <data name="Warmup Plane" xml:space="preserve">
+    <value>Επίπεδο Προθέρμανσης</value>
+  </data>
+  <data name="What IS counted" xml:space="preserve">
+    <value>Τι ΥΠΟΛΟΓΙΖΕΤΑΙ</value>
+  </data>
+  <data name="What is NOT counted" xml:space="preserve">
+    <value>Τι ΔΕΝ μετράται</value>
+  </data>
+  <data name="Where configured" xml:space="preserve">
+    <value>Πού διαμορφώνεται</value>
+  </data>
+  <data name="With" xml:space="preserve">
+    <value>Με</value>
+  </data>
+  <data name="Without specifying a model, the gateway uses" xml:space="preserve">
+    <value>Χωρίς καθορισμό μοντέλου, η πύλη χρησιμοποιεί</value>
+  </data>
+
+</root>
