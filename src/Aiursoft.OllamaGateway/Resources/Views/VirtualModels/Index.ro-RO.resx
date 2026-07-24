@@ -24,17 +24,38 @@
   <data name="Are you sure?" xml:space="preserve">
     <value>Ești sigur?</value>
   </data>
+  <data name="Banned" xml:space="preserve">
+    <value>Interzis</value>
+  </data>
   <data name="Chat" xml:space="preserve">
     <value>Chat</value>
+  </data>
+  <data name="Circuit breaker has temporarily blocked this backend due to repeated failures. No requests are routed here until the ban expires. Use &quot;Test Connection&quot; on the Provider edit page to manually revive." xml:space="preserve">
+    <value>Întrerupătorul de circuit a blocat temporar acest backend din cauza eșecurilor repetate. Nicio cerere nu este redirecționată aici până la expirarea interdicției. Utilizați „Test Connection” pe pagina de editare a Furnizorului pentru a-l revitaliza manual.</value>
   </data>
   <data name="Created" xml:space="preserve">
     <value>Creat</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Oprit</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Editează</value>
   </data>
+  <data name="Healthy" xml:space="preserve">
+    <value>Sănătos</value>
+  </data>
   <data name="Manage virtual models that proxy to underlying Ollama models" xml:space="preserve">
     <value>Gestionați modele virtuale care fac proxy la modelele Ollama subiacente</value>
+  </data>
+  <data name="Model exists on the provider, but is not currently loaded in memory. Requests ARE routed here — Ollama will automatically load the model on demand (cold start, may take seconds to minutes)." xml:space="preserve">
+    <value>Modelul există pe furnizor, dar nu este încărcat în prezent în memorie. Cererile SUNT redirecționate aici — Ollama va încărca automat modelul la cerere (pornire rece, poate dura de la câteva secunde până la câteva minute).</value>
+  </data>
+  <data name="Model is loaded in GPU VRAM. Requests are routed to this backend and respond instantly." xml:space="preserve">
+    <value>Modelul este încărcat în VRAM-ul GPU. Cererile sunt direcționate către acest backend și primesc răspunsuri instantaneu.</value>
+  </data>
+  <data name="Model not found on the provider. Requests are NOT routed here. Check that the underlying model name is correct and exists on the provider." xml:space="preserve">
+    <value>Modelul nu a fost găsit la furnizor. Cererile NU sunt redirecționate aici. Verificați dacă numele modelului de bază este corect și există la furnizor.</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Nume</value>
@@ -45,11 +66,20 @@
   <data name="No models defined yet." xml:space="preserve">
     <value>Nu există încă modele definite.</value>
   </data>
+  <data name="Open in Chat Playground" xml:space="preserve">
+    <value>Deschide în Chat Playground</value>
+  </data>
   <data name="Overrides" xml:space="preserve">
     <value>Supraîncărcări</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>Furnizor</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Gata</value>
+  </data>
+  <data name="Status Guide" xml:space="preserve">
+    <value>Ghid de stare</value>
   </data>
   <data name="Underlying" xml:space="preserve">
     <value>Subiacent</value>
