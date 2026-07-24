@@ -51,6 +51,9 @@
   <data name="Forces the upstream engine to allocate a specific window size." xml:space="preserve">
     <value>Pakottaa ylävirtaiseen moottoriin varaamaan tietyn ikk Kokoonpanon.</value>
   </data>
+  <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies. SUGGESTED VALUES: small models (≤8B, NVMe SSD) → 60–120s; large models (≥27B or HDD/NAS storage) → 600–1800s; embedding models → 30–60s." xml:space="preserve">
+    <value>Kuinka kauan gateway odottaa backendin ALKAISTA vastaamaan. Ei SISÄLLY autentikointia, nopeusrajoituspinoa tai samanaikaissuorituspaikkojen odotusaikaa. Kun suoratoisto alkaa, aikarajoitusta ei sovelleta. SUOSITELLUT ARVOT: pienet mallit (≤8B, NVMe SSD) → 60–120s; suuret mallit (≥27B tai HDD/NAS-tallennus) → 600–1800s; upotusmallit → 30–60s.</value>
+  </data>
   <data name="Initial Backend Configuration" xml:space="preserve">
     <value>Alkuperäinen backend-konfiguraatio</value>
   </data>
@@ -77,6 +80,9 @@
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Toistokarsinta</value>
+  </data>
+  <data name="Request Timeout (s)" xml:space="preserve">
+    <value>Pyyntöaika (s)</value>
   </data>
   <data name="Selection Strategy" xml:space="preserve">
     <value>Valintastrategia</value>

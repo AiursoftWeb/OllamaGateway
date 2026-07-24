@@ -24,17 +24,38 @@
   <data name="Are you sure?" xml:space="preserve">
     <value>Oletko varma?</value>
   </data>
+  <data name="Banned" xml:space="preserve">
+    <value>Estetty</value>
+  </data>
   <data name="Chat" xml:space="preserve">
     <value>Keskustelu</value>
+  </data>
+  <data name="Circuit breaker has temporarily blocked this backend due to repeated failures. No requests are routed here until the ban expires. Use &quot;Test Connection&quot; on the Provider edit page to manually revive." xml:space="preserve">
+    <value>Virrankatkaisija on tilapäisesti estänyt tämän taustaohjelman toistuvien virheiden vuoksi. Pyyntöjä ei ohjata tänne, ennen kuin kielto päättyy. Käytä &quot;Testaa yhteys&quot; -toimintoa Provider-muokkaussivulla palauttaaksesi sen manuaalisesti.</value>
   </data>
   <data name="Created" xml:space="preserve">
     <value>Luotu</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Alas</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Muokkaa</value>
   </data>
+  <data name="Healthy" xml:space="preserve">
+    <value>Terve</value>
+  </data>
   <data name="Manage virtual models that proxy to underlying Ollama models" xml:space="preserve">
     <value>Hallitse virtuaalimalleja, jotka proxytoivat taustalla olevia Ollama-malleja</value>
+  </data>
+  <data name="Model exists on the provider, but is not currently loaded in memory. Requests ARE routed here — Ollama will automatically load the model on demand (cold start, may take seconds to minutes)." xml:space="preserve">
+    <value>Malli on saatavilla palvelimella, mutta sitä ei ole tällä hetkellä ladattu muistiin. Pyyntöjä REITITETÄÄN tähän — Ollama lataa mallin automaattisesti tarpeen mukaan (cold start, voi kestää sekunteja minuutteihin).</value>
+  </data>
+  <data name="Model is loaded in GPU VRAM. Requests are routed to this backend and respond instantly." xml:space="preserve">
+    <value>Malli on ladattu GPU:n VRAM-muistiin. Pyyntöjä ohjataan tähän taustapalveluun, ja vastaukset tulevat välittömästi.</value>
+  </data>
+  <data name="Model not found on the provider. Requests are NOT routed here. Check that the underlying model name is correct and exists on the provider." xml:space="preserve">
+    <value>Mallia ei löydy palveluntarjoajalta. Pyyntöjä EI reititetä tähän. Varmista, että pohjalla oleva mallin nimi on oikein ja se on olemassa palveluntarjoajalla.</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Nimi</value>
@@ -45,11 +66,20 @@
   <data name="No models defined yet." xml:space="preserve">
     <value>Malleja ei vielä määritelty.</value>
   </data>
+  <data name="Open in Chat Playground" xml:space="preserve">
+    <value>Avaa Chat Playgroundissa</value>
+  </data>
   <data name="Overrides" xml:space="preserve">
     <value>Ohitukset</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>Toimittaja</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Valmis</value>
+  </data>
+  <data name="Status Guide" xml:space="preserve">
+    <value>Tilan opas</value>
   </data>
   <data name="Underlying" xml:space="preserve">
     <value>Alustava</value>

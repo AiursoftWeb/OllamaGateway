@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="(fallback)" xml:space="preserve">
+    <value>(vakioarvo)</value>
+  </data>
+  <data name="1. Client Request" xml:space="preserve">
+    <value>1. Asiakaspäätteen pyyntö</value>
+  </data>
+  <data name="2. Authentication &amp; Rate Limiting" xml:space="preserve">
+    <value>2. Todennus ja nopeusrajoitus</value>
+  </data>
+  <data name="3. Virtual Model" xml:space="preserve">
+    <value>3. Virtuaalinen malli</value>
+  </data>
+  <data name="4. Provider Concurrency Limiter" xml:space="preserve">
+    <value>4. Palveluntarjoajan samanaikaisuusrajoitin</value>
+  </data>
+  <data name="5. ⏱️ Timeout Clock Starts" xml:space="preserve">
+    <value>5. ⏱️ Aikarajan laskenta alkaa</value>
+  </data>
+  <data name="6. Physical Backend" xml:space="preserve">
+    <value>6. Fyysinen tausta</value>
+  </data>
+  <data name="7. Observability Pipeline — Dual Logging &amp; Usage Tracking" xml:space="preserve">
+    <value>7. Havainnollistamisputki — Kaksoislokitointi ja käytön seuranta</value>
+  </data>
+  <data name="Any OpenAI-compatible or Ollama-native client sends a request." xml:space="preserve">
+    <value>Mikä tahansa OpenAI-yhteensopiva tai Ollama-alkuperäinen asiakas lähettää pyynnön.</value>
+  </data>
+  <data name="API Key Verification" xml:space="preserve">
+    <value>API-avaimen vahvistus</value>
+  </data>
+  <data name="Architecture Guide" xml:space="preserve">
+    <value>Arkkitehtuuriohje</value>
+  </data>
+  <data name="attempts and" xml:space="preserve">
+    <value>yritystä ja</value>
+  </data>
+  <data name="Authentication &amp; API key validation" xml:space="preserve">
+    <value>Todennus ja API-avaimen validointi</value>
+  </data>
+  <data name="Backends" xml:space="preserve">
+    <value>Takapäät</value>
+  </data>
+  <data name="Bearer token or x-api-key is validated." xml:space="preserve">
+    <value>Bearer-token tai x-api-key todennetaan.</value>
+  </data>
+  <data name="Both pipelines are fire-and-forget from the request hot-path. If ClickHouse is down or the buffer is full, requests still succeed — logs are simply dropped (DropWrite). The system never blocks a user request to write a log." xml:space="preserve">
+    <value>Molemmat putkistot ovat erillisessä prosessissa (fire-and-forget) pyyntöjen kriittisen polun ulkopuolella. Jos ClickHouse on poissa käytöstä tai puskuri on täynnä, pyynnöt onnistuvat silti — lokit hylätään yksinkertaisesti (DropWrite). Järjestelmä ei koskaan estä käyttäjän pyyntöä lokin kirjoittamisen vuoksi.</value>
+  </data>
+  <data name="bounded to" xml:space="preserve">
+    <value>rajoitettu</value>
+  </data>
+  <data name="but no virtual model with that name and type &apos;Chat&apos; exists in the database." xml:space="preserve">
+    <value>mutta tietokannasta ei löydy tätä nimeä ja tyyppiä &apos;Chat&apos; vastaavaa virtuaalista mallia.</value>
+  </data>
+  <data name="ClickHouse Log Pipeline" xml:space="preserve">
+    <value>ClickHouse-lokkiputki</value>
+  </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>Määritys</value>
+  </data>
+  <data name="Control Plane" xml:space="preserve">
+    <value>Ohjaustaso</value>
+  </data>
+  <data name="Controls" xml:space="preserve">
+    <value>Hallinnoi</value>
+  </data>
+  <data name="create it here → New Virtual Model" xml:space="preserve">
+    <value>luo se täältä → Uusi virtuaalimalli</value>
+  </data>
+  <data name="Current Value" xml:space="preserve">
+    <value>Nykyarvo</value>
+  </data>
+  <data name="Dashboard Plane" xml:space="preserve">
+    <value>Ohjauspaneeli</value>
+  </data>
+  <data name="Data Plane" xml:space="preserve">
+    <value>Datataso</value>
+  </data>
+  <data name="Default Chat Model Not Found!" xml:space="preserve">
+    <value>Oletuskeskustelumallia ei löydy!</value>
+  </data>
+  <data name="drains buffer, batch-inserts into ClickHouse" xml:space="preserve">
+    <value>tyhjentää puskurin ja suorittaa eräluonnin ClickHouseen</value>
+  </data>
+  <data name="Each API key has its own rate-limit window. Two modes:" xml:space="preserve">
+    <value>Jokaisella API-avaimella on oma nopeusrajoitusikkunansa. Kaksi tilaa:</value>
+  </data>
+  <data name="entries, DropWrite when full" xml:space="preserve">
+    <value>merkintöä, DropWrite kun täynnä</value>
+  </data>
+  <data name="every" xml:space="preserve">
+    <value>jokainen</value>
+  </data>
+  <data name="Every request is logged asynchronously without blocking the hot path:" xml:space="preserve">
+    <value>Jokainen pyyntö kirjataan asynkronisesti ilman kriittisen polkun estämistä:</value>
+  </data>
+  <data name="Example" xml:space="preserve">
+    <value>Esimerkki</value>
+  </data>
+  <data name="Fallback Timeline" xml:space="preserve">
+    <value>Vaihtoehtoisten aikajana</value>
+  </data>
+  <data name="Fast in-memory counters avoid DB writes on every request:" xml:space="preserve">
+    <value>Nopeat muistissa olevat laskurit välttävät tietokantakirjoitukset jokaisella pyynnöllä:</value>
+  </data>
+  <data name="Fix it here → Global Settings" xml:space="preserve">
+    <value>Korjaa se täältä → Globaali asetukset</value>
+  </data>
+  <data name="GPU processes tokens. Once loaded, subsequent requests skip loading → straight to inference." xml:space="preserve">
+    <value>GPU käsittelee tokenit. Kun malli on ladattu, myöhemmät pyynnöt ohittavat latauksen ja siirtyvät suoraan päättelyyn.</value>
+  </data>
+  <data name="Hang mode" xml:space="preserve">
+    <value>Odota-tila</value>
+  </data>
+  <data name="Hardcoded" xml:space="preserve">
+    <value>Koodissa määritetty</value>
+  </data>
+  <data name="Health Check" xml:space="preserve">
+    <value>Kunto tarkistus</value>
+  </data>
+  <data name="How a request flows through the Ollama Gateway — from client to backend" xml:space="preserve">
+    <value>Miten pyyntö kulkee Ollama Gatewayn läpi — asiakkaasta backendiin</value>
+  </data>
+  <data name="How long the background health monitor waits when probing /api/tags and /api/ps" xml:space="preserve">
+    <value>Kuinka kauan taustalla toimiva tilanvalvonta odottaa testatessaan polkuja /api/tags ja /api/ps</value>
+  </data>
+  <data name="How long the gateway waits for the backend to START responding to a user request" xml:space="preserve">
+    <value>Kuinka kauan portinvartija odottaa, että takapää aloittaa käyttäjän pyynnön käsittelyn.</value>
+  </data>
+  <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies." xml:space="preserve">
+    <value>Kuinka kauan gateway odottaa taustajärjestelmän ALOITTAVAN vastauksen. Ei sisällä todennusta, nopeusrajoituspinoa tai samanaikaisuuslokerojen odotusaikaa. Kun suoratoisto alkaa, aikarajoitusta ei sovelleta.</value>
+  </data>
+  <data name="How long the warmup job waits for each model to load. Per-model configurable." xml:space="preserve">
+    <value>Kuinka kauan lämmitystehtävä odottaa kunkin mallin latautumista. Konfiguroitavissa mallikohtaisesti.</value>
+  </data>
+  <data name="HTTP request to backend (DNS, TCP handshake, TLS)" xml:space="preserve">
+    <value>HTTP-pyyntö backendiin (DNS, TCP-kätely, TLS)</value>
+  </data>
+  <data name="Immediately return HTTP 429." xml:space="preserve">
+    <value>Palauta välittömästi HTTP 429.</value>
+  </data>
+  <data name="In-Memory Usage Tracking" xml:space="preserve">
+    <value>Muistissa tapahtuva käytön seuranta</value>
+  </data>
+  <data name="Inference" xml:space="preserve">
+    <value>Inferenssi</value>
+  </data>
+  <data name="Keep-Alive &amp; Warmup" xml:space="preserve">
+    <value>Pysy aktiivisena &amp; lämmitys</value>
+  </data>
+  <data name="KeepAlive" xml:space="preserve">
+    <value>Yhdistyksen säilytys</value>
+  </data>
+  <data name="keys in the system." xml:space="preserve">
+    <value>avainta järjestelmässä.</value>
+  </data>
+  <data name="Layer" xml:space="preserve">
+    <value>Taso</value>
+  </data>
+  <data name="Limit" xml:space="preserve">
+    <value>Raja</value>
+  </data>
+  <data name="Logs include: user, model, provider, tokens, latency, status code, conversation count" xml:space="preserve">
+    <value>Lokit sisältävät: käyttäjä, malli, tarjoaja, tokenit, viive, tilakoodi, keskustelujen määrä</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>Maksimi</value>
+  </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>Maksimiyritysmäärä</value>
+  </data>
+  <data name="Middleware" xml:space="preserve">
+    <value>Välikohta</value>
+  </data>
+  <data name="Model" xml:space="preserve">
+    <value>Malli</value>
+  </data>
+  <data name="Model Loading" xml:space="preserve">
+    <value>Mallin lataus</value>
+  </data>
+  <data name="Model loading time (cold start on GPU)" xml:space="preserve">
+    <value>Mallin latausaika (GPU:n kylmä käynnistys)</value>
+  </data>
+  <data name="needs another 30 s to finish → completely fine ✅" xml:space="preserve">
+    <value>tarvitsee vielä 30 s valmistuakseen → täysin kunnossa ✅</value>
+  </data>
+  <data name="No backends configured for this virtual model." xml:space="preserve">
+    <value>Tälle virtuaalimallille ei ole määritetty taustapalvelimia.</value>
+  </data>
+  <data name="No concurrency limit — requests pass through immediately" xml:space="preserve">
+    <value>Ei rinnakkaisuusrajoitusta — pyynnöt ohjautuvat läpi välittömästi</value>
+  </data>
+  <data name="No providers configured yet." xml:space="preserve">
+    <value>Toimittajia ei ole vielä määritetty.</value>
+  </data>
+  <data name="not found. Create it to see real configuration here." xml:space="preserve">
+    <value>ei löydy. Luo se nähdäksesi todellisen konfiguraation täällä.</value>
+  </data>
+  <data name="NumCtx" xml:space="preserve">
+    <value>NumCtx</value>
+  </data>
+  <data name="Once the backend sends HTTP headers, the timeout is PASSED. The model can stream tokens for hours — only client disconnection stops it." xml:space="preserve">
+    <value>Kun backend lähettää HTTP-otsikot, aikakatkaisu on ohitettu. Malli voi suoratoistaa token-tunteja — vain asiakasohjelman katkaisu pysäyttää sen.</value>
+  </data>
+  <data name="or" xml:space="preserve">
+    <value>tai</value>
+  </data>
+  <data name="Per-Key Rate Limiter" xml:space="preserve">
+    <value>Avainkohtainen nopeusrajoitin</value>
+  </data>
+  <data name="Pri" xml:space="preserve">
+    <value>Prioriteetti</value>
+  </data>
+  <data name="processing" xml:space="preserve">
+    <value>käsittelyssä</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Palveluntarjoaja</value>
+  </data>
+  <data name="Provider → Health Check Timeout (s)" xml:space="preserve">
+    <value>Tarjoaja → Terveystarkistuksen aikakatkaisu (s)</value>
+  </data>
+  <data name="Provider → Warmup Model → Timeout (s)" xml:space="preserve">
+    <value>Palveluntarjoaja → Lämmitysmalli → Aikakatkaisu (s)</value>
+  </data>
+  <data name="Provider concurrency slot queuing" xml:space="preserve">
+    <value>Palveluntarjoajan samanaikaisuusajan jonottaminen</value>
+  </data>
+  <data name="Queue until a slot opens — does NOT consume the virtual model timeout." xml:space="preserve">
+    <value>Jonoa kunnes vapautuu paikka — ei käytä virtuaalimallin aikakatkaisua.</value>
+  </data>
+  <data name="Quick admin dashboard ping. Does NOT write to DB — UI-only." xml:space="preserve">
+    <value>Nopea hallintapaneelin ping. EI kirjoita tietokantaan — vain käyttöliittymä.</value>
+  </data>
+  <data name="Rate-limit queue waiting (Hang mode)" xml:space="preserve">
+    <value>Nopeusrajoitusjonon odotus (Hang-tila)</value>
+  </data>
+  <data name="Rate-limiting happens BEFORE the virtual model timeout starts. Queuing here is free." xml:space="preserve">
+    <value>Nopeusrajoitus tapahtuu ENNEN kuin virtuaalimallin aikakatkaisu alkaa. Jonottaminen tässä on ilmaista.</value>
+  </data>
+  <data name="Reads model weights from disk into GPU VRAM. 27GB on NVMe ≈ 5–15s; on HDD/NAS ≈ 3–10 min." xml:space="preserve">
+    <value>Lukaa mallin painot levystä GPU:n VRAM-muistiin. 27 Gt NVMe-levyltä ≈ 5–15 s; HDD/NAS-tallenteelta ≈ 3–10 min.</value>
+  </data>
+  <data name="Reject mode" xml:space="preserve">
+    <value>Hylkäystila</value>
+  </data>
+  <data name="Request Timeout" xml:space="preserve">
+    <value>Pyyntöajastin</value>
+  </data>
+  <data name="runs every" xml:space="preserve">
+    <value>suorittaa joka</value>
+  </data>
+  <data name="Strategy" xml:space="preserve">
+    <value>Strategia</value>
+  </data>
+  <data name="Streaming response body (after headers received)" xml:space="preserve">
+    <value>Virtauksellinen vastausruumis (otsikoiden vastaanottamisen jälkeen)</value>
+  </data>
+  <data name="swaps buffers and bulk-updates DB (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)" xml:space="preserve">
+    <value>vaihtaa puskurit ja päivittää tietokannan eräpäivityksellä (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)</value>
+  </data>
+  <data name="Temperature" xml:space="preserve">
+    <value>Lämpötila</value>
+  </data>
+  <data name="The 4-Layer Timeout Architecture" xml:space="preserve">
+    <value>Nelikerroksinen aikakatkaisurakenne</value>
+  </data>
+  <data name="The global default chat model is set to" xml:space="preserve">
+    <value>Globaali oletuschatmalli on asetettu arvoon</value>
+  </data>
+  <data name="The warmup background job pings configured models every 5 min to prevent unloading." xml:space="preserve">
+    <value>Lämmittelytaustatehtävä lähettää määritetyille malleille ping-kehotteita 5 minuutin välein estäen niiden purkautumisen.</value>
+  </data>
+  <data name="timeout:" xml:space="preserve">
+    <value>aika:</value>
+  </data>
+  <data name="timeout. Backend starts streaming at" xml:space="preserve">
+    <value>aika. Taustapalvelu aloittaa suoratoiston kohdassa</value>
+  </data>
+  <data name="tracks API key usage, virtual model usage, underlying model usage — feeds the Dashboard charts in real-time" xml:space="preserve">
+    <value>seuraa API-avaimen, virtuaalimallin ja pohjamallin käyttöä — syöttää Dashboard-kaaviot reaaliajassa</value>
+  </data>
+  <data name="tracks live in-flight requests — powers the &quot;Live Inference&quot; table and Monitor page" xml:space="preserve">
+    <value>seuraa reaaliaikaisia lentoaikapyyntöjä — tarjoaa tiedot &quot;Live Inference&quot; -taulukolle ja Valvonta-sivulle</value>
+  </data>
+  <data name="Tries backends from lowest priority to highest. If backend #1 fails or times out, falls back to #2, then #3." xml:space="preserve">
+    <value>Yrittää backendejä alhaisimmasta korkeimpaan prioriteettiin. Jos backend #1 epäonnistuu tai aikakatkaisee, siirtyy backup-tilassa numeroon #2, sitten numeroon #3.</value>
+  </data>
+  <data name="Unlimited" xml:space="preserve">
+    <value>Rajoittamaton</value>
+  </data>
+  <data name="Virtual model" xml:space="preserve">
+    <value>Virtuaalimalli</value>
+  </data>
+  <data name="Virtual Model → Request Timeout (s)" xml:space="preserve">
+    <value>Virtuaalimalli → Pyynnön aikakatkaisu (s)</value>
+  </data>
+  <data name="waiting" xml:space="preserve">
+    <value>odottaa</value>
+  </data>
+  <data name="Waiting for backend to send HTTP response headers" xml:space="preserve">
+    <value>Odottaa backendin lähettävän HTTP-vastausotsakkeet</value>
+  </data>
+  <data name="Waiting in the concurrency queue does NOT consume the virtual model timeout. The timeout clock only starts after the slot is acquired. A request will wait indefinitely for its slot — the only way it stops waiting is if the client (browser / SDK) disconnects. A busy GPU does not cause the virtual model to give up on this backend." xml:space="preserve">
+    <value>Odottaminen rinnakkaisuusjonossa EI kuluta virtuaalimallin aikakatkaisua. Aikakatkaisukello käynnistyy vasta, kun lokero on hankittu. Pyyntö odottaa loputtomiasti lokeronsa perään — ainoa tapa lopettaa odottaminen on, jos asiakas (selain / SDK) katkaisee yhteyden. Kiireinen GPU ei saa virtuaalimallia luopumaan tästä backendistä.</value>
+  </data>
+  <data name="Warmup Plane" xml:space="preserve">
+    <value>Lämmittelykerros</value>
+  </data>
+  <data name="What IS counted" xml:space="preserve">
+    <value>Mitä lasketaan mukaan</value>
+  </data>
+  <data name="What is NOT counted" xml:space="preserve">
+    <value>Mitä EI lasketa</value>
+  </data>
+  <data name="Where configured" xml:space="preserve">
+    <value>Missä määritetty</value>
+  </data>
+  <data name="With" xml:space="preserve">
+    <value>Ilman</value>
+  </data>
+  <data name="Without specifying a model, the gateway uses" xml:space="preserve">
+    <value>Jos mallia ei määritetä, gateway käyttää</value>
+  </data>
+
+</root>

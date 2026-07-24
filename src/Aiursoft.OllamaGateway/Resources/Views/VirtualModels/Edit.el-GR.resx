@@ -63,6 +63,9 @@
   <data name="Enabled" xml:space="preserve">
     <value>Ενεργοποιημένο</value>
   </data>
+  <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies. SUGGESTED VALUES: small models (≤8B, NVMe SSD) → 60–120s; large models (≥27B or HDD/NAS storage) → 600–1800s; embedding models → 30–60s." xml:space="preserve">
+    <value>Πόσο καιρό περιμένει το gateway για να ΞΕΚΙΝΗΣΕΙ η απάντηση από το backend. ΔΕΝ συμπεριλαμβάνει την ταύτιση, την ουρά ορίου ρυθμού ή την αναμονή θέσης concurrency. Μόλις ξεκινήσει η μετάδοση (streaming), δεν ισχύει χρονικό όριο. ΠΡΟΤΕΙΝΟΜΕΝΕΣ ΤΙΜΕΣ: μικρά μοντέλα (≤8B, NVMe SSD) → 60–120s; μεγάλα μοντέλα (≥27B ή αποθήκευση HDD/NAS) → 600–1800s; μοντέλα ενσωμάτωσης → 30–60s.</value>
+  </data>
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>Διατήρηση του μοντέλου φορτωμένο στη μνήμη</value>
   </data>
@@ -98,6 +101,9 @@
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Τιμωρία Επανάληψης</value>
+  </data>
+  <data name="Request Timeout (s)" xml:space="preserve">
+    <value>Χρονικό Όριο Αίτησης (δλ.)</value>
   </data>
   <data name="Save Changes" xml:space="preserve">
     <value>Αποθήκευση Αλλαγών</value>

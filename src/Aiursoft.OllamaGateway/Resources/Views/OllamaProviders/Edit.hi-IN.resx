@@ -18,7 +18,22 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Advanced Warmup Options" xml:space="preserve">
+      <data name="(1 hour)," xml:space="preserve">
+    <value>(1 घंटा),</value>
+  </data>
+  <data name="(24 hours)." xml:space="preserve">
+    <value>(24 घंटे).</value>
+  </data>
+  <data name="(5 minutes)," xml:space="preserve">
+    <value>(5 मिनट),</value>
+  </data>
+  <data name="= keep forever." xml:space="preserve">
+    <value>= हमेशा के लिए रखें।</value>
+  </data>
+  <data name="= unload immediately." xml:space="preserve">
+    <value>= तुरंत अनलोड करें।</value>
+  </data>
+  <data name="Advanced Warmup Options" xml:space="preserve">
     <value>उन्नत वार्म-अप विकल्प</value>
   </data>
   <data name="Back to List" xml:space="preserve">
@@ -39,6 +54,9 @@
   <data name="Controls how long the AI model weights stay loaded in GPU VRAM after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep in VRAM forever." xml:space="preserve">
     <value>यह नियंत्रित करता है कि अनुरोध के बाद AI मॉडल वजन GPU VRAM में कितनी देर लोड रहते हैं। Ollama प्रारूप (जैसे, &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;)। तुरंत अनलोड करने के लिए &apos;0&apos; का उपयोग करें, या हमेशा के लिए VRAM में रखने के लिए &apos;-1&apos; का उपयोग करें।</value>
   </data>
+  <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
+    <value>कृपया &apos;300&apos; जैसे कच्चे सेकंड का उपयोग न करें। इसके बजाय &apos;5m&apos; लिखें। ओलामा (Ollama) अमान्य प्रारूपों को चुपचाप अनदेखा कर देता है।</value>
+  </data>
   <data name="e.g. Local Server" xml:space="preserve">
     <value>उदाहरण के लिए: स्थानीय सर्वर</value>
   </data>
@@ -47,6 +65,15 @@
   </data>
   <data name="Embed" xml:space="preserve">
     <value>एम्बेड</value>
+  </data>
+  <data name="Health Check Timeout (s)" xml:space="preserve">
+    <value>हेल्थ चेक टाइमआउट (से.)</value>
+  </data>
+  <data name="How long model weights stay in GPU VRAM after the last request. Uses Ollama duration format: (number)(unit) — e.g." xml:space="preserve">
+    <value>आखिरी अनुरोध के बाद मॉडल वजन GPU VRAM में कितनी देर तक रहते हैं। Ollama अवधि प्रारूप का उपयोग करता है: (संख्या)(इकाई) — उदा।</value>
+  </data>
+  <data name="How long the background health monitor waits when probing this provider for model lists and running status. Set higher for providers with slow storage (HDD/NAS)." xml:space="preserve">
+    <value>बैकग्राउंड हेल्थ मॉनिटर को इस प्रोवाइडर से मॉडल सूचियों और चल रहे स्थिति के लिए प्रोब करते समय कितनी देर तक इंतजार करना चाहिए। धीमी स्टोरेज (HDD/NAS) वाले प्रोवाइडर्स के लिए इसे अधिकतर सेट करें।</value>
   </data>
   <data name="Keep" xml:space="preserve">
     <value>रखें</value>
@@ -101,6 +128,9 @@
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>अंतर्निहित मॉडल का नाम</value>
+  </data>
+  <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
+    <value>कंकरेंसी कतार में प्रतीक्षा करने से वर्चुअल मॉडल के Request Timeout का खपत नहीं होता है। अनुरोध एक स्लॉट के लिए असीमित समय तक प्रतीक्षा करेगा — केवल क्लाइंट विच्छेदन (ब्राउज़र बंद करना, SDK टाइमआउट) प्रतीक्षा को रोकता है। वर्चुअल मॉडल केवल इसलिए बैकएंड पर हार नहीं मानता क्योंकि वह व्यस्त है।</value>
   </data>
   <data name="Warmup is not applicable to OpenAI-compatible providers. The upstream service manages model loading automatically." xml:space="preserve">
     <value>वार्मअप ओपनएआई-कम्पैटिबल प्रोवाइडर्स पर लागू नहीं है। अग्रभूमि सेवा मॉडल लोडिंग को स्वचालित रूप से प्रबंधित करती है।</value>
