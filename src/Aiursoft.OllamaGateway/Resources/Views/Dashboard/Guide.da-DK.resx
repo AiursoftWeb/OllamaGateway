@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="(fallback)" xml:space="preserve">
+    <value>(fallback)</value>
+  </data>
+  <data name="1. Client Request" xml:space="preserve">
+    <value>1. Klientanmodning</value>
+  </data>
+  <data name="2. Authentication &amp; Rate Limiting" xml:space="preserve">
+    <value>2. Godkendelse og hastighedsbegrænsning</value>
+  </data>
+  <data name="3. Virtual Model" xml:space="preserve">
+    <value>3. Virtuel model</value>
+  </data>
+  <data name="4. Provider Concurrency Limiter" xml:space="preserve">
+    <value>4. Samtidighedsbegrænsning for udbyder</value>
+  </data>
+  <data name="5. ⏱️ Timeout Clock Starts" xml:space="preserve">
+    <value>5. ⏱️ Timeouturet starter</value>
+  </data>
+  <data name="6. Physical Backend" xml:space="preserve">
+    <value>6. Fysisk Backend</value>
+  </data>
+  <data name="7. Observability Pipeline — Dual Logging &amp; Usage Tracking" xml:space="preserve">
+    <value>7. Observerbarheds-pipeline — Dobbelt logning og brugsregistrering</value>
+  </data>
+  <data name="Any OpenAI-compatible or Ollama-native client sends a request." xml:space="preserve">
+    <value>Enhver OpenAI-kompatibel eller Ollama-native klient sender en anmodning.</value>
+  </data>
+  <data name="API Key Verification" xml:space="preserve">
+    <value>API-nøgleverifikation</value>
+  </data>
+  <data name="Architecture Guide" xml:space="preserve">
+    <value>Arkitekturguide</value>
+  </data>
+  <data name="attempts and" xml:space="preserve">
+    <value>forsøg og</value>
+  </data>
+  <data name="Authentication &amp; API key validation" xml:space="preserve">
+    <value>Godkendelse og validering af API-nøgle</value>
+  </data>
+  <data name="Backends" xml:space="preserve">
+    <value>Bagende systemer</value>
+  </data>
+  <data name="Bearer token or x-api-key is validated." xml:space="preserve">
+    <value>Bearer token eller x-api-key valideres.</value>
+  </data>
+  <data name="Both pipelines are fire-and-forget from the request hot-path. If ClickHouse is down or the buffer is full, requests still succeed — logs are simply dropped (DropWrite). The system never blocks a user request to write a log." xml:space="preserve">
+    <value>Begge pipelines er fire-and-forget fra request-hot-paden. Hvis ClickHouse er nede eller bufferen er fuld, lykkes anmodninger stadig — logs droppes blot (DropWrite). Systemet blokerer aldrig en brugeranmodning for at skrive en log.</value>
+  </data>
+  <data name="bounded to" xml:space="preserve">
+    <value>begrænset til</value>
+  </data>
+  <data name="but no virtual model with that name and type &apos;Chat&apos; exists in the database." xml:space="preserve">
+    <value>men der findes ingen virtuel model med det navn og typen &apos;Chat&apos; i databasen.</value>
+  </data>
+  <data name="ClickHouse Log Pipeline" xml:space="preserve">
+    <value>ClickHouse-logpipeline</value>
+  </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>Konfiguration</value>
+  </data>
+  <data name="Control Plane" xml:space="preserve">
+    <value>Kontrolplanen</value>
+  </data>
+  <data name="Controls" xml:space="preserve">
+    <value>Kontrollerer</value>
+  </data>
+  <data name="create it here → New Virtual Model" xml:space="preserve">
+    <value>opret det her → Ny virtuel model</value>
+  </data>
+  <data name="Current Value" xml:space="preserve">
+    <value>Nuværende værdi</value>
+  </data>
+  <data name="Dashboard Plane" xml:space="preserve">
+    <value>Dashboard-plan</value>
+  </data>
+  <data name="Data Plane" xml:space="preserve">
+    <value>Dataplan</value>
+  </data>
+  <data name="Default Chat Model Not Found!" xml:space="preserve">
+    <value>Standard chatmodel ikke fundet!</value>
+  </data>
+  <data name="drains buffer, batch-inserts into ClickHouse" xml:space="preserve">
+    <value>tømmer bufferen, batch-indsætter i ClickHouse</value>
+  </data>
+  <data name="Each API key has its own rate-limit window. Two modes:" xml:space="preserve">
+    <value>Hver API-nøgle har sit eget hastighedsbegrænsningsvindue. To tilstande:</value>
+  </data>
+  <data name="entries, DropWrite when full" xml:space="preserve">
+    <value>poster, DropWrite når fuld</value>
+  </data>
+  <data name="every" xml:space="preserve">
+    <value>hver</value>
+  </data>
+  <data name="Every request is logged asynchronously without blocking the hot path:" xml:space="preserve">
+    <value>Hver anmodning logges asynkront uden at blokere den kritiske sti:</value>
+  </data>
+  <data name="Example" xml:space="preserve">
+    <value>Eksempel</value>
+  </data>
+  <data name="Fallback Timeline" xml:space="preserve">
+    <value>Tidslinje for fallback</value>
+  </data>
+  <data name="Fast in-memory counters avoid DB writes on every request:" xml:space="preserve">
+    <value>Hurtige hukommelsesoptællere undgår DB-skrivninger ved hver anmodning:</value>
+  </data>
+  <data name="Fix it here → Global Settings" xml:space="preserve">
+    <value>Løs det her → Globale indstillinger</value>
+  </data>
+  <data name="GPU processes tokens. Once loaded, subsequent requests skip loading → straight to inference." xml:space="preserve">
+    <value>GPU&apos;en behandler tokens. Når modellen er indlæst, springer efterfølgende anmodninger indlæsningen over → direkte til inferens.</value>
+  </data>
+  <data name="Hang mode" xml:space="preserve">
+    <value>Ventetilstand</value>
+  </data>
+  <data name="Hardcoded" xml:space="preserve">
+    <value>Indkodet</value>
+  </data>
+  <data name="Health Check" xml:space="preserve">
+    <value>Sundhedstjek</value>
+  </data>
+  <data name="How a request flows through the Ollama Gateway — from client to backend" xml:space="preserve">
+    <value>Sådan flyder en anmodning gennem Ollama Gateway — fra klient til backend</value>
+  </data>
+  <data name="How long the background health monitor waits when probing /api/tags and /api/ps" xml:space="preserve">
+    <value>Hvor længe baggrundsmonitoreringen af sundhed venter ved sondering af /api/tags og /api/ps</value>
+  </data>
+  <data name="How long the gateway waits for the backend to START responding to a user request" xml:space="preserve">
+    <value>Hvor længe gatewayen venter på, at backend&apos;en STARTER med at svare på en brugeranmodning</value>
+  </data>
+  <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies." xml:space="preserve">
+    <value>Hvor længe gateway&apos;et venter på, at backend&apos;en STARTER med at svare. Inkluderer IKKE godkendelse, hastighedsbegrænsningskø eller ventetid for samtidighedsslot. Når streaming begynder, gælder der ingen tidsgrænse.</value>
+  </data>
+  <data name="How long the warmup job waits for each model to load. Per-model configurable." xml:space="preserve">
+    <value>Hvor længe opvarmningsjobbet venter på, at hver model indlæses. Kan konfigureres pr. model.</value>
+  </data>
+  <data name="HTTP request to backend (DNS, TCP handshake, TLS)" xml:space="preserve">
+    <value>HTTP-anmodning til backend (DNS, TCP-håndtryk, TLS)</value>
+  </data>
+  <data name="Immediately return HTTP 429." xml:space="preserve">
+    <value>Returnér straks HTTP 429.</value>
+  </data>
+  <data name="In-Memory Usage Tracking" xml:space="preserve">
+    <value>Sporing af hukommelsesforbrug</value>
+  </data>
+  <data name="Inference" xml:space="preserve">
+    <value>Inference</value>
+  </data>
+  <data name="Keep-Alive &amp; Warmup" xml:space="preserve">
+    <value>Keep-Alive &amp; Opvarmning</value>
+  </data>
+  <data name="KeepAlive" xml:space="preserve">
+    <value>KeepAlive</value>
+  </data>
+  <data name="keys in the system." xml:space="preserve">
+    <value>nøgler i systemet.</value>
+  </data>
+  <data name="Layer" xml:space="preserve">
+    <value>Lag</value>
+  </data>
+  <data name="Limit" xml:space="preserve">
+    <value>Grænse</value>
+  </data>
+  <data name="Logs include: user, model, provider, tokens, latency, status code, conversation count" xml:space="preserve">
+    <value>Logs indeholder: bruger, model, udbyder, tokens, latenstid, statuskode, samtaleantal</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>Maks. gentagsforsøg</value>
+  </data>
+  <data name="Middleware" xml:space="preserve">
+    <value>Middleware</value>
+  </data>
+  <data name="Model" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="Model Loading" xml:space="preserve">
+    <value>Modelindlæsning</value>
+  </data>
+  <data name="Model loading time (cold start on GPU)" xml:space="preserve">
+    <value>Tid til modelindlæsning (kold start på GPU)</value>
+  </data>
+  <data name="needs another 30 s to finish → completely fine ✅" xml:space="preserve">
+    <value>behøver yderligere 30 s for at fuldføre → helt fint ✅</value>
+  </data>
+  <data name="No backends configured for this virtual model." xml:space="preserve">
+    <value>Der er ikke konfigureret nogen backends til denne virtuelle model.</value>
+  </data>
+  <data name="No concurrency limit — requests pass through immediately" xml:space="preserve">
+    <value>Ingen samtidighedsbegrænsning — anmodninger går straks videre</value>
+  </data>
+  <data name="No providers configured yet." xml:space="preserve">
+    <value>Ingen udbydere konfigureret endnu.</value>
+  </data>
+  <data name="not found. Create it to see real configuration here." xml:space="preserve">
+    <value>ikke fundet. Opret det for at se den faktiske konfiguration her.</value>
+  </data>
+  <data name="NumCtx" xml:space="preserve">
+    <value>NumCtx</value>
+  </data>
+  <data name="Once the backend sends HTTP headers, the timeout is PASSED. The model can stream tokens for hours — only client disconnection stops it." xml:space="preserve">
+    <value>Når backenden sender HTTP-headere, er timeout-perioden overstået. Modellen kan streame tokens i timevis — kun klientens afslutning af forbindelsen stopper den.</value>
+  </data>
+  <data name="or" xml:space="preserve">
+    <value>eller</value>
+  </data>
+  <data name="Per-Key Rate Limiter" xml:space="preserve">
+    <value>Prøvebegrænsning pr. nøgle</value>
+  </data>
+  <data name="Pri" xml:space="preserve">
+    <value>Prioritet</value>
+  </data>
+  <data name="processing" xml:space="preserve">
+    <value>bearbejder</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Udbyder</value>
+  </data>
+  <data name="Provider → Health Check Timeout (s)" xml:space="preserve">
+    <value>Udbyder → Tidsgrænse for sundhedstjek (s)</value>
+  </data>
+  <data name="Provider → Warmup Model → Timeout (s)" xml:space="preserve">
+    <value>Udbyder → Opvarmningsmodel → Timeout (s)</value>
+  </data>
+  <data name="Provider concurrency slot queuing" xml:space="preserve">
+    <value>Kødannelse for udbyders konkurrenceplads</value>
+  </data>
+  <data name="Queue until a slot opens — does NOT consume the virtual model timeout." xml:space="preserve">
+    <value>Kø til en plads frigøres — bruger IKKE den virtuelle models timeout.</value>
+  </data>
+  <data name="Quick admin dashboard ping. Does NOT write to DB — UI-only." xml:space="preserve">
+    <value>Hurtig admin-dashboard-ping. Skriver IKKE til DB — kun UI.</value>
+  </data>
+  <data name="Rate-limit queue waiting (Hang mode)" xml:space="preserve">
+    <value>Køventen for hastighedsbegrænsning (Hang-tilstand)</value>
+  </data>
+  <data name="Rate-limiting happens BEFORE the virtual model timeout starts. Queuing here is free." xml:space="preserve">
+    <value>Hastighedsbegrænsning sker FØR timeouten for den virtuelle model starter. Kødannelse er gratis her.</value>
+  </data>
+  <data name="Reads model weights from disk into GPU VRAM. 27GB on NVMe ≈ 5–15s; on HDD/NAS ≈ 3–10 min." xml:space="preserve">
+    <value>Læser modelvægte fra disk til GPU VRAM. 27 GB på NVMe ≈ 5–15 s; på HDD/NAS ≈ 3–10 min.</value>
+  </data>
+  <data name="Reject mode" xml:space="preserve">
+    <value>Afvis-tilstand</value>
+  </data>
+  <data name="Request Timeout" xml:space="preserve">
+    <value>Forespørgsels-timeout</value>
+  </data>
+  <data name="runs every" xml:space="preserve">
+    <value>kører hver</value>
+  </data>
+  <data name="Strategy" xml:space="preserve">
+    <value>Strategi</value>
+  </data>
+  <data name="Streaming response body (after headers received)" xml:space="preserve">
+    <value>Streaming af responskrop (efter modtagelse af headers)</value>
+  </data>
+  <data name="swaps buffers and bulk-updates DB (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)" xml:space="preserve">
+    <value>bytter buffere og opdaterer DB i bulk (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)</value>
+  </data>
+  <data name="Temperature" xml:space="preserve">
+    <value>Temperatur</value>
+  </data>
+  <data name="The 4-Layer Timeout Architecture" xml:space="preserve">
+    <value>Den 4-laggede timeout-arkitektur</value>
+  </data>
+  <data name="The global default chat model is set to" xml:space="preserve">
+    <value>Den globale standard chat-model er indstillet til</value>
+  </data>
+  <data name="The warmup background job pings configured models every 5 min to prevent unloading." xml:space="preserve">
+    <value>Baggrundsopgaven for opvarmning pinger de konfigurerede modeller hvert 5. minut for at forhindre, at de bliver fjernet fra hukommelsen.</value>
+  </data>
+  <data name="timeout:" xml:space="preserve">
+    <value>timeout:</value>
+  </data>
+  <data name="timeout. Backend starts streaming at" xml:space="preserve">
+    <value>timeout. Backend starter streaming ved</value>
+  </data>
+  <data name="tracks API key usage, virtual model usage, underlying model usage — feeds the Dashboard charts in real-time" xml:space="preserve">
+    <value>sparer API-nøgleanvendelse, virtuel modelanvendelse og underliggende modelanvendelse — opdaterer Dashboard-diagrammerne i realtid</value>
+  </data>
+  <data name="tracks live in-flight requests — powers the &quot;Live Inference&quot; table and Monitor page" xml:space="preserve">
+    <value>sporer aktive anmodninger — driver &quot;Live Inference&quot;-tabellen og Monitor-siden</value>
+  </data>
+  <data name="Tries backends from lowest priority to highest. If backend #1 fails or times out, falls back to #2, then #3." xml:space="preserve">
+    <value>Prøver bagender fra laveste til højeste prioritet. Hvis bagend #1 fejler eller udløber, skiftes der til #2, derefter #3.</value>
+  </data>
+  <data name="Unlimited" xml:space="preserve">
+    <value>Ubegrænset</value>
+  </data>
+  <data name="Virtual model" xml:space="preserve">
+    <value>Virtuel model</value>
+  </data>
+  <data name="Virtual Model → Request Timeout (s)" xml:space="preserve">
+    <value>Virtuel model → Forespørgselstidsgrænse (s)</value>
+  </data>
+  <data name="waiting" xml:space="preserve">
+    <value>venter</value>
+  </data>
+  <data name="Waiting for backend to send HTTP response headers" xml:space="preserve">
+    <value>Venter på, at backend sender HTTP-svarshoveder</value>
+  </data>
+  <data name="Waiting in the concurrency queue does NOT consume the virtual model timeout. The timeout clock only starts after the slot is acquired. A request will wait indefinitely for its slot — the only way it stops waiting is if the client (browser / SDK) disconnects. A busy GPU does not cause the virtual model to give up on this backend." xml:space="preserve">
+    <value>At vente i konkurrencekøen bruger IKKE den virtuelle models timeout. Timeouturet starter først, når slot er erhvervet. En anmodning vil vente uendeligt på sit slot — den eneste måde, det holder op med at vente, er hvis klienten (browser / SDK) afbryder forbindelsen. En optaget GPU får ikke den virtuelle model til at give op for denne backend.</value>
+  </data>
+  <data name="Warmup Plane" xml:space="preserve">
+    <value>Opvarmningsplan</value>
+  </data>
+  <data name="What IS counted" xml:space="preserve">
+    <value>Hvad TÆLLES med</value>
+  </data>
+  <data name="What is NOT counted" xml:space="preserve">
+    <value>Hvad der IKKE tæller</value>
+  </data>
+  <data name="Where configured" xml:space="preserve">
+    <value>Hvor konfigureret</value>
+  </data>
+  <data name="With" xml:space="preserve">
+    <value>Med</value>
+  </data>
+  <data name="Without specifying a model, the gateway uses" xml:space="preserve">
+    <value>Uden at angive en model bruger gatewayen</value>
+  </data>
+
+</root>
