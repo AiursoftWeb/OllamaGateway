@@ -63,6 +63,9 @@
   <data name="Enabled" xml:space="preserve">
     <value>Diaktifkan</value>
   </data>
+  <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies. SUGGESTED VALUES: small models (≤8B, NVMe SSD) → 60–120s; large models (≥27B or HDD/NAS storage) → 600–1800s; embedding models → 30–60s." xml:space="preserve">
+    <value>Berapa lama gateway menunggu backend untuk MULAI merespons. TIDAK termasuk autentikasi, antrian batasan laju (rate-limit), atau penantian slot konkurensi. Setelah streaming dimulai, tidak ada batas waktu yang berlaku. NILAI YANG DISARANKAN: model kecil (≤8B, NVMe SSD) → 60–120d; model besar (≥27B atau penyimpanan HDD/NAS) → 600–1800d; model embedding → 30–60d.</value>
+  </data>
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>Simpan model di memori</value>
   </data>
@@ -98,6 +101,9 @@
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Penalti Pengulangan</value>
+  </data>
+  <data name="Request Timeout (s)" xml:space="preserve">
+    <value>Waktu Habis Permintaan (dtk)</value>
   </data>
   <data name="Save Changes" xml:space="preserve">
     <value>Simpan Perubahan</value>

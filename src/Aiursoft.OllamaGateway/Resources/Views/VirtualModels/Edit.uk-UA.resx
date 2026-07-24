@@ -63,6 +63,9 @@
   <data name="Enabled" xml:space="preserve">
     <value>Увімкнено</value>
   </data>
+  <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies. SUGGESTED VALUES: small models (≤8B, NVMe SSD) → 60–120s; large models (≥27B or HDD/NAS storage) → 600–1800s; embedding models → 30–60s." xml:space="preserve">
+    <value>Скільки часу шлюз чекає на початок відповіді від бекенду. НЕ включає очікування автентифікації, черги обмеження частоти або слоту конкурентності. Після початку потокової передачі часовий ліміт не застосовується. РЕКОМЕНДОВАНІ ЗНАЧЕННЯ: малі моделі (≤8B, NVMe SSD) → 60–120с; великі моделі (≥27B або сховище HDD/NAS) → 600–1800с; моделі вбудування → 30–60с.</value>
+  </data>
   <data name="Keep model loaded in memory" xml:space="preserve">
     <value>Зберігати модель у пам&apos;яті</value>
   </data>
@@ -98,6 +101,9 @@
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Штраф за повторення</value>
+  </data>
+  <data name="Request Timeout (s)" xml:space="preserve">
+    <value>Тайм-аут запиту (с)</value>
   </data>
   <data name="Save Changes" xml:space="preserve">
     <value>Зберегти зміни</value>

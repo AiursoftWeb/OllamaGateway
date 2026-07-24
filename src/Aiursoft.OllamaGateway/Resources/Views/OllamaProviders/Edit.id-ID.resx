@@ -18,7 +18,22 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Advanced Warmup Options" xml:space="preserve">
+      <data name="(1 hour)," xml:space="preserve">
+    <value>(1 jam),</value>
+  </data>
+  <data name="(24 hours)." xml:space="preserve">
+    <value>(24 jam).</value>
+  </data>
+  <data name="(5 minutes)," xml:space="preserve">
+    <value>(5 menit),</value>
+  </data>
+  <data name="= keep forever." xml:space="preserve">
+    <value>= simpan selamanya.</value>
+  </data>
+  <data name="= unload immediately." xml:space="preserve">
+    <value>= muat ulang segera.</value>
+  </data>
+  <data name="Advanced Warmup Options" xml:space="preserve">
     <value>Opsi Pemanasan Lanjutan</value>
   </data>
   <data name="Back to List" xml:space="preserve">
@@ -39,6 +54,9 @@
   <data name="Controls how long the AI model weights stay loaded in GPU VRAM after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep in VRAM forever." xml:space="preserve">
     <value>Mengontrol berapa lama bobot model AI tetap dimuat di VRAM GPU setelah permintaan. Format Ollama (misalnya, &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Gunakan &apos;0&apos; untuk membongkar segera, atau &apos;-1&apos; untuk menyimpan di VRAM selamanya.</value>
   </data>
+  <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
+    <value>JANGAN gunakan detik mentah seperti &apos;300&apos;. Gunakan &apos;5m&apos; sebagai gantinya. Format yang tidak valid akan diabaikan secara diam-diam oleh Ollama.</value>
+  </data>
   <data name="e.g. Local Server" xml:space="preserve">
     <value>misalnya, Server Lokal</value>
   </data>
@@ -47,6 +65,15 @@
   </data>
   <data name="Embed" xml:space="preserve">
     <value>Penyematan</value>
+  </data>
+  <data name="Health Check Timeout (s)" xml:space="preserve">
+    <value>Batas Waktu Pemeriksaan Kesehatan (dtk)</value>
+  </data>
+  <data name="How long model weights stay in GPU VRAM after the last request. Uses Ollama duration format: (number)(unit) — e.g." xml:space="preserve">
+    <value>Berapa lama bobot model tetap berada di VRAM GPU setelah permintaan terakhir. Menggunakan format durasi Ollama: (angka)(satuan) — mis.</value>
+  </data>
+  <data name="How long the background health monitor waits when probing this provider for model lists and running status. Set higher for providers with slow storage (HDD/NAS)." xml:space="preserve">
+    <value>Durasi tunggu monitor kesehatan latar belakang saat memeriksa penyedia ini untuk daftar model dan status berjalan. Atur lebih tinggi untuk penyedia dengan penyimpanan lambat (HDD/NAS).</value>
   </data>
   <data name="Keep" xml:space="preserve">
     <value>Tetap</value>
@@ -101,6 +128,9 @@
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>Nama Model Dasar</value>
+  </data>
+  <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
+    <value>Menunggu di antrean konkurensi TIDAK menghabiskan Batas Waktu Permintaan model virtual. Permintaan akan menunggu selamanya untuk mendapatkan slot — hanya pemutusan koneksi klien (penutupan browser, batas waktu SDK) yang menghentikan penantian ini. Model virtual tidak menyerah pada backend hanya karena sedang sibuk.</value>
   </data>
   <data name="Warmup is not applicable to OpenAI-compatible providers. The upstream service manages model loading automatically." xml:space="preserve">
     <value>Warmup tidak berlaku untuk penyedia yang kompatibel dengan OpenAI. Layanan hulu mengelola pemuatan model secara otomatis.</value>
