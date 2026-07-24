@@ -24,17 +24,38 @@
   <data name="Are you sure?" xml:space="preserve">
     <value>Είστε σίγουρος;</value>
   </data>
+  <data name="Banned" xml:space="preserve">
+    <value>Απαγορευμένο</value>
+  </data>
   <data name="Chat" xml:space="preserve">
     <value>Συνομιλία</value>
+  </data>
+  <data name="Circuit breaker has temporarily blocked this backend due to repeated failures. No requests are routed here until the ban expires. Use &quot;Test Connection&quot; on the Provider edit page to manually revive." xml:space="preserve">
+    <value>Ο διακόπτης κυκλώματος έχει προσωρινά αποκλείσει αυτόν τον backend λόγω επαναλαμβανόμενων αποτυχιών. Καμία αίτηση δεν κατευθύνεται εδώ μέχρι να λήξει η απαγόρευση. Χρησιμοποιήστε τη λειτουργία &quot;Test Connection&quot; στη σελίδα επεξεργασίας του Provider για χειροκίνητη επαναφορά.</value>
   </data>
   <data name="Created" xml:space="preserve">
     <value>Δημιουργία</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Μη διαθέσιμο</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Επεξεργασία</value>
   </data>
+  <data name="Healthy" xml:space="preserve">
+    <value>Υγιής</value>
+  </data>
   <data name="Manage virtual models that proxy to underlying Ollama models" xml:space="preserve">
     <value>Διαχείριση εικονικών προτύπων που λειτουργούν ως μεσολαβητές για τα υποκείμενα πρότυπα Ollama</value>
+  </data>
+  <data name="Model exists on the provider, but is not currently loaded in memory. Requests ARE routed here — Ollama will automatically load the model on demand (cold start, may take seconds to minutes)." xml:space="preserve">
+    <value>Το μοντέλο υπάρχει στον πάροχο, αλλά δεν έχει φορτωθεί αυτή τη στιγμή στη μνήμη. Τα αιτήματα ΔΙΕΥΘΥΝΤΑΙ εδώ — το Ollama θα φορτώσει αυτόματα το μοντέλο κατόπιν αιτήματος (κρύα εκκίνηση, μπορεί να διαρκέσει δευτερόλεπτα έως λεπτά).</value>
+  </data>
+  <data name="Model is loaded in GPU VRAM. Requests are routed to this backend and respond instantly." xml:space="preserve">
+    <value>Το μοντέλο έχει φορτωθεί στη VRAM της GPU. Τα αιτήματα κατευθύνονται σε αυτό το backend και αποκρίνονται άμεσα.</value>
+  </data>
+  <data name="Model not found on the provider. Requests are NOT routed here. Check that the underlying model name is correct and exists on the provider." xml:space="preserve">
+    <value>Το μοντέλο δεν βρέθηκε στον πάροχο. Τα αιτήματα ΔΕΝ κατευθύνονται εδώ. Ελέγξτε ότι το υποκείμενο όνομα του μοντέλου είναι σωστό και υπάρχει στον πάροχο.</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Όνομα</value>
@@ -45,11 +66,20 @@
   <data name="No models defined yet." xml:space="preserve">
     <value>Δεν έχουν οριστεί ακόμη μοντέλα.</value>
   </data>
+  <data name="Open in Chat Playground" xml:space="preserve">
+    <value>Άνοιγμα στο Chat Playground</value>
+  </data>
   <data name="Overrides" xml:space="preserve">
     <value>Ανακαλύψεις</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>Πάροχος</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Έτοιμο</value>
+  </data>
+  <data name="Status Guide" xml:space="preserve">
+    <value>Οδηγός Κατάστασης</value>
   </data>
   <data name="Underlying" xml:space="preserve">
     <value>Υπόβαθρο</value>
