@@ -61,6 +61,28 @@ public class DashboardControllerTests : TestBase
     }
 
     [TestMethod]
+    public async Task GetGuide_DescribesCurrentSemanticIrArchitecture()
+    {
+        await LoginAsAdmin();
+
+        var response = await Http.GetAsync("/Dashboard/Guide");
+
+        response.EnsureSuccessStatusCode();
+        var html = await response.Content.ReadAsStringAsync();
+        Assert.Contains("POST /v1/messages", html);
+        Assert.Contains("data-guide-architecture=\"semantic-ir-v1\"", html);
+        Assert.Contains("data-stage=\"request-ir\"", html);
+        Assert.Contains("data-stage=\"per-attempt-adapter\"", html);
+        Assert.Contains("data-stage=\"event-ir\"", html);
+        Assert.Contains("data-retry-semantics=\"attempt-budget\"", html);
+        Assert.Contains("data-timeout-scope=\"headers-only\"", html);
+        Assert.Contains("data-dashboard-timeouts=\"ollama-ps-3-version-5-openai-models-10\"", html);
+        Assert.DoesNotContain("Any OpenAI-compatible or Ollama-native client sends a request.", html);
+        Assert.DoesNotContain("feeds the Dashboard charts in real-time", html);
+        Assert.DoesNotContain("Every request is logged asynchronously", html);
+    }
+
+    [TestMethod]
     public async Task GetIndex_WithProviderAndModels_ShowsCorrectModelCount()
     {
         await LoginAsAdmin();

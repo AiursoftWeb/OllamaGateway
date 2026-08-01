@@ -64,7 +64,7 @@ public class ApiKeyAuthenticationHandler(
             return AuthenticateResult.Fail("API Key expired.");
         }
 
-        var isAllowed = await rateLimitService.IsAllowedAsync(apiKey);
+        var isAllowed = await rateLimitService.IsAllowedAsync(apiKey, Context.RequestAborted);
         if (!isAllowed)
         {
             return AuthenticateResult.Fail("Rate limit exceeded.");

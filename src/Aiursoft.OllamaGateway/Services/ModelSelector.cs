@@ -9,12 +9,15 @@ public class ModelSelector : IModelSelector, ISingletonDependency
     private readonly ConcurrentDictionary<int, int> _roundRobinStates = new();
     private readonly ConcurrentDictionary<int, (int FailureCount, DateTime? BanUntil)> _circuitBreakerStates = new();
 
-    public VirtualModelBackend? SelectBackend(VirtualModel virtualModel)
+    public VirtualModelBackend? SelectBackend(
+        VirtualModel virtualModel,
+        Func<VirtualModelBackend, bool>? eligibility = null)
     {
         var utcNow = DateTime.UtcNow;
         var backends = virtualModel.VirtualModelBackends
             .Where(b => b.Enabled && (b.IsHealthy || b.IsReady))
             .Where(b => !_circuitBreakerStates.TryGetValue(b.Id, out var state) || state.BanUntil == null || state.BanUntil < utcNow)
+            .Where(b => eligibility == null || eligibility(b))
             .ToList();
 
         if (backends.Count == 0) return null;

@@ -146,6 +146,39 @@ public class ModelSelectorTests
     }
 
     [TestMethod]
+    public void TestEligibilityFilterIsAppliedBeforeSelectionStrategy()
+    {
+        var vm = new VirtualModel
+        {
+            Name = "test-model",
+            SelectionStrategy = SelectionStrategy.PriorityFallback,
+            VirtualModelBackends =
+            [
+                new VirtualModelBackend
+                {
+                    Id = 1,
+                    Priority = 0,
+                    Enabled = true,
+                    IsHealthy = true,
+                    UnderlyingModelName = "ineligible"
+                },
+                new VirtualModelBackend
+                {
+                    Id = 2,
+                    Priority = 1,
+                    Enabled = true,
+                    IsHealthy = true,
+                    UnderlyingModelName = "eligible"
+                }
+            ]
+        };
+
+        var selected = _selector.SelectBackend(vm, backend => backend.Id == 2);
+
+        Assert.AreEqual(2, selected?.Id);
+    }
+
+    [TestMethod]
     public void TestBanCap()
     {
         // 5^(10-3) = 78125 minutes > 1440 minutes cap

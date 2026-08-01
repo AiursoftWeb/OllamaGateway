@@ -17,4 +17,5 @@ public class GuideViewModel : UiStackLayoutViewModel
     public List<OllamaProvider> Providers { get; init; } = [];
     public int TotalApiKeys { get; init; }
     public int TotalProviders { get; init; }
+    public bool AnonymousApiAccessEnabled { get; init; }
 }
