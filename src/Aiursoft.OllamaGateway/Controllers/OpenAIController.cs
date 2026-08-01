@@ -20,8 +20,7 @@ public class OpenAIController : ControllerBase
     private readonly TemplateDbContext _dbContext;
     private readonly RequestLogContext _logContext;
     private readonly ILogger<OpenAIController> _logger;
-    private readonly MemoryUsageTracker _memoryUsageTracker;
-    private readonly ActiveRequestTracker _activeRequestTracker;
+    private readonly GatewayRequestTracker _requestTracker;
     private readonly IBackendInvoker _backendInvoker;
     private readonly IGatewayModelResolver _modelResolver;
     private readonly IEmbeddingGatewayService _embeddingGatewayService;
@@ -32,8 +31,7 @@ public class OpenAIController : ControllerBase
         TemplateDbContext dbContext,
         RequestLogContext logContext,
         ILogger<OpenAIController> logger,
-        MemoryUsageTracker memoryUsageTracker,
-        ActiveRequestTracker activeRequestTracker,
+        GatewayRequestTracker requestTracker,
         IBackendInvoker backendInvoker,
         IGatewayModelResolver modelResolver,
         IEmbeddingGatewayService embeddingGatewayService,
@@ -43,8 +41,7 @@ public class OpenAIController : ControllerBase
         _dbContext = dbContext;
         _logContext = logContext;
         _logger = logger;
-        _memoryUsageTracker = memoryUsageTracker;
-        _activeRequestTracker = activeRequestTracker;
+        _requestTracker = requestTracker;
         _backendInvoker = backendInvoker;
         _modelResolver = modelResolver;
         _embeddingGatewayService = embeddingGatewayService;
@@ -90,7 +87,7 @@ public class OpenAIController : ControllerBase
             if (backend.Provider == null)
                 throw new InvalidOperationException("Resolved backend has no provider.");
 
-            TrackRequest(clientJson, virtualModel, backend);
+            TrackRequest(clientJson, virtualModel);
             var streaming = decodedRequest.Request.Stream;
             var result = await _backendInvoker.SendAsync(
                 virtualModel,
@@ -153,48 +150,17 @@ public class OpenAIController : ControllerBase
         }
         finally
         {
-            if (!string.IsNullOrEmpty(_logContext.Log.Model))
-            {
-                _activeRequestTracker.EndRequest(
-                    _logContext.Log.Model,
-                    _logContext.Log.ProviderId ?? 0,
-                    _logContext.Log.UnderlyingModelName,
-                    _logContext.Log.Success,
-                    _logContext.Log.Success
-                        ? string.Empty
-                        : ActiveRequestTracker.GetErrorSummary(_logContext.Log.Answer),
-                    _logContext.Log.Answer);
-            }
+            _requestTracker.Complete();
         }
     }
 
     private void TrackRequest(
         JsonObject clientJson,
-        VirtualModel virtualModel,
-        VirtualModelBackend backend)
+        VirtualModel virtualModel)
     {
-        var apiKeyIdClaim = User.FindFirst("ApiKeyId");
-        if (apiKeyIdClaim != null && int.TryParse(apiKeyIdClaim.Value, out var apiKeyId))
-        {
-            _memoryUsageTracker.TrackApiKeyUsage(apiKeyId);
-            _memoryUsageTracker.TrackApiKeyModelUsage(apiKeyId, virtualModel.Name);
-        }
-
-        _memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider!.Id, backend.UnderlyingModelName);
-        _memoryUsageTracker.TrackVirtualModelUsage(virtualModel.Name);
-
         var messages = clientJson["messages"]?.AsArray();
-        _logContext.Log.Model = virtualModel.Name;
-        _logContext.Log.ConversationMessageCount = messages?.Count ?? 0;
-        _logContext.Log.LastQuestion = messages?.LastOrDefault()?["content"]?.ToString() ?? string.Empty;
-        _logContext.Log.ProviderId = backend.Provider.Id;
-        _logContext.Log.UnderlyingModelName = backend.UnderlyingModelName;
-        _activeRequestTracker.StartRequest(
-            virtualModel.Name,
-            _logContext.Log.LastQuestion,
-            backend.Provider.Id,
-            backend.UnderlyingModelName,
-            _logContext.Log.ApiKeyName);
+        var lastQuestion = messages?.LastOrDefault()?["content"]?.ToString() ?? string.Empty;
+        _requestTracker.Begin(virtualModel, lastQuestion, messages?.Count ?? 0, User);
     }
 
 [HttpPost("/v1/embeddings")]
@@ -230,21 +196,11 @@ public class OpenAIController : ControllerBase
             var backend = resolution.Backend!;
             if (backend.Provider == null) throw new InvalidOperationException("Resolved backend has no provider.");
 
-            var apiKeyIdClaim = User.FindFirst("ApiKeyId");
-            if (apiKeyIdClaim != null && int.TryParse(apiKeyIdClaim.Value, out var apiKeyId))
-            {
-                _memoryUsageTracker.TrackApiKeyUsage(apiKeyId);
-                _memoryUsageTracker.TrackApiKeyModelUsage(apiKeyId, virtualModel.Name);
-            }
-            _memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
-            _memoryUsageTracker.TrackVirtualModelUsage(virtualModel.Name);
-
-            _logContext.Log.Model = virtualModel.Name;
-            _logContext.Log.ConversationMessageCount = 1;
-            _logContext.Log.LastQuestion = clientJson["input"]?.ToString() ?? string.Empty;
-            _logContext.Log.ProviderId = backend.Provider.Id;
-            _logContext.Log.UnderlyingModelName = backend.UnderlyingModelName;
-            _activeRequestTracker.StartRequest(virtualModel.Name, _logContext.Log.LastQuestion, backend.Provider.Id, backend.UnderlyingModelName, _logContext.Log.ApiKeyName);
+            _requestTracker.Begin(
+                virtualModel,
+                clientJson["input"]?.ToString() ?? string.Empty,
+                1,
+                User);
 
             await _embeddingGatewayService.ExecuteAsync(
                 ProtocolDialect.OpenAiChatCompletions,
@@ -272,14 +228,7 @@ public class OpenAIController : ControllerBase
         }
         finally
         {
-            if (!string.IsNullOrEmpty(_logContext.Log.Model))
-                _activeRequestTracker.EndRequest(
-                    _logContext.Log.Model,
-                    _logContext.Log.ProviderId ?? 0,
-                    _logContext.Log.UnderlyingModelName,
-                    _logContext.Log.Success,
-                    _logContext.Log.Success ? string.Empty : ActiveRequestTracker.GetErrorSummary(_logContext.Log.Answer),
-                    _logContext.Log.Answer);
+            _requestTracker.Complete();
         }
     }
 

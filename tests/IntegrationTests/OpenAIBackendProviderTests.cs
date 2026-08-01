@@ -219,6 +219,9 @@ public class OpenAIBackendProviderTests : TestBase
         const string retryModelName = "generate-capability-retry:latest";
         const string primaryPhysicalModel = "llama-generate-primary";
         const string fallbackPhysicalModel = "llama-generate-fallback";
+        int primaryProviderId;
+        int incompatibleProviderId;
+        int fallbackProviderId;
         using (var scope = Server!.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
@@ -240,6 +243,9 @@ public class OpenAIBackendProviderTests : TestBase
             };
             db.OllamaProviders.AddRange(primaryOllama, fallbackOllama);
             await db.SaveChangesAsync();
+            primaryProviderId = primaryOllama.Id;
+            incompatibleProviderId = openAiProvider.Id;
+            fallbackProviderId = fallbackOllama.Id;
 
             var virtualModel = new VirtualModel
             {
@@ -321,6 +327,13 @@ public class OpenAIBackendProviderTests : TestBase
         var responseBody = JsonNode.Parse(await response.Content.ReadAsStringAsync());
         Assert.AreEqual(retryModelName, responseBody?["model"]?.ToString());
         Assert.AreEqual("fallback worked", responseBody?["response"]?.ToString());
+
+        var usageCounter = Server!.Services.GetRequiredService<UsageCounter>();
+        var (modelUsages, _) = usageCounter.SwapModelBuffers();
+        Assert.AreEqual(1L, modelUsages[(primaryProviderId, primaryPhysicalModel)]);
+        Assert.AreEqual(1L, modelUsages[(fallbackProviderId, fallbackPhysicalModel)]);
+        Assert.IsFalse(modelUsages.ContainsKey((incompatibleProviderId, PhysicalModelName)),
+            "A backend skipped by the capability planner must not be counted as an attempt.");
     }
 
     [TestMethod]

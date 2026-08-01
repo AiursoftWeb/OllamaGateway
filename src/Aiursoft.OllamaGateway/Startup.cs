@@ -65,6 +65,7 @@ public class Startup : IWebStartup
         });
         services.AddSingleton<Services.IModelSelector, Services.ModelSelector>();
         services.AddSingleton<Services.IProviderConcurrencyLimiter, Services.ProviderConcurrencyLimiter>();
+        services.AddScoped<Services.GatewayRequestTracker>();
         services.AddScoped<Services.IBackendInvoker, Services.BackendInvoker>();
         services.AddSingleton<Gateway.Execution.IBackendCapabilityPlanner, Gateway.Execution.BackendCapabilityPlanner>();
         services.AddScoped<Gateway.Execution.IGatewayModelResolver, Gateway.Execution.GatewayModelResolver>();

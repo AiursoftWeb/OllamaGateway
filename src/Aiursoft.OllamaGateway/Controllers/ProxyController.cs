@@ -80,8 +80,7 @@ public class ProxyController(
     RequestLogContext logContext,
     GlobalSettingsService globalSettingsService,
     ILogger<ProxyController> logger,
-    MemoryUsageTracker memoryUsageTracker,
-    ActiveRequestTracker activeRequestTracker,
+    GatewayRequestTracker requestTracker,
     IBackendInvoker backendInvoker,
     IGatewayModelResolver modelResolver,
     IEmbeddingGatewayService embeddingGatewayService,
@@ -136,7 +135,7 @@ public class ProxyController(
             using var bodyReader = new StreamReader(Request.Body, Encoding.UTF8, leaveOpen: true);
             var rawBody = await bodyReader.ReadToEndAsync(HttpContext.RequestAborted);
             var decodedRequest = chatRequestCompiler.Decode(ProtocolDialect.OllamaNative, rawBody);
-            TrackChatRequest(input, virtualModel, backend);
+            TrackChatRequest(input, virtualModel);
 
             var result = await backendInvoker.SendAsync(
                 virtualModel,
@@ -204,46 +203,19 @@ public class ProxyController(
         }
         finally
         {
-            if (!string.IsNullOrEmpty(logContext.Log.Model))
-            {
-                activeRequestTracker.EndRequest(
-                    logContext.Log.Model,
-                    logContext.Log.ProviderId ?? 0,
-                    logContext.Log.UnderlyingModelName,
-                    logContext.Log.Success,
-                    logContext.Log.Success
-                        ? string.Empty
-                        : ActiveRequestTracker.GetErrorSummary(logContext.Log.Answer),
-                    logContext.Log.Answer);
-            }
+            requestTracker.Complete();
         }
     }
 
     private void TrackChatRequest(
         OllamaRequestModel input,
-        VirtualModel virtualModel,
-        VirtualModelBackend backend)
+        VirtualModel virtualModel)
     {
-        var apiKeyIdClaim = User.FindFirst("ApiKeyId");
-        if (apiKeyIdClaim != null && int.TryParse(apiKeyIdClaim.Value, out var apiKeyId))
-        {
-            memoryUsageTracker.TrackApiKeyUsage(apiKeyId);
-            memoryUsageTracker.TrackApiKeyModelUsage(apiKeyId, virtualModel.Name);
-        }
-
-        memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider!.Id, backend.UnderlyingModelName);
-        memoryUsageTracker.TrackVirtualModelUsage(virtualModel.Name);
-        logContext.Log.Model = virtualModel.Name;
-        logContext.Log.ConversationMessageCount = input.Messages?.Count ?? 0;
-        logContext.Log.LastQuestion = input.Messages?.LastOrDefault()?.Content ?? string.Empty;
-        logContext.Log.ProviderId = backend.Provider.Id;
-        logContext.Log.UnderlyingModelName = backend.UnderlyingModelName;
-        activeRequestTracker.StartRequest(
-            virtualModel.Name,
-            logContext.Log.LastQuestion,
-            backend.Provider.Id,
-            backend.UnderlyingModelName,
-            logContext.Log.ApiKeyName);
+        requestTracker.Begin(
+            virtualModel,
+            input.Messages?.LastOrDefault()?.Content ?? string.Empty,
+            input.Messages?.Count ?? 0,
+            User);
     }
 
     [HttpPost("generate")]
@@ -269,21 +241,7 @@ public class ProxyController(
             var backend = resolution.Backend!;
             if (backend.Provider == null) throw new InvalidOperationException("Resolved backend has no provider.");
 
-            var apiKeyIdClaim = User.FindFirst("ApiKeyId");
-            if (apiKeyIdClaim != null && int.TryParse(apiKeyIdClaim.Value, out var apiKeyId))
-            {
-                memoryUsageTracker.TrackApiKeyUsage(apiKeyId);
-                memoryUsageTracker.TrackApiKeyModelUsage(apiKeyId, virtualModel.Name);
-            }
-            memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
-            memoryUsageTracker.TrackVirtualModelUsage(virtualModel.Name);
-
-            logContext.Log.Model = virtualModel.Name;
-            logContext.Log.ConversationMessageCount = 1;
-            logContext.Log.LastQuestion = input.Prompt ?? string.Empty;
-            logContext.Log.ProviderId = backend.Provider.Id;
-            logContext.Log.UnderlyingModelName = backend.UnderlyingModelName;
-            activeRequestTracker.StartRequest(virtualModel.Name, logContext.Log.LastQuestion, backend.Provider.Id, backend.UnderlyingModelName, logContext.Log.ApiKeyName);
+            requestTracker.Begin(virtualModel, input.Prompt ?? string.Empty, 1, User);
 
             // /api/generate has no OpenAI-compatible equivalent — reject if backend is OpenAI
             if (backend.Provider.ProviderType == ProviderType.OpenAI)
@@ -452,14 +410,7 @@ public class ProxyController(
         }
         finally
         {
-            if (!string.IsNullOrEmpty(logContext.Log.Model))
-                activeRequestTracker.EndRequest(
-                    logContext.Log.Model,
-                    logContext.Log.ProviderId ?? 0,
-                    logContext.Log.UnderlyingModelName,
-                    logContext.Log.Success,
-                    logContext.Log.Success ? string.Empty : ActiveRequestTracker.GetErrorSummary(logContext.Log.Answer),
-                    logContext.Log.Answer);
+            requestTracker.Complete();
         }
     }
 
@@ -504,21 +455,11 @@ public class ProxyController(
             var backend = resolution.Backend!;
             if (backend.Provider == null) throw new InvalidOperationException("Resolved backend has no provider.");
 
-            var apiKeyIdClaim = User.FindFirst("ApiKeyId");
-            if (apiKeyIdClaim != null && int.TryParse(apiKeyIdClaim.Value, out var apiKeyId))
-            {
-                memoryUsageTracker.TrackApiKeyUsage(apiKeyId);
-                memoryUsageTracker.TrackApiKeyModelUsage(apiKeyId, virtualModel.Name);
-            }
-            memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
-            memoryUsageTracker.TrackVirtualModelUsage(virtualModel.Name);
-
-            logContext.Log.Model = virtualModel.Name;
-            logContext.Log.ConversationMessageCount = 1;
-            logContext.Log.LastQuestion = inputNode["input"]?.ToString() ?? inputNode["prompt"]?.ToString() ?? string.Empty;
-            logContext.Log.ProviderId = backend.Provider.Id;
-            logContext.Log.UnderlyingModelName = backend.UnderlyingModelName;
-            activeRequestTracker.StartRequest(virtualModel.Name, logContext.Log.LastQuestion, backend.Provider.Id, backend.UnderlyingModelName, logContext.Log.ApiKeyName);
+            requestTracker.Begin(
+                virtualModel,
+                inputNode["input"]?.ToString() ?? inputNode["prompt"]?.ToString() ?? string.Empty,
+                1,
+                User);
 
             await embeddingGatewayService.ExecuteAsync(
                 ProtocolDialect.OllamaNative,
@@ -546,14 +487,7 @@ public class ProxyController(
         }
         finally
         {
-            if (!string.IsNullOrEmpty(logContext.Log.Model))
-                activeRequestTracker.EndRequest(
-                    logContext.Log.Model,
-                    logContext.Log.ProviderId ?? 0,
-                    logContext.Log.UnderlyingModelName,
-                    logContext.Log.Success,
-                    logContext.Log.Success ? string.Empty : ActiveRequestTracker.GetErrorSummary(logContext.Log.Answer),
-                    logContext.Log.Answer);
+            requestTracker.Complete();
         }
     }
 

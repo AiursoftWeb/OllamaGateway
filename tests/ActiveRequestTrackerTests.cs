@@ -6,6 +6,58 @@ namespace Aiursoft.OllamaGateway.Tests;
 public class ActiveRequestTrackerTests
 {
     [TestMethod]
+    public void TrackedRequest_MovesToActualBackendWithoutEndingVirtualRequest()
+    {
+        var tracker = new ActiveRequestTracker();
+        var request = tracker.BeginRequest("virtual", "hello", "key");
+
+        Assert.AreEqual(1, tracker.GetAll()["virtual"].ActiveCount);
+        Assert.AreEqual(0, tracker.GetBusyPhysicalModels().Count);
+
+        request.SetBackend(1, "primary");
+        Assert.IsTrue(tracker.GetBusyPhysicalModels().Contains((1, "primary")));
+
+        request.ClearBackend();
+        Assert.AreEqual(1, tracker.GetAll()["virtual"].ActiveCount);
+        Assert.AreEqual(0, tracker.GetBusyPhysicalModels().Count);
+
+        request.SetBackend(2, "fallback");
+        Assert.IsFalse(tracker.GetBusyPhysicalModels().Contains((1, "primary")));
+        Assert.IsTrue(tracker.GetBusyPhysicalModels().Contains((2, "fallback")));
+
+        request.Complete(true, answer: "done");
+
+        Assert.AreEqual(0, tracker.GetAll()["virtual"].ActiveCount);
+        Assert.AreEqual(0, tracker.GetBusyPhysicalModels().Count);
+        var recent = tracker.GetRecentRequests();
+        Assert.AreEqual(1, recent.Count);
+        Assert.AreEqual("fallback", recent[0].BackendModelName);
+        Assert.AreEqual("hello", recent[0].Question);
+        Assert.AreEqual("key", recent[0].ApiKeyName);
+        Assert.AreEqual("done", recent[0].Answer);
+    }
+
+    [TestMethod]
+    public void TrackedRequests_OnSameVirtualModelKeepIndependentPhysicalCounts()
+    {
+        var tracker = new ActiveRequestTracker();
+        var first = tracker.BeginRequest("virtual", "first");
+        var second = tracker.BeginRequest("virtual", "second");
+        first.SetBackend(1, "model-a");
+        second.SetBackend(2, "model-b");
+
+        first.Complete(true);
+
+        Assert.AreEqual(1, tracker.GetAll()["virtual"].ActiveCount);
+        Assert.IsFalse(tracker.GetBusyPhysicalModels().Contains((1, "model-a")));
+        Assert.IsTrue(tracker.GetBusyPhysicalModels().Contains((2, "model-b")));
+
+        second.Complete(true);
+        Assert.AreEqual(0, tracker.GetAll()["virtual"].ActiveCount);
+        Assert.AreEqual(0, tracker.GetBusyPhysicalModels().Count);
+    }
+
+    [TestMethod]
     public void TestStartAndEndRequest()
     {
         var tracker = new ActiveRequestTracker();
