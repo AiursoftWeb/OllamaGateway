@@ -1,4 +1,5 @@
 using Aiursoft.OllamaGateway.Entities;
+using Aiursoft.OllamaGateway.Gateway.Execution;
 
 namespace Aiursoft.OllamaGateway.Services;
 
@@ -13,6 +14,7 @@ public interface IBackendInvoker
     Task<BackendInvocationResult?> SendAsync(
         VirtualModel virtualModel,
         VirtualModelBackend initialBackend,
+        GatewayCapability capability,
         Func<VirtualModelBackend, HttpRequestMessage> requestFactory,
         CancellationToken clientCancellation);
 }

@@ -4,7 +4,9 @@ namespace Aiursoft.OllamaGateway.Services;
 
 public interface IModelSelector
 {
-    VirtualModelBackend? SelectBackend(VirtualModel virtualModel);
+    VirtualModelBackend? SelectBackend(
+        VirtualModel virtualModel,
+        Func<VirtualModelBackend, bool>? eligibility = null);
     void ReportSuccess(int backendId);
     void ReportFailure(int backendId);
     void UnbanBackend(int backendId);

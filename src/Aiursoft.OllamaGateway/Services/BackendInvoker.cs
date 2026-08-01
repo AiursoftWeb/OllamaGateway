@@ -1,10 +1,12 @@
 using Aiursoft.OllamaGateway.Entities;
+using Aiursoft.OllamaGateway.Gateway.Execution;
 
 namespace Aiursoft.OllamaGateway.Services;
 
 public class BackendInvoker(
     IHttpClientFactory httpClientFactory,
     IModelSelector modelSelector,
+    IBackendCapabilityPlanner capabilityPlanner,
     IProviderConcurrencyLimiter concurrencyLimiter,
     MemoryUsageTracker memoryUsageTracker,
     ILogger<BackendInvoker> logger) : IBackendInvoker
@@ -12,10 +14,15 @@ public class BackendInvoker(
     public async Task<BackendInvocationResult?> SendAsync(
         VirtualModel virtualModel,
         VirtualModelBackend initialBackend,
+        GatewayCapability capability,
         Func<VirtualModelBackend, HttpRequestMessage> requestFactory,
         CancellationToken clientCancellation)
     {
-        var backend = initialBackend;
+        bool IsEligible(VirtualModelBackend candidate) => capabilityPlanner.Supports(candidate, capability);
+
+        var backend = IsEligible(initialBackend)
+            ? initialBackend
+            : modelSelector.SelectBackend(virtualModel, IsEligible);
         IAsyncDisposable? concurrencySlot = null;
 
         for (var i = 0; i < virtualModel.MaxRetries; i++)
@@ -39,7 +46,7 @@ public class BackendInvoker(
                 logger.LogWarning("[Trace] Concurrency slot acquisition canceled for provider {ProviderId}", backend.Provider.Id);
                 concurrencySlot = null;
                 if (i == virtualModel.MaxRetries - 1) break;
-                backend = modelSelector.SelectBackend(virtualModel);
+                backend = modelSelector.SelectBackend(virtualModel, IsEligible);
                 continue;
             }
 
@@ -80,7 +87,7 @@ public class BackendInvoker(
                     await concurrencySlot.DisposeAsync();
                     concurrencySlot = null;
                     response.Dispose();
-                    backend = modelSelector.SelectBackend(virtualModel);
+                    backend = modelSelector.SelectBackend(virtualModel, IsEligible);
                     if (backend?.Provider == null) break;
                     memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
                     continue;
@@ -114,7 +121,7 @@ public class BackendInvoker(
                 if (i == virtualModel.MaxRetries - 1)
                     break;
 
-                backend = modelSelector.SelectBackend(virtualModel);
+                backend = modelSelector.SelectBackend(virtualModel, IsEligible);
                 if (backend?.Provider == null)
                     break;
 
