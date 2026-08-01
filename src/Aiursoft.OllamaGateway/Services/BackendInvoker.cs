@@ -20,15 +20,33 @@ public class BackendInvoker(
     {
         bool IsEligible(VirtualModelBackend candidate) => capabilityPlanner.Supports(candidate, capability);
 
+        var attemptedBackendIds = new HashSet<int>();
+
+        VirtualModelBackend? SelectNextBackend()
+        {
+            var next = modelSelector.SelectBackend(
+                virtualModel,
+                candidate => IsEligible(candidate) && !attemptedBackendIds.Contains(candidate.Id));
+            if (next != null)
+                return next;
+
+            // All currently eligible backends have been attempted. If the retry budget is
+            // larger than the backend pool, begin another pass rather than stopping early.
+            attemptedBackendIds.Clear();
+            return modelSelector.SelectBackend(virtualModel, IsEligible);
+        }
+
         var backend = IsEligible(initialBackend)
             ? initialBackend
-            : modelSelector.SelectBackend(virtualModel, IsEligible);
+            : SelectNextBackend();
         IAsyncDisposable? concurrencySlot = null;
 
         for (var i = 0; i < virtualModel.MaxRetries; i++)
         {
             if (backend?.Provider == null)
                 break;
+
+            attemptedBackendIds.Add(backend.Id);
 
             var underlyingUrl = backend.Provider.BaseUrl.TrimEnd('/');
 
@@ -44,10 +62,7 @@ public class BackendInvoker(
             catch (OperationCanceledException)
             {
                 logger.LogWarning("[Trace] Concurrency slot acquisition canceled for provider {ProviderId}", backend.Provider.Id);
-                concurrencySlot = null;
-                if (i == virtualModel.MaxRetries - 1) break;
-                backend = modelSelector.SelectBackend(virtualModel, IsEligible);
-                continue;
+                throw;
             }
 
             using var cts = CancellationTokenSource.CreateLinkedTokenSource(clientCancellation);
@@ -87,7 +102,7 @@ public class BackendInvoker(
                     await concurrencySlot.DisposeAsync();
                     concurrencySlot = null;
                     response.Dispose();
-                    backend = modelSelector.SelectBackend(virtualModel, IsEligible);
+                    backend = SelectNextBackend();
                     if (backend?.Provider == null) break;
                     memoryUsageTracker.TrackUnderlyingModelUsage(backend.Provider.Id, backend.UnderlyingModelName);
                     continue;
@@ -121,7 +136,7 @@ public class BackendInvoker(
                 if (i == virtualModel.MaxRetries - 1)
                     break;
 
-                backend = modelSelector.SelectBackend(virtualModel, IsEligible);
+                backend = SelectNextBackend();
                 if (backend?.Provider == null)
                     break;
 

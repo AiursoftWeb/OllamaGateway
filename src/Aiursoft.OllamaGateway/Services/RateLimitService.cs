@@ -8,7 +8,7 @@ public class RateLimitService : ISingletonDependency
 {
     private readonly ConcurrentDictionary<int, ConcurrentQueue<DateTime>> _requests = new();
 
-    public async Task<bool> IsAllowedAsync(ApiKey apiKey)
+    public async Task<bool> IsAllowedAsync(ApiKey apiKey, CancellationToken cancellationToken = default)
     {
         if (!apiKey.RateLimitEnabled) return true;
 
@@ -36,18 +36,18 @@ public class RateLimitService : ISingletonDependency
                     var waitTime = window - (now - oldest);
                     if (waitTime > TimeSpan.Zero)
                     {
-                        await Task.Delay(waitTime);
+                        await Task.Delay(waitTime, cancellationToken);
                     }
                     else
                     {
                         // Smallest wait to avoid tight loop
-                        await Task.Delay(100);
+                        await Task.Delay(100, cancellationToken);
                     }
                 }
                 else
                 {
                     // Should not happen if history.Count >= MaxRequests (which is at least 1)
-                    await Task.Delay(100);
+                    await Task.Delay(100, cancellationToken);
                 }
             }
         }

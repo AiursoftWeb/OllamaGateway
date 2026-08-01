@@ -176,7 +176,8 @@ public class DashboardController(
             DefaultVirtualModel = virtualModel,
             Providers = providers,
             TotalApiKeys = await dbContext.ApiKeys.CountAsync(),
-            TotalProviders = providers.Count
+            TotalProviders = providers.Count,
+            AnonymousApiAccessEnabled = await globalSettingsService.GetAllowAnonymousApiCallAsync()
         };
 
         return this.StackView(model);

@@ -7,6 +7,7 @@ public class ProviderConcurrencyLimiter : IProviderConcurrencyLimiter, ISingleto
 {
     private readonly ConcurrentDictionary<int, SemaphoreSlim> _semaphores = new();
     private readonly ConcurrentDictionary<int, int> _waitingCounts = new();
+    private readonly ConcurrentDictionary<int, int> _activeCounts = new();
 
     public async Task<IAsyncDisposable> AcquireAsync(int providerId, int maxParallelism, CancellationToken cancellationToken)
     {
@@ -25,7 +26,9 @@ public class ProviderConcurrencyLimiter : IProviderConcurrencyLimiter, ISingleto
             _waitingCounts.AddOrUpdate(providerId, 0, (_, v) => Math.Max(0, v - 1));
         }
 
-        return new SemaphoreRelease(semaphore);
+        _activeCounts.AddOrUpdate(providerId, 1, (_, v) => v + 1);
+        return new SemaphoreRelease(semaphore, () =>
+            _activeCounts.AddOrUpdate(providerId, 0, (_, v) => Math.Max(0, v - 1)));
     }
 
     public int GetWaitingCount(int providerId)
@@ -36,15 +39,20 @@ public class ProviderConcurrencyLimiter : IProviderConcurrencyLimiter, ISingleto
 
     public int GetActiveCount(int providerId)
     {
-        if (!_semaphores.TryGetValue(providerId, out var semaphore))
-            return 0;
-        return semaphore.CurrentCount;
+        _activeCounts.TryGetValue(providerId, out var count);
+        return count;
     }
 
-    private sealed class SemaphoreRelease(SemaphoreSlim semaphore) : IAsyncDisposable
+    private sealed class SemaphoreRelease(SemaphoreSlim semaphore, Action onRelease) : IAsyncDisposable
     {
+        private int _released;
+
         public ValueTask DisposeAsync()
         {
+            if (Interlocked.Exchange(ref _released, 1) != 0)
+                return ValueTask.CompletedTask;
+
+            onRelease();
             semaphore.Release();
             return ValueTask.CompletedTask;
         }

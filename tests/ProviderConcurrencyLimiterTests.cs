@@ -6,6 +6,38 @@ namespace Aiursoft.OllamaGateway.Tests;
 [TestClass]
 public class ProviderConcurrencyLimiterTests
 {
+    [TestMethod]
+    public async Task RuntimeCounts_ReportActiveAndWaitingRequests()
+    {
+        var limiter = new ProviderConcurrencyLimiter();
+        Assert.AreEqual(0, limiter.GetActiveCount(42));
+        Assert.AreEqual(0, limiter.GetWaitingCount(42));
+
+        var firstSlot = await limiter.AcquireAsync(42, maxParallelism: 1, CancellationToken.None);
+        Assert.AreEqual(1, limiter.GetActiveCount(42));
+
+        var secondAcquired = new TaskCompletionSource<IAsyncDisposable>(
+            TaskCreationOptions.RunContinuationsAsynchronously);
+        var secondTask = Task.Run(async () =>
+        {
+            var slot = await limiter.AcquireAsync(42, maxParallelism: 1, CancellationToken.None);
+            secondAcquired.SetResult(slot);
+        });
+
+        await WaitUntilAsync(() => limiter.GetWaitingCount(42) == 1);
+        Assert.AreEqual(1, limiter.GetActiveCount(42));
+        Assert.AreEqual(1, limiter.GetWaitingCount(42));
+
+        await firstSlot.DisposeAsync();
+        var secondSlot = await secondAcquired.Task;
+        Assert.AreEqual(1, limiter.GetActiveCount(42));
+        Assert.AreEqual(0, limiter.GetWaitingCount(42));
+
+        await secondSlot.DisposeAsync();
+        await secondTask;
+        Assert.AreEqual(0, limiter.GetActiveCount(42));
+    }
+
     /// <summary>
     /// BUG REPRODUCTION: Without concurrency limiting, 5 concurrent requests
     /// all hit the same backend simultaneously. If the backend is slow, all 5
@@ -268,5 +300,14 @@ public class ProviderConcurrencyLimiterTests
 
         // If we get here, the slot was successfully acquired → the previous
         // disposal correctly released the semaphore.
+    }
+
+    private static async Task WaitUntilAsync(Func<bool> condition)
+    {
+        using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
+        while (!condition())
+        {
+            await Task.Delay(10, cts.Token);
+        }
     }
 }

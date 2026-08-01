@@ -310,13 +310,13 @@ public class OpenAIBackendProviderTests : TestBase
         var response = await Http.SendAsync(AuthedPost("/api/generate", payload));
 
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        Assert.AreEqual(4, attempts.Count);
-        Assert.IsTrue(attempts.Take(3).All(attempt => attempt.Host == "primary-generate-ollama.test"));
+        Assert.AreEqual(2, attempts.Count);
+        Assert.AreEqual("primary-generate-ollama.test", attempts[0].Host);
         Assert.IsTrue(attempts.All(attempt => attempt.Path == "/api/generate"));
         Assert.IsFalse(attempts.Any(attempt => attempt.Host == "api.openai.test"),
             "An OpenAI-compatible backend must never be selected for /api/generate.");
-        Assert.AreEqual("fallback-generate-ollama.test", attempts[3].Host);
-        Assert.AreEqual(fallbackPhysicalModel, JsonNode.Parse(attempts[3].Body)?["model"]?.ToString());
+        Assert.AreEqual("fallback-generate-ollama.test", attempts[1].Host);
+        Assert.AreEqual(fallbackPhysicalModel, JsonNode.Parse(attempts[1].Body)?["model"]?.ToString());
 
         var responseBody = JsonNode.Parse(await response.Content.ReadAsStringAsync());
         Assert.AreEqual(retryModelName, responseBody?["model"]?.ToString());
@@ -542,11 +542,11 @@ public class OpenAIBackendProviderTests : TestBase
         var response = await Http.SendAsync(AuthedPost("/v1/embeddings", payload));
 
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        Assert.AreEqual(4, attempts.Count, "The primary backend should be banned after three failures, then retried on the fallback.");
-        Assert.IsTrue(attempts.Take(3).All(attempt => attempt.Path == "/api/embed"));
-        Assert.IsTrue(attempts.Take(3).All(attempt => JsonNode.Parse(attempt.Body)?["model"]?.ToString() == ollamaPhysicalModel));
-        Assert.AreEqual("/v1/embeddings", attempts[3].Path);
-        Assert.AreEqual(PhysicalEmbedModel, JsonNode.Parse(attempts[3].Body)?["model"]?.ToString());
+        Assert.AreEqual(2, attempts.Count, "A single request should try the next eligible backend immediately.");
+        Assert.AreEqual("/api/embed", attempts[0].Path);
+        Assert.AreEqual(ollamaPhysicalModel, JsonNode.Parse(attempts[0].Body)?["model"]?.ToString());
+        Assert.AreEqual("/v1/embeddings", attempts[1].Path);
+        Assert.AreEqual(PhysicalEmbedModel, JsonNode.Parse(attempts[1].Body)?["model"]?.ToString());
 
         var responseBody = JsonNode.Parse(await response.Content.ReadAsStringAsync());
         Assert.AreEqual(retryModelName, responseBody?["model"]?.ToString());
@@ -629,11 +629,11 @@ public class OpenAIBackendProviderTests : TestBase
         var response = await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
 
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        Assert.AreEqual(4, attempts.Count);
-        Assert.IsTrue(attempts.Take(3).All(attempt => attempt.Path == "/api/chat"));
-        Assert.IsTrue(attempts.Take(3).All(attempt => JsonNode.Parse(attempt.Body)?["model"]?.ToString() == ollamaPhysicalModel));
-        Assert.AreEqual("/v1/chat/completions", attempts[3].Path);
-        Assert.AreEqual(PhysicalModelName, JsonNode.Parse(attempts[3].Body)?["model"]?.ToString());
+        Assert.AreEqual(2, attempts.Count);
+        Assert.AreEqual("/api/chat", attempts[0].Path);
+        Assert.AreEqual(ollamaPhysicalModel, JsonNode.Parse(attempts[0].Body)?["model"]?.ToString());
+        Assert.AreEqual("/v1/chat/completions", attempts[1].Path);
+        Assert.AreEqual(PhysicalModelName, JsonNode.Parse(attempts[1].Body)?["model"]?.ToString());
 
         var responseBody = JsonNode.Parse(await response.Content.ReadAsStringAsync());
         Assert.AreEqual(retryModelName, responseBody?["model"]?.ToString());
@@ -717,11 +717,11 @@ public class OpenAIBackendProviderTests : TestBase
         var response = await Http.SendAsync(AuthedPost("/api/chat", payload));
 
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        Assert.AreEqual(4, attempts.Count);
-        Assert.IsTrue(attempts.Take(3).All(attempt => attempt.Path == "/v1/chat/completions"));
-        Assert.IsTrue(attempts.Take(3).All(attempt => JsonNode.Parse(attempt.Body)?["model"]?.ToString() == PhysicalModelName));
-        Assert.AreEqual("/api/chat", attempts[3].Path);
-        Assert.AreEqual(ollamaPhysicalModel, JsonNode.Parse(attempts[3].Body)?["model"]?.ToString());
+        Assert.AreEqual(2, attempts.Count);
+        Assert.AreEqual("/v1/chat/completions", attempts[0].Path);
+        Assert.AreEqual(PhysicalModelName, JsonNode.Parse(attempts[0].Body)?["model"]?.ToString());
+        Assert.AreEqual("/api/chat", attempts[1].Path);
+        Assert.AreEqual(ollamaPhysicalModel, JsonNode.Parse(attempts[1].Body)?["model"]?.ToString());
 
         var responseBody = JsonNode.Parse(await response.Content.ReadAsStringAsync());
         Assert.AreEqual(retryModelName, responseBody?["model"]?.ToString());
@@ -803,7 +803,7 @@ public class OpenAIBackendProviderTests : TestBase
 
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         CollectionAssert.AreEqual(
-            new[] { "/api/chat", "/api/chat", "/api/chat", "/v1/chat/completions" },
+            new[] { "/api/chat", "/v1/chat/completions" },
             attempts);
         var responseBody = JsonNode.Parse(await response.Content.ReadAsStringAsync());
         Assert.AreEqual(retryModelName, responseBody?["model"]?.ToString());
@@ -814,6 +814,36 @@ public class OpenAIBackendProviderTests : TestBase
         Assert.AreEqual("x", responseBody?["content"]?[2]?["input"]?["q"]?.ToString());
         Assert.AreEqual(6, responseBody?["usage"]?["input_tokens"]?.GetValue<int>());
         Assert.AreEqual(4, responseBody?["usage"]?["output_tokens"]?.GetValue<int>());
+    }
+
+    [TestMethod]
+    public async Task AnthropicToOpenAiBackend_ConvertsBase64AndUrlImages()
+    {
+        MockUpstreamState.Handler = (_, _) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+        {
+            Content = new StringContent(
+                """{"id":"vision","object":"chat.completion","model":"gpt-4o-mini","choices":[{"index":0,"message":{"role":"assistant","content":"I see both images."},"finish_reason":"stop"}],"usage":{"prompt_tokens":8,"completion_tokens":4,"total_tokens":12}}""",
+                Encoding.UTF8,
+                "application/json")
+        });
+
+        var payload = $$$"""
+        {
+          "model":"{{{ChatModelName}}}","max_tokens":100,"messages":[{"role":"user","content":[
+            {"type":"text","text":"describe"},
+            {"type":"image","source":{"type":"base64","media_type":"image/jpeg","data":"AQID"}},
+            {"type":"image","source":{"type":"url","url":"https://images.example.test/cat.png"}}
+          ]}]
+        }
+        """;
+        var response = await Http.SendAsync(AuthedPost("/v1/messages", payload));
+
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody!)!;
+        var content = upstreamBody["messages"]?[0]?["content"];
+        Assert.AreEqual("describe", content?[0]?["text"]?.ToString());
+        Assert.AreEqual("data:image/jpeg;base64,AQID", content?[1]?["image_url"]?["url"]?.ToString());
+        Assert.AreEqual("https://images.example.test/cat.png", content?[2]?["image_url"]?["url"]?.ToString());
     }
 
     // ========================================================================

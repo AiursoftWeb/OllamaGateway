@@ -91,10 +91,11 @@ public sealed class AnthropicChatRequestDecoder : IChatRequestDecoder
                     break;
                 case "image":
                     var source = item?["source"];
+                    var isUrl = ChatRequestDecoding.StringValue(source?["type"]) == "url";
                     parts.Add(new GatewayImageContent(
-                        ChatRequestDecoding.StringValue(source?["data"]),
+                        ChatRequestDecoding.StringValue(isUrl ? source?["url"] : source?["data"]),
                         ChatRequestDecoding.StringValue(source?["media_type"], null!),
-                        ChatRequestDecoding.StringValue(source?["type"]) == "url"));
+                        isUrl));
                     break;
                 default:
                     if (item != null)

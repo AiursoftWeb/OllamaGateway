@@ -24,7 +24,8 @@ public class ChatRequestCompilerTests
             {"role":"assistant","content":"","tool_calls":[{"id":"call_1","type":"function","function":{"name":"lookup","arguments":"{\"q\":\"x\"}"}}]}
           ],
           "tools":[{"type":"function","function":{"name":"lookup","description":"Lookup","parameters":{"type":"object"}}}],
-          "temperature":0.2
+          "temperature":0.2,
+          "chat_template_kwargs":{"enable_thinking":true}
         }
         """;
         var decoded = _compiler.Decode(ProtocolDialect.OpenAiChatCompletions, body);
@@ -41,12 +42,13 @@ public class ChatRequestCompilerTests
         Assert.AreEqual("x", json?["messages"]?[1]?["tool_calls"]?[0]?["function"]?["arguments"]?["q"]?.ToString());
         Assert.AreEqual("lookup", json?["tools"]?[0]?["function"]?["name"]?.ToString());
         Assert.AreEqual(0.7, json?["options"]?["temperature"]?.GetValue<double>());
+        Assert.AreEqual(true, json?["think"]?.GetValue<bool>());
     }
 
     [TestMethod]
     public async Task OpenAiToOpenAi_PreservesUnknownFields()
     {
-        const string body = """{"model":"virtual","messages":[{"role":"user","content":null}],"stream":false,"response_format":{"type":"json_schema"},"vendor_extension":{"exact":1.2300}}""";
+        const string body = """{"model":"virtual","messages":[{"role":"user","content":null}],"stream":false,"response_format":{"type":"json_schema"},"vendor_extension":{"exact":1.2300},"top_k":40,"num_ctx":8192,"repeat_penalty":1.2}""";
         var decoded = _compiler.Decode(ProtocolDialect.OpenAiChatCompletions, body);
 
         using var request = _compiler.CreateProviderRequest(decoded, Model(), Backend(ProviderType.OpenAI, "gpt-physical"));
@@ -55,7 +57,31 @@ public class ChatRequestCompilerTests
         Assert.AreEqual("gpt-physical", json?["model"]?.ToString());
         Assert.AreEqual("json_schema", json?["response_format"]?["type"]?.ToString());
         Assert.AreEqual("1.2300", json?["vendor_extension"]?["exact"]?.ToJsonString());
+        Assert.AreEqual(40, json?["top_k"]?.GetValue<int>());
+        Assert.AreEqual(8192, json?["num_ctx"]?.GetValue<int>());
+        Assert.AreEqual(1.2, json?["repeat_penalty"]?.GetValue<double>());
         Assert.AreEqual(string.Empty, json?["messages"]?[0]?["content"]?.ToString());
+    }
+
+    [TestMethod]
+    public async Task OllamaToOpenAi_ConvertsSharedOptionsAndDropsOllamaOnlyOptions()
+    {
+        const string body = """{"model":"virtual","messages":[{"role":"user","content":"hi"}],"think":true,"options":{"temperature":0.3,"top_p":0.8,"top_k":40,"num_ctx":8192,"repeat_penalty":1.2}}""";
+        var decoded = _compiler.Decode(ProtocolDialect.OllamaNative, body);
+
+        using var request = _compiler.CreateProviderRequest(
+            decoded,
+            Model(),
+            Backend(ProviderType.OpenAI, "gpt-physical"));
+        var json = JsonNode.Parse(await request.Content!.ReadAsStringAsync());
+
+        Assert.AreEqual(0.3, json?["temperature"]?.GetValue<double>());
+        Assert.AreEqual(0.8, json?["top_p"]?.GetValue<double>());
+        Assert.AreEqual(true, json?["chat_template_kwargs"]?["enable_thinking"]?.GetValue<bool>());
+        Assert.IsNull(json?["top_k"]);
+        Assert.IsNull(json?["num_ctx"]);
+        Assert.IsNull(json?["repeat_penalty"]);
+        Assert.IsNull(json?["options"]);
     }
 
     [TestMethod]
@@ -93,6 +119,77 @@ public class ChatRequestCompilerTests
         Assert.AreEqual("tool", json?["messages"]?[1]?["role"]?.ToString());
         Assert.AreEqual("tool_1", json?["messages"]?[1]?["tool_call_id"]?.ToString());
         Assert.AreEqual(123, json?["max_tokens"]?.GetValue<int>());
+    }
+
+    [TestMethod]
+    public async Task AnthropicBase64Image_CompilesToOpenAiDataUrl()
+    {
+        const string body = """
+        {
+          "model":"virtual","messages":[{"role":"user","content":[
+            {"type":"text","text":"describe"},
+            {"type":"image","source":{"type":"base64","media_type":"image/jpeg","data":"AQID"}}
+          ]}]
+        }
+        """;
+        var decoded = _compiler.Decode(ProtocolDialect.AnthropicMessages, body);
+
+        using var request = _compiler.CreateProviderRequest(
+            decoded,
+            Model(),
+            Backend(ProviderType.OpenAI, "gpt-vision"));
+        var content = JsonNode.Parse(await request.Content!.ReadAsStringAsync())?["messages"]?[0]?["content"];
+
+        Assert.AreEqual("describe", content?[0]?["text"]?.ToString());
+        Assert.AreEqual(
+            "data:image/jpeg;base64,AQID",
+            content?[1]?["image_url"]?["url"]?.ToString());
+    }
+
+    [TestMethod]
+    public async Task AnthropicUrlImage_CompilesToOpenAiImageUrl()
+    {
+        const string body = """
+        {
+          "model":"virtual","messages":[{"role":"user","content":[
+            {"type":"text","text":"describe"},
+            {"type":"image","source":{"type":"url","url":"https://images.example.test/cat.png"}}
+          ]}]
+        }
+        """;
+        var decoded = _compiler.Decode(ProtocolDialect.AnthropicMessages, body);
+
+        using var request = _compiler.CreateProviderRequest(
+            decoded,
+            Model(),
+            Backend(ProviderType.OpenAI, "gpt-vision"));
+        var imageUrl = JsonNode.Parse(await request.Content!.ReadAsStringAsync())
+            ?["messages"]?[0]?["content"]?[1]?["image_url"]?["url"]?.ToString();
+
+        Assert.AreEqual("https://images.example.test/cat.png", imageUrl);
+    }
+
+    [TestMethod]
+    public async Task AnthropicBase64Image_CompilesToOllamaImagesArray()
+    {
+        const string body = """
+        {
+          "model":"virtual","messages":[{"role":"user","content":[
+            {"type":"text","text":"describe"},
+            {"type":"image","source":{"type":"base64","media_type":"image/png","data":"BAUG"}}
+          ]}]
+        }
+        """;
+        var decoded = _compiler.Decode(ProtocolDialect.AnthropicMessages, body);
+
+        using var request = _compiler.CreateProviderRequest(
+            decoded,
+            Model(),
+            Backend(ProviderType.Ollama, "llava"));
+        var message = JsonNode.Parse(await request.Content!.ReadAsStringAsync())?["messages"]?[0];
+
+        Assert.AreEqual("describe", message?["content"]?.ToString());
+        Assert.AreEqual("BAUG", message?["images"]?[0]?.ToString());
     }
 
     [TestMethod]

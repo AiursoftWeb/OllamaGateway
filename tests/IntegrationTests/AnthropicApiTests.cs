@@ -192,6 +192,74 @@ public class AnthropicApiTests : TestBase
     }
 
     [TestMethod]
+    public async Task AnthropicToOllamaBackend_ConvertsBase64Image()
+    {
+        const string modelName = "anthropic-image-ollama";
+        var token = await CreateApiKey();
+        using (var scope = Server!.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+            var provider = new OllamaProvider
+            {
+                Name = "Anthropic Image Ollama",
+                BaseUrl = "http://anthropic-image-ollama.test:11434",
+                ProviderType = ProviderType.Ollama
+            };
+            db.OllamaProviders.Add(provider);
+            await db.SaveChangesAsync();
+
+            var model = new VirtualModel
+            {
+                Name = modelName,
+                Type = ModelType.Chat,
+                MaxRetries = 1
+            };
+            model.VirtualModelBackends.Add(new VirtualModelBackend
+            {
+                ProviderId = provider.Id,
+                UnderlyingModelName = "llava",
+                Enabled = true,
+                IsHealthy = true
+            });
+            db.VirtualModels.Add(model);
+            await db.SaveChangesAsync();
+        }
+
+        MockUpstreamState.Handler = (_, _) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+        {
+            Content = JsonContent.Create(new
+            {
+                model = "llava",
+                message = new { role = "assistant", content = "I see it." },
+                done = true,
+                prompt_eval_count = 5,
+                eval_count = 3
+            })
+        });
+
+        var payload = $$$"""
+        {
+          "model":"{{{modelName}}}","max_tokens":100,"messages":[{"role":"user","content":[
+            {"type":"text","text":"describe"},
+            {"type":"image","source":{"type":"base64","media_type":"image/png","data":"BAUG"}}
+          ]}]
+        }
+        """;
+        var request = new HttpRequestMessage(HttpMethod.Post, "/v1/messages")
+        {
+            Content = new StringContent(payload, System.Text.Encoding.UTF8, "application/json")
+        };
+        request.Headers.Add("x-api-key", token);
+        var response = await Http.SendAsync(request);
+
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody!)!;
+        var message = upstreamBody["messages"]?[0];
+        Assert.AreEqual("describe", message?["content"]?.ToString());
+        Assert.AreEqual("BAUG", message?["images"]?[0]?.ToString());
+    }
+
+    [TestMethod]
     public async Task Anthropic_Messages_UltimateStressTest_MappingWorks()
     {
         var token = await CreateApiKey();

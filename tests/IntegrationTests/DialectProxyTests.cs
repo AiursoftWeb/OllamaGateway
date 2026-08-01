@@ -1015,7 +1015,7 @@ public class DialectProxyTests : TestBase
     }
 
     [TestMethod]
-    public async Task Gateway_CircuitBreaker_FallbackToNextNode()
+    public async Task Gateway_RequestFallback_TriesNextNodeImmediately()
     {
         // Arrange: Add a second backend (Priority 1)
         using (var scope = Server?.Services.CreateScope())
@@ -1061,18 +1061,14 @@ public class DialectProxyTests : TestBase
 
         var payload = $$"""{"model":"{{VirtualModelName}}","messages":[{"role":"user","content":"test fallback"}],"stream":false}""";
 
-        // Act 1: First request hits the primary node 3 times, fails, and bans it.
-        var response1 = await Http.SendAsync(AuthedPost("/api/chat", payload));
-        Assert.AreEqual(HttpStatusCode.InternalServerError, response1.StatusCode);
-        Assert.AreEqual(3, failCount); // MaxRetries exhausted on Node 1
+        var response = await Http.SendAsync(AuthedPost("/api/chat", payload));
 
-        // Act 2: Second request hits the fallback node because Node 1 is now in circuit breaker ban.
-        var response2 = await Http.SendAsync(AuthedPost("/api/chat", payload));
-        Assert.AreEqual(HttpStatusCode.OK, response2.StatusCode);
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.AreEqual(1, failCount, "A failed backend must not be selected again before another eligible backend is tried.");
 
-        var body2 = await response2.Content.ReadAsStringAsync();
-        var json2 = JsonNode.Parse(body2);
-        Assert.AreEqual("Fallback success!", json2?["message"]?["content"]?.ToString());
+        var body = await response.Content.ReadAsStringAsync();
+        var json = JsonNode.Parse(body);
+        Assert.AreEqual("Fallback success!", json?["message"]?["content"]?.ToString());
     }
 
     // ========================================================================
