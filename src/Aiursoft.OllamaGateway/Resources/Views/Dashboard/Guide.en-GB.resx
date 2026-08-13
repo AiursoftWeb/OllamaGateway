@@ -57,6 +57,15 @@
   <data name="Authentication &amp; API key validation" xml:space="preserve">
     <value>Authentication &amp; API key validation</value>
   </data>
+  <data name="Authentication &amp; rate limit" xml:space="preserve">
+    <value>Authentication &amp; rate limit</value>
+  </data>
+  <data name="Backend protocol" xml:space="preserve">
+    <value>Backend protocol</value>
+  </data>
+  <data name="Backend protocol is selected per physical model" xml:space="preserve">
+    <value>Backend protocol is selected per physical model</value>
+  </data>
   <data name="Backends" xml:space="preserve">
     <value>Backends</value>
   </data>
@@ -72,6 +81,9 @@
   <data name="but no virtual model with that name and type &apos;Chat&apos; exists in the database." xml:space="preserve">
     <value>but no virtual model with that name and type &apos;Chat&apos; exists in the database.</value>
   </data>
+  <data name="Change default" xml:space="preserve">
+    <value>Change default</value>
+  </data>
   <data name="ClickHouse Log Pipeline" xml:space="preserve">
     <value>ClickHouse Log Pipeline</value>
   </data>
@@ -83,6 +95,12 @@
   </data>
   <data name="Controls" xml:space="preserve">
     <value>Controls</value>
+  </data>
+  <data name="Counted by the VM timeout" xml:space="preserve">
+    <value>Included in the VM timeout</value>
+  </data>
+  <data name="Create chat model" xml:space="preserve">
+    <value>Create chat model</value>
   </data>
   <data name="create it here → New Virtual Model" xml:space="preserve">
     <value>create it here → New Virtual Model</value>
@@ -96,14 +114,29 @@
   <data name="Data Plane" xml:space="preserve">
     <value>Data Plane</value>
   </data>
+  <data name="Default chat model is unavailable" xml:space="preserve">
+    <value>Default chat model is unavailable</value>
+  </data>
   <data name="Default Chat Model Not Found!" xml:space="preserve">
     <value>Default Chat Model Not Found!</value>
+  </data>
+  <data name="Default virtual model" xml:space="preserve">
+    <value>Default virtual model</value>
+  </data>
+  <data name="does not match a Chat virtual model in the database. Requests without an explicit model cannot be resolved." xml:space="preserve">
+    <value>does not match a Chat virtual model in the database. Requests without an explicit model cannot be resolved.</value>
   </data>
   <data name="drains buffer, batch-inserts into ClickHouse" xml:space="preserve">
     <value>drains buffer, batch-inserts into ClickHouse</value>
   </data>
+  <data name="Dual observability pipeline" xml:space="preserve">
+    <value>Dual observability pipeline</value>
+  </data>
   <data name="Each API key has its own rate-limit window. Two modes:" xml:space="preserve">
     <value>Each API key has its own rate-limit window. Two modes:</value>
+  </data>
+  <data name="Embedding and non-chat APIs" xml:space="preserve">
+    <value>Embedding and non-chat APIs</value>
   </data>
   <data name="entries, DropWrite when full" xml:space="preserve">
     <value>entries, DropWrite when full</value>
@@ -117,6 +150,9 @@
   <data name="Example" xml:space="preserve">
     <value>Example</value>
   </data>
+  <data name="Fallback budget for the current default model" xml:space="preserve">
+    <value>Fallback budget for the current default model</value>
+  </data>
   <data name="Fallback Timeline" xml:space="preserve">
     <value>Fallback Timeline</value>
   </data>
@@ -125,6 +161,9 @@
   </data>
   <data name="Fix it here → Global Settings" xml:space="preserve">
     <value>Fix it here → Global Settings</value>
+  </data>
+  <data name="Four independent timeout planes" xml:space="preserve">
+    <value>Four independent timeout planes</value>
   </data>
   <data name="GPU processes tokens. Once loaded, subsequent requests skip loading → straight to inference." xml:space="preserve">
     <value>The GPU processes tokens. Once loaded, subsequent requests bypass loading → proceeding directly to inference.</value>
@@ -137,6 +176,9 @@
   </data>
   <data name="Health Check" xml:space="preserve">
     <value>Health Check</value>
+  </data>
+  <data name="How a request flows through the Ollama Gateway — from client contract to selected backend protocol." xml:space="preserve">
+    <value>How a request flows through the Ollama Gateway — from client contract to selected backend protocol.</value>
   </data>
   <data name="How a request flows through the Ollama Gateway — from client to backend" xml:space="preserve">
     <value>How a request flows through the Ollama Gateway — from client to backend</value>
@@ -219,16 +261,34 @@
   <data name="NumCtx" xml:space="preserve">
     <value>Context Size</value>
   </data>
+  <data name="Observability" xml:space="preserve">
+    <value>Observability</value>
+  </data>
   <data name="Once the backend sends HTTP headers, the timeout is PASSED. The model can stream tokens for hours — only client disconnection stops it." xml:space="preserve">
     <value>Once the backend sends HTTP headers, the timeout has elapsed. The model can stream tokens for hours — only client disconnection stops it.</value>
+  </data>
+  <data name="One semantic core, protocol-aware edges" xml:space="preserve">
+    <value>One semantic core, protocol-aware edges</value>
+  </data>
+  <data name="Open Traffic Visualization" xml:space="preserve">
+    <value>Open Traffic Visualisation</value>
   </data>
   <data name="or" xml:space="preserve">
     <value>or</value>
   </data>
+  <data name="Outside the VM timeout" xml:space="preserve">
+    <value>Outside the VM timeout</value>
+  </data>
   <data name="Per-Key Rate Limiter" xml:space="preserve">
     <value>Per-Key Rate Limiter</value>
   </data>
+  <data name="Physical model" xml:space="preserve">
+    <value>Physical model</value>
+  </data>
   <data name="Pri" xml:space="preserve">
+    <value>Priority</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
     <value>Priority</value>
   </data>
   <data name="processing" xml:space="preserve">
@@ -242,6 +302,9 @@
   </data>
   <data name="Provider → Warmup Model → Timeout (s)" xml:space="preserve">
     <value>Provider → Warmup Model → Timeout (s)</value>
+  </data>
+  <data name="Provider concurrency — live process state" xml:space="preserve">
+    <value>Provider concurrency — live process state</value>
   </data>
   <data name="Provider concurrency slot queuing" xml:space="preserve">
     <value>Provider concurrency slot queuing</value>
@@ -264,11 +327,26 @@
   <data name="Reject mode" xml:space="preserve">
     <value>Reject mode</value>
   </data>
+  <data name="Request Path" xml:space="preserve">
+    <value>Request Path</value>
+  </data>
   <data name="Request Timeout" xml:space="preserve">
     <value>Request Timeout</value>
   </data>
   <data name="runs every" xml:space="preserve">
     <value>runs every</value>
+  </data>
+  <data name="Runtime" xml:space="preserve">
+    <value>Runtime</value>
+  </data>
+  <data name="Runtime configuration" xml:space="preserve">
+    <value>Runtime configuration</value>
+  </data>
+  <data name="Separate, narrower contracts" xml:space="preserve">
+    <value>Separate, narrower contracts</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>State</value>
   </data>
   <data name="Strategy" xml:space="preserve">
     <value>Strategy</value>
@@ -285,6 +363,9 @@
   <data name="The 4-Layer Timeout Architecture" xml:space="preserve">
     <value>The 4-Layer Timeout Architecture</value>
   </data>
+  <data name="The configured default" xml:space="preserve">
+    <value>The configured default</value>
+  </data>
   <data name="The global default chat model is set to" xml:space="preserve">
     <value>The global default chat model is set to</value>
   </data>
@@ -296,6 +377,9 @@
   </data>
   <data name="timeout. Backend starts streaming at" xml:space="preserve">
     <value>timeout. Backend starts streaming at</value>
+  </data>
+  <data name="Timeouts &amp; Queues" xml:space="preserve">
+    <value>Timeouts &amp; Queues</value>
   </data>
   <data name="tracks API key usage, virtual model usage, underlying model usage — feeds the Dashboard charts in real-time" xml:space="preserve">
     <value>tracks API key usage, virtual model usage, underlying model usage — feeds the Dashboard charts in real-time</value>
