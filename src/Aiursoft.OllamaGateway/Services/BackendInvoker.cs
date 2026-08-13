@@ -14,11 +14,16 @@ public class BackendInvoker(
     public async Task<BackendInvocationResult?> SendAsync(
         VirtualModel virtualModel,
         VirtualModelBackend initialBackend,
-        GatewayCapability capability,
+        GatewayCapability requiredCapabilities,
         Func<VirtualModelBackend, HttpRequestMessage> requestFactory,
-        CancellationToken clientCancellation)
+        CancellationToken clientCancellation,
+        GatewayCapability preferredCapabilities = GatewayCapability.None)
     {
-        bool IsEligible(VirtualModelBackend candidate) => capabilityPlanner.Supports(candidate, capability);
+        bool SupportsRequired(VirtualModelBackend candidate) =>
+            capabilityPlanner.Supports(candidate, requiredCapabilities);
+        bool SupportsPreferred(VirtualModelBackend candidate) =>
+            preferredCapabilities == GatewayCapability.None ||
+            capabilityPlanner.Supports(candidate, requiredCapabilities | preferredCapabilities);
 
         var attemptedBackendIds = new HashSet<int>();
 
@@ -26,19 +31,36 @@ public class BackendInvoker(
         {
             var next = modelSelector.SelectBackend(
                 virtualModel,
-                candidate => IsEligible(candidate) && !attemptedBackendIds.Contains(candidate.Id));
+                candidate => SupportsRequired(candidate) &&
+                             SupportsPreferred(candidate) &&
+                             !attemptedBackendIds.Contains(candidate.Id));
+            if (next != null)
+                return next;
+
+            next = modelSelector.SelectBackend(
+                virtualModel,
+                candidate => SupportsRequired(candidate) && !attemptedBackendIds.Contains(candidate.Id));
             if (next != null)
                 return next;
 
             // All currently eligible backends have been attempted. If the retry budget is
             // larger than the backend pool, begin another pass rather than stopping early.
             attemptedBackendIds.Clear();
-            return modelSelector.SelectBackend(virtualModel, IsEligible);
+            return modelSelector.SelectBackend(
+                       virtualModel,
+                       candidate => SupportsRequired(candidate) && SupportsPreferred(candidate))
+                   ?? modelSelector.SelectBackend(virtualModel, SupportsRequired);
         }
 
-        var backend = IsEligible(initialBackend)
+        var backend = SupportsRequired(initialBackend) && SupportsPreferred(initialBackend)
             ? initialBackend
             : SelectNextBackend();
+        if (backend != null && preferredCapabilities != GatewayCapability.None && !SupportsPreferred(backend))
+        {
+            logger.LogInformation(
+                "No available backend supports preferred capabilities {PreferredCapabilities}; falling back to semantic translation",
+                preferredCapabilities);
+        }
         IAsyncDisposable? concurrencySlot = null;
 
         for (var i = 0; i < virtualModel.MaxRetries; i++)

@@ -830,6 +830,108 @@ public class OpenAIBackendProviderTests : TestBase
     }
 
     [TestMethod]
+    public async Task AnthropicClaudeCodeControls_FallBackToOpenAiChatBackend()
+    {
+        MockUpstreamState.Handler = (_, _) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+        {
+            Content = new StringContent(
+                """{"id":"claude-fallback","object":"chat.completion","model":"gpt-4o-mini","choices":[{"index":0,"message":{"role":"assistant","content":"Claude Code works"},"finish_reason":"stop"}],"usage":{"prompt_tokens":8,"completion_tokens":4,"total_tokens":12}}""",
+                Encoding.UTF8,
+                "application/json")
+        });
+
+        var payload = $$"""
+        {
+          "model":"{{ChatModelName}}",
+          "max_tokens":1024,
+          "messages":[{"role":"user","content":"hello"}],
+          "stream":false,
+          "top_k":40,
+          "thinking":{"type":"adaptive"},
+          "metadata":{"user_id":"session"},
+          "stop_sequences":["stop"],
+          "service_tier":"auto"
+        }
+        """;
+
+        var response = await Http.SendAsync(AuthedPost("/v1/messages?beta=true", payload));
+
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.AreEqual("/v1/chat/completions", MockUpstreamState.LastRequest?.RequestUri?.AbsolutePath);
+        var upstream = JsonNode.Parse(MockUpstreamState.LastRequestBody!);
+        Assert.AreEqual(PhysicalModelName, upstream?["model"]?.ToString());
+        Assert.AreEqual(true, upstream?["chat_template_kwargs"]?["enable_thinking"]?.GetValue<bool>());
+        Assert.IsNull(upstream?["metadata"]);
+        Assert.IsNull(upstream?["service_tier"]);
+
+        var result = JsonNode.Parse(await response.Content.ReadAsStringAsync());
+        Assert.AreEqual("Claude Code works", result?["content"]?[0]?["text"]?.ToString());
+    }
+
+    [TestMethod]
+    public async Task OpenAiSoftPassthrough_PrefersMatchingBackendOverHigherPriorityTranslation()
+    {
+        const string modelName = "openai-soft-preference:latest";
+        using (var scope = Server!.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+            var openAiProvider = await db.OllamaProviders
+                .Where(provider => provider.Name == "OpenAI Backend")
+                .OrderByDescending(provider => provider.Id)
+                .FirstAsync();
+            var ollamaProvider = new OllamaProvider
+            {
+                Name = "Higher priority Ollama",
+                BaseUrl = "http://soft-preference-ollama.test:11434",
+                ProviderType = ProviderType.Ollama
+            };
+            db.OllamaProviders.Add(ollamaProvider);
+            await db.SaveChangesAsync();
+
+            var virtualModel = new VirtualModel
+            {
+                Name = modelName,
+                Type = ModelType.Chat,
+                SelectionStrategy = SelectionStrategy.PriorityFallback
+            };
+            virtualModel.VirtualModelBackends.Add(new VirtualModelBackend
+            {
+                ProviderId = ollamaProvider.Id,
+                UnderlyingModelName = "llama-primary",
+                Priority = 0,
+                Enabled = true,
+                IsHealthy = true
+            });
+            virtualModel.VirtualModelBackends.Add(new VirtualModelBackend
+            {
+                ProviderId = openAiProvider.Id,
+                UnderlyingModelName = PhysicalModelName,
+                Priority = 1,
+                Enabled = true,
+                IsHealthy = true
+            });
+            db.VirtualModels.Add(virtualModel);
+            await db.SaveChangesAsync();
+        }
+
+        MockUpstreamState.Handler = (_, _) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+        {
+            Content = new StringContent(
+                """{"id":"soft","object":"chat.completion","model":"gpt-4o-mini","choices":[{"index":0,"message":{"role":"assistant","content":"preserved"},"finish_reason":"stop"}],"usage":{"prompt_tokens":3,"completion_tokens":1,"total_tokens":4}}""",
+                Encoding.UTF8,
+                "application/json")
+        });
+
+        var payload = $$$"""{"model":"{{{modelName}}}","messages":[{"role":"user","content":"hi"}],"vendor_extension":{"keep":true}}""";
+        var response = await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
+
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.AreEqual("/v1/chat/completions", MockUpstreamState.LastRequest?.RequestUri?.AbsolutePath);
+        Assert.AreEqual(true,
+            JsonNode.Parse(MockUpstreamState.LastRequestBody!)?["vendor_extension"]?["keep"]?.GetValue<bool>());
+    }
+
+    [TestMethod]
     public async Task AnthropicToOpenAiBackend_ConvertsBase64AndUrlImages()
     {
         MockUpstreamState.Handler = (_, _) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)

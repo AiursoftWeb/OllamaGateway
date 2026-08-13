@@ -94,14 +94,17 @@ public class OpenAIController : ControllerBase
                 backend,
                 decodedRequest.Request.RequiredCapabilities,
                 candidate => _chatRequestCompiler.CreateProviderRequest(decodedRequest, virtualModel, candidate),
-                HttpContext.RequestAborted);
+                HttpContext.RequestAborted,
+                decodedRequest.Request.PreferredCapabilities);
 
             if (result == null)
             {
+                var error = $"No available backend for model '{virtualModel.Name}' supports the required request capabilities.";
                 Response.StatusCode = StatusCodes.Status503ServiceUnavailable;
-                await Response.WriteAsync(
-                    $"No available backend for model '{virtualModel.Name}'.",
-                    HttpContext.RequestAborted);
+                _logContext.Log.StatusCode = Response.StatusCode;
+                _logContext.Log.Success = false;
+                _logContext.Log.Answer = error;
+                await Response.WriteAsync(error, HttpContext.RequestAborted);
                 return;
             }
 

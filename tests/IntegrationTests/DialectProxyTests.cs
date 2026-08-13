@@ -167,6 +167,33 @@ public class DialectProxyTests : TestBase
     }
 
     [TestMethod]
+    public async Task OpenAIUntranslatedControl_FallsBackToOllamaBackend()
+    {
+        MockUpstreamState.Handler = (_, _) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+        {
+            Content = new StringContent(
+                """{"model":"llama3.2","message":{"role":"assistant","content":"translated"},"done":true,"prompt_eval_count":3,"eval_count":1}""",
+                Encoding.UTF8,
+                "application/json")
+        });
+
+        var payload = $$"""
+        {
+          "model":"{{VirtualModelName}}",
+          "messages":[{"role":"user","content":"Hi"}],
+          "stream":false,
+          "frequency_penalty":0.2
+        }
+        """;
+
+        var response = await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
+
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.AreEqual("/api/chat", MockUpstreamState.LastRequest?.RequestUri?.AbsolutePath);
+        Assert.IsNull(JsonNode.Parse(MockUpstreamState.LastRequestBody!)?["frequency_penalty"]);
+    }
+
+    [TestMethod]
     public async Task OpenAI_Streaming_ReturnsValidSSE()
     {
         // Arrange: mock upstream returns NDJSON stream (Ollama native format)

@@ -51,7 +51,8 @@ public class ChatRequestCompilerTests
     {
         const string body = """{"model":"virtual","messages":[{"role":"user","content":null}],"stream":true,"stream_options":{"future_option":"kept"},"response_format":{"type":"json_schema","future_option":"kept"},"chat_template_kwargs":{"enable_thinking":true,"future_option":"kept"},"max_completion_tokens":100,"vendor_extension":{"exact":1.2300},"top_k":40,"num_ctx":8192,"repeat_penalty":1.2}""";
         var decoded = _compiler.Decode(ProtocolDialect.OpenAiChatCompletions, body);
-        Assert.IsTrue(decoded.Request.RequiredCapabilities.HasFlag(GatewayCapability.OpenAiChatPassthrough));
+        Assert.IsFalse(decoded.Request.RequiredCapabilities.HasFlag(GatewayCapability.OpenAiChatPassthrough));
+        Assert.IsTrue(decoded.Request.PreferredCapabilities.HasFlag(GatewayCapability.OpenAiChatPassthrough));
 
         using var request = _compiler.CreateProviderRequest(decoded, Model(), Backend(ProviderType.OpenAI, "gpt-physical"));
         var json = JsonNode.Parse(await request.Content!.ReadAsStringAsync());
@@ -127,6 +128,50 @@ public class ChatRequestCompilerTests
         Assert.AreEqual("tool", json?["messages"]?[1]?["role"]?.ToString());
         Assert.AreEqual("tool_1", json?["messages"]?[1]?["tool_call_id"]?.ToString());
         Assert.AreEqual(123, json?["max_tokens"]?.GetValue<int>());
+    }
+
+    [TestMethod]
+    public void AnthropicClaudeCodeControls_AreSoftPassthroughPreference()
+    {
+        const string body = """
+        {
+          "model":"virtual",
+          "max_tokens":1024,
+          "messages":[{"role":"user","content":"hi"}],
+          "stream":true,
+          "top_k":40,
+          "thinking":{"type":"adaptive"},
+          "metadata":{"user_id":"session"},
+          "stop_sequences":["stop"],
+          "service_tier":"auto"
+        }
+        """;
+
+        var decoded = _compiler.Decode(ProtocolDialect.AnthropicMessages, body);
+
+        Assert.IsTrue(decoded.Request.RequiredCapabilities.HasFlag(GatewayCapability.Streaming));
+        Assert.IsTrue(decoded.Request.RequiredCapabilities.HasFlag(GatewayCapability.Reasoning));
+        Assert.IsFalse(decoded.Request.RequiredCapabilities.HasFlag(GatewayCapability.AnthropicPassthrough));
+        Assert.IsTrue(decoded.Request.PreferredCapabilities.HasFlag(GatewayCapability.AnthropicPassthrough));
+        Assert.AreEqual(40, decoded.Request.Options.TopK);
+        Assert.AreEqual(true, decoded.Request.Options.Thinking);
+    }
+
+    [TestMethod]
+    public void AnthropicUnknownContentBlock_RemainsHardPassthroughRequirement()
+    {
+        const string body = """
+        {
+          "model":"virtual",
+          "max_tokens":100,
+          "messages":[{"role":"user","content":[{"type":"document","source":{"type":"text","data":"important"}}]}]
+        }
+        """;
+
+        var decoded = _compiler.Decode(ProtocolDialect.AnthropicMessages, body);
+
+        Assert.IsTrue(decoded.Request.RequiredCapabilities.HasFlag(GatewayCapability.AnthropicPassthrough));
+        Assert.AreEqual(GatewayCapability.None, decoded.Request.PreferredCapabilities);
     }
 
     [TestMethod]

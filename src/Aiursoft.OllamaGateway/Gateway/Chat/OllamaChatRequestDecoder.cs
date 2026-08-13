@@ -65,11 +65,11 @@ public sealed class OllamaChatRequestDecoder : IChatRequestDecoder
             messages,
             tools,
             structuredOutput: root["format"] != null);
-        if (messages.SelectMany(message => message.Content).Any(part => part is GatewayOpaqueContent) ||
-            HasUntranslatedFields(root, options))
-        {
+        if (messages.SelectMany(message => message.Content).Any(part => part is GatewayOpaqueContent))
             requiredCapabilities |= GatewayCapability.OllamaNativePassthrough;
-        }
+        var preferredCapabilities = HasUntranslatedFields(root, options)
+            ? GatewayCapability.OllamaNativePassthrough
+            : GatewayCapability.None;
         var request = new GatewayChatRequest(
             streaming,
             messages,
@@ -85,7 +85,8 @@ public sealed class OllamaChatRequestDecoder : IChatRequestDecoder
                 StructuredOutputJson: root["format"]?.ToJsonString()),
             tools,
             ChatProviderEncoding.DecodeOpenAiToolChoice(root["tool_choice"]),
-            RequiredCapabilities: requiredCapabilities);
+            RequiredCapabilities: requiredCapabilities,
+            PreferredCapabilities: preferredCapabilities);
 
         return new DecodedChatRequest(Dialect, request, root);
     }

@@ -108,7 +108,8 @@ public sealed class OpenAIResponsesController(
                 initialBackend,
                 required,
                 candidate => chatRequestCompiler.CreateProviderRequest(decoded, virtualModel, candidate),
-                HttpContext.RequestAborted);
+                HttpContext.RequestAborted,
+                decoded.Request.PreferredCapabilities);
             if (result == null)
             {
                 await WriteErrorAsync(503, "server_error", "backend_unavailable",

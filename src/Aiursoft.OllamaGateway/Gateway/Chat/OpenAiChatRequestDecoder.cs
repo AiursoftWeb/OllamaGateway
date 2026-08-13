@@ -30,11 +30,11 @@ public sealed class OpenAiChatRequestDecoder : IChatRequestDecoder
             tools,
             structuredOutput: root["response_format"] != null,
             reasoningRequested: root["reasoning_effort"] != null);
-        if (messages.SelectMany(message => message.Content).Any(part => part is GatewayOpaqueContent) ||
-            HasUntranslatedTopLevelFields(root))
-        {
+        if (messages.SelectMany(message => message.Content).Any(part => part is GatewayOpaqueContent))
             requiredCapabilities |= GatewayCapability.OpenAiChatPassthrough;
-        }
+        var preferredCapabilities = HasUntranslatedTopLevelFields(root)
+            ? GatewayCapability.OpenAiChatPassthrough
+            : GatewayCapability.None;
         var request = new GatewayChatRequest(
             streaming,
             messages,
@@ -47,7 +47,8 @@ public sealed class OpenAiChatRequestDecoder : IChatRequestDecoder
                 StructuredOutputJson: NormalizeResponseFormat(root["response_format"])),
             tools,
             ChatProviderEncoding.DecodeOpenAiToolChoice(root["tool_choice"]),
-            RequiredCapabilities: requiredCapabilities);
+            RequiredCapabilities: requiredCapabilities,
+            PreferredCapabilities: preferredCapabilities);
 
         return new DecodedChatRequest(Dialect, request, root);
     }

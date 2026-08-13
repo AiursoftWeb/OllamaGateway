@@ -18,6 +18,7 @@ public sealed record GatewayChatRequest(
     GatewayToolChoice? ToolChoice = null,
     string? Instructions = null,
     GatewayCapability RequiredCapabilities = GatewayCapability.ChatCompletion,
+    GatewayCapability PreferredCapabilities = GatewayCapability.None,
     IReadOnlyDictionary<string, string>? Extensions = null)
 {
     public IReadOnlyDictionary<string, string> Extensions { get; init; } =

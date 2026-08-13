@@ -142,14 +142,17 @@ public class ProxyController(
                 backend,
                 decodedRequest.Request.RequiredCapabilities,
                 candidate => chatRequestCompiler.CreateProviderRequest(decodedRequest, virtualModel, candidate),
-                HttpContext.RequestAborted);
+                HttpContext.RequestAborted,
+                decodedRequest.Request.PreferredCapabilities);
 
             if (result == null)
             {
+                var error = $"No available backend for model '{virtualModel.Name}' supports the required request capabilities.";
                 Response.StatusCode = StatusCodes.Status503ServiceUnavailable;
-                await Response.WriteAsync(
-                    $"No available backend for model '{virtualModel.Name}'.",
-                    HttpContext.RequestAborted);
+                logContext.Log.StatusCode = Response.StatusCode;
+                logContext.Log.Success = false;
+                logContext.Log.Answer = error;
+                await Response.WriteAsync(error, HttpContext.RequestAborted);
                 return;
             }
 

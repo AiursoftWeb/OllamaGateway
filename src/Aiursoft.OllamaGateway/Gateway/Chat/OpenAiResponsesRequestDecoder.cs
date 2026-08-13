@@ -41,9 +41,9 @@ public sealed class OpenAiResponsesRequestDecoder : IChatRequestDecoder
         var streaming = ChatRequestDecoding.BoolValue(root["stream"]) ?? false;
         var isStateful = root["previous_response_id"] != null || root["conversation"] != null;
         var structuredOutput = root["text"]?["format"];
-        var requiresResponsesPassthrough = messages
+        var hasOpaqueContent = messages
             .SelectMany(message => message.Content)
-            .Any(part => part is GatewayOpaqueContent) || HasUntranslatedTopLevelFields(root);
+            .Any(part => part is GatewayOpaqueContent);
         var requiredCapabilities = ChatRequestCapabilities.Infer(
             streaming,
             messages,
@@ -52,8 +52,11 @@ public sealed class OpenAiResponsesRequestDecoder : IChatRequestDecoder
             hasNativeTools,
             isStateful,
             root["reasoning"] != null);
-        if (requiresResponsesPassthrough)
+        if (hasOpaqueContent)
             requiredCapabilities |= GatewayCapability.OpenAiResponsesPassthrough;
+        var preferredCapabilities = HasUntranslatedTopLevelFields(root)
+            ? GatewayCapability.OpenAiResponsesPassthrough
+            : GatewayCapability.None;
         var request = new GatewayChatRequest(
             streaming,
             messages,
@@ -66,7 +69,8 @@ public sealed class OpenAiResponsesRequestDecoder : IChatRequestDecoder
             tools,
             ChatProviderEncoding.DecodeOpenAiToolChoice(root["tool_choice"]),
             instructions,
-            requiredCapabilities);
+            requiredCapabilities,
+            preferredCapabilities);
 
         return new DecodedChatRequest(Dialect, request, root);
     }

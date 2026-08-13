@@ -14,7 +14,8 @@ public interface IBackendInvoker
     Task<BackendInvocationResult?> SendAsync(
         VirtualModel virtualModel,
         VirtualModelBackend initialBackend,
-        GatewayCapability capability,
+        GatewayCapability requiredCapabilities,
         Func<VirtualModelBackend, HttpRequestMessage> requestFactory,
-        CancellationToken clientCancellation);
+        CancellationToken clientCancellation,
+        GatewayCapability preferredCapabilities = GatewayCapability.None);
 }

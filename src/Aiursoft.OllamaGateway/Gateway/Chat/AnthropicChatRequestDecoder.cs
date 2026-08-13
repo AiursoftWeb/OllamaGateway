@@ -46,23 +46,31 @@ public sealed class AnthropicChatRequestDecoder : IChatRequestDecoder
         }
 
         var streaming = ChatRequestDecoding.BoolValue(root["stream"]) ?? false;
+        var thinking = DecodeThinking(root["thinking"]);
         var mergedMessages = MergeSystemMessages(messages);
-        var requiredCapabilities = ChatRequestCapabilities.Infer(streaming, mergedMessages, tools);
-        if (mergedMessages.SelectMany(message => message.Content).Any(part => part is GatewayOpaqueContent) ||
-            HasUntranslatedTopLevelFields(root))
-        {
+        var requiredCapabilities = ChatRequestCapabilities.Infer(
+            streaming,
+            mergedMessages,
+            tools,
+            reasoningRequested: thinking == true);
+        if (mergedMessages.SelectMany(message => message.Content).Any(part => part is GatewayOpaqueContent))
             requiredCapabilities |= GatewayCapability.AnthropicPassthrough;
-        }
+        var preferredCapabilities = HasUntranslatedTopLevelFields(root)
+            ? GatewayCapability.AnthropicPassthrough
+            : GatewayCapability.None;
         var request = new GatewayChatRequest(
             streaming,
             mergedMessages,
             new GatewayChatOptions(
                 Temperature: ChatRequestDecoding.DoubleValue(root["temperature"]),
                 TopP: ChatRequestDecoding.DoubleValue(root["top_p"]),
-                MaxTokens: ChatRequestDecoding.IntValue(root["max_tokens"])),
+                TopK: ChatRequestDecoding.IntValue(root["top_k"]),
+                MaxTokens: ChatRequestDecoding.IntValue(root["max_tokens"]),
+                Thinking: thinking),
             tools,
             ChatProviderEncoding.DecodeAnthropicToolChoice(root["tool_choice"]),
-            RequiredCapabilities: requiredCapabilities);
+            RequiredCapabilities: requiredCapabilities,
+            PreferredCapabilities: preferredCapabilities);
 
         return new DecodedChatRequest(Dialect, request, root);
     }
@@ -72,9 +80,21 @@ public sealed class AnthropicChatRequestDecoder : IChatRequestDecoder
         var translated = new HashSet<string>(StringComparer.Ordinal)
         {
             "model", "messages", "system", "stream", "max_tokens", "temperature",
-            "top_p", "tools", "tool_choice"
+            "top_p", "top_k", "thinking", "tools", "tool_choice"
         };
         return root.Any(property => !translated.Contains(property.Key));
+    }
+
+    private static bool? DecodeThinking(JsonNode? node)
+    {
+        if (node is JsonObject thinking)
+        {
+            var type = ChatRequestDecoding.StringValue(thinking["type"]);
+            if (type is "enabled" or "adaptive") return true;
+            if (type == "disabled") return false;
+        }
+
+        return ChatRequestDecoding.BoolValue(node);
     }
 
     private static List<GatewayContentPart> DecodeContent(JsonNode? content, string role)

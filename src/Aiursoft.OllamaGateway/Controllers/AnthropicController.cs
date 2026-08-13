@@ -91,12 +91,17 @@ public class AnthropicController : ControllerBase
                 backend,
                 decodedChatRequest.Request.RequiredCapabilities,
                 b => _chatRequestCompiler.CreateProviderRequest(decodedChatRequest, virtualModel, b),
-                HttpContext.RequestAborted);
+                HttpContext.RequestAborted,
+                decodedChatRequest.Request.PreferredCapabilities);
 
             if (result == null)
             {
+                const string error = "No available backend supports the required request capabilities.";
                 Response.StatusCode = 503;
-                await Response.WriteAsync("No available backend.");
+                _logContext.Log.StatusCode = Response.StatusCode;
+                _logContext.Log.Success = false;
+                _logContext.Log.Answer = error;
+                await Response.WriteAsync(error);
                 return;
             }
 

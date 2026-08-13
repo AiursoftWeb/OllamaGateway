@@ -147,7 +147,7 @@
                                 <code>Decoder</code><span>→</span><code>Request IR</code><span>→</span><code>Target adapter</code>
                             </div>
                             <p class="text-body-secondary mb-0">
-                                Only shared semantics are translated. Unrepresentable extensions are discarded when documented, explicitly rejected, or pin routing to a compatible backend.
+                                Only shared semantics are translated. Wire extensions prefer a matching backend and fall back to the documented semantic subset; opaque content and unsupported stateful operations remain hard rejections.
                             </p>
                         </div>
                     </div>

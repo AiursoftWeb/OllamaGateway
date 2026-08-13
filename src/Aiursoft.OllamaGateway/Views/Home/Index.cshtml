@@ -416,7 +416,7 @@
                 </div>
                 <div class="col-12 col-lg-6">
                     <article class="compatibility-contract-card contract-discarded h-100">
-                        <h4><i class="fas fa-times-circle"></i>@Localizer["Discarded, rejected, or pinned"]</h4>
+                        <h4><i class="fas fa-times-circle"></i>@Localizer["Discarded, rejected, or preferred"]</h4>
                         <div data-route-discarded></div>
                     </article>
                 </div>
@@ -437,7 +437,7 @@
                         <th style="width: 18%;">@Localizer["Implementation method"]</th>
                         <th style="width: 19%;"><i class="fas fa-check-circle text-success me-1"></i>@Localizer["Preserved"]</th>
                         <th style="width: 21%;"><i class="fas fa-random text-info me-1"></i>@Localizer["Mapped / reconstructed"]</th>
-                        <th style="width: 16%;"><i class="fas fa-times-circle text-danger me-1"></i>@Localizer["Discarded, rejected, or pinned"]</th>
+                        <th style="width: 16%;"><i class="fas fa-times-circle text-danger me-1"></i>@Localizer["Discarded, rejected, or preferred"]</th>
                         <th style="width: 14%;"><i class="fas fa-database text-warning me-1"></i>@Localizer["Database override"]</th>
                     </tr>
                 </thead>
@@ -450,7 +450,7 @@
                         <td><code>OllamaChatRequestDecoder</code> performs capability inspection; <code>OllamaChatProviderRequestAdapter</code> clones the original JSON; <code>OllamaChatWireResponseWriter</code> keeps NDJSON records in the Ollama dialect.</td>
                         <td>Unknown request fields, <code>messages</code>, <code>tools</code>, <code>options</code>, <code>format</code>, and unknown JSON response fields are retained. Malformed upstream NDJSON records are forwarded raw.</td>
                         <td>Only gateway-owned fields are rewritten: virtual model → physical model upstream, physical model → virtual model downstream; <code>stream</code> is normalized; missing <code>keep_alive</code> receives the request/provider default.</td>
-                        <td>No known Ollama field is intentionally dropped on this route. Unknown fields pin routing to an Ollama-native backend. This is semantic, not byte-for-byte, preservation because valid JSON is reserialized.</td>
+                        <td>No known Ollama field is intentionally dropped on this route. Unknown fields make an Ollama-native backend preferred; if none is available, the request may use a documented translated subset. Valid JSON may be reserialized.</td>
                         <td><code>temperature</code>, <code>top_p</code>, <code>top_k</code>, <code>num_predict</code>, <code>num_ctx</code>, <code>repeat_penalty</code>, and <code>think</code> are hard-overridden when configured.</td>
                     </tr>
                     <tr data-direction="ollama-to-openai-chat" data-mode="translated">
@@ -458,7 +458,7 @@
                         <td><code>OllamaChatRequestDecoder</code> → <code>GatewayChatRequest</code> → <code>OpenAiChatProviderRequestAdapter</code>. The response reverses through <code>OpenAiChatProviderResponseDecoder</code> and <code>OllamaChatClientResponseWriter</code>.</td>
                         <td>Message roles/text, function definitions, function calls/results, streaming intent, temperature, top-p, token limit, images, structured format, and token usage survive when representable.</td>
                         <td><code>images[]</code> → OpenAI <code>image_url</code> data parts; <code>num_predict</code> → <code>max_tokens</code>; <code>think</code> → <code>chat_template_kwargs.enable_thinking</code>; Ollama tool calls and responses are rebuilt as OpenAI tools and back again.</td>
-                        <td><code>top_k</code>, <code>num_ctx</code>, <code>repeat_penalty</code>, and <code>keep_alive</code> have no OpenAI Chat mapping. Unknown Ollama extensions pin the request to an Ollama backend rather than entering this route.</td>
+                        <td><code>top_k</code>, <code>num_ctx</code>, <code>repeat_penalty</code>, and <code>keep_alive</code> have no OpenAI Chat mapping. Unknown Ollama controls prefer a native backend but are omitted when this translation path is the only eligible route.</td>
                         <td>OpenAI target fields <code>temperature</code>, <code>top_p</code>, and <code>max_tokens</code> use VM values when set. VM <code>Thinking</code> overrides the translated client value.</td>
                     </tr>
                     <tr data-direction="ollama-to-openai-responses" data-mode="translated">
@@ -477,7 +477,7 @@
                         <td><code>OpenAiChatRequestDecoder</code> → <code>GatewayChatRequest</code> → <code>OllamaChatProviderRequestAdapter</code>. Ollama response records are decoded into canonical events and emitted as Chat Completion JSON/SSE.</td>
                         <td>Roles/text, data-URI images, function tools/calls/results, temperature, top-p, token limit, reasoning text, structured output intent, stream, finish reason, and usage.</td>
                         <td>OpenAI content parts → Ollama <code>content</code> + <code>images[]</code>; <code>max_tokens</code>/<code>max_completion_tokens</code> → <code>num_predict</code>; <code>reasoning_effort</code> → boolean <code>think</code>; <code>response_format</code> → Ollama <code>format</code>.</td>
-                        <td>Remote image URLs have no portable Ollama-native representation; base64/data-URI is the verified conversion. Chat-only extensions such as penalties/logprobs/seed require a Chat backend instead of being silently translated.</td>
+                        <td>Remote image URLs have no portable Ollama-native representation; base64/data-URI is the verified conversion. Chat-only controls such as penalties/logprobs/seed prefer a Chat backend and are omitted when Ollama is the only eligible route.</td>
                         <td>All Ollama VM controls apply: <code>temperature</code>, <code>top_p</code>, <code>top_k</code>, <code>num_predict</code>, <code>num_ctx</code>, <code>repeat_penalty</code>, and <code>think</code>. Ollama-only values may therefore be injected even though the client dialect cannot express them.</td>
                     </tr>
                     <tr data-direction="openai-chat-to-openai-chat" data-mode="transparent">
@@ -485,7 +485,7 @@
                         <td><code>OpenAiChatRequestDecoder</code> inspects capabilities; the provider adapter clones the source JSON; <code>OpenAiChatWireResponseWriter</code> forwards Chat JSON/SSE while observing text, reasoning, tools, and usage.</td>
                         <td>Unknown request fields, message/content extensions, <code>response_format</code>, <code>reasoning_effort</code>, vendor fields, unknown response fields, null values, and unrecognized SSE lines remain in the Chat dialect.</td>
                         <td>Model identity is masked in both directions; <code>stream</code> is normalized; streaming requests merge <code>stream_options.include_usage=true</code>; null message content is normalized to an empty string.</td>
-                        <td>No known Chat field is intentionally dropped. Unknown/Chat-only fields pin selection to a Chat Completions backend. Valid JSON may be reserialized, so whitespace and numeric formatting are not contractual.</td>
+                        <td>No known Chat field is intentionally dropped on this route. Unknown/Chat-only fields prefer a Chat Completions backend, with semantic translation as fallback when no matching backend is available. Valid JSON may be reserialized.</td>
                         <td>VM <code>Temperature</code>, <code>TopP</code>, <code>NumPredict</code>, and <code>Thinking</code> override their target fields. Existing nested <code>chat_template_kwargs</code> members are preserved around <code>enable_thinking</code>.</td>
                     </tr>
                     <tr data-direction="openai-chat-to-openai-responses" data-mode="translated">
@@ -493,7 +493,7 @@
                         <td><code>OpenAiChatRequestDecoder</code> → canonical IL → <code>OpenAiResponsesProviderRequestAdapter</code>. Responses output Items/events return through the Responses decoder and Chat client writer.</td>
                         <td>Roles/text, images, function tools/calls/results, temperature, top-p, maximum output tokens, reasoning effort/output, structured output, streaming, finish reason, and usage.</td>
                         <td>System/developer messages → <code>instructions</code>; messages → <code>input</code> Items; function schemas are flattened; named <code>tool_choice.function.name</code> → Responses <code>tool_choice.name</code>; <code>max_completion_tokens</code> → <code>max_output_tokens</code>; <code>response_format</code> → <code>text.format</code>.</td>
-                        <td><code>chat_template_kwargs.enable_thinking</code> has no Responses mapping. Chat-only extensions require a Chat backend. Responses annotations, citations, and noncanonical output Items cannot be reconstructed in a Chat Completion response.</td>
+                        <td><code>chat_template_kwargs.enable_thinking</code> has no Responses mapping. Chat-only controls prefer a Chat backend and are omitted on fallback. Responses annotations, citations, and noncanonical output Items cannot be reconstructed in a Chat Completion response.</td>
                         <td>VM <code>Temperature</code>, <code>TopP</code>, and <code>NumPredict</code> override Responses target fields. VM <code>Thinking</code>, <code>TopK</code>, <code>NumCtx</code>, and <code>RepeatPenalty</code> are not Responses controls.</td>
                     </tr>
                     <tr class="compatibility-group compatibility-group-responses">
@@ -504,7 +504,7 @@
                         <td><code>OpenAiResponsesRequestDecoder</code> → canonical IL → <code>OllamaChatProviderRequestAdapter</code>. Ollama output becomes typed Responses Items and typed SSE events.</td>
                         <td>Instructions, message Items, text, images, function calls/results, function tool definitions, temperature, top-p, output-token limit, reasoning effort/output, structured format, stream, finish reason, and usage.</td>
                         <td><code>instructions</code> → system message; <code>input_text</code>/<code>input_image</code> → Ollama content/images; <code>max_output_tokens</code> → <code>num_predict</code>; <code>reasoning.effort</code> → <code>think</code>; <code>text.format</code> → <code>format</code>; response events are synthesized with stable output indexes.</td>
-                        <td><code>previous_response_id</code>, <code>conversation</code>, <code>store:true</code>, and <code>background:true</code> are rejected before routing. Native tools and unknown Items/fields require a Responses backend; they are never silently sent to Ollama.</td>
+                        <td><code>previous_response_id</code>, <code>conversation</code>, <code>store:true</code>, and <code>background:true</code> are rejected before routing. Native tools and unknown Items require a Responses backend. Unknown top-level controls prefer Responses and are omitted on fallback.</td>
                         <td>All Ollama VM controls apply and override translated values: sampling, context, repeat penalty, token limit, and thinking. Ollama-only DB controls may be injected.</td>
                     </tr>
                     <tr data-direction="openai-responses-to-openai-chat" data-mode="translated">
@@ -512,7 +512,7 @@
                         <td><code>OpenAiResponsesRequestDecoder</code> → canonical IL → <code>OpenAiChatProviderRequestAdapter</code>. Chat completions/chunks are decoded and emitted as Responses JSON/typed SSE.</td>
                         <td>Instructions, text/images, function tools/calls/results, temperature, top-p, token limit, reasoning effort/output, structured output, stream, finish state, and usage.</td>
                         <td>Input Items → Chat <code>messages</code>; instructions → system message; Responses function tool/choice shapes → Chat wrappers; <code>max_output_tokens</code> → <code>max_tokens</code>; <code>reasoning.effort</code> → <code>reasoning_effort</code>; <code>text.format</code> → <code>response_format</code>.</td>
-                        <td>State/background requests are rejected. Native Responses tools, unknown Items, metadata, and protocol extensions require a Responses backend. Responses-only annotations/citations cannot be recreated from Chat output.</td>
+                        <td>State/background requests are rejected. Native Responses tools and unknown Items require a Responses backend. Metadata and unknown top-level controls prefer Responses and are omitted on fallback. Responses-only annotations/citations cannot be recreated from Chat output.</td>
                         <td>VM <code>Temperature</code>, <code>TopP</code>, <code>NumPredict</code>, and <code>Thinking</code> override Chat target controls; Chat-only VM thinking is injected through <code>chat_template_kwargs</code>.</td>
                     </tr>
                     <tr data-direction="openai-responses-to-openai-responses" data-mode="transparent">
@@ -531,7 +531,7 @@
                         <td><code>AnthropicChatRequestDecoder</code> → canonical IL → <code>OllamaChatProviderRequestAdapter</code>. Ollama JSON/NDJSON becomes Anthropic message JSON or <code>message_start/content_block_*/message_delta/message_stop</code> SSE.</td>
                         <td>System text, message text, base64 images, tool definitions, <code>tool_use</code>/<code>tool_result</code>, tool choice modes, temperature, top-p, max tokens, visible reasoning text, stream, finish reason, and usage.</td>
                         <td>Anthropic image sources → Ollama <code>images[]</code>; <code>max_tokens</code> → <code>num_predict</code>; <code>tool_use</code> → function call; <code>tool_result</code> → tool message; reasoning text → Ollama thinking; Ollama output is rebuilt as Anthropic content blocks.</td>
-                        <td>Remote image URLs are not a portable Ollama-native contract; base64 is the verified path. Thinking signatures are discarded. Unknown Anthropic blocks/top-level extensions require an Anthropic backend, which is not currently implemented, so the call fails.</td>
+                        <td>Remote image URLs are not a portable Ollama-native contract; base64 is the verified path. Thinking signatures are discarded. Unknown content blocks remain a hard rejection; unknown top-level controls are omitted when this translated fallback is used.</td>
                         <td>All Ollama VM controls apply. <code>TopK</code>, <code>NumCtx</code>, <code>RepeatPenalty</code>, and <code>Thinking</code> can be injected from DB even though Anthropic request fields do not directly express them.</td>
                     </tr>
                     <tr data-direction="anthropic-to-openai-chat" data-mode="translated">
@@ -539,7 +539,7 @@
                         <td><code>AnthropicChatRequestDecoder</code> → canonical IL → <code>OpenAiChatProviderRequestAdapter</code>. Chat JSON/SSE is decoded and reconstructed as Anthropic Messages output.</td>
                         <td>System/messages, text, base64 and URL images, function tools/calls/results, tool choice, temperature, top-p, max tokens, reasoning text, stream, finish reason, and usage.</td>
                         <td>Anthropic system content → system message; image blocks → OpenAI <code>image_url</code>; <code>input_schema</code> → function <code>parameters</code>; <code>tool_use</code>/<code>tool_result</code> → Chat tool calls/messages; <code>max_tokens</code> remains the Chat token limit.</td>
-                        <td>Thinking signatures are discarded. Anthropic-only request controls and unknown content blocks require a physical Anthropic backend; because none exists, they are rejected by capability routing rather than dropped into Chat.</td>
+                        <td>Thinking signatures are discarded. Unknown content blocks remain a hard rejection. Anthropic-only top-level controls prefer a future Anthropic backend but are omitted when Chat is the only eligible route.</td>
                         <td>VM <code>Temperature</code>, <code>TopP</code>, <code>NumPredict</code>, and <code>Thinking</code> override Chat target fields. Ollama-only DB sampling/context controls do not apply to Chat.</td>
                     </tr>
                     <tr data-direction="anthropic-to-openai-responses" data-mode="translated">
@@ -547,7 +547,7 @@
                         <td><code>AnthropicChatRequestDecoder</code> → canonical IL → <code>OpenAiResponsesProviderRequestAdapter</code>. Responses Items/events are decoded and rebuilt as Anthropic content blocks and SSE.</td>
                         <td>System instructions, text, base64/URL images, function tools/calls/results, tool choice, temperature, top-p, max tokens, response reasoning text, stream, finish state, and usage.</td>
                         <td>System → <code>instructions</code>; messages/images → Responses input Items; Anthropic tools → Responses function tools; named tool choice → Responses <code>name</code>; <code>max_tokens</code> → <code>max_output_tokens</code>; Responses reasoning/text/function output → Anthropic blocks.</td>
-                        <td>Anthropic input thinking blocks and signatures are not encoded into Responses input. Unknown Anthropic fields/blocks cannot use this route. Native Responses-only output Items, annotations, and citations cannot be represented in Anthropic output and are omitted.</td>
+                        <td>Anthropic input thinking blocks and signatures are not encoded into Responses input. Unknown content blocks cannot use this route; unknown top-level controls are omitted on fallback. Native Responses-only output Items, annotations, and citations cannot be represented in Anthropic output.</td>
                         <td>VM <code>Temperature</code>, <code>TopP</code>, and <code>NumPredict</code> override Responses fields. VM <code>Thinking</code>, <code>TopK</code>, <code>NumCtx</code>, and <code>RepeatPenalty</code> have no Responses target field.</td>
                     </tr>
                 </tbody>
