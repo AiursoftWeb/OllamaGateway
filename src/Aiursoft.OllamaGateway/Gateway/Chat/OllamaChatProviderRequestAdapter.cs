@@ -6,9 +6,9 @@ namespace Aiursoft.OllamaGateway.Gateway.Chat;
 
 public sealed class OllamaChatProviderRequestAdapter : IChatProviderRequestAdapter
 {
-    public ProviderType ProviderType => ProviderType.Ollama;
+    public BackendProtocol Protocol => BackendProtocol.OllamaNative;
 
-    public ProtocolDialect Dialect => ProtocolDialect.OllamaNative;
+    private const ProtocolDialect Dialect = ProtocolDialect.OllamaNative;
 
     public HttpRequestMessage CreateRequest(
         DecodedChatRequest decoded,
@@ -41,11 +41,8 @@ public sealed class OllamaChatProviderRequestAdapter : IChatProviderRequestAdapt
         };
         if (decoded.Request.Tools.Count > 0)
             body["tools"] = ChatProviderEncoding.BuildOpenAiTools(decoded.Request.Tools);
-        if (decoded.Request.ToolChoiceJson != null)
-        {
-            try { body["tool_choice"] = JsonNode.Parse(decoded.Request.ToolChoiceJson); }
-            catch (System.Text.Json.JsonException) { /* Ignore an invalid optional hint. */ }
-        }
+        if (decoded.Request.ToolChoice != null)
+            body["tool_choice"] = ChatProviderEncoding.EncodeOpenAiToolChoice(decoded.Request.ToolChoice);
         return body;
     }
 
@@ -77,6 +74,18 @@ public sealed class OllamaChatProviderRequestAdapter : IChatProviderRequestAdapt
         if (optionBody.Count > 0) body["options"] = optionBody;
 
         var thinking = virtualModel.Thinking ?? options.Thinking;
+        if (!thinking.HasValue && !string.IsNullOrWhiteSpace(options.ReasoningEffort))
+            thinking = !string.Equals(options.ReasoningEffort, "none", StringComparison.OrdinalIgnoreCase);
         if (thinking.HasValue) body["think"] = thinking.Value;
+
+        if (!string.IsNullOrWhiteSpace(options.StructuredOutputJson))
+        {
+            try
+            {
+                var format = JsonNode.Parse(options.StructuredOutputJson);
+                body["format"] = format?["schema"]?.DeepClone() ?? format;
+            }
+            catch (System.Text.Json.JsonException) { /* Ignore an invalid optional format. */ }
+        }
     }
 }

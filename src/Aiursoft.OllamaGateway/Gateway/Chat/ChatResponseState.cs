@@ -9,6 +9,9 @@ internal sealed class ChatResponseState
     public StringBuilder Text { get; } = new();
     public StringBuilder Reasoning { get; } = new();
     public SortedDictionary<int, ToolCallState> Tools { get; } = new();
+    public int NextOutputIndex { get; set; }
+    public int? MessageOutputIndex { get; set; }
+    public int? ReasoningOutputIndex { get; set; }
     public long PromptTokens { get; set; }
     public long CompletionTokens { get; set; }
     public GatewayFinishReason FinishReason { get; set; } = GatewayFinishReason.Stop;
@@ -30,4 +33,5 @@ internal sealed class ToolCallState
     public string Name { get; set; } = string.Empty;
     public StringBuilder Arguments { get; } = new();
     public bool StartEmitted { get; set; }
+    public int? OutputIndex { get; set; }
 }

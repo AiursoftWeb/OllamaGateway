@@ -4,9 +4,7 @@ namespace Aiursoft.OllamaGateway.Gateway.Chat;
 
 public interface IChatProviderResponseDecoder
 {
-    ProviderType ProviderType { get; }
-
-    ProtocolDialect Dialect { get; }
+    BackendProtocol Protocol { get; }
 
     IAsyncEnumerable<GatewayChatEvent> DecodeAsync(
         Stream responseStream,

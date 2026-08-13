@@ -8,7 +8,7 @@ namespace Aiursoft.OllamaGateway.Gateway.Chat;
 public sealed class OllamaChatWireResponseWriter(RequestLogContext logContext) : IChatWireResponseWriter
 {
     public ProtocolDialect Dialect => ProtocolDialect.OllamaNative;
-    public ProviderType ProviderType => ProviderType.Ollama;
+    public BackendProtocol Protocol => BackendProtocol.OllamaNative;
 
     public async Task WriteAsync(
         HttpResponseMessage upstreamResponse,

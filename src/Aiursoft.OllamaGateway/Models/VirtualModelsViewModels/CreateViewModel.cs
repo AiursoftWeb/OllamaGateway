@@ -22,6 +22,8 @@ public class CreateViewModel : UiStackLayoutViewModel
 
     public int ProviderId { get; set; }
 
+    public BackendProtocol? Protocol { get; set; }
+
     public ModelType Type { get; set; }
 
     public SelectionStrategy SelectionStrategy { get; set; } = SelectionStrategy.PriorityFallback;

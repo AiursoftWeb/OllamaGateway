@@ -140,7 +140,7 @@ public class ProxyController(
             var result = await backendInvoker.SendAsync(
                 virtualModel,
                 backend,
-                GatewayCapability.ChatCompletion,
+                decodedRequest.Request.RequiredCapabilities,
                 candidate => chatRequestCompiler.CreateProviderRequest(decodedRequest, virtualModel, candidate),
                 HttpContext.RequestAborted);
 
@@ -243,11 +243,12 @@ public class ProxyController(
 
             requestTracker.Begin(virtualModel, input.Prompt ?? string.Empty, 1, User);
 
-            // /api/generate has no OpenAI-compatible equivalent — reject if backend is OpenAI
-            if (backend.Provider.ProviderType == ProviderType.OpenAI)
+            // /api/generate is an Ollama-native operation and cannot be translated
+            // to either OpenAI endpoint family.
+            if (BackendProtocolResolver.Resolve(backend) != BackendProtocol.OllamaNative)
             {
                 Response.StatusCode = 501;
-                await Response.WriteAsync("The /api/generate endpoint is not supported for OpenAI-compatible providers. Use /api/chat or /v1/chat/completions instead.");
+                await Response.WriteAsync("The /api/generate endpoint requires an Ollama-native backend. Use /api/chat, /v1/chat/completions, or /v1/responses instead.");
                 return;
             }
 

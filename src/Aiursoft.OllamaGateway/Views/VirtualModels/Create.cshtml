@@ -49,7 +49,7 @@
                         <hr />
                         <h5 class="card-title mb-3">@Localizer["Initial Backend Configuration"]</h5>
                         <div class="row">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-4 mb-3">
                                 <label asp-for="ProviderId" class="form-label">@Localizer["Provider"]</label>
                                 <select asp-for="ProviderId" class="form-select" onchange="window.location.href='?type=@Model.Type&amp;providerId=' + this.value">
                                     @foreach (var p in Model.AvailableProviders)
@@ -59,7 +59,12 @@
                                 </select>
                                 <span asp-validation-for="ProviderId" class="text-danger"></span>
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="Protocol" class="form-label">@Localizer["Backend Protocol"]</label>
+                                <select asp-for="Protocol" class="form-select" asp-items="Html.GetEnumSelectList<BackendProtocol>()" required></select>
+                                <div class="form-text small">@Localizer["The HTTP dialect used by this physical model endpoint."]</div>
+                            </div>
+                            <div class="col-md-4 mb-3">
                                 <label asp-for="UnderlyingModel" class="form-label">@Localizer["Underlying Model"]</label>
                                 <select asp-for="UnderlyingModel" class="form-select">
                                     <option value="">@Localizer["-- Select Underlying Model --"]</option>

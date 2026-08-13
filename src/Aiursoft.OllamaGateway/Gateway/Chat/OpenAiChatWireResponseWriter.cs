@@ -15,7 +15,7 @@ public sealed class OpenAiChatWireResponseWriter(
         RegexOptions.CultureInvariant);
 
     public ProtocolDialect Dialect => ProtocolDialect.OpenAiChatCompletions;
-    public ProviderType ProviderType => ProviderType.OpenAI;
+    public BackendProtocol Protocol => BackendProtocol.OpenAiChatCompletions;
 
     public async Task WriteAsync(
         HttpResponseMessage upstreamResponse,

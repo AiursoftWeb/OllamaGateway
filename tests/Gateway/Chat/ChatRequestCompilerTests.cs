@@ -2,6 +2,7 @@ using System.Text.Json.Nodes;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Gateway;
 using Aiursoft.OllamaGateway.Gateway.Chat;
+using Aiursoft.OllamaGateway.Gateway.Execution;
 
 namespace Aiursoft.OllamaGateway.Tests.Gateway.Chat;
 
@@ -48,14 +49,21 @@ public class ChatRequestCompilerTests
     [TestMethod]
     public async Task OpenAiToOpenAi_PreservesUnknownFields()
     {
-        const string body = """{"model":"virtual","messages":[{"role":"user","content":null}],"stream":false,"response_format":{"type":"json_schema"},"vendor_extension":{"exact":1.2300},"top_k":40,"num_ctx":8192,"repeat_penalty":1.2}""";
+        const string body = """{"model":"virtual","messages":[{"role":"user","content":null}],"stream":true,"stream_options":{"future_option":"kept"},"response_format":{"type":"json_schema","future_option":"kept"},"chat_template_kwargs":{"enable_thinking":true,"future_option":"kept"},"max_completion_tokens":100,"vendor_extension":{"exact":1.2300},"top_k":40,"num_ctx":8192,"repeat_penalty":1.2}""";
         var decoded = _compiler.Decode(ProtocolDialect.OpenAiChatCompletions, body);
+        Assert.IsTrue(decoded.Request.RequiredCapabilities.HasFlag(GatewayCapability.OpenAiChatPassthrough));
 
         using var request = _compiler.CreateProviderRequest(decoded, Model(), Backend(ProviderType.OpenAI, "gpt-physical"));
         var json = JsonNode.Parse(await request.Content!.ReadAsStringAsync());
 
         Assert.AreEqual("gpt-physical", json?["model"]?.ToString());
         Assert.AreEqual("json_schema", json?["response_format"]?["type"]?.ToString());
+        Assert.AreEqual("kept", json?["response_format"]?["future_option"]?.ToString());
+        Assert.AreEqual("kept", json?["chat_template_kwargs"]?["future_option"]?.ToString());
+        Assert.AreEqual("kept", json?["stream_options"]?["future_option"]?.ToString());
+        Assert.AreEqual(true, json?["stream_options"]?["include_usage"]?.GetValue<bool>());
+        Assert.AreEqual(100, json?["max_completion_tokens"]?.GetValue<int>());
+        Assert.IsNull(json?["max_tokens"]);
         Assert.AreEqual("1.2300", json?["vendor_extension"]?["exact"]?.ToJsonString());
         Assert.AreEqual(40, json?["top_k"]?.GetValue<int>());
         Assert.AreEqual(8192, json?["num_ctx"]?.GetValue<int>());

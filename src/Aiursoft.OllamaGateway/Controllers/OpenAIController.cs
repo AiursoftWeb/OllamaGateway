@@ -92,7 +92,7 @@ public class OpenAIController : ControllerBase
             var result = await _backendInvoker.SendAsync(
                 virtualModel,
                 backend,
-                GatewayCapability.ChatCompletion,
+                decodedRequest.Request.RequiredCapabilities,
                 candidate => _chatRequestCompiler.CreateProviderRequest(decodedRequest, virtualModel, candidate),
                 HttpContext.RequestAborted);
 

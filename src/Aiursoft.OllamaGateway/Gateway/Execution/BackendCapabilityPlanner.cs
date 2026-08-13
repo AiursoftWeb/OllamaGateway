@@ -10,16 +10,43 @@ public sealed class BackendCapabilityPlanner : IBackendCapabilityPlanner
 {
     public bool Supports(VirtualModelBackend backend, GatewayCapability capability)
     {
-        return backend.Provider?.ProviderType switch
+        if (backend.Provider == null)
+            return false;
+
+        var supported = BackendProtocolResolver.Resolve(backend) switch
         {
-            ProviderType.Ollama => capability is
-                GatewayCapability.ChatCompletion or
-                GatewayCapability.TextGeneration or
-                GatewayCapability.Embedding,
-            ProviderType.OpenAI => capability is
-                GatewayCapability.ChatCompletion or
-                GatewayCapability.Embedding,
-            _ => false
+            BackendProtocol.OllamaNative =>
+                GatewayCapability.ChatCompletion |
+                GatewayCapability.TextGeneration |
+                GatewayCapability.Embedding |
+                GatewayCapability.Streaming |
+                GatewayCapability.ImageInput |
+                GatewayCapability.FunctionCalling |
+                GatewayCapability.Reasoning |
+                GatewayCapability.StructuredOutput |
+                GatewayCapability.OllamaNativePassthrough,
+            BackendProtocol.OpenAiChatCompletions =>
+                GatewayCapability.ChatCompletion |
+                GatewayCapability.Embedding |
+                GatewayCapability.Streaming |
+                GatewayCapability.ImageInput |
+                GatewayCapability.FunctionCalling |
+                GatewayCapability.Reasoning |
+                GatewayCapability.StructuredOutput |
+                GatewayCapability.OpenAiChatPassthrough,
+            BackendProtocol.OpenAiResponses =>
+                GatewayCapability.ChatCompletion |
+                GatewayCapability.Embedding |
+                GatewayCapability.Streaming |
+                GatewayCapability.ImageInput |
+                GatewayCapability.FunctionCalling |
+                GatewayCapability.Reasoning |
+                GatewayCapability.StructuredOutput |
+                GatewayCapability.NativeTools |
+                GatewayCapability.OpenAiResponsesPassthrough,
+            _ => GatewayCapability.None
         };
+
+        return (supported & capability) == capability;
     }
 }

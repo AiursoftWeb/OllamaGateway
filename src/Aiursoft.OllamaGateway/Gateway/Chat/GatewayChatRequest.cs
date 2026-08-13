@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using Aiursoft.OllamaGateway.Gateway.Execution;
 
 // Some semantic fields are intentionally retained for adapters that are not implemented yet.
 // ReSharper disable NotAccessedPositionalProperty.Global
@@ -14,7 +15,9 @@ public sealed record GatewayChatRequest(
     IReadOnlyList<GatewayChatMessage> Messages,
     GatewayChatOptions Options,
     IReadOnlyList<GatewayToolDefinition> Tools,
-    string? ToolChoiceJson = null,
+    GatewayToolChoice? ToolChoice = null,
+    string? Instructions = null,
+    GatewayCapability RequiredCapabilities = GatewayCapability.ChatCompletion,
     IReadOnlyDictionary<string, string>? Extensions = null)
 {
     public IReadOnlyDictionary<string, string> Extensions { get; init; } =
@@ -58,6 +61,18 @@ public sealed record GatewayToolDefinition(
     string Description,
     string InputSchemaJson);
 
+public enum GatewayToolChoiceMode
+{
+    Auto,
+    None,
+    Required,
+    Function
+}
+
+public sealed record GatewayToolChoice(
+    GatewayToolChoiceMode Mode,
+    string? FunctionName = null);
+
 public sealed record GatewayChatOptions(
     double? Temperature = null,
     double? TopP = null,
@@ -66,5 +81,7 @@ public sealed record GatewayChatOptions(
     int? ContextSize = null,
     double? RepeatPenalty = null,
     bool? Thinking = null,
-    string? KeepAlive = null);
+    string? KeepAlive = null,
+    string? ReasoningEffort = null,
+    string? StructuredOutputJson = null);
 // ReSharper restore NotAccessedPositionalProperty.Global

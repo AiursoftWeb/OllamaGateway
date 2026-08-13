@@ -93,13 +93,29 @@ OllamaGateway logs every request to a ClickHouse database. A pre-built Grafana d
 3. When prompted, select your ClickHouse data source for the **grafana-clickhouse-datasource** input.
 4. Click **Import**.
 
-## Parameter Behavior by Provider and API Format
+## Protocol translation
 
-Ollama Gateway supports two inbound API formats and two backend provider types, yielding four distinct request paths:
+Ollama Gateway exposes four client-facing dialects:
+
+- Ollama native (`/api/chat`)
+- OpenAI Chat Completions (`/v1/chat/completions`)
+- OpenAI Responses (`/v1/responses`)
+- Anthropic Messages (`/v1/messages`)
+
+Requests are decoded into a protocol-neutral representation and then encoded for the selected physical backend. Responses take the reverse path. Each physical-model backend records its actual protocol independently from its provider, so one OpenAI-compatible provider can host both Chat Completions and Responses backends.
+
+When the client and physical backend use the same dialect, the gateway takes a transparent fast path: it preserves unknown request fields, response items, and stream events while changing only gateway-owned fields such as the model name. Cross-dialect calls use the neutral representation.
+
+The initial Responses implementation supports stateless text, image, custom-function, structured-output, reasoning, and streaming translation. Native Responses tools are passed through only to Responses-capable backends. `previous_response_id`, Conversations, stored responses, and background mode return an explicit `unsupported_feature` error instead of being silently ignored.
+
+## Legacy parameter behavior by provider and API format
+
+The table below documents the pre-Responses Chat Completions, Ollama, and Anthropic parameter mappings:
 
 - **Paths ① and ③** enter via `/v1/chat/completions` and are handled by `OpenAIController`.
 - **Paths ② and ④** enter via `/api/chat` and are handled by `ProxyController`.
 - **Paths ⑤ and ⑥** enter via `/v1/messages` and are handled by `AnthropicController`.
+- OpenAI Responses enters via `/v1/responses` and is handled by `OpenAIResponsesController`; its mappings are described above rather than added to this legacy matrix.
 
 > **"DB override"** means a hard assignment (`=`), not a null-coalescing assignment (`??=`). When the virtual model has a value configured in the database, the client-supplied value is **always discarded**, regardless of what the client sent.
 

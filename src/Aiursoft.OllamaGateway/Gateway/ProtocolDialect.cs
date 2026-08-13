@@ -8,5 +8,6 @@ public enum ProtocolDialect
 {
     OllamaNative,
     OpenAiChatCompletions,
-    AnthropicMessages
+    AnthropicMessages,
+    OpenAiResponses
 }

@@ -1,4 +1,5 @@
 using System.Text.Json.Nodes;
+using Aiursoft.OllamaGateway.Gateway.Execution;
 
 namespace Aiursoft.OllamaGateway.Gateway.Chat;
 
@@ -44,16 +45,36 @@ public sealed class AnthropicChatRequestDecoder : IChatRequestDecoder
             }
         }
 
+        var streaming = ChatRequestDecoding.BoolValue(root["stream"]) ?? false;
+        var mergedMessages = MergeSystemMessages(messages);
+        var requiredCapabilities = ChatRequestCapabilities.Infer(streaming, mergedMessages, tools);
+        if (mergedMessages.SelectMany(message => message.Content).Any(part => part is GatewayOpaqueContent) ||
+            HasUntranslatedTopLevelFields(root))
+        {
+            requiredCapabilities |= GatewayCapability.AnthropicPassthrough;
+        }
         var request = new GatewayChatRequest(
-            ChatRequestDecoding.BoolValue(root["stream"]) ?? false,
-            MergeSystemMessages(messages),
+            streaming,
+            mergedMessages,
             new GatewayChatOptions(
                 Temperature: ChatRequestDecoding.DoubleValue(root["temperature"]),
                 TopP: ChatRequestDecoding.DoubleValue(root["top_p"]),
                 MaxTokens: ChatRequestDecoding.IntValue(root["max_tokens"])),
-            tools);
+            tools,
+            ChatProviderEncoding.DecodeAnthropicToolChoice(root["tool_choice"]),
+            RequiredCapabilities: requiredCapabilities);
 
         return new DecodedChatRequest(Dialect, request, root);
+    }
+
+    private static bool HasUntranslatedTopLevelFields(JsonObject root)
+    {
+        var translated = new HashSet<string>(StringComparer.Ordinal)
+        {
+            "model", "messages", "system", "stream", "max_tokens", "temperature",
+            "top_p", "tools", "tool_choice"
+        };
+        return root.Any(property => !translated.Contains(property.Key));
     }
 
     private static List<GatewayContentPart> DecodeContent(JsonNode? content, string role)

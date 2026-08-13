@@ -9,7 +9,7 @@ namespace Aiursoft.OllamaGateway.Gateway.Chat;
 public interface IChatWireResponseWriter
 {
     ProtocolDialect Dialect { get; }
-    ProviderType ProviderType { get; }
+    BackendProtocol Protocol { get; }
 
     Task WriteAsync(
         HttpResponseMessage upstreamResponse,

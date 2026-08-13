@@ -3,6 +3,19 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Aiursoft.OllamaGateway.Entities;
 
+/// <summary>
+/// The HTTP protocol used to invoke one physical model. This belongs to the
+/// backend rather than the provider because one provider can expose multiple
+/// protocols and individual models may support different endpoint families.
+/// Null is retained for existing rows and means "infer from ProviderType".
+/// </summary>
+public enum BackendProtocol
+{
+    OllamaNative = 0,
+    OpenAiChatCompletions = 1,
+    OpenAiResponses = 2
+}
+
 [ExcludeFromCodeCoverage]
 public class VirtualModelBackend
 {
@@ -17,6 +30,8 @@ public class VirtualModelBackend
 
     [MaxLength(100)]
     public required string UnderlyingModelName { get; set; }
+
+    public BackendProtocol? Protocol { get; set; }
 
     public int Priority { get; set; }
 

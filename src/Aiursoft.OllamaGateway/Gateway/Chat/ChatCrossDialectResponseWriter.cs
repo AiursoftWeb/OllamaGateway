@@ -17,9 +17,8 @@ public sealed class ChatCrossDialectResponseWriter(
         bool streaming,
         HttpContext httpContext)
     {
-        var providerType = actualBackend.Provider?.ProviderType
-                           ?? throw new InvalidOperationException("Cannot decode a chat response without a provider.");
-        var decoder = providerDecoders.Single(item => item.ProviderType == providerType);
+        var protocol = BackendProtocolResolver.Resolve(actualBackend);
+        var decoder = providerDecoders.Single(item => item.Protocol == protocol);
         var writer = clientWriters.Single(item => item.Dialect == clientDialect);
         await using var responseStream = await upstreamResponse.Content.ReadAsStreamAsync(httpContext.RequestAborted);
         var events = decoder.DecodeAsync(responseStream, streaming, httpContext.RequestAborted);

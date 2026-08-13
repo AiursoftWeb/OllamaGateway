@@ -1,597 +1,404 @@
 @using Aiursoft.OllamaGateway.Entities
+@using Aiursoft.OllamaGateway.Gateway
 @using Aiursoft.OllamaGateway.Services
 @model Aiursoft.OllamaGateway.Models.DashboardViewModels.GuideViewModel
 @inject IProviderConcurrencyLimiter ConcurrencyLimiter
 
-<div class="container-fluid p-0">
+@section styles {
+    <link rel="stylesheet" href="~/styles/guide.css" />
+}
 
-    @* === Error: Default model not found === *@
-    @if (Model.DefaultVirtualModel == null)
+@{
+    var vm = Model.DefaultVirtualModel;
+    var headerBudget = vm == null ? 0 : vm.MaxRetries * vm.RequestTimeoutSeconds;
+}
+
+<div class="architecture-guide" data-guide-architecture="semantic-ir-v2">
+    @if (vm == null)
     {
-        <div class="alert alert-danger d-flex align-items-center shadow-sm" role="alert">
-            <i data-lucide="alert-octagon" class="me-3 flex-shrink-0" style="width:28px;height:28px;"></i>
-            <div>
-                <h5 class="alert-heading mb-1">@Localizer["Default Chat Model Not Found!"]</h5>
+        <div class="guide-config-alert mb-4" role="alert" data-guide-status="default-model-missing">
+            <div class="guide-config-alert-icon"><i data-lucide="alert-triangle"></i></div>
+            <div class="guide-config-alert-copy">
+                <span class="guide-config-alert-label">CONFIGURATION REQUIRED</span>
+                <h2>@Localizer["Default chat model is unavailable"]</h2>
                 <p class="mb-0">
-                    @Localizer["The global default chat model is set to"] <strong><code>@Model.DefaultChatModelName</code></strong>,
-                    @Localizer["but no virtual model with that name and type 'Chat' exists in the database."]
-                    <a href="/GlobalSettings" class="alert-link">@Localizer["Fix it here → Global Settings"]</a>
-                    @Localizer["or"]
-                    <a href="/VirtualModels/Create?type=Chat" class="alert-link">@Localizer["create it here → New Virtual Model"]</a>.
+                    @Localizer["The configured default"] <code>@Model.DefaultChatModelName</code>
+                    @Localizer["does not match a Chat virtual model in the database. Requests without an explicit model cannot be resolved."]
                 </p>
+            </div>
+            <div class="guide-config-alert-actions">
+                <a href="/GlobalSettings" class="btn btn-danger">
+                    <i data-lucide="settings-2"></i>@Localizer["Change default"]
+                </a>
+                <a href="/VirtualModels/Create?type=Chat" class="btn btn-outline-danger">
+                    <i data-lucide="plus"></i>@Localizer["Create chat model"]
+                </a>
             </div>
         </div>
     }
 
-    <div class="row mb-3">
-        <div class="col-auto">
-            <h1 class="h3 mb-0">@Localizer["Architecture Guide"]</h1>
-            <small class="text-muted">@Localizer["How a request flows through the Ollama Gateway — from client to backend"]</small>
+    <section class="guide-hero mb-4">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-7">
+                <div class="guide-kicker"><i data-lucide="network"></i> SEMANTIC GATEWAY · V2</div>
+                <h1 class="display-6 fw-bold mb-2">@Localizer["Architecture Guide"]</h1>
+                <p class="lead mb-0 text-body-secondary">
+                    @Localizer["How a request flows through the Ollama Gateway — from client contract to selected backend protocol."]
+                </p>
+            </div>
+            <div class="col-lg-5">
+                <div class="guide-fact-grid">
+                    <div class="guide-fact"><strong>4</strong><span>Inbound dialects</span></div>
+                    <div class="guide-fact"><strong>3</strong><span>Backend protocols</span></div>
+                    <div class="guide-fact"><strong>2</strong><span>Provider types</span></div>
+                    <div class="guide-fact guide-fact-warning"><strong>Stateless</strong><span>Responses contract</span></div>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 
-    @* === Step 1: Client === *@
-    <div class="row justify-content-center mb-3">
-        <div class="col-12 col-lg-10">
-            <div class="card border-primary shadow-sm">
-                <div class="card-body text-center py-4">
-                    <div class="d-inline-flex align-items-center justify-content-center bg-primary-subtle rounded-circle mb-3" style="width:64px;height:64px;">
-                        <i data-lucide="globe" style="width:32px;height:32px;" class="text-primary"></i>
+    <ul class="nav nav-pills guide-tabs mb-4" id="architectureGuideTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="request-path-tab" data-bs-toggle="tab" data-bs-target="#request-path-pane" type="button" role="tab" aria-controls="request-path-pane" aria-selected="true">
+                <i data-lucide="route"></i><span>@Localizer["Request Path"]</span>
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="runtime-tab" data-bs-toggle="tab" data-bs-target="#runtime-pane" type="button" role="tab" aria-controls="runtime-pane" aria-selected="false">
+                <i data-lucide="activity"></i><span>@Localizer["Runtime"]</span><span class="guide-live-dot" title="Live configuration"></span>
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="timeouts-tab" data-bs-toggle="tab" data-bs-target="#timeouts-pane" type="button" role="tab" aria-controls="timeouts-pane" aria-selected="false">
+                <i data-lucide="timer"></i><span>@Localizer["Timeouts & Queues"]</span>
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="observability-tab" data-bs-toggle="tab" data-bs-target="#observability-pane" type="button" role="tab" aria-controls="observability-pane" aria-selected="false">
+                <i data-lucide="bar-chart-3"></i><span>@Localizer["Observability"]</span>
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="architectureGuideContent">
+        <div class="tab-pane fade show active" id="request-path-pane" role="tabpanel" aria-labelledby="request-path-tab" tabindex="0">
+            <div class="guide-section-heading">
+                <div>
+                    <span class="guide-section-label">FIXED ARCHITECTURE CONTRACT</span>
+                    <h2>@Localizer["One semantic core, protocol-aware edges"]</h2>
+                </div>
+                <span class="badge text-bg-primary">semantic-ir-v2</span>
+            </div>
+
+            <div class="card guide-card mb-4">
+                <div class="card-body p-3 p-lg-4">
+                    <div class="guide-dialects mb-4" data-stage="client-dialects">
+                        <div class="guide-dialect">
+                            <i data-lucide="message-square"></i><span>Ollama Chat</span><code>POST /api/chat</code>
+                        </div>
+                        <div class="guide-dialect">
+                            <i data-lucide="messages-square"></i><span>OpenAI Chat</span><code>POST /v1/chat/completions</code>
+                        </div>
+                        <div class="guide-dialect guide-dialect-new">
+                            <i data-lucide="waves"></i><span>OpenAI Responses</span><code>POST /v1/responses</code>
+                        </div>
+                        <div class="guide-dialect">
+                            <i data-lucide="braces"></i><span>Anthropic Messages</span><code>POST /v1/messages</code>
+                        </div>
                     </div>
-                    <h4 class="text-primary">@Localizer["1. Client Request"]</h4>
-                    <p class="mb-1">
-                        <code class="fs-6">POST /api/chat</code>&nbsp;&nbsp;
-                        <code class="fs-6">POST /v1/chat/completions</code>&nbsp;&nbsp;
-                        <code class="fs-6">POST /v1/messages</code>
-                    </p>
-                    <small class="text-muted">
-                        <code>Ollama</code> · <code>OpenAI</code> · <code>Anthropic</code>
-                        @if (!string.IsNullOrEmpty(Model.DefaultChatModelName))
-                        {
-                            <span>@Localizer["Without specifying a model, the gateway uses"] <code>@Model.DefaultChatModelName</code>.</span>
-                        }
-                    </small>
 
-                    <div class="border rounded p-3 mt-4 text-start bg-light"
-                         data-guide-architecture="semantic-ir-v1">
-                        <div class="small fw-bold text-primary mb-2">Semantic Gateway Pipeline</div>
-                        <div class="d-flex flex-wrap align-items-center gap-2 small mb-2" data-stage="request-ir">
-                            <span class="badge bg-primary">Client JSON</span><span>→</span>
-                            <span class="badge bg-primary">Client Decoder</span><span>→</span>
-                            <span class="badge bg-info text-dark">Semantic Request IR</span><span>→</span>
-                            <span class="badge bg-secondary">Model Resolver + Capability Planner</span>
+                    <div class="guide-flow" data-stage="request-ir">
+                        <div class="guide-flow-node"><small>01</small><strong>Client JSON</strong><span>Dialect contract</span></div>
+                        <i data-lucide="arrow-right" class="guide-flow-arrow"></i>
+                        <div class="guide-flow-node"><small>02</small><strong>Auth + Rate Limit</strong><span>Before model timeout</span></div>
+                        <i data-lucide="arrow-right" class="guide-flow-arrow"></i>
+                        <div class="guide-flow-node guide-flow-node-accent"><small>03</small><strong>Client Decoder</strong><span>Semantic Request IR</span></div>
+                        <i data-lucide="arrow-right" class="guide-flow-arrow"></i>
+                        <div class="guide-flow-node"><small>04</small><strong>Resolver + Planner</strong><span>Model and capabilities</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-4 mb-4">
+                <div class="col-lg-6">
+                    <div class="card guide-route-card guide-route-native h-100" data-route-mode="same-dialect">
+                        <div class="card-body">
+                            <div class="guide-route-title">
+                                <span class="guide-route-icon"><i data-lucide="shield-check"></i></span>
+                                <div><span class="badge text-bg-success">SAME DIALECT</span><h3>Transparent wire path</h3></div>
+                            </div>
+                            <div class="guide-mini-flow">
+                                <code>Original JSON</code><span>→</span><code>Deep clone</code><span>→</span><code>Gateway overrides</code>
+                            </div>
+                            <p class="text-body-secondary mb-0">
+                                Unknown representable fields survive. The gateway changes owned fields such as physical model identity, configured VM parameters, and <code>store:false</code> for Responses.
+                            </p>
                         </div>
-                        <div class="d-flex flex-wrap align-items-center gap-2 small mb-2" data-stage="per-attempt-adapter">
-                            <span class="badge bg-secondary">Selected Backend</span><span>→</span>
-                            <span class="badge bg-danger">Concurrency Slot</span><span>→</span>
-                            <span class="badge bg-warning text-dark">Provider Adapter (per attempt)</span><span>→</span>
-                            <span class="badge bg-dark">Backend HTTP</span>
-                        </div>
-                        <div class="d-flex flex-wrap align-items-center gap-2 small" data-stage="event-ir">
-                            <span class="badge bg-dark">Backend Response</span><span>→</span>
-                            <span class="badge bg-success">Same dialect: Wire Writer</span>
-                            <span class="text-muted">|</span>
-                            <span class="badge bg-success">Cross dialect: Decoder → Event IR → Client Writer</span>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card guide-route-card guide-route-translated h-100" data-route-mode="cross-dialect">
+                        <div class="card-body">
+                            <div class="guide-route-title">
+                                <span class="guide-route-icon"><i data-lucide="shuffle"></i></span>
+                                <div><span class="badge text-bg-info">CROSS DIALECT</span><h3>Semantic translation path</h3></div>
+                            </div>
+                            <div class="guide-mini-flow">
+                                <code>Decoder</code><span>→</span><code>Request IR</code><span>→</span><code>Target adapter</code>
+                            </div>
+                            <p class="text-body-secondary mb-0">
+                                Only shared semantics are translated. Unrepresentable extensions are discarded when documented, explicitly rejected, or pin routing to a compatible backend.
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="row justify-content-center mb-3">
-        <div class="col-auto text-center">
-            <i data-lucide="arrow-down" class="text-muted" style="width:28px;height:28px;"></i>
-        </div>
-    </div>
-
-    @* === Step 2: Auth & Rate Limit === *@
-    <div class="row justify-content-center mb-3">
-        <div class="col-12 col-lg-10">
-            <div class="card border-warning shadow-sm">
-                <div class="card-header bg-warning-subtle">
-                    <h5 class="card-title mb-0 text-warning-emphasis">
-                        <i data-lucide="shield-check" class="me-2" style="width:20px;height:20px;"></i>
-                        @Localizer["2. Authentication & Rate Limiting"]
-                    </h5>
+            <div class="card guide-card mb-4" data-stage="per-attempt-adapter">
+                <div class="card-header guide-card-header">
+                    <div><i data-lucide="server-cog"></i><strong>@Localizer["Backend protocol is selected per physical model"]</strong></div>
+                    <span class="text-body-secondary small">2 provider types ≠ 3 wire protocols</span>
                 </div>
                 <div class="card-body">
                     <div class="row g-3">
-                        <div class="col-md-6">
-                            <div class="border rounded p-3 h-100">
-                                <h6 class="fw-bold"><i data-lucide="key" class="me-1" style="width:16px;height:16px;"></i> @Localizer["API Key Verification"]</h6>
-                                <p class="small text-muted mb-0">
-                                    <code>Authorization</code> · <code>x-api-key</code> · <code>api-key</code>
-                                    · <code>Web session</code>
-                                    <strong>@Model.TotalApiKeys</strong> @Localizer["keys in the system."]
-                                    <span class="badge @(Model.AnonymousApiAccessEnabled ? "bg-warning text-dark" : "bg-secondary") ms-1"
-                                          data-anonymous-api="@(Model.AnonymousApiAccessEnabled ? "enabled" : "disabled")">
-                                        Anonymous API: @(Model.AnonymousApiAccessEnabled ? "ON" : "OFF")
-                                    </span>
-                                </p>
+                        <div class="col-md-4">
+                            <div class="guide-protocol">
+                                <span class="guide-protocol-number">01</span><i data-lucide="box"></i>
+                                <strong>Ollama Native</strong><code>/api/chat</code>
+                                <small>Provider type: Ollama</small>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="border rounded p-3 h-100">
-                                <h6 class="fw-bold"><i data-lucide="gauge" class="me-1" style="width:16px;height:16px;"></i> @Localizer["Per-Key Rate Limiter"]</h6>
-                                <p class="small text-muted mb-2">@Localizer["Each API key has its own rate-limit window. Two modes:"]</p>
-                                <ul class="small text-muted mb-0 ps-3">
-                                    <li><strong>@Localizer["Hang mode"]</strong>: @Localizer["Queue until a slot opens — does NOT consume the virtual model timeout."]</li>
-                                    <li><strong>@Localizer["Reject mode"]</strong>: @Localizer["Immediately return HTTP 429."]</li>
-                                </ul>
+                        <div class="col-md-4">
+                            <div class="guide-protocol">
+                                <span class="guide-protocol-number">02</span><i data-lucide="messages-square"></i>
+                                <strong>OpenAI Chat Completions</strong><code>/v1/chat/completions</code>
+                                <small>Provider type: OpenAI</small>
                             </div>
                         </div>
-                    </div>
-                    <div class="mt-2 p-2 bg-light rounded border border-warning">
-                        <small class="text-warning-emphasis">
-                            <i data-lucide="info" style="width:14px;height:14px;" class="me-1"></i>
-                            @Localizer["Rate-limiting happens BEFORE the virtual model timeout starts. Queuing here is free."]
-                        </small>
+                        <div class="col-md-4">
+                            <div class="guide-protocol guide-protocol-new">
+                                <span class="guide-protocol-number">03</span><i data-lucide="radio-tower"></i>
+                                <strong>OpenAI Responses</strong><code>/v1/responses</code>
+                                <small>Provider type: OpenAI</small>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="row justify-content-center mb-3">
-        <div class="col-auto text-center">
-            <i data-lucide="arrow-down" class="text-muted" style="width:28px;height:28px;"></i>
-        </div>
-    </div>
+            <div class="guide-response-flow mb-4" data-stage="event-ir">
+                <div><i data-lucide="download"></i><strong>Backend response</strong></div>
+                <span class="guide-response-line"></span>
+                <div class="guide-response-branch guide-response-native"><span>Same dialect</span><strong>Wire Writer</strong><small>Preserve protocol-specific payload</small></div>
+                <div class="guide-response-branch guide-response-cross"><span>Cross dialect</span><strong>Decoder → Event IR → Client Writer</strong><small>Reconstruct client JSON or streaming events</small></div>
+            </div>
 
-    @* === Step 3: Virtual Model === *@
-    <div class="row justify-content-center mb-3">
-        <div class="col-12 col-lg-10">
-            <div class="card border-info shadow-sm" data-retry-semantics="attempt-budget">
-                <div class="card-header bg-info-subtle">
-                    <h5 class="card-title mb-0 text-info-emphasis">
-                        <i data-lucide="cpu" class="me-2" style="width:20px;height:20px;"></i>
-                        @Localizer["3. Virtual Model"]
-                        @if (Model.DefaultVirtualModel != null)
-                        {
-                            <span>— <code class="fs-5">@Model.DefaultVirtualModel.Name</code></span>
-                            <span class="badge bg-info ms-2">@Model.DefaultVirtualModel.Type</span>
-                        }
-                    </h5>
+            <div class="alert guide-boundary-alert mb-4" role="note" data-responses-contract="stateless-only">
+                <div class="guide-boundary-icon"><i data-lucide="triangle-alert"></i></div>
+                <div>
+                    <strong>OpenAI Responses is stateless at the gateway boundary</strong>
+                    <p class="mb-0">Clients must send the complete input. <code>previous_response_id</code>, <code>conversation</code>, <code>store:true</code>, and <code>background:true</code> return an explicit <code>400 unsupported_feature</code>.</p>
                 </div>
-                <div class="card-body">
-                    @if (Model.DefaultVirtualModel != null)
-                    {
-                        var vm = Model.DefaultVirtualModel;
-                        <div class="row g-3">
-                            <div class="col-lg-4">
-                                <div class="border rounded p-3 h-100">
-                                    <h6 class="fw-bold"><i data-lucide="sliders-horizontal" class="me-1" style="width:16px;height:16px;"></i> @Localizer["Configuration"]</h6>
-                                    <table class="table table-sm small mb-0 mt-2">
-                                        <tr><td class="text-muted">@Localizer["Strategy"]</td><td><span class="badge bg-secondary">@vm.SelectionStrategy</span></td></tr>
-                                        <tr><td class="text-muted">Max Attempts</td><td><strong>@vm.MaxRetries</strong></td></tr>
-                                        <tr>
-                                            <td class="text-muted">@Localizer["Request Timeout"]</td>
-                                            <td>
-                                                <strong>@vm.RequestTimeoutSeconds s</strong>
-                                                <i data-lucide="help-circle" class="ms-1 text-muted" style="width:12px;height:12px;cursor:help;" title="@Localizer["How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies."]"></i>
-                                            </td>
-                                        </tr>
-                                        <tr><td class="text-muted">@Localizer["Temperature"]</td><td>@(vm.Temperature?.ToString() ?? "—")</td></tr>
-                                        <tr><td class="text-muted">@Localizer["NumCtx"]</td><td>@(vm.NumCtx?.ToString() ?? "—")</td></tr>
+            </div>
+
+            <details class="guide-details">
+                <summary><span><i data-lucide="layers-3"></i><strong>@Localizer["Embedding and non-chat APIs"]</strong></span><small>@Localizer["Separate, narrower contracts"]</small></summary>
+                <div class="guide-details-body">
+                    <div class="row g-3">
+                        <div class="col-md-4"><div class="guide-aux-card"><strong>Embeddings</strong><code>/v1/embeddings ↔ /api/embed</code><p>Uses its own two-dialect adapter pipeline. It does not pass through the chat Request/Event IR.</p></div></div>
+                        <div class="col-md-4"><div class="guide-aux-card"><strong>Ollama Generate</strong><code>POST /api/generate</code><p>Native Ollama only. A non-Ollama selected backend returns <code>501</code>.</p></div></div>
+                        <div class="col-md-4"><div class="guide-aux-card"><strong>Model discovery</strong><code>/v1/models · /api/tags · /api/ps</code><p>Gateway-owned responses expose virtual models and avoid recursive upstream discovery.</p></div></div>
+                    </div>
+                </div>
+            </details>
+        </div>
+
+        <div class="tab-pane fade" id="runtime-pane" role="tabpanel" aria-labelledby="runtime-tab" tabindex="0">
+            <div class="guide-section-heading">
+                <div><span class="guide-section-label guide-section-label-live">CURRENT INSTANCE · LIVE</span><h2>@Localizer["Runtime configuration"]</h2></div>
+                <span class="badge @(Model.AnonymousApiAccessEnabled ? "text-bg-warning" : "text-bg-secondary")" data-anonymous-api="@(Model.AnonymousApiAccessEnabled ? "enabled" : "disabled")">Anonymous API: @(Model.AnonymousApiAccessEnabled ? "ON" : "OFF")</span>
+            </div>
+
+            <div class="row g-4 mb-4">
+                <div class="col-xl-4">
+                    <div class="card guide-card h-100">
+                        <div class="card-header guide-card-header"><div><i data-lucide="key-round"></i><strong>@Localizer["Authentication & rate limit"]</strong></div></div>
+                        <div class="card-body">
+                            <div class="guide-stat-line"><span>API keys</span><strong>@Model.TotalApiKeys</strong></div>
+                            <div class="guide-code-list"><code>Authorization</code><code>x-api-key</code><code>api-key</code><code>Web session</code></div>
+                            <hr />
+                            <div class="guide-mode"><span class="badge text-bg-info">Hang</span><p>Wait for the per-key rate window. Waiting does not consume VM timeout.</p></div>
+                            <div class="guide-mode"><span class="badge text-bg-danger">Reject</span><p>Return HTTP <code>429</code> immediately.</p></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-8">
+                    <div class="card guide-card h-100" data-retry-semantics="attempt-budget">
+                        <div class="card-header guide-card-header">
+                            <div><i data-lucide="cpu"></i><strong>@Localizer["Default virtual model"]</strong></div>
+                            @if (vm != null) { <code>@vm.Name</code> }
+                        </div>
+                        <div class="card-body">
+                            @if (vm != null)
+                            {
+                                <div class="guide-runtime-metrics mb-4">
+                                    <div><span>Strategy</span><strong>@vm.SelectionStrategy</strong></div>
+                                    <div><span>Max attempts</span><strong>@vm.MaxRetries</strong></div>
+                                    <div><span>Header timeout</span><strong>@vm.RequestTimeoutSeconds s</strong></div>
+                                    <div><span>Temperature</span><strong>@(vm.Temperature?.ToString() ?? "—")</strong></div>
+                                    <div><span>NumCtx</span><strong>@(vm.NumCtx?.ToString() ?? "—")</strong></div>
+                                </div>
+                                <div class="table-responsive guide-table-wrap">
+                                    <table class="table table-hover align-middle mb-0">
+                                        <thead><tr><th>#</th><th>@Localizer["Physical model"]</th><th>@Localizer["Provider"]</th><th>@Localizer["Backend protocol"]</th><th>@Localizer["Priority"]</th><th>@Localizer["State"]</th></tr></thead>
+                                        <tbody>
+                                        @{ var backendIndex = 1; }
+                                        @foreach (var backend in vm.VirtualModelBackends.OrderBy(b => b.Priority))
+                                        {
+                                            var protocol = BackendProtocolResolver.Resolve(backend);
+                                            <tr>
+                                                <td class="text-body-secondary">@backendIndex</td>
+                                                <td><code>@backend.UnderlyingModelName</code></td>
+                                                <td>@(backend.Provider?.Name ?? "—")</td>
+                                                <td><span class="badge text-bg-light border">@protocol</span></td>
+                                                <td>@backend.Priority</td>
+                                                <td><span class="badge @(backend.Enabled ? "text-bg-success" : "text-bg-secondary")">@(backend.Enabled ? "Enabled" : "Disabled")</span></td>
+                                            </tr>
+                                            backendIndex++;
+                                        }
+                                        </tbody>
                                     </table>
                                 </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="border rounded p-3 h-100">
-                                    <h6 class="fw-bold"><i data-lucide="server" class="me-1" style="width:16px;height:16px;"></i> @Localizer["Backends"] (@vm.VirtualModelBackends.Count)
-                                    </h6>
-                                    @if (vm.VirtualModelBackends.Any())
-                                    {
-                                        <table class="table table-sm small mb-0 mt-2">
-                                            <thead><tr><th>#</th><th>@Localizer["Model"]</th><th>@Localizer["Provider"]</th><th>@Localizer["Pri"]</th></tr></thead>
-                                            <tbody>
-                                                @{ int idx = 1; }
-                                                @foreach (var b in vm.VirtualModelBackends.OrderBy(b => b.Priority))
-                                                {
-                                                    <tr>
-                                                        <td>@idx</td>
-                                                        <td><code class="small">@b.UnderlyingModelName</code></td>
-                                                        <td><small>@(b.Provider?.Name ?? "—")</small></td>
-                                                        <td>@b.Priority</td>
-                                                    </tr>
-                                                    idx++;
-                                                }
-                                            </tbody>
-                                        </table>
-                                        <p class="small text-muted mt-2 mb-0">
-                                            @Localizer["Strategy"]: <strong>@vm.SelectionStrategy</strong> —
-                                            @if (vm.SelectionStrategy == SelectionStrategy.PriorityFallback)
-                                            {
-                                                <span>@Localizer["Tries backends from lowest priority to highest. If backend #1 fails or times out, falls back to #2, then #3."]</span>
-                                            }
-                                        </p>
-                                        <p class="small text-muted mt-1 mb-0">
-                                            <code>Per request</code>: each eligible backend once before a second pass ·
-                                            <code>Circuit breaker</code>: temporary ban after 3 failures
-                                        </p>
-                                    }
-                                    else
-                                    {
-                                        <p class="small text-muted mb-0">@Localizer["No backends configured for this virtual model."]</p>
-                                    }
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="border rounded p-3 h-100">
-                                    <h6 class="fw-bold"><i data-lucide="git-branch" class="me-1" style="width:16px;height:16px;"></i> @Localizer["Fallback Timeline"]
-                                    </h6>
-                                    <p class="small text-muted mb-2">
-                                        @Localizer["With"] @vm.MaxRetries @Localizer["attempts and"] @vm.RequestTimeoutSeconds s @Localizer["timeout:"]
-                                    </p>
-                                    <div class="d-flex align-items-center small mb-1">
-                                        @for (int i = 0; i < vm.MaxRetries; i++)
-                                        {
-                                            <div class="bg-info-subtle border border-info rounded px-2 py-1 me-1 text-center" style="min-width:60px;">
-                                                <div class="fw-bold">@vm.RequestTimeoutSeconds s</div>
-                                                <div class="text-muted" style="font-size:10px;">Attempt #@(i+1)</div>
-                                            </div>
-                                            if (i < vm.MaxRetries - 1)
-                                            {
-                                                <span class="me-1">→</span>
-                                            }
-                                        }
-                                        <div class="fw-bold ms-1 text-danger" style="font-size:11px;">
-                                            Σ headers ≤ @(vm.MaxRetries * vm.RequestTimeoutSeconds) s
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <p class="text-muted mb-0">
-                            <i data-lucide="alert-triangle" style="width:16px;height:16px;" class="me-1"></i>
-                            @Localizer["Virtual model"] <code>@Model.DefaultChatModelName</code> @Localizer["not found. Create it to see real configuration here."]
-                        </p>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row justify-content-center mb-3">
-        <div class="col-auto text-center">
-            <i data-lucide="arrow-down" class="text-muted" style="width:28px;height:28px;"></i>
-        </div>
-    </div>
-
-    @* === Step 4: Provider Concurrency Limiter === *@
-    <div class="row justify-content-center mb-3">
-        <div class="col-12 col-lg-10">
-            <div class="card border-danger shadow-sm">
-                <div class="card-header bg-danger-subtle">
-                    <h5 class="card-title mb-0 text-danger-emphasis">
-                        <i data-lucide="traffic-cone" class="me-2" style="width:20px;height:20px;"></i>
-                        @Localizer["4. Provider Concurrency Limiter"]
-                    </h5>
-                </div>
-                <div class="card-body">
-                    @if (Model.Providers.Any())
-                    {
-                        <div class="row g-3">
-                            @foreach (var p in Model.Providers)
+                                <p class="small text-body-secondary mt-3 mb-0">Each eligible backend is attempted once before a second pass. Three consecutive failures activate the circuit breaker; a later success clears it.</p>
+                            }
+                            else
                             {
-                                var active = ConcurrencyLimiter.GetActiveCount(p.Id);
-                                var waiting = ConcurrencyLimiter.GetWaitingCount(p.Id);
-                                var limit = p.MaxParallelism;
-                                var isBusy = limit > 0 && active >= limit;
-                                var hasQueue = waiting > 0;
-
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="border rounded p-3 text-center @(hasQueue ? "border-warning bg-warning-subtle bg-opacity-10" : "")">
-                                        <strong class="d-block mb-2">@p.Name</strong>
-                                        @if (limit == 0)
-                                        {
-                                            <span class="badge bg-success mb-2">@Localizer["Unlimited"]</span>
-                                            <div class="small text-muted">@Localizer["No concurrency limit — requests pass through immediately"]</div>
-                                        }
-                                        else
-                                        {
-                                            @* House + People visualization *@
-                                            <div class="d-flex justify-content-center align-items-end gap-3 mb-2" style="min-height:80px;">
-                                                @* Waiting queue — outside the house *@
-                                                <div class="text-center">
-                                                    @for (int i = 0; i < Math.Min(waiting, 8); i++)
-                                                    {
-                                                        <i data-lucide="user" class="text-secondary d-block mx-auto" style="width:14px;height:14px;"></i>
-                                                    }
-                                                    @if (waiting == 0) { <div style="width:14px;height:14px;"></div> }
-                                                    <span class="badge bg-warning text-dark mt-1">@waiting @Localizer["waiting"]</span>
-                                                </div>
-                                                @* House with active requests inside *@
-                                                <div class="text-center position-relative" style="width:80px;">
-                                                    <i data-lucide="home" style="width:40px;height:40px;" class="@(isBusy ? "text-danger" : "text-success")"></i>
-                                                    <div class="mt-1">
-                                                        @for (int i = 0; i < Math.Min(active, 6); i++)
-                                                        {
-                                                            <i data-lucide="user-check" class="text-success d-inline" style="width:12px;height:12px;"></i>
-                                                        }
-                                                    </div>
-                                                    <span class="badge @(isBusy ? "bg-danger" : "bg-success") mt-1">@active @Localizer["processing"]</span>
-                                                </div>
-                                            </div>
-                                            <div class="small text-muted">
-                                                @Localizer["Limit"]: <strong>@limit</strong> &middot;
-                                                @Localizer["Health Check"]:
-                                                <code>@(p.ProviderType == ProviderType.OpenAI ? "10 s fixed" : $"{p.HealthCheckTimeoutSeconds} s")</code>
-                                            </div>
-                                        }
-                                    </div>
-                                </div>
+                                <p class="text-body-secondary mb-0">No default chat virtual model is available.</p>
                             }
                         </div>
-                    }
-                    else
+                    </div>
+                </div>
+            </div>
+
+            <div class="card guide-card">
+                <div class="card-header guide-card-header">
+                    <div><i data-lucide="traffic-cone"></i><strong>@Localizer["Provider concurrency — live process state"]</strong></div>
+                    <span class="small text-body-secondary">Queue wait is outside the VM timeout</span>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        @foreach (var provider in Model.Providers)
+                        {
+                            var active = ConcurrencyLimiter.GetActiveCount(provider.Id);
+                            var waiting = ConcurrencyLimiter.GetWaitingCount(provider.Id);
+                            var unlimited = provider.MaxParallelism <= 0;
+                            <div class="col-md-6 col-xl-4">
+                                <div class="guide-provider @(waiting > 0 ? "guide-provider-waiting" : "")">
+                                    <div class="guide-provider-heading"><strong>@provider.Name</strong><span class="badge @(unlimited ? "text-bg-success" : "text-bg-primary")">@(unlimited ? "Unlimited" : $"Limit {provider.MaxParallelism}")</span></div>
+                                    <div class="guide-provider-counts">
+                                        <div><strong>@active</strong><span>active</span></div><div><strong>@waiting</strong><span>waiting</span></div>
+                                    </div>
+                                    <small>@provider.ProviderType · health timeout @(provider.ProviderType == ProviderType.OpenAI ? "10 s fixed" : $"{provider.HealthCheckTimeoutSeconds} s")</small>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    @if (!Model.Providers.Any())
                     {
-                        <p class="text-muted mb-0">@Localizer["No providers configured yet."]</p>
+                        <p class="text-body-secondary mb-0">@Localizer["No providers configured yet."]</p>
                     }
-                    <div class="mt-3 p-2 bg-light rounded border border-danger">
-                        <small class="text-danger-emphasis">
-                            <i data-lucide="info" style="width:14px;height:14px;" class="me-1"></i>
-                            @Localizer["Waiting in the concurrency queue does NOT consume the virtual model timeout. The timeout clock only starts after the slot is acquired. A request will wait indefinitely for its slot — the only way it stops waiting is if the client (browser / SDK) disconnects. A busy GPU does not cause the virtual model to give up on this backend."]
-                        </small>
-                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="row justify-content-center mb-3">
-        <div class="col-auto text-center">
-            <i data-lucide="arrow-down" class="text-muted" style="width:28px;height:28px;"></i>
-        </div>
-    </div>
+        <div class="tab-pane fade" id="timeouts-pane" role="tabpanel" aria-labelledby="timeouts-tab" tabindex="0">
+            <div class="guide-section-heading">
+                <div><span class="guide-section-label">EXECUTION BOUNDARIES</span><h2>@Localizer["Four independent timeout planes"]</h2></div>
+                @if (vm != null) { <span class="badge text-bg-success">Data plane: @vm.RequestTimeoutSeconds s</span> }
+            </div>
 
-    @* === Step 5: Timeout Clock Starts === *@
-    <div class="row justify-content-center mb-3">
-        <div class="col-12 col-lg-10">
-            <div class="card border-success shadow-sm" data-timeout-scope="headers-only">
-                <div class="card-header bg-success-subtle">
-                    <h5 class="card-title mb-0 text-success-emphasis">
-                        <i data-lucide="timer" class="me-2" style="width:20px;height:20px;"></i>
-                        @Localizer["5. ⏱️ Timeout Clock Starts"]
-                        @if (Model.DefaultVirtualModel != null)
-                        {
-                            <span class="ms-2 badge bg-success">cts.CancelAfter(@Model.DefaultVirtualModel.RequestTimeoutSeconds s)</span>
-                        }
-                    </h5>
+            <div class="guide-timeout-grid mb-4">
+                <div class="guide-timeout-card guide-timeout-data" data-timeout-scope="headers-only">
+                    <span>01 · DATA PLANE</span><strong>@(vm?.RequestTimeoutSeconds.ToString() ?? "—") s</strong><h3>Response-header deadline</h3><p>Starts after a provider concurrency slot is acquired. Covers DNS, connection, TLS, cold model loading, and waiting for upstream headers.</p>
                 </div>
+                <div class="guide-timeout-card guide-timeout-control">
+                    <span>02 · CONTROL PLANE</span><strong>10–@Model.Providers.Where(p => p.ProviderType == ProviderType.Ollama).Select(p => p.HealthCheckTimeoutSeconds).DefaultIfEmpty(10).Max() s</strong><h3>Provider health probes</h3><p>Ollama uses configured timeout for <code>/api/tags</code> and <code>/api/ps</code>. OpenAI <code>/v1/models</code> is fixed at 10 s.</p>
+                </div>
+                <div class="guide-timeout-card guide-timeout-warmup">
+                    <span>03 · WARMUP PLANE</span><strong>1800 s</strong><h3>Ollama model warmup</h3><p>Fallback per-model loading timeout. Native Ollama only; the background job runs every 5 minutes.</p>
+                </div>
+                <div class="guide-timeout-card guide-timeout-dashboard" data-dashboard-timeouts="ollama-ps-3-version-5-openai-models-10">
+                    <span>04 · DASHBOARD PLANE</span><strong>3 / 5 / 10 s</strong><h3>Quick admin probes</h3><p><code>/api/ps</code> 3 s · <code>/api/version</code> 5 s · <code>/v1/models</code> 10 s. UI-only; no health state is persisted.</p>
+                </div>
+            </div>
+
+            <div class="row g-4 mb-4">
+                <div class="col-lg-6">
+                    <div class="card guide-card h-100 border-success-subtle">
+                        <div class="card-body"><h3 class="guide-list-title text-success"><i data-lucide="check-circle"></i>@Localizer["Counted by the VM timeout"]</h3><ul class="guide-check-list"><li>Backend DNS, TCP handshake, and TLS</li><li>Cold-start model loading</li><li>Waiting for backend HTTP response headers</li></ul></div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card guide-card h-100 border-warning-subtle">
+                        <div class="card-body"><h3 class="guide-list-title text-warning-emphasis"><i data-lucide="minus-circle"></i>@Localizer["Outside the VM timeout"]</h3><ul class="guide-check-list"><li>Authentication and per-key rate-limit wait</li><li>Provider concurrency queue wait</li><li>Response body after headers, streaming or buffered</li></ul></div>
+                    </div>
+                </div>
+            </div>
+
+            @if (vm != null)
+            {
+                <div class="card guide-card mb-4">
+                    <div class="card-header guide-card-header"><div><i data-lucide="git-branch"></i><strong>@Localizer["Fallback budget for the current default model"]</strong></div></div>
+                    <div class="card-body">
+                        <div class="guide-attempts">
+                            @for (var attempt = 1; attempt <= vm.MaxRetries; attempt++)
+                            {
+                                <div class="guide-attempt"><span>Attempt @attempt</span><strong>≤ @vm.RequestTimeoutSeconds s</strong><small>after slot acquired</small></div>
+                                @if (attempt < vm.MaxRetries) { <div class="guide-queue-gap"><i data-lucide="hourglass"></i><span>queue wait<br />unbounded</span></div> }
+                            }
+                        </div>
+                        <div class="alert alert-info mt-4 mb-0"><strong>Upstream header budget ≤ @headerBudget s.</strong> Total wall-clock time has no fixed upper bound because rate-limit and concurrency queues are outside this budget.</div>
+                    </div>
+                </div>
+            }
+
+            <div class="alert alert-success mb-0">
+                <strong>After response headers:</strong> the virtual-model deadline no longer applies to the response body. Streaming may continue for hours, but transport failure, upstream closure, client cancellation, gateway shutdown, or decoding errors can still end it.
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="observability-pane" role="tabpanel" aria-labelledby="observability-tab" tabindex="0">
+            <div class="guide-section-heading">
+                <div><span class="guide-section-label">NON-BLOCKING HOT PATH</span><h2>@Localizer["Dual observability pipeline"]</h2></div>
+            </div>
+
+            <div class="row g-4 mb-4">
+                <div class="col-lg-6">
+                    <div class="card guide-card h-100">
+                        <div class="card-body p-lg-4">
+                            <div class="guide-observe-heading"><span><i data-lucide="database"></i></span><div><small>AUDIT EVENTS</small><h3>ClickHouse log pipeline</h3></div></div>
+                            <div class="guide-observe-flow"><strong>Resolved AI request</strong><i data-lucide="arrow-right"></i><strong>Buffer</strong><i data-lucide="arrow-right"></i><strong>ClickHouse</strong></div>
+                            <ul class="guide-check-list text-body-secondary"><li>Bounded <code>Channel&lt;RequestLog&gt;</code>: 10,000 entries</li><li><code>DropWrite</code> when full; enqueue never blocks the request</li><li>Flush every 2 minutes in batches</li><li>User, model, provider, token, latency, status, and conversation fields</li></ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card guide-card h-100">
+                        <div class="card-body p-lg-4">
+                            <div class="guide-observe-heading guide-observe-heading-purple"><span><i data-lucide="bar-chart-3"></i></span><div><small>USAGE COUNTERS</small><h3>In-memory to relational DB</h3></div></div>
+                            <div class="guide-observe-flow"><strong>Hot-path increment</strong><i data-lucide="arrow-right"></i><strong>Swap</strong><i data-lucide="arrow-right"></i><strong>Bulk update</strong></div>
+                            <ul class="guide-check-list text-body-secondary"><li>API key · virtual model · underlying model</li><li>Flush every 3 minutes</li><li>Dashboard totals are DB-backed, with nominal ≤ 3 minute lag</li><li>No database write on every model request</li></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card guide-card">
                 <div class="card-body">
-                    <div class="row g-3">
-                        <div class="col-lg-6">
-                            <div class="border rounded border-success p-3 h-100 bg-success-subtle bg-opacity-10">
-                                <h6 class="fw-bold text-success">@Localizer["What IS counted"]</h6>
-                                <ul class="small mb-0 mt-2">
-                                    <li>@Localizer["HTTP request to backend (DNS, TCP handshake, TLS)"]</li>
-                                    <li>@Localizer["Waiting for backend to send HTTP response headers"]</li>
-                                    <li>@Localizer["Model loading time (cold start on GPU)"]</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="border rounded p-3 h-100">
-                                <h6 class="fw-bold text-muted">@Localizer["What is NOT counted"]</h6>
-                                <ul class="small mb-0 mt-2 text-muted">
-                                    <li>@Localizer["Authentication & API key validation"]</li>
-                                    <li>@Localizer["Rate-limit queue waiting (Hang mode)"]</li>
-                                    <li>@Localizer["Provider concurrency slot queuing"]</li>
-                                    <li><code>Response body after headers</code> — streaming or buffered</li>
-                                </ul>
-                            </div>
-                        </div>
+                    <div class="guide-active-flow">
+                        <div><i data-lucide="scan-line"></i><span><strong>ActiveRequestTracker</strong><small>Rate queue → provider queue → upstream → response lifecycle</small></span></div>
+                        <a asp-controller="Dashboard" asp-action="Monitor" class="btn btn-outline-primary">@Localizer["Open Traffic Visualization"] <i data-lucide="arrow-up-right"></i></a>
                     </div>
-                    <div class="mt-3 p-3 bg-success-subtle rounded border border-success">
-                        <h6 class="text-success-emphasis mb-1">
-                            <i data-lucide="help-circle" style="width:16px;height:16px;" class="me-1"></i>
-                            @Localizer["Once the backend sends HTTP headers, the timeout is PASSED. The model can stream tokens for hours — only client disconnection stops it."]
-                        </h6>
-                        @if (Model.DefaultVirtualModel != null)
-                        {
-                            <small class="text-success">
-                                @Localizer["Example"]: @Model.DefaultVirtualModel.RequestTimeoutSeconds s @Localizer["timeout. Backend starts streaming at"] @(Model.DefaultVirtualModel.RequestTimeoutSeconds - 10) s,
-                                @Localizer["needs another 30 s to finish → completely fine ✅"]
-                            </small>
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row justify-content-center mb-3">
-        <div class="col-auto text-center">
-            <i data-lucide="arrow-down" class="text-muted" style="width:28px;height:28px;"></i>
-        </div>
-    </div>
-
-    @* === Step 6: Backend === *@
-    <div class="row justify-content-center mb-3">
-        <div class="col-12 col-lg-10">
-            <div class="card border-dark shadow-sm">
-                <div class="card-header bg-dark-subtle">
-                    <h5 class="card-title mb-0">
-                        <i data-lucide="server" class="me-2" style="width:20px;height:20px;"></i>
-                        @Localizer["6. Physical Backend"]
-                    </h5>
-                </div>
-                <div class="card-body">
-                    <div class="row g-3">
-                        <div class="col-md-4">
-                            <div class="text-center p-3">
-                                <div class="bg-primary-subtle rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width:48px;height:48px;">
-                                    <i data-lucide="hard-drive" class="text-primary" style="width:24px;height:24px;"></i>
-                                </div>
-                                <h6>Native Ollama</h6>
-                                <small class="text-muted"><code>model loading</code> · <code>GPU/RAM</code> · <code>keep_alive</code> · host-dependent latency</small>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="text-center p-3">
-                                <div class="bg-success-subtle rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width:48px;height:48px;">
-                                    <i data-lucide="zap" class="text-success" style="width:24px;height:24px;"></i>
-                                </div>
-                                <h6>OpenAI-compatible</h6>
-                                <small class="text-muted"><code>provider-managed loading</code> · <code>/v1/models</code> · gateway warmup skipped</small>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="text-center p-3">
-                                <div class="bg-warning-subtle rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width:48px;height:48px;">
-                                    <i data-lucide="refresh-cw" class="text-warning" style="width:24px;height:24px;"></i>
-                                </div>
-                                <h6>@Localizer["Keep-Alive & Warmup"]</h6>
-                                <small class="text-muted"><code>Native Ollama only</code> · configured models · 5 min · fallback timeout 1800 s</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    @* === Step 7: Observability Pipeline === *@
-    <div class="row justify-content-center mb-3">
-        <div class="col-12 col-lg-10">
-            <div class="card border-secondary shadow-sm">
-                <div class="card-header bg-secondary-subtle">
-                    <h5 class="card-title mb-0">
-                        <i data-lucide="bar-chart-3" class="me-2" style="width:20px;height:20px;"></i>
-                        @Localizer["7. Observability Pipeline — Dual Logging & Usage Tracking"]
-                    </h5>
-                </div>
-                <div class="card-body">
-                    <div class="row g-3">
-                        <div class="col-lg-6">
-                            <div class="border rounded p-3 h-100">
-                                <h6 class="fw-bold">
-                                    <i data-lucide="database" class="me-1" style="width:16px;height:16px;"></i>
-                                    @Localizer["ClickHouse Log Pipeline"]
-                                </h6>
-                                <div class="small text-muted mb-2"><code>Resolved AI requests only</code></div>
-                                <div class="d-flex align-items-center small">
-                                    <span class="badge bg-primary me-2">@Localizer["Middleware"]</span>
-                                    <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
-                                    <span class="badge bg-info me-2">RequestLogBuffer</span>
-                                    <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
-                                    <span class="badge bg-success">ClickHouse</span>
-                                </div>
-                                <ul class="small text-muted mt-2 mb-0 ps-3">
-                                    <li>Channel&lt;RequestLog&gt; @Localizer["bounded to"] <strong>10,000</strong> @Localizer["entries, DropWrite when full"]</li>
-                                    <li>ClickhouseFlushService @Localizer["runs every"] <strong>2 min</strong>: @Localizer["drains buffer, batch-inserts into ClickHouse"]</li>
-                                    <li>@Localizer["Logs include: user, model, provider, tokens, latency, status code, conversation count"]</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="border rounded p-3 h-100">
-                                <h6 class="fw-bold">
-                                    <i data-lucide="layers" class="me-1" style="width:16px;height:16px;"></i>
-                                    @Localizer["In-Memory Usage Tracking"]
-                                </h6>
-                                <p class="small text-muted mb-2">@Localizer["Fast in-memory counters avoid DB writes on every request:"]</p>
-                                <ul class="small text-muted mb-0 ps-3">
-                                    <li><strong>UsageCounter</strong>: API key · virtual model · underlying model</li>
-                                    <li><strong>UsageFlushService</strong> @Localizer["every"] <strong>3 min</strong>: @Localizer["swaps buffers and bulk-updates DB (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)"]</li>
-                                    <li><strong>Dashboard charts</strong>: DB-backed · nominal ≤ 3 min persistence lag</li>
-                                    <li><strong>ActiveRequestTracker</strong>: queue + upstream + response lifecycle · Monitor page</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-3 p-2 bg-light rounded border">
-                        <small class="text-muted">
-                            <i data-lucide="info" style="width:14px;height:14px;" class="me-1"></i>
-                            <code>RequestLogBuffer</code>: non-blocking + DropWrite · <code>UsageCounter</code>: in-memory increments · background persistence never blocks the request hot path
-                        </small>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row justify-content-center mb-3">
-        <div class="col-auto text-center">
-            <i data-lucide="arrow-down" class="text-muted" style="width:28px;height:28px;"></i>
-        </div>
-    </div>
-
-    @* === The 4-Layer Timeout Architecture === *@
-    <div class="row justify-content-center mb-3">
-        <div class="col-12 col-lg-10">
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="card-title mb-0">
-                        <i data-lucide="clock" class="me-2" style="width:20px;height:20px;"></i>
-                        @Localizer["The 4-Layer Timeout Architecture"]
-                    </h5>
-                </div>
-                <div class="card-body p-0">
-                    <table class="table table-striped mb-0">
-                        <thead>
-                            <tr>
-                                <th>@Localizer["Layer"]</th>
-                                <th>@Localizer["Where configured"]</th>
-                                <th>@Localizer["Current Value"]</th>
-                                <th>@Localizer["Controls"]</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><span class="badge bg-primary">@Localizer["Data Plane"]</span></td>
-                                <td>@Localizer["Virtual Model → Request Timeout (s)"]</td>
-                                <td>
-                                    @if (Model.DefaultVirtualModel != null)
-                                    {
-                                        <strong>@Model.DefaultVirtualModel.RequestTimeoutSeconds s</strong>
-                                    }
-                                    else
-                                    {
-                                        <span class="text-muted">—</span>
-                                    }
-                                </td>
-                                <td>@Localizer["How long the gateway waits for the backend to START responding to a user request"]</td>
-                            </tr>
-                            <tr>
-                                <td><span class="badge bg-info">@Localizer["Control Plane"]</span></td>
-                                <td>@Localizer["Provider → Health Check Timeout (s)"]</td>
-                                <td>
-                                    @if (Model.Providers.Any())
-                                    {
-                                        @foreach (var p in Model.Providers)
-                                        {
-                                            <strong>@p.Name</strong>
-                                            <span>: @(p.ProviderType == ProviderType.OpenAI ? "10 s fixed" : $"{p.HealthCheckTimeoutSeconds} s")</span>
-                                            if (p != Model.Providers.Last()) { <span>, </span> }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <span class="text-muted">—</span>
-                                    }
-                                </td>
-                                <td><code>Ollama: /api/tags + /api/ps</code> · <code>OpenAI: /v1/models (10 s)</code></td>
-                            </tr>
-                            <tr>
-                                <td><span class="badge bg-success">@Localizer["Warmup Plane"]</span></td>
-                                <td>@Localizer["Provider → Warmup Model → Timeout (s)"]</td>
-                                <td><strong>1800 s</strong> @Localizer["(fallback)"] · Ollama only</td>
-                                <td>@Localizer["How long the warmup job waits for each model to load. Per-model configurable."]</td>
-                            </tr>
-                            <tr data-dashboard-timeouts="ollama-ps-3-version-5-openai-models-10">
-                                <td><span class="badge bg-secondary">@Localizer["Dashboard Plane"]</span></td>
-                                <td>@Localizer["Hardcoded"]</td>
-                                <td><code>Ollama /api/ps: 3 s</code> · <code>Ollama /api/version: 5 s</code> · <code>OpenAI /v1/models: 10 s</code></td>
-                                <td>@Localizer["Quick admin dashboard ping. Does NOT write to DB — UI-only."]</td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>

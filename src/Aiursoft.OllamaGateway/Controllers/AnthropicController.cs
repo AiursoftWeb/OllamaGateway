@@ -89,7 +89,7 @@ public class AnthropicController : ControllerBase
             var result = await _backendInvoker.SendAsync(
                 virtualModel,
                 backend,
-                GatewayCapability.ChatCompletion,
+                decodedChatRequest.Request.RequiredCapabilities,
                 b => _chatRequestCompiler.CreateProviderRequest(decodedChatRequest, virtualModel, b),
                 HttpContext.RequestAborted);
 

@@ -4,9 +4,7 @@ namespace Aiursoft.OllamaGateway.Gateway.Chat;
 
 public interface IChatProviderRequestAdapter
 {
-    ProviderType ProviderType { get; }
-
-    ProtocolDialect Dialect { get; }
+    BackendProtocol Protocol { get; }
 
     HttpRequestMessage CreateRequest(
         DecodedChatRequest request,

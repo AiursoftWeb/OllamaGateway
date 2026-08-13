@@ -16,9 +16,8 @@ public sealed class ChatRequestCompiler(
         VirtualModel virtualModel,
         VirtualModelBackend backend)
     {
-        var providerType = backend.Provider?.ProviderType
-                           ?? throw new InvalidOperationException("Cannot compile a chat request without a provider.");
-        return providerAdapters.Single(adapter => adapter.ProviderType == providerType)
+        var protocol = BackendProtocolResolver.Resolve(backend);
+        return providerAdapters.Single(adapter => adapter.Protocol == protocol)
             .CreateRequest(request, virtualModel, backend);
     }
 }

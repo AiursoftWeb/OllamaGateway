@@ -1,5 +1,6 @@
 using Aiursoft.OllamaGateway.Authorization;
 using Aiursoft.OllamaGateway.Entities;
+using Aiursoft.OllamaGateway.Gateway;
 using Aiursoft.OllamaGateway.Models.VirtualModelsViewModels;
 using Aiursoft.OllamaGateway.Services;
 using Aiursoft.UiStack.Navigation;
@@ -147,6 +148,9 @@ public class VirtualModelsController(
         {
             Type = type,
             ProviderId = providerId ?? 0,
+            Protocol = providers.FirstOrDefault(provider => provider.Id == providerId) is { } selectedProvider
+                ? DefaultProtocol(selectedProvider)
+                : null,
             AvailableUnderlyingModels = underlyingModels,
             AvailableProviders = providers
         };
@@ -163,10 +167,23 @@ public class VirtualModelsController(
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(CreateViewModel model)
     {
-        if (!ModelState.IsValid || string.IsNullOrEmpty(model.UnderlyingModel) || model.ProviderId == 0)
+        var selectedProvider = model.ProviderId == 0
+            ? null
+            : await dbContext.OllamaProviders.AsNoTracking().FirstOrDefaultAsync(provider => provider.Id == model.ProviderId);
+        if (!model.Protocol.HasValue && selectedProvider != null)
+        {
+            model.Protocol = DefaultProtocol(selectedProvider);
+        }
+
+        if (!ModelState.IsValid ||
+            string.IsNullOrEmpty(model.UnderlyingModel) ||
+            selectedProvider == null ||
+            (model.Protocol.HasValue && !Enum.IsDefined(model.Protocol.Value)))
         {
             if (string.IsNullOrEmpty(model.UnderlyingModel)) ModelState.AddModelError(nameof(model.UnderlyingModel), "The Underlying Model field is required.");
-            if (model.ProviderId == 0) ModelState.AddModelError(nameof(model.ProviderId), "The Provider field is required.");
+            if (selectedProvider == null) ModelState.AddModelError(nameof(model.ProviderId), "A valid provider is required.");
+            if (model.Protocol.HasValue && !Enum.IsDefined(model.Protocol.Value))
+                ModelState.AddModelError(nameof(model.Protocol), "The backend protocol is invalid.");
 
             model.AvailableProviders = await dbContext.OllamaProviders.ToListAsync();
             var provider = model.AvailableProviders.FirstOrDefault(p => p.Id == model.ProviderId);
@@ -222,6 +239,7 @@ public class VirtualModelsController(
                 {
                     UnderlyingModelName = model.UnderlyingModel,
                     ProviderId = model.ProviderId,
+                    Protocol = model.Protocol,
                     Enabled = true,
                     IsHealthy = true,
                     Priority = 1,
@@ -241,6 +259,7 @@ public class VirtualModelsController(
     {
         var virtualModel = await dbContext.VirtualModels
             .Include(m => m.VirtualModelBackends)
+            .ThenInclude(b => b.Provider)
             .FirstOrDefaultAsync(m => m.Id == id);
 
         if (virtualModel == null)
@@ -261,6 +280,9 @@ public class VirtualModelsController(
             Name = virtualModel.Name,
             UnderlyingModel = firstBackend?.UnderlyingModelName ?? string.Empty,
             ProviderId = providerId ?? 0,
+            Protocol = firstBackend == null
+                ? (provider == null ? null : DefaultProtocol(provider))
+                : BackendProtocolResolver.Resolve(firstBackend),
             Type = virtualModel.Type,
             SelectionStrategy = virtualModel.SelectionStrategy,
             MaxRetries = virtualModel.MaxRetries,
@@ -362,20 +384,35 @@ public class VirtualModelsController(
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> AddBackend(int id, int providerId, string underlyingModel, int priority = 1, int weight = 1)
+    public async Task<IActionResult> AddBackend(
+        int id,
+        int providerId,
+        string underlyingModel,
+        BackendProtocol? protocol,
+        int priority = 1,
+        int weight = 1)
     {
         var virtualModel = await dbContext.VirtualModels.FindAsync(id);
         if (virtualModel == null) return NotFound();
 
-        if (string.IsNullOrEmpty(underlyingModel) || providerId <= 0)
+        var provider = providerId <= 0
+            ? null
+            : await dbContext.OllamaProviders.AsNoTracking().FirstOrDefaultAsync(item => item.Id == providerId);
+        protocol ??= provider == null ? null : DefaultProtocol(provider);
+
+        if (string.IsNullOrEmpty(underlyingModel) || provider == null || !protocol.HasValue || !Enum.IsDefined(protocol.Value))
         {
             if (string.IsNullOrEmpty(underlyingModel))
             {
                 ModelState.AddModelError(nameof(underlyingModel), "The underlying model is required.");
             }
-            if (providerId <= 0)
+            if (provider == null)
             {
-                ModelState.AddModelError(nameof(providerId), "The provider is required.");
+                ModelState.AddModelError(nameof(providerId), "A valid provider is required.");
+            }
+            if (!protocol.HasValue || !Enum.IsDefined(protocol.Value))
+            {
+                ModelState.AddModelError(nameof(protocol), "A valid backend protocol is required.");
             }
             return await Edit(id, providerId);
         }
@@ -385,6 +422,7 @@ public class VirtualModelsController(
             VirtualModelId = id,
             ProviderId = providerId,
             UnderlyingModelName = underlyingModel,
+            Protocol = protocol.Value,
             Priority = priority,
             Weight = weight,
             Enabled = true,
@@ -397,13 +435,15 @@ public class VirtualModelsController(
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> UpdateBackend(int id, int priority, int weight)
+    public async Task<IActionResult> UpdateBackend(int id, BackendProtocol? protocol, int priority, int weight)
     {
         var backend = await dbContext.VirtualModelBackends.FindAsync(id);
         if (backend == null) return NotFound();
+        if (protocol.HasValue && !Enum.IsDefined(protocol.Value)) return BadRequest("A valid backend protocol is required.");
 
         backend.Priority = priority;
         backend.Weight = weight;
+        if (protocol.HasValue) backend.Protocol = protocol.Value;
         await dbContext.SaveChangesAsync();
         return RedirectToAction(nameof(Edit), new { id = backend.VirtualModelId });
     }
@@ -492,4 +532,10 @@ public class VirtualModelsController(
             ? await ollamaService.GetOpenAIAvailableModelsAsync(provider.BaseUrl, provider.BearerToken) ?? new List<string>()
             : await ollamaService.GetUnderlyingModelsAsync(provider.BaseUrl, provider.BearerToken) ?? new List<string>();
     }
+
+    private static BackendProtocol DefaultProtocol(OllamaProvider provider) => provider.ProviderType switch
+    {
+        ProviderType.OpenAI => BackendProtocol.OpenAiChatCompletions,
+        _ => BackendProtocol.OllamaNative
+    };
 }

@@ -14,10 +14,9 @@ public sealed class ChatResponseDispatcher(
         bool streaming,
         HttpContext httpContext)
     {
-        var providerType = actualBackend.Provider?.ProviderType
-                           ?? throw new InvalidOperationException("Cannot dispatch a chat response without a provider.");
+        var protocol = BackendProtocolResolver.Resolve(actualBackend);
         var wireWriter = wireWriters.SingleOrDefault(writer =>
-            writer.Dialect == clientDialect && writer.ProviderType == providerType);
+            writer.Dialect == clientDialect && writer.Protocol == protocol);
 
         return wireWriter != null
             ? wireWriter.WriteAsync(upstreamResponse, virtualModel, streaming, httpContext)

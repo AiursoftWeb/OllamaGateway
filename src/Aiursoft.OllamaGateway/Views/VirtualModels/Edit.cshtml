@@ -1,4 +1,5 @@
 @using Aiursoft.OllamaGateway.Entities
+@using Aiursoft.OllamaGateway.Gateway
 @using Aiursoft.WebTools
 @model Aiursoft.OllamaGateway.Models.VirtualModelsViewModels.CreateViewModel
 
@@ -100,6 +101,7 @@
                             <tr>
                                 <th>@Localizer["Provider"]</th>
                                 <th>@Localizer["Underlying"]</th>
+                                <th>@Localizer["Protocol"]</th>
                                 <th>@Localizer["Priority"]</th>
                                 <th>@Localizer["Weight"]</th>
                                 <th>@Localizer["Status"]</th>
@@ -112,7 +114,7 @@
                             }
                             @if (backends == null || !backends.Any())
                             {
-                                <tr><td colspan="6" class="text-center text-muted py-3">@Localizer["No backends added."]</td></tr>
+                                <tr><td colspan="7" class="text-center text-muted py-3">@Localizer["No backends added."]</td></tr>
                             }
                             else
                             {
@@ -130,6 +132,14 @@
                                                 </div>
                                             </td>
                                             <td><code>@b.UnderlyingModelName</code></td>
+                                            <td>
+                                                <select name="protocol" class="form-select form-select-sm">
+                                                    @foreach (var protocol in Enum.GetValues<BackendProtocol>())
+                                                    {
+                                                        <option value="@((int)protocol)" selected="@(protocol == BackendProtocolResolver.Resolve(b) ? "selected" : null)">@protocol</option>
+                                                    }
+                                                </select>
+                                            </td>
                                             <td>
                                                 <input type="number" name="priority" value="@b.Priority" class="form-control form-control-sm" style="width: 70px;" />
                                             </td>
@@ -172,7 +182,7 @@
                     <h6>@Localizer["Add New Backend"]</h6>
                     <div asp-validation-summary="All" class="text-danger small"></div>
                     <form asp-action="AddBackend" asp-route-id="@ViewData["Id"]" method="post" class="row g-2">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label class="form-label small mb-1">@Localizer["Provider"]</label>
                             <select name="providerId" class="form-select form-select-sm" onchange="window.location.href='?id=@ViewData["Id"]&amp;providerId=' + this.value" required>
                                 <option value="">@Localizer["-- Select Provider --"]</option>
@@ -182,7 +192,16 @@
                                 }
                             </select>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <label class="form-label small mb-1">@Localizer["Backend Protocol"]</label>
+                            <select name="protocol" class="form-select form-select-sm" required>
+                                @foreach (var protocol in Enum.GetValues<BackendProtocol>())
+                                {
+                                    <option value="@((int)protocol)" selected="@(protocol == Model.Protocol ? "selected" : null)">@protocol</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-4">
                             <label class="form-label small mb-1">@Localizer["Underlying Model"]</label>
                             <select name="underlyingModel" class="form-select form-select-sm" required>
                                 <option value="">@Localizer["-- Select Model --"]</option>

@@ -7,9 +7,9 @@ namespace Aiursoft.OllamaGateway.Gateway.Chat;
 
 public sealed class OpenAiChatProviderResponseDecoder : IChatProviderResponseDecoder
 {
-    public ProviderType ProviderType => ProviderType.OpenAI;
+    public BackendProtocol Protocol => BackendProtocol.OpenAiChatCompletions;
 
-    public ProtocolDialect Dialect => ProtocolDialect.OpenAiChatCompletions;
+    private const ProtocolDialect Dialect = ProtocolDialect.OpenAiChatCompletions;
 
     public async IAsyncEnumerable<GatewayChatEvent> DecodeAsync(
         Stream responseStream,

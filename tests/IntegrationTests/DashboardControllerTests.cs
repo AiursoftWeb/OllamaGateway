@@ -70,10 +70,15 @@ public class DashboardControllerTests : TestBase
         response.EnsureSuccessStatusCode();
         var html = await response.Content.ReadAsStringAsync();
         Assert.Contains("POST /v1/messages", html);
-        Assert.Contains("data-guide-architecture=\"semantic-ir-v1\"", html);
+        Assert.Contains("POST /v1/responses", html);
+        Assert.Contains("data-guide-architecture=\"semantic-ir-v2\"", html);
         Assert.Contains("data-stage=\"request-ir\"", html);
         Assert.Contains("data-stage=\"per-attempt-adapter\"", html);
         Assert.Contains("data-stage=\"event-ir\"", html);
+        Assert.Contains("data-route-mode=\"same-dialect\"", html);
+        Assert.Contains("data-route-mode=\"cross-dialect\"", html);
+        Assert.Contains("data-responses-contract=\"stateless-only\"", html);
+        Assert.Contains("data-guide-status=\"default-model-missing\"", html);
         Assert.Contains("data-retry-semantics=\"attempt-budget\"", html);
         Assert.Contains("data-timeout-scope=\"headers-only\"", html);
         Assert.Contains("data-dashboard-timeouts=\"ollama-ps-3-version-5-openai-models-10\"", html);

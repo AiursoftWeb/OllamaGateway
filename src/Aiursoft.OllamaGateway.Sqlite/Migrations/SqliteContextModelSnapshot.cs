@@ -15,7 +15,7 @@ namespace Aiursoft.OllamaGateway.Sqlite.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "10.0.10");
+            modelBuilder.HasAnnotation("ProductVersion", "10.0.11");
 
             modelBuilder.Entity("Aiursoft.OllamaGateway.Entities.ApiKey", b =>
                 {
@@ -327,6 +327,9 @@ namespace Aiursoft.OllamaGateway.Sqlite.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Priority")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Protocol")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("ProviderId")

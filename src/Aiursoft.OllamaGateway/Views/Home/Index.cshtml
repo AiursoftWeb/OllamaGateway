@@ -275,161 +275,421 @@
     </div>
 </section>
 
-<section class="py-6 bg-dark text-white" data-compatibility-inbound-formats="3">
+<section id="compatibility-reference" class="py-6 bg-dark text-white compatibility-section"
+         data-compatibility-inbound-formats="4"
+         data-compatibility-backend-protocols="3">
     <div class="container">
-        <div class="mb-5 text-center">
-            <span class="text-uppercase text-primary text-sm fw-medium mb-1 d-block">@Localizer["Universal API Compatibility"]</span>
-            <h2 class="h1 text-white">@Localizer["Mix Any Client with Any Backend"]</h2>
+        <div class="mb-4 text-center">
+            <span class="text-uppercase text-primary text-sm fw-medium mb-1 d-block">@Localizer["Cross-Protocol Compatibility"]</span>
+            <h2 class="h1 text-white mb-3">@Localizer["Inspect one translation route at a time."]</h2>
             <div class="row justify-content-center mt-3">
-                <div class="col-lg-8">
-                    <p class="text-gray-400 fs-lg">
-                        @Localizer["OllamaGateway supports three inbound API formats (OpenAI, Ollama & Anthropic) and two backend provider types — in any combination. Your clients and physical models don't have to speak the same language."]
+                <div class="col-xl-8">
+                    <p class="text-gray-400 fs-lg mb-0">
+                        @Localizer["Choose the API your client sends on the left and the protocol spoken by the physical backend on the right. The active route shows exactly what is preserved, translated, rejected, and overridden."]
                     </p>
                 </div>
             </div>
         </div>
 
-        <div class="row g-3 mb-5">
-            <div class="col-12 col-md-4 col-xl-2 d-flex">
-                <div class="card bg-dark-glass border-white-10 flex-fill hover-lift">
-                    <div class="card-body p-3 text-center">
-                        <span class="badge bg-primary fs-6 mb-3 px-3 py-2">①</span>
-                        <h6 class="text-white fw-bold mb-2">@Localizer["OpenAI Client"]<br>→ @Localizer["OpenAI Backend"]</h6>
-                        <p class="text-gray-400 small mb-0"><code class="text-gray-300">/v1/chat/completions</code><br>@Localizer["→ OpenAI-compatible provider"]</p>
+        <ul class="nav compatibility-tabs mb-4" id="compatibilityTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="compatibility-chat-tab" data-bs-toggle="tab" data-bs-target="#compatibility-chat" type="button" role="tab" aria-controls="compatibility-chat" aria-selected="true">
+                    <span class="compatibility-tab-icon"><i class="fas fa-comments"></i></span>
+                    <span><strong>Chat</strong><small>4 client dialects × 3 backend protocols</small></span>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="compatibility-embedding-tab" data-bs-toggle="tab" data-bs-target="#compatibility-embedding" type="button" role="tab" aria-controls="compatibility-embedding" aria-selected="false">
+                    <span class="compatibility-tab-icon"><i class="fas fa-cubes"></i></span>
+                    <span><strong>Embedding</strong><small>2 client dialects × 2 Provider types</small></span>
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="compatibilityTabContent">
+            <div class="tab-pane fade show active" id="compatibility-chat" role="tabpanel" aria-labelledby="compatibility-chat-tab" tabindex="0">
+        <div class="compatibility-workbench p-3 p-lg-4 mb-4" data-compatibility-matrix="semantic-ir-v2">
+            <div class="row g-3 g-lg-4 align-items-stretch">
+                <div class="col-12 col-lg-3 order-1">
+                    <div class="compatibility-selector h-100">
+                        <div class="compatibility-selector-label"><span>01</span>@Localizer["Requester's API"]</div>
+                        <div class="d-grid gap-2" role="group" aria-label="@Localizer["Select requester API"]">
+                            <button type="button" class="compatibility-choice active" data-compatibility-source="ollama" data-endpoint="/api/chat" data-label="Ollama Chat" aria-pressed="true">
+                                <i class="fas fa-terminal"></i><span><strong>Ollama Chat</strong><small>/api/chat</small></span>
+                            </button>
+                            <button type="button" class="compatibility-choice" data-compatibility-source="openai-chat" data-endpoint="/v1/chat/completions" data-label="OpenAI Chat" aria-pressed="false">
+                                <i class="fas fa-comments"></i><span><strong>OpenAI Chat</strong><small>/v1/chat/completions</small></span>
+                            </button>
+                            <button type="button" class="compatibility-choice" data-compatibility-source="openai-responses" data-endpoint="/v1/responses" data-label="OpenAI Responses" aria-pressed="false">
+                                <i class="fas fa-stream"></i><span><strong>OpenAI Responses</strong><small>/v1/responses · stateless</small></span>
+                            </button>
+                            <button type="button" class="compatibility-choice" data-compatibility-source="anthropic" data-endpoint="/v1/messages" data-label="Anthropic Messages" aria-pressed="false">
+                                <i class="fas fa-message"></i><span><strong>Anthropic Messages</strong><small>/v1/messages</small></span>
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-12 col-md-4 col-xl-2 d-flex">
-                <div class="card bg-dark-glass border-white-10 flex-fill hover-lift">
-                    <div class="card-body p-3 text-center">
-                        <span class="badge bg-warning text-dark fs-6 mb-3 px-3 py-2">②</span>
-                        <h6 class="text-white fw-bold mb-2">@Localizer["Ollama Client"]<br>→ @Localizer["OpenAI Backend"]</h6>
-                        <p class="text-gray-400 small mb-0"><code class="text-gray-300">/api/chat</code><br>@Localizer["→ OpenAI-compatible provider"]</p>
+
+                <div class="col-12 col-lg-6 order-3 order-lg-2">
+                    <div class="compatibility-stage state-transparent h-100"
+                         data-compatibility-stage
+                         data-native-label="@Localizer["Native / same dialect"]"
+                         data-translated-label="@Localizer["Translated through semantic layer"]"
+                         data-native-summary="@Localizer["The gateway keeps the protocol shape and rewrites only gateway-owned values and configured policy fields."]"
+                         data-translated-summary="@Localizer["The gateway decodes both sides through its canonical chat model. Only semantics representable by the target protocol can cross this route."]"
+                         aria-live="polite">
+                        <div class="compatibility-stage-grid" aria-hidden="true"></div>
+                        <div class="compatibility-route-kicker">@Localizer["Active route"] <span data-route-number>01 / 12</span></div>
+                        <div class="compatibility-signal" aria-hidden="true">
+                            <span class="compatibility-signal-node"><i class="fas fa-code"></i></span>
+                            <span class="compatibility-signal-line"><span></span></span>
+                            <span class="compatibility-signal-core"><i class="fas fa-bolt"></i></span>
+                            <span class="compatibility-signal-line"><span></span></span>
+                            <span class="compatibility-signal-node"><i class="fas fa-server"></i></span>
+                        </div>
+                        <div class="row g-2 text-center position-relative">
+                            <div class="col-5">
+                                <small class="text-gray-500 d-block">@Localizer["Client"]</small>
+                                <strong class="text-white d-block" data-route-source-label>Ollama Chat</strong>
+                                <code data-route-source-endpoint>/api/chat</code>
+                            </div>
+                            <div class="col-2 d-flex justify-content-center align-items-center">
+                                <i class="fas fa-arrow-right compatibility-direction-icon"></i>
+                            </div>
+                            <div class="col-5">
+                                <small class="text-gray-500 d-block">@Localizer["Backend"]</small>
+                                <strong class="text-white d-block" data-route-target-label>Ollama Native</strong>
+                                <code data-route-target-endpoint>/api/chat</code>
+                            </div>
+                        </div>
+                        <div class="text-center position-relative mt-4">
+                            <span class="compatibility-mode-badge" data-route-mode>@Localizer["Native / same dialect"]</span>
+                            <p class="small text-gray-400 mt-3 mb-0" data-route-summary>@Localizer["The gateway keeps the protocol shape and rewrites only gateway-owned values and configured policy fields."]</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-12 col-md-4 col-xl-2 d-flex">
-                <div class="card bg-dark-glass border-white-10 flex-fill hover-lift">
-                    <div class="card-body p-3 text-center">
-                        <span class="badge bg-success fs-6 mb-3 px-3 py-2">③</span>
-                        <h6 class="text-white fw-bold mb-2">@Localizer["OpenAI Client"]<br>→ @Localizer["Ollama Backend"]</h6>
-                        <p class="text-gray-400 small mb-0"><code class="text-gray-300">/v1/chat/completions</code><br>@Localizer["→ Native Ollama"]</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-4 col-xl-2 d-flex">
-                <div class="card bg-dark-glass border-white-10 flex-fill hover-lift">
-                    <div class="card-body p-3 text-center">
-                        <span class="badge bg-info fs-6 mb-3 px-3 py-2">④</span>
-                        <h6 class="text-white fw-bold mb-2">@Localizer["Ollama Client"]<br>→ @Localizer["Ollama Backend"]</h6>
-                        <p class="text-gray-400 small mb-0"><code class="text-gray-300">/api/chat</code><br>@Localizer["→ Native Ollama"]</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-4 col-xl-2 d-flex">
-                <div class="card bg-dark-glass border-white-10 flex-fill hover-lift">
-                    <div class="card-body p-3 text-center">
-                        <span class="badge bg-purple fs-6 mb-3 px-3 py-2" style="background-color: #6f42c1 !important;">⑤</span>
-                        <h6 class="text-white fw-bold mb-2">@Localizer["Anthropic Client"]<br>→ @Localizer["OpenAI Backend"]</h6>
-                        <p class="text-gray-400 small mb-0"><code class="text-gray-300">/v1/messages</code><br>@Localizer["→ OpenAI-compatible provider"]</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-4 col-xl-2 d-flex">
-                <div class="card bg-dark-glass border-white-10 flex-fill hover-lift">
-                    <div class="card-body p-3 text-center">
-                        <span class="badge bg-teal fs-6 mb-3 px-3 py-2" style="background-color: #20c997 !important;">⑥</span>
-                        <h6 class="text-white fw-bold mb-2">@Localizer["Anthropic Client"]<br>→ @Localizer["Ollama Backend"]</h6>
-                        <p class="text-gray-400 small mb-0"><code class="text-gray-300">/v1/messages</code><br>@Localizer["→ Native Ollama"]</p>
+
+                <div class="col-12 col-lg-3 order-2 order-lg-3">
+                    <div class="compatibility-selector h-100">
+                        <div class="compatibility-selector-label"><span>02</span>@Localizer["Physical backend protocol"]</div>
+                        <div class="d-grid gap-2" role="group" aria-label="@Localizer["Select backend protocol"]">
+                            <button type="button" class="compatibility-choice active" data-compatibility-target="ollama" data-endpoint="/api/chat" data-label="Ollama Native" aria-pressed="true">
+                                <i class="fas fa-server"></i><span><strong>Ollama Native</strong><small>/api/chat</small></span>
+                            </button>
+                            <button type="button" class="compatibility-choice" data-compatibility-target="openai-chat" data-endpoint="/v1/chat/completions" data-label="OpenAI Chat" aria-pressed="false">
+                                <i class="fas fa-comments"></i><span><strong>OpenAI Chat</strong><small>/v1/chat/completions</small></span>
+                            </button>
+                            <button type="button" class="compatibility-choice" data-compatibility-target="openai-responses" data-endpoint="/v1/responses" data-label="OpenAI Responses" aria-pressed="false">
+                                <i class="fas fa-stream"></i><span><strong>OpenAI Responses</strong><small>/v1/responses</small></span>
+                            </button>
+                        </div>
+                        <p class="small text-gray-500 mt-3 mb-0">@Localizer["Provider type and backend protocol are separate. No physical Anthropic backend adapter exists today."]</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="table-responsive rounded shadow-sm">
-            <table class="table table-bordered table-dark mb-0 text-center align-middle" data-compatibility-matrix="semantic-ir-v1">
-                <thead>
+        <div class="compatibility-active-contract mb-4" data-active-route-contract>
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-3">
+                <div>
+                    <span class="compatibility-eyebrow">@Localizer["Current route contract"]</span>
+                    <h3 class="h4 text-white mb-0" data-route-title>Ollama → Ollama</h3>
+                </div>
+                <small class="text-gray-500">@Localizer["Only the selected route is shown"]</small>
+            </div>
+            <div class="compatibility-method mb-3">
+                <div class="compatibility-contract-icon"><i class="fas fa-code-branch"></i></div>
+                <div><span>@Localizer["Implementation method"]</span><div data-route-method></div></div>
+            </div>
+            <div class="row g-3">
+                <div class="col-12 col-lg-6">
+                    <article class="compatibility-contract-card contract-preserved h-100">
+                        <h4><i class="fas fa-check-circle"></i>@Localizer["Preserved"]</h4>
+                        <div data-route-preserved></div>
+                    </article>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <article class="compatibility-contract-card contract-mapped h-100">
+                        <h4><i class="fas fa-random"></i>@Localizer["Mapped / reconstructed"]</h4>
+                        <div data-route-mapped></div>
+                    </article>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <article class="compatibility-contract-card contract-discarded h-100">
+                        <h4><i class="fas fa-times-circle"></i>@Localizer["Discarded, rejected, or pinned"]</h4>
+                        <div data-route-discarded></div>
+                    </article>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <article class="compatibility-contract-card contract-database h-100">
+                        <h4><i class="fas fa-database"></i>@Localizer["Database override"]</h4>
+                        <div data-route-database></div>
+                    </article>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-none" aria-hidden="true" data-route-catalog>
+            <table class="table table-bordered table-dark table-sm mb-0 align-top compatibility-table compatibility-detail" data-translation-directions="12" style="min-width: 1900px;">
+                <thead class="align-middle text-center">
                     <tr>
-                        <th class="text-start ps-3">@Localizer["Parameter"]</th>
-                        <th><span class="badge bg-primary me-1">①</span>@Localizer["OpenAI → OpenAI"]</th>
-                        <th><span class="badge bg-warning text-dark me-1">②</span>@Localizer["Ollama → OpenAI"]</th>
-                        <th><span class="badge bg-success me-1">③</span>@Localizer["OpenAI → Ollama"]</th>
-                        <th><span class="badge bg-info me-1">④</span>@Localizer["Ollama → Ollama"]</th>
-                        <th><span class="badge bg-purple me-1" style="background-color: #6f42c1 !important;">⑤</span>@Localizer["Anthropic → OpenAI"]</th>
-                        <th><span class="badge bg-teal me-1" style="background-color: #20c997 !important;">⑥</span>@Localizer["Anthropic → Ollama"]</th>
+                        <th style="width: 12%;">@Localizer["Direction"]</th>
+                        <th style="width: 18%;">@Localizer["Implementation method"]</th>
+                        <th style="width: 19%;"><i class="fas fa-check-circle text-success me-1"></i>@Localizer["Preserved"]</th>
+                        <th style="width: 21%;"><i class="fas fa-random text-info me-1"></i>@Localizer["Mapped / reconstructed"]</th>
+                        <th style="width: 16%;"><i class="fas fa-times-circle text-danger me-1"></i>@Localizer["Discarded, rejected, or pinned"]</th>
+                        <th style="width: 14%;"><i class="fas fa-database text-warning me-1"></i>@Localizer["Database override"]</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td class="text-start fw-medium ps-3">Temperature</td>
-                        <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
-                        <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
-                        <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
-                        <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
-                        <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
-                        <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
+                <tbody class="small">
+                    <tr class="compatibility-group compatibility-group-ollama">
+                        <th colspan="6"><i class="fas fa-server me-2"></i>@Localizer["Ollama Chat client routes"] <span class="fw-normal opacity-75 ms-2"><code>/api/chat</code> → 3 backend protocols</span></th>
                     </tr>
-                    <tr>
-                        <td class="text-start fw-medium ps-3">Top P</td>
-                        <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
-                        <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
-                        <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
-                        <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
-                        <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
-                        <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
+                    <tr data-direction="ollama-to-ollama" data-mode="transparent">
+                        <th><code>/api/chat</code><br>Ollama → Ollama<br><span class="badge bg-success mt-2">@Localizer["Transparent"]</span></th>
+                        <td><code>OllamaChatRequestDecoder</code> performs capability inspection; <code>OllamaChatProviderRequestAdapter</code> clones the original JSON; <code>OllamaChatWireResponseWriter</code> keeps NDJSON records in the Ollama dialect.</td>
+                        <td>Unknown request fields, <code>messages</code>, <code>tools</code>, <code>options</code>, <code>format</code>, and unknown JSON response fields are retained. Malformed upstream NDJSON records are forwarded raw.</td>
+                        <td>Only gateway-owned fields are rewritten: virtual model → physical model upstream, physical model → virtual model downstream; <code>stream</code> is normalized; missing <code>keep_alive</code> receives the request/provider default.</td>
+                        <td>No known Ollama field is intentionally dropped on this route. Unknown fields pin routing to an Ollama-native backend. This is semantic, not byte-for-byte, preservation because valid JSON is reserialized.</td>
+                        <td><code>temperature</code>, <code>top_p</code>, <code>top_k</code>, <code>num_predict</code>, <code>num_ctx</code>, <code>repeat_penalty</code>, and <code>think</code> are hard-overridden when configured.</td>
                     </tr>
-                    <tr>
-                        <td class="text-start fw-medium ps-3">Top K</td>
-                        <td data-capability="openai-openai-top-k" data-support="passthrough"><i class="fas fa-check-circle text-success"></i> @Localizer["Passthrough"]</td>
-                        <td data-capability="ollama-openai-top-k" data-support="not-supported"><i class="fas fa-times-circle text-danger"></i> @Localizer["Not supported"]</td>
-                        <td><i class="fas fa-check-circle text-success"></i> @Localizer["DB override"]</td>
-                        <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
-                        <td><i class="fas fa-times-circle text-danger"></i> @Localizer["Not supported"]</td>
-                        <td><i class="fas fa-check-circle text-success"></i> @Localizer["DB override"]</td>
+                    <tr data-direction="ollama-to-openai-chat" data-mode="translated">
+                        <th><code>/api/chat</code><br>Ollama → OpenAI Chat<br><span class="badge bg-info text-dark mt-2">@Localizer["Translated"]</span></th>
+                        <td><code>OllamaChatRequestDecoder</code> → <code>GatewayChatRequest</code> → <code>OpenAiChatProviderRequestAdapter</code>. The response reverses through <code>OpenAiChatProviderResponseDecoder</code> and <code>OllamaChatClientResponseWriter</code>.</td>
+                        <td>Message roles/text, function definitions, function calls/results, streaming intent, temperature, top-p, token limit, images, structured format, and token usage survive when representable.</td>
+                        <td><code>images[]</code> → OpenAI <code>image_url</code> data parts; <code>num_predict</code> → <code>max_tokens</code>; <code>think</code> → <code>chat_template_kwargs.enable_thinking</code>; Ollama tool calls and responses are rebuilt as OpenAI tools and back again.</td>
+                        <td><code>top_k</code>, <code>num_ctx</code>, <code>repeat_penalty</code>, and <code>keep_alive</code> have no OpenAI Chat mapping. Unknown Ollama extensions pin the request to an Ollama backend rather than entering this route.</td>
+                        <td>OpenAI target fields <code>temperature</code>, <code>top_p</code>, and <code>max_tokens</code> use VM values when set. VM <code>Thinking</code> overrides the translated client value.</td>
                     </tr>
-                    <tr>
-                        <td class="text-start fw-medium ps-3">Num Ctx</td>
-                        <td data-capability="openai-openai-num-ctx" data-support="passthrough"><i class="fas fa-check-circle text-success"></i> @Localizer["Passthrough"]</td>
-                        <td data-capability="ollama-openai-num-ctx" data-support="not-supported"><i class="fas fa-times-circle text-danger"></i> @Localizer["Not supported"]</td>
-                        <td><i class="fas fa-check-circle text-success"></i> @Localizer["DB override"]</td>
-                        <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
-                        <td><i class="fas fa-times-circle text-danger"></i> @Localizer["Not supported"]</td>
-                        <td><i class="fas fa-check-circle text-success"></i> @Localizer["DB override"]</td>
+                    <tr data-direction="ollama-to-openai-responses" data-mode="translated">
+                        <th><code>/api/chat</code><br>Ollama → Responses<br><span class="badge bg-info text-dark mt-2">@Localizer["Translated"]</span></th>
+                        <td><code>OllamaChatRequestDecoder</code> → canonical messages/items → <code>OpenAiResponsesProviderRequestAdapter</code>. Typed Responses Items/events are decoded and rebuilt as Ollama JSON/NDJSON.</td>
+                        <td>Roles, text, system/developer instructions, images, function tools, function calls/results, temperature, top-p, token limit, structured format, stream, reasoning output, finish state, and usage.</td>
+                        <td>System messages → <code>instructions</code>; messages → Responses <code>input</code> Items; images → <code>input_image</code>; <code>num_predict</code> → <code>max_output_tokens</code>; <code>format</code> → <code>text.format</code>; function tool shapes are flattened.</td>
+                        <td>Ollama <code>top_k</code>, <code>num_ctx</code>, <code>repeat_penalty</code>, <code>keep_alive</code>, and boolean <code>think</code> are not encoded into Responses. Responses-native tools cannot be requested from the Ollama dialect.</td>
+                        <td>VM <code>Temperature</code>, <code>TopP</code>, and <code>NumPredict</code> override <code>temperature</code>, <code>top_p</code>, and <code>max_output_tokens</code>. Other VM sampling fields are not applicable.</td>
                     </tr>
-                    <tr>
-                        <td class="text-start fw-medium ps-3">@Localizer["Thinking"]</td>
-                        <td data-capability="openai-openai-thinking" data-support="full"><span data-bs-toggle="tooltip" title="@Localizer["DB overrides via chat_template_kwargs. When DB is unset, client can pass chat_template_kwargs freely."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
-                        <td data-capability="ollama-openai-thinking" data-support="converted"><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Converted"]</span></td>
-                        <td data-capability="openai-ollama-thinking" data-support="converted"><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Converted"]</span></td>
-                        <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
-                        <td><i class="fas fa-check-circle text-success"></i> @Localizer["DB override"]</td>
-                        <td><i class="fas fa-check-circle text-success"></i> @Localizer["DB override"]</td>
+                    <tr class="compatibility-group compatibility-group-chat">
+                        <th colspan="6"><i class="fas fa-comments me-2"></i>@Localizer["OpenAI Chat Completions client routes"] <span class="fw-normal opacity-75 ms-2"><code>/v1/chat/completions</code> → 3 backend protocols</span></th>
                     </tr>
-                    <tr>
-                        <td class="text-start fw-medium ps-3">@Localizer["Images / Multimodal"]</td>
-                        <td><span data-bs-toggle="tooltip" title="@Localizer["Multimodal content array passes through as-is to the OpenAI backend."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Passthrough"]</span></td>
-                        <td><span data-bs-toggle="tooltip" title="@Localizer["Ollama images array is converted to OpenAI multimodal content parts (text + image_url with data URI)."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Converted"]</span></td>
-                        <td data-capability="openai-ollama-images" data-support="base64-converted"><span data-bs-toggle="tooltip" title="@Localizer["OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Converted"] <small class="text-gray-400">(base64)</small></span></td>
-                        <td><span data-bs-toggle="tooltip" title="@Localizer["Images array passes through as-is to native Ollama."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Passthrough"]</span></td>
-                        <td data-capability="anthropic-openai-images" data-support="base64-url-converted"><i class="fas fa-check-circle text-success"></i> @Localizer["Converted"] <small class="text-gray-400">(base64 + URL)</small></td>
-                        <td data-capability="anthropic-ollama-images" data-support="base64-converted"><i class="fas fa-check-circle text-success"></i> @Localizer["Converted"] <small class="text-gray-400">(base64)</small></td>
+                    <tr data-direction="openai-chat-to-ollama" data-mode="translated">
+                        <th><code>/v1/chat/completions</code><br>OpenAI Chat → Ollama<br><span class="badge bg-info text-dark mt-2">@Localizer["Translated"]</span></th>
+                        <td><code>OpenAiChatRequestDecoder</code> → <code>GatewayChatRequest</code> → <code>OllamaChatProviderRequestAdapter</code>. Ollama response records are decoded into canonical events and emitted as Chat Completion JSON/SSE.</td>
+                        <td>Roles/text, data-URI images, function tools/calls/results, temperature, top-p, token limit, reasoning text, structured output intent, stream, finish reason, and usage.</td>
+                        <td>OpenAI content parts → Ollama <code>content</code> + <code>images[]</code>; <code>max_tokens</code>/<code>max_completion_tokens</code> → <code>num_predict</code>; <code>reasoning_effort</code> → boolean <code>think</code>; <code>response_format</code> → Ollama <code>format</code>.</td>
+                        <td>Remote image URLs have no portable Ollama-native representation; base64/data-URI is the verified conversion. Chat-only extensions such as penalties/logprobs/seed require a Chat backend instead of being silently translated.</td>
+                        <td>All Ollama VM controls apply: <code>temperature</code>, <code>top_p</code>, <code>top_k</code>, <code>num_predict</code>, <code>num_ctx</code>, <code>repeat_penalty</code>, and <code>think</code>. Ollama-only values may therefore be injected even though the client dialect cannot express them.</td>
                     </tr>
-                    <tr>
-                        <td class="text-start fw-medium ps-3">@Localizer["Repeat Penalty"]</td>
-                        <td data-capability="openai-openai-repeat-penalty" data-support="passthrough"><i class="fas fa-check-circle text-success" data-bs-toggle="tooltip" title="@Localizer["Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently."]"></i> @Localizer["Passthrough"]</td>
-                        <td data-capability="ollama-openai-repeat-penalty" data-support="not-supported"><i class="fas fa-times-circle text-danger"></i> @Localizer["Not supported"]</td>
-                        <td><i class="fas fa-check-circle text-success" data-bs-toggle="tooltip" title="@Localizer["Hard override from DB. Client-supplied frequency_penalty and presence_penalty are not mapped to repeat_penalty."]"></i> @Localizer["DB override"]</td>
-                        <td><span data-bs-toggle="tooltip" title="@Localizer["If DB has a value, it overrides the client value. If DB is unset, the client value passes through."]"><i class="fas fa-check-circle text-success"></i> @Localizer["Full support"]</span></td>
-                        <td><i class="fas fa-times-circle text-danger"></i> @Localizer["Not supported"]</td>
-                        <td><i class="fas fa-check-circle text-success" data-bs-toggle="tooltip" title="@Localizer["Hard override from DB. Anthropic has no native penalty parameters."]"></i> @Localizer["DB override"]</td>
+                    <tr data-direction="openai-chat-to-openai-chat" data-mode="transparent">
+                        <th><code>/v1/chat/completions</code><br>OpenAI Chat → OpenAI Chat<br><span class="badge bg-success mt-2">@Localizer["Transparent"]</span></th>
+                        <td><code>OpenAiChatRequestDecoder</code> inspects capabilities; the provider adapter clones the source JSON; <code>OpenAiChatWireResponseWriter</code> forwards Chat JSON/SSE while observing text, reasoning, tools, and usage.</td>
+                        <td>Unknown request fields, message/content extensions, <code>response_format</code>, <code>reasoning_effort</code>, vendor fields, unknown response fields, null values, and unrecognized SSE lines remain in the Chat dialect.</td>
+                        <td>Model identity is masked in both directions; <code>stream</code> is normalized; streaming requests merge <code>stream_options.include_usage=true</code>; null message content is normalized to an empty string.</td>
+                        <td>No known Chat field is intentionally dropped. Unknown/Chat-only fields pin selection to a Chat Completions backend. Valid JSON may be reserialized, so whitespace and numeric formatting are not contractual.</td>
+                        <td>VM <code>Temperature</code>, <code>TopP</code>, <code>NumPredict</code>, and <code>Thinking</code> override their target fields. Existing nested <code>chat_template_kwargs</code> members are preserved around <code>enable_thinking</code>.</td>
+                    </tr>
+                    <tr data-direction="openai-chat-to-openai-responses" data-mode="translated">
+                        <th><code>/v1/chat/completions</code><br>OpenAI Chat → Responses<br><span class="badge bg-info text-dark mt-2">@Localizer["Translated"]</span></th>
+                        <td><code>OpenAiChatRequestDecoder</code> → canonical IL → <code>OpenAiResponsesProviderRequestAdapter</code>. Responses output Items/events return through the Responses decoder and Chat client writer.</td>
+                        <td>Roles/text, images, function tools/calls/results, temperature, top-p, maximum output tokens, reasoning effort/output, structured output, streaming, finish reason, and usage.</td>
+                        <td>System/developer messages → <code>instructions</code>; messages → <code>input</code> Items; function schemas are flattened; named <code>tool_choice.function.name</code> → Responses <code>tool_choice.name</code>; <code>max_completion_tokens</code> → <code>max_output_tokens</code>; <code>response_format</code> → <code>text.format</code>.</td>
+                        <td><code>chat_template_kwargs.enable_thinking</code> has no Responses mapping. Chat-only extensions require a Chat backend. Responses annotations, citations, and noncanonical output Items cannot be reconstructed in a Chat Completion response.</td>
+                        <td>VM <code>Temperature</code>, <code>TopP</code>, and <code>NumPredict</code> override Responses target fields. VM <code>Thinking</code>, <code>TopK</code>, <code>NumCtx</code>, and <code>RepeatPenalty</code> are not Responses controls.</td>
+                    </tr>
+                    <tr class="compatibility-group compatibility-group-responses">
+                        <th colspan="6"><i class="fas fa-stream me-2"></i>@Localizer["OpenAI Responses client routes"] <span class="fw-normal opacity-75 ms-2"><code>/v1/responses</code> → 3 backend protocols · stateless contract</span></th>
+                    </tr>
+                    <tr data-direction="openai-responses-to-ollama" data-mode="translated">
+                        <th><code>/v1/responses</code><br>Responses → Ollama<br><span class="badge bg-info text-dark mt-2">@Localizer["Translated subset"]</span></th>
+                        <td><code>OpenAiResponsesRequestDecoder</code> → canonical IL → <code>OllamaChatProviderRequestAdapter</code>. Ollama output becomes typed Responses Items and typed SSE events.</td>
+                        <td>Instructions, message Items, text, images, function calls/results, function tool definitions, temperature, top-p, output-token limit, reasoning effort/output, structured format, stream, finish reason, and usage.</td>
+                        <td><code>instructions</code> → system message; <code>input_text</code>/<code>input_image</code> → Ollama content/images; <code>max_output_tokens</code> → <code>num_predict</code>; <code>reasoning.effort</code> → <code>think</code>; <code>text.format</code> → <code>format</code>; response events are synthesized with stable output indexes.</td>
+                        <td><code>previous_response_id</code>, <code>conversation</code>, <code>store:true</code>, and <code>background:true</code> are rejected before routing. Native tools and unknown Items/fields require a Responses backend; they are never silently sent to Ollama.</td>
+                        <td>All Ollama VM controls apply and override translated values: sampling, context, repeat penalty, token limit, and thinking. Ollama-only DB controls may be injected.</td>
+                    </tr>
+                    <tr data-direction="openai-responses-to-openai-chat" data-mode="translated">
+                        <th><code>/v1/responses</code><br>Responses → OpenAI Chat<br><span class="badge bg-info text-dark mt-2">@Localizer["Translated subset"]</span></th>
+                        <td><code>OpenAiResponsesRequestDecoder</code> → canonical IL → <code>OpenAiChatProviderRequestAdapter</code>. Chat completions/chunks are decoded and emitted as Responses JSON/typed SSE.</td>
+                        <td>Instructions, text/images, function tools/calls/results, temperature, top-p, token limit, reasoning effort/output, structured output, stream, finish state, and usage.</td>
+                        <td>Input Items → Chat <code>messages</code>; instructions → system message; Responses function tool/choice shapes → Chat wrappers; <code>max_output_tokens</code> → <code>max_tokens</code>; <code>reasoning.effort</code> → <code>reasoning_effort</code>; <code>text.format</code> → <code>response_format</code>.</td>
+                        <td>State/background requests are rejected. Native Responses tools, unknown Items, metadata, and protocol extensions require a Responses backend. Responses-only annotations/citations cannot be recreated from Chat output.</td>
+                        <td>VM <code>Temperature</code>, <code>TopP</code>, <code>NumPredict</code>, and <code>Thinking</code> override Chat target controls; Chat-only VM thinking is injected through <code>chat_template_kwargs</code>.</td>
+                    </tr>
+                    <tr data-direction="openai-responses-to-openai-responses" data-mode="transparent">
+                        <th><code>/v1/responses</code><br>Responses → Responses<br><span class="badge bg-success mt-2">@Localizer["Transparent, stateless"]</span></th>
+                        <td>The request adapter deep-clones the original Responses JSON. <code>OpenAiResponsesWireResponseWriter</code> preserves unknown output Items and SSE event names/data/comments/id/retry without passing the payload through canonical IL.</td>
+                        <td>Unknown top-level and nested request fields, native tools, metadata, future Items, annotations, citations, unknown response fields, future SSE event types, and JSON/non-JSON event data are retained.</td>
+                        <td>Only model identity, stream intent, configured VM options, and storage policy are gateway-owned. Upstream physical model names are replaced with the virtual model in response objects and events.</td>
+                        <td>The gateway currently rejects <code>previous_response_id</code>, <code>conversation</code>, <code>background:true</code>, and <code>store:true</code>; every forwarded request is forced to <code>store:false</code>. This is not byte-transparent because JSON may be reserialized.</td>
+                        <td>VM <code>Temperature</code>, <code>TopP</code>, and <code>NumPredict</code> override <code>temperature</code>, <code>top_p</code>, and <code>max_output_tokens</code>. Other nested Responses fields remain untouched.</td>
+                    </tr>
+                    <tr class="compatibility-group compatibility-group-anthropic">
+                        <th colspan="6"><i class="fas fa-cubes me-2"></i>@Localizer["Anthropic Messages client routes"] <span class="fw-normal opacity-75 ms-2"><code>/v1/messages</code> → 3 backend protocols · no physical Anthropic adapter</span></th>
+                    </tr>
+                    <tr data-direction="anthropic-to-ollama" data-mode="translated">
+                        <th><code>/v1/messages</code><br>Anthropic → Ollama<br><span class="badge bg-info text-dark mt-2">@Localizer["Translated"]</span></th>
+                        <td><code>AnthropicChatRequestDecoder</code> → canonical IL → <code>OllamaChatProviderRequestAdapter</code>. Ollama JSON/NDJSON becomes Anthropic message JSON or <code>message_start/content_block_*/message_delta/message_stop</code> SSE.</td>
+                        <td>System text, message text, base64 images, tool definitions, <code>tool_use</code>/<code>tool_result</code>, tool choice modes, temperature, top-p, max tokens, visible reasoning text, stream, finish reason, and usage.</td>
+                        <td>Anthropic image sources → Ollama <code>images[]</code>; <code>max_tokens</code> → <code>num_predict</code>; <code>tool_use</code> → function call; <code>tool_result</code> → tool message; reasoning text → Ollama thinking; Ollama output is rebuilt as Anthropic content blocks.</td>
+                        <td>Remote image URLs are not a portable Ollama-native contract; base64 is the verified path. Thinking signatures are discarded. Unknown Anthropic blocks/top-level extensions require an Anthropic backend, which is not currently implemented, so the call fails.</td>
+                        <td>All Ollama VM controls apply. <code>TopK</code>, <code>NumCtx</code>, <code>RepeatPenalty</code>, and <code>Thinking</code> can be injected from DB even though Anthropic request fields do not directly express them.</td>
+                    </tr>
+                    <tr data-direction="anthropic-to-openai-chat" data-mode="translated">
+                        <th><code>/v1/messages</code><br>Anthropic → OpenAI Chat<br><span class="badge bg-info text-dark mt-2">@Localizer["Translated"]</span></th>
+                        <td><code>AnthropicChatRequestDecoder</code> → canonical IL → <code>OpenAiChatProviderRequestAdapter</code>. Chat JSON/SSE is decoded and reconstructed as Anthropic Messages output.</td>
+                        <td>System/messages, text, base64 and URL images, function tools/calls/results, tool choice, temperature, top-p, max tokens, reasoning text, stream, finish reason, and usage.</td>
+                        <td>Anthropic system content → system message; image blocks → OpenAI <code>image_url</code>; <code>input_schema</code> → function <code>parameters</code>; <code>tool_use</code>/<code>tool_result</code> → Chat tool calls/messages; <code>max_tokens</code> remains the Chat token limit.</td>
+                        <td>Thinking signatures are discarded. Anthropic-only request controls and unknown content blocks require a physical Anthropic backend; because none exists, they are rejected by capability routing rather than dropped into Chat.</td>
+                        <td>VM <code>Temperature</code>, <code>TopP</code>, <code>NumPredict</code>, and <code>Thinking</code> override Chat target fields. Ollama-only DB sampling/context controls do not apply to Chat.</td>
+                    </tr>
+                    <tr data-direction="anthropic-to-openai-responses" data-mode="translated">
+                        <th><code>/v1/messages</code><br>Anthropic → Responses<br><span class="badge bg-info text-dark mt-2">@Localizer["Translated"]</span></th>
+                        <td><code>AnthropicChatRequestDecoder</code> → canonical IL → <code>OpenAiResponsesProviderRequestAdapter</code>. Responses Items/events are decoded and rebuilt as Anthropic content blocks and SSE.</td>
+                        <td>System instructions, text, base64/URL images, function tools/calls/results, tool choice, temperature, top-p, max tokens, response reasoning text, stream, finish state, and usage.</td>
+                        <td>System → <code>instructions</code>; messages/images → Responses input Items; Anthropic tools → Responses function tools; named tool choice → Responses <code>name</code>; <code>max_tokens</code> → <code>max_output_tokens</code>; Responses reasoning/text/function output → Anthropic blocks.</td>
+                        <td>Anthropic input thinking blocks and signatures are not encoded into Responses input. Unknown Anthropic fields/blocks cannot use this route. Native Responses-only output Items, annotations, and citations cannot be represented in Anthropic output and are omitted.</td>
+                        <td>VM <code>Temperature</code>, <code>TopP</code>, and <code>NumPredict</code> override Responses fields. VM <code>Thinking</code>, <code>TopK</code>, <code>NumCtx</code>, and <code>RepeatPenalty</code> have no Responses target field.</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <p class="text-gray-500 small text-center mt-3">
-            <i class="fas fa-info-circle me-1"></i>
-            @Localizer["'DB override' means a hard assignment (=), not a null-coalescing assignment (??=). When the virtual model has a value configured in the database, the client-supplied value is always discarded."]
-        </p>
+
+                <div class="row g-3 mt-3">
+                    <div class="col-12 col-xl-7">
+                        <div class="compatibility-policy-card policy-database h-100" role="note" data-db-override-policy="hard-assignment">
+                            <div class="compatibility-policy-heading">
+                                <span class="compatibility-policy-icon"><i class="fas fa-database"></i></span>
+                                <div><small>@Localizer["Configuration precedence"]</small><h4>@Localizer["Database values are hard assignments"]</h4></div>
+                            </div>
+                            <p>@Localizer["A configured virtual-model value replaces the client-derived value after translation. An unset value leaves the translated value unchanged."]</p>
+                            <div class="compatibility-policy-targets">
+                                <div><strong>Ollama</strong><span>Temperature · TopP · TopK · NumPredict · NumCtx · RepeatPenalty · Thinking</span></div>
+                                <div><strong>OpenAI Chat</strong><span>Temperature · TopP · NumPredict · Thinking</span></div>
+                                <div><strong>Responses</strong><span>Temperature · TopP · NumPredict</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-5">
+                        <div class="compatibility-policy-card policy-responses h-100" role="note" data-responses-state="stateless-only">
+                            <div class="compatibility-policy-heading">
+                                <span class="compatibility-policy-icon"><i class="fas fa-exclamation-triangle"></i></span>
+                                <div><small>OpenAI Responses</small><h4>@Localizer["Stateless only"]</h4></div>
+                            </div>
+                            <p>@Localizer["Clients must send the complete input history. The gateway does not retain or resume response state."]</p>
+                            <div class="compatibility-unsupported-options">
+                                <code>previous_response_id</code><code>conversation</code><code>store:true</code><code>background:true</code>
+                            </div>
+                            <p class="mb-0">→ <strong>@Localizer["explicit unsupported_feature error"]</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="compatibility-embedding" role="tabpanel" aria-labelledby="compatibility-embedding-tab" tabindex="0">
+                <div class="compatibility-embedding-pane p-3 p-lg-4">
+                        <div class="embedding-inspector" data-embedding-inspector data-auxiliary-api-contract="embedding-and-ollama-operations">
+                            <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-2 mb-3">
+                                <div>
+                                    <span class="compatibility-eyebrow">@Localizer["Embedding route inspector"]</span>
+                                    <h4 class="h5 text-white mb-0">@Localizer["Two client dialects × two Provider types"]</h4>
+                                </div>
+                                <small class="text-gray-500">@Localizer["Embedding adapters select by ProviderType, not chat BackendProtocol"]</small>
+                            </div>
+                            <div class="row g-3 align-items-stretch">
+                                <div class="col-12 col-lg-3">
+                                    <div class="embedding-selector h-100">
+                                        <div class="compatibility-selector-label"><span>01</span>@Localizer["Client endpoint"]</div>
+                                        <div class="d-grid gap-2">
+                                            <button type="button" class="compatibility-choice active" data-embedding-source="openai-embedding" data-label="OpenAI Embeddings" data-endpoint="/v1/embeddings" aria-pressed="true">
+                                                <i class="fas fa-cubes"></i><span><strong>OpenAI Embeddings</strong><small>POST /v1/embeddings</small></span>
+                                            </button>
+                                            <button type="button" class="compatibility-choice" data-embedding-source="ollama-embedding" data-label="Ollama Embed" data-endpoint="/api/embed" aria-pressed="false">
+                                                <i class="fas fa-vector-square"></i><span><strong>Ollama Embed</strong><small>POST /api/embed</small></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="compatibility-stage embedding-stage state-transparent h-100" data-embedding-stage>
+                                        <div class="compatibility-stage-grid" aria-hidden="true"></div>
+                                        <div class="compatibility-route-kicker">@Localizer["Embedding route"] <span data-embedding-route-number>01 / 04</span></div>
+                                        <div class="compatibility-signal" aria-hidden="true">
+                                            <span class="compatibility-signal-node"><i class="fas fa-cubes"></i></span>
+                                            <span class="compatibility-signal-line"><span></span></span>
+                                            <span class="compatibility-signal-core"><i class="fas fa-bolt"></i></span>
+                                            <span class="compatibility-signal-line"><span></span></span>
+                                            <span class="compatibility-signal-node"><i class="fas fa-database"></i></span>
+                                        </div>
+                                        <div class="row g-2 text-center position-relative">
+                                            <div class="col-5"><small class="text-gray-500 d-block">@Localizer["Client"]</small><strong class="text-white d-block" data-embedding-source-label>OpenAI Embeddings</strong><code data-embedding-source-endpoint>/v1/embeddings</code></div>
+                                            <div class="col-2 d-flex justify-content-center align-items-center"><i class="fas fa-arrow-right compatibility-direction-icon"></i></div>
+                                            <div class="col-5"><small class="text-gray-500 d-block">Provider</small><strong class="text-white d-block" data-embedding-target-label>OpenAI-compatible</strong><code data-embedding-target-endpoint>/v1/embeddings</code></div>
+                                        </div>
+                                        <div class="text-center position-relative mt-3"><span class="compatibility-mode-badge" data-embedding-mode>@Localizer["Native / same dialect"]</span></div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <div class="embedding-selector h-100">
+                                        <div class="compatibility-selector-label"><span>02</span>@Localizer["Backend Provider type"]</div>
+                                        <div class="d-grid gap-2">
+                                            <button type="button" class="compatibility-choice active" data-embedding-target="openai" data-label="OpenAI-compatible" data-endpoint="/v1/embeddings" aria-pressed="true">
+                                                <i class="fas fa-cloud"></i><span><strong>OpenAI-compatible</strong><small>POST /v1/embeddings</small></span>
+                                            </button>
+                                            <button type="button" class="compatibility-choice" data-embedding-target="ollama" data-label="Ollama Provider" data-endpoint="/api/embed" aria-pressed="false">
+                                                <i class="fas fa-server"></i><span><strong>Ollama Provider</strong><small>POST /api/embed</small></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="embedding-contract mt-3">
+                                <div class="d-flex justify-content-between align-items-center gap-2 mb-3">
+                                    <h5 class="text-white mb-0" data-embedding-title>OpenAI Embeddings → OpenAI-compatible</h5>
+                                    <small class="text-gray-500">@Localizer["Current route only"]</small>
+                                </div>
+                                <div class="row g-3">
+                                    <div class="col-12 col-lg-4"><article class="compatibility-contract-card contract-preserved h-100"><h4><i class="fas fa-check-circle"></i>@Localizer["Preserved / mapped"]</h4><div data-embedding-preserved></div></article></div>
+                                    <div class="col-12 col-lg-4"><article class="compatibility-contract-card contract-discarded h-100"><h4><i class="fas fa-times-circle"></i>@Localizer["Discarded / restriction"]</h4><div data-embedding-discarded></div></article></div>
+                                    <div class="col-12 col-lg-4"><article class="compatibility-contract-card contract-database h-100"><h4><i class="fas fa-code-branch"></i>@Localizer["Policy and implementation"]</h4><div data-embedding-notes></div></article></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mt-3">
+                            <div class="col-12 col-lg-6">
+                                <article class="aux-operation-card h-100">
+                                    <div class="aux-operation-heading"><span><i class="fas fa-pen-nib"></i></span><div><small>@Localizer["Narrow operation"]</small><h5>Ollama Generate</h5></div><span class="badge bg-warning text-dark">Ollama only</span></div>
+                                    <code>POST /api/generate</code>
+                                    <p>Ollama JSON/NDJSON stays in the native dialect; model identity, answer, finish data, and usage are observed and rewritten.</p>
+                                    <div class="aux-operation-limit"><i class="fas fa-ban"></i>No Chat Completions or Responses translation. A non-Ollama backend returns <code>501</code>.</div>
+                                </article>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <article class="aux-operation-card h-100">
+                                    <div class="aux-operation-heading"><span><i class="fas fa-compass"></i></span><div><small>@Localizer["Gateway-owned operation"]</small><h5>@Localizer["Model discovery"]</h5></div><span class="badge bg-info text-dark">No upstream call</span></div>
+                                    <div class="aux-endpoints"><code>/v1/models*</code><code>/api/tags</code><code>/api/ps</code><code>/api/version</code></div>
+                                    <p>Virtual-model names and gateway-owned metadata are rendered directly in the requested client shape.</p>
+                                    <div class="aux-operation-limit"><i class="fas fa-info-circle"></i>Physical provider metadata is not proxied; Ollama runtime details are placeholders or omitted.</div>
+                                </article>
+                            </div>
+                        </div>
+
+                        <div class="d-none" aria-hidden="true" data-aux-route-catalog>
+                            <table>
+                                <tbody>
+                                    <tr data-aux-route="openai-embedding-to-openai" data-mode="transparent"><th>OpenAI embedding input</th><td>OpenAI-type Provider</td><td>The original request and successful response JSON are cloned; unknown OpenAI embedding fields are preserved; only model identity is rewritten.</td><td>No chat protocol translation occurs. Backend <code>Protocol</code> is not consulted for embeddings.</td><td><code>OpenAiEmbeddingClientAdapter</code> + <code>OpenAiEmbeddingProviderAdapter</code>. No VM sampling/context override is injected into an OpenAI embedding request.</td></tr>
+                                    <tr data-aux-route="openai-embedding-to-ollama" data-mode="translated"><th>OpenAI embedding input</th><td>Ollama-type Provider</td><td>OpenAI <code>input</code> is sent as Ollama <code>input</code>; <code>embeddings[]</code> and <code>prompt_eval_count</code> are reconstructed as OpenAI <code>data[]</code> and <code>usage</code>.</td><td>OpenAI embedding extensions outside the shared input are not copied into the cross-dialect request or reconstructed response.</td><td>VM <code>NumCtx</code>, <code>Temperature</code>, <code>TopP</code>, <code>TopK</code>, and <code>RepeatPenalty</code> are injected into Ollama <code>options</code>.</td></tr>
+                                    <tr data-aux-route="ollama-embedding-to-openai" data-mode="translated"><th>Ollama embedding input</th><td>OpenAI-type Provider</td><td>Ollama <code>input</code> or legacy <code>prompt</code> becomes OpenAI <code>input</code>; OpenAI <code>data[].embedding</code> is reconstructed as Ollama <code>embeddings[]</code>.</td><td>Ollama-only embedding fields such as <code>options</code>, <code>truncate</code>, <code>dimensions</code> variants, and <code>keep_alive</code> are not copied into the OpenAI request unless represented by the shared input.</td><td>Provider adapter selection uses <code>ProviderType</code>, not chat <code>BackendProtocol</code>. No Ollama VM options are injected into an OpenAI embedding target.</td></tr>
+                                    <tr data-aux-route="ollama-embedding-to-ollama" data-mode="transparent"><th>Ollama embedding input</th><td>Ollama-type Provider</td><td>The original request and successful response JSON are cloned; unknown fields are preserved; model identity is rewritten.</td><td>The provider-level <code>keep_alive</code> replaces the client value on this route.</td><td>VM <code>NumCtx</code>, <code>Temperature</code>, <code>TopP</code>, <code>TopK</code>, and <code>RepeatPenalty</code> hard-override Ollama <code>options</code>.</td></tr>
+                                    <tr data-aux-route="ollama-generate"><th><code>POST /api/generate</code></th><td>Ollama Native only</td><td>Ollama generate JSON/NDJSON is forwarded in the same dialect; model identity, answer text, finish data, and usage are observed and the virtual model name is restored.</td><td>There is no Chat Completions or Responses translation. A non-Ollama backend returns <code>501</code>.</td><td>VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing <code>keep_alive</code> uses the Provider value.</td></tr>
+                                    <tr data-aux-route="model-discovery"><th>Model discovery endpoints</th><td>@Localizer["Gateway-generated response"]</td><td>Virtual model names and gateway-owned metadata are rendered directly in the requested client shape.</td><td>These endpoints do not proxy physical provider metadata. Ollama size/digest/runtime details are placeholders or omitted.</td><td>This avoids recursive upstream discovery when a Provider points back to the gateway and keeps the public catalog scoped to virtual models.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </div>
 </section>
 
@@ -651,10 +911,134 @@
 @section scripts {
     <script>
         window.addEventListener('load', function () {
-            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
             tooltipTriggerList.map(function (tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl)
-            })
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+
+            var compatibilitySection = document.getElementById('compatibility-reference');
+            if (!compatibilitySection) {
+                return;
+            }
+
+            var sourceButtons = Array.from(compatibilitySection.querySelectorAll('[data-compatibility-source]'));
+            var targetButtons = Array.from(compatibilitySection.querySelectorAll('[data-compatibility-target]'));
+            var catalog = compatibilitySection.querySelector('[data-route-catalog]');
+            var stage = compatibilitySection.querySelector('[data-compatibility-stage]');
+            var selectedSource = 'ollama';
+            var selectedTarget = 'ollama';
+
+            function setHtml(selector, value) {
+                compatibilitySection.querySelector(selector).innerHTML = value;
+            }
+
+            function updateButtonState(buttons, attribute, selectedValue) {
+                buttons.forEach(function (button) {
+                    var isActive = button.getAttribute(attribute) === selectedValue;
+                    button.classList.toggle('active', isActive);
+                    button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+                });
+            }
+
+            function renderRoute() {
+                var direction = selectedSource + '-to-' + selectedTarget;
+                var route = catalog.querySelector('[data-direction="' + direction + '"]');
+                var sourceButton = compatibilitySection.querySelector('[data-compatibility-source="' + selectedSource + '"]');
+                var targetButton = compatibilitySection.querySelector('[data-compatibility-target="' + selectedTarget + '"]');
+                if (!route || !sourceButton || !targetButton) {
+                    return;
+                }
+
+                var cells = route.children;
+                var isTransparent = route.dataset.mode === 'transparent';
+                var routeNumber = sourceButtons.indexOf(sourceButton) * targetButtons.length + targetButtons.indexOf(targetButton) + 1;
+
+                updateButtonState(sourceButtons, 'data-compatibility-source', selectedSource);
+                updateButtonState(targetButtons, 'data-compatibility-target', selectedTarget);
+                stage.classList.toggle('state-transparent', isTransparent);
+                stage.classList.toggle('state-translated', !isTransparent);
+
+                setHtml('[data-route-number]', String(routeNumber).padStart(2, '0') + ' / 12');
+                setHtml('[data-route-source-label]', sourceButton.dataset.label);
+                setHtml('[data-route-source-endpoint]', sourceButton.dataset.endpoint);
+                setHtml('[data-route-target-label]', targetButton.dataset.label);
+                setHtml('[data-route-target-endpoint]', targetButton.dataset.endpoint);
+                setHtml('[data-route-mode]', isTransparent ? stage.dataset.nativeLabel : stage.dataset.translatedLabel);
+                setHtml('[data-route-summary]', isTransparent ? stage.dataset.nativeSummary : stage.dataset.translatedSummary);
+                setHtml('[data-route-title]', sourceButton.dataset.label + ' → ' + targetButton.dataset.label);
+                setHtml('[data-route-method]', cells[1].innerHTML);
+                setHtml('[data-route-preserved]', cells[2].innerHTML);
+                setHtml('[data-route-mapped]', cells[3].innerHTML);
+                setHtml('[data-route-discarded]', cells[4].innerHTML);
+                setHtml('[data-route-database]', cells[5].innerHTML);
+            }
+
+            sourceButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    selectedSource = button.dataset.compatibilitySource;
+                    renderRoute();
+                });
+            });
+            targetButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    selectedTarget = button.dataset.compatibilityTarget;
+                    renderRoute();
+                });
+            });
+
+            renderRoute();
+
+            var embeddingSourceButtons = Array.from(compatibilitySection.querySelectorAll('[data-embedding-source]'));
+            var embeddingTargetButtons = Array.from(compatibilitySection.querySelectorAll('[data-embedding-target]'));
+            var embeddingCatalog = compatibilitySection.querySelector('[data-aux-route-catalog]');
+            var embeddingStage = compatibilitySection.querySelector('[data-embedding-stage]');
+            var selectedEmbeddingSource = 'openai-embedding';
+            var selectedEmbeddingTarget = 'openai';
+
+            function renderEmbeddingRoute() {
+                var direction = selectedEmbeddingSource + '-to-' + selectedEmbeddingTarget;
+                var route = embeddingCatalog.querySelector('[data-aux-route="' + direction + '"]');
+                var sourceButton = compatibilitySection.querySelector('[data-embedding-source="' + selectedEmbeddingSource + '"]');
+                var targetButton = compatibilitySection.querySelector('[data-embedding-target="' + selectedEmbeddingTarget + '"]');
+                if (!route || !sourceButton || !targetButton) {
+                    return;
+                }
+
+                var cells = route.children;
+                var isTransparent = route.dataset.mode === 'transparent';
+                var routeNumber = embeddingSourceButtons.indexOf(sourceButton) * embeddingTargetButtons.length + embeddingTargetButtons.indexOf(targetButton) + 1;
+
+                updateButtonState(embeddingSourceButtons, 'data-embedding-source', selectedEmbeddingSource);
+                updateButtonState(embeddingTargetButtons, 'data-embedding-target', selectedEmbeddingTarget);
+                embeddingStage.classList.toggle('state-transparent', isTransparent);
+                embeddingStage.classList.toggle('state-translated', !isTransparent);
+
+                setHtml('[data-embedding-route-number]', String(routeNumber).padStart(2, '0') + ' / 04');
+                setHtml('[data-embedding-source-label]', sourceButton.dataset.label);
+                setHtml('[data-embedding-source-endpoint]', sourceButton.dataset.endpoint);
+                setHtml('[data-embedding-target-label]', targetButton.dataset.label);
+                setHtml('[data-embedding-target-endpoint]', targetButton.dataset.endpoint);
+                setHtml('[data-embedding-mode]', isTransparent ? stage.dataset.nativeLabel : stage.dataset.translatedLabel);
+                setHtml('[data-embedding-title]', sourceButton.dataset.label + ' → ' + targetButton.dataset.label);
+                setHtml('[data-embedding-preserved]', cells[2].innerHTML);
+                setHtml('[data-embedding-discarded]', cells[3].innerHTML);
+                setHtml('[data-embedding-notes]', cells[4].innerHTML);
+            }
+
+            embeddingSourceButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    selectedEmbeddingSource = button.dataset.embeddingSource;
+                    renderEmbeddingRoute();
+                });
+            });
+            embeddingTargetButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    selectedEmbeddingTarget = button.dataset.embeddingTarget;
+                    renderEmbeddingRoute();
+                });
+            });
+
+            renderEmbeddingRoute();
         });
     </script>
 }
