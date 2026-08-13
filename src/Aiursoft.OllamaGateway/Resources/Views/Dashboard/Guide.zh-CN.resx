@@ -57,6 +57,15 @@
   <data name="Authentication &amp; API key validation" xml:space="preserve">
     <value>身份验证与 API 密钥校验</value>
   </data>
+  <data name="Authentication &amp; rate limit" xml:space="preserve">
+    <value>身份验证与速率限制</value>
+  </data>
+  <data name="Backend protocol" xml:space="preserve">
+    <value>后端协议</value>
+  </data>
+  <data name="Backend protocol is selected per physical model" xml:space="preserve">
+    <value>后端协议根据物理模型选择</value>
+  </data>
   <data name="Backends" xml:space="preserve">
     <value>后端</value>
   </data>
@@ -72,6 +81,9 @@
   <data name="but no virtual model with that name and type &apos;Chat&apos; exists in the database." xml:space="preserve">
     <value>但数据库中不存在具有该名称且类型为“Chat”的虚拟模型。</value>
   </data>
+  <data name="Change default" xml:space="preserve">
+    <value>更改默认设置</value>
+  </data>
   <data name="ClickHouse Log Pipeline" xml:space="preserve">
     <value>ClickHouse 日志管道</value>
   </data>
@@ -83,6 +95,12 @@
   </data>
   <data name="Controls" xml:space="preserve">
     <value>控制项</value>
+  </data>
+  <data name="Counted by the VM timeout" xml:space="preserve">
+    <value>计入 VM 超时时间</value>
+  </data>
+  <data name="Create chat model" xml:space="preserve">
+    <value>创建聊天模型</value>
   </data>
   <data name="create it here → New Virtual Model" xml:space="preserve">
     <value>在此创建 → 新建虚拟模型</value>
@@ -96,14 +114,29 @@
   <data name="Data Plane" xml:space="preserve">
     <value>数据平面</value>
   </data>
+  <data name="Default chat model is unavailable" xml:space="preserve">
+    <value>默认聊天模型不可用</value>
+  </data>
   <data name="Default Chat Model Not Found!" xml:space="preserve">
     <value>未找到默认聊天模型！</value>
+  </data>
+  <data name="Default virtual model" xml:space="preserve">
+    <value>默认虚拟模型</value>
+  </data>
+  <data name="does not match a Chat virtual model in the database. Requests without an explicit model cannot be resolved." xml:space="preserve">
+    <value>与数据库中的 Chat 虚拟模型不匹配。无法解析未指定模型的请求。</value>
   </data>
   <data name="drains buffer, batch-inserts into ClickHouse" xml:space="preserve">
     <value>清空缓冲区，批量插入 ClickHouse</value>
   </data>
+  <data name="Dual observability pipeline" xml:space="preserve">
+    <value>双可观测性管道</value>
+  </data>
   <data name="Each API key has its own rate-limit window. Two modes:" xml:space="preserve">
     <value>每个 API 密钥都有独立的速率限制窗口。两种模式：</value>
+  </data>
+  <data name="Embedding and non-chat APIs" xml:space="preserve">
+    <value>嵌入与非聊天 API</value>
   </data>
   <data name="entries, DropWrite when full" xml:space="preserve">
     <value>条目，满时丢弃写入</value>
@@ -117,6 +150,9 @@
   <data name="Example" xml:space="preserve">
     <value>示例</value>
   </data>
+  <data name="Fallback budget for the current default model" xml:space="preserve">
+    <value>当前默认模型的备用预算</value>
+  </data>
   <data name="Fallback Timeline" xml:space="preserve">
     <value>回退时间线</value>
   </data>
@@ -125,6 +161,9 @@
   </data>
   <data name="Fix it here → Global Settings" xml:space="preserve">
     <value>在此修复 → 全局设置</value>
+  </data>
+  <data name="Four independent timeout planes" xml:space="preserve">
+    <value>四个独立的超时层面</value>
   </data>
   <data name="GPU processes tokens. Once loaded, subsequent requests skip loading → straight to inference." xml:space="preserve">
     <value>GPU 处理 Token。加载完成后，后续请求将跳过加载步骤，直接进入推理阶段。</value>
@@ -137,6 +176,9 @@
   </data>
   <data name="Health Check" xml:space="preserve">
     <value>健康检查</value>
+  </data>
+  <data name="How a request flows through the Ollama Gateway — from client contract to selected backend protocol." xml:space="preserve">
+    <value>请求在 Ollama 网关中的流转过程——从客户端契约到选定的后端协议。</value>
   </data>
   <data name="How a request flows through the Ollama Gateway — from client to backend" xml:space="preserve">
     <value>请求如何流经 Ollama Gateway——从客户端到后端</value>
@@ -219,16 +261,34 @@
   <data name="NumCtx" xml:space="preserve">
     <value>上下文窗口大小</value>
   </data>
+  <data name="Observability" xml:space="preserve">
+    <value>可观测性</value>
+  </data>
   <data name="Once the backend sends HTTP headers, the timeout is PASSED. The model can stream tokens for hours — only client disconnection stops it." xml:space="preserve">
     <value>一旦后端发送 HTTP 响应头，即视为通过超时检查。模型可以持续流式传输 Token 数小时——只有客户端断开连接才会停止该过程。</value>
+  </data>
+  <data name="One semantic core, protocol-aware edges" xml:space="preserve">
+    <value>一个语义核心，感知协议的边缘</value>
+  </data>
+  <data name="Open Traffic Visualization" xml:space="preserve">
+    <value>打开流量可视化</value>
   </data>
   <data name="or" xml:space="preserve">
     <value>或</value>
   </data>
+  <data name="Outside the VM timeout" xml:space="preserve">
+    <value>不计入 VM 超时</value>
+  </data>
   <data name="Per-Key Rate Limiter" xml:space="preserve">
     <value>按密钥速率限制器</value>
   </data>
+  <data name="Physical model" xml:space="preserve">
+    <value>物理模型</value>
+  </data>
   <data name="Pri" xml:space="preserve">
+    <value>优先级</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
     <value>优先级</value>
   </data>
   <data name="processing" xml:space="preserve">
@@ -242,6 +302,9 @@
   </data>
   <data name="Provider → Warmup Model → Timeout (s)" xml:space="preserve">
     <value>提供商 → 预热模型 → 超时（秒）</value>
+  </data>
+  <data name="Provider concurrency — live process state" xml:space="preserve">
+    <value>提供商并发 — 实时进程状态</value>
   </data>
   <data name="Provider concurrency slot queuing" xml:space="preserve">
     <value>提供商并发槽排队</value>
@@ -264,11 +327,26 @@
   <data name="Reject mode" xml:space="preserve">
     <value>拒绝模式</value>
   </data>
+  <data name="Request Path" xml:space="preserve">
+    <value>请求路径</value>
+  </data>
   <data name="Request Timeout" xml:space="preserve">
     <value>请求超时</value>
   </data>
   <data name="runs every" xml:space="preserve">
     <value>每</value>
+  </data>
+  <data name="Runtime" xml:space="preserve">
+    <value>运行时</value>
+  </data>
+  <data name="Runtime configuration" xml:space="preserve">
+    <value>运行时配置</value>
+  </data>
+  <data name="Separate, narrower contracts" xml:space="preserve">
+    <value>独立且更窄的契约</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>无状态</value>
   </data>
   <data name="Strategy" xml:space="preserve">
     <value>策略</value>
@@ -285,6 +363,9 @@
   <data name="The 4-Layer Timeout Architecture" xml:space="preserve">
     <value>四层超时架构</value>
   </data>
+  <data name="The configured default" xml:space="preserve">
+    <value>已配置的默认</value>
+  </data>
   <data name="The global default chat model is set to" xml:space="preserve">
     <value>全局默认聊天模型已设置为</value>
   </data>
@@ -296,6 +377,9 @@
   </data>
   <data name="timeout. Backend starts streaming at" xml:space="preserve">
     <value>超时。后端在 处开始流式传输</value>
+  </data>
+  <data name="Timeouts &amp; Queues" xml:space="preserve">
+    <value>超时与队列</value>
   </data>
   <data name="tracks API key usage, virtual model usage, underlying model usage — feeds the Dashboard charts in real-time" xml:space="preserve">
     <value>追踪 API 密钥用量、虚拟模型用量及底层模型用量——实时为仪表盘图表提供数据</value>
