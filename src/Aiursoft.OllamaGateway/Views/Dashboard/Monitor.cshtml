@@ -52,9 +52,16 @@
         sb.AppendLine();
         sb.AppendLine($"        subgraph VS_{vm.Id} [{Localizer["Virtual Service"].Value} {vm.Name}]");
         var svcClass = isBusy ? "virtualSvcBusy" : "virtualSvc";
-        var svcLabel = isBusy ? $"🔥 {vm.Name}<br/>({vm.Type})" : $"📦 {vm.Name}<br/>({vm.Type})";
+        var modelType = vm.Type == ModelType.Chat ? Localizer["Chat"].Value : Localizer["Embedding"].Value;
+        var svcLabel = isBusy ? $"🔥 {vm.Name}<br/>({modelType})" : $"📦 {vm.Name}<br/>({modelType})";
         sb.AppendLine($"            Svc_{vm.Id}(\"{svcLabel}\"):::{svcClass}");
-        var algoStr = vm.SelectionStrategy.ToString();
+        var algoStr = vm.SelectionStrategy switch
+        {
+            SelectionStrategy.PriorityFallback => Localizer["Priority Fallback"].Value,
+            SelectionStrategy.WeightedRandom => Localizer["Weighted Random"].Value,
+            SelectionStrategy.RoundRobin => Localizer["Round Robin"].Value,
+            _ => Localizer["Unknown"].Value
+        };
         sb.AppendLine($"            Algo_{vm.Id}[\"⚖️ {algoStr}\"]:::algo");
         sb.AppendLine($"            Svc_{vm.Id} --- Algo_{vm.Id}");
         sb.AppendLine("        end");
@@ -65,7 +72,7 @@
     var byProvider = physicalNodeMap.GroupBy(kv => kv.Key.ProviderId);
     foreach (var providerGroup in byProvider)
     {
-        var providerName = providerGroup.First().Value.Provider?.Name ?? $"Provider {providerGroup.Key}";
+        var providerName = providerGroup.First().Value.Provider?.Name ?? Localizer["Provider {0}", providerGroup.Key].Value;
         sb.AppendLine();
         sb.AppendLine($"    subgraph PhysPool_P{providerGroup.Key} [{Localizer["Backend Pool"].Value} {providerName}]");
         foreach (var kv in providerGroup)
@@ -83,7 +90,15 @@
 
             var statusClass = isBanned ? "banned" : isBusy ? "physicalBusy" : backend.IsReady ? "ready" : (backend.IsHealthy ? "healthy" : "down");
             var icon = isBanned ? "🚫" : isBusy ? "🔥" : backend.IsReady ? "🟢" : (backend.IsHealthy ? "🔵" : "🔴");
-            var statusText = isBanned ? "Banned" : isBusy ? "Busy" : backend.IsReady ? "Ready" : (backend.IsHealthy ? "Healthy" : "Down");
+            var statusText = isBanned
+                ? Localizer["Banned"].Value
+                : isBusy
+                    ? Localizer["Busy"].Value
+                    : backend.IsReady
+                        ? Localizer["Ready"].Value
+                        : backend.IsHealthy
+                            ? Localizer["Healthy"].Value
+                            : Localizer["Down"].Value;
             
             sb.AppendLine($"        {nodeId}[(\"{icon} {providerName}<br/>{backend.UnderlyingModelName}<br/>{statusText}\")]:::{statusClass}");
         }

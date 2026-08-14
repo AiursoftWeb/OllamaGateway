@@ -110,7 +110,7 @@
                     </tr>
                     <tr>
                         <td>@Localizer["System"]</td>
-                        <td>@Aiursoft.CSTools.Services.OperatingSystemExtensions.TryGetFullOsVersion() @(Environment.Is64BitOperatingSystem ? "(64-bit)" : "(32-bit)")</td>
+                        <td>@Aiursoft.CSTools.Services.OperatingSystemExtensions.TryGetFullOsVersion() @(Environment.Is64BitOperatingSystem ? Localizer["(64-bit)"] : Localizer["(32-bit)"])</td>
                     </tr>
                     <tr>
                         <td>@Localizer["Machine Name"]</td>
@@ -131,7 +131,7 @@
                     <tr>
                         <td>@Localizer["Worker Process"]</td>
                         <td>
-                            [@process.Id] @process.ProcessName @(Environment.Is64BitProcess ? "(64-bit)" : "(32-bit)")</td>
+                            [@process.Id] @process.ProcessName @(Environment.Is64BitProcess ? Localizer["(64-bit)"] : Localizer["(32-bit)"])</td>
                     </tr>
                     <tr>
                         <td>@Localizer["Start Time"]</td>
@@ -163,7 +163,7 @@
                     </tr>
                     <tr>
                         <td>@Localizer["Uptime"]</td>
-                        <td>@uptime.Days d @uptime.Hours h @uptime.Minutes m @uptime.Seconds s</td>
+                        <td>@Localizer["{0} d {1} h {2} m {3} s", uptime.Days, uptime.Hours, uptime.Minutes, uptime.Seconds]</td>
                     </tr>
                     <tr>
                         <td>@Localizer["CPU Cores"]</td>
@@ -171,7 +171,7 @@
                     </tr>
                     <tr>
                         <td>@Localizer["GC Mode"]</td>
-                        <td>@(System.Runtime.GCSettings.IsServerGC ? "Server" : "Workstation")</td>
+                        <td>@(System.Runtime.GCSettings.IsServerGC ? Localizer["Server"] : Localizer["Workstation"])</td>
                     </tr>
                     <tr>
                         <td>@Localizer["Thread Count"]</td>
@@ -179,7 +179,7 @@
                     </tr>
                     <tr>
                         <td>@Localizer["Environment"]</td>
-                        <td>@(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "N/A")</td>
+                        <td>@(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? Localizer["N/A"].Value)</td>
                     </tr>
                     <tr>
                         <td>@Localizer["Handle Count"]</td>
@@ -300,7 +300,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="restartModalLabel">@Localizer["Confirm Application Restart"]</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="@Localizer["Close"]"></button>
             </div>
             <div class="modal-body">
                 <div class="text-center mb-3">

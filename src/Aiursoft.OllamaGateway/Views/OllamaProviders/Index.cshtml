@@ -155,7 +155,7 @@
                                         <a asp-action="Edit" asp-route-id="@p.Provider.Id" class="btn btn-sm btn-outline-primary" title="@Localizer["Edit"]">
                                             <i class="align-middle" data-lucide="edit"></i>
                                         </a>
-                                        <form asp-action="Delete" asp-route-id="@p.Provider.Id" method="post" onsubmit="return confirm('@Localizer["Are you sure you want to delete this provider? All linked virtual models will also be deleted."]');" style="display:inline;">
+                                        <form asp-action="Delete" asp-route-id="@p.Provider.Id" method="post" class="localized-confirm-form" style="display:inline;">
                                             <button type="submit" class="btn btn-sm btn-outline-danger">
                                                 <i class="align-middle" data-lucide="trash-2"></i>
                                             </button>
@@ -170,3 +170,22 @@
         </div>
     </div>
 </div>
+
+<!-- Localization Data -->
+<div id="providers-loc-data" hidden>
+    <span data-key="delete-confirm">@Localizer["Are you sure you want to delete this provider? All linked virtual models will also be deleted."]</span>
+</div>
+
+@* ReSharper disable once Razor.SectionNotResolved *@
+@section scripts {
+    <script>
+        document.querySelectorAll('.localized-confirm-form').forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                const message = document.querySelector('#providers-loc-data span[data-key="delete-confirm"]')?.innerText || 'Are you sure you want to delete this provider?';
+                if (!confirm(message)) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
+}

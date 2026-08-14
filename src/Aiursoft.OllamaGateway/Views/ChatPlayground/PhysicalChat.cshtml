@@ -22,19 +22,19 @@
                 <div class="row">
                     <div class="col-md-2 mb-3">
                         <label class="form-label small fw-bold">@Localizer["Temperature"]</label>
-                        <input type="number" step="0.1" class="form-control form-control-sm" id="temperature" placeholder="Default" value="@Model.Temperature">
+                        <input type="number" step="0.1" class="form-control form-control-sm" id="temperature" placeholder="@Localizer["Default"]" value="@Model.Temperature">
                     </div>
                     <div class="col-md-2 mb-3">
                         <label class="form-label small fw-bold">@Localizer["Top P"]</label>
-                        <input type="number" step="0.01" class="form-control form-control-sm" id="topP" placeholder="Default" value="@Model.TopP">
+                        <input type="number" step="0.01" class="form-control form-control-sm" id="topP" placeholder="@Localizer["Default"]" value="@Model.TopP">
                     </div>
                     <div class="col-md-2 mb-3 ollama-only-param">
                         <label class="form-label small fw-bold">@Localizer["Top K"]</label>
-                        <input type="number" class="form-control form-control-sm" id="topK" placeholder="Default" value="@Model.TopK">
+                        <input type="number" class="form-control form-control-sm" id="topK" placeholder="@Localizer["Default"]" value="@Model.TopK">
                     </div>
                     <div class="col-md-2 mb-3 ollama-only-param">
                         <label class="form-label small fw-bold">@Localizer["Num Ctx"]</label>
-                        <input type="number" class="form-control form-control-sm" id="numCtx" placeholder="Default" value="@Model.NumCtx">
+                        <input type="number" class="form-control form-control-sm" id="numCtx" placeholder="@Localizer["Default"]" value="@Model.NumCtx">
                     </div>
                     <div class="col-md-2 mb-3 ollama-only-param">
                         <div class="form-check form-switch mt-4">
@@ -130,7 +130,7 @@
     }
 </style>
 
-<div id="loc-data" hidden>
+<div id="loc-data" data-model="@Model.Name" data-openai-provider="@Model.IsOpenAIProvider.ToString().ToLowerInvariant()" hidden>
     <span data-key="session-cleared">@Localizer["Session cleared. Send a new message to start over."]</span>
     <span data-key="error-prefix">@Localizer["Error: "]</span>
     <span data-key="thinking">@Localizer["Thinking..."]</span>
@@ -139,7 +139,8 @@
 @* ReSharper disable once Razor.SectionNotResolved *@
 @section scripts {
     <script>
-        const isOpenAIProvider = @(Model.IsOpenAIProvider ? "true" : "false");
+        const pageData = document.getElementById('loc-data');
+        const isOpenAIProvider = pageData.dataset.openaiProvider === 'true';
 
         // Hide Ollama-only params immediately if this is an OpenAI provider
         if (isOpenAIProvider) {
@@ -365,7 +366,7 @@
                 const thinking = !isOpenAIProvider && document.getElementById('thinking').checked;
 
                 const body = {
-                    model: '@Model.Name',
+                    model: pageData.dataset.model,
                     messages: history,
                     stream: true,
                     options: Object.keys(options).length > 0 ? options : undefined,

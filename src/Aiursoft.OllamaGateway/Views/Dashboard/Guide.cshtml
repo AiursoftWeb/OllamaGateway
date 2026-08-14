@@ -19,7 +19,7 @@
         <div class="guide-config-alert mb-4" role="alert" data-guide-status="default-model-missing">
             <div class="guide-config-alert-icon"><i data-lucide="alert-triangle"></i></div>
             <div class="guide-config-alert-copy">
-                <span class="guide-config-alert-label">CONFIGURATION REQUIRED</span>
+                <span class="guide-config-alert-label">@Localizer["CONFIGURATION REQUIRED"]</span>
                 <h2>@Localizer["Default chat model is unavailable"]</h2>
                 <p class="mb-0">
                     @Localizer["The configured default"] <code>@Model.DefaultChatModelName</code>
@@ -40,7 +40,7 @@
     <section class="guide-hero mb-4">
         <div class="row align-items-center g-4">
             <div class="col-lg-7">
-                <div class="guide-kicker"><i data-lucide="network"></i> SEMANTIC GATEWAY · V2</div>
+                <div class="guide-kicker"><i data-lucide="network"></i> @Localizer["SEMANTIC GATEWAY · V2"]</div>
                 <h1 class="display-6 fw-bold mb-2">@Localizer["Architecture Guide"]</h1>
                 <p class="lead mb-0 text-body-secondary">
                     @Localizer["How a request flows through the Ollama Gateway — from client contract to selected backend protocol."]
@@ -48,10 +48,10 @@
             </div>
             <div class="col-lg-5">
                 <div class="guide-fact-grid">
-                    <div class="guide-fact"><strong>4</strong><span>Inbound dialects</span></div>
-                    <div class="guide-fact"><strong>3</strong><span>Backend protocols</span></div>
-                    <div class="guide-fact"><strong>2</strong><span>Provider types</span></div>
-                    <div class="guide-fact guide-fact-warning"><strong>State-aware</strong><span>Native Responses</span></div>
+                    <div class="guide-fact"><strong>4</strong><span>@Localizer["Inbound dialects"]</span></div>
+                    <div class="guide-fact"><strong>3</strong><span>@Localizer["Backend protocols"]</span></div>
+                    <div class="guide-fact"><strong>2</strong><span>@Localizer["Provider types"]</span></div>
+                    <div class="guide-fact guide-fact-warning"><strong>@Localizer["State-aware"]</strong><span>@Localizer["Native Responses"]</span></div>
                 </div>
             </div>
         </div>
@@ -65,7 +65,7 @@
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="runtime-tab" data-bs-toggle="tab" data-bs-target="#runtime-pane" type="button" role="tab" aria-controls="runtime-pane" aria-selected="false">
-                <i data-lucide="activity"></i><span>@Localizer["Runtime"]</span><span class="guide-live-dot" title="Live configuration"></span>
+                <i data-lucide="activity"></i><span>@Localizer["Runtime"]</span><span class="guide-live-dot" title="@Localizer["Live configuration"]"></span>
             </button>
         </li>
         <li class="nav-item" role="presentation">
@@ -84,7 +84,7 @@
         <div class="tab-pane fade show active" id="request-path-pane" role="tabpanel" aria-labelledby="request-path-tab" tabindex="0">
             <div class="guide-section-heading">
                 <div>
-                    <span class="guide-section-label">FIXED ARCHITECTURE CONTRACT</span>
+                    <span class="guide-section-label">@Localizer["FIXED ARCHITECTURE CONTRACT"]</span>
                     <h2>@Localizer["One semantic core, protocol-aware edges"]</h2>
                 </div>
                 <span class="badge text-bg-primary">semantic-ir-v2</span>
@@ -108,13 +108,13 @@
                     </div>
 
                     <div class="guide-flow" data-stage="request-ir">
-                        <div class="guide-flow-node"><small>01</small><strong>Client JSON</strong><span>Dialect contract</span></div>
+                        <div class="guide-flow-node"><small>01</small><strong>@Localizer["Client JSON"]</strong><span>@Localizer["Dialect contract"]</span></div>
                         <i data-lucide="arrow-right" class="guide-flow-arrow"></i>
-                        <div class="guide-flow-node"><small>02</small><strong>Auth + Rate Limit</strong><span>Before model timeout</span></div>
+                        <div class="guide-flow-node"><small>02</small><strong>@Localizer["Auth + Rate Limit"]</strong><span>@Localizer["Before model timeout"]</span></div>
                         <i data-lucide="arrow-right" class="guide-flow-arrow"></i>
-                        <div class="guide-flow-node guide-flow-node-accent"><small>03</small><strong>Client Decoder</strong><span>Semantic Request IR</span></div>
+                        <div class="guide-flow-node guide-flow-node-accent"><small>03</small><strong>@Localizer["Client Decoder"]</strong><span>@Localizer["Semantic Request IR"]</span></div>
                         <i data-lucide="arrow-right" class="guide-flow-arrow"></i>
-                        <div class="guide-flow-node"><small>04</small><strong>Resolver + Planner</strong><span>Model and capabilities</span></div>
+                        <div class="guide-flow-node"><small>04</small><strong>@Localizer["Resolver + Planner"]</strong><span>@Localizer["Model and capabilities"]</span></div>
                     </div>
                 </div>
             </div>
@@ -125,13 +125,13 @@
                         <div class="card-body">
                             <div class="guide-route-title">
                                 <span class="guide-route-icon"><i data-lucide="shield-check"></i></span>
-                                <div><span class="badge text-bg-success">SAME DIALECT</span><h3>Transparent wire path</h3></div>
+                                <div><span class="badge text-bg-success">@Localizer["SAME DIALECT"]</span><h3>@Localizer["Transparent wire path"]</h3></div>
                             </div>
                             <div class="guide-mini-flow">
-                                <code>Original JSON</code><span>→</span><code>Deep clone</code><span>→</span><code>Gateway overrides</code>
+                                <code>@Localizer["Original JSON"]</code><span>→</span><code>@Localizer["Deep clone"]</code><span>→</span><code>@Localizer["Gateway overrides"]</code>
                             </div>
                             <p class="text-body-secondary mb-0">
-                                Unknown representable fields survive. The gateway changes owned fields such as physical model identity and configured VM parameters; translated Responses requests use <code>store:false</code>.
+                                @Localizer["Unknown representable fields survive. The gateway changes owned fields such as physical model identity and configured VM parameters; translated Responses requests use store:false."]
                             </p>
                         </div>
                     </div>
@@ -141,13 +141,13 @@
                         <div class="card-body">
                             <div class="guide-route-title">
                                 <span class="guide-route-icon"><i data-lucide="shuffle"></i></span>
-                                <div><span class="badge text-bg-info">CROSS DIALECT</span><h3>Semantic translation path</h3></div>
+                                <div><span class="badge text-bg-info">@Localizer["CROSS DIALECT"]</span><h3>@Localizer["Semantic translation path"]</h3></div>
                             </div>
                             <div class="guide-mini-flow">
-                                <code>Decoder</code><span>→</span><code>Request IR</code><span>→</span><code>Target adapter</code>
+                                <code>@Localizer["Decoder"]</code><span>→</span><code>@Localizer["Request IR"]</code><span>→</span><code>@Localizer["Target adapter"]</code>
                             </div>
                             <p class="text-body-secondary mb-0">
-                                Only shared semantics are translated. Wire extensions prefer a matching backend and fall back to the documented semantic subset; opaque content and unsupported stateful operations remain hard rejections.
+                                @Localizer["Only shared semantics are translated. Wire extensions prefer a matching backend and fall back to the documented semantic subset; opaque content and unsupported stateful operations remain hard rejections."]
                             </p>
                         </div>
                     </div>
@@ -157,7 +157,7 @@
             <div class="card guide-card mb-4" data-stage="per-attempt-adapter">
                 <div class="card-header guide-card-header">
                     <div><i data-lucide="server-cog"></i><strong>@Localizer["Backend protocol is selected per request and provider capability"]</strong></div>
-                    <span class="text-body-secondary small">2 provider types ≠ 3 wire protocols</span>
+                    <span class="text-body-secondary small">@Localizer["2 provider types ≠ 3 wire protocols"]</span>
                 </div>
                 <div class="card-body">
                     <div class="row g-3">
@@ -165,21 +165,21 @@
                             <div class="guide-protocol">
                                 <span class="guide-protocol-number">01</span><i data-lucide="box"></i>
                                 <strong>Ollama Native</strong><code>/api/chat</code>
-                                <small>Provider type: Ollama</small>
+                                <small>@Localizer["Provider type: Ollama"]</small>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="guide-protocol">
                                 <span class="guide-protocol-number">02</span><i data-lucide="messages-square"></i>
                                 <strong>OpenAI Chat Completions</strong><code>/v1/chat/completions</code>
-                                <small>Provider type: OpenAI</small>
+                                <small>@Localizer["Provider type: OpenAI"]</small>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="guide-protocol guide-protocol-new">
                                 <span class="guide-protocol-number">03</span><i data-lucide="radio-tower"></i>
                                 <strong>OpenAI Responses</strong><code>/v1/responses</code>
-                                <small>Provider type: OpenAI</small>
+                                <small>@Localizer["Provider type: OpenAI"]</small>
                             </div>
                         </div>
                     </div>
@@ -187,17 +187,17 @@
             </div>
 
             <div class="guide-response-flow mb-4" data-stage="event-ir">
-                <div><i data-lucide="download"></i><strong>Backend response</strong></div>
+                <div><i data-lucide="download"></i><strong>@Localizer["Backend response"]</strong></div>
                 <span class="guide-response-line"></span>
-                <div class="guide-response-branch guide-response-native"><span>Same dialect</span><strong>Wire Writer</strong><small>Preserve protocol-specific payload</small></div>
-                <div class="guide-response-branch guide-response-cross"><span>Cross dialect</span><strong>Decoder → Event IR → Client Writer</strong><small>Reconstruct client JSON or streaming events</small></div>
+                <div class="guide-response-branch guide-response-native"><span>@Localizer["Same dialect"]</span><strong>@Localizer["Wire Writer"]</strong><small>@Localizer["Preserve protocol-specific payload"]</small></div>
+                <div class="guide-response-branch guide-response-cross"><span>@Localizer["Cross dialect"]</span><strong>@Localizer["Decoder → Event IR → Client Writer"]</strong><small>@Localizer["Reconstruct client JSON or streaming events"]</small></div>
             </div>
 
             <div class="alert guide-boundary-alert mb-4" role="note" data-responses-contract="native-state">
                 <div class="guide-boundary-icon"><i data-lucide="triangle-alert"></i></div>
                 <div>
-                    <strong>OpenAI Responses state is preserved only on native Responses routes</strong>
-                    <p class="mb-0"><code>previous_response_id</code>, <code>conversation</code>, <code>store:true</code>, and <code>background:true</code> pass through unchanged to Responses-capable providers; translated routes return an explicit <code>400 unsupported_feature</code>.</p>
+                    <strong>@Localizer["OpenAI Responses state is preserved only on native Responses routes"]</strong>
+                    <p class="mb-0">@Localizer["previous_response_id, conversation, store:true, and background:true pass through unchanged to Responses-capable providers; translated routes return an explicit 400 unsupported_feature."]</p>
                 </div>
             </div>
 
@@ -205,9 +205,9 @@
                 <summary><span><i data-lucide="layers-3"></i><strong>@Localizer["Embedding and non-chat APIs"]</strong></span><small>@Localizer["Separate, narrower contracts"]</small></summary>
                 <div class="guide-details-body">
                     <div class="row g-3">
-                        <div class="col-md-4"><div class="guide-aux-card"><strong>Embeddings</strong><code>/v1/embeddings ↔ /api/embed</code><p>Uses its own two-dialect adapter pipeline. It does not pass through the chat Request/Event IR.</p></div></div>
-                        <div class="col-md-4"><div class="guide-aux-card"><strong>Ollama Generate</strong><code>POST /api/generate</code><p>Native Ollama only. A non-Ollama selected backend returns <code>501</code>.</p></div></div>
-                        <div class="col-md-4"><div class="guide-aux-card"><strong>Model discovery</strong><code>/v1/models · /api/tags · /api/ps</code><p>Gateway-owned responses expose virtual models and avoid recursive upstream discovery.</p></div></div>
+                        <div class="col-md-4"><div class="guide-aux-card"><strong>@Localizer["Embeddings"]</strong><code>/v1/embeddings ↔ /api/embed</code><p>@Localizer["Uses its own two-dialect adapter pipeline. It does not pass through the chat Request/Event IR."]</p></div></div>
+                        <div class="col-md-4"><div class="guide-aux-card"><strong>Ollama Generate</strong><code>POST /api/generate</code><p>@Localizer["Native Ollama only. A non-Ollama selected backend returns HTTP 501."]</p></div></div>
+                        <div class="col-md-4"><div class="guide-aux-card"><strong>@Localizer["Model discovery"]</strong><code>/v1/models · /api/tags · /api/ps</code><p>@Localizer["Gateway-owned responses expose virtual models and avoid recursive upstream discovery."]</p></div></div>
                     </div>
                 </div>
             </details>
@@ -215,8 +215,8 @@
 
         <div class="tab-pane fade" id="runtime-pane" role="tabpanel" aria-labelledby="runtime-tab" tabindex="0">
             <div class="guide-section-heading">
-                <div><span class="guide-section-label guide-section-label-live">CURRENT INSTANCE · LIVE</span><h2>@Localizer["Runtime configuration"]</h2></div>
-                <span class="badge @(Model.AnonymousApiAccessEnabled ? "text-bg-warning" : "text-bg-secondary")" data-anonymous-api="@(Model.AnonymousApiAccessEnabled ? "enabled" : "disabled")">Anonymous API: @(Model.AnonymousApiAccessEnabled ? "ON" : "OFF")</span>
+                <div><span class="guide-section-label guide-section-label-live">@Localizer["CURRENT INSTANCE · LIVE"]</span><h2>@Localizer["Runtime configuration"]</h2></div>
+                <span class="badge @(Model.AnonymousApiAccessEnabled ? "text-bg-warning" : "text-bg-secondary")" data-anonymous-api="@(Model.AnonymousApiAccessEnabled ? "enabled" : "disabled")">@Localizer["Anonymous API: {0}", Model.AnonymousApiAccessEnabled ? Localizer["ON"] : Localizer["OFF"]]</span>
             </div>
 
             <div class="row g-4 mb-4">
@@ -224,11 +224,11 @@
                     <div class="card guide-card h-100">
                         <div class="card-header guide-card-header"><div><i data-lucide="key-round"></i><strong>@Localizer["Authentication & rate limit"]</strong></div></div>
                         <div class="card-body">
-                            <div class="guide-stat-line"><span>API keys</span><strong>@Model.TotalApiKeys</strong></div>
-                            <div class="guide-code-list"><code>Authorization</code><code>x-api-key</code><code>api-key</code><code>Web session</code></div>
+                            <div class="guide-stat-line"><span>@Localizer["API keys"]</span><strong>@Model.TotalApiKeys</strong></div>
+                            <div class="guide-code-list"><code>Authorization</code><code>x-api-key</code><code>api-key</code><code>@Localizer["Web session"]</code></div>
                             <hr />
-                            <div class="guide-mode"><span class="badge text-bg-info">Hang</span><p>Wait for the per-key rate window. Waiting does not consume VM timeout.</p></div>
-                            <div class="guide-mode"><span class="badge text-bg-danger">Reject</span><p>Return HTTP <code>429</code> immediately.</p></div>
+                            <div class="guide-mode"><span class="badge text-bg-info">@Localizer["Hang"]</span><p>@Localizer["Wait for the per-key rate window. Waiting does not consume VM timeout."]</p></div>
+                            <div class="guide-mode"><span class="badge text-bg-danger">@Localizer["Reject"]</span><p>@Localizer["Return HTTP 429 immediately."]</p></div>
                         </div>
                     </div>
                 </div>
@@ -241,12 +241,19 @@
                         <div class="card-body">
                             @if (vm != null)
                             {
+                                var strategyLabel = vm.SelectionStrategy switch
+                                {
+                                    SelectionStrategy.PriorityFallback => Localizer["Priority Fallback"],
+                                    SelectionStrategy.WeightedRandom => Localizer["Weighted Random"],
+                                    SelectionStrategy.RoundRobin => Localizer["Round Robin"],
+                                    _ => Localizer["Unknown"]
+                                };
                                 <div class="guide-runtime-metrics mb-4">
-                                    <div><span>Strategy</span><strong>@vm.SelectionStrategy</strong></div>
-                                    <div><span>Max attempts</span><strong>@vm.MaxRetries</strong></div>
-                                    <div><span>Header timeout</span><strong>@vm.RequestTimeoutSeconds s</strong></div>
-                                    <div><span>Temperature</span><strong>@(vm.Temperature?.ToString() ?? "—")</strong></div>
-                                    <div><span>NumCtx</span><strong>@(vm.NumCtx?.ToString() ?? "—")</strong></div>
+                                    <div><span>@Localizer["Strategy"]</span><strong>@strategyLabel</strong></div>
+                                    <div><span>@Localizer["Max attempts"]</span><strong>@vm.MaxRetries</strong></div>
+                                    <div><span>@Localizer["Header timeout"]</span><strong>@vm.RequestTimeoutSeconds s</strong></div>
+                                    <div><span>@Localizer["Temperature"]</span><strong>@(vm.Temperature?.ToString() ?? "—")</strong></div>
+                                    <div><span>@Localizer["NumCtx"]</span><strong>@(vm.NumCtx?.ToString() ?? "—")</strong></div>
                                 </div>
                                 <div class="table-responsive guide-table-wrap">
                                     <table class="table table-hover align-middle mb-0">
@@ -262,18 +269,18 @@
                                                 <td>@(backend.Provider?.Name ?? "—")</td>
                                                 <td><span class="badge text-bg-light border">@protocol</span></td>
                                                 <td>@backend.Priority</td>
-                                                <td><span class="badge @(backend.Enabled ? "text-bg-success" : "text-bg-secondary")">@(backend.Enabled ? "Enabled" : "Disabled")</span></td>
+                                                <td><span class="badge @(backend.Enabled ? "text-bg-success" : "text-bg-secondary")">@(backend.Enabled ? Localizer["Enabled"] : Localizer["Disabled"])</span></td>
                                             </tr>
                                             backendIndex++;
                                         }
                                         </tbody>
                                     </table>
                                 </div>
-                                <p class="small text-body-secondary mt-3 mb-0">Each eligible backend is attempted once before a second pass. Three consecutive failures activate the circuit breaker; a later success clears it.</p>
+                                <p class="small text-body-secondary mt-3 mb-0">@Localizer["Each eligible backend is attempted once before a second pass. Three consecutive failures activate the circuit breaker; a later success clears it."]</p>
                             }
                             else
                             {
-                                <p class="text-body-secondary mb-0">No default chat virtual model is available.</p>
+                                <p class="text-body-secondary mb-0">@Localizer["No default chat virtual model is available."]</p>
                             }
                         </div>
                     </div>
@@ -283,7 +290,7 @@
             <div class="card guide-card">
                 <div class="card-header guide-card-header">
                     <div><i data-lucide="traffic-cone"></i><strong>@Localizer["Provider concurrency — live process state"]</strong></div>
-                    <span class="small text-body-secondary">Queue wait is outside the VM timeout</span>
+                    <span class="small text-body-secondary">@Localizer["Queue wait is outside the VM timeout"]</span>
                 </div>
                 <div class="card-body">
                     <div class="row g-3">
@@ -294,11 +301,11 @@
                             var unlimited = provider.MaxParallelism <= 0;
                             <div class="col-md-6 col-xl-4">
                                 <div class="guide-provider @(waiting > 0 ? "guide-provider-waiting" : "")">
-                                    <div class="guide-provider-heading"><strong>@provider.Name</strong><span class="badge @(unlimited ? "text-bg-success" : "text-bg-primary")">@(unlimited ? "Unlimited" : $"Limit {provider.MaxParallelism}")</span></div>
+                                    <div class="guide-provider-heading"><strong>@provider.Name</strong><span class="badge @(unlimited ? "text-bg-success" : "text-bg-primary")">@(unlimited ? Localizer["Unlimited"] : Localizer["Limit {0}", provider.MaxParallelism])</span></div>
                                     <div class="guide-provider-counts">
-                                        <div><strong>@active</strong><span>active</span></div><div><strong>@waiting</strong><span>waiting</span></div>
+                                        <div><strong>@active</strong><span>@Localizer["active"]</span></div><div><strong>@waiting</strong><span>@Localizer["waiting"]</span></div>
                                     </div>
-                                    <small>@provider.ProviderType · health timeout @(provider.ProviderType == ProviderType.OpenAI ? "10 s fixed" : $"{provider.HealthCheckTimeoutSeconds} s")</small>
+                                    <small>@provider.ProviderType · @Localizer["health timeout"] @(provider.ProviderType == ProviderType.OpenAI ? Localizer["10 s fixed"] : Localizer["{0} s", provider.HealthCheckTimeoutSeconds])</small>
                                 </div>
                             </div>
                         }
@@ -313,34 +320,34 @@
 
         <div class="tab-pane fade" id="timeouts-pane" role="tabpanel" aria-labelledby="timeouts-tab" tabindex="0">
             <div class="guide-section-heading">
-                <div><span class="guide-section-label">EXECUTION BOUNDARIES</span><h2>@Localizer["Four independent timeout planes"]</h2></div>
-                @if (vm != null) { <span class="badge text-bg-success">Data plane: @vm.RequestTimeoutSeconds s</span> }
+                <div><span class="guide-section-label">@Localizer["EXECUTION BOUNDARIES"]</span><h2>@Localizer["Four independent timeout planes"]</h2></div>
+                @if (vm != null) { <span class="badge text-bg-success">@Localizer["Data plane: {0} s", vm.RequestTimeoutSeconds]</span> }
             </div>
 
             <div class="guide-timeout-grid mb-4">
                 <div class="guide-timeout-card guide-timeout-data" data-timeout-scope="headers-only">
-                    <span>01 · DATA PLANE</span><strong>@(vm?.RequestTimeoutSeconds.ToString() ?? "—") s</strong><h3>Response-header deadline</h3><p>Starts after a provider concurrency slot is acquired. Covers DNS, connection, TLS, cold model loading, and waiting for upstream headers.</p>
+                    <span>01 · @Localizer["DATA PLANE"]</span><strong>@(vm?.RequestTimeoutSeconds.ToString() ?? "—") s</strong><h3>@Localizer["Response-header deadline"]</h3><p>@Localizer["Starts after a provider concurrency slot is acquired. Covers DNS, connection, TLS, cold model loading, and waiting for upstream headers."]</p>
                 </div>
                 <div class="guide-timeout-card guide-timeout-control">
-                    <span>02 · CONTROL PLANE</span><strong>10–@Model.Providers.Where(p => p.ProviderType == ProviderType.Ollama).Select(p => p.HealthCheckTimeoutSeconds).DefaultIfEmpty(10).Max() s</strong><h3>Provider health probes</h3><p>Ollama uses configured timeout for <code>/api/tags</code> and <code>/api/ps</code>. OpenAI <code>/v1/models</code> is fixed at 10 s.</p>
+                    <span>02 · @Localizer["CONTROL PLANE"]</span><strong>10–@Model.Providers.Where(p => p.ProviderType == ProviderType.Ollama).Select(p => p.HealthCheckTimeoutSeconds).DefaultIfEmpty(10).Max() s</strong><h3>@Localizer["Provider health probes"]</h3><p>@Localizer["Ollama uses its configured timeout for /api/tags and /api/ps. OpenAI /v1/models is fixed at 10 s."]</p>
                 </div>
                 <div class="guide-timeout-card guide-timeout-warmup">
-                    <span>03 · WARMUP PLANE</span><strong>1800 s</strong><h3>Ollama model warmup</h3><p>Fallback per-model loading timeout. Native Ollama only; the background job runs every 5 minutes.</p>
+                    <span>03 · @Localizer["WARMUP PLANE"]</span><strong>1800 s</strong><h3>@Localizer["Ollama model warmup"]</h3><p>@Localizer["Fallback per-model loading timeout. Native Ollama only; the background job runs every 5 minutes."]</p>
                 </div>
                 <div class="guide-timeout-card guide-timeout-dashboard" data-dashboard-timeouts="ollama-ps-3-version-5-openai-models-10">
-                    <span>04 · DASHBOARD PLANE</span><strong>3 / 5 / 10 s</strong><h3>Quick admin probes</h3><p><code>/api/ps</code> 3 s · <code>/api/version</code> 5 s · <code>/v1/models</code> 10 s. UI-only; no health state is persisted.</p>
+                    <span>04 · @Localizer["DASHBOARD PLANE"]</span><strong>3 / 5 / 10 s</strong><h3>@Localizer["Quick admin probes"]</h3><p>@Localizer["/api/ps: 3 s · /api/version: 5 s · /v1/models: 10 s. UI-only; no health state is persisted."]</p>
                 </div>
             </div>
 
             <div class="row g-4 mb-4">
                 <div class="col-lg-6">
                     <div class="card guide-card h-100 border-success-subtle">
-                        <div class="card-body"><h3 class="guide-list-title text-success"><i data-lucide="check-circle"></i>@Localizer["Counted by the VM timeout"]</h3><ul class="guide-check-list"><li>Backend DNS, TCP handshake, and TLS</li><li>Cold-start model loading</li><li>Waiting for backend HTTP response headers</li></ul></div>
+                        <div class="card-body"><h3 class="guide-list-title text-success"><i data-lucide="check-circle"></i>@Localizer["Counted by the VM timeout"]</h3><ul class="guide-check-list"><li>@Localizer["Backend DNS, TCP handshake, and TLS"]</li><li>@Localizer["Cold-start model loading"]</li><li>@Localizer["Waiting for backend HTTP response headers"]</li></ul></div>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="card guide-card h-100 border-warning-subtle">
-                        <div class="card-body"><h3 class="guide-list-title text-warning-emphasis"><i data-lucide="minus-circle"></i>@Localizer["Outside the VM timeout"]</h3><ul class="guide-check-list"><li>Authentication and per-key rate-limit wait</li><li>Provider concurrency queue wait</li><li>Response body after headers, streaming or buffered</li></ul></div>
+                        <div class="card-body"><h3 class="guide-list-title text-warning-emphasis"><i data-lucide="minus-circle"></i>@Localizer["Outside the VM timeout"]</h3><ul class="guide-check-list"><li>@Localizer["Authentication and per-key rate-limit wait"]</li><li>@Localizer["Provider concurrency queue wait"]</li><li>@Localizer["Response body after headers, streaming or buffered"]</li></ul></div>
                     </div>
                 </div>
             </div>
@@ -353,41 +360,41 @@
                         <div class="guide-attempts">
                             @for (var attempt = 1; attempt <= vm.MaxRetries; attempt++)
                             {
-                                <div class="guide-attempt"><span>Attempt @attempt</span><strong>≤ @vm.RequestTimeoutSeconds s</strong><small>after slot acquired</small></div>
-                                @if (attempt < vm.MaxRetries) { <div class="guide-queue-gap"><i data-lucide="hourglass"></i><span>queue wait<br />unbounded</span></div> }
+                                <div class="guide-attempt"><span>@Localizer["Attempt {0}", attempt]</span><strong>≤ @vm.RequestTimeoutSeconds s</strong><small>@Localizer["after slot acquired"]</small></div>
+                                @if (attempt < vm.MaxRetries) { <div class="guide-queue-gap"><i data-lucide="hourglass"></i><span>@Localizer["queue wait"]<br />@Localizer["unbounded"]</span></div> }
                             }
                         </div>
-                        <div class="alert alert-info mt-4 mb-0"><strong>Upstream header budget ≤ @headerBudget s.</strong> Total wall-clock time has no fixed upper bound because rate-limit and concurrency queues are outside this budget.</div>
+                        <div class="alert alert-info mt-4 mb-0"><strong>@Localizer["Upstream header budget ≤ {0} s.", headerBudget]</strong> @Localizer["Total wall-clock time has no fixed upper bound because rate-limit and concurrency queues are outside this budget."]</div>
                     </div>
                 </div>
             }
 
             <div class="alert alert-success mb-0">
-                <strong>After response headers:</strong> the virtual-model deadline no longer applies to the response body. Streaming may continue for hours, but transport failure, upstream closure, client cancellation, gateway shutdown, or decoding errors can still end it.
+                <strong>@Localizer["After response headers:"]</strong> @Localizer["The virtual-model deadline no longer applies to the response body. Streaming may continue for hours, but transport failure, upstream closure, client cancellation, gateway shutdown, or decoding errors can still end it."]
             </div>
         </div>
 
         <div class="tab-pane fade" id="observability-pane" role="tabpanel" aria-labelledby="observability-tab" tabindex="0">
             <div class="guide-section-heading">
-                <div><span class="guide-section-label">NON-BLOCKING HOT PATH</span><h2>@Localizer["Dual observability pipeline"]</h2></div>
+                <div><span class="guide-section-label">@Localizer["NON-BLOCKING HOT PATH"]</span><h2>@Localizer["Dual observability pipeline"]</h2></div>
             </div>
 
             <div class="row g-4 mb-4">
                 <div class="col-lg-6">
                     <div class="card guide-card h-100">
                         <div class="card-body p-lg-4">
-                            <div class="guide-observe-heading"><span><i data-lucide="database"></i></span><div><small>AUDIT EVENTS</small><h3>ClickHouse log pipeline</h3></div></div>
-                            <div class="guide-observe-flow"><strong>Resolved AI request</strong><i data-lucide="arrow-right"></i><strong>Buffer</strong><i data-lucide="arrow-right"></i><strong>ClickHouse</strong></div>
-                            <ul class="guide-check-list text-body-secondary"><li>Bounded <code>Channel&lt;RequestLog&gt;</code>: 10,000 entries</li><li><code>DropWrite</code> when full; enqueue never blocks the request</li><li>Flush every 2 minutes in batches</li><li>User, model, provider, token, latency, status, and conversation fields</li></ul>
+                            <div class="guide-observe-heading"><span><i data-lucide="database"></i></span><div><small>@Localizer["AUDIT EVENTS"]</small><h3>@Localizer["ClickHouse log pipeline"]</h3></div></div>
+                            <div class="guide-observe-flow"><strong>@Localizer["Resolved AI request"]</strong><i data-lucide="arrow-right"></i><strong>@Localizer["Buffer"]</strong><i data-lucide="arrow-right"></i><strong>ClickHouse</strong></div>
+                            <ul class="guide-check-list text-body-secondary"><li>@Localizer["Bounded Channel<RequestLog>: 10,000 entries"]</li><li>@Localizer["DropWrite when full; enqueue never blocks the request"]</li><li>@Localizer["Flush every 2 minutes in batches"]</li><li>@Localizer["User, model, provider, token, latency, status, and conversation fields"]</li></ul>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="card guide-card h-100">
                         <div class="card-body p-lg-4">
-                            <div class="guide-observe-heading guide-observe-heading-purple"><span><i data-lucide="bar-chart-3"></i></span><div><small>USAGE COUNTERS</small><h3>In-memory to relational DB</h3></div></div>
-                            <div class="guide-observe-flow"><strong>Hot-path increment</strong><i data-lucide="arrow-right"></i><strong>Swap</strong><i data-lucide="arrow-right"></i><strong>Bulk update</strong></div>
-                            <ul class="guide-check-list text-body-secondary"><li>API key · virtual model · underlying model</li><li>Flush every 3 minutes</li><li>Dashboard totals are DB-backed, with nominal ≤ 3 minute lag</li><li>No database write on every model request</li></ul>
+                            <div class="guide-observe-heading guide-observe-heading-purple"><span><i data-lucide="bar-chart-3"></i></span><div><small>@Localizer["USAGE COUNTERS"]</small><h3>@Localizer["In-memory to relational DB"]</h3></div></div>
+                            <div class="guide-observe-flow"><strong>@Localizer["Hot-path increment"]</strong><i data-lucide="arrow-right"></i><strong>@Localizer["Swap"]</strong><i data-lucide="arrow-right"></i><strong>@Localizer["Bulk update"]</strong></div>
+                            <ul class="guide-check-list text-body-secondary"><li>@Localizer["API key · virtual model · underlying model"]</li><li>@Localizer["Flush every 3 minutes"]</li><li>@Localizer["Dashboard totals are DB-backed, with nominal ≤ 3 minute lag"]</li><li>@Localizer["No database write on every model request"]</li></ul>
                         </div>
                     </div>
                 </div>
@@ -396,7 +403,7 @@
             <div class="card guide-card">
                 <div class="card-body">
                     <div class="guide-active-flow">
-                        <div><i data-lucide="scan-line"></i><span><strong>ActiveRequestTracker</strong><small>Rate queue → provider queue → upstream → response lifecycle</small></span></div>
+                        <div><i data-lucide="scan-line"></i><span><strong>ActiveRequestTracker</strong><small>@Localizer["Rate queue → provider queue → upstream → response lifecycle"]</small></span></div>
                         <a asp-controller="Dashboard" asp-action="Monitor" class="btn btn-outline-primary">@Localizer["Open Traffic Visualization"] <i data-lucide="arrow-up-right"></i></a>
                     </div>
                 </div>

@@ -108,7 +108,9 @@ public class ManageControllerTests : TestBase
 
         var html = await response.Content.ReadAsStringAsync();
         Assert.Contains("data-allowed-file-extensions=\"png bmp jpg jpeg\"", html);
-        Assert.Contains("validExtensions: ('png bmp jpg jpeg' || '').split(' ').filter(Boolean)", html);
+        Assert.Contains("data-valid-extensions=\"png bmp jpg jpeg\"", html);
+        Assert.Contains("validExtensions: (config.dataset.validExtensions || '').split(' ').filter(Boolean)", html);
+        Assert.Contains("The file size is too big ({{ value }} max).", html);
     }
 
     private class UploadResult

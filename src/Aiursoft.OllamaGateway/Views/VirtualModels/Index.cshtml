@@ -59,16 +59,16 @@
                             var badgeClass = status == "Banned" ? "bg-danger" : status == "Ready" ? "bg-success" : status == "Healthy" ? "bg-info" : "bg-danger";
                             <tr>
                                 <td>
-                                    <span class="badge @badgeClass me-1" title="@status">
+                                    <span class="badge @badgeClass me-1" title="@Localizer[status]">
                                         @if (isAllBanned && maxBanTime.HasValue)
                                         {
-                                            <text>Banned (Till </text>
+                                            <text>@Localizer["Banned (Till"] </text>
                                             <label data-utc-time="@maxBanTime.Value.ToHtmlDateTime()" class="d-inline mb-0"></label>
                                             <text>)</text>
                                         }
                                         else
                                         {
-                                            @status
+                                            @Localizer[status]
                                         }
                                     </span>
                                     <strong>@m.Name</strong>
@@ -98,9 +98,9 @@
                                 </td>
                                 <td>
                                     <small class="text-muted">
-                                        @if (m.Thinking.HasValue) { <span>Think: @m.Thinking.Value </span> }
-                                        @if (m.NumCtx.HasValue) { <span>Ctx: @m.NumCtx.Value </span> }
-                                        @if (m.Temperature.HasValue) { <span>Temp: @m.Temperature.Value </span> }
+                                        @if (m.Thinking.HasValue) { <span>@Localizer["Think:"] @m.Thinking.Value </span> }
+                                        @if (m.NumCtx.HasValue) { <span>@Localizer["Ctx:"] @m.NumCtx.Value </span> }
+                                        @if (m.Temperature.HasValue) { <span>@Localizer["Temp:"] @m.Temperature.Value </span> }
                                     </small>
                                 </td>
                                 <td>@m.CreatedAt.ToShortDateString()</td>
@@ -115,7 +115,7 @@
                                         <a asp-action="Edit" asp-route-id="@m.Id" class="btn btn-sm btn-outline-primary" title="@Localizer["Edit"]">
                                             <i class="align-middle" data-lucide="edit"></i>
                                         </a>
-                                        <form asp-action="Delete" asp-route-id="@m.Id" method="post" onsubmit="return confirm('@Localizer["Are you sure?"]');" style="display:inline;">
+                                        <form asp-action="Delete" asp-route-id="@m.Id" method="post" class="localized-confirm-form" style="display:inline;">
                                             <button type="submit" class="btn btn-sm btn-outline-danger">
                                                 <i class="align-middle" data-lucide="trash-2"></i>
                                             </button>
@@ -172,3 +172,22 @@
         </div>
     </div>
 </div>
+
+<!-- Localization Data -->
+<div id="virtual-models-loc-data" hidden>
+    <span data-key="delete-confirm">@Localizer["Are you sure?"]</span>
+</div>
+
+@* ReSharper disable once Razor.SectionNotResolved *@
+@section scripts {
+    <script>
+        document.querySelectorAll('.localized-confirm-form').forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                const message = document.querySelector('#virtual-models-loc-data span[data-key="delete-confirm"]')?.innerText || 'Are you sure?';
+                if (!confirm(message)) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
+}

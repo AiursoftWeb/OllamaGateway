@@ -25,7 +25,7 @@
                     <code>@Model.NewKey</code>
                 </p>
             </div>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="@Localizer["Close"]"></button>
         </div>
     }
 
@@ -111,7 +111,7 @@
                                             <i class="align-middle me-1" data-lucide="edit"></i>
                                             @Localizer["Edit"]
                                         </a>
-                                        <form asp-action="Delete" asp-route-id="@key.Id" method="post" onsubmit="return confirm('@Localizer["Are you sure you want to delete this API key?"]');">
+                                        <form asp-action="Delete" asp-route-id="@key.Id" method="post" class="localized-confirm-form">
                                             <button type="submit" class="btn btn-sm btn-outline-danger">
                                                 <i class="align-middle" data-lucide="trash-2"></i>
                                             </button>
@@ -127,12 +127,36 @@
     </div>
 </div>
 
+<!-- Localization Data -->
+<div id="api-keys-loc-data" hidden>
+    <span data-key="delete-confirm">@Localizer["Are you sure you want to delete this API key?"]</span>
+    <span data-key="empty-table">@Localizer["No data available in table"]</span>
+    <span data-key="info">@Localizer["Showing _START_ to _END_ of _TOTAL_ entries"]</span>
+    <span data-key="info-empty">@Localizer["Showing 0 to 0 of 0 entries"]</span>
+    <span data-key="length-menu">@Localizer["Show _MENU_ entries"]</span>
+    <span data-key="search">@Localizer["Search:"]</span>
+    <span data-key="zero-records">@Localizer["No matching records found"]</span>
+    <span data-key="first">@Localizer["First"]</span>
+    <span data-key="last">@Localizer["Last"]</span>
+    <span data-key="next">@Localizer["Next"]</span>
+    <span data-key="previous">@Localizer["Previous"]</span>
+</div>
+
 @* ReSharper disable once Razor.SectionNotResolved *@
 @section scripts {
     @if (Model.ApiKeys.Count > 0)
     {
         <script>
             document.addEventListener("DOMContentLoaded", function() {
+                const locData = document.getElementById('api-keys-loc-data');
+                const text = (key, fallback) => locData.querySelector(`span[data-key="${key}"]`)?.innerText || fallback;
+                document.querySelectorAll('.localized-confirm-form').forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!confirm(text('delete-confirm', 'Are you sure you want to delete this API key?'))) {
+                            event.preventDefault();
+                        }
+                    });
+                });
                 $('#apiKeysTable').DataTable({
                     "destroy": true,
                     "responsive": true,
@@ -140,6 +164,20 @@
                     "pageLength": 50,
                     "searching": true,
                     "info": true,
+                    "language": {
+                        "emptyTable": text('empty-table', 'No data available in table'),
+                        "info": text('info', 'Showing _START_ to _END_ of _TOTAL_ entries'),
+                        "infoEmpty": text('info-empty', 'Showing 0 to 0 of 0 entries'),
+                        "lengthMenu": text('length-menu', 'Show _MENU_ entries'),
+                        "search": text('search', 'Search:'),
+                        "zeroRecords": text('zero-records', 'No matching records found'),
+                        "paginate": {
+                            "first": text('first', 'First'),
+                            "last": text('last', 'Last'),
+                            "next": text('next', 'Next'),
+                            "previous": text('previous', 'Previous')
+                        }
+                    },
                     "order": [[2, "asc"]],
                     "columnDefs": [
                         { "orderable": false, "targets": [6] }

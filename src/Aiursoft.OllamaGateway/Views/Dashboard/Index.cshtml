@@ -513,6 +513,7 @@
      data-embedding-count="@Model.EmbeddingModelsCount"
      data-chat-label="@Localizer["Chat"]"
      data-embedding-label="@Localizer["Embedding"]"
+     data-no-data-label="@Localizer["No Data"]"
      data-usage-count-label="@Localizer["Usage Count"]"
      data-provider-labels='@Json.Serialize(Model.ProviderStats.Select(p => p.Name))'
      data-provider-data='@Json.Serialize(Model.ProviderStats.Select(p => p.ModelCount))'
@@ -575,7 +576,7 @@
             var pLabels = getJsonAttr('data-provider-labels');
             var pData = getJsonAttr('data-provider-data');
 
-            if (pLabels.length === 0) { pLabels = ["No Data"]; pData = [1]; }
+            if (pLabels.length === 0) { pLabels = [getAttr('data-no-data-label')]; pData = [1]; }
 
             new Chart(ctxProvider, {
                 type: "pie",

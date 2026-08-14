@@ -108,7 +108,7 @@
                         </div>
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button type="button" class="btn btn-outline-info me-md-2" onclick="testConnection()">@Localizer["Test Connection"]</button>
+                            <button type="button" class="btn btn-outline-info me-md-2" id="btnTestConnection">@Localizer["Test Connection"]</button>
                             <a asp-action="Index" class="btn btn-outline-secondary me-md-2">@Localizer["Back to List"]</a>
                             <button type="submit" class="btn btn-primary">@Localizer["Save Changes"]</button>
                         </div>
@@ -172,16 +172,16 @@
                                         <td class="align-middle"><code>@m</code></td>
                                         <td class="align-middle">
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox"
+                                                <input class="form-check-input warmup-toggle" type="checkbox"
                                                        checked="@(isEnabled ? "checked" : null)" 
-                                                       onchange="toggleWarmup(event, '@m')">
+                                                       data-model-name="@m">
                                             </div>
                                         </td>
                                         <td class="align-middle">
                                             <div class="form-check form-switch embed-toggle @(isEnabled ? "" : "d-none")">
-                                                <input class="form-check-input" type="checkbox" title="isEmbedding"
+                                                <input class="form-check-input warmup-option" type="checkbox" title="@Localizer["Embedding model"]"
                                                        checked="@(warmupModel?.IsEmbedding == true ? "checked" : null)"
-                                                       onchange="updateOptions(event, '@m')">
+                                                       data-model-name="@m">
                                             </div>
                                         </td>
                                         <td>
@@ -189,14 +189,14 @@
                                                 <div class="row g-2">
                                                     <div class="col-md-6 col-lg-3">
                                                         <div class="input-group input-group-sm">
-                                                            <span class="input-group-text">Ctx</span>
-                                                            <input type="number" class="form-control warmup-numctx" title="num_ctx" placeholder="4096" value="@warmupModel?.NumCtx" onchange="updateOptions(event, '@m')">
+                                                            <span class="input-group-text">@Localizer["Ctx"]</span>
+                                                            <input type="number" class="form-control warmup-numctx warmup-option" title="@Localizer["Context size"]" placeholder="4096" value="@warmupModel?.NumCtx" data-model-name="@m">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 col-lg-3">
                                                         <div class="input-group input-group-sm">
-                                                            <span class="input-group-text">Timeout (s)</span>
-                                                            <input type="number" class="form-control warmup-timeout" title="timeout" placeholder="1800" value="@warmupModel?.TimeoutSeconds" onchange="updateOptions(event, '@m')">
+                                                            <span class="input-group-text">@Localizer["Timeout (s)"]</span>
+                                                            <input type="number" class="form-control warmup-timeout warmup-option" title="@Localizer["Warmup timeout"]" placeholder="1800" value="@warmupModel?.TimeoutSeconds" data-model-name="@m">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -224,9 +224,29 @@
     </div>
 </div>
 
+<!-- Localization and server-rendered data for JavaScript -->
+<div id="provider-edit-data"
+     data-provider-id="@ViewData["Id"]"
+     data-test-url="@Url.Action("Test")"
+     data-toggle-warmup-url="@Url.Action("ToggleWarmup", new { id = ViewData["Id"] })"
+     data-update-warmup-url="@Url.Action("UpdateWarmupOptions", new { id = ViewData["Id"] })"
+     hidden>
+    <span data-key="connecting">@Localizer["Connecting..."]</span>
+    <span data-key="connected-models">@Localizer["Connected! Found {0} models.", "{0}"]</span>
+    <span data-key="error-prefix">@Localizer["Error: "]</span>
+    <span data-key="toggle-failed">@Localizer["Failed to toggle warmup. Please try again."]</span>
+    <span data-key="unexpected-error">@Localizer["An error occurred. Please check the browser console."]</span>
+</div>
+
 @* ReSharper disable once Razor.SectionNotResolved *@
 @section scripts {
     <script>
+        const providerEditData = document.getElementById('provider-edit-data');
+        function getLocalizedText(key, defaultText) {
+            const el = providerEditData.querySelector(`span[data-key="${key}"]`);
+            return el ? el.innerText : defaultText;
+        }
+
         const providerTypeSelect = document.getElementById('providerTypeSelect');
         const openAiProtocolOptions = document.getElementById('openAiProtocolOptions');
         providerTypeSelect.addEventListener('change', function () {
@@ -240,25 +260,30 @@
             const contentDiv = document.getElementById('testContent');
             
             resultDiv.style.display = 'block';
-            contentDiv.innerHTML = '<div class="text-center"><div class="spinner-border spinner-border-sm text-primary" role="status"></div> Connecting...</div>';
+            contentDiv.innerHTML = '<div class="text-center"><div class="spinner-border spinner-border-sm text-primary" role="status"></div> <span></span></div>';
+            contentDiv.querySelector('span').innerText = getLocalizedText('connecting', 'Connecting...');
             
             try {
-                const response = await fetch('@Url.Action("Test")', {
+                const response = await fetch(providerEditData.dataset.testUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ providerId: @ViewData["Id"], baseUrl, bearerToken, providerType: parseInt(providerTypeSelect?.value ?? '0') })
+                    body: JSON.stringify({ providerId: parseInt(providerEditData.dataset.providerId), baseUrl, bearerToken, providerType: parseInt(providerTypeSelect?.value ?? '0') })
                 });
                 const data = await response.json();
                 
                 if (data.success) {
-                    contentDiv.innerHTML = '<div class="alert alert-success mb-0"><i class="align-middle me-2" data-feather="check-circle"></i>Connected! Found ' + data.models.length + ' models.</div>';
+                    contentDiv.innerHTML = '<div class="alert alert-success mb-0"><i class="align-middle me-2" data-feather="check-circle"></i><span></span></div>';
+                    contentDiv.querySelector('span').innerText = getLocalizedText('connected-models', 'Connected! Found {0} models.')
+                        .replace('{0}', data.models.length);
                     if (window.feather) window.feather.replace();
                 } else {
-                    contentDiv.innerHTML = '<div class="alert alert-danger mb-0"><i class="align-middle me-2" data-feather="alert-triangle"></i>' + data.message + '</div>';
+                    contentDiv.innerHTML = '<div class="alert alert-danger mb-0"><i class="align-middle me-2" data-feather="alert-triangle"></i><span></span></div>';
+                    contentDiv.querySelector('span').innerText = data.message;
                     if (window.feather) window.feather.replace();
                 }
             } catch (e) {
-                contentDiv.innerHTML = '<div class="alert alert-danger mb-0">Error: ' + e.message + '</div>';
+                contentDiv.innerHTML = '<div class="alert alert-danger mb-0"></div>';
+                contentDiv.firstElementChild.innerText = getLocalizedText('error-prefix', 'Error: ') + e.message;
             }
         }
 
@@ -282,7 +307,7 @@
             formData.append('modelName', modelName);
             
             try {
-                const response = await fetch('@Url.Action("ToggleWarmup", new { id = ViewData["Id"] })', {
+                const response = await fetch(providerEditData.dataset.toggleWarmupUrl, {
                     method: 'POST',
                     headers: {
                         'RequestVerificationToken': token
@@ -291,7 +316,7 @@
                 });
                 
                 if (!response.ok) {
-                    alert('Failed to toggle warmup. Please try again.');
+                    alert(getLocalizedText('toggle-failed', 'Failed to toggle warmup. Please try again.'));
                     // Revert UI
                     event.target.checked = !isChecked;
                     if (!isChecked) { optionsContainer.classList.remove('d-none'); embedToggle.classList.remove('d-none'); }
@@ -299,7 +324,7 @@
                 }
             } catch (e) {
                 console.error('Failed to toggle warmup:', e);
-                alert('An error occurred. Please check console.');
+                alert(getLocalizedText('unexpected-error', 'An error occurred. Please check the browser console.'));
                 // Revert UI
                 event.target.checked = !isChecked;
                 if (!isChecked) { optionsContainer.classList.remove('d-none'); embedToggle.classList.remove('d-none'); }
@@ -337,7 +362,7 @@
             event.target.classList.remove('is-valid', 'is-invalid');
             
             try {
-                const response = await fetch('@Url.Action("UpdateWarmupOptions", new { id = ViewData["Id"] })', {
+                const response = await fetch(providerEditData.dataset.updateWarmupUrl, {
                     method: 'POST',
                     headers: {
                         'RequestVerificationToken': token
@@ -356,5 +381,17 @@
                 event.target.classList.add('is-invalid');
             }
         }
+
+        document.getElementById('btnTestConnection').addEventListener('click', testConnection);
+        document.querySelectorAll('.warmup-toggle').forEach(function (input) {
+            input.addEventListener('change', function (event) {
+                toggleWarmup(event, input.dataset.modelName);
+            });
+        });
+        document.querySelectorAll('.warmup-option').forEach(function (input) {
+            input.addEventListener('change', function (event) {
+                updateOptions(event, input.dataset.modelName);
+            });
+        });
     </script>
 }

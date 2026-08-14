@@ -31,19 +31,19 @@
                 <div class="row">
                     <div class="col-md-2 mb-3">
                         <label class="form-label small fw-bold">@Localizer["Temperature"]</label>
-                        <input type="number" step="0.1" class="form-control form-control-sm" id="temperature" placeholder="Default" value="@Model.Temperature">
+                        <input type="number" step="0.1" class="form-control form-control-sm" id="temperature" placeholder="@Localizer["Default"]" value="@Model.Temperature">
                     </div>
                     <div class="col-md-2 mb-3">
                         <label class="form-label small fw-bold">@Localizer["Top P"]</label>
-                        <input type="number" step="0.01" class="form-control form-control-sm" id="topP" placeholder="Default" value="@Model.TopP">
+                        <input type="number" step="0.01" class="form-control form-control-sm" id="topP" placeholder="@Localizer["Default"]" value="@Model.TopP">
                     </div>
                     <div class="col-md-2 mb-3">
                         <label class="form-label small fw-bold">@Localizer["Top K"]</label>
-                        <input type="number" class="form-control form-control-sm" id="topK" placeholder="Default" value="@Model.TopK">
+                        <input type="number" class="form-control form-control-sm" id="topK" placeholder="@Localizer["Default"]" value="@Model.TopK">
                     </div>
                     <div class="col-md-2 mb-3">
                         <label class="form-label small fw-bold">@Localizer["Num Ctx"]</label>
-                        <input type="number" class="form-control form-control-sm" id="numCtx" placeholder="Default" value="@Model.NumCtx">
+                        <input type="number" class="form-control form-control-sm" id="numCtx" placeholder="@Localizer["Default"]" value="@Model.NumCtx">
                     </div>
                     <div class="col-md-3 mb-3">
                         <div class="form-check form-switch mt-4">
@@ -109,9 +109,22 @@
     }
 </style>
 
+<!-- Localization and server-rendered data for JavaScript -->
+<div id="completion-data" data-model="@Model.Name" hidden>
+    <span data-key="error-prefix">@Localizer["Error: "]</span>
+    <span data-key="request-timeout">@Localizer["Request timed out."]</span>
+    <span data-key="request-timeout-after">@Localizer["Request timed out after {0} seconds.", "{0}"]</span>
+</div>
+
 @* ReSharper disable once Razor.SectionNotResolved *@
 @section scripts {
     <script>
+        const completionData = document.getElementById('completion-data');
+        function getLocalizedText(key, defaultText) {
+            const el = completionData.querySelector(`span[data-key="${key}"]`);
+            return el ? el.innerText : defaultText;
+        }
+
         const promptInput = document.getElementById('promptInput');
         const responseOutput = document.getElementById('responseOutput');
         const btnRun = document.getElementById('btnRun');
@@ -148,7 +161,7 @@
                 if (!isNaN(numCtx)) options.num_ctx = numCtx;
 
                 const body = {
-                    model: '@Model.Name',
+                    model: completionData.dataset.model,
                     prompt: prompt,
                     stream: true,
                     options: options,
@@ -157,7 +170,9 @@
 
                 abortController = new AbortController();
                 timeoutId = setTimeout(() => {
-                    abortController.abort(new Error(`Request timed out after ${timeoutSeconds} seconds.`));
+                    const timeoutMessage = getLocalizedText('request-timeout-after', 'Request timed out after {0} seconds.')
+                        .replace('{0}', timeoutSeconds);
+                    abortController.abort(new Error(timeoutMessage));
                 }, timeoutSeconds * 1000);
 
                 const response = await fetch('/api/generate', {
@@ -206,9 +221,10 @@
             } catch (error) {
                 responseOutput.classList.add('text-danger');
                 if (error.name === 'AbortError' || (abortController && abortController.signal.aborted)) {
-                    responseOutput.innerText = 'Error: ' + (abortController?.signal?.reason?.message || 'Request timed out.');
+                    responseOutput.innerText = getLocalizedText('error-prefix', 'Error: ') +
+                        (abortController?.signal?.reason?.message || getLocalizedText('request-timeout', 'Request timed out.'));
                 } else {
-                    responseOutput.innerText = 'Error: ' + error.message;
+                    responseOutput.innerText = getLocalizedText('error-prefix', 'Error: ') + error.message;
                 }
             } finally {
                 if (timeoutId) clearTimeout(timeoutId);

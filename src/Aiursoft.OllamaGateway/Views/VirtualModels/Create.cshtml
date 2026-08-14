@@ -1,10 +1,13 @@
 @using Aiursoft.OllamaGateway.Entities
 @model Aiursoft.OllamaGateway.Models.VirtualModelsViewModels.CreateViewModel
+@{
+    var modelTypeLabel = Model.Type == ModelType.Chat ? Localizer["Chat"] : Localizer["Embedding"];
+}
 
 <div class="container-fluid p-0">
     <div class="row mb-3">
         <div class="col-auto">
-            <h1 class="h3 mb-3">@Localizer["Create Virtual Model"] (@Model.Type)</h1>
+            <h1 class="h3 mb-3">@Localizer["Create Virtual Model"] (@modelTypeLabel)</h1>
         </div>
     </div>
 
@@ -27,7 +30,19 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label asp-for="SelectionStrategy" class="form-label">@Localizer["Selection Strategy"]</label>
-                                <select asp-for="SelectionStrategy" class="form-select" asp-items="Html.GetEnumSelectList<SelectionStrategy>()"></select>
+                                <select asp-for="SelectionStrategy" class="form-select">
+                                    @foreach (var strategy in Enum.GetValues<SelectionStrategy>())
+                                    {
+                                        var strategyLabel = strategy switch
+                                        {
+                                            SelectionStrategy.PriorityFallback => Localizer["Priority Fallback"],
+                                            SelectionStrategy.WeightedRandom => Localizer["Weighted Random"],
+                                            SelectionStrategy.RoundRobin => Localizer["Round Robin"],
+                                            _ => Localizer["Unknown"]
+                                        };
+                                        <option value="@strategy">@strategyLabel</option>
+                                    }
+                                </select>
                                 <span asp-validation-for="SelectionStrategy" class="text-danger"></span>
                             </div>
                         </div>
@@ -51,7 +66,7 @@
                         <div class="row">
                             <div class="col-md-4 mb-3">
                                 <label asp-for="ProviderId" class="form-label">@Localizer["Provider"]</label>
-                                <select asp-for="ProviderId" class="form-select" onchange="window.location.href='?type=@Model.Type&amp;providerId=' + this.value">
+                                <select asp-for="ProviderId" id="providerSelect" class="form-select" data-navigation-prefix="?type=@Model.Type&amp;providerId=">
                                     @foreach (var p in Model.AvailableProviders)
                                     {
                                         <option value="@p.Id" selected="@(p.Id == Model.ProviderId ? "selected" : null)">@p.Name</option>
@@ -130,3 +145,12 @@
         </div>
     </div>
 </div>
+
+@* ReSharper disable once Razor.SectionNotResolved *@
+@section scripts {
+    <script>
+        document.getElementById('providerSelect').addEventListener('change', function () {
+            window.location.href = this.dataset.navigationPrefix + encodeURIComponent(this.value);
+        });
+    </script>
+}

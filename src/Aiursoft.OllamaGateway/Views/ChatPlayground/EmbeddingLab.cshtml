@@ -44,7 +44,7 @@
     </div>
 </div>
 
-<div id="loc-data" hidden>
+<div id="loc-data" data-model="@Model.Name" hidden>
     <span data-key="generating">@Localizer["Generating..."]</span>
     <span data-key="no-embeddings">@Localizer["No embeddings returned."]</span>
     <span data-key="error-prefix">@Localizer["Error: "]</span>
@@ -87,7 +87,7 @@
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        model: '@Model.Name',
+                        model: document.getElementById('loc-data').dataset.model,
                         input: text
                     })
                 });
