@@ -21,8 +21,14 @@
       <data name="(fallback)" xml:space="preserve">
     <value>(Standardwert)</value>
   </data>
+  <data name="/api/ps: 3 s · /api/version: 5 s · /v1/models: 10 s. UI-only; no health state is persisted." xml:space="preserve">
+    <value>/api/ps: 3 s · /api/version: 5 s · /v1/models: 10 s. Nur für die Benutzeroberfläche; der Gesundheitsstatus wird nicht gespeichert.</value>
+  </data>
   <data name="1. Client Request" xml:space="preserve">
     <value>1. Client-Anfrage</value>
+  </data>
+  <data name="2 provider types ≠ 3 wire protocols" xml:space="preserve">
+    <value>2 Anbietertypen ≠ 3 Protokolle</value>
   </data>
   <data name="2. Authentication &amp; Rate Limiting" xml:space="preserve">
     <value>2. Authentifizierung &amp; Ratenbegrenzung</value>
@@ -42,11 +48,26 @@
   <data name="7. Observability Pipeline — Dual Logging &amp; Usage Tracking" xml:space="preserve">
     <value>7. Observability-Pipeline – Duales Logging &amp; Nutzungsprotokollierung</value>
   </data>
+  <data name="active" xml:space="preserve">
+    <value>aktiv</value>
+  </data>
+  <data name="After response headers:" xml:space="preserve">
+    <value>Nach den Antwort-Headern:</value>
+  </data>
+  <data name="after slot acquired" xml:space="preserve">
+    <value>nach Zuweisung der Kapazitätseinheit</value>
+  </data>
   <data name="Any OpenAI-compatible or Ollama-native client sends a request." xml:space="preserve">
     <value>Jeder OpenAI-kompatible oder Ollama-native Client sendet eine Anfrage.</value>
   </data>
+  <data name="API key · virtual model · underlying model" xml:space="preserve">
+    <value>API-Schlüssel · virtuelles Modell · zugrunde liegendes Modell</value>
+  </data>
   <data name="API Key Verification" xml:space="preserve">
     <value>API-Schlüssel-Verifizierung</value>
+  </data>
+  <data name="API keys" xml:space="preserve">
+    <value>API-Schlüssel</value>
   </data>
   <data name="Architecture Guide" xml:space="preserve">
     <value>Architekturleitfaden</value>
@@ -54,8 +75,35 @@
   <data name="attempts and" xml:space="preserve">
     <value>Versuche und</value>
   </data>
+  <data name="AUDIT EVENTS" xml:space="preserve">
+    <value>PRÜFUNGSEREIGNISSE</value>
+  </data>
+  <data name="Auth + Rate Limit" xml:space="preserve">
+    <value>Authentifizierung + Drosselung</value>
+  </data>
   <data name="Authentication &amp; API key validation" xml:space="preserve">
     <value>Authentifizierung &amp; API-Schlüssel-Validierung</value>
+  </data>
+  <data name="Authentication &amp; rate limit" xml:space="preserve">
+    <value>Authentifizierung &amp; Ratenbegrenzung</value>
+  </data>
+  <data name="Authentication and per-key rate-limit wait" xml:space="preserve">
+    <value>Authentifizierung und Wartezeit auf Ratenbegrenzung pro Schlüssel</value>
+  </data>
+  <data name="Backend DNS, TCP handshake, and TLS" xml:space="preserve">
+    <value>Backend-DNS, TCP-Handshake und TLS</value>
+  </data>
+  <data name="Backend protocol" xml:space="preserve">
+    <value>Backend-Protokoll</value>
+  </data>
+  <data name="Backend protocol is selected per request and provider capability" xml:space="preserve">
+    <value>Das Backend-Protokoll wird je nach Anfrage und Anbieterfähigkeit ausgewählt</value>
+  </data>
+  <data name="Backend protocols" xml:space="preserve">
+    <value>Backend-Protokolle</value>
+  </data>
+  <data name="Backend response" xml:space="preserve">
+    <value>Backend-Antwort</value>
   </data>
   <data name="Backends" xml:space="preserve">
     <value>Backends</value>
@@ -63,20 +111,47 @@
   <data name="Bearer token or x-api-key is validated." xml:space="preserve">
     <value>Bearer-Token oder x-api-key wird validiert.</value>
   </data>
+  <data name="Before model timeout" xml:space="preserve">
+    <value>Vor dem Modell-Timeout</value>
+  </data>
   <data name="Both pipelines are fire-and-forget from the request hot-path. If ClickHouse is down or the buffer is full, requests still succeed — logs are simply dropped (DropWrite). The system never blocks a user request to write a log." xml:space="preserve">
     <value>Beide Pipelines sind vom kritischen Anfragepfad entkoppelt und arbeiten im „Fire-and-Forget“-Modus. Wenn ClickHouse nicht erreichbar ist oder der Puffer voll ist, schlagen die Anfragen dennoch fehl — Logs werden einfach verworfen (DropWrite). Das System blockiert niemals eine Benutzeranfrage, um ein Log zu schreiben.</value>
+  </data>
+  <data name="Bounded Channel&lt;RequestLog&gt;: 10,000 entries" xml:space="preserve">
+    <value>Begrenzter Channel&lt;RequestLog&gt;: 10.000 Einträge</value>
   </data>
   <data name="bounded to" xml:space="preserve">
     <value>begrenzt auf</value>
   </data>
+  <data name="Buffer" xml:space="preserve">
+    <value>Puffer</value>
+  </data>
+  <data name="Bulk update" xml:space="preserve">
+    <value>Massenaktualisierung</value>
+  </data>
   <data name="but no virtual model with that name and type &apos;Chat&apos; exists in the database." xml:space="preserve">
     <value>aber es existiert kein virtuelles Modell mit diesem Namen und dem Typ „Chat“ in der Datenbank.</value>
+  </data>
+  <data name="Change default" xml:space="preserve">
+    <value>Standard ändern</value>
   </data>
   <data name="ClickHouse Log Pipeline" xml:space="preserve">
     <value>ClickHouse-Protokollpipeline</value>
   </data>
+  <data name="Client Decoder" xml:space="preserve">
+    <value>Client-Dekodierer</value>
+  </data>
+  <data name="Client JSON" xml:space="preserve">
+    <value>Client-JSON</value>
+  </data>
+  <data name="Cold-start model loading" xml:space="preserve">
+    <value>Laden des Modells beim Kaltstart</value>
+  </data>
   <data name="Configuration" xml:space="preserve">
     <value>Konfiguration</value>
+  </data>
+  <data name="CONFIGURATION REQUIRED" xml:space="preserve">
+    <value>KONFIGURATION ERFORDERLICH</value>
   </data>
   <data name="Control Plane" xml:space="preserve">
     <value>Kontroll-Ebene</value>
@@ -84,8 +159,20 @@
   <data name="Controls" xml:space="preserve">
     <value>Steuert</value>
   </data>
+  <data name="Counted by the VM timeout" xml:space="preserve">
+    <value>Wird vom VM-Timeout berücksichtigt</value>
+  </data>
+  <data name="Create chat model" xml:space="preserve">
+    <value>Chat-Modell erstellen</value>
+  </data>
   <data name="create it here → New Virtual Model" xml:space="preserve">
     <value>erstellen Sie es hier → Neues virtuelles Modell</value>
+  </data>
+  <data name="CROSS DIALECT" xml:space="preserve">
+    <value>Quersprachlich</value>
+  </data>
+  <data name="CURRENT INSTANCE · LIVE" xml:space="preserve">
+    <value>AKTUELLE INSTANZ · LIVE</value>
   </data>
   <data name="Current Value" xml:space="preserve">
     <value>Aktueller Wert</value>
@@ -93,17 +180,56 @@
   <data name="Dashboard Plane" xml:space="preserve">
     <value>Dashboard-Ebene</value>
   </data>
+  <data name="Dashboard totals are DB-backed, with nominal ≤ 3 minute lag" xml:space="preserve">
+    <value>Dashboard-Gesamtsummen werden durch die Datenbank unterstützt, mit einer nominalen Verzögerung von ≤ 3 Minuten</value>
+  </data>
   <data name="Data Plane" xml:space="preserve">
     <value>Datenebene</value>
+  </data>
+  <data name="Decoder" xml:space="preserve">
+    <value>Decoder</value>
+  </data>
+  <data name="Decoder → Event IR → Client Writer" xml:space="preserve">
+    <value>Decoder → Event-IR → Client Writer</value>
+  </data>
+  <data name="Deep clone" xml:space="preserve">
+    <value>Tiefes Klonen</value>
+  </data>
+  <data name="Default chat model is unavailable" xml:space="preserve">
+    <value>Standard-Chatmodell ist nicht verfügbar</value>
   </data>
   <data name="Default Chat Model Not Found!" xml:space="preserve">
     <value>Standard-Chatmodell nicht gefunden!</value>
   </data>
+  <data name="Default virtual model" xml:space="preserve">
+    <value>Standard-Virtualmodell</value>
+  </data>
+  <data name="Dialect contract" xml:space="preserve">
+    <value>Dialektvertrag</value>
+  </data>
+  <data name="does not match a Chat virtual model in the database. Requests without an explicit model cannot be resolved." xml:space="preserve">
+    <value>entspricht keinem virtuellen Chat-Modell in der Datenbank. Anfragen ohne ein explizites Modell können nicht aufgelöst werden.</value>
+  </data>
   <data name="drains buffer, batch-inserts into ClickHouse" xml:space="preserve">
     <value>leert den Puffer und führt Batch-Einfügungen in ClickHouse durch</value>
   </data>
+  <data name="DropWrite when full; enqueue never blocks the request" xml:space="preserve">
+    <value>DropWrite bei Volldauer; Einreihung blockiert die Anfrage niemals</value>
+  </data>
+  <data name="Dual observability pipeline" xml:space="preserve">
+    <value>Duale Observability-Pipeline</value>
+  </data>
   <data name="Each API key has its own rate-limit window. Two modes:" xml:space="preserve">
     <value>Jeder API-Schlüssel hat sein eigenes Ratenlimit-Fenster. Zwei Modi:</value>
+  </data>
+  <data name="Each eligible backend is attempted once before a second pass. Three consecutive failures activate the circuit breaker; a later success clears it." xml:space="preserve">
+    <value>Jeder qualifizierende Backend wird einmal vor einem zweiten Durchlauf versucht. Drei aufeinanderfolgende Fehler aktivieren den Circuit Breaker; ein späterer Erfolg löst ihn wieder.</value>
+  </data>
+  <data name="Embedding and non-chat APIs" xml:space="preserve">
+    <value>Embedding- und Nicht-Chat-APIs</value>
+  </data>
+  <data name="Embeddings" xml:space="preserve">
+    <value>Embeddings</value>
   </data>
   <data name="entries, DropWrite when full" xml:space="preserve">
     <value>Einträge, DropWrite bei Volllauf</value>
@@ -117,6 +243,15 @@
   <data name="Example" xml:space="preserve">
     <value>Beispiel</value>
   </data>
+  <data name="EXECUTION BOUNDARIES" xml:space="preserve">
+    <value>AUSFÜHRUNGSGRENZEN</value>
+  </data>
+  <data name="Fallback budget for the current default model" xml:space="preserve">
+    <value>Reservezeit für das aktuelle Standardmodell</value>
+  </data>
+  <data name="Fallback per-model loading timeout. Native Ollama only; the background job runs every 5 minutes." xml:space="preserve">
+    <value>Fallback-Zeitlimit für das Laden von Modellen. Nur für nativen Ollama; der Hintergrundjob läuft alle 5 Minuten.</value>
+  </data>
   <data name="Fallback Timeline" xml:space="preserve">
     <value>Zeitplan für Fallbacks</value>
   </data>
@@ -126,8 +261,29 @@
   <data name="Fix it here → Global Settings" xml:space="preserve">
     <value>Hier beheben → Globale Einstellungen</value>
   </data>
+  <data name="FIXED ARCHITECTURE CONTRACT" xml:space="preserve">
+    <value>FESTER ARCHITEKTURVERTRAG</value>
+  </data>
+  <data name="Flush every 2 minutes in batches" xml:space="preserve">
+    <value>Alle 2 Minuten in Chargen schreiben</value>
+  </data>
+  <data name="Flush every 3 minutes" xml:space="preserve">
+    <value>Alle 3 Minuten schreiben</value>
+  </data>
+  <data name="Four independent timeout planes" xml:space="preserve">
+    <value>Vier unabhängige Timeout-Ebenen</value>
+  </data>
+  <data name="Gateway overrides" xml:space="preserve">
+    <value>Gateway-Überschreibungen</value>
+  </data>
+  <data name="Gateway-owned responses expose virtual models and avoid recursive upstream discovery." xml:space="preserve">
+    <value>Vom Gateway bereitgestellte Antworten geben virtuelle Modelle preis und vermeiden eine rekursive Upstream-Entdeckung.</value>
+  </data>
   <data name="GPU processes tokens. Once loaded, subsequent requests skip loading → straight to inference." xml:space="preserve">
     <value>Die GPU verarbeitet Tokens. Nach dem Laden werden nachfolgende Anfragen ohne erneutes Laden direkt zur Inferenz weitergeleitet.</value>
+  </data>
+  <data name="Hang" xml:space="preserve">
+    <value>Warten</value>
   </data>
   <data name="Hang mode" xml:space="preserve">
     <value>Warteschlangenmodus</value>
@@ -135,8 +291,20 @@
   <data name="Hardcoded" xml:space="preserve">
     <value>Hardcodiert</value>
   </data>
+  <data name="Header timeout" xml:space="preserve">
+    <value>Header-Timeout</value>
+  </data>
   <data name="Health Check" xml:space="preserve">
     <value>Gesundheitsprüfung</value>
+  </data>
+  <data name="health timeout" xml:space="preserve">
+    <value>Gesundheitsüberprüfungstimeout</value>
+  </data>
+  <data name="Hot-path increment" xml:space="preserve">
+    <value>Inkrementierung im Hot Path</value>
+  </data>
+  <data name="How a request flows through the Ollama Gateway — from client contract to selected backend protocol." xml:space="preserve">
+    <value>Wie eine Anfrage durch das Ollama Gateway fließt – vom Client-Vertrag bis zum ausgewählten Backend-Protokoll.</value>
   </data>
   <data name="How a request flows through the Ollama Gateway — from client to backend" xml:space="preserve">
     <value>Wie eine Anfrage durch das Ollama Gateway fließt — vom Client zum Backend</value>
@@ -159,8 +327,14 @@
   <data name="Immediately return HTTP 429." xml:space="preserve">
     <value>Gibt sofort HTTP 429 zurück.</value>
   </data>
+  <data name="In-memory to relational DB" xml:space="preserve">
+    <value>Von Arbeitsspeicher zur relationalen Datenbank</value>
+  </data>
   <data name="In-Memory Usage Tracking" xml:space="preserve">
     <value>Nutzungserfassung im Arbeitsspeicher</value>
+  </data>
+  <data name="Inbound dialects" xml:space="preserve">
+    <value>Eingehende Dialekte</value>
   </data>
   <data name="Inference" xml:space="preserve">
     <value>Inferenz</value>
@@ -180,11 +354,17 @@
   <data name="Limit" xml:space="preserve">
     <value>Begrenzung</value>
   </data>
+  <data name="Live configuration" xml:space="preserve">
+    <value>Live-Konfiguration</value>
+  </data>
   <data name="Logs include: user, model, provider, tokens, latency, status code, conversation count" xml:space="preserve">
     <value>Protokolle umfassen: Benutzer, Modell, Anbieter, Token, Latenz, Statuscode, Konversationsanzahl</value>
   </data>
   <data name="Max" xml:space="preserve">
     <value>Max</value>
+  </data>
+  <data name="Max attempts" xml:space="preserve">
+    <value>Maximale Versuche</value>
   </data>
   <data name="Max Retries" xml:space="preserve">
     <value>Maximale Versuche</value>
@@ -195,11 +375,23 @@
   <data name="Model" xml:space="preserve">
     <value>Modell</value>
   </data>
+  <data name="Model and capabilities" xml:space="preserve">
+    <value>Modell und Fähigkeiten</value>
+  </data>
+  <data name="Model discovery" xml:space="preserve">
+    <value>Modellentdeckung</value>
+  </data>
   <data name="Model Loading" xml:space="preserve">
     <value>Modell laden</value>
   </data>
   <data name="Model loading time (cold start on GPU)" xml:space="preserve">
     <value>Modellladezeit (kalter Start auf GPU)</value>
+  </data>
+  <data name="Native Ollama only. A non-Ollama selected backend returns HTTP 501." xml:space="preserve">
+    <value>Nur natives Ollama. Ein ausgewählter Backend-Provider, der kein Ollama ist, gibt HTTP 501 zurück.</value>
+  </data>
+  <data name="Native Responses" xml:space="preserve">
+    <value>Native-Antworten</value>
   </data>
   <data name="needs another 30 s to finish → completely fine ✅" xml:space="preserve">
     <value>benötigt weitere 30 s zum Abschluss → völlig in Ordnung ✅</value>
@@ -210,8 +402,17 @@
   <data name="No concurrency limit — requests pass through immediately" xml:space="preserve">
     <value>Keine Begrenzung der Parallelität – Anfragen werden sofort weitergeleitet</value>
   </data>
+  <data name="No database write on every model request" xml:space="preserve">
+    <value>Kein Datenbank-Write bei jeder Modellanfrage</value>
+  </data>
+  <data name="No default chat virtual model is available." xml:space="preserve">
+    <value>Kein Standard-Chat-Virtualmodell ist verfügbar.</value>
+  </data>
   <data name="No providers configured yet." xml:space="preserve">
     <value>Noch keine Anbieter konfiguriert.</value>
+  </data>
+  <data name="NON-BLOCKING HOT PATH" xml:space="preserve">
+    <value>NICHT-BLOCKIERENDER KRITISCHER PFAD</value>
   </data>
   <data name="not found. Create it to see real configuration here." xml:space="preserve">
     <value>nicht gefunden. Erstellen Sie es, um die tatsächliche Konfiguration hier zu sehen.</value>
@@ -219,16 +420,55 @@
   <data name="NumCtx" xml:space="preserve">
     <value>Kontextlänge</value>
   </data>
+  <data name="Observability" xml:space="preserve">
+    <value>Beobachtbarkeit</value>
+  </data>
+  <data name="Ollama model warmup" xml:space="preserve">
+    <value>Aufwärmen des Ollama-Modells</value>
+  </data>
+  <data name="Ollama uses its configured timeout for /api/tags and /api/ps. OpenAI /v1/models is fixed at 10 s." xml:space="preserve">
+    <value>Ollama verwendet die konfigurierte Zeitüberschreitung für /api/tags und /api/ps. OpenAI /v1/models ist fest auf 10 s eingestellt.</value>
+  </data>
   <data name="Once the backend sends HTTP headers, the timeout is PASSED. The model can stream tokens for hours — only client disconnection stops it." xml:space="preserve">
     <value>Sobald das Backend HTTP-Header sendet, ist das Timeout ABGELAUFEN. Das Modell kann Token über Stunden streamen – nur eine Client-Trennung unterbricht dies.</value>
+  </data>
+  <data name="One semantic core, protocol-aware edges" xml:space="preserve">
+    <value>Ein semantischer Kern, protokollbewusste Endpunkte</value>
+  </data>
+  <data name="Only shared semantics are translated. Wire extensions prefer a matching backend and fall back to the documented semantic subset; opaque content and unsupported stateful operations remain hard rejections." xml:space="preserve">
+    <value>Es werden nur gemeinsam genutzte Semantiken übersetzt. Drahterweiterungen bevorzugen ein passendes Backend und fallen auf den dokumentierten semantischen Teilmenge zurück; intransparente Inhalte und nicht unterstützte zustandsbehaftete Operationen bleiben harte Ablehnungen.</value>
+  </data>
+  <data name="Open Traffic Visualization" xml:space="preserve">
+    <value>Traffic-Visualisierung öffnen</value>
+  </data>
+  <data name="OpenAI Responses state is preserved only on native Responses routes" xml:space="preserve">
+    <value>Der Zustand von OpenAI Responses wird nur auf nativen Responses-Routen beibehalten</value>
   </data>
   <data name="or" xml:space="preserve">
     <value>oder</value>
   </data>
+  <data name="Original JSON" xml:space="preserve">
+    <value>Original JSON</value>
+  </data>
+  <data name="Outside the VM timeout" xml:space="preserve">
+    <value>Außerhalb des VM-Timeouts</value>
+  </data>
   <data name="Per-Key Rate Limiter" xml:space="preserve">
     <value>Ratenbegrenzung pro Schlüssel</value>
   </data>
+  <data name="Physical model" xml:space="preserve">
+    <value>Physisches Modell</value>
+  </data>
+  <data name="Preserve protocol-specific payload" xml:space="preserve">
+    <value>Protokollspezifische Nutzlast beibehalten</value>
+  </data>
+  <data name="previous_response_id, conversation, store:true, and background:true pass through unchanged to Responses-capable providers; translated routes return an explicit 400 unsupported_feature." xml:space="preserve">
+    <value>previous_response_id, conversation, store:true und background:true werden unverändert an Responses-fähige Anbieter weitergeleitet; übersetzte Routen geben eine explizite 400 unsupported_feature zurück.</value>
+  </data>
   <data name="Pri" xml:space="preserve">
+    <value>Priorität</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
     <value>Priorität</value>
   </data>
   <data name="processing" xml:space="preserve">
@@ -243,14 +483,44 @@
   <data name="Provider → Warmup Model → Timeout (s)" xml:space="preserve">
     <value>Anbieter → Warmup-Modell → Timeout (s)</value>
   </data>
+  <data name="Provider concurrency — live process state" xml:space="preserve">
+    <value>Anbietersynchronisation — Live-Prozessstatus</value>
+  </data>
+  <data name="Provider concurrency queue wait" xml:space="preserve">
+    <value>Wartezeit in der Anbieter-Konkurrenzwarteschlange</value>
+  </data>
   <data name="Provider concurrency slot queuing" xml:space="preserve">
     <value>Warteschlange für Anbieter-Konkurrenz-Slots</value>
+  </data>
+  <data name="Provider health probes" xml:space="preserve">
+    <value>Anbieter-Health-Probes</value>
+  </data>
+  <data name="Provider type: Ollama" xml:space="preserve">
+    <value>Anbieter-Typ: Ollama</value>
+  </data>
+  <data name="Provider type: OpenAI" xml:space="preserve">
+    <value>Anbietertyp: OpenAI</value>
+  </data>
+  <data name="Provider types" xml:space="preserve">
+    <value>Anbiertypen</value>
   </data>
   <data name="Queue until a slot opens — does NOT consume the virtual model timeout." xml:space="preserve">
     <value>Warteschlange, bis ein Slot frei wird — verbraucht NICHT das Timeout des virtuellen Modells.</value>
   </data>
+  <data name="queue wait" xml:space="preserve">
+    <value>Warteschlangenwartung</value>
+  </data>
+  <data name="Queue wait is outside the VM timeout" xml:space="preserve">
+    <value>Warteschlangenwartung liegt außerhalb des VM-Timeouts</value>
+  </data>
   <data name="Quick admin dashboard ping. Does NOT write to DB — UI-only." xml:space="preserve">
     <value>Schneller Admin-Dashboard-Ping. Schreibt NICHT in die DB – nur für die Benutzeroberfläche.</value>
+  </data>
+  <data name="Quick admin probes" xml:space="preserve">
+    <value>Schnelle Administratorabfragen</value>
+  </data>
+  <data name="Rate queue → provider queue → upstream → response lifecycle" xml:space="preserve">
+    <value>Ratenwarteschlange → Provider-Warteschlange → Upstream → Antwort-Lebenszyklus</value>
   </data>
   <data name="Rate-limit queue waiting (Hang mode)" xml:space="preserve">
     <value>Warten in der Rate-Limit-Warteschlange (Hang-Modus)</value>
@@ -261,14 +531,71 @@
   <data name="Reads model weights from disk into GPU VRAM. 27GB on NVMe ≈ 5–15s; on HDD/NAS ≈ 3–10 min." xml:space="preserve">
     <value>Liest Modellgewichte von der Festplatte in den GPU-VRAM. 27 GB auf NVMe ≈ 5–15 s; auf HDD/NAS ≈ 3–10 Min.</value>
   </data>
+  <data name="Reconstruct client JSON or streaming events" xml:space="preserve">
+    <value>Client-JSON oder Streaming-Ereignisse rekonstruieren</value>
+  </data>
+  <data name="Reject" xml:space="preserve">
+    <value>Ablehnen</value>
+  </data>
   <data name="Reject mode" xml:space="preserve">
     <value>Ablehnungsmodus</value>
+  </data>
+  <data name="Request IR" xml:space="preserve">
+    <value>Anfrage-IR</value>
+  </data>
+  <data name="Request Path" xml:space="preserve">
+    <value>Anfragepfad</value>
   </data>
   <data name="Request Timeout" xml:space="preserve">
     <value>Anfrage-Timeout</value>
   </data>
+  <data name="Resolved AI request" xml:space="preserve">
+    <value>Aufgelöste AI-Anfrage</value>
+  </data>
+  <data name="Resolver + Planner" xml:space="preserve">
+    <value>Auflösung + Planung</value>
+  </data>
+  <data name="Response body after headers, streaming or buffered" xml:space="preserve">
+    <value>Antwortkörper nach den Kopfzeilen, gestreamt oder gepuffert</value>
+  </data>
+  <data name="Response-header deadline" xml:space="preserve">
+    <value>Frist für Antwort-Header</value>
+  </data>
+  <data name="Return HTTP 429 immediately." xml:space="preserve">
+    <value>HTTP 429 sofort zurückgeben.</value>
+  </data>
   <data name="runs every" xml:space="preserve">
     <value>wird alle</value>
+  </data>
+  <data name="Runtime" xml:space="preserve">
+    <value>Laufzeit</value>
+  </data>
+  <data name="Runtime configuration" xml:space="preserve">
+    <value>Laufzeitkonfiguration</value>
+  </data>
+  <data name="SAME DIALECT" xml:space="preserve">
+    <value>Gleicher Dialekt</value>
+  </data>
+  <data name="SEMANTIC GATEWAY · V2" xml:space="preserve">
+    <value>SEMANTISCHES GATEWAY · V2</value>
+  </data>
+  <data name="Semantic Request IR" xml:space="preserve">
+    <value>Semantische Anfrage-IR</value>
+  </data>
+  <data name="Semantic translation path" xml:space="preserve">
+    <value>Semantischer Übersetzungsweg</value>
+  </data>
+  <data name="Separate, narrower contracts" xml:space="preserve">
+    <value>Separate, schmalere Verträge</value>
+  </data>
+  <data name="Starts after a provider concurrency slot is acquired. Covers DNS, connection, TLS, cold model loading, and waiting for upstream headers." xml:space="preserve">
+    <value>Startet nach der Bereitstellung eines Provider-Konkurrenzslots. Umfasst DNS, Verbindungsaufbau, TLS, das Laden des Modells im kalten Start und das Warten auf Upstream-Header.</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>Zustandsbewusst</value>
+  </data>
+  <data name="State-aware" xml:space="preserve">
+    <value>Statussensitiv</value>
   </data>
   <data name="Strategy" xml:space="preserve">
     <value>Strategie</value>
@@ -276,8 +603,14 @@
   <data name="Streaming response body (after headers received)" xml:space="preserve">
     <value>Streamende Antwortdaten (nach Erhalt der Header)</value>
   </data>
+  <data name="Swap" xml:space="preserve">
+    <value>Austausch</value>
+  </data>
   <data name="swaps buffers and bulk-updates DB (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)" xml:space="preserve">
     <value>tauscht Puffer und aktualisiert die DB im Stapel (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)</value>
+  </data>
+  <data name="Target adapter" xml:space="preserve">
+    <value>Zieladapter</value>
   </data>
   <data name="Temperature" xml:space="preserve">
     <value>Temperatur</value>
@@ -285,8 +618,14 @@
   <data name="The 4-Layer Timeout Architecture" xml:space="preserve">
     <value>Die 4-Schichten-Timeout-Architektur</value>
   </data>
+  <data name="The configured default" xml:space="preserve">
+    <value>Das konfigurierte Standard-</value>
+  </data>
   <data name="The global default chat model is set to" xml:space="preserve">
     <value>Das globale Standard-Chatmodell ist auf</value>
+  </data>
+  <data name="The virtual-model deadline no longer applies to the response body. Streaming may continue for hours, but transport failure, upstream closure, client cancellation, gateway shutdown, or decoding errors can still end it." xml:space="preserve">
+    <value>Die Frist des virtuellen Modells gilt nicht mehr für den Antwortkörper. Das Streaming kann stundenlang fortgesetzt werden, aber Transportfehler, das Schließen der Upstream-Verbindung, die Client-Abbruchanforderung, das Herunterfahren des Gateways oder Decodierungsfehler können es dennoch beenden.</value>
   </data>
   <data name="The warmup background job pings configured models every 5 min to prevent unloading." xml:space="preserve">
     <value>Der Warmup-Hintergrundjob pingt alle 5 Minuten die konfigurierten Modelle an, um ein Entladen zu verhindern.</value>
@@ -297,17 +636,41 @@
   <data name="timeout. Backend starts streaming at" xml:space="preserve">
     <value>Zeitlimit. Der Backend-Stream beginnt bei</value>
   </data>
+  <data name="Timeouts &amp; Queues" xml:space="preserve">
+    <value>Zeitüberschreitungen &amp; Warteschlangen</value>
+  </data>
+  <data name="Total wall-clock time has no fixed upper bound because rate-limit and concurrency queues are outside this budget." xml:space="preserve">
+    <value>Die gesamte Wanduhrzeit hat keine feste Obergrenze, da Rate-Limiting- und Koncurrenz-Warteschlangen außerhalb dieses Budgets liegen.</value>
+  </data>
   <data name="tracks API key usage, virtual model usage, underlying model usage — feeds the Dashboard charts in real-time" xml:space="preserve">
     <value>verfolgt die Nutzung von API-Schlüsseln, virtuellen Modellen und zugrunde liegenden Modellen – versorgt die Dashboard-Diagramme in Echtzeit mit Daten</value>
   </data>
   <data name="tracks live in-flight requests — powers the &quot;Live Inference&quot; table and Monitor page" xml:space="preserve">
     <value>verfolgt aktive, laufende Anfragen – speist die Tabelle „Live Inference“ und die Monitor-Seite</value>
   </data>
+  <data name="Transparent wire path" xml:space="preserve">
+    <value>Transparenter Datenpfad</value>
+  </data>
   <data name="Tries backends from lowest priority to highest. If backend #1 fails or times out, falls back to #2, then #3." xml:space="preserve">
     <value>Versucht Backends von niedrigster zu höchster Priorität. Wenn Backend #1 fehlschlägt oder eine Zeitüberschreitung aufweist, wird auf #2 und dann auf #3 zurückgegriffen.</value>
   </data>
+  <data name="unbounded" xml:space="preserve">
+    <value>ohne Begrenzung</value>
+  </data>
+  <data name="Unknown representable fields survive. The gateway changes owned fields such as physical model identity and configured VM parameters; translated Responses requests use store:false." xml:space="preserve">
+    <value>Unbekannte darstellbare Felder werden beibehalten. Das Gateway ändert eigenständige Felder wie die physische Modellidentität und konfigurierte VM-Parameter; übersetzte Responses-Anfragen verwenden store:false.</value>
+  </data>
   <data name="Unlimited" xml:space="preserve">
     <value>Unbegrenzt</value>
+  </data>
+  <data name="USAGE COUNTERS" xml:space="preserve">
+    <value>NUTZUNGSMETRIKEN</value>
+  </data>
+  <data name="User, model, provider, token, latency, status, and conversation fields" xml:space="preserve">
+    <value>Benutzer-, Modell-, Anbieter-, Token-, Latenz-, Status- und Konversationsfelder</value>
+  </data>
+  <data name="Uses its own two-dialect adapter pipeline. It does not pass through the chat Request/Event IR." xml:space="preserve">
+    <value>Verwendet eine eigene Adapter-Pipeline für zwei Dialekte. Sie leitet nicht durch die Chat-Request-/Event-IR weiter.</value>
   </data>
   <data name="Virtual model" xml:space="preserve">
     <value>Virtuelles Modell</value>
@@ -315,8 +678,14 @@
   <data name="Virtual Model → Request Timeout (s)" xml:space="preserve">
     <value>Virtuelles Modell → Anfrage-Timeout (s)</value>
   </data>
+  <data name="Wait for the per-key rate window. Waiting does not consume VM timeout." xml:space="preserve">
+    <value>Warten auf das Raten-Fenster pro Schlüssel. Das Warten verbraucht nicht den VM-Timeout.</value>
+  </data>
   <data name="waiting" xml:space="preserve">
     <value>Warten</value>
+  </data>
+  <data name="Waiting for backend HTTP response headers" xml:space="preserve">
+    <value>Warten auf Backend-HTTP-Antwortheader</value>
   </data>
   <data name="Waiting for backend to send HTTP response headers" xml:space="preserve">
     <value>Warten auf HTTP-Antwort-Header vom Backend</value>
@@ -327,6 +696,9 @@
   <data name="Warmup Plane" xml:space="preserve">
     <value>Aufwärm-Ebene</value>
   </data>
+  <data name="Web session" xml:space="preserve">
+    <value>Websitz</value>
+  </data>
   <data name="What IS counted" xml:space="preserve">
     <value>Was wird gezählt</value>
   </data>
@@ -335,6 +707,9 @@
   </data>
   <data name="Where configured" xml:space="preserve">
     <value>Konfiguriert unter</value>
+  </data>
+  <data name="Wire Writer" xml:space="preserve">
+    <value>Kabelschreiber</value>
   </data>
   <data name="With" xml:space="preserve">
     <value>Mit</value>

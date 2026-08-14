@@ -69,11 +69,17 @@
   <data name="Ollama num_ctx Override" xml:space="preserve">
     <value>Ollama num_ctx Override</value>
   </data>
+  <data name="OpenAI clients use their matching provider protocol when available. This protocol is the fallback for other client dialects." xml:space="preserve">
+    <value>ไคลเอนต์ OpenAI จะใช้โปรโตคอลของผู้ให้บริการที่ตรงกันหากมีอยู่ โปรโตคอลนี้จะเป็นตัวเลือกสำรองสำหรับไคลเอนต์รูปแบบอื่น ๆ</value>
+  </data>
   <data name="Optional Model Overrides" xml:space="preserve">
     <value>การกำหนดค่า Model แบบไม่บังคับ</value>
   </data>
   <data name="Optional Overrides (Leave empty to use client/defaults)" xml:space="preserve">
     <value>การแทนค่าเพิ่มเติม (เว้นว่างไว้เพื่อใช้ค่าจากไคลเอนต์/ค่าเริ่มต้น)</value>
+  </data>
+  <data name="Preferred Backend Protocol" xml:space="preserve">
+    <value>โปรโตคอลแบ็กเอนด์ที่ต้องการใช้</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>ผู้ให้บริการ</value>

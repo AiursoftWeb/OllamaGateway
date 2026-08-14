@@ -27,29 +27,56 @@
   <data name="Ooops, something wrong happended." xml:space="preserve">
     <value>อุ๊ย! เกิดข้อผิดพลาดบางอย่างขึ้น</value>
   </data>
+  <data name="Oops, something went wrong." xml:space="preserve">
+    <value>อุ๊ย! มีบางอย่างผิดพลาด</value>
+  </data>
   <data name="Remove" xml:space="preserve">
     <value>ลบ</value>
   </data>
   <data name="The file is not allowed ({{ value }} only)." xml:space="preserve">
     <value>ไม่อนุญาตให้ใช้ไฟล์นี้ (เฉพาะ {{ value }} เท่านั้น)</value>
   </data>
+  <data name="The file is not allowed ({{{{ value }}}} only)." xml:space="preserve">
+    <value>ไม่อนุญาตให้ใช้ไฟล์นี้ (รองรับเฉพาะ {{{{ value }}}})</value>
+  </data>
   <data name="The file size is too big ({{ value }} max)." xml:space="preserve">
     <value>ขนาดไฟล์ใหญ่เกินไป (สูงสุด {{ value }})</value>
+  </data>
+  <data name="The file size is too big ({{{{ value }}}} max)." xml:space="preserve">
+    <value>ขนาดไฟล์ใหญ่เกินไป (สูงสุด {{{{ value }}}})</value>
   </data>
   <data name="The image format is not allowed ({{ value }} only)." xml:space="preserve">
     <value>รูปแบบของภาพไม่ได้รับอนุญาต (เฉพาะ {{ value }} เท่านั้น)</value>
   </data>
+  <data name="The image format is not allowed ({{{{ value }}}} only)." xml:space="preserve">
+    <value>รูปแบบรูปภาพไม่ได้รับอนุญาต (เฉพาะ {{{{ value }}}})</value>
+  </data>
   <data name="The image height is too big ({{ value }}px max)." xml:space="preserve">
     <value>ความสูงของภาพมากเกินไป (สูงสุด {{ value }}px)</value>
+  </data>
+  <data name="The image height is too big ({{{{ value }}}}px max)." xml:space="preserve">
+    <value>ความสูงของภาพมากเกินไป (สูงสุด {{{{ value }}}}px)</value>
   </data>
   <data name="The image height is too small ({{ value }}px min)." xml:space="preserve">
     <value>ความสูงของภาพน้อยเกินไป (ขั้นต่ำ {{ value }}px)</value>
   </data>
+  <data name="The image height is too small ({{{{ value }}}}px min)." xml:space="preserve">
+    <value>ความสูงของภาพน้อยเกินไป ({{{{ value }}}}px ขั้นต่ำ)</value>
+  </data>
   <data name="The image width is too big ({{ value }}px max)." xml:space="preserve">
     <value>ความกว้างของภาพมากเกินไป (สูงสุด {{ value }}px)</value>
   </data>
+  <data name="The image width is too big ({{{{ value }}}}px max)." xml:space="preserve">
+    <value>ความกว้างของภาพใหญ่เกินไป (สูงสุด {{{{ value }}}}px)</value>
+  </data>
   <data name="The image width is too small ({{ value }}px min)." xml:space="preserve">
     <value>ความกว้างของภาพน้อยเกินไป (ขั้นต่ำ {{ value }}px)</value>
+  </data>
+  <data name="The image width is too small ({{{{ value }}}}px min)." xml:space="preserve">
+    <value>ความกว้างของภาพเล็กเกินไป ({{{{ value }}}}px ขั้นต่ำ)</value>
+  </data>
+  <data name="Your file is still uploading. Are you sure you want to leave?" xml:space="preserve">
+    <value>ไฟล์ของคุณกำลังอัปโหลดอยู่ คุณแน่ใจหรือไม่ว่าต้องการออก?</value>
   </data>
 
 </root>
