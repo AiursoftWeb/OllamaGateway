@@ -72,11 +72,17 @@
   <data name="Ollama num_ctx Override" xml:space="preserve">
     <value>올라마 num_ctx 오버라이드</value>
   </data>
+  <data name="OpenAI clients use their matching provider protocol when available. This protocol is the fallback for other client dialects." xml:space="preserve">
+    <value>OpenAI 클라이언트는 사용 가능한 경우 해당 제공업체 프로토콜을 사용합니다. 이 프로토콜은 다른 클라이언트 방식의 폴백으로 사용됩니다.</value>
+  </data>
   <data name="Optional Model Overrides" xml:space="preserve">
     <value>선택적 모델 오버라이드</value>
   </data>
   <data name="Optional Overrides (Leave empty to use client/defaults)" xml:space="preserve">
     <value>선택적 오버라이드 (클라이언트/기본값을 사용하려면 빈칸으로 두세요)</value>
+  </data>
+  <data name="Preferred Backend Protocol" xml:space="preserve">
+    <value>기본 백엔드 프로토콜</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>공급자</value>

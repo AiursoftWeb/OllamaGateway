@@ -21,8 +21,14 @@
       <data name="(fallback)" xml:space="preserve">
     <value>(기본값)</value>
   </data>
+  <data name="/api/ps: 3 s · /api/version: 5 s · /v1/models: 10 s. UI-only; no health state is persisted." xml:space="preserve">
+    <value>/api/ps: 3초 · /api/version: 5초 · /v1/models: 10초. UI 전용이며, 건강 상태는 저장되지 않습니다.</value>
+  </data>
   <data name="1. Client Request" xml:space="preserve">
     <value>1. 클라이언트 요청</value>
+  </data>
+  <data name="2 provider types ≠ 3 wire protocols" xml:space="preserve">
+    <value>제공자 유형 2가지 ≠ 와이어 프로토콜 3가지</value>
   </data>
   <data name="2. Authentication &amp; Rate Limiting" xml:space="preserve">
     <value>2. 인증 및 속도 제한</value>
@@ -42,11 +48,26 @@
   <data name="7. Observability Pipeline — Dual Logging &amp; Usage Tracking" xml:space="preserve">
     <value>7. 관찰 가능성 파이프라인 — 이중 로깅 및 사용량 추적</value>
   </data>
+  <data name="active" xml:space="preserve">
+    <value>활성</value>
+  </data>
+  <data name="After response headers:" xml:space="preserve">
+    <value>응답 헤더 이후:</value>
+  </data>
+  <data name="after slot acquired" xml:space="preserve">
+    <value>슬롯 획득 후</value>
+  </data>
   <data name="Any OpenAI-compatible or Ollama-native client sends a request." xml:space="preserve">
     <value>OpenAI 호환 또는 Ollama 네이티브 클라이언트에서 요청을 보냅니다.</value>
   </data>
+  <data name="API key · virtual model · underlying model" xml:space="preserve">
+    <value>API 키 · 가상 모델 · 기반 모델</value>
+  </data>
   <data name="API Key Verification" xml:space="preserve">
     <value>API 키 확인</value>
+  </data>
+  <data name="API keys" xml:space="preserve">
+    <value>API 키</value>
   </data>
   <data name="Architecture Guide" xml:space="preserve">
     <value>아키텍처 가이드</value>
@@ -54,8 +75,35 @@
   <data name="attempts and" xml:space="preserve">
     <value>회 시도 및</value>
   </data>
+  <data name="AUDIT EVENTS" xml:space="preserve">
+    <value>감사 이벤트</value>
+  </data>
+  <data name="Auth + Rate Limit" xml:space="preserve">
+    <value>인증 + 속도 제한</value>
+  </data>
   <data name="Authentication &amp; API key validation" xml:space="preserve">
     <value>인증 및 API 키 검증</value>
+  </data>
+  <data name="Authentication &amp; rate limit" xml:space="preserve">
+    <value>인증 및 속도 제한</value>
+  </data>
+  <data name="Authentication and per-key rate-limit wait" xml:space="preserve">
+    <value>인증 및 키별 속도 제한 대기 시간</value>
+  </data>
+  <data name="Backend DNS, TCP handshake, and TLS" xml:space="preserve">
+    <value>백엔드 DNS, TCP 핸드셰이크 및 TLS</value>
+  </data>
+  <data name="Backend protocol" xml:space="preserve">
+    <value>백엔드 프로토콜</value>
+  </data>
+  <data name="Backend protocol is selected per request and provider capability" xml:space="preserve">
+    <value>요청 및 공급자 기능에 따라 백엔드 프로토콜이 선택됩니다</value>
+  </data>
+  <data name="Backend protocols" xml:space="preserve">
+    <value>백엔드 프로토콜</value>
+  </data>
+  <data name="Backend response" xml:space="preserve">
+    <value>백엔드 응답</value>
   </data>
   <data name="Backends" xml:space="preserve">
     <value>백엔드</value>
@@ -63,20 +111,47 @@
   <data name="Bearer token or x-api-key is validated." xml:space="preserve">
     <value>Bearer 토큰 또는 x-api-key가 유효성 검사됩니다.</value>
   </data>
+  <data name="Before model timeout" xml:space="preserve">
+    <value>모델 타임아웃 전</value>
+  </data>
   <data name="Both pipelines are fire-and-forget from the request hot-path. If ClickHouse is down or the buffer is full, requests still succeed — logs are simply dropped (DropWrite). The system never blocks a user request to write a log." xml:space="preserve">
     <value>두 파이프라인 모두 요청 핫패스(hot-path)에서 fire-and-forget 방식으로 동작합니다. ClickHouse가 다운되었거나 버퍼가 가득 찼더라도 요청은 성공하며, 로그는 단순히 버려집니다(DropWrite). 시스템은 로그 작성으로 인해 사용자 요청을 절대 차단하지 않습니다.</value>
+  </data>
+  <data name="Bounded Channel&lt;RequestLog&gt;: 10,000 entries" xml:space="preserve">
+    <value>유한 채널&lt;RequestLog&gt;: 10,000개 항목</value>
   </data>
   <data name="bounded to" xml:space="preserve">
     <value>10,000개로 제한됨</value>
   </data>
+  <data name="Buffer" xml:space="preserve">
+    <value>버퍼</value>
+  </data>
+  <data name="Bulk update" xml:space="preserve">
+    <value>일괄 업데이트</value>
+  </data>
   <data name="but no virtual model with that name and type &apos;Chat&apos; exists in the database." xml:space="preserve">
     <value>하지만 데이터베이스에 해당 이름과 유형 &apos;Chat&apos;을(를) 가진 가상 모델이 없습니다.</value>
+  </data>
+  <data name="Change default" xml:space="preserve">
+    <value>기본값 변경</value>
   </data>
   <data name="ClickHouse Log Pipeline" xml:space="preserve">
     <value>ClickHouse 로그 파이프라인</value>
   </data>
+  <data name="Client Decoder" xml:space="preserve">
+    <value>클라이언트 디코더</value>
+  </data>
+  <data name="Client JSON" xml:space="preserve">
+    <value>클라이언트 JSON</value>
+  </data>
+  <data name="Cold-start model loading" xml:space="preserve">
+    <value>콜드 스타트 모델 로딩</value>
+  </data>
   <data name="Configuration" xml:space="preserve">
     <value>구성</value>
+  </data>
+  <data name="CONFIGURATION REQUIRED" xml:space="preserve">
+    <value>설정 필요</value>
   </data>
   <data name="Control Plane" xml:space="preserve">
     <value>제어 평면</value>
@@ -84,8 +159,20 @@
   <data name="Controls" xml:space="preserve">
     <value>제어 대상</value>
   </data>
+  <data name="Counted by the VM timeout" xml:space="preserve">
+    <value>VM 타임아웃에 포함됨</value>
+  </data>
+  <data name="Create chat model" xml:space="preserve">
+    <value>채팅 모델 만들기</value>
+  </data>
   <data name="create it here → New Virtual Model" xml:space="preserve">
     <value>여기서 생성하기 → 새 가상 모델</value>
+  </data>
+  <data name="CROSS DIALECT" xml:space="preserve">
+    <value>교차 방언</value>
+  </data>
+  <data name="CURRENT INSTANCE · LIVE" xml:space="preserve">
+    <value>현재 인스턴스 · 실시간</value>
   </data>
   <data name="Current Value" xml:space="preserve">
     <value>현재 값</value>
@@ -93,17 +180,56 @@
   <data name="Dashboard Plane" xml:space="preserve">
     <value>대시보드 플레인</value>
   </data>
+  <data name="Dashboard totals are DB-backed, with nominal ≤ 3 minute lag" xml:space="preserve">
+    <value>대시보드 합계는 데이터베이스를 기반으로 하며, 명목상 3분 이내의 지연 시간이 있습니다.</value>
+  </data>
   <data name="Data Plane" xml:space="preserve">
     <value>데이터 평면</value>
+  </data>
+  <data name="Decoder" xml:space="preserve">
+    <value>디코더</value>
+  </data>
+  <data name="Decoder → Event IR → Client Writer" xml:space="preserve">
+    <value>디코더 → 이벤트 IR → 클라이언트 작성기</value>
+  </data>
+  <data name="Deep clone" xml:space="preserve">
+    <value>심층 복제</value>
+  </data>
+  <data name="Default chat model is unavailable" xml:space="preserve">
+    <value>기본 채팅 모델을 사용할 수 없습니다</value>
   </data>
   <data name="Default Chat Model Not Found!" xml:space="preserve">
     <value>기본 채팅 모델을 찾을 수 없습니다!</value>
   </data>
+  <data name="Default virtual model" xml:space="preserve">
+    <value>기본 가상 모델</value>
+  </data>
+  <data name="Dialect contract" xml:space="preserve">
+    <value>방언 계약</value>
+  </data>
+  <data name="does not match a Chat virtual model in the database. Requests without an explicit model cannot be resolved." xml:space="preserve">
+    <value>데이터베이스의 채팅 가상 모델과 일치하지 않습니다. 명시적인 모델이 없는 요청은 해결할 수 없습니다.</value>
+  </data>
   <data name="drains buffer, batch-inserts into ClickHouse" xml:space="preserve">
     <value>버퍼를 비우고 ClickHouse로 일괄 삽입합니다</value>
   </data>
+  <data name="DropWrite when full; enqueue never blocks the request" xml:space="preserve">
+    <value>버퍼가 가득 차면 DropWrite; 요청은 대기열에 추가될 때 절대 차단되지 않음</value>
+  </data>
+  <data name="Dual observability pipeline" xml:space="preserve">
+    <value>이중 가시성 파이프라인</value>
+  </data>
   <data name="Each API key has its own rate-limit window. Two modes:" xml:space="preserve">
     <value>각 API 키는 자체 속도 제한 창을 가집니다. 두 가지 모드:</value>
+  </data>
+  <data name="Each eligible backend is attempted once before a second pass. Three consecutive failures activate the circuit breaker; a later success clears it." xml:space="preserve">
+    <value>두 번째 패스 전에 자격이 있는 각 백엔드에 대해 한 번씩 시도가 이루어집니다. 세 번의 연속 실패는 서킷 브레이커를 활성화하며, 이후 성공은 이를 해제합니다.</value>
+  </data>
+  <data name="Embedding and non-chat APIs" xml:space="preserve">
+    <value>임베딩 및 채팅 이외의 API</value>
+  </data>
+  <data name="Embeddings" xml:space="preserve">
+    <value>임베딩</value>
   </data>
   <data name="entries, DropWrite when full" xml:space="preserve">
     <value>개체, 가득 차면 DropWrite 적용</value>
@@ -117,6 +243,15 @@
   <data name="Example" xml:space="preserve">
     <value>예시</value>
   </data>
+  <data name="EXECUTION BOUNDARIES" xml:space="preserve">
+    <value>실행 범위</value>
+  </data>
+  <data name="Fallback budget for the current default model" xml:space="preserve">
+    <value>현재 기본 모델의 대체 예산</value>
+  </data>
+  <data name="Fallback per-model loading timeout. Native Ollama only; the background job runs every 5 minutes." xml:space="preserve">
+    <value>모델별 로드 폴백 시간 제한. 네이티브 Ollama 전용이며, 백그라운드 작업은 5분마다 실행됩니다.</value>
+  </data>
   <data name="Fallback Timeline" xml:space="preserve">
     <value>대체 타임라인</value>
   </data>
@@ -126,8 +261,29 @@
   <data name="Fix it here → Global Settings" xml:space="preserve">
     <value>여기서 수정하기 → 글로벌 설정</value>
   </data>
+  <data name="FIXED ARCHITECTURE CONTRACT" xml:space="preserve">
+    <value>고정된 아키텍처 계약</value>
+  </data>
+  <data name="Flush every 2 minutes in batches" xml:space="preserve">
+    <value>2분마다 배치로 플러시</value>
+  </data>
+  <data name="Flush every 3 minutes" xml:space="preserve">
+    <value>3분마다 플러시</value>
+  </data>
+  <data name="Four independent timeout planes" xml:space="preserve">
+    <value>네 가지 독립된 타임아웃 평면</value>
+  </data>
+  <data name="Gateway overrides" xml:space="preserve">
+    <value>게이트웨이 오버라이드</value>
+  </data>
+  <data name="Gateway-owned responses expose virtual models and avoid recursive upstream discovery." xml:space="preserve">
+    <value>게이트웨이에서 관리하는 응답은 가상 모델을 노출하고 재귀적 업스트림 탐색을 방지합니다.</value>
+  </data>
   <data name="GPU processes tokens. Once loaded, subsequent requests skip loading → straight to inference." xml:space="preserve">
     <value>GPU가 토큰을 처리합니다. 모델이 로드되면 이후 요청은 로딩 단계를 건너뛰고 바로 추론으로 진행됩니다.</value>
+  </data>
+  <data name="Hang" xml:space="preserve">
+    <value>대기 중</value>
   </data>
   <data name="Hang mode" xml:space="preserve">
     <value>대기 모드</value>
@@ -135,8 +291,20 @@
   <data name="Hardcoded" xml:space="preserve">
     <value>하드코딩됨</value>
   </data>
+  <data name="Header timeout" xml:space="preserve">
+    <value>헤더 시간 초과</value>
+  </data>
   <data name="Health Check" xml:space="preserve">
     <value>상태 확인</value>
+  </data>
+  <data name="health timeout" xml:space="preserve">
+    <value>건강 상태 타임아웃</value>
+  </data>
+  <data name="Hot-path increment" xml:space="preserve">
+    <value>핫패스 증분</value>
+  </data>
+  <data name="How a request flows through the Ollama Gateway — from client contract to selected backend protocol." xml:space="preserve">
+    <value>클라이언트 계약부터 선택된 백엔드 프로토콜까지 Ollama Gateway를 통해 요청이 흐르는 방식</value>
   </data>
   <data name="How a request flows through the Ollama Gateway — from client to backend" xml:space="preserve">
     <value>Ollama Gateway를 통해 요청이 흐르는 방식 — 클라이언트에서 백엔드로</value>
@@ -159,8 +327,14 @@
   <data name="Immediately return HTTP 429." xml:space="preserve">
     <value>즉시 HTTP 429를 반환합니다.</value>
   </data>
+  <data name="In-memory to relational DB" xml:space="preserve">
+    <value>메모리에서 관계형 DB로</value>
+  </data>
   <data name="In-Memory Usage Tracking" xml:space="preserve">
     <value>메모리 내 사용량 추적</value>
+  </data>
+  <data name="Inbound dialects" xml:space="preserve">
+    <value>인바운드 구문</value>
   </data>
   <data name="Inference" xml:space="preserve">
     <value>추론</value>
@@ -180,11 +354,17 @@
   <data name="Limit" xml:space="preserve">
     <value>제한</value>
   </data>
+  <data name="Live configuration" xml:space="preserve">
+    <value>실시간 설정</value>
+  </data>
   <data name="Logs include: user, model, provider, tokens, latency, status code, conversation count" xml:space="preserve">
     <value>로그에는 사용자, 모델, 제공자, 토큰, 대기 시간, 상태 코드, 대화 횟수가 포함됩니다.</value>
   </data>
   <data name="Max" xml:space="preserve">
     <value>최대</value>
+  </data>
+  <data name="Max attempts" xml:space="preserve">
+    <value>최대 시도 횟수</value>
   </data>
   <data name="Max Retries" xml:space="preserve">
     <value>최대 재시도 횟수</value>
@@ -195,11 +375,23 @@
   <data name="Model" xml:space="preserve">
     <value>모델</value>
   </data>
+  <data name="Model and capabilities" xml:space="preserve">
+    <value>모델 및 기능</value>
+  </data>
+  <data name="Model discovery" xml:space="preserve">
+    <value>모델 검색</value>
+  </data>
   <data name="Model Loading" xml:space="preserve">
     <value>모델 로드 중</value>
   </data>
   <data name="Model loading time (cold start on GPU)" xml:space="preserve">
     <value>모델 로드 시간 (GPU에서 콜드 스타트)</value>
+  </data>
+  <data name="Native Ollama only. A non-Ollama selected backend returns HTTP 501." xml:space="preserve">
+    <value>Ollama 네이티브만 지원됩니다. Ollama가 아닌 백엔드를 선택하면 HTTP 501 오류가 반환됩니다.</value>
+  </data>
+  <data name="Native Responses" xml:space="preserve">
+    <value>네이티브 응답</value>
   </data>
   <data name="needs another 30 s to finish → completely fine ✅" xml:space="preserve">
     <value>완료까지 30초 더 필요 → 문제없음 ✅</value>
@@ -210,8 +402,17 @@
   <data name="No concurrency limit — requests pass through immediately" xml:space="preserve">
     <value>동시성 제한 없음 — 요청이 즉시 처리됩니다</value>
   </data>
+  <data name="No database write on every model request" xml:space="preserve">
+    <value>모든 모델 요청마다 데이터베이스에 기록하지 않음</value>
+  </data>
+  <data name="No default chat virtual model is available." xml:space="preserve">
+    <value>기본 채팅 가상 모델을 사용할 수 없습니다.</value>
+  </data>
   <data name="No providers configured yet." xml:space="preserve">
     <value>아직 공급자가 구성되지 않았습니다.</value>
+  </data>
+  <data name="NON-BLOCKING HOT PATH" xml:space="preserve">
+    <value>논블로킹 핫패스</value>
   </data>
   <data name="not found. Create it to see real configuration here." xml:space="preserve">
     <value>찾을 수 없습니다. 실제 구성을 보려면 만들어 주세요.</value>
@@ -219,16 +420,55 @@
   <data name="NumCtx" xml:space="preserve">
     <value>NumCtx</value>
   </data>
+  <data name="Observability" xml:space="preserve">
+    <value>가시성</value>
+  </data>
+  <data name="Ollama model warmup" xml:space="preserve">
+    <value>Ollama 모델 워밍업</value>
+  </data>
+  <data name="Ollama uses its configured timeout for /api/tags and /api/ps. OpenAI /v1/models is fixed at 10 s." xml:space="preserve">
+    <value>Ollama는 /api/tags 및 /api/ps에 대해 구성된 시간 제한을 사용합니다. OpenAI /v1/models은 10초로 고정되어 있습니다.</value>
+  </data>
   <data name="Once the backend sends HTTP headers, the timeout is PASSED. The model can stream tokens for hours — only client disconnection stops it." xml:space="preserve">
     <value>백엔드가 HTTP 헤더를 전송하면 타임아웃 조건은 통과됩니다. 모델은 수 시간 동안 토큰을 스트리밍할 수 있으며, 클라이언트 연결이 끊겨야만 중단됩니다.</value>
+  </data>
+  <data name="One semantic core, protocol-aware edges" xml:space="preserve">
+    <value>단일 의미론적 코어, 프로토콜 인지형 엣지</value>
+  </data>
+  <data name="Only shared semantics are translated. Wire extensions prefer a matching backend and fall back to the documented semantic subset; opaque content and unsupported stateful operations remain hard rejections." xml:space="preserve">
+    <value>공유된 의미만 번역됩니다. 와이어 확장 기능은 일치하는 백엔드를 우선적으로 선택하며, 문서화된 의미 하위 집합으로 폴백합니다. 불투명한 콘텐츠와 지원되지 않는 상태 유지 연산은 명시적으로 거부됩니다.</value>
+  </data>
+  <data name="Open Traffic Visualization" xml:space="preserve">
+    <value>트래픽 시각화 열기</value>
+  </data>
+  <data name="OpenAI Responses state is preserved only on native Responses routes" xml:space="preserve">
+    <value>OpenAI Responses 상태는 네이티브 Responses 라우트에서만 유지됩니다</value>
   </data>
   <data name="or" xml:space="preserve">
     <value>또는</value>
   </data>
+  <data name="Original JSON" xml:space="preserve">
+    <value>원본 JSON</value>
+  </data>
+  <data name="Outside the VM timeout" xml:space="preserve">
+    <value>VM 타임아웃 범위 밖</value>
+  </data>
   <data name="Per-Key Rate Limiter" xml:space="preserve">
     <value>키별 속도 제한기</value>
   </data>
+  <data name="Physical model" xml:space="preserve">
+    <value>물리적 모델</value>
+  </data>
+  <data name="Preserve protocol-specific payload" xml:space="preserve">
+    <value>프로토콜별 페이로드 유지</value>
+  </data>
+  <data name="previous_response_id, conversation, store:true, and background:true pass through unchanged to Responses-capable providers; translated routes return an explicit 400 unsupported_feature." xml:space="preserve">
+    <value>previous_response_id, conversation, store:true 및 background:true는 Responses 지원 제공업체로 변경 없이 전달되며, 변환된 라우트는 명시적인 400 unsupported_feature를 반환합니다.</value>
+  </data>
   <data name="Pri" xml:space="preserve">
+    <value>우선순위</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
     <value>우선순위</value>
   </data>
   <data name="processing" xml:space="preserve">
@@ -243,14 +483,44 @@
   <data name="Provider → Warmup Model → Timeout (s)" xml:space="preserve">
     <value>제공자 → 워밍업 모델 → 시간 초과 (초)</value>
   </data>
+  <data name="Provider concurrency — live process state" xml:space="preserve">
+    <value>프로바이더 동시성 — 실시간 프로세스 상태</value>
+  </data>
+  <data name="Provider concurrency queue wait" xml:space="preserve">
+    <value>제공자 동시성 대기열 대기 시간</value>
+  </data>
   <data name="Provider concurrency slot queuing" xml:space="preserve">
     <value>프로바이더 동시성 슬롯 대기열</value>
+  </data>
+  <data name="Provider health probes" xml:space="preserve">
+    <value>프로바이더 상태 확인 프로브</value>
+  </data>
+  <data name="Provider type: Ollama" xml:space="preserve">
+    <value>제공자 유형: Ollama</value>
+  </data>
+  <data name="Provider type: OpenAI" xml:space="preserve">
+    <value>제공자 유형: OpenAI</value>
+  </data>
+  <data name="Provider types" xml:space="preserve">
+    <value>제공자 유형</value>
   </data>
   <data name="Queue until a slot opens — does NOT consume the virtual model timeout." xml:space="preserve">
     <value>슬롯이 비칠 때까지 대기 — 가상 모델 타임아웃을 소모하지 않음.</value>
   </data>
+  <data name="queue wait" xml:space="preserve">
+    <value>대기열 대기</value>
+  </data>
+  <data name="Queue wait is outside the VM timeout" xml:space="preserve">
+    <value>대기열 대기 시간은 VM 타임아웃과 무관합니다</value>
+  </data>
   <data name="Quick admin dashboard ping. Does NOT write to DB — UI-only." xml:space="preserve">
     <value>빠른 관리자 대시보드 핑. 데이터베이스에 기록하지 않음 — UI 전용입니다.</value>
+  </data>
+  <data name="Quick admin probes" xml:space="preserve">
+    <value>빠른 관리자 프로브</value>
+  </data>
+  <data name="Rate queue → provider queue → upstream → response lifecycle" xml:space="preserve">
+    <value>レート 큐 → 제공자 큐 → 업스트림 → 응답 라이프사이클</value>
   </data>
   <data name="Rate-limit queue waiting (Hang mode)" xml:space="preserve">
     <value>レート 제한 대기열 대기 (정지 모드)</value>
@@ -261,14 +531,71 @@
   <data name="Reads model weights from disk into GPU VRAM. 27GB on NVMe ≈ 5–15s; on HDD/NAS ≈ 3–10 min." xml:space="preserve">
     <value>디스크에서 모델 가중치를 GPU VRAM으로 읽습니다. NVMe 기준 27GB ≈ 5~15초; HDD/NAS 기준 ≈ 3~10분.</value>
   </data>
+  <data name="Reconstruct client JSON or streaming events" xml:space="preserve">
+    <value>클라이언트 JSON 또는 스트리밍 이벤트 재구성</value>
+  </data>
+  <data name="Reject" xml:space="preserve">
+    <value>거부</value>
+  </data>
   <data name="Reject mode" xml:space="preserve">
     <value>거부 모드</value>
+  </data>
+  <data name="Request IR" xml:space="preserve">
+    <value>요청 IR</value>
+  </data>
+  <data name="Request Path" xml:space="preserve">
+    <value>요청 경로</value>
   </data>
   <data name="Request Timeout" xml:space="preserve">
     <value>요청 시간 초과</value>
   </data>
+  <data name="Resolved AI request" xml:space="preserve">
+    <value>처리된 AI 요청</value>
+  </data>
+  <data name="Resolver + Planner" xml:space="preserve">
+    <value>해결사 + 플래너</value>
+  </data>
+  <data name="Response body after headers, streaming or buffered" xml:space="preserve">
+    <value>헤더 이후의 응답 본문 (스트리밍 또는 버퍼링)</value>
+  </data>
+  <data name="Response-header deadline" xml:space="preserve">
+    <value>응답 헤더 기한</value>
+  </data>
+  <data name="Return HTTP 429 immediately." xml:space="preserve">
+    <value>즉시 HTTP 429를 반환합니다.</value>
+  </data>
   <data name="runs every" xml:space="preserve">
     <value>매</value>
+  </data>
+  <data name="Runtime" xml:space="preserve">
+    <value>런타임</value>
+  </data>
+  <data name="Runtime configuration" xml:space="preserve">
+    <value>런타임 구성</value>
+  </data>
+  <data name="SAME DIALECT" xml:space="preserve">
+    <value>동일한 방식</value>
+  </data>
+  <data name="SEMANTIC GATEWAY · V2" xml:space="preserve">
+    <value>시맨틱 게이트웨이 · V2</value>
+  </data>
+  <data name="Semantic Request IR" xml:space="preserve">
+    <value>시맨틱 요청 IR</value>
+  </data>
+  <data name="Semantic translation path" xml:space="preserve">
+    <value>의미 번역 경로</value>
+  </data>
+  <data name="Separate, narrower contracts" xml:space="preserve">
+    <value>별도의 좁은 범위 계약</value>
+  </data>
+  <data name="Starts after a provider concurrency slot is acquired. Covers DNS, connection, TLS, cold model loading, and waiting for upstream headers." xml:space="preserve">
+    <value>제공자 동시성 슬롯을 획득한 후 시작됩니다. DNS, 연결, TLS, 모델 콜드 로딩 및 업스트림 헤더 대기 시간을 포함합니다.</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>상태 인식</value>
+  </data>
+  <data name="State-aware" xml:space="preserve">
+    <value>상태 인식형</value>
   </data>
   <data name="Strategy" xml:space="preserve">
     <value>전략</value>
@@ -276,8 +603,14 @@
   <data name="Streaming response body (after headers received)" xml:space="preserve">
     <value>스트리밍 응답 본문 (헤더 수신 후)</value>
   </data>
+  <data name="Swap" xml:space="preserve">
+    <value>스왑</value>
+  </data>
   <data name="swaps buffers and bulk-updates DB (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)" xml:space="preserve">
     <value>버퍼를 교체하고 DB(ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)에 일괄 업데이트합니다</value>
+  </data>
+  <data name="Target adapter" xml:space="preserve">
+    <value>대상 어댑터</value>
   </data>
   <data name="Temperature" xml:space="preserve">
     <value>온도</value>
@@ -285,8 +618,14 @@
   <data name="The 4-Layer Timeout Architecture" xml:space="preserve">
     <value>4단계 타임아웃 아키텍처</value>
   </data>
+  <data name="The configured default" xml:space="preserve">
+    <value>구성된 기본값은</value>
+  </data>
   <data name="The global default chat model is set to" xml:space="preserve">
     <value>전역 기본 채팅 모델은 다음으로 설정되어 있습니다</value>
+  </data>
+  <data name="The virtual-model deadline no longer applies to the response body. Streaming may continue for hours, but transport failure, upstream closure, client cancellation, gateway shutdown, or decoding errors can still end it." xml:space="preserve">
+    <value>가상 모델 마감 시간은 더 이상 응답 본문에 적용되지 않습니다. 스트리밍은 몇 시간 동안 계속될 수 있지만, 전송 오류, 상류 서버 연결 종료, 클라이언트 취소, 게이트웨이 종료 또는 디코딩 오류로 인해 중단될 수 있습니다.</value>
   </data>
   <data name="The warmup background job pings configured models every 5 min to prevent unloading." xml:space="preserve">
     <value>워밍업 백그라운드 작업은 언로딩을 방지하기 위해 설정된 모델을 5분마다 핑합니다.</value>
@@ -297,17 +636,41 @@
   <data name="timeout. Backend starts streaming at" xml:space="preserve">
     <value>초과 시간입니다. 백엔드가 스트리밍을 시작하는 시점은</value>
   </data>
+  <data name="Timeouts &amp; Queues" xml:space="preserve">
+    <value>시간 초과 및 대기열</value>
+  </data>
+  <data name="Total wall-clock time has no fixed upper bound because rate-limit and concurrency queues are outside this budget." xml:space="preserve">
+    <value>스로틀링 및 동시성 대기열이 이 예산 범위에 포함되지 않으므로 전체 실제 소요 시간은 고정된 상한선이 없습니다.</value>
+  </data>
   <data name="tracks API key usage, virtual model usage, underlying model usage — feeds the Dashboard charts in real-time" xml:space="preserve">
     <value>API 키 사용량, 가상 모델 사용량, 기반 모델 사용량을 추적하며 대시보드 차트를 실시간으로 업데이트합니다</value>
   </data>
   <data name="tracks live in-flight requests — powers the &quot;Live Inference&quot; table and Monitor page" xml:space="preserve">
     <value>실시간 처리 중인 요청을 추적하며 &quot;Live Inference&quot; 테이블 및 Monitor 페이지의 데이터 원천이 됩니다</value>
   </data>
+  <data name="Transparent wire path" xml:space="preserve">
+    <value>투명한 와이어 경로</value>
+  </data>
   <data name="Tries backends from lowest priority to highest. If backend #1 fails or times out, falls back to #2, then #3." xml:space="preserve">
     <value>우선순위가 낮은 백엔드부터 높은 순서로 시도합니다. 백엔드 #1이 실패하거나 시간 초과되면 #2, 그다음 #3으로 폴백됩니다.</value>
   </data>
+  <data name="unbounded" xml:space="preserve">
+    <value>무제한</value>
+  </data>
+  <data name="Unknown representable fields survive. The gateway changes owned fields such as physical model identity and configured VM parameters; translated Responses requests use store:false." xml:space="preserve">
+    <value>알 수 없는 직렬화 가능한 필드는 유지됩니다. 게이트웨이는 물리적 모델 ID 및 구성된 VM 매개변수와 같은 소유 필드를 변경하며, 번역된 Responses 요청은 store:false를 사용합니다.</value>
+  </data>
   <data name="Unlimited" xml:space="preserve">
     <value>무제한</value>
+  </data>
+  <data name="USAGE COUNTERS" xml:space="preserve">
+    <value>사용량 카운터</value>
+  </data>
+  <data name="User, model, provider, token, latency, status, and conversation fields" xml:space="preserve">
+    <value>사용자, 모델, 제공자, 토큰, 지연 시간, 상태 및 대화 필드</value>
+  </data>
+  <data name="Uses its own two-dialect adapter pipeline. It does not pass through the chat Request/Event IR." xml:space="preserve">
+    <value>독립된 2중 변형 어댑터 파이프라인을 사용합니다. 채팅 Request/Event IR을 통과하지 않습니다.</value>
   </data>
   <data name="Virtual model" xml:space="preserve">
     <value>가상 모델</value>
@@ -315,8 +678,14 @@
   <data name="Virtual Model → Request Timeout (s)" xml:space="preserve">
     <value>가상 모델 → 요청 시간 초과(초)</value>
   </data>
+  <data name="Wait for the per-key rate window. Waiting does not consume VM timeout." xml:space="preserve">
+    <value>키별 속도 제한 대기 창을 기다립니다. 대기 시간은 VM 타임아웃에 포함되지 않습니다.</value>
+  </data>
   <data name="waiting" xml:space="preserve">
     <value>대기 중</value>
+  </data>
+  <data name="Waiting for backend HTTP response headers" xml:space="preserve">
+    <value>백엔드 HTTP 응답 헤더 대기 중</value>
   </data>
   <data name="Waiting for backend to send HTTP response headers" xml:space="preserve">
     <value>백엔드가 HTTP 응답 헤더를 보내기를 기다리는 중</value>
@@ -327,6 +696,9 @@
   <data name="Warmup Plane" xml:space="preserve">
     <value>워밍업 평면</value>
   </data>
+  <data name="Web session" xml:space="preserve">
+    <value>웹 세션</value>
+  </data>
   <data name="What IS counted" xml:space="preserve">
     <value>타이머에 포함되는 항목</value>
   </data>
@@ -335,6 +707,9 @@
   </data>
   <data name="Where configured" xml:space="preserve">
     <value>설정 위치</value>
+  </data>
+  <data name="Wire Writer" xml:space="preserve">
+    <value>와이어 작성기</value>
   </data>
   <data name="With" xml:space="preserve">
     <value>~와 함께</value>

@@ -45,6 +45,9 @@
   <data name="Backend Protocol" xml:space="preserve">
     <value>バックエンドプロトコル</value>
   </data>
+  <data name="Banned (Till" xml:space="preserve">
+    <value>禁止（～まで）</value>
+  </data>
   <data name="Configuration Guide:" xml:space="preserve">
     <value>設定ガイド：</value>
   </data>
@@ -60,11 +63,17 @@
   <data name="Disabled" xml:space="preserve">
     <value>無効</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>停止中</value>
+  </data>
   <data name="Edit Virtual Model" xml:space="preserve">
     <value>仮想モデルの編集</value>
   </data>
   <data name="Enabled" xml:space="preserve">
     <value>有効</value>
+  </data>
+  <data name="Healthy" xml:space="preserve">
+    <value>健全</value>
   </data>
   <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies. SUGGESTED VALUES: small models (≤8B, NVMe SSD) → 60–120s; large models (≥27B or HDD/NAS storage) → 600–1800s; embedding models → 30–60s." xml:space="preserve">
     <value>ゲートウェイがバックエンドからの応答開始を待つ時間。認証、レート制限キュー、並行スロット待ちは含まれません。ストリーミング開始後はタイムリミットは適用されません。推奨値: 小規模モデル (≤8B, NVMe SSD) → 60–120秒; 大規模モデル (≥27B または HDD/NAS ストレージ) → 600–1800秒; 埋め込みモデル → 30–60秒。</value>
@@ -110,6 +119,9 @@
   </data>
   <data name="Provider" xml:space="preserve">
     <value>プロバイダー</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>準備完了</value>
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>繰り返しペナルティ</value>

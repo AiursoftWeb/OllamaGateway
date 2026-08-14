@@ -69,11 +69,17 @@
   <data name="Ollama num_ctx Override" xml:space="preserve">
     <value>Ghi đè num_ctx của Ollama</value>
   </data>
+  <data name="OpenAI clients use their matching provider protocol when available. This protocol is the fallback for other client dialects." xml:space="preserve">
+    <value>Các client OpenAI sử dụng giao thức nhà cung cấp tương thích của chúng khi có sẵn. Giao thức này là phương án dự phòng cho các biến thể client khác.</value>
+  </data>
   <data name="Optional Model Overrides" xml:space="preserve">
     <value>Tùy chọn ghi đè mô hình</value>
   </data>
   <data name="Optional Overrides (Leave empty to use client/defaults)" xml:space="preserve">
     <value>Tùy chọn ghi đè (Để trống để sử dụng máy khách/mặc định)</value>
+  </data>
+  <data name="Preferred Backend Protocol" xml:space="preserve">
+    <value>Giao thức Backend ưu tiên</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>Nhà cung cấp</value>

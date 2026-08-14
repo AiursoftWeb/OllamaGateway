@@ -30,6 +30,78 @@
   <data name="→ OpenAI-compatible provider" xml:space="preserve">
     <value>→ OpenAI 호환 제공업체</value>
   </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama JSON/NDJSON becomes Anthropic message JSON or &lt;code&gt;message_start/content_block_*/message_delta/message_stop&lt;/code&gt; SSE." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama JSON/NDJSON becomes Anthropic message JSON or &lt;code&gt;message_start/content_block_*/message_delta/message_stop&lt;/code&gt; SSE.</value>
+  </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat JSON/SSE is decoded and reconstructed as Anthropic Messages output." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat JSON/SSE는 디코딩되어 Anthropic Messages 출력으로 재구성됩니다.</value>
+  </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses Items/events are decoded and rebuilt as Anthropic content blocks and SSE." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses Items/events는 디코딩되어 Anthropic 콘텐츠 블록 및 SSE로 재구성됩니다.</value>
+  </data>
+  <data name="&lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt; has no Responses mapping. Chat-only controls prefer a Chat backend and are omitted on fallback. Responses annotations, citations, and noncanonical output Items cannot be reconstructed in a Chat Completion response." xml:space="preserve">
+    <value>&lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt;에는 Responses 매핑이 없습니다. 채팅 전용 컨트롤은 채팅 백엔드를 선호하며, 폴백 시 생략됩니다. Responses 주석, 인용문 및 비정규 출력 항목들은 Chat Completion 응답에서 재구성할 수 없습니다.</value>
+  </data>
+  <data name="&lt;code&gt;images[]&lt;/code&gt; → OpenAI &lt;code&gt;image_url&lt;/code&gt; data parts; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;think&lt;/code&gt; → &lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt;; Ollama tool calls and responses are rebuilt as OpenAI tools and back again." xml:space="preserve">
+    <value>&lt;code&gt;images[]&lt;/code&gt; → OpenAI &lt;code&gt;image_url&lt;/code&gt; 데이터 부분; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;think&lt;/code&gt; → &lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt;; Ollama 도구 호출 및 응답은 OpenAI 도구로 다시 구성되고 원래대로 복원됩니다.</value>
+  </data>
+  <data name="&lt;code&gt;instructions&lt;/code&gt; → system message; &lt;code&gt;input_text&lt;/code&gt;/&lt;code&gt;input_image&lt;/code&gt; → Ollama content/images; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt;; response events are synthesized with stable output indexes." xml:space="preserve">
+    <value>&lt;code&gt;instructions&lt;/code&gt; → 시스템 메시지; &lt;code&gt;input_text&lt;/code&gt;/&lt;code&gt;input_image&lt;/code&gt; → Ollama 콘텐츠/이미지; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt;; 응답 이벤트는 안정적인 출력 인덱스로 합성됩니다.</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. The response reverses through &lt;code&gt;OpenAiChatProviderResponseDecoder&lt;/code&gt; and &lt;code&gt;OllamaChatClientResponseWriter&lt;/code&gt;." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. 응답은 &lt;code&gt;OpenAiChatProviderResponseDecoder&lt;/code&gt;와 &lt;code&gt;OllamaChatClientResponseWriter&lt;/code&gt;를 거쳐 역순으로 처리됩니다.</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → canonical messages/items → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Typed Responses Items/events are decoded and rebuilt as Ollama JSON/NDJSON." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → 표준 메시지/항목 → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. 타입이 지정된 Responses 항목/이벤트는 디코딩되어 Ollama JSON/NDJSON으로 재구성됩니다.</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; performs capability inspection; &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt; clones the original JSON; &lt;code&gt;OllamaChatWireResponseWriter&lt;/code&gt; keeps NDJSON records in the Ollama dialect." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt;가 기능 검사를 수행하고, &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;는 원래 JSON을 복제하며, &lt;code&gt;OllamaChatWireResponseWriter&lt;/code&gt;는 NDJSON 레코드를 Ollama 형식으로 유지합니다.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama response records are decoded into canonical events and emitted as Chat Completion JSON/SSE." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama 응답 레코드는 표준 이벤트로 디코딩된 후 Chat Completion JSON/SSE로 발행됩니다.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses output Items/events return through the Responses decoder and Chat client writer." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses 출력 Items/이벤트는 Responses 디코더와 Chat 클라이언트 작성자를 통해 반환됩니다.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; inspects capabilities; the provider adapter clones the source JSON; &lt;code&gt;OpenAiChatWireResponseWriter&lt;/code&gt; forwards Chat JSON/SSE while observing text, reasoning, tools, and usage." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt;가 기능을 검사하고, 공급자 어댑터가 소스 JSON을 복제하며, &lt;code&gt;OpenAiChatWireResponseWriter&lt;/code&gt;는 텍스트, 추론, 도구 및 사용량을 관찰하는 동시에 Chat JSON/SSE를 전달합니다.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiEmbeddingClientAdapter&lt;/code&gt; + &lt;code&gt;OpenAiEmbeddingProviderAdapter&lt;/code&gt;. No VM sampling/context override is injected into an OpenAI embedding request." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiEmbeddingClientAdapter&lt;/code&gt; + &lt;code&gt;OpenAiEmbeddingProviderAdapter&lt;/code&gt;. OpenAI 임베딩 요청에는 VM 샘플링/컨텍스트 오버라이드가 주입되지 않습니다.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama output becomes typed Responses Items and typed SSE events." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama 출력은 유형이 지정된 Responses Items 및 유형이 지정된 SSE 이벤트로 변환됩니다.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat completions/chunks are decoded and emitted as Responses JSON/typed SSE." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat completions/chunks are decoded and emitted as Responses JSON/typed SSE.</value>
+  </data>
+  <data name="&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;background&lt;/code&gt;, and &lt;code&gt;store&lt;/code&gt; retain their native Responses semantics. This is not byte-transparent because JSON may be reserialized." xml:space="preserve">
+    <value>&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;background&lt;/code&gt;, &lt;code&gt;store&lt;/code&gt;는 원본 Responses의 의미론을 유지합니다. JSON이 다시 직렬화될 수 있으므로 바이트 단위 투명성은 보장되지 않습니다.</value>
+  </data>
+  <data name="&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;store:true&lt;/code&gt;, &lt;code&gt;background:true&lt;/code&gt;, native tools, and unknown Items require a Responses backend. Stateless representable requests fall back to translation." xml:space="preserve">
+    <value>&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;store:true&lt;/code&gt;, &lt;code&gt;background:true&lt;/code&gt;, 네이티브 도구, 및 알려지지 않은 Items는 Responses 백엔드가 필요합니다. 상태가 없는(representable) 요청은 번역으로 폴백됩니다.</value>
+  </data>
+  <data name="&lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt; are hard-overridden when configured." xml:space="preserve">
+    <value>&lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, 및 &lt;code&gt;think&lt;/code&gt;는 구성 시 강제 덮어쓰입니다.</value>
+  </data>
+  <data name="&lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;keep_alive&lt;/code&gt; have no OpenAI Chat mapping. Unknown Ollama controls prefer a native backend but are omitted when this translation path is the only eligible route." xml:space="preserve">
+    <value>&lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, &lt;code&gt;keep_alive&lt;/code&gt;는 OpenAI Chat 매핑이 없습니다. 알 수 없는 Ollama 제어 파라미터는 네이티브 백엔드를 선호하지만, 이 변환 경로가 유일한 사용 가능한 경로인 경우 생략됩니다.</value>
+  </data>
+  <data name="2 client dialects × 2 Provider types" xml:space="preserve">
+    <value>2가지 클라이언트 변형 × 2가지 제공업체 유형</value>
+  </data>
+  <data name="3 backend protocols" xml:space="preserve">
+    <value>3가지 백엔드 프로토콜</value>
+  </data>
+  <data name="3 backend protocols · native state passthrough" xml:space="preserve">
+    <value>3가지 백엔드 프로토콜 · 네이티브 상태 패스스루</value>
+  </data>
+  <data name="3 backend protocols · no physical Anthropic adapter" xml:space="preserve">
+    <value>3가지 백엔드 프로토콜 · Anthropic 물리 어댑터 없음</value>
+  </data>
+  <data name="4 client dialects × 3 backend protocols" xml:space="preserve">
+    <value>4가지 클라이언트 방언 × 3가지 백엔드 프로토콜</value>
+  </data>
   <data name="A built-in Role-Based Access Control (RBAC) system for fine-grained permission management." xml:space="preserve">
     <value>세분화된 권한 관리를 위한 내장형 역할 기반 접근 제어(RBAC) 시스템.</value>
   </data>
@@ -42,6 +114,9 @@
   <data name="A complete solution for user authentication and profile management." xml:space="preserve">
     <value>사용자 인증 및 프로필 관리에 대한 완전한 솔루션입니다.</value>
   </data>
+  <data name="A configured virtual-model value replaces the client-derived value after translation. An unset value leaves the translated value unchanged." xml:space="preserve">
+    <value>설정된 가상 모델 값은 변환 후 클라이언트에서 파생된 값을 대체합니다. 설정되지 않은 값은 변환된 값을 변경하지 않습니다.</value>
+  </data>
   <data name="A fully responsive layout that looks great on both desktop and mobile devices." xml:space="preserve">
     <value>데스크톱과 모바일 기기 모두에서 훌륭하게 보이는 완전 반응형 레이아웃.</value>
   </data>
@@ -50,6 +125,9 @@
   </data>
   <data name="Achieve more with Aiursoft Template" xml:space="preserve">
     <value>Aiursoft 템플릿으로 더 많은 성과를 이루세요</value>
+  </data>
+  <data name="Active route" xml:space="preserve">
+    <value>활성 경로</value>
   </data>
   <data name="Admin Management GUI" xml:space="preserve">
     <value>관리자 관리 GUI</value>
@@ -81,6 +159,15 @@
   <data name="All dependencies are automatically registered and always available via constructor injection." xml:space="preserve">
     <value>모든 종속성은 자동으로 등록되며 생성자 주입을 통해 항상 사용할 수 있습니다.</value>
   </data>
+  <data name="All Ollama VM controls apply and override translated values: sampling, context, repeat penalty, token limit, and thinking. Ollama-only DB controls may be injected." xml:space="preserve">
+    <value>모든 Ollama VM 컨트롤이 적용되며 번역된 값을 덮어씁니다: 샘플링, 컨텍스트, 반복 패널티, 토큰 제한, 및 추론. Ollama 전용 DB 컨트롤이 삽입될 수 있습니다.</value>
+  </data>
+  <data name="All Ollama VM controls apply: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt;. Ollama-only values may therefore be injected even though the client dialect cannot express them." xml:space="preserve">
+    <value>모든 Ollama VM 설정이 적용됩니다: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, 그리고 &lt;code&gt;think&lt;/code&gt;. 따라서 클라이언트 인터페이스가 이를 표현할 수 없더라도 Ollama 전용 값이 주입될 수 있습니다.</value>
+  </data>
+  <data name="All Ollama VM controls apply. &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;RepeatPenalty&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; can be injected from DB even though Anthropic request fields do not directly express them." xml:space="preserve">
+    <value>모든 Ollama VM 제어가 적용됩니다. Anthropic 요청 필드가 이를 직접 표현하지는 않지만, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;RepeatPenalty&lt;/code&gt;, &lt;code&gt;Thinking&lt;/code&gt;은 데이터베이스에서 주입될 수 있습니다.</value>
+  </data>
   <data name="Anduin" xml:space="preserve">
     <value>안두인</value>
   </data>
@@ -104,6 +191,18 @@
   </data>
   <data name="Anthropic image content blocks are not yet translated to OpenAI format." xml:space="preserve">
     <value>Anthropic 이미지 콘텐츠 블록은 아직 OpenAI 형식으로 변환되지 않았습니다.</value>
+  </data>
+  <data name="Anthropic image sources → Ollama &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt; → function call; &lt;code&gt;tool_result&lt;/code&gt; → tool message; reasoning text → Ollama thinking; Ollama output is rebuilt as Anthropic content blocks." xml:space="preserve">
+    <value>Anthropic 이미지 소스 → Ollama &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt; → 함수 호출; &lt;code&gt;tool_result&lt;/code&gt; → 도구 메시지; 추론 텍스트 → Ollama 사고 과정; Ollama 출력을 Anthropic 콘텐츠 블록으로 재구성합니다.</value>
+  </data>
+  <data name="Anthropic input thinking blocks and signatures are not encoded into Responses input. Unknown content blocks cannot use this route; unknown top-level controls are omitted on fallback. Native Responses-only output Items, annotations, and citations cannot be represented in Anthropic output." xml:space="preserve">
+    <value>Anthropic 입력 thinking 블록 및 서명은 Responses 입력에 인코딩되지 않습니다. 알려지지 않은 콘텐츠 블록은 이 경로를 사용할 수 없으며, 알려지지 않은 최상위 제어는 폴백 시 생략됩니다. Responses 전용 출력 Items, 주석, 인용문은 Anthropic 출력으로 표현할 수 없습니다.</value>
+  </data>
+  <data name="Anthropic Messages client routes" xml:space="preserve">
+    <value>Anthropic Messages 클라이언트 라우트</value>
+  </data>
+  <data name="Anthropic system content → system message; image blocks → OpenAI &lt;code&gt;image_url&lt;/code&gt;; &lt;code&gt;input_schema&lt;/code&gt; → function &lt;code&gt;parameters&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt; → Chat tool calls/messages; &lt;code&gt;max_tokens&lt;/code&gt; remains the Chat token limit." xml:space="preserve">
+    <value>Anthropic 시스템 콘텐츠 → 시스템 메시지; 이미지 블록 → OpenAI &lt;code&gt;image_url&lt;/code&gt;; &lt;code&gt;input_schema&lt;/code&gt; → 함수 &lt;code&gt;parameters&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt; → Chat 도구 호출/메시지; &lt;code&gt;max_tokens&lt;/code&gt;는 Chat 토큰 제한으로 유지됩니다.</value>
   </data>
   <data name="API Authentication (Bearer)" xml:space="preserve">
     <value>API 인증 (Bearer)</value>
@@ -162,6 +261,12 @@
   <data name="Automatically sync OpenID roles. Unified Rule management." xml:space="preserve">
     <value>OpenID 역할을 자동으로 동기화합니다. 통합 규칙 관리.</value>
   </data>
+  <data name="Backend" xml:space="preserve">
+    <value>백엔드</value>
+  </data>
+  <data name="Backend Provider type" xml:space="preserve">
+    <value>백엔드 공급자 유형</value>
+  </data>
   <data name="Background Job Processing" xml:space="preserve">
     <value>백그라운드 작업 처리</value>
   </data>
@@ -207,14 +312,26 @@
   <data name="Built-in User Management" xml:space="preserve">
     <value>내장된 사용자 관리</value>
   </data>
+  <data name="Chat" xml:space="preserve">
+    <value>채팅</value>
+  </data>
   <data name="Chat Models" xml:space="preserve">
     <value>채팅 모델</value>
   </data>
   <data name="Chat/Embedding Segregation" xml:space="preserve">
     <value>채팅/임베딩 분리</value>
   </data>
+  <data name="Choose the API your client sends on the left and the protocol spoken by the physical backend on the right. The active route shows exactly what is preserved, translated, rejected, and overridden." xml:space="preserve">
+    <value>왼쪽에는 클라이언트가 사용하는 API를, 오른쪽에는 실제 백엔드가 지원하는 프로토콜을 선택하세요. 활성화된 라우트에서는 유지, 변환, 거부, 재정의되는 항목이 정확하게 표시됩니다.</value>
+  </data>
   <data name="Clickhouse Auditing" xml:space="preserve">
     <value>Clickhouse 감사</value>
+  </data>
+  <data name="Client" xml:space="preserve">
+    <value>클라이언트</value>
+  </data>
+  <data name="Client endpoint" xml:space="preserve">
+    <value>클라이언트 엔드포인트</value>
   </data>
   <data name="Comes with Docker support for simplified and consistent deployments." xml:space="preserve">
     <value>Docker 지원을 제공하여 간편하고 일관된 배포가 가능합니다.</value>
@@ -233,6 +350,9 @@
   </data>
   <data name="Concise Docs" xml:space="preserve">
     <value>간결한 문서</value>
+  </data>
+  <data name="Configuration precedence" xml:space="preserve">
+    <value>설정 우선순위</value>
   </data>
   <data name="Consistency Validation" xml:space="preserve">
     <value>일관성 검증</value>
@@ -261,6 +381,15 @@
   <data name="Cross Platform" xml:space="preserve">
     <value>크로스 플랫폼</value>
   </data>
+  <data name="Cross-Protocol Compatibility" xml:space="preserve">
+    <value>프로토콜 간 호환성</value>
+  </data>
+  <data name="Current route contract" xml:space="preserve">
+    <value>현재 라우트 계약</value>
+  </data>
+  <data name="Current route only" xml:space="preserve">
+    <value>현재 경로만</value>
+  </data>
   <data name="Custom dev required" xml:space="preserve">
     <value>사용자 정의 개발 필요</value>
   </data>
@@ -272,6 +401,12 @@
   </data>
   <data name="Dashboard Website" xml:space="preserve">
     <value>대시보드 웹사이트</value>
+  </data>
+  <data name="Database override" xml:space="preserve">
+    <value>데이터베이스 오버라이드</value>
+  </data>
+  <data name="Database values are hard assignments" xml:space="preserve">
+    <value>데이터베이스 값은 고정 할당입니다</value>
   </data>
   <data name="Day 1 Compliance &amp; Security." xml:space="preserve">
     <value>Day 1 준수성 및 보안.</value>
@@ -336,6 +471,15 @@
   <data name="DevOps Native" xml:space="preserve">
     <value>DevOps 네이티브</value>
   </data>
+  <data name="Direction" xml:space="preserve">
+    <value>방향</value>
+  </data>
+  <data name="Discarded / restriction" xml:space="preserve">
+    <value>제외 / 제한 사항</value>
+  </data>
+  <data name="Discarded, rejected, or preferred" xml:space="preserve">
+    <value>폐기, 거부 또는 우선 선택됨</value>
+  </data>
   <data name="Discussions page" xml:space="preserve">
     <value>토론 페이지</value>
   </data>
@@ -363,8 +507,20 @@
   <data name="Effortlessly write integration tests using in-memory databases, temporary file systems, built-in mocking, and real-world HTTP request simulation." xml:space="preserve">
     <value>메모리 내 데이터베이스, 임시 파일 시스템, 내장된 모킹, 그리고 실제 웹 요청 시뮬레이션을 사용하여 통합 테스트를 쉽게 작성하세요.</value>
   </data>
+  <data name="Embedding" xml:space="preserve">
+    <value>임베딩</value>
+  </data>
+  <data name="Embedding adapters select by ProviderType, not chat BackendProtocol" xml:space="preserve">
+    <value>임베딩 어댑터는 채팅 BackendProtocol이 아닌 ProviderType으로 선택됩니다</value>
+  </data>
   <data name="Embedding Models" xml:space="preserve">
     <value>임베딩 모델</value>
+  </data>
+  <data name="Embedding route" xml:space="preserve">
+    <value>임베딩 경로</value>
+  </data>
+  <data name="Embedding route inspector" xml:space="preserve">
+    <value>임베딩 경로 검사기</value>
   </data>
   <data name="Enforced" xml:space="preserve">
     <value>강제된</value>
@@ -456,6 +612,12 @@
   <data name="Function call" xml:space="preserve">
     <value>함수 호출</value>
   </data>
+  <data name="Gateway-generated response" xml:space="preserve">
+    <value>게이트웨이 생성 응답</value>
+  </data>
+  <data name="Gateway-owned operation" xml:space="preserve">
+    <value>게이트웨이 관리 작업</value>
+  </data>
   <data name="Generic configuration" xml:space="preserve">
     <value>일반 구성</value>
   </data>
@@ -531,6 +693,9 @@
   <data name="Images array passes through as-is to native Ollama." xml:space="preserve">
     <value>이미지 배열이 변경 없이 기본 Ollama로 전달됩니다.</value>
   </data>
+  <data name="Implementation method" xml:space="preserve">
+    <value>구현 방법</value>
+  </data>
   <data name="Included" xml:space="preserve">
     <value>포함됨</value>
   </data>
@@ -539,6 +704,18 @@
   </data>
   <data name="Includes Tutorials" xml:space="preserve">
     <value>튜토리얼 포함</value>
+  </data>
+  <data name="Input Items → Chat &lt;code&gt;messages&lt;/code&gt;; instructions → system message; Responses function tool/choice shapes → Chat wrappers; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;reasoning_effort&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;response_format&lt;/code&gt;." xml:space="preserve">
+    <value>입력 항목 → Chat &lt;code&gt;messages&lt;/code&gt;; 지시사항 → 시스템 메시지; Responses 함수 도구/선택 형식 → Chat 래퍼; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;reasoning_effort&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;response_format&lt;/code&gt;.</value>
+  </data>
+  <data name="Inspect one translation route at a time." xml:space="preserve">
+    <value>번역 경로를 하나씩 확인하세요.</value>
+  </data>
+  <data name="Instructions, message Items, text, images, function calls/results, function tool definitions, temperature, top-p, output-token limit, reasoning effort/output, structured format, stream, finish reason, and usage." xml:space="preserve">
+    <value>지시사항, 메시지 항목, 텍스트, 이미지, 함수 호출/결과, 함수 도구 정의, 온도, top-p, 출력 토큰 제한, 추론 노력/출력, 구조화된 형식, 스트림, 완료 사유 및 사용량.</value>
+  </data>
+  <data name="Instructions, text/images, function tools/calls/results, temperature, top-p, token limit, reasoning effort/output, structured output, stream, finish state, and usage." xml:space="preserve">
+    <value>지시사항, 텍스트/이미지, 함수 도구/호출/결과, 온도, top-p, 토큰 제한, 추론 노력/출력, 구조화된 출력, 스트림, 완료 상태 및 사용량.</value>
   </data>
   <data name="Integrated File Management" xml:space="preserve">
     <value>통합 파일 관리</value>
@@ -585,11 +762,17 @@
   <data name="Management Dashboard" xml:space="preserve">
     <value>관리 대시보드</value>
   </data>
+  <data name="Mapped / reconstructed" xml:space="preserve">
+    <value>매핑/재구성됨</value>
+  </data>
   <data name="Markdown To HTML" xml:space="preserve">
     <value>마크다운을 HTML로 변환</value>
   </data>
   <data name="MCP" xml:space="preserve">
     <value>MCP</value>
+  </data>
+  <data name="Message roles/text, function definitions, function calls/results, streaming intent, temperature, top-p, token limit, images, structured format, and token usage survive when representable." xml:space="preserve">
+    <value>표현 가능한 메시지 역할/텍스트, 함수 정의, 함수 호출/결과, 스트리밍 의도, 온도, top-p, 토큰 제한, 이미지, 구조화된 형식 및 토큰 사용량이 유지됩니다.</value>
   </data>
   <data name="MIT Licence" xml:space="preserve">
     <value>MIT 라이선스</value>
@@ -600,8 +783,17 @@
   <data name="Mix Any Client with Any Backend" xml:space="preserve">
     <value>어떤 클라이언트든 어떤 백엔드든 자유롭게 조합하세요</value>
   </data>
+  <data name="Model discovery" xml:space="preserve">
+    <value>모델 검색</value>
+  </data>
+  <data name="Model discovery endpoints" xml:space="preserve">
+    <value>모델 검색 엔드포인트</value>
+  </data>
   <data name="Model Hosting &amp; Inference" xml:space="preserve">
     <value>모델 호스팅 및 추론</value>
+  </data>
+  <data name="Model identity is masked in both directions; &lt;code&gt;stream&lt;/code&gt; is normalized; streaming requests merge &lt;code&gt;stream_options.include_usage=true&lt;/code&gt;; null message content is normalized to an empty string." xml:space="preserve">
+    <value>모델 식별자는 양방향으로 가려집니다; &lt;code&gt;stream&lt;/code&gt;이 정규화됩니다; 스트리밍 요청은 &lt;code&gt;stream_options.include_usage=true&lt;/code&gt;를 병합합니다; null 메시지 콘텐츠는 빈 문자열로 정규화됩니다.</value>
   </data>
   <data name="Model Keep-alive" xml:space="preserve">
     <value>모델 지속 연결</value>
@@ -642,6 +834,12 @@
   <data name="Music Tools" xml:space="preserve">
     <value>음악 도구</value>
   </data>
+  <data name="Narrow operation" xml:space="preserve">
+    <value>세분화된 작업</value>
+  </data>
+  <data name="Native / same dialect" xml:space="preserve">
+    <value>네이티브 / 동일 변종</value>
+  </data>
   <data name="Native Ollama" xml:space="preserve">
     <value>네이티브 Ollama</value>
   </data>
@@ -653,6 +851,9 @@
   </data>
   <data name="Native Power, AI Development" xml:space="preserve">
     <value>네이티브 파워, AI 개발</value>
+  </data>
+  <data name="Native state passthrough" xml:space="preserve">
+    <value>네이티브 상태 직접 전달</value>
   </data>
   <data name="Native vs. Gateway" xml:space="preserve">
     <value>네이티브 대 게이트웨이</value>
@@ -699,8 +900,23 @@
   <data name="Needs TypeORM or similar" xml:space="preserve">
     <value>TypeORM 또는 유사한 것이 필요합니다</value>
   </data>
+  <data name="No Chat Completions or Responses translation. A non-Ollama backend returns &lt;code&gt;501&lt;/code&gt;." xml:space="preserve">
+    <value>Chat Completions 또는 Responses 번역이 없습니다. Ollama가 아닌 백엔드는 &lt;code&gt;501&lt;/code&gt;을 반환합니다.</value>
+  </data>
+  <data name="No chat protocol translation occurs. Backend &lt;code&gt;Protocol&lt;/code&gt; is not consulted for embeddings." xml:space="preserve">
+    <value>채팅 프로토콜 번역은 수행되지 않습니다. 임베딩의 경우 백엔드 &lt;code&gt;Protocol&lt;/code&gt;은 참조하지 않습니다.</value>
+  </data>
   <data name="No dependency on any cloud vendor. Run anywhere, any time." xml:space="preserve">
     <value>클라우드 벤더에 의존하지 않습니다. 어디서나 언제나 실행 가능합니다.</value>
+  </data>
+  <data name="No known Chat field is intentionally dropped on this route. Unknown/Chat-only fields prefer a Chat Completions backend, with semantic translation as fallback when no matching backend is available. Valid JSON may be reserialized." xml:space="preserve">
+    <value>이 경로에서는 알려진 Chat 필드가 고의로 삭제되지 않습니다. 알려지지 않거나 Chat 전용 필드는 Chat Completions 백엔드를 선호하며, 일치하는 백엔드가 사용할 수 없을 경우 의미론적 번역을 폴백으로 사용합니다. 유효한 JSON은 다시 직렬화될 수 있습니다.</value>
+  </data>
+  <data name="No known Ollama field is intentionally dropped on this route. Unknown fields make an Ollama-native backend preferred; if none is available, the request may use a documented translated subset. Valid JSON may be reserialized." xml:space="preserve">
+    <value>이 경로에서 알려진 Ollama 필드는 의도적으로 삭제되지 않습니다. 알려지지 않은 필드가 있으면 Ollama 네이티브 백엔드가 우선 사용됩니다. 사용 가능한 것이 없는 경우 요청은 문서화된 번역된 부분 집합을 사용할 수 있습니다. 유효한 JSON은 다시 직렬화될 수 있습니다.</value>
+  </data>
+  <data name="No upstream call" xml:space="preserve">
+    <value>상류 호출 없음</value>
   </data>
   <data name="Not supported" xml:space="preserve">
     <value>지원되지 않음</value>
@@ -717,11 +933,23 @@
   <data name="Ollama → OpenAI" xml:space="preserve">
     <value>Ollama → OpenAI</value>
   </data>
+  <data name="Ollama &lt;code&gt;input&lt;/code&gt; or legacy &lt;code&gt;prompt&lt;/code&gt; becomes OpenAI &lt;code&gt;input&lt;/code&gt;; OpenAI &lt;code&gt;data[].embedding&lt;/code&gt; is reconstructed as Ollama &lt;code&gt;embeddings[]&lt;/code&gt;." xml:space="preserve">
+    <value>Ollama &lt;code&gt;input&lt;/code&gt; 또는 레거시 &lt;code&gt;prompt&lt;/code&gt;가 OpenAI &lt;code&gt;input&lt;/code&gt;이 됩니다. OpenAI &lt;code&gt;data[].embedding&lt;/code&gt;은 Ollama &lt;code&gt;embeddings[]&lt;/code&gt;로 재구성됩니다.</value>
+  </data>
+  <data name="Ollama &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, &lt;code&gt;keep_alive&lt;/code&gt;, and boolean &lt;code&gt;think&lt;/code&gt; are not encoded into Responses. Responses-native tools cannot be requested from the Ollama dialect." xml:space="preserve">
+    <value>Ollama의 &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, &lt;code&gt;keep_alive&lt;/code&gt;, 그리고 불리언 &lt;code&gt;think&lt;/code&gt;는 Responses에 인코딩되지 않습니다. Ollama 방언에서 Responses 네이티브 도구를 요청할 수 없습니다.</value>
+  </data>
   <data name="Ollama Backend" xml:space="preserve">
     <value>Ollama 백엔드</value>
   </data>
+  <data name="Ollama Chat client routes" xml:space="preserve">
+    <value>Ollama 채팅 클라이언트 경로</value>
+  </data>
   <data name="Ollama Client" xml:space="preserve">
     <value>Ollama Client</value>
+  </data>
+  <data name="Ollama embedding input" xml:space="preserve">
+    <value>Ollama 임베딩 입력</value>
   </data>
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: 엔터프라이즈급 API 인증, 요청 감사, 가상 모델 관리를 통해 네이티브 Ollama 의 성능을 극대화하세요—안전하고 개인화된 AI 게이트웨이입니다.</value>
@@ -729,11 +957,29 @@
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: 엔터프라이즈급 API 인증, 요청 감사, 속도 제한 및 가상 모델 관리로 네이티브 Ollama를 강화하세요—안전하고 프라이빗한 AI 게이트웨이입니다.</value>
   </data>
+  <data name="Ollama generate JSON/NDJSON is forwarded in the same dialect; model identity, answer text, finish data, and usage are observed and the virtual model name is restored." xml:space="preserve">
+    <value>Ollama 생성 JSON/NDJSON은 동일한 형식으로 전달됩니다. 모델 ID, 답변 텍스트, 종료 데이터 및 사용량이 관찰되고 가상 모델 이름이 복원됩니다.</value>
+  </data>
   <data name="Ollama images array is converted to OpenAI multimodal content parts (text + image_url with data URI)." xml:space="preserve">
     <value>Ollama 이미지 배열이 OpenAI 멀티모달 콘텐츠 파트(텍스트 + data URI를 포함한 image_url)로 변환됩니다.</value>
   </data>
+  <data name="Ollama JSON/NDJSON stays in the native dialect; model identity, answer, finish data, and usage are observed and rewritten." xml:space="preserve">
+    <value>Ollama JSON/NDJSON은 기본 형식을 유지하며, 모델 식별자, 응답, 종료 데이터 및 사용량은 관찰되고 재작성됩니다.</value>
+  </data>
+  <data name="Ollama Native only" xml:space="preserve">
+    <value>Ollama 네이티브만 지원</value>
+  </data>
+  <data name="Ollama only" xml:space="preserve">
+    <value>Ollama 전용</value>
+  </data>
+  <data name="Ollama-only embedding fields such as &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;truncate&lt;/code&gt;, &lt;code&gt;dimensions&lt;/code&gt; variants, and &lt;code&gt;keep_alive&lt;/code&gt; are not copied into the OpenAI request unless represented by the shared input." xml:space="preserve">
+    <value>공유 입력으로 표현되지 않는 한 &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;truncate&lt;/code&gt;, &lt;code&gt;dimensions&lt;/code&gt; 변형, &lt;code&gt;keep_alive&lt;/code&gt;와 같은 Ollama 전용 임베딩 필드는 OpenAI 요청에 복사되지 않습니다.</value>
+  </data>
   <data name="Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently." xml:space="preserve">
     <value>Ollama 전용 매개변수입니다. OpenAI는 frequency_penalty와 presence_penalty를 기본적으로 지원하며, 이는 별도로 전달됩니다.</value>
+  </data>
+  <data name="Ollama-type Provider" xml:space="preserve">
+    <value>Ollama 유형 제공자</value>
   </data>
   <data name="Ollama." xml:space="preserve">
     <value>Ollama.</value>
@@ -753,6 +999,12 @@
   <data name="OllamaGateway High Availability Routing" xml:space="preserve">
     <value>OllamaGateway 고가용성 라우팅</value>
   </data>
+  <data name="OllamaGateway in Docker" xml:space="preserve">
+    <value>Docker에서 OllamaGateway</value>
+  </data>
+  <data name="OllamaGateway main screenshot" xml:space="preserve">
+    <value>OllamaGateway 주요 스크린샷</value>
+  </data>
   <data name="OllamaGateway seamlessly connects your local Ollama capabilities to professional AI development tools. Whether you are using Claude Code, Opencode or Qwen Code, you can now leverage your own hardware for automated coding and development tasks—all verified and officially supported by our team." xml:space="preserve">
     <value>OllamaGateway는 로컬 Ollama 기능을 전문적인 AI 개발 도구에 원활하게 연결합니다. Claude Code, Opencode 또는 Qwen Code를 사용 중이시라면, 이제 자체 하드웨어를 활용하여 자동화된 코딩 및 개발 작업을 수행할 수 있습니다. 모든 기능은 당 팀이 검증하고 공식적으로 지원합니다.</value>
   </data>
@@ -768,6 +1020,15 @@
   <data name="One Click Start" xml:space="preserve">
     <value>한 번 클릭 시작</value>
   </data>
+  <data name="Only gateway-owned fields are rewritten: virtual model → physical model upstream, physical model → virtual model downstream; &lt;code&gt;stream&lt;/code&gt; is normalized; missing &lt;code&gt;keep_alive&lt;/code&gt; receives the request/provider default." xml:space="preserve">
+    <value>게이트웨이 소유 필드만 재작성됩니다: 업스트림에서는 가상 모델 → 물리 모델로, 다운스트림에서는 물리 모델 → 가상 모델로 변환됩니다. &lt;code&gt;stream&lt;/code&gt;은 정규화되며, 누락된 &lt;code&gt;keep_alive&lt;/code&gt;에는 요청/제공자 기본값이 적용됩니다.</value>
+  </data>
+  <data name="Only model identity, stream intent, and configured VM options are gateway-owned. Upstream physical model names are replaced with the virtual model in response objects and events." xml:space="preserve">
+    <value>모델 정체성, 스트림 의도 및 구성된 VM 옵션만 게이트웨이가 소유합니다. 응답 객체와 이벤트에서 업스트림 물리 모델 이름은 가상 모델로 대체됩니다.</value>
+  </data>
+  <data name="Only the selected route is shown" xml:space="preserve">
+    <value>선택한 라우트만 표시됩니다</value>
+  </data>
   <data name="Open Source" xml:space="preserve">
     <value>오픈 소스</value>
   </data>
@@ -777,17 +1038,44 @@
   <data name="OpenAI → OpenAI" xml:space="preserve">
     <value>OpenAI → OpenAI</value>
   </data>
+  <data name="OpenAI &lt;code&gt;input&lt;/code&gt; is sent as Ollama &lt;code&gt;input&lt;/code&gt;; &lt;code&gt;embeddings[]&lt;/code&gt; and &lt;code&gt;prompt_eval_count&lt;/code&gt; are reconstructed as OpenAI &lt;code&gt;data[]&lt;/code&gt; and &lt;code&gt;usage&lt;/code&gt;." xml:space="preserve">
+    <value>OpenAI &lt;code&gt;input&lt;/code&gt;이 Ollama &lt;code&gt;input&lt;/code&gt;으로 전송됩니다. &lt;code&gt;embeddings[]&lt;/code&gt; 및 &lt;code&gt;prompt_eval_count&lt;/code&gt;는 OpenAI &lt;code&gt;data[]&lt;/code&gt;와 &lt;code&gt;usage&lt;/code&gt;로 재구성됩니다.</value>
+  </data>
   <data name="OpenAI API Translation" xml:space="preserve">
     <value>OpenAI API 번역</value>
   </data>
   <data name="OpenAI Backend" xml:space="preserve">
     <value>OpenAI Backend</value>
   </data>
+  <data name="OpenAI Chat Completions client routes" xml:space="preserve">
+    <value>OpenAI Chat Completions 클라이언트 라우트</value>
+  </data>
   <data name="OpenAI Client" xml:space="preserve">
     <value>OpenAI 클라이언트</value>
   </data>
+  <data name="OpenAI content parts → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → boolean &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;." xml:space="preserve">
+    <value>OpenAI 콘텐츠 부분 → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → 불리언 &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;.</value>
+  </data>
+  <data name="OpenAI embedding extensions outside the shared input are not copied into the cross-dialect request or reconstructed response." xml:space="preserve">
+    <value>공유 입력 범위를 벗어난 OpenAI 임베딩 확장 기능은 언어 간 요청이나 재구성된 응답에 복사되지 않습니다.</value>
+  </data>
+  <data name="OpenAI embedding input" xml:space="preserve">
+    <value>OpenAI 임베딩 입력</value>
+  </data>
   <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
     <value>OpenAI 다중 모드 콘텐츠 배열이 추출됩니다: image_url 데이터는 Ollama 이미지 배열로 이동하고, 텍스트는 콘텐츠가 됩니다.</value>
+  </data>
+  <data name="OpenAI Responses client routes" xml:space="preserve">
+    <value>OpenAI Responses 클라이언트 경로</value>
+  </data>
+  <data name="OpenAI target fields &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_tokens&lt;/code&gt; use VM values when set. VM &lt;code&gt;Thinking&lt;/code&gt; overrides the translated client value." xml:space="preserve">
+    <value>OpenAI 대상 필드 &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;max_tokens&lt;/code&gt;은(는) 설정 시 VM 값을 사용합니다. VM &lt;code&gt;Thinking&lt;/code&gt;이(가) 변환된 클라이언트 값을 재정의합니다.</value>
+  </data>
+  <data name="OpenAI-type Provider" xml:space="preserve">
+    <value>OpenAI 타입 제공자</value>
+  </data>
+  <data name="Opencode and Qwen Code working with OllamaGateway" xml:space="preserve">
+    <value>OllamaGateway와 함께 작동하는 Opencode 및 Qwen Code</value>
   </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>OpenID Connect 연동</value>
@@ -831,6 +1119,15 @@
   <data name="Permission discovery and sync" xml:space="preserve">
     <value>권한 검색 및 동기화</value>
   </data>
+  <data name="Physical backend protocol" xml:space="preserve">
+    <value>물리적 백엔드 프로토콜</value>
+  </data>
+  <data name="Physical provider metadata is not proxied; Ollama runtime details are placeholders or omitted." xml:space="preserve">
+    <value>물리적 제공자 메타데이터는 프록시되지 않으며, Ollama 런타임 세부 정보는 자리표시자이거나 생략됩니다.</value>
+  </data>
+  <data name="Policy and implementation" xml:space="preserve">
+    <value>정책 및 구현</value>
+  </data>
   <data name="Pre-configured and tested" xml:space="preserve">
     <value>사전 구성 및 테스트 완료됨</value>
   </data>
@@ -840,8 +1137,23 @@
   <data name="Pre-configured pipelines for dev/prod" xml:space="preserve">
     <value>개발/운영을 위한 사전 설정된 파이프라인</value>
   </data>
+  <data name="Preserved" xml:space="preserve">
+    <value>유지됨</value>
+  </data>
+  <data name="Preserved / mapped" xml:space="preserve">
+    <value>유지됨 / 매핑됨</value>
+  </data>
   <data name="Private AI" xml:space="preserve">
     <value>개인 AI</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>제공자</value>
+  </data>
+  <data name="Provider adapter selection uses &lt;code&gt;ProviderType&lt;/code&gt;, not chat &lt;code&gt;BackendProtocol&lt;/code&gt;. No Ollama VM options are injected into an OpenAI embedding target." xml:space="preserve">
+    <value>제공자 어댑터 선택은 채팅 &lt;code&gt;BackendProtocol&lt;/code&gt;이 아닌 &lt;code&gt;ProviderType&lt;/code&gt;을 사용합니다. OpenAI 임베딩 대상에는 Ollama VM 옵션이 주입되지 않습니다.</value>
+  </data>
+  <data name="Provider type and backend protocol are separate. No physical Anthropic backend adapter exists today." xml:space="preserve">
+    <value>제공자 유형과 백엔드 프로토콜은 별개입니다. 현재 Anthropic용 물리적 백엔드 어댑터는 존재하지 않습니다.</value>
   </data>
   <data name="Quality Gate" xml:space="preserve">
     <value>품질 게이트</value>
@@ -858,11 +1170,23 @@
   <data name="Recommended Models" xml:space="preserve">
     <value>추천 모델</value>
   </data>
+  <data name="Remote image URLs are not a portable Ollama-native contract; base64 is the verified path. Thinking signatures are discarded. Unknown content blocks remain a hard rejection; unknown top-level controls are omitted when this translated fallback is used." xml:space="preserve">
+    <value>원격 이미지 URL은 이식 가능한 Ollama 네이티브 계약이 아닙니다. base64가 검증된 방식입니다. Thinking 시그니처는 삭제됩니다. 알려지지 않은 콘텐츠 블록은 엄격한 거부로 유지되며, 이러한 번역 폴백을 사용할 때 알려지지 않은 최상위 컨트롤은 생략됩니다.</value>
+  </data>
+  <data name="Remote image URLs have no portable Ollama-native representation; base64/data-URI is the verified conversion. Chat-only controls such as penalties/logprobs/seed prefer a Chat backend and are omitted when Ollama is the only eligible route." xml:space="preserve">
+    <value>원격 이미지 URL은 이식 가능한 Ollama 고유 표현이 없으므로 base64/data-URI가 검증된 변환 방식입니다. 페널티/logprobs/seed와 같은 채팅 전용 제어 기능은 채팅 백엔드를 우선하며, Ollama만이 유효한 경로인 경우 생략됩니다.</value>
+  </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>반복 패널티</value>
   </data>
   <data name="Request &amp; Response Auditing" xml:space="preserve">
     <value>요청 및 응답 감사</value>
+  </data>
+  <data name="Requester&apos;s API" xml:space="preserve">
+    <value>요청자 API</value>
+  </data>
+  <data name="requires a Responses-capable provider" xml:space="preserve">
+    <value>Responses 호환 공급자가 필요합니다</value>
   </data>
   <data name="Requires Laravel Socialite config" xml:space="preserve">
     <value>Laravel Socialite 설정 필요</value>
@@ -878,6 +1202,15 @@
   </data>
   <data name="Robust Integration Testing" xml:space="preserve">
     <value>강력한 통합 테스트</value>
+  </data>
+  <data name="Roles, text, system/developer instructions, images, function tools, function calls/results, temperature, top-p, token limit, structured format, stream, reasoning output, finish state, and usage." xml:space="preserve">
+    <value>역할(role), 텍스트, 시스템/개발자 지침, 이미지, 함수 도구, 함수 호출/결과, temperature(온도), top-p, 토큰 제한, 구조화된 형식, 스트림(stream), 추론 출력, 완료 상태, 사용량.</value>
+  </data>
+  <data name="Roles/text, data-URI images, function tools/calls/results, temperature, top-p, token limit, reasoning text, structured output intent, stream, finish reason, and usage." xml:space="preserve">
+    <value>역할/텍스트, data-URI 이미지, 함수 도구/호출/결과, 온도(top-p), 토큰 제한, 추론 텍스트, 구조화된 출력 의도, 스트림, 종료 이유 및 사용량.</value>
+  </data>
+  <data name="Roles/text, images, function tools/calls/results, temperature, top-p, maximum output tokens, reasoning effort/output, structured output, streaming, finish reason, and usage." xml:space="preserve">
+    <value>역할/텍스트, 이미지, 함수 도구/호출/결과, 온도, top-p, 최대 출력 토큰, 추론 노력/출력, 구조화된 출력, 스트리밍, 종료 이유 및 사용량.</value>
   </data>
   <data name="Runs without any internet connection required." xml:space="preserve">
     <value>인터넷 연결 없이도 실행됩니다.</value>
@@ -896,6 +1229,12 @@
   </data>
   <data name="Security and Auditing by Design." xml:space="preserve">
     <value>디자인 기반 보안 및 감사</value>
+  </data>
+  <data name="Select backend protocol" xml:space="preserve">
+    <value>백엔드 프로토콜 선택</value>
+  </data>
+  <data name="Select requester API" xml:space="preserve">
+    <value>요청자 API 선택</value>
   </data>
   <data name="Shift with confidence" xml:space="preserve">
     <value>자신 있게 전환하세요</value>
@@ -942,6 +1281,15 @@
   <data name="Starts without any configuration" xml:space="preserve">
     <value>설정 없이 시작</value>
   </data>
+  <data name="state-aware" xml:space="preserve">
+    <value>상태 인식</value>
+  </data>
+  <data name="State/background requests require a Responses backend. Native Responses tools and unknown Items also require Responses. Metadata and unknown top-level controls prefer Responses and are omitted on fallback. Responses-only annotations/citations cannot be recreated from Chat output." xml:space="preserve">
+    <value>상태/백그라운드 요청에는 Responses 백엔드가 필요합니다. 네이티브 Responses 도구와 알 수 없는 Items도 Responses가 필요합니다. 메타데이터와 알 수 없는 최상위 제어는 Responses를 선호하며, 폴백 시 생략됩니다. Responses 전용 주석/인용은 Chat 출력에서 다시 생성할 수 없습니다.</value>
+  </data>
+  <data name="Stateful controls pass through to native Responses providers and are never silently translated." xml:space="preserve">
+    <value>상태 기반 제어는 네이티브 Responses 제공업체로 직접 전달되며, 절대 묵시적으로 번역되지 않습니다.</value>
+  </data>
   <data name="Stop Coding Boilerplate." xml:space="preserve">
     <value>보일러플레이트 코딩 멈추기.</value>
   </data>
@@ -978,6 +1326,24 @@
   <data name="Supports JetBrains Rider for easy code style fixes." xml:space="preserve">
     <value>JetBrains Rider 지원으로 코드 스타일 수정이 간편합니다.</value>
   </data>
+  <data name="System → &lt;code&gt;instructions&lt;/code&gt;; messages/images → Responses input Items; Anthropic tools → Responses function tools; named tool choice → Responses &lt;code&gt;name&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; Responses reasoning/text/function output → Anthropic blocks." xml:space="preserve">
+    <value>System → &lt;code&gt;instructions&lt;/code&gt;; 메시지/이미지 → Responses 입력 Items; Anthropic 도구 → Responses 함수 도구; 이름 지정된 도구 선택 → Responses &lt;code&gt;name&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; Responses 추론/텍스트/함수 출력 → Anthropic 블록.</value>
+  </data>
+  <data name="System instructions, text, base64/URL images, function tools/calls/results, tool choice, temperature, top-p, max tokens, response reasoning text, stream, finish state, and usage." xml:space="preserve">
+    <value>시스템 지시사항, 텍스트, base64/URL 이미지, 함수 도구/호출/결과, 도구 선택, temperature, top-p, 최대 토큰, 응답 추론 텍스트, 스트림, 완료 상태 및 사용량.</value>
+  </data>
+  <data name="System messages → &lt;code&gt;instructions&lt;/code&gt;; messages → Responses &lt;code&gt;input&lt;/code&gt; Items; images → &lt;code&gt;input_image&lt;/code&gt;; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;; function tool shapes are flattened." xml:space="preserve">
+    <value>시스템 메시지 → &lt;code&gt;instructions&lt;/code&gt;; 메시지 → Responses &lt;code&gt;input&lt;/code&gt; 항목; 이미지 → &lt;code&gt;input_image&lt;/code&gt;; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;; 함수 도구 구조가 평탄화됩니다.</value>
+  </data>
+  <data name="System text, message text, base64 images, tool definitions, &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt;, tool choice modes, temperature, top-p, max tokens, visible reasoning text, stream, finish reason, and usage." xml:space="preserve">
+    <value>시스템 텍스트, 메시지 텍스트, base64 이미지, 도구 정의, &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt;, 도구 선택 모드, 온도(top-p), 상위 확률(top-p), 최대 토큰 수, 가시적 추론 텍스트, 스트림, 종료 사유 및 사용량.</value>
+  </data>
+  <data name="System/developer messages → &lt;code&gt;instructions&lt;/code&gt;; messages → &lt;code&gt;input&lt;/code&gt; Items; function schemas are flattened; named &lt;code&gt;tool_choice.function.name&lt;/code&gt; → Responses &lt;code&gt;tool_choice.name&lt;/code&gt;; &lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;." xml:space="preserve">
+    <value>시스템/개발자 메시지 → &lt;code&gt;instructions&lt;/code&gt;; 메시지 → &lt;code&gt;input&lt;/code&gt; 항목; 함수 스키마가 평탄화됨; 명명된 &lt;code&gt;tool_choice.function.name&lt;/code&gt; → Responses &lt;code&gt;tool_choice.name&lt;/code&gt;; &lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;.</value>
+  </data>
+  <data name="System/messages, text, base64 and URL images, function tools/calls/results, tool choice, temperature, top-p, max tokens, reasoning text, stream, finish reason, and usage." xml:space="preserve">
+    <value>시스템/메시지, 텍스트, base64 및 URL 이미지, 함수 도구/호출/결과, 도구 선택, 온도(top-p), 최대 토큰 수, 추론 텍스트, 스트림, 종료 이유 및 사용량.</value>
+  </data>
   <data name="Task Runner" xml:space="preserve">
     <value>작업 실행기</value>
   </data>
@@ -990,14 +1356,38 @@
   <data name="The definitive, battle-tested .NET enterprise foundation. From Auth to AI, we&apos;ve solved the hard parts so you don&apos;t have to." xml:space="preserve">
     <value>결정적인, 검증된 .NET 엔터프라이즈 기반입니다. 인증(Auth)부터 인공지능(AI)까지, 어려운 부분은 이미 해결했으므로 귀하께서는 그 부분을 신경 쓰지 않아도 됩니다.</value>
   </data>
+  <data name="The gateway decodes both sides through its canonical chat model. Only semantics representable by the target protocol can cross this route." xml:space="preserve">
+    <value>게이트웨이는 표준 채팅 모델을 통해 양쪽을 디코딩합니다. 대상 프로토콜로 표현할 수 있는 의미만 이 경로를 통과할 수 있습니다.</value>
+  </data>
+  <data name="The gateway keeps the protocol shape and rewrites only gateway-owned values and configured policy fields." xml:space="preserve">
+    <value>게이트웨이는 프로토콜 구조를 유지하고 게이트웨이가 소유한 값 및 구성된 정책 필드만 재작성합니다.</value>
+  </data>
   <data name="The navigation bar automatically adjusts based on user roles and permissions." xml:space="preserve">
     <value>네비게이션 바는 사용자 역할과 권한에 따라 자동으로 조정됩니다.</value>
+  </data>
+  <data name="The original request and successful response JSON are cloned; unknown fields are preserved; model identity is rewritten." xml:space="preserve">
+    <value>원본 요청과 성공적인 응답 JSON은 복제되며, 알려지지 않은 필드는 보존되고, 모델 식별자는 재작성됩니다.</value>
+  </data>
+  <data name="The original request and successful response JSON are cloned; unknown OpenAI embedding fields are preserved; only model identity is rewritten." xml:space="preserve">
+    <value>원본 요청과 성공적인 응답 JSON이 복제되며, 알려지지 않은 OpenAI 임베딩 필드는 보존되고 모델 식별자만 재작성됩니다.</value>
   </data>
   <data name="The Philosophy" xml:space="preserve">
     <value>철학</value>
   </data>
+  <data name="The provider-level &lt;code&gt;keep_alive&lt;/code&gt; replaces the client value on this route." xml:space="preserve">
+    <value>프로바이더 레벨의 &lt;code&gt;keep_alive&lt;/code&gt;가 이 라우트에서 클라이언트 값을 대체합니다.</value>
+  </data>
+  <data name="The request adapter deep-clones the original Responses JSON. &lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt; preserves unknown output Items and SSE event names/data/comments/id/retry without passing the payload through canonical IL." xml:space="preserve">
+    <value>요청 어댑터는 원래 Responses JSON을 깊은 복사합니다. &lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt;는 페이로드를 정규화된 IL(canonical IL)을 통해 전달하지 않고 알려지지 않은 출력 항목(Item)과 SSE 이벤트 이름/데이터/댓글(id)/재시도(retry)를 그대로 유지합니다.</value>
+  </data>
   <data name="The template is built for easy deployment. It includes full Docker support, so you can containerize your app and run it anywhere. You can also deploy it directly to IIS, Azure App Service, or any server that supports ASP.NET Core." xml:space="preserve">
     <value>이 템플릿은 손쉬운 배포를 위해 구축되었습니다. 완전한 Docker 지원을 포함하고 있어 앱을 컨테이너화하여 어디서나 실행할 수 있습니다. 또한 IIS, Azure App Service 또는 ASP.NET Core를 지원하는 모든 서버에 직접 배포할 수도 있습니다.</value>
+  </data>
+  <data name="There is no Chat Completions or Responses translation. A non-Ollama backend returns &lt;code&gt;501&lt;/code&gt;." xml:space="preserve">
+    <value>채팅 완성 또는 응답 번역이 없습니다. Ollama가 아닌 백엔드에서는 &lt;code&gt;501&lt;/code&gt;을 반환합니다.</value>
+  </data>
+  <data name="These endpoints do not proxy physical provider metadata. Ollama size/digest/runtime details are placeholders or omitted." xml:space="preserve">
+    <value>이 엔드포인트는 물리적 제공자 메타데이터를 프록시하지 않습니다. Ollama 크기/해시값/런타임 세부 사항은 자리 표시자이거나 생략됩니다.</value>
   </data>
   <data name="Thinking" xml:space="preserve">
     <value>생각</value>
@@ -1007,6 +1397,12 @@
   </data>
   <data name="Thinking Mode (DeepSeek)" xml:space="preserve">
     <value>생각 모드 (DeepSeek)</value>
+  </data>
+  <data name="Thinking signatures are discarded. Unknown content blocks remain a hard rejection. Anthropic-only top-level controls prefer a future Anthropic backend but are omitted when Chat is the only eligible route." xml:space="preserve">
+    <value>생각 서명은 삭제됩니다. 알 수 없는 콘텐츠 블록은 엄격한 거부를 유지합니다. Anthropic 전용 최상위 제어는 향후 Anthropic 백엔드를 선호하지만 Chat이 유일한 유효한 경로인 경우 생략됩니다.</value>
+  </data>
+  <data name="This avoids recursive upstream discovery when a Provider points back to the gateway and keeps the public catalog scoped to virtual models." xml:space="preserve">
+    <value>이렇게 하면 Provider가 게이트웨이로 다시 지목될 때 발생하는 재귀적 업스트림 검색을 방지하고, 공개 카탈로그의 범위를 가상 모델로 제한합니다.</value>
   </data>
   <data name="This is a template project" xml:space="preserve">
     <value>이것은 템플릿 프로젝트입니다.</value>
@@ -1020,8 +1416,26 @@
   <data name="Timezone-aware fields" xml:space="preserve">
     <value>시간대 인식 필드</value>
   </data>
+  <data name="Translated" xml:space="preserve">
+    <value>번역됨</value>
+  </data>
+  <data name="Translated subset" xml:space="preserve">
+    <value>일부 번역됨</value>
+  </data>
+  <data name="Translated through semantic layer" xml:space="preserve">
+    <value>의미 레이어를 통해 번역됨</value>
+  </data>
+  <data name="Transparent" xml:space="preserve">
+    <value>투명 전달</value>
+  </data>
+  <data name="Transparent, state-aware" xml:space="preserve">
+    <value>투명성, 상태 인식</value>
+  </data>
   <data name="Trusted by production-grade applications including AnduinOS, StatHub, and Warp. We don&apos;t just share this code; we run our entire business on it." xml:space="preserve">
     <value>AnduinOS, StatHub, Warp를 포함한 프로덕션 수준의 애플리케이션들에 의해 신뢰받고 있습니다. 우리는 단지 이 코드를 공유하는 것이 아니라, 우리의 전체 비즈니스를 이 코드 위에 운영하고 있습니다.</value>
+  </data>
+  <data name="Two client dialects × two Provider types" xml:space="preserve">
+    <value>2개의 클라이언트 규약 × 2개의 제공자 유형</value>
   </data>
   <data name="Unified Env" xml:space="preserve">
     <value>통합 환경</value>
@@ -1031,6 +1445,15 @@
   </data>
   <data name="Universal API Compatibility" xml:space="preserve">
     <value>범용 API 호환성</value>
+  </data>
+  <data name="Unknown request fields, &lt;code&gt;messages&lt;/code&gt;, &lt;code&gt;tools&lt;/code&gt;, &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;format&lt;/code&gt;, and unknown JSON response fields are retained. Malformed upstream NDJSON records are forwarded raw." xml:space="preserve">
+    <value>알 수 없는 요청 필드(&lt;code&gt;messages&lt;/code&gt;, &lt;code&gt;tools&lt;/code&gt;, &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;format&lt;/code&gt;)와 알 수 없는 JSON 응답 필드는 유지됩니다. 손상된 상류 NDJSON 레코드는 원본 그대로 전달됩니다.</value>
+  </data>
+  <data name="Unknown request fields, message/content extensions, &lt;code&gt;response_format&lt;/code&gt;, &lt;code&gt;reasoning_effort&lt;/code&gt;, vendor fields, unknown response fields, null values, and unrecognized SSE lines remain in the Chat dialect." xml:space="preserve">
+    <value>알 수 없는 요청 필드, 메시지/콘텐츠 확장, &lt;code&gt;response_format&lt;/code&gt;, &lt;code&gt;reasoning_effort&lt;/code&gt;, 벤더 필드, 알 수 없는 응답 필드, null 값, 그리고 인식되지 않은 SSE 라인은 Chat 다이얼렉트에서 그대로 유지됩니다.</value>
+  </data>
+  <data name="Unknown top-level and nested request fields, native tools, metadata, future Items, annotations, citations, unknown response fields, future SSE event types, and JSON/non-JSON event data are retained." xml:space="preserve">
+    <value>알 수 없는 최상위 및 중첩 요청 필드, 네이티브 도구, 메타데이터, 향후 Items, 주석, 인용문, 알 수 없는 응답 필드, 향후 SSE 이벤트 유형, JSON/비JSON 이벤트 데이터는 유지됩니다.</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>사용법</value>
@@ -1055,6 +1478,39 @@
   </data>
   <data name="Virtual Models" xml:space="preserve">
     <value>가상 모델</value>
+  </data>
+  <data name="Virtual-model names and gateway-owned metadata are rendered directly in the requested client shape." xml:space="preserve">
+    <value>가상 모델 이름과 게이트웨이 소유 메타데이터는 요청된 클라이언트 형식으로 직접 렌더링됩니다.</value>
+  </data>
+  <data name="VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are injected into Ollama &lt;code&gt;options&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, 및 &lt;code&gt;RepeatPenalty&lt;/code&gt;가 Ollama &lt;code&gt;options&lt;/code&gt;에 주입됩니다.</value>
+  </data>
+  <data name="VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; hard-override Ollama &lt;code&gt;options&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, 그리고 &lt;code&gt;RepeatPenalty&lt;/code&gt;가 Ollama &lt;code&gt;options&lt;/code&gt;를 강제 덮어씁니다.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override Chat target controls; Chat-only VM thinking is injected through &lt;code&gt;chat_template_kwargs&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, 그리고 &lt;code&gt;Thinking&lt;/code&gt;은 Chat 대상 컨트롤을 재정의합니다. Chat 전용 VM Thinking은 &lt;code&gt;chat_template_kwargs&lt;/code&gt;를 통해 주입됩니다.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override Chat target fields. Ollama-only DB sampling/context controls do not apply to Chat." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, 및 &lt;code&gt;Thinking&lt;/code&gt;이 Chat 대상 필드를 덮어씁니다. Ollama 전용 DB 샘플링/컨텍스트 컨트롤은 Chat에 적용되지 않습니다.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override their target fields. Existing nested &lt;code&gt;chat_template_kwargs&lt;/code&gt; members are preserved around &lt;code&gt;enable_thinking&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, 및 &lt;code&gt;Thinking&lt;/code&gt;이(가) 대상 필드를 덮어씁니다. 기존 중첩된 &lt;code&gt;chat_template_kwargs&lt;/code&gt; 멤버는 &lt;code&gt;enable_thinking&lt;/code&gt; 주변에 유지됩니다.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other nested Responses fields remain untouched." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;은(는) &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;max_output_tokens&lt;/code&gt;를 덮어씁니다. 다른 중첩된 Responses 필드는 변경되지 않습니다.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other VM sampling fields are not applicable." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, 및 &lt;code&gt;NumPredict&lt;/code&gt;이(가) &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, 및 &lt;code&gt;max_output_tokens&lt;/code&gt;을(를) 덮어씁니다. 다른 VM 샘플링 필드는 적용되지 않습니다.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;은 Responses 필드를 덮어씁니다. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;RepeatPenalty&lt;/code&gt;에는 해당하는 Responses 대상 필드가 없습니다.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, 및 &lt;code&gt;NumPredict&lt;/code&gt;은 Responses 대상 필드를 덮어씁니다. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, 및 &lt;code&gt;RepeatPenalty&lt;/code&gt;는 Responses 컨트롤이 아닙니다.</value>
+  </data>
+  <data name="VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
+    <value>VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict 및 RepeatPenalty가 요청을 덮어씁니다. 누락된 &lt;code&gt;keep_alive&lt;/code&gt;는 Provider 값을 사용합니다.</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>환영합니다</value>

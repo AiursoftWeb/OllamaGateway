@@ -30,6 +30,78 @@
   <data name="→ OpenAI-compatible provider" xml:space="preserve">
     <value>→ OpenAI 互換プロバイダー</value>
   </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama JSON/NDJSON becomes Anthropic message JSON or &lt;code&gt;message_start/content_block_*/message_delta/message_stop&lt;/code&gt; SSE." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;。Ollama JSON/NDJSON は Anthropic メッセージ JSON または &lt;code&gt;message_start/content_block_*/message_delta/message_stop&lt;/code&gt; SSE になります。</value>
+  </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat JSON/SSE is decoded and reconstructed as Anthropic Messages output." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;。Chat JSON/SSEはデコードされ、Anthropic Messagesの出力として再構築されます。</value>
+  </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses Items/events are decoded and rebuilt as Anthropic content blocks and SSE." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;。Responsesのアイテム/イベントはデコードされ、AnthropicコンテンツブロックおよびSSEとして再構築されます。</value>
+  </data>
+  <data name="&lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt; has no Responses mapping. Chat-only controls prefer a Chat backend and are omitted on fallback. Responses annotations, citations, and noncanonical output Items cannot be reconstructed in a Chat Completion response." xml:space="preserve">
+    <value>&lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt; には Responses へのマッピングがありません。チャット固有の制御パラメータは Chat バックエンドを優先し、フォールバック時には省略されます。Responses の注釈、引用、および非標準的な出力 Items は、Chat Completion レスポンスでは再構築できません。</value>
+  </data>
+  <data name="&lt;code&gt;images[]&lt;/code&gt; → OpenAI &lt;code&gt;image_url&lt;/code&gt; data parts; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;think&lt;/code&gt; → &lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt;; Ollama tool calls and responses are rebuilt as OpenAI tools and back again." xml:space="preserve">
+    <value>&lt;code&gt;images[]&lt;/code&gt; → OpenAI &lt;code&gt;image_url&lt;/code&gt; データパート; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;think&lt;/code&gt; → &lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt;; Ollama のツール呼び出しとレスポンスは OpenAI ツールとして再構築され、元に戻されます。</value>
+  </data>
+  <data name="&lt;code&gt;instructions&lt;/code&gt; → system message; &lt;code&gt;input_text&lt;/code&gt;/&lt;code&gt;input_image&lt;/code&gt; → Ollama content/images; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt;; response events are synthesized with stable output indexes." xml:space="preserve">
+    <value>&lt;code&gt;instructions&lt;/code&gt; → システムメッセージ; &lt;code&gt;input_text&lt;/code&gt;/&lt;code&gt;input_image&lt;/code&gt; → Ollama コンテンツ/画像; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt;; 応答イベントは安定した出力インデックスで合成されます。</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. The response reverses through &lt;code&gt;OpenAiChatProviderResponseDecoder&lt;/code&gt; and &lt;code&gt;OllamaChatClientResponseWriter&lt;/code&gt;." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;。レスポンスは &lt;code&gt;OpenAiChatProviderResponseDecoder&lt;/code&gt; と &lt;code&gt;OllamaChatClientResponseWriter&lt;/code&gt; を介して逆順に処理されます。</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → canonical messages/items → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Typed Responses Items/events are decoded and rebuilt as Ollama JSON/NDJSON." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → 標準メッセージ/アイテム → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;。型付きの Responses アイテム/イベントはデコードされ、Ollama JSON/NDJSONとして再構築されます。</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; performs capability inspection; &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt; clones the original JSON; &lt;code&gt;OllamaChatWireResponseWriter&lt;/code&gt; keeps NDJSON records in the Ollama dialect." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; が機能検査を実行し、&lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt; が元の JSON を複製し、&lt;code&gt;OllamaChatWireResponseWriter&lt;/code&gt; が Ollama 方言の NDJSON レコードを保持します。</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama response records are decoded into canonical events and emitted as Chat Completion JSON/SSE." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollamaのレスポンスレコードは標準的なイベントにデコードされ、Chat Completion JSON/SSEとして出力されます。</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses output Items/events return through the Responses decoder and Chat client writer." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → 標準 IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;。レスポンス出力アイテム/イベントは、レスポンスデコーダーとチャットクライアントライターを介して返されます。</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; inspects capabilities; the provider adapter clones the source JSON; &lt;code&gt;OpenAiChatWireResponseWriter&lt;/code&gt; forwards Chat JSON/SSE while observing text, reasoning, tools, and usage." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; が機能を検出し、プロバイダーアダプターがソース JSON を複製します。&lt;code&gt;OpenAiChatWireResponseWriter&lt;/code&gt; はテキスト、推論、ツール、および使用量を監視しながら Chat JSON/SSE を転送します。</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiEmbeddingClientAdapter&lt;/code&gt; + &lt;code&gt;OpenAiEmbeddingProviderAdapter&lt;/code&gt;. No VM sampling/context override is injected into an OpenAI embedding request." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiEmbeddingClientAdapter&lt;/code&gt; + &lt;code&gt;OpenAiEmbeddingProviderAdapter&lt;/code&gt;。OpenAIの埋め込みリクエストには、VMサンプリング/コンテキストの上書きは注入されません。</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama output becomes typed Responses Items and typed SSE events." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama の出力は、型付きの Responses Items および型付きの SSE イベントに変換されます。</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat completions/chunks are decoded and emitted as Responses JSON/typed SSE." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → 標準 IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;。チャット補完/チャンクはデコードされ、Responses JSON/型付き SSE として出力されます。</value>
+  </data>
+  <data name="&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;background&lt;/code&gt;, and &lt;code&gt;store&lt;/code&gt; retain their native Responses semantics. This is not byte-transparent because JSON may be reserialized." xml:space="preserve">
+    <value>&lt;code&gt;previous_response_id&lt;/code&gt;、&lt;code&gt;conversation&lt;/code&gt;、&lt;code&gt;background&lt;/code&gt;、および &lt;code&gt;store&lt;/code&gt; は、ネイティブな Responses のセマンティクスを保持します。JSON が再シリアライズされる可能性があるため、これはバイト透過ではありません。</value>
+  </data>
+  <data name="&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;store:true&lt;/code&gt;, &lt;code&gt;background:true&lt;/code&gt;, native tools, and unknown Items require a Responses backend. Stateless representable requests fall back to translation." xml:space="preserve">
+    <value>&lt;code&gt;previous_response_id&lt;/code&gt;、&lt;code&gt;conversation&lt;/code&gt;、&lt;code&gt;store:true&lt;/code&gt;、&lt;code&gt;background:true&lt;/code&gt;、ネイティブツール、および不明なアイテムは Responses バックエンドを必要とします。ステートレスで表現可能なリクエストは翻訳にフォールバックします。</value>
+  </data>
+  <data name="&lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt; are hard-overridden when configured." xml:space="preserve">
+    <value>&lt;code&gt;temperature&lt;/code&gt;、&lt;code&gt;top_p&lt;/code&gt;、&lt;code&gt;top_k&lt;/code&gt;、&lt;code&gt;num_predict&lt;/code&gt;、&lt;code&gt;num_ctx&lt;/code&gt;、&lt;code&gt;repeat_penalty&lt;/code&gt;、および &lt;code&gt;think&lt;/code&gt; は設定時に強制的に上書きされます。</value>
+  </data>
+  <data name="&lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;keep_alive&lt;/code&gt; have no OpenAI Chat mapping. Unknown Ollama controls prefer a native backend but are omitted when this translation path is the only eligible route." xml:space="preserve">
+    <value>&lt;code&gt;top_k&lt;/code&gt;、&lt;code&gt;num_ctx&lt;/code&gt;、&lt;code&gt;repeat_penalty&lt;/code&gt;、および &lt;code&gt;keep_alive&lt;/code&gt; には OpenAI Chat へのマッピングがありません。不明な Ollama コントロールはネイティブバックエンドを優先しますが、この翻訳パスが利用可能な唯一のルートである場合は省略されます。</value>
+  </data>
+  <data name="2 client dialects × 2 Provider types" xml:space="preserve">
+    <value>2つのクライアント方言 × 2つのプロバイダータイプ</value>
+  </data>
+  <data name="3 backend protocols" xml:space="preserve">
+    <value>3つのバックエンドプロトコル</value>
+  </data>
+  <data name="3 backend protocols · native state passthrough" xml:space="preserve">
+    <value>3つのバックエンドプロトコル · ネイティブ状態のパススルー</value>
+  </data>
+  <data name="3 backend protocols · no physical Anthropic adapter" xml:space="preserve">
+    <value>3つのバックエンドプロトコル · 物理的なAnthropicアダプターなし</value>
+  </data>
+  <data name="4 client dialects × 3 backend protocols" xml:space="preserve">
+    <value>4つのクライアント方言 × 3つのバックエンドプロトコル</value>
+  </data>
   <data name="A built-in Role-Based Access Control (RBAC) system for fine-grained permission management." xml:space="preserve">
     <value>きめ細かい権限管理のための組み込みのロールベースアクセス制御（RBAC）システム。</value>
   </data>
@@ -87,6 +159,15 @@
   <data name="All dependencies are automatically registered and always available via constructor injection." xml:space="preserve">
     <value>すべての依存関係は自動的に登録され、コンストラクタインジェクションを通じて常に利用可能です。</value>
   </data>
+  <data name="All Ollama VM controls apply and override translated values: sampling, context, repeat penalty, token limit, and thinking. Ollama-only DB controls may be injected." xml:space="preserve">
+    <value>すべてのOllama VM制御が適用され、変換された値（サンプリング、コンテキスト、繰り返しペナルティ、トークン制限、思考）を上書きします。Ollama専用のDB制御が注入される場合があります。</value>
+  </data>
+  <data name="All Ollama VM controls apply: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt;. Ollama-only values may therefore be injected even though the client dialect cannot express them." xml:space="preserve">
+    <value>すべてのOllama VM制御が適用されます：&lt;code&gt;temperature&lt;/code&gt;、&lt;code&gt;top_p&lt;/code&gt;、&lt;code&gt;top_k&lt;/code&gt;、&lt;code&gt;num_predict&lt;/code&gt;、&lt;code&gt;num_ctx&lt;/code&gt;、&lt;code&gt;repeat_penalty&lt;/code&gt;、および &lt;code&gt;think&lt;/code&gt;。したがって、クライアントの方言で表現できない場合でも、Ollama固有の値が注入されることがあります。</value>
+  </data>
+  <data name="All Ollama VM controls apply. &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;RepeatPenalty&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; can be injected from DB even though Anthropic request fields do not directly express them." xml:space="preserve">
+    <value>すべての Ollama VM コントロールが適用されます。&lt;code&gt;TopK&lt;/code&gt;、&lt;code&gt;NumCtx&lt;/code&gt;、&lt;code&gt;RepeatPenalty&lt;/code&gt;、および &lt;code&gt;Thinking&lt;/code&gt; は、Anthropic リクエストフィールドで直接表現されていない場合でも、DB からインジェクトすることができます。</value>
+  </data>
   <data name="Anduin" xml:space="preserve">
     <value>Anduin</value>
   </data>
@@ -111,8 +192,17 @@
   <data name="Anthropic image content blocks are not yet translated to OpenAI format." xml:space="preserve">
     <value>Anthropic の画像コンテンツブロックはまだOpenAI形式に変換されていません。</value>
   </data>
+  <data name="Anthropic image sources → Ollama &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt; → function call; &lt;code&gt;tool_result&lt;/code&gt; → tool message; reasoning text → Ollama thinking; Ollama output is rebuilt as Anthropic content blocks." xml:space="preserve">
+    <value>Anthropic 画像ソース → Ollama &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt; → function call; &lt;code&gt;tool_result&lt;/code&gt; → tool message; reasoning text → Ollama thinking; Ollama の出力は Anthropic コンテンツブロックとして再構築されます。</value>
+  </data>
+  <data name="Anthropic input thinking blocks and signatures are not encoded into Responses input. Unknown content blocks cannot use this route; unknown top-level controls are omitted on fallback. Native Responses-only output Items, annotations, and citations cannot be represented in Anthropic output." xml:space="preserve">
+    <value>Anthropicの入力思考ブロックと署名はResponses入力にエンコードされません。不明なコンテンツブロックはこのルートを使用できません。フォールバック時に不明なトップレベル制御は省略されます。ネイティブのResponses専用出力Items、注釈、および引用はAnthropic出力で表現できません。</value>
+  </data>
   <data name="Anthropic Messages client routes" xml:space="preserve">
     <value>Anthropic Messages クライアント ルート</value>
+  </data>
+  <data name="Anthropic system content → system message; image blocks → OpenAI &lt;code&gt;image_url&lt;/code&gt;; &lt;code&gt;input_schema&lt;/code&gt; → function &lt;code&gt;parameters&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt; → Chat tool calls/messages; &lt;code&gt;max_tokens&lt;/code&gt; remains the Chat token limit." xml:space="preserve">
+    <value>Anthropic のシステムコンテンツ → システムメッセージ; 画像ブロック → OpenAI &lt;code&gt;image_url&lt;/code&gt;; &lt;code&gt;input_schema&lt;/code&gt; → 関数の &lt;code&gt;parameters&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt; → Chat ツール呼び出し/メッセージ; &lt;code&gt;max_tokens&lt;/code&gt; は Chat のトークン制限のまま。</value>
   </data>
   <data name="API Authentication (Bearer)" xml:space="preserve">
     <value>API 認証 (ベアラー)</value>
@@ -221,6 +311,9 @@
   </data>
   <data name="Built-in User Management" xml:space="preserve">
     <value>組み込みユーザー管理</value>
+  </data>
+  <data name="Chat" xml:space="preserve">
+    <value>チャット</value>
   </data>
   <data name="Chat Models" xml:space="preserve">
     <value>チャットモデル</value>
@@ -416,6 +509,9 @@
   </data>
   <data name="Effortlessly write integration tests using in-memory databases, temporary file systems, built-in mocking, and real-world HTTP request simulation." xml:space="preserve">
     <value>インメモリデータベース、一時ファイルシステム、組み込みモック、そして現実のHTTPリクエストシミュレーションを使用して、簡単に統合テストを書くことができます。</value>
+  </data>
+  <data name="Embedding" xml:space="preserve">
+    <value>埋め込み</value>
   </data>
   <data name="Embedding adapters select by ProviderType, not chat BackendProtocol" xml:space="preserve">
     <value>埋め込みアダプターはチャットの BackendProtocol ではなく、ProviderType によって選択されます</value>
@@ -615,8 +711,17 @@
   <data name="Includes Tutorials" xml:space="preserve">
     <value>チュートリアルを含む</value>
   </data>
+  <data name="Input Items → Chat &lt;code&gt;messages&lt;/code&gt;; instructions → system message; Responses function tool/choice shapes → Chat wrappers; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;reasoning_effort&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;response_format&lt;/code&gt;." xml:space="preserve">
+    <value>入力アイテム → Chat &lt;code&gt;messages&lt;/code&gt;; 指示 → システムメッセージ; Responses関数ツール/選択形状 → Chatラッパー; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;reasoning_effort&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;response_format&lt;/code&gt;.</value>
+  </data>
   <data name="Inspect one translation route at a time." xml:space="preserve">
     <value>1つの翻訳ルートを一度に確認する。</value>
+  </data>
+  <data name="Instructions, message Items, text, images, function calls/results, function tool definitions, temperature, top-p, output-token limit, reasoning effort/output, structured format, stream, finish reason, and usage." xml:space="preserve">
+    <value>指示、メッセージアイテム、テキスト、画像、関数呼び出し/結果、関数ツール定義、temperature（温度）、top-p、出力トークン制限、推論努力/出力、構造化フォーマット、ストリーム、終了理由、および使用状況。</value>
+  </data>
+  <data name="Instructions, text/images, function tools/calls/results, temperature, top-p, token limit, reasoning effort/output, structured output, stream, finish state, and usage." xml:space="preserve">
+    <value>指示、テキスト/画像、関数ツール/呼び出し/結果、温度、top-p、トークン制限、推論努力/出力、構造化出力、ストリーム、終了状態、および使用量。</value>
   </data>
   <data name="Integrated File Management" xml:space="preserve">
     <value>統合ファイル管理</value>
@@ -672,6 +777,9 @@
   <data name="MCP" xml:space="preserve">
     <value>MCP</value>
   </data>
+  <data name="Message roles/text, function definitions, function calls/results, streaming intent, temperature, top-p, token limit, images, structured format, and token usage survive when representable." xml:space="preserve">
+    <value>メッセージのロール/テキスト、関数の定義、関数呼び出し/結果、ストリーミングの意図、temperature、top-p、トークン制限、画像、構造化フォーマット、およびトークン使用量は、表現可能な場合に保持されます。</value>
+  </data>
   <data name="MIT Licence" xml:space="preserve">
     <value>MITライセンス</value>
   </data>
@@ -684,8 +792,14 @@
   <data name="Model discovery" xml:space="preserve">
     <value>モデル発見</value>
   </data>
+  <data name="Model discovery endpoints" xml:space="preserve">
+    <value>モデル発見エンドポイント</value>
+  </data>
   <data name="Model Hosting &amp; Inference" xml:space="preserve">
     <value>モデルのホスティングと推論</value>
+  </data>
+  <data name="Model identity is masked in both directions; &lt;code&gt;stream&lt;/code&gt; is normalized; streaming requests merge &lt;code&gt;stream_options.include_usage=true&lt;/code&gt;; null message content is normalized to an empty string." xml:space="preserve">
+    <value>モデルの識別情報は双方向でマスクされ、&lt;code&gt;stream&lt;/code&gt; は正規化されます。ストリーミングリクエストは &lt;code&gt;stream_options.include_usage=true&lt;/code&gt; をマージし、null のメッセージコンテンツは空文字列に正規化されます。</value>
   </data>
   <data name="Model Keep-alive" xml:space="preserve">
     <value>モデルのキープアライブ</value>
@@ -792,8 +906,23 @@
   <data name="Needs TypeORM or similar" xml:space="preserve">
     <value>TypeORM または同等のものが必要です</value>
   </data>
+  <data name="No Chat Completions or Responses translation. A non-Ollama backend returns &lt;code&gt;501&lt;/code&gt;." xml:space="preserve">
+    <value>チャット補完またはレスポンスの翻訳は行われません。Ollama 以外のバックエンドは &lt;code&gt;501&lt;/code&gt; を返します。</value>
+  </data>
+  <data name="No chat protocol translation occurs. Backend &lt;code&gt;Protocol&lt;/code&gt; is not consulted for embeddings." xml:space="preserve">
+    <value>チャットプロトコルの翻訳は行われません。ベクトル埋め込みでは、バックエンドの &lt;code&gt;Protocol&lt;/code&gt; は参照されません。</value>
+  </data>
   <data name="No dependency on any cloud vendor. Run anywhere, any time." xml:space="preserve">
     <value>クラウドベンダーへの依存なし。どこでも、いつでも実行可能。</value>
+  </data>
+  <data name="No known Chat field is intentionally dropped on this route. Unknown/Chat-only fields prefer a Chat Completions backend, with semantic translation as fallback when no matching backend is available. Valid JSON may be reserialized." xml:space="preserve">
+    <value>このルートでは、既知の Chat フィールドは意図的にドロップされません。不明/Chat 専用フィールドは Chat Completions バックエンドを優先し、対応するバックエンドが利用できない場合はセマンティック変換をフォールバックとして使用します。有効な JSON は再シリアライズされる場合があります。</value>
+  </data>
+  <data name="No known Ollama field is intentionally dropped on this route. Unknown fields make an Ollama-native backend preferred; if none is available, the request may use a documented translated subset. Valid JSON may be reserialized." xml:space="preserve">
+    <value>このルートでは、既知の Ollama フィールドが意図的に削除されることはありません。不明なフィールドがある場合、Ollama ネイティブのバックエンドが優先されます。利用できない場合は、リクエストで文書化された翻訳済みサブセットが使用される可能性があります。有効な JSON は再シリアライズされる場合があります。</value>
+  </data>
+  <data name="No upstream call" xml:space="preserve">
+    <value>上流呼び出しなし</value>
   </data>
   <data name="Not supported" xml:space="preserve">
     <value>非対応</value>
@@ -810,6 +939,12 @@
   <data name="Ollama → OpenAI" xml:space="preserve">
     <value>Ollama → OpenAI</value>
   </data>
+  <data name="Ollama &lt;code&gt;input&lt;/code&gt; or legacy &lt;code&gt;prompt&lt;/code&gt; becomes OpenAI &lt;code&gt;input&lt;/code&gt;; OpenAI &lt;code&gt;data[].embedding&lt;/code&gt; is reconstructed as Ollama &lt;code&gt;embeddings[]&lt;/code&gt;." xml:space="preserve">
+    <value>Ollama &lt;code&gt;input&lt;/code&gt; または従来の &lt;code&gt;prompt&lt;/code&gt; が OpenAI &lt;code&gt;input&lt;/code&gt; になり、OpenAI &lt;code&gt;data[].embedding&lt;/code&gt; は Ollama &lt;code&gt;embeddings[]&lt;/code&gt; として再構築されます。</value>
+  </data>
+  <data name="Ollama &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, &lt;code&gt;keep_alive&lt;/code&gt;, and boolean &lt;code&gt;think&lt;/code&gt; are not encoded into Responses. Responses-native tools cannot be requested from the Ollama dialect." xml:space="preserve">
+    <value>Ollama の &lt;code&gt;top_k&lt;/code&gt;、&lt;code&gt;num_ctx&lt;/code&gt;、&lt;code&gt;repeat_penalty&lt;/code&gt;、&lt;code&gt;keep_alive&lt;/code&gt; およびブール値の &lt;code&gt;think&lt;/code&gt; は Responses にエンコードされません。Responses ネイティブのツールは Ollama ダイアレクトからリクエストできません。</value>
+  </data>
   <data name="Ollama Backend" xml:space="preserve">
     <value>Ollama Backend</value>
   </data>
@@ -819,17 +954,38 @@
   <data name="Ollama Client" xml:space="preserve">
     <value>Ollama Client</value>
   </data>
+  <data name="Ollama embedding input" xml:space="preserve">
+    <value>Ollama 埋め込み入力</value>
+  </data>
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: エンタープライズグレードの API 認証、リクエスト監査、仮想モデル管理により、ネイティブの Ollama を強化します—あなたの安全でプライベートな AI ゲートウェイ。</value>
   </data>
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: エンタープライズグレードのAPI認証、リクエスト監査、レート制限、仮想モデル管理により、ネイティブのOllamaを強化します—安全でプライベートなAIゲートウェイ。</value>
   </data>
+  <data name="Ollama generate JSON/NDJSON is forwarded in the same dialect; model identity, answer text, finish data, and usage are observed and the virtual model name is restored." xml:space="preserve">
+    <value>Ollama generate の JSON/NDJSON は同一の方言で転送されます。モデルID、回答テキスト、終了データ、および使用量は監視され、仮想モデル名が復元されます。</value>
+  </data>
   <data name="Ollama images array is converted to OpenAI multimodal content parts (text + image_url with data URI)." xml:space="preserve">
     <value>Ollama 画像配列は、OpenAI マルチモーダルコンテンツパーツ（テキスト + data URI 付き image_url）に変換されます。</value>
   </data>
+  <data name="Ollama JSON/NDJSON stays in the native dialect; model identity, answer, finish data, and usage are observed and rewritten." xml:space="preserve">
+    <value>Ollama JSON/NDJSON はネイティブ形式のまま保持されます。モデルID、回答、終了データ、および使用量は監視され、書き換えられます。</value>
+  </data>
+  <data name="Ollama Native only" xml:space="preserve">
+    <value>Ollama ネイティブのみ</value>
+  </data>
+  <data name="Ollama only" xml:space="preserve">
+    <value>Ollama のみ</value>
+  </data>
+  <data name="Ollama-only embedding fields such as &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;truncate&lt;/code&gt;, &lt;code&gt;dimensions&lt;/code&gt; variants, and &lt;code&gt;keep_alive&lt;/code&gt; are not copied into the OpenAI request unless represented by the shared input." xml:space="preserve">
+    <value>共有入力として表現されていない限り、&lt;code&gt;options&lt;/code&gt;、&lt;code&gt;truncate&lt;/code&gt;、&lt;code&gt;dimensions&lt;/code&gt; バリアント、および &lt;code&gt;keep_alive&lt;/code&gt; などの Ollama 固有の埋め込みフィールドは、OpenAI リクエストにコピーされません。</value>
+  </data>
   <data name="Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently." xml:space="preserve">
     <value>Ollama固有のパラメータです。OpenAIは代わりにfrequency_penaltyとpresence_penaltyをネイティブにサポートしており、これらは独立して渡されます。</value>
+  </data>
+  <data name="Ollama-type Provider" xml:space="preserve">
+    <value>Ollama 型プロバイダー</value>
   </data>
   <data name="Ollama." xml:space="preserve">
     <value>Ollama.</value>
@@ -849,6 +1005,12 @@
   <data name="OllamaGateway High Availability Routing" xml:space="preserve">
     <value>OllamaGateway 高可用性ルーティング</value>
   </data>
+  <data name="OllamaGateway in Docker" xml:space="preserve">
+    <value>Docker 上の OllamaGateway</value>
+  </data>
+  <data name="OllamaGateway main screenshot" xml:space="preserve">
+    <value>OllamaGateway メインスクリーンショット</value>
+  </data>
   <data name="OllamaGateway seamlessly connects your local Ollama capabilities to professional AI development tools. Whether you are using Claude Code, Opencode or Qwen Code, you can now leverage your own hardware for automated coding and development tasks—all verified and officially supported by our team." xml:space="preserve">
     <value>OllamaGatewayは、ローカルのOllama機能をプロフェッショナルなAI開発ツールにシームレスに接続します。Claude Code、Opencode、またはQwen Codeをお使いの場合、ご自身のハードウェアを活用して自動コーディングおよび開発タスクを実行可能になりました。これらはすべて、当チームによって検証され、公式にサポートされています。</value>
   </data>
@@ -864,6 +1026,12 @@
   <data name="One Click Start" xml:space="preserve">
     <value>ワンクリックスタート</value>
   </data>
+  <data name="Only gateway-owned fields are rewritten: virtual model → physical model upstream, physical model → virtual model downstream; &lt;code&gt;stream&lt;/code&gt; is normalized; missing &lt;code&gt;keep_alive&lt;/code&gt; receives the request/provider default." xml:space="preserve">
+    <value>ゲートウェイが所有するフィールドのみが書き換えられます：上流では仮想モデル → 物理モデル、下流では物理モデル → 仮想モデルへの変換が行われます。&lt;code&gt;stream&lt;/code&gt; は正規化され、欠落している &lt;code&gt;keep_alive&lt;/code&gt; にはリクエストまたはプロバイダーのデフォルト値が適用されます。</value>
+  </data>
+  <data name="Only model identity, stream intent, and configured VM options are gateway-owned. Upstream physical model names are replaced with the virtual model in response objects and events." xml:space="preserve">
+    <value>モデルの識別情報、ストリーミングの意図、および設定されたVMオプションのみがゲートウェイに属します。応答オブジェクトおよびイベント内のアップストリーム物理モデル名は仮想モデルに置き換えられます。</value>
+  </data>
   <data name="Only the selected route is shown" xml:space="preserve">
     <value>選択されたルートのみ表示されます</value>
   </data>
@@ -875,6 +1043,9 @@
   </data>
   <data name="OpenAI → OpenAI" xml:space="preserve">
     <value>OpenAI → OpenAI</value>
+  </data>
+  <data name="OpenAI &lt;code&gt;input&lt;/code&gt; is sent as Ollama &lt;code&gt;input&lt;/code&gt;; &lt;code&gt;embeddings[]&lt;/code&gt; and &lt;code&gt;prompt_eval_count&lt;/code&gt; are reconstructed as OpenAI &lt;code&gt;data[]&lt;/code&gt; and &lt;code&gt;usage&lt;/code&gt;." xml:space="preserve">
+    <value>OpenAI &lt;code&gt;input&lt;/code&gt; が Ollama &lt;code&gt;input&lt;/code&gt; として送信され、&lt;code&gt;embeddings[]&lt;/code&gt; と &lt;code&gt;prompt_eval_count&lt;/code&gt; は OpenAI の &lt;code&gt;data[]&lt;/code&gt; と &lt;code&gt;usage&lt;/code&gt; として再構築されます。</value>
   </data>
   <data name="OpenAI API Translation" xml:space="preserve">
     <value>OpenAI API 翻訳</value>
@@ -888,11 +1059,29 @@
   <data name="OpenAI Client" xml:space="preserve">
     <value>OpenAI Client</value>
   </data>
+  <data name="OpenAI content parts → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → boolean &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;." xml:space="preserve">
+    <value>OpenAI コンテンツパーツ → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → ブール値 &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;.</value>
+  </data>
+  <data name="OpenAI embedding extensions outside the shared input are not copied into the cross-dialect request or reconstructed response." xml:space="preserve">
+    <value>共有入力外のOpenAI埋め込み拡張は、方言間リクエストや再構築されたレスポンスにはコピーされません。</value>
+  </data>
+  <data name="OpenAI embedding input" xml:space="preserve">
+    <value>OpenAI 埋め込み入力</value>
+  </data>
   <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
     <value>OpenAIマルチモーダルコンテンツ配列が抽出されます：image_urlデータはOllama images配列に移動し、テキストはcontentになります。</value>
   </data>
   <data name="OpenAI Responses client routes" xml:space="preserve">
     <value>OpenAI Responses クライアント ルート</value>
+  </data>
+  <data name="OpenAI target fields &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_tokens&lt;/code&gt; use VM values when set. VM &lt;code&gt;Thinking&lt;/code&gt; overrides the translated client value." xml:space="preserve">
+    <value>OpenAI のターゲットフィールド &lt;code&gt;temperature&lt;/code&gt;、&lt;code&gt;top_p&lt;/code&gt;、および &lt;code&gt;max_tokens&lt;/code&gt; は設定時に VM 値を使用します。VM の &lt;code&gt;Thinking&lt;/code&gt; は変換されたクライアント値を上書きします。</value>
+  </data>
+  <data name="OpenAI-type Provider" xml:space="preserve">
+    <value>OpenAI互換プロバイダー</value>
+  </data>
+  <data name="Opencode and Qwen Code working with OllamaGateway" xml:space="preserve">
+    <value>OpencodeとQwen CodeがOllamaGatewayで動作中</value>
   </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>OpenID Connect 連携</value>
@@ -939,6 +1128,9 @@
   <data name="Physical backend protocol" xml:space="preserve">
     <value>物理的なバックエンドプロトコル</value>
   </data>
+  <data name="Physical provider metadata is not proxied; Ollama runtime details are placeholders or omitted." xml:space="preserve">
+    <value>物理プロバイダーのメタデータはプロキシされません。Ollamaの実行時詳細はプレースホルダーまたは省略されます。</value>
+  </data>
   <data name="Policy and implementation" xml:space="preserve">
     <value>ポリシーと実装</value>
   </data>
@@ -960,6 +1152,12 @@
   <data name="Private AI" xml:space="preserve">
     <value>プライベート AI</value>
   </data>
+  <data name="Provider" xml:space="preserve">
+    <value>プロバイダー</value>
+  </data>
+  <data name="Provider adapter selection uses &lt;code&gt;ProviderType&lt;/code&gt;, not chat &lt;code&gt;BackendProtocol&lt;/code&gt;. No Ollama VM options are injected into an OpenAI embedding target." xml:space="preserve">
+    <value>プロバイダーアダプターの選択にはチャットの &lt;code&gt;BackendProtocol&lt;/code&gt; ではなく &lt;code&gt;ProviderType&lt;/code&gt; が使用されます。OpenAI の埋め込みターゲットには Ollama の VM オプションは注入されません。</value>
+  </data>
   <data name="Provider type and backend protocol are separate. No physical Anthropic backend adapter exists today." xml:space="preserve">
     <value>プロバイダーの種類とバックエンドプロトコルは独立しています。現在、Anthropic用の物理的なバックエンドアダプターは存在しません。</value>
   </data>
@@ -977,6 +1175,12 @@
   </data>
   <data name="Recommended Models" xml:space="preserve">
     <value>推奨モデル</value>
+  </data>
+  <data name="Remote image URLs are not a portable Ollama-native contract; base64 is the verified path. Thinking signatures are discarded. Unknown content blocks remain a hard rejection; unknown top-level controls are omitted when this translated fallback is used." xml:space="preserve">
+    <value>リモート画像URLはポータブルなOllamaネイティブ契約ではありません。base64が検証済みの方法です。Thinking署名は破棄されます。不明なコンテンツブロックは堅牢な拒否のままです。この翻訳フォールバックを使用する場合は、不明なトップレベルコントロールは省略されます。</value>
+  </data>
+  <data name="Remote image URLs have no portable Ollama-native representation; base64/data-URI is the verified conversion. Chat-only controls such as penalties/logprobs/seed prefer a Chat backend and are omitted when Ollama is the only eligible route." xml:space="preserve">
+    <value>リモート画像URLにはポータブルなOllamaネイティブ表現が存在しないため、base64/data-URIが検証済みの変換方法です。ペナルティ/logprobs/seedなどのチャット専用制御パラメータはChatバックエンドを優先し、利用可能なルートがOllamaのみである場合は省略されます。</value>
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>繰り返しペナルティ</value>
@@ -1004,6 +1208,15 @@
   </data>
   <data name="Robust Integration Testing" xml:space="preserve">
     <value>堅牢な統合テスト</value>
+  </data>
+  <data name="Roles, text, system/developer instructions, images, function tools, function calls/results, temperature, top-p, token limit, structured format, stream, reasoning output, finish state, and usage." xml:space="preserve">
+    <value>ロール、テキスト、システム/開発者指示、画像、関数ツール、関数呼び出し/結果、温度、top-p、トークン制限、構造化フォーマット、ストリーム、推論出力、終了状態、および使用量。</value>
+  </data>
+  <data name="Roles/text, data-URI images, function tools/calls/results, temperature, top-p, token limit, reasoning text, structured output intent, stream, finish reason, and usage." xml:space="preserve">
+    <value>ロール/テキスト、data-URI画像、関数ツール/呼び出し/結果、温度、top-p、トークン制限、推論テキスト、構造化出力意図、ストリーム、終了理由、および使用量。</value>
+  </data>
+  <data name="Roles/text, images, function tools/calls/results, temperature, top-p, maximum output tokens, reasoning effort/output, structured output, streaming, finish reason, and usage." xml:space="preserve">
+    <value>ロール/テキスト、画像、関数ツール/呼び出し/結果、温度、top-p、最大出力トークン数、推論努力/出力、構造化出力、ストリーミング、終了理由、および使用状況。</value>
   </data>
   <data name="Runs without any internet connection required." xml:space="preserve">
     <value>インターネット接続は必要ありません。</value>
@@ -1074,6 +1287,12 @@
   <data name="Starts without any configuration" xml:space="preserve">
     <value>設定不要で起動します</value>
   </data>
+  <data name="state-aware" xml:space="preserve">
+    <value>ステート認識型</value>
+  </data>
+  <data name="State/background requests require a Responses backend. Native Responses tools and unknown Items also require Responses. Metadata and unknown top-level controls prefer Responses and are omitted on fallback. Responses-only annotations/citations cannot be recreated from Chat output." xml:space="preserve">
+    <value>ステート/バックグラウンドリクエストにはResponsesバックエンドが必要です。ネイティブのResponsesツールおよび不明なItemsもResponsesを必要とします。メタデータおよび不明なトップレベル制御はResponsesを優先し、フォールバック時には省略されます。Responses固有のアノテーション/引用元はChat出力から再作成できません。</value>
+  </data>
   <data name="Stateful controls pass through to native Responses providers and are never silently translated." xml:space="preserve">
     <value>ステートフルな制御はネイティブの Responses プロバイダにそのまま渡され、サイレントに翻訳されることはありません。</value>
   </data>
@@ -1116,6 +1335,24 @@
   <data name="Supports JetBrains Rider for easy code style fixes." xml:space="preserve">
     <value>JetBrains Rider のサポートにより、コードスタイルの修正が簡単に行えます。</value>
   </data>
+  <data name="System → &lt;code&gt;instructions&lt;/code&gt;; messages/images → Responses input Items; Anthropic tools → Responses function tools; named tool choice → Responses &lt;code&gt;name&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; Responses reasoning/text/function output → Anthropic blocks." xml:space="preserve">
+    <value>System → &lt;code&gt;instructions&lt;/code&gt;; メッセージ/画像 → Responses 入力 Items; Anthropic ツール → Responses 関数ツール; 名前指定ツール選択 → Responses &lt;code&gt;name&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; Responses 推論/テキスト/関数出力 → Anthropic ブロック。</value>
+  </data>
+  <data name="System instructions, text, base64/URL images, function tools/calls/results, tool choice, temperature, top-p, max tokens, response reasoning text, stream, finish state, and usage." xml:space="preserve">
+    <value>システム指示、テキスト、base64/URL画像、関数ツール/呼び出し/結果、ツール選択、温度、top-p、最大トークン数、応答推論テキスト、ストリーム、終了状態、および使用量。</value>
+  </data>
+  <data name="System messages → &lt;code&gt;instructions&lt;/code&gt;; messages → Responses &lt;code&gt;input&lt;/code&gt; Items; images → &lt;code&gt;input_image&lt;/code&gt;; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;; function tool shapes are flattened." xml:space="preserve">
+    <value>システムメッセージ → &lt;code&gt;instructions&lt;/code&gt;; メッセージ → Responses の &lt;code&gt;input&lt;/code&gt; アイテム; 画像 → &lt;code&gt;input_image&lt;/code&gt;; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;; ファンクションツールの構造はフラット化されます。</value>
+  </data>
+  <data name="System text, message text, base64 images, tool definitions, &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt;, tool choice modes, temperature, top-p, max tokens, visible reasoning text, stream, finish reason, and usage." xml:space="preserve">
+    <value>システムテキスト、メッセージテキスト、base64画像、ツール定義、&lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt;、ツールの選択モード、temperature、top-p、最大トークン数、可視化された推論テキスト、ストリーム、終了理由、および使用量。</value>
+  </data>
+  <data name="System/developer messages → &lt;code&gt;instructions&lt;/code&gt;; messages → &lt;code&gt;input&lt;/code&gt; Items; function schemas are flattened; named &lt;code&gt;tool_choice.function.name&lt;/code&gt; → Responses &lt;code&gt;tool_choice.name&lt;/code&gt;; &lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;." xml:space="preserve">
+    <value>システム/開発者メッセージ → &lt;code&gt;instructions&lt;/code&gt;; メッセージ → &lt;code&gt;input&lt;/code&gt; アイテム; 関数スキーマは平坦化される; 名前付き &lt;code&gt;tool_choice.function.name&lt;/code&gt; → Responses &lt;code&gt;tool_choice.name&lt;/code&gt;; &lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;.</value>
+  </data>
+  <data name="System/messages, text, base64 and URL images, function tools/calls/results, tool choice, temperature, top-p, max tokens, reasoning text, stream, finish reason, and usage." xml:space="preserve">
+    <value>システム/メッセージ、テキスト、base64およびURL画像、関数ツール/呼び出し/結果、ツール選択、温度、top-p、最大トークン数、推論テキスト、ストリーム、終了理由、および使用量。</value>
+  </data>
   <data name="Task Runner" xml:space="preserve">
     <value>タスクランナー</value>
   </data>
@@ -1137,11 +1374,29 @@
   <data name="The navigation bar automatically adjusts based on user roles and permissions." xml:space="preserve">
     <value>ナビゲーションバーは、ユーザーの役割と権限に基づいて自動的に調整されます。</value>
   </data>
+  <data name="The original request and successful response JSON are cloned; unknown fields are preserved; model identity is rewritten." xml:space="preserve">
+    <value>元のリクエストと成功したレスポンスのJSONは複製され、不明なフィールドは保持され、モデルのIDは書き換えられます。</value>
+  </data>
+  <data name="The original request and successful response JSON are cloned; unknown OpenAI embedding fields are preserved; only model identity is rewritten." xml:space="preserve">
+    <value>元の要求と成功した応答の JSON は複製され、不明な OpenAI 埋め込みフィールドは保持されます。モデルの識別子のみが書き換えられます。</value>
+  </data>
   <data name="The Philosophy" xml:space="preserve">
     <value>哲学</value>
   </data>
+  <data name="The provider-level &lt;code&gt;keep_alive&lt;/code&gt; replaces the client value on this route." xml:space="preserve">
+    <value>プロバイダーレベルの &lt;code&gt;keep_alive&lt;/code&gt; が、このルートにおけるクライアント側の値を上書きします。</value>
+  </data>
+  <data name="The request adapter deep-clones the original Responses JSON. &lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt; preserves unknown output Items and SSE event names/data/comments/id/retry without passing the payload through canonical IL." xml:space="preserve">
+    <value>リクエストアダプターは、元の Responses JSON をディープコピーします。&lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt; は、ペイロードを標準 IL 経由で処理することなく、不明な出力アイテムおよび SSE イベント名/データ/コメント/id/retry を保持します。</value>
+  </data>
   <data name="The template is built for easy deployment. It includes full Docker support, so you can containerize your app and run it anywhere. You can also deploy it directly to IIS, Azure App Service, or any server that supports ASP.NET Core." xml:space="preserve">
     <value>このテンプレートは簡単なデプロイを実現するために構築されています。完全なDockerサポートを含んでいるため、アプリをコンテナ化してどこでも実行できます。また、IIS、Azure App Service、またはASP.NET Coreをサポートする任意のサーバーに直接デプロイすることも可能です。</value>
+  </data>
+  <data name="There is no Chat Completions or Responses translation. A non-Ollama backend returns &lt;code&gt;501&lt;/code&gt;." xml:space="preserve">
+    <value>チャット補完やレスポンスの翻訳はありません。Ollama 以外のバックエンドは &lt;code&gt;501&lt;/code&gt; を返します。</value>
+  </data>
+  <data name="These endpoints do not proxy physical provider metadata. Ollama size/digest/runtime details are placeholders or omitted." xml:space="preserve">
+    <value>これらのエンドポイントは物理プロバイダーのメタデータをプロキシしません。Ollama のサイズ/ダイジェスト/ランタイム詳細はプレースホルダーまたは省略されます。</value>
   </data>
   <data name="Thinking" xml:space="preserve">
     <value>思考</value>
@@ -1151,6 +1406,12 @@
   </data>
   <data name="Thinking Mode (DeepSeek)" xml:space="preserve">
     <value>思考モード（DeepSeek）</value>
+  </data>
+  <data name="Thinking signatures are discarded. Unknown content blocks remain a hard rejection. Anthropic-only top-level controls prefer a future Anthropic backend but are omitted when Chat is the only eligible route." xml:space="preserve">
+    <value>Thinking署名は破棄されます。不明なコンテンツブロックは厳格な拒否として処理されます。Anthropic固有のトップレベル制御は将来のAnthropicバックエンドを優先しますが、Chatのみが利用可能なルートの場合、省略されます。</value>
+  </data>
+  <data name="This avoids recursive upstream discovery when a Provider points back to the gateway and keeps the public catalog scoped to virtual models." xml:space="preserve">
+    <value>これにより、Providerがゲートウェイ自身を指す場合の再帰的なアップストリーム探索を防ぎ、公開カタログのスコープを仮想モデルに限定します。</value>
   </data>
   <data name="This is a template project" xml:space="preserve">
     <value>これはテンプレートプロジェクトです</value>
@@ -1197,6 +1458,15 @@
   <data name="Universal API Compatibility" xml:space="preserve">
     <value>ユニバーサル API 互換性</value>
   </data>
+  <data name="Unknown request fields, &lt;code&gt;messages&lt;/code&gt;, &lt;code&gt;tools&lt;/code&gt;, &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;format&lt;/code&gt;, and unknown JSON response fields are retained. Malformed upstream NDJSON records are forwarded raw." xml:space="preserve">
+    <value>不明なリクエストフィールド、&lt;code&gt;messages&lt;/code&gt;、&lt;code&gt;tools&lt;/code&gt;、&lt;code&gt;options&lt;/code&gt;、&lt;code&gt;format&lt;/code&gt;、および不明なJSONレスポンスフィールドは保持されます。不正な形式の上流NDJSONレコードはそのまま転送されます。</value>
+  </data>
+  <data name="Unknown request fields, message/content extensions, &lt;code&gt;response_format&lt;/code&gt;, &lt;code&gt;reasoning_effort&lt;/code&gt;, vendor fields, unknown response fields, null values, and unrecognized SSE lines remain in the Chat dialect." xml:space="preserve">
+    <value>不明なリクエストフィールド、メッセージ/コンテンツ拡張、&lt;code&gt;response_format&lt;/code&gt;、&lt;code&gt;reasoning_effort&lt;/code&gt;、ベンダー固有のフィールド、不明なレスポンスフィールド、null値、および認識できないSSE行はChat方言のまま残ります。</value>
+  </data>
+  <data name="Unknown top-level and nested request fields, native tools, metadata, future Items, annotations, citations, unknown response fields, future SSE event types, and JSON/non-JSON event data are retained." xml:space="preserve">
+    <value>不明なトップレベルおよびネストされたリクエストフィールド、ネイティブツール、メタデータ、将来のItems、注釈、引用、不明なレスポンスフィールド、将来のSSEイベントタイプ、およびJSON/非JSONイベントデータは保持されます。</value>
+  </data>
   <data name="Usage" xml:space="preserve">
     <value>使用方法</value>
   </data>
@@ -1220,6 +1490,39 @@
   </data>
   <data name="Virtual Models" xml:space="preserve">
     <value>バーチャルモデル</value>
+  </data>
+  <data name="Virtual-model names and gateway-owned metadata are rendered directly in the requested client shape." xml:space="preserve">
+    <value>仮想モデル名とゲートウェイが所有するメタデータは、要求されたクライアントの形式で直接レンダリングされます。</value>
+  </data>
+  <data name="VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are injected into Ollama &lt;code&gt;options&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;NumCtx&lt;/code&gt;、&lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、&lt;code&gt;TopK&lt;/code&gt;、および &lt;code&gt;RepeatPenalty&lt;/code&gt; が Ollama の &lt;code&gt;options&lt;/code&gt; に注入されます。</value>
+  </data>
+  <data name="VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; hard-override Ollama &lt;code&gt;options&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;NumCtx&lt;/code&gt;、&lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、&lt;code&gt;TopK&lt;/code&gt;、および &lt;code&gt;RepeatPenalty&lt;/code&gt; は Ollama の &lt;code&gt;options&lt;/code&gt; を強制的に上書きします。</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override Chat target controls; Chat-only VM thinking is injected through &lt;code&gt;chat_template_kwargs&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、&lt;code&gt;NumPredict&lt;/code&gt;、および &lt;code&gt;Thinking&lt;/code&gt; は Chat 対象の制御を上書きします。Chat 固有の VM thinking は &lt;code&gt;chat_template_kwargs&lt;/code&gt; を介して注入されます。</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override Chat target fields. Ollama-only DB sampling/context controls do not apply to Chat." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、&lt;code&gt;NumPredict&lt;/code&gt;、および &lt;code&gt;Thinking&lt;/code&gt; は Chat ターゲットフィールドを上書きします。Ollama 専用の DB サンプリング/コンテキスト制御は Chat に適用されません。</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override their target fields. Existing nested &lt;code&gt;chat_template_kwargs&lt;/code&gt; members are preserved around &lt;code&gt;enable_thinking&lt;/code&gt;." xml:space="preserve">
+    <value>VMの &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、&lt;code&gt;NumPredict&lt;/code&gt;、および &lt;code&gt;Thinking&lt;/code&gt; は、対応するターゲットフィールドを上書きします。&lt;code&gt;enable_thinking&lt;/code&gt; を中心に既存のネストされた &lt;code&gt;chat_template_kwargs&lt;/code&gt; メンバーは保持されます。</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other nested Responses fields remain untouched." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、および &lt;code&gt;NumPredict&lt;/code&gt; は &lt;code&gt;temperature&lt;/code&gt;、&lt;code&gt;top_p&lt;/code&gt;、および &lt;code&gt;max_output_tokens&lt;/code&gt; を上書きします。他の Responses のネストされたフィールドは変更されません。</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other VM sampling fields are not applicable." xml:space="preserve">
+    <value>VMの&lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、および&lt;code&gt;NumPredict&lt;/code&gt;は、それぞれ&lt;code&gt;temperature&lt;/code&gt;、&lt;code&gt;top_p&lt;/code&gt;、&lt;code&gt;max_output_tokens&lt;/code&gt;を優先して上書きします。その他のVMサンプリングフィールドは適用されません。</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、および &lt;code&gt;NumPredict&lt;/code&gt; は Responses フィールドを上書きします。VM &lt;code&gt;Thinking&lt;/code&gt;、&lt;code&gt;TopK&lt;/code&gt;、&lt;code&gt;NumCtx&lt;/code&gt;、および &lt;code&gt;RepeatPenalty&lt;/code&gt; には Responses の対象フィールドがありません。</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、および &lt;code&gt;NumPredict&lt;/code&gt; は Responses のターゲットフィールドを上書きします。VM &lt;code&gt;Thinking&lt;/code&gt;、&lt;code&gt;TopK&lt;/code&gt;、&lt;code&gt;NumCtx&lt;/code&gt;、および &lt;code&gt;RepeatPenalty&lt;/code&gt; は Responses コントロールではありません。</value>
+  </data>
+  <data name="VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
+    <value>VM Thinking、NumCtx、Temperature、TopP、TopK、NumPredict、およびRepeatPenaltyはリクエストを上書きします。&lt;code&gt;keep_alive&lt;/code&gt;が指定されていない場合は、プロバイダーの値を使用します。</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>ようこそ</value>

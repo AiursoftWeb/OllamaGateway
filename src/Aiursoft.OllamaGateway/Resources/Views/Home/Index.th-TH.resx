@@ -30,6 +30,78 @@
   <data name="→ OpenAI-compatible provider" xml:space="preserve">
     <value>→ ผู้ให้บริการที่เข้ากันได้กับ OpenAI</value>
   </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama JSON/NDJSON becomes Anthropic message JSON or &lt;code&gt;message_start/content_block_*/message_delta/message_stop&lt;/code&gt; SSE." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → IL มาตรฐาน → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt; JSON/NDJSON จาก Ollama จะถูกแปลงเป็น JSON ของข้อความ Anthropic หรือ SSE แบบ &lt;code&gt;message_start/content_block_*/message_delta/message_stop&lt;/code&gt;</value>
+  </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat JSON/SSE is decoded and reconstructed as Anthropic Messages output." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → IL มาตรฐาน → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt; JSON/SSE ของ Chat จะถูกถอดรหัสและสร้างใหม่เป็นผลลัพธ์ของ Anthropic Messages</value>
+  </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses Items/events are decoded and rebuilt as Anthropic content blocks and SSE." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → IL มาตรฐาน → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt; รายการ/เหตุการณ์ของ Responses จะถูกถอดรหัสและสร้างใหม่เป็นบล็อกเนื้อหา Anthropic และ SSE</value>
+  </data>
+  <data name="&lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt; has no Responses mapping. Chat-only controls prefer a Chat backend and are omitted on fallback. Responses annotations, citations, and noncanonical output Items cannot be reconstructed in a Chat Completion response." xml:space="preserve">
+    <value>&lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt; ไม่มีค่าที่สอดคล้องกับ Responses ควบคุมที่ใช้เฉพาะใน Chat จะเลือกใช้ backend ประเภท Chat และจะถูกละเว้นเมื่อใช้การสำรอง ข้อความประกอบ (annotations) การอ้างอิง (citations) และรายการผลลัพธ์ที่ไม่ใช่รูปแบบมาตรฐานของ Responses ไม่สามารถสร้างใหม่ในคำตอบ Chat Completion ได้</value>
+  </data>
+  <data name="&lt;code&gt;images[]&lt;/code&gt; → OpenAI &lt;code&gt;image_url&lt;/code&gt; data parts; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;think&lt;/code&gt; → &lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt;; Ollama tool calls and responses are rebuilt as OpenAI tools and back again." xml:space="preserve">
+    <value>&lt;code&gt;images[]&lt;/code&gt; → ส่วนข้อมูล &lt;code&gt;image_url&lt;/code&gt; ของ OpenAI; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;think&lt;/code&gt; → &lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt;; การเรียกใช้เครื่องมือและการตอบกลับของ Ollama จะถูกสร้างใหม่เป็นเครื่องมือของ OpenAI และแปลงกลับอีกครั้ง</value>
+  </data>
+  <data name="&lt;code&gt;instructions&lt;/code&gt; → system message; &lt;code&gt;input_text&lt;/code&gt;/&lt;code&gt;input_image&lt;/code&gt; → Ollama content/images; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt;; response events are synthesized with stable output indexes." xml:space="preserve">
+    <value>&lt;code&gt;instructions&lt;/code&gt; → ข้อความระบบ; &lt;code&gt;input_text&lt;/code&gt;/&lt;code&gt;input_image&lt;/code&gt; → เนื้อหา/รูปภาพของ Ollama; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt;; เหตุการณ์การตอบกลับถูกสังเคราะห์ด้วยดัชนีผลลัพธ์ที่เสถียร</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. The response reverses through &lt;code&gt;OpenAiChatProviderResponseDecoder&lt;/code&gt; and &lt;code&gt;OllamaChatClientResponseWriter&lt;/code&gt;." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt; การตอบกลับจะย้อนกลับผ่าน &lt;code&gt;OpenAiChatProviderResponseDecoder&lt;/code&gt; และ &lt;code&gt;OllamaChatClientResponseWriter&lt;/code&gt;</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → canonical messages/items → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Typed Responses Items/events are decoded and rebuilt as Ollama JSON/NDJSON." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → ข้อความ/รายการมาตรฐาน → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt; รายการ/เหตุการณ์แบบกำหนดชนิดของ Responses จะถูกถอดรหัสและสร้างใหม่เป็น JSON/NDJSON ของ Ollama</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; performs capability inspection; &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt; clones the original JSON; &lt;code&gt;OllamaChatWireResponseWriter&lt;/code&gt; keeps NDJSON records in the Ollama dialect." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; ดำเนินการตรวจสอบความสามารถ; &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt; คัดลอก JSON ดั้งเดิม; &lt;code&gt;OllamaChatWireResponseWriter&lt;/code&gt; รักษารายการ NDJSON ให้คงอยู่ในรูปแบบของ Ollama</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama response records are decoded into canonical events and emitted as Chat Completion JSON/SSE." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. บันทึกการตอบกลับของ Ollama จะถูกถอดรหัสเป็นเหตุการณ์มาตรฐานและส่งออกเป็น Chat Completion JSON/SSE</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses output Items/events return through the Responses decoder and Chat client writer." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → IL แบบมาตรฐาน → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt; ข้อมูล Items/เหตุการณ์ผลลัพธ์จาก Responses จะส่งคืนผ่านตัวถอดรหัส Responses และโปรแกรมเขียนไคลเอนต์ Chat</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; inspects capabilities; the provider adapter clones the source JSON; &lt;code&gt;OpenAiChatWireResponseWriter&lt;/code&gt; forwards Chat JSON/SSE while observing text, reasoning, tools, and usage." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; ตรวจสอบความสามารถ; ตัวปรับใช้ผู้ให้บริการคัดลอก JSON ต้นฉบับ; &lt;code&gt;OpenAiChatWireResponseWriter&lt;/code&gt; ส่งต่อ Chat JSON/SSE ไปพร้อมกับการติดตามข้อความ การให้เหตุผล เครื่องมือ และการใช้งาน</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiEmbeddingClientAdapter&lt;/code&gt; + &lt;code&gt;OpenAiEmbeddingProviderAdapter&lt;/code&gt;. No VM sampling/context override is injected into an OpenAI embedding request." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiEmbeddingClientAdapter&lt;/code&gt; + &lt;code&gt;OpenAiEmbeddingProviderAdapter&lt;/code&gt;. ไม่มีการแทรกการสุ่มตัวอย่าง VM/การลบล้างบริบทลงในคำขอ Embedding ของ OpenAI</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama output becomes typed Responses Items and typed SSE events." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. ผลลัพธ์จาก Ollama จะถูกแปลงเป็น Responses Items ที่มีประเภทข้อมูลชัดเจน และ SSE events ที่มีประเภทข้อมูลชัดเจน</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat completions/chunks are decoded and emitted as Responses JSON/typed SSE." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → IL มาตรฐาน → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt; คำตอบ/ส่วนย่อยของแชทจะถูกถอดรหัสและปล่อยออกมาเป็น JSON Responses/SSE แบบกำหนดประเภท</value>
+  </data>
+  <data name="&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;background&lt;/code&gt;, and &lt;code&gt;store&lt;/code&gt; retain their native Responses semantics. This is not byte-transparent because JSON may be reserialized." xml:space="preserve">
+    <value>&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;background&lt;/code&gt; และ &lt;code&gt;store&lt;/code&gt; ยังคงมีความหมายตามมาตรฐานของ Responses แบบเดิม การดำเนินการนี้ไม่ใช่การโปร่งใสในระดับไบต์ เนื่องจาก JSON อาจถูกจัดการใหม่</value>
+  </data>
+  <data name="&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;store:true&lt;/code&gt;, &lt;code&gt;background:true&lt;/code&gt;, native tools, and unknown Items require a Responses backend. Stateless representable requests fall back to translation." xml:space="preserve">
+    <value>&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;store:true&lt;/code&gt;, &lt;code&gt;background:true&lt;/code&gt;, เครื่องมือแบบเนทีฟ และรายการที่ไม่รู้จัก ต้องการ Backend Responses คำขอที่แสดงสถานะไม่คงตัว (Stateless) จะเปลี่ยนไปใช้การแปลแทน</value>
+  </data>
+  <data name="&lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt; are hard-overridden when configured." xml:space="preserve">
+    <value>&lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt; และ &lt;code&gt;think&lt;/code&gt; จะถูกบังคับค่าใหม่หากมีการกำหนดค่าไว้</value>
+  </data>
+  <data name="&lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;keep_alive&lt;/code&gt; have no OpenAI Chat mapping. Unknown Ollama controls prefer a native backend but are omitted when this translation path is the only eligible route." xml:space="preserve">
+    <value>&lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt; และ &lt;code&gt;keep_alive&lt;/code&gt; ไม่มีค่าที่แมปกับ OpenAI Chat พารามิเตอร์ของ Ollama ที่ไม่รู้จักจะเลือกใช้ backend แบบ native เป็นหลัก แต่จะถูกตัดออกหากเส้นทางการแปลนี้เป็นเส้นทางเดียวที่ใช้ได้</value>
+  </data>
+  <data name="2 client dialects × 2 Provider types" xml:space="preserve">
+    <value>2 รูปแบบไวยากรณ์ของผู้ใช้ × 2 ประเภทผู้ให้บริการ</value>
+  </data>
+  <data name="3 backend protocols" xml:space="preserve">
+    <value>3 โปรโตคอลแบ็กเอนด์</value>
+  </data>
+  <data name="3 backend protocols · native state passthrough" xml:space="preserve">
+    <value>โปรโตคอลแบ็กเอนด์ 3 แบบ · การส่งผ่านสถานะแบบเนทีฟ</value>
+  </data>
+  <data name="3 backend protocols · no physical Anthropic adapter" xml:space="preserve">
+    <value>โปรโตคอลแบ็กเอนด์ 3 แบบ · ไม่มีตัวเชื่อมต่อ Anthropic แบบกายภาพ</value>
+  </data>
+  <data name="4 client dialects × 3 backend protocols" xml:space="preserve">
+    <value>รูปแบบไคลเอนต์ 4 แบบ × โปรโตคอลแบ็กเอนด์ 3 แบบ</value>
+  </data>
   <data name="A built-in Role-Based Access Control (RBAC) system for fine-grained permission management." xml:space="preserve">
     <value>ระบบควบคุมการเข้าถึงตามบทบาท (RBAC) ในตัว สำหรับการจัดการสิทธิ์แบบละเอียด</value>
   </data>
@@ -42,6 +114,9 @@
   <data name="A complete solution for user authentication and profile management." xml:space="preserve">
     <value>โซลูชันครบวงจรสำหรับการยืนยันตัวตนของผู้ใช้และการจัดการโปรไฟล์</value>
   </data>
+  <data name="A configured virtual-model value replaces the client-derived value after translation. An unset value leaves the translated value unchanged." xml:space="preserve">
+    <value>ค่า virtual-model ที่กำหนดไว้จะแทนที่ค่าที่ได้จากไคลเอนต์หลังจากการแปล ค่าที่ไม่ได้ตั้งจะปล่อยค่าที่แปลไว้โดยไม่มีการเปลี่ยนแปลง</value>
+  </data>
   <data name="A fully responsive layout that looks great on both desktop and mobile devices." xml:space="preserve">
     <value>การจัดวางที่ตอบสนองได้อย่างสมบูรณ์ ซึ่งดูดีทั้งบนเดสก์ท็อปและอุปกรณ์มือถือ</value>
   </data>
@@ -50,6 +125,9 @@
   </data>
   <data name="Achieve more with Aiursoft Template" xml:space="preserve">
     <value>บรรลุผลได้มากขึ้นด้วย Aiursoft Template</value>
+  </data>
+  <data name="Active route" xml:space="preserve">
+    <value>เส้นทางที่ใช้งานอยู่</value>
   </data>
   <data name="Admin Management GUI" xml:space="preserve">
     <value>ส่วนจัดการผู้ดูแลระบบแบบกราฟิก</value>
@@ -81,6 +159,15 @@
   <data name="All dependencies are automatically registered and always available via constructor injection." xml:space="preserve">
     <value>การอ้างอิงทั้งหมดจะถูกลงทะเบียนโดยอัตโนมัติและพร้อมใช้งานเสมอผ่าน Constructor Injection</value>
   </data>
+  <data name="All Ollama VM controls apply and override translated values: sampling, context, repeat penalty, token limit, and thinking. Ollama-only DB controls may be injected." xml:space="preserve">
+    <value>การควบคุม VM ของ Ollama ทั้งหมดมีผลและครอบคลุมค่าที่แปลแล้ว ได้แก่ การสุ่มตัวอย่าง บริบท ค่าปรับโทษการทำซ้ำ จำกัดโทเค็น และการคิดวิเคราะห์ อาจมีการเพิ่มการควบคุมเฉพาะของ Ollama จากฐานข้อมูลเข้ามาได้</value>
+  </data>
+  <data name="All Ollama VM controls apply: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt;. Ollama-only values may therefore be injected even though the client dialect cannot express them." xml:space="preserve">
+    <value>การควบคุม VM ของ Ollama ทั้งหมดมีผลบังคับใช้: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, และ &lt;code&gt;think&lt;/code&gt; ดังนั้น ค่าที่ใช้เฉพาะกับ Ollama อาจถูกใส่เข้าไปแม้ว่าไวยากรณ์ของไคลเอนต์จะไม่สามารถแสดงค่าเหล่านั้นได้</value>
+  </data>
+  <data name="All Ollama VM controls apply. &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;RepeatPenalty&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; can be injected from DB even though Anthropic request fields do not directly express them." xml:space="preserve">
+    <value>การควบคุม VM ของ Ollama ทั้งหมดมีผลบังคับใช้ &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;RepeatPenalty&lt;/code&gt; และ &lt;code&gt;Thinking&lt;/code&gt; สามารถถูกแทรกจากฐานข้อมูลได้ แม้ฟิลด์คำขอ Anthropic จะไม่แสดงค่าเหล่านี้โดยตรงก็ตาม</value>
+  </data>
   <data name="Anduin" xml:space="preserve">
     <value>Anduin</value>
   </data>
@@ -104,6 +191,18 @@
   </data>
   <data name="Anthropic image content blocks are not yet translated to OpenAI format." xml:space="preserve">
     <value>บล็อกเนื้อหารูปภาพของ Anthropic ยังไม่ถูกแปลเป็นรูปแบบ OpenAI</value>
+  </data>
+  <data name="Anthropic image sources → Ollama &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt; → function call; &lt;code&gt;tool_result&lt;/code&gt; → tool message; reasoning text → Ollama thinking; Ollama output is rebuilt as Anthropic content blocks." xml:space="preserve">
+    <value>แหล่งภาพของ Anthropic → &lt;code&gt;images[]&lt;/code&gt; ของ Ollama; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt; → การเรียกใช้ฟังก์ชัน; &lt;code&gt;tool_result&lt;/code&gt; → ข้อความเครื่องมือ; ข้อความเหตุผล → การคิดของ Ollama; เอาต์พุตของ Ollama จะถูกสร้างใหม่เป็นบล็อกเนื้อหาแบบ Anthropic</value>
+  </data>
+  <data name="Anthropic input thinking blocks and signatures are not encoded into Responses input. Unknown content blocks cannot use this route; unknown top-level controls are omitted on fallback. Native Responses-only output Items, annotations, and citations cannot be represented in Anthropic output." xml:space="preserve">
+    <value>บล็อกความคิดและลายเซ็นทางเข้าของ Anthropic จะไม่ถูกเข้ารหัสเข้าไปในข้อมูลทางเข้าของ Responses บล็อกเนื้อหาที่ไม่รู้จักไม่สามารถใช้เส้นทางนี้ได้ ควบคุมระดับบนสุดที่ไม่รู้จักจะถูกตัดออกเมื่อใช้วิธีสำรอง (fallback) รายการเอาต์พุตเฉพาะของ Responses, หมายเหตุประกอบ และแหล่งอ้างอิง ไม่สามารถแสดงผลได้ในเอาต์พุตของ Anthropic</value>
+  </data>
+  <data name="Anthropic Messages client routes" xml:space="preserve">
+    <value>เส้นทางไคลเอนต์ Anthropic Messages</value>
+  </data>
+  <data name="Anthropic system content → system message; image blocks → OpenAI &lt;code&gt;image_url&lt;/code&gt;; &lt;code&gt;input_schema&lt;/code&gt; → function &lt;code&gt;parameters&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt; → Chat tool calls/messages; &lt;code&gt;max_tokens&lt;/code&gt; remains the Chat token limit." xml:space="preserve">
+    <value>เนื้อหา Anthropic system → ข้อความระบบ; บล็อกภาพ → OpenAI &lt;code&gt;image_url&lt;/code&gt;; &lt;code&gt;input_schema&lt;/code&gt; → พารามิเตอร์ฟังก์ชัน &lt;code&gt;parameters&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt; → การเรียกใช้/ข้อความเครื่องมือ Chat; &lt;code&gt;max_tokens&lt;/code&gt; ยังคงเป็นขีดจำกัดโทเค็นของ Chat</value>
   </data>
   <data name="API Authentication (Bearer)" xml:space="preserve">
     <value>การตรวจสอบสิทธิ์ API (Bearer)</value>
@@ -162,6 +261,12 @@
   <data name="Automatically sync OpenID roles. Unified Rule management." xml:space="preserve">
     <value>ซิงค์บทบาท OpenID โดยอัตโนมัติ การจัดการกฎแบบรวมศูนย์</value>
   </data>
+  <data name="Backend" xml:space="preserve">
+    <value>แบ็กเอนด์</value>
+  </data>
+  <data name="Backend Provider type" xml:space="preserve">
+    <value>ประเภทผู้ให้บริการแบ็กเอนด์</value>
+  </data>
   <data name="Background Job Processing" xml:space="preserve">
     <value>การประมวลผลงานหลังบ้าน</value>
   </data>
@@ -207,14 +312,26 @@
   <data name="Built-in User Management" xml:space="preserve">
     <value>การจัดการผู้ใช้ในตัว</value>
   </data>
+  <data name="Chat" xml:space="preserve">
+    <value>แชท</value>
+  </data>
   <data name="Chat Models" xml:space="preserve">
     <value>แบบจำลองแชท</value>
   </data>
   <data name="Chat/Embedding Segregation" xml:space="preserve">
     <value>การแยกแชท/การฝัง</value>
   </data>
+  <data name="Choose the API your client sends on the left and the protocol spoken by the physical backend on the right. The active route shows exactly what is preserved, translated, rejected, and overridden." xml:space="preserve">
+    <value>เลือก API ที่ไคลเอนต์ของคุณส่งทางฝั่งซ้าย และโปรโตคอลที่แบ็กเอนด์กายภาพใช้งานทางฝั่งขวา เส้นทางที่ใช้งานอยู่จะแสดงรายละเอียดชัดเจนว่าข้อมูลส่วนใดถูกคงไว้ แปลง ถูกปฏิเสธ หรือถูกแทนที่</value>
+  </data>
   <data name="Clickhouse Auditing" xml:space="preserve">
     <value>การตรวจสอบโดย Clickhouse</value>
+  </data>
+  <data name="Client" xml:space="preserve">
+    <value>ไคลเอนต์</value>
+  </data>
+  <data name="Client endpoint" xml:space="preserve">
+    <value>จุดสิ้นสุดของไคลเอ็นต์</value>
   </data>
   <data name="Comes with Docker support for simplified and consistent deployments." xml:space="preserve">
     <value>มาพร้อมการสนับสนุน Docker สำหรับการปรับใช้งานที่ง่ายและมีความสม่ำเสมอ</value>
@@ -233,6 +350,9 @@
   </data>
   <data name="Concise Docs" xml:space="preserve">
     <value>เอกสารกระชับ</value>
+  </data>
+  <data name="Configuration precedence" xml:space="preserve">
+    <value>ลำดับความสำคัญของค่ากำหนด</value>
   </data>
   <data name="Consistency Validation" xml:space="preserve">
     <value>การตรวจสอบความสอดคล้อง</value>
@@ -261,6 +381,15 @@
   <data name="Cross Platform" xml:space="preserve">
     <value>ข้ามแพลตฟอร์ม</value>
   </data>
+  <data name="Cross-Protocol Compatibility" xml:space="preserve">
+    <value>ความเข้ากันได้ข้ามโปรโตคอล</value>
+  </data>
+  <data name="Current route contract" xml:space="preserve">
+    <value>สัญญาเส้นทางปัจจุบัน</value>
+  </data>
+  <data name="Current route only" xml:space="preserve">
+    <value>เฉพาะเส้นทางปัจจุบันเท่านั้น</value>
+  </data>
   <data name="Custom dev required" xml:space="preserve">
     <value>ต้องการการพัฒนาแบบกำหนดเอง</value>
   </data>
@@ -272,6 +401,12 @@
   </data>
   <data name="Dashboard Website" xml:space="preserve">
     <value>เว็บไซต์แดชบอร์ด</value>
+  </data>
+  <data name="Database override" xml:space="preserve">
+    <value>การแทนที่ฐานข้อมูล</value>
+  </data>
+  <data name="Database values are hard assignments" xml:space="preserve">
+    <value>ค่าในฐานข้อมูลเป็นการกำหนดแบบบังคับ</value>
   </data>
   <data name="Day 1 Compliance &amp; Security." xml:space="preserve">
     <value>วันที่ 1 ความสอดคล้องและด้านความปลอดภัย</value>
@@ -336,6 +471,15 @@
   <data name="DevOps Native" xml:space="preserve">
     <value>รองรับ DevOps โดยธรรมชาติ</value>
   </data>
+  <data name="Direction" xml:space="preserve">
+    <value>ทิศทาง</value>
+  </data>
+  <data name="Discarded / restriction" xml:space="preserve">
+    <value>ละเว้น / จำกัด</value>
+  </data>
+  <data name="Discarded, rejected, or preferred" xml:space="preserve">
+    <value>ถูกทิ้ง, ถูกปฏิเสธ, หรือถูกเลือก</value>
+  </data>
   <data name="Discussions page" xml:space="preserve">
     <value>หน้าห้องสนทนา</value>
   </data>
@@ -363,8 +507,20 @@
   <data name="Effortlessly write integration tests using in-memory databases, temporary file systems, built-in mocking, and real-world HTTP request simulation." xml:space="preserve">
     <value>เขียนการทดสอบการรวมระบบได้อย่างง่ายดายโดยใช้ฐานข้อมูลในหน่วยความจำ ระบบไฟล์ชั่วคราว การจำลองแบบที่มีอยู่ในตัว และการจำลองการร้องขอ HTTP แบบจริง</value>
   </data>
+  <data name="Embedding" xml:space="preserve">
+    <value>การฝังตัว</value>
+  </data>
+  <data name="Embedding adapters select by ProviderType, not chat BackendProtocol" xml:space="preserve">
+    <value>ตัวปรับแต่ง Embedding จะเลือกตาม ProviderType ไม่ใช่ BackendProtocol ของแชท</value>
+  </data>
   <data name="Embedding Models" xml:space="preserve">
     <value>โมเดล Embedding</value>
+  </data>
+  <data name="Embedding route" xml:space="preserve">
+    <value>เส้นทาง Embedding</value>
+  </data>
+  <data name="Embedding route inspector" xml:space="preserve">
+    <value>ตัวตรวจสอบเส้นทาง Embedding</value>
   </data>
   <data name="Enforced" xml:space="preserve">
     <value>บังคับใช้</value>
@@ -456,6 +612,12 @@
   <data name="Function call" xml:space="preserve">
     <value>การเรียกฟังก์ชัน</value>
   </data>
+  <data name="Gateway-generated response" xml:space="preserve">
+    <value>การตอบกลับที่สร้างโดยเกตเวย์</value>
+  </data>
+  <data name="Gateway-owned operation" xml:space="preserve">
+    <value>การดำเนินการที่เกตเวย์เป็นเจ้าของ</value>
+  </data>
   <data name="Generic configuration" xml:space="preserve">
     <value>การตั้งค่าทั่วไป</value>
   </data>
@@ -531,6 +693,9 @@
   <data name="Images array passes through as-is to native Ollama." xml:space="preserve">
     <value>อาร์เรย์รูปภาพจะถูกส่งผ่านไปยัง Ollama ดั้งเดิมตามที่เป็นอยู่</value>
   </data>
+  <data name="Implementation method" xml:space="preserve">
+    <value>วิธีการดำเนินการ</value>
+  </data>
   <data name="Included" xml:space="preserve">
     <value>รวมไว้แล้ว</value>
   </data>
@@ -539,6 +704,18 @@
   </data>
   <data name="Includes Tutorials" xml:space="preserve">
     <value>รวมบทช่วยสอน</value>
+  </data>
+  <data name="Input Items → Chat &lt;code&gt;messages&lt;/code&gt;; instructions → system message; Responses function tool/choice shapes → Chat wrappers; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;reasoning_effort&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;response_format&lt;/code&gt;." xml:space="preserve">
+    <value>รายการข้อมูลนำเข้า → ข้อความ &lt;code&gt;messages&lt;/code&gt; ของ Chat; คำแนะนำ → ข้อความของระบบ; รูปแบบเครื่องมือ/ตัวเลือกฟังก์ชันของ Responses → ตัวห่อหุ้มของ Chat; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;reasoning_effort&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;response_format&lt;/code&gt;.</value>
+  </data>
+  <data name="Inspect one translation route at a time." xml:space="preserve">
+    <value>ตรวจสอบเส้นทางแปลทีละเส้น</value>
+  </data>
+  <data name="Instructions, message Items, text, images, function calls/results, function tool definitions, temperature, top-p, output-token limit, reasoning effort/output, structured format, stream, finish reason, and usage." xml:space="preserve">
+    <value>คำแนะนำ, รายการข้อความ, ข้อความ, รูปภาพ, การเรียกใช้ฟังก์ชัน/ผลลัพธ์, คำจำกัดความเครื่องมือฟังก์ชัน, อุณหภูมิ, top-p, จำกัดจำนวนโทเค็นเอาต์พุต, ความพยายาม/ผลลัพธ์ในการให้เหตุผล, รูปแบบโครงสร้าง, สตรีม, สาเหตุการเสร็จสิ้น, และการใช้งาน</value>
+  </data>
+  <data name="Instructions, text/images, function tools/calls/results, temperature, top-p, token limit, reasoning effort/output, structured output, stream, finish state, and usage." xml:space="preserve">
+    <value>คำแนะนำ, ข้อความ/รูปภาพ, เครื่องมือฟังก์ชัน/การเรียกใช้/ผลลัพธ์, อุณหภูมิ, top-p, ขีดจำกัดโทเค็น, ความพยายาม/ผลลัพธ์ในการให้เหตุผล, ผลลัพธ์ที่มีโครงสร้าง, การสตรีม, สถานะการสิ้นสุด, และการใช้งาน.</value>
   </data>
   <data name="Integrated File Management" xml:space="preserve">
     <value>การจัดการไฟล์แบบครบวงจร</value>
@@ -585,11 +762,17 @@
   <data name="Management Dashboard" xml:space="preserve">
     <value>แดชบอร์ดการจัดการ</value>
   </data>
+  <data name="Mapped / reconstructed" xml:space="preserve">
+    <value>แมป / สร้างใหม่</value>
+  </data>
   <data name="Markdown To HTML" xml:space="preserve">
     <value>มาร์กดาวน์เป็นเอชทีเอ็มแอล</value>
   </data>
   <data name="MCP" xml:space="preserve">
     <value>MCP</value>
+  </data>
+  <data name="Message roles/text, function definitions, function calls/results, streaming intent, temperature, top-p, token limit, images, structured format, and token usage survive when representable." xml:space="preserve">
+    <value>บทบาท/ข้อความของข้อความ นิยามฟังก์ชัน การเรียกใช้/ผลลัพธ์ของฟังก์ชัน ความตั้งใจในการสตรีม ค่าอุณหภูมิ top-p จำนวนโทเค็นสูงสุด รูปภาพ รูปแบบโครงสร้าง และการใช้งานโทเค็น จะยังคงอยู่หากสามารถแสดงผลได้</value>
   </data>
   <data name="MIT Licence" xml:space="preserve">
     <value>สัญญาอนุญาต MIT</value>
@@ -600,8 +783,17 @@
   <data name="Mix Any Client with Any Backend" xml:space="preserve">
     <value>ผสมไคลเอนต์ใด ๆ กับแบ็กเอนด์ใด ๆ</value>
   </data>
+  <data name="Model discovery" xml:space="preserve">
+    <value>การค้นพบโมเดล</value>
+  </data>
+  <data name="Model discovery endpoints" xml:space="preserve">
+    <value>จุดสิ้นสุดการค้นพบโมเดล</value>
+  </data>
   <data name="Model Hosting &amp; Inference" xml:space="preserve">
     <value>การโฮสต์และการอนุมานแบบจำลอง</value>
+  </data>
+  <data name="Model identity is masked in both directions; &lt;code&gt;stream&lt;/code&gt; is normalized; streaming requests merge &lt;code&gt;stream_options.include_usage=true&lt;/code&gt;; null message content is normalized to an empty string." xml:space="preserve">
+    <value>ตัวตนของโมเดลถูกปิดบังในทั้งสองทิศทาง; &lt;code&gt;stream&lt;/code&gt; ถูกปรับให้เป็นมาตรฐาน; คำขอแบบสตรีมมิ่งจะรวมค่า &lt;code&gt;stream_options.include_usage=true&lt;/code&gt;; เนื้อหาข้อความที่เป็น null จะถูกปรับให้เป็นมาตรฐานเป็นสตริงว่าง</value>
   </data>
   <data name="Model Keep-alive" xml:space="preserve">
     <value>การคงสถานะของโมเดล</value>
@@ -642,6 +834,12 @@
   <data name="Music Tools" xml:space="preserve">
     <value>เครื่องมือด้านดนตรี</value>
   </data>
+  <data name="Narrow operation" xml:space="preserve">
+    <value>การดำเนินการเฉพาะทาง</value>
+  </data>
+  <data name="Native / same dialect" xml:space="preserve">
+    <value>เนทีฟ / 方言เดียวกัน</value>
+  </data>
   <data name="Native Ollama" xml:space="preserve">
     <value>Ollama ท้องถิ่น</value>
   </data>
@@ -653,6 +851,9 @@
   </data>
   <data name="Native Power, AI Development" xml:space="preserve">
     <value>พลังท้องถิ่น พัฒนา AI</value>
+  </data>
+  <data name="Native state passthrough" xml:space="preserve">
+    <value>การส่งผ่านสถานะแบบเนทีฟ</value>
   </data>
   <data name="Native vs. Gateway" xml:space="preserve">
     <value>แบบเนทีฟ เทียบกับ เกตเวย์</value>
@@ -699,8 +900,23 @@
   <data name="Needs TypeORM or similar" xml:space="preserve">
     <value>ต้องการ TypeORM หรือคล้ายกัน</value>
   </data>
+  <data name="No Chat Completions or Responses translation. A non-Ollama backend returns &lt;code&gt;501&lt;/code&gt;." xml:space="preserve">
+    <value>ไม่มีการแปล Chat Completions หรือ Responses ระบบ Backend ที่ไม่ใช่ Ollama จะส่งคืนค่า &lt;code&gt;501&lt;/code&gt;</value>
+  </data>
+  <data name="No chat protocol translation occurs. Backend &lt;code&gt;Protocol&lt;/code&gt; is not consulted for embeddings." xml:space="preserve">
+    <value>ไม่มีการแปลงโปรโตคอลการสนทนาเกิดขึ้น ระบบหลังบ้าน &lt;code&gt;Protocol&lt;/code&gt; จะไม่ถูกขอคำปรึกษาสำหรับ embeddings</value>
+  </data>
   <data name="No dependency on any cloud vendor. Run anywhere, any time." xml:space="preserve">
     <value>ไม่มีการพึ่งพาผู้ให้บริการคลาวด์ใด ๆ ใช้งานได้ทุกที่ ทุกเวลา</value>
+  </data>
+  <data name="No known Chat field is intentionally dropped on this route. Unknown/Chat-only fields prefer a Chat Completions backend, with semantic translation as fallback when no matching backend is available. Valid JSON may be reserialized." xml:space="preserve">
+    <value>ไม่มีการละเว้นฟิลด์ Chat ที่รู้จักอย่างจงใจในเส้นทางนี้ ฟิลด์ที่ไม่รู้จักหรือเฉพาะสำหรับ Chat จะใช้ backend Chat Completions เป็นหลัก และใช้การแปลเชิงความหมายเป็นทางเลือกสำรองเมื่อไม่มี backend ที่ตรงกัน JSON ที่ถูกต้องอาจถูก sérialize ใหม่</value>
+  </data>
+  <data name="No known Ollama field is intentionally dropped on this route. Unknown fields make an Ollama-native backend preferred; if none is available, the request may use a documented translated subset. Valid JSON may be reserialized." xml:space="preserve">
+    <value>ไม่มีฟิลด์ Ollama ที่รู้จักใดถูกละทิ้งโดยเจตนาบนเส้นทางนี้ ฟิลด์ที่ไม่รู้จักทำให้บэкเอนด์แบบ Ollama เป็นทางเลือกที่แนะนำ; หากไม่มีบริการดังกล่าว คำขออาจใช้เซตย่อยที่ได้รับการแปลและบันทึกไว้ JSON ที่ถูกต้องอาจถูกจัดอนุกรมใหม่</value>
+  </data>
+  <data name="No upstream call" xml:space="preserve">
+    <value>ไม่มีการเรียกใช้ upstream</value>
   </data>
   <data name="Not supported" xml:space="preserve">
     <value>ไม่รองรับ</value>
@@ -717,11 +933,23 @@
   <data name="Ollama → OpenAI" xml:space="preserve">
     <value>Ollama → OpenAI</value>
   </data>
+  <data name="Ollama &lt;code&gt;input&lt;/code&gt; or legacy &lt;code&gt;prompt&lt;/code&gt; becomes OpenAI &lt;code&gt;input&lt;/code&gt;; OpenAI &lt;code&gt;data[].embedding&lt;/code&gt; is reconstructed as Ollama &lt;code&gt;embeddings[]&lt;/code&gt;." xml:space="preserve">
+    <value>Ollama &lt;code&gt;input&lt;/code&gt; หรือ &lt;code&gt;prompt&lt;/code&gt; แบบเดิม จะกลายเป็น OpenAI &lt;code&gt;input&lt;/code&gt;; OpenAI &lt;code&gt;data[].embedding&lt;/code&gt; จะถูกสร้างใหม่เป็น Ollama &lt;code&gt;embeddings[]&lt;/code&gt;</value>
+  </data>
+  <data name="Ollama &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, &lt;code&gt;keep_alive&lt;/code&gt;, and boolean &lt;code&gt;think&lt;/code&gt; are not encoded into Responses. Responses-native tools cannot be requested from the Ollama dialect." xml:space="preserve">
+    <value>พารามิเตอร์ Ollama &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, &lt;code&gt;keep_alive&lt;/code&gt; และค่าบูลีน &lt;code&gt;think&lt;/code&gt; จะไม่ถูกเข้ารหัสลงใน Responses เครื่องมือเฉพาะของ Responses ไม่สามารถร้องขอผ่านไวยากรณ์ของ Ollama ได้</value>
+  </data>
   <data name="Ollama Backend" xml:space="preserve">
     <value>Ollama Backend</value>
   </data>
+  <data name="Ollama Chat client routes" xml:space="preserve">
+    <value>เส้นทางไคลเอนต์ Ollama Chat</value>
+  </data>
   <data name="Ollama Client" xml:space="preserve">
     <value>Ollama Client</value>
+  </data>
+  <data name="Ollama embedding input" xml:space="preserve">
+    <value>ข้อมูลป้อนเข้า embedding ของ Ollama</value>
   </data>
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: เพิ่มประสิทธิภาพ Ollama ของคุณด้วยระบบตรวจสอบสิทธิ์ API ระดับองค์กร การตรวจสอบคำขอ และการจัดการโมเดลเสมือน—ประตูทางเข้า AI ที่ปลอดภัยและเป็นส่วนตัวของคุณ</value>
@@ -729,11 +957,29 @@
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: เพิ่มประสิทธิภาพ Ollama ในท้องถิ่นของคุณด้วย API authentication ระดับองค์กร การตรวจสอบคำขอ การจำกัดอัตรา และการจัดการแบบจำลองเสมือน — เกตเวย์ AI ที่ปลอดภัยและเป็นส่วนตัวของคุณ</value>
   </data>
+  <data name="Ollama generate JSON/NDJSON is forwarded in the same dialect; model identity, answer text, finish data, and usage are observed and the virtual model name is restored." xml:space="preserve">
+    <value>JSON/NDJSON จาก Ollama generate จะถูกส่งต่อในรูปแบบภาษาเดิม; ระบบจะตรวจสอบและคงชื่อรุ่นเสมือน โดยบันทึกข้อมูลตัวตนของรุ่น ข้อความคำตอบ ข้อมูลการสิ้นสุด และสถิติการใช้งาน</value>
+  </data>
   <data name="Ollama images array is converted to OpenAI multimodal content parts (text + image_url with data URI)." xml:space="preserve">
     <value>อาร์เรย์รูปภาพของ Ollama ถูกแปลงเป็นส่วนเนื้อหา multimodal ของ OpenAI (ข้อความ + image_url พร้อม data URI)</value>
   </data>
+  <data name="Ollama JSON/NDJSON stays in the native dialect; model identity, answer, finish data, and usage are observed and rewritten." xml:space="preserve">
+    <value>JSON/NDJSON ของ Ollama ยังคงอยู่ในรูปแบบเดิม; ข้อมูลตัวตนของโมเดล คำตอบ ข้อมูลการสิ้นสุด และสถิติการใช้งาน จะถูกติดตามและเขียนใหม่</value>
+  </data>
+  <data name="Ollama Native only" xml:space="preserve">
+    <value>เฉพาะ Ollama แบบเนทีฟเท่านั้น</value>
+  </data>
+  <data name="Ollama only" xml:space="preserve">
+    <value>เฉพาะ Ollama เท่านั้น</value>
+  </data>
+  <data name="Ollama-only embedding fields such as &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;truncate&lt;/code&gt;, &lt;code&gt;dimensions&lt;/code&gt; variants, and &lt;code&gt;keep_alive&lt;/code&gt; are not copied into the OpenAI request unless represented by the shared input." xml:space="preserve">
+    <value>ฟิลด์ฝังตัวที่ใช้เฉพาะกับ Ollama เช่น &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;truncate&lt;/code&gt;, รูปแบบของ &lt;code&gt;dimensions&lt;/code&gt; และ &lt;code&gt;keep_alive&lt;/code&gt; จะไม่ถูกคัดลอกไปยังคำขอ OpenAI เว้นแต่จะถูกแทนค่าโดยอินพุตส่วนร่วม</value>
+  </data>
   <data name="Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently." xml:space="preserve">
     <value>พารามิเตอร์เฉพาะของ Ollama OpenAI รองรับ frequency_penalty และ presence_penalty ในตัวแทน ซึ่งจะถูกส่งผ่านแยกกัน</value>
+  </data>
+  <data name="Ollama-type Provider" xml:space="preserve">
+    <value>ผู้ให้บริการแบบ Ollama</value>
   </data>
   <data name="Ollama." xml:space="preserve">
     <value>Ollama.</value>
@@ -753,6 +999,12 @@
   <data name="OllamaGateway High Availability Routing" xml:space="preserve">
     <value>การเปลี่ยนเส้นทางความพร้อมใช้งานสูงของ OllamaGateway</value>
   </data>
+  <data name="OllamaGateway in Docker" xml:space="preserve">
+    <value>OllamaGateway ใน Docker</value>
+  </data>
+  <data name="OllamaGateway main screenshot" xml:space="preserve">
+    <value>ภาพหน้าจอหลักของ OllamaGateway</value>
+  </data>
   <data name="OllamaGateway seamlessly connects your local Ollama capabilities to professional AI development tools. Whether you are using Claude Code, Opencode or Qwen Code, you can now leverage your own hardware for automated coding and development tasks—all verified and officially supported by our team." xml:space="preserve">
     <value>OllamaGateway เชื่อมต่อความสามารถของ Ollama ในเครื่องของคุณไปยังเครื่องมือพัฒนา AI ระดับมืออาชีพได้อย่างราบรื่น ไม่ว่าจะเป็นการใช้ Claude Code, Opencode หรือ Qwen Code คุณก็สามารถใช้ฮาร์ดแวร์ของตัวเองเพื่อทำงานเขียนโค้ดและพัฒนาอัตโนมัติได้อย่างมีประสิทธิภาพ—all ได้รับการยืนยันและรองรับอย่างเป็นทางการโดยทีมของเรา</value>
   </data>
@@ -765,6 +1017,15 @@
   <data name="One Click Start" xml:space="preserve">
     <value>เริ่มต้นด้วยคลิกเดียว</value>
   </data>
+  <data name="Only gateway-owned fields are rewritten: virtual model → physical model upstream, physical model → virtual model downstream; &lt;code&gt;stream&lt;/code&gt; is normalized; missing &lt;code&gt;keep_alive&lt;/code&gt; receives the request/provider default." xml:space="preserve">
+    <value>เฉพาะฟิลด์ที่เกตเวย์เป็นเจ้าของเท่านั้นที่จะถูกเขียนใหม่: รุ่นเสมือน → รุ่นทางกายภาพ ไปยังฝั่งอัพสตรีม, รุ่นทางกายภาพ → รุ่นเสมือน ไปยังฝั่งดาวน์สตรีม; &lt;code&gt;stream&lt;/code&gt; จะได้รับการปรับให้เป็นมาตรฐาน; ค่า &lt;code&gt;keep_alive&lt;/code&gt; ที่หายไปจะรับค่าเริ่มต้นจากรายการคำขอ/ผู้ให้บริการ</value>
+  </data>
+  <data name="Only model identity, stream intent, and configured VM options are gateway-owned. Upstream physical model names are replaced with the virtual model in response objects and events." xml:space="preserve">
+    <value>เฉพาะตัวตนของโมเดล ความตั้งใจในการสตรีม และตัวเลือก VM ที่กำหนดค่าเท่านั้นที่เป็นของเกตเวย์ ชื่อโมเดลกายภาพจากต้นทางจะถูกแทนที่ด้วยโมเดลเสมือนในออบเจ็กต์และเหตุการณ์การตอบกลับ</value>
+  </data>
+  <data name="Only the selected route is shown" xml:space="preserve">
+    <value>แสดงเฉพาะเส้นทางที่เลือกเท่านั้น</value>
+  </data>
   <data name="Open Source" xml:space="preserve">
     <value>โอเพนซอร์ส</value>
   </data>
@@ -774,17 +1035,44 @@
   <data name="OpenAI → OpenAI" xml:space="preserve">
     <value>OpenAI → OpenAI</value>
   </data>
+  <data name="OpenAI &lt;code&gt;input&lt;/code&gt; is sent as Ollama &lt;code&gt;input&lt;/code&gt;; &lt;code&gt;embeddings[]&lt;/code&gt; and &lt;code&gt;prompt_eval_count&lt;/code&gt; are reconstructed as OpenAI &lt;code&gt;data[]&lt;/code&gt; and &lt;code&gt;usage&lt;/code&gt;." xml:space="preserve">
+    <value>OpenAI &lt;code&gt;input&lt;/code&gt; จะถูกส่งเป็น Ollama &lt;code&gt;input&lt;/code&gt;; &lt;code&gt;embeddings[]&lt;/code&gt; และ &lt;code&gt;prompt_eval_count&lt;/code&gt; จะถูกสร้างใหม่เป็น OpenAI &lt;code&gt;data[]&lt;/code&gt; และ &lt;code&gt;usage&lt;/code&gt;</value>
+  </data>
   <data name="OpenAI API Translation" xml:space="preserve">
     <value>การแปล API ของ OpenAI</value>
   </data>
   <data name="OpenAI Backend" xml:space="preserve">
     <value>OpenAI Backend</value>
   </data>
+  <data name="OpenAI Chat Completions client routes" xml:space="preserve">
+    <value>เส้นทางไคลเอนต์ OpenAI Chat Completions</value>
+  </data>
   <data name="OpenAI Client" xml:space="preserve">
     <value>OpenAI Client</value>
   </data>
+  <data name="OpenAI content parts → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → boolean &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;." xml:space="preserve">
+    <value>ส่วนประกอบเนื้อหา OpenAI → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → ค่าบูลีน &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;.</value>
+  </data>
+  <data name="OpenAI embedding extensions outside the shared input are not copied into the cross-dialect request or reconstructed response." xml:space="preserve">
+    <value>ส่วนขยายของการฝังตัวของ OpenAI ที่อยู่นอกเขตข้อมูลอินพุตร่วมกันจะไม่ถูกคัดลอกไปยังคำขอข้ามรูปแบบหรือการตอบสนองที่สร้างใหม่</value>
+  </data>
+  <data name="OpenAI embedding input" xml:space="preserve">
+    <value>ข้อมูลเข้า OpenAI embedding</value>
+  </data>
   <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
     <value>สารบัญเนื้อหาหลายรูปแบบของ OpenAI ถูกแยกออก: ข้อมูล image_url ถูกส่งไปยังอาร์เรย์รูปภาพของ Ollama ส่วนข้อความจะกลายเป็นเนื้อหา</value>
+  </data>
+  <data name="OpenAI Responses client routes" xml:space="preserve">
+    <value>เส้นทางไคลเอ็นต์ OpenAI Responses</value>
+  </data>
+  <data name="OpenAI target fields &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_tokens&lt;/code&gt; use VM values when set. VM &lt;code&gt;Thinking&lt;/code&gt; overrides the translated client value." xml:space="preserve">
+    <value>ฟิลด์เป้าหมายของ OpenAI &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; และ &lt;code&gt;max_tokens&lt;/code&gt; จะใช้ค่า VM เมื่อมีการตั้งค่า ค่า VM &lt;code&gt;Thinking&lt;/code&gt; จะทับซ้อนค่าไคลเอนต์ที่แปลงแล้ว</value>
+  </data>
+  <data name="OpenAI-type Provider" xml:space="preserve">
+    <value>ผู้ให้บริการแบบ OpenAI</value>
+  </data>
+  <data name="Opencode and Qwen Code working with OllamaGateway" xml:space="preserve">
+    <value>Opencode และ Qwen Code ทำงานร่วมกับ OllamaGateway</value>
   </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>การผสานรวม OpenID Connect</value>
@@ -828,6 +1116,15 @@
   <data name="Permission discovery and sync" xml:space="preserve">
     <value>การค้นพบและการซิงค์สิทธิ์</value>
   </data>
+  <data name="Physical backend protocol" xml:space="preserve">
+    <value>โปรโตคอลแบ็กเอนด์ทางกายภาพ</value>
+  </data>
+  <data name="Physical provider metadata is not proxied; Ollama runtime details are placeholders or omitted." xml:space="preserve">
+    <value>ไม่มีการต่อทอดเมตาข้อมูลของผู้ให้บริการจริง รายละเอียดสภาพแวดล้อมการทำงานของ Ollama เป็นค่าชั่วคราวหรือถูกละเว้น</value>
+  </data>
+  <data name="Policy and implementation" xml:space="preserve">
+    <value>นโยบายและการดำเนินการ</value>
+  </data>
   <data name="Pre-configured and tested" xml:space="preserve">
     <value>ตั้งค่าล่วงหน้าและผ่านการทดสอบแล้ว</value>
   </data>
@@ -837,8 +1134,23 @@
   <data name="Pre-configured pipelines for dev/prod" xml:space="preserve">
     <value>ท่อส่งงานที่พร้อมใช้งานสำหรับ dev/prod</value>
   </data>
+  <data name="Preserved" xml:space="preserve">
+    <value>คงไว้</value>
+  </data>
+  <data name="Preserved / mapped" xml:space="preserve">
+    <value>คงไว้ / ทำการแมป</value>
+  </data>
   <data name="Private AI" xml:space="preserve">
     <value>AI ส่วนตัว</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>ผู้ให้บริการ</value>
+  </data>
+  <data name="Provider adapter selection uses &lt;code&gt;ProviderType&lt;/code&gt;, not chat &lt;code&gt;BackendProtocol&lt;/code&gt;. No Ollama VM options are injected into an OpenAI embedding target." xml:space="preserve">
+    <value>การเลือก Adapter ของผู้ให้บริการใช้ &lt;code&gt;ProviderType&lt;/code&gt; ไม่ใช่ chat &lt;code&gt;BackendProtocol&lt;/code&gt; ตัวเลือก VM ของ Ollama จะไม่ถูกแทรกไปยังเป้าหมาย Embedding ของ OpenAI</value>
+  </data>
+  <data name="Provider type and backend protocol are separate. No physical Anthropic backend adapter exists today." xml:space="preserve">
+    <value>ประเภทผู้ให้บริการและโปรโตคอลแบ็กเอนด์แยกจากกัน ปัจจุบันยังไม่มีอะแดปเตอร์แบ็กเอนด์ Anthropic ทางกายภาพ</value>
   </data>
   <data name="Quality Gate" xml:space="preserve">
     <value>เกตเวย์คุณภาพ</value>
@@ -855,11 +1167,23 @@
   <data name="Recommended Models" xml:space="preserve">
     <value>โมเดลที่แนะนำ</value>
   </data>
+  <data name="Remote image URLs are not a portable Ollama-native contract; base64 is the verified path. Thinking signatures are discarded. Unknown content blocks remain a hard rejection; unknown top-level controls are omitted when this translated fallback is used." xml:space="preserve">
+    <value>URL ของภาพระยะไกลไม่ใช่สัญญาแบบ Ollama-native ที่พกพาได้; base64 คือเส้นทางที่ได้รับการยืนยัน ลายเซ็นการคิดจะถูกทิ้ง บล็อกเนื้อหาที่ไม่รู้จักยังคงถูกปฏิเสธอย่างเด็ดขาด; การควบคุมระดับบนสุดที่ไม่รู้จักจะถูกละเลยเมื่อใช้การตกกลับแบบแปลนี้</value>
+  </data>
+  <data name="Remote image URLs have no portable Ollama-native representation; base64/data-URI is the verified conversion. Chat-only controls such as penalties/logprobs/seed prefer a Chat backend and are omitted when Ollama is the only eligible route." xml:space="preserve">
+    <value>URL ของรูปภาพระยะไกลไม่มีรูปแบบเฉพาะของ Ollama ที่พกพาได้ การแปลงเป็น base64/data-URI เป็นวิธีที่ได้รับการยืนยันแล้ว ตัวควบคุมที่ใช้ได้เฉพาะกับ Chat เช่น penalties/logprobs/seed จะทำงานได้ดีกว่ากับ Backend แบบ Chat และจะถูกตัดออกเมื่อ Ollama เป็นเส้นทางที่รองรับเพียงอย่างเดียว</value>
+  </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>การลงโทษการทำซ้ำ</value>
   </data>
   <data name="Request &amp; Response Auditing" xml:space="preserve">
     <value>การตรวจสอบคำขอและการตอบกลับ</value>
+  </data>
+  <data name="Requester&apos;s API" xml:space="preserve">
+    <value>API ของผู้ขอเรียกใช้</value>
+  </data>
+  <data name="requires a Responses-capable provider" xml:space="preserve">
+    <value>ต้องใช้ผู้ให้บริการที่รองรับ Responses</value>
   </data>
   <data name="Requires Laravel Socialite config" xml:space="preserve">
     <value>ต้องมีการตั้งค่า Laravel Socialite</value>
@@ -875,6 +1199,15 @@
   </data>
   <data name="Robust Integration Testing" xml:space="preserve">
     <value>การทดสอบการรวมระบบที่มั่นคง</value>
+  </data>
+  <data name="Roles, text, system/developer instructions, images, function tools, function calls/results, temperature, top-p, token limit, structured format, stream, reasoning output, finish state, and usage." xml:space="preserve">
+    <value>บทบาท ข้อความ คำสั่งระบบ/นักพัฒนา รูปภาพ เครื่องมือฟังก์ชัน การเรียกใช้/ผลลัพธ์ของฟังก์ชัน อุณหภูมิ top-p จำกัดจำนวนโทเค็น รูปแบบโครงสร้าง การสตรีม ผลลัพธ์การให้เหตุผล สถานะเสร็จสิ้น และการใช้งาน</value>
+  </data>
+  <data name="Roles/text, data-URI images, function tools/calls/results, temperature, top-p, token limit, reasoning text, structured output intent, stream, finish reason, and usage." xml:space="preserve">
+    <value>บทบาท/ข้อความ, รูปภาพข้อมูล URI, ฟังก์ชันเครื่องมือ/การเรียกใช้/ผลลัพธ์, อุณหภูมิ, top-p, จำนวนโทเค็นสูงสุด, ข้อความเหตุผล,เจตนาเอาต์พุตที่มีโครงสร้าง, สตรีม, เหตุผลในการสิ้นสุด, และการใช้งาน</value>
+  </data>
+  <data name="Roles/text, images, function tools/calls/results, temperature, top-p, maximum output tokens, reasoning effort/output, structured output, streaming, finish reason, and usage." xml:space="preserve">
+    <value>บทบาท/ข้อความ, รูปภาพ, เครื่องมือฟังก์ชัน/การเรียกใช้/ผลลัพธ์, อุณหภูมิ, top-p, โทเค็นเอาต์พุตสูงสุด, ความพยายาม/เอาต์พุตในการให้เหตุผล, เอาต์พุตแบบมีโครงสร้าง, การสตรีม, เหตุผลในการสิ้นสุด, และการใช้งาน</value>
   </data>
   <data name="Runs without any internet connection required." xml:space="preserve">
     <value>ทำงานได้โดยไม่ต้องใช้การเชื่อมต่ออินเทอร์เน็ต</value>
@@ -893,6 +1226,12 @@
   </data>
   <data name="Security and Auditing by Design." xml:space="preserve">
     <value>ความปลอดภัยและการตรวจสอบโดยออกแบบ</value>
+  </data>
+  <data name="Select backend protocol" xml:space="preserve">
+    <value>เลือกโปรโตคอลแบ็กเอนด์</value>
+  </data>
+  <data name="Select requester API" xml:space="preserve">
+    <value>เลือก API ของผู้ร้องขอ</value>
   </data>
   <data name="Shift with confidence" xml:space="preserve">
     <value>เปลี่ยนไปอย่างมั่นใจ</value>
@@ -939,6 +1278,15 @@
   <data name="Starts without any configuration" xml:space="preserve">
     <value>เริ่มใช้งานได้ทันทีโดยไม่ต้องตั้งค่าใดๆ</value>
   </data>
+  <data name="state-aware" xml:space="preserve">
+    <value>ตระหนักถึงสถานะ</value>
+  </data>
+  <data name="State/background requests require a Responses backend. Native Responses tools and unknown Items also require Responses. Metadata and unknown top-level controls prefer Responses and are omitted on fallback. Responses-only annotations/citations cannot be recreated from Chat output." xml:space="preserve">
+    <value>คำขอแบบมีสถานะ/พื้นหลังต้องใช้ backend Responses เครื่องมือ Responses แบบเนทีฟและ Items ที่ไม่รู้จักยังต้องการ Responses เช่นกัน Metadata และตัวควบคุมระดับบนสุดที่ไม่รู้จักจะเลือกใช้ Responses และจะถูกละเว้นเมื่อใช้วิธีสำรอง หมายเหตุอ้างอิง/การอ้างอิงที่มีเฉพาะใน Responses ไม่สามารถสร้างใหม่จากผลลัพธ์ของ Chat ได้</value>
+  </data>
+  <data name="Stateful controls pass through to native Responses providers and are never silently translated." xml:space="preserve">
+    <value>การควบคุมแบบมีสถานะจะส่งผ่านไปยังผู้ให้บริการ Responses แบบเนทีฟ และจะไม่มีการแปลโดยอัตโนมัติอย่างเงียบๆ</value>
+  </data>
   <data name="Stop Coding Boilerplate." xml:space="preserve">
     <value>หยุดเขียนโค้ดซ้ำซ้อน</value>
   </data>
@@ -975,6 +1323,24 @@
   <data name="Supports JetBrains Rider for easy code style fixes." xml:space="preserve">
     <value>รองรับ JetBrains Rider สำหรับการแก้ไขรูปแบบโค้ดอย่างง่าย</value>
   </data>
+  <data name="System → &lt;code&gt;instructions&lt;/code&gt;; messages/images → Responses input Items; Anthropic tools → Responses function tools; named tool choice → Responses &lt;code&gt;name&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; Responses reasoning/text/function output → Anthropic blocks." xml:space="preserve">
+    <value>System → &lt;code&gt;instructions&lt;/code&gt;; ข้อความ/รูปภาพ → รายการอินพุตของ Responses; เครื่องมือ Anthropic → เครื่องมือฟังก์ชันของ Responses; การเลือกเครื่องมือแบบระบุชื่อ → &lt;code&gt;name&lt;/code&gt; ของ Responses; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; ผลลัพธ์การให้เหตุผล/ข้อความ/ฟังก์ชันของ Responses → บล็อก Anthropic.</value>
+  </data>
+  <data name="System instructions, text, base64/URL images, function tools/calls/results, tool choice, temperature, top-p, max tokens, response reasoning text, stream, finish state, and usage." xml:space="preserve">
+    <value>คำสั่งระบบ ข้อความ รูปภาพแบบ base64/URL เครื่องมือฟังก์ชัน/การเรียกใช้/ผลลัพธ์ การเลือกเครื่องมือ อุณหภูมิ top-p จำนวนโทเค็นสูงสุด ข้อความเหตุผลในการตอบกลับ การส่งข้อมูลแบบสตรีม สถานะการสิ้นสุด และการใช้งาน</value>
+  </data>
+  <data name="System messages → &lt;code&gt;instructions&lt;/code&gt;; messages → Responses &lt;code&gt;input&lt;/code&gt; Items; images → &lt;code&gt;input_image&lt;/code&gt;; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;; function tool shapes are flattened." xml:space="preserve">
+    <value>ข้อความระบบ → &lt;code&gt;instructions&lt;/code&gt;; ข้อความ → รายการ &lt;code&gt;input&lt;/code&gt; ของ Responses; รูปภาพ → &lt;code&gt;input_image&lt;/code&gt;; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;; โครงสร้างของเครื่องมือฟังก์ชันถูกทำให้เรียบ</value>
+  </data>
+  <data name="System text, message text, base64 images, tool definitions, &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt;, tool choice modes, temperature, top-p, max tokens, visible reasoning text, stream, finish reason, and usage." xml:space="preserve">
+    <value>ข้อความระบบ ข้อความในภาพ ข้อความฐานข้อมูล base64 ภาพ ข้อความพื้นฐาน เครื่องมือ definitions &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt; โหมดการเลือกเครื่องมือ อุณหภูมิ top-p จำนวนโทเค็นสูงสุด ข้อความเหตุผลที่มองเห็นได้ สตรีม เหตุผลในการใช้งาน และปริมาณการใช้งาน</value>
+  </data>
+  <data name="System/developer messages → &lt;code&gt;instructions&lt;/code&gt;; messages → &lt;code&gt;input&lt;/code&gt; Items; function schemas are flattened; named &lt;code&gt;tool_choice.function.name&lt;/code&gt; → Responses &lt;code&gt;tool_choice.name&lt;/code&gt;; &lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;." xml:space="preserve">
+    <value>ข้อความระบบ/นักพัฒนา → &lt;code&gt;instructions&lt;/code&gt;; ข้อความ → รายการ &lt;code&gt;input&lt;/code&gt;; lượcนำฟังก์ชันถูกปรับให้แบนราบ; ชื่อ &lt;code&gt;tool_choice.function.name&lt;/code&gt; → Responses &lt;code&gt;tool_choice.name&lt;/code&gt;; &lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;.</value>
+  </data>
+  <data name="System/messages, text, base64 and URL images, function tools/calls/results, tool choice, temperature, top-p, max tokens, reasoning text, stream, finish reason, and usage." xml:space="preserve">
+    <value>ข้อความระบบ/ข้อความ, ข้อความ, รูปภาพ base64 และ URL, เครื่องมือฟังก์ชัน/การเรียกใช้/ผลลัพธ์, ตัวเลือกเครื่องมือ, อุณหภูมิ, top-p, โทเค็นสูงสุด, ข้อความเหตุผล, การสตรีม, เหตุผลในการสิ้นสุด, และการใช้งาน</value>
+  </data>
   <data name="Task Runner" xml:space="preserve">
     <value>ผู้จัดการงาน</value>
   </data>
@@ -987,14 +1353,38 @@
   <data name="The definitive, battle-tested .NET enterprise foundation. From Auth to AI, we&apos;ve solved the hard parts so you don&apos;t have to." xml:space="preserve">
     <value>พื้นฐานองค์กร .NET ที่เป็นที่สุดและผ่านการทดสอบในสนามรบแล้ว ตั้งแต่การยืนยันตัวตน (Auth) ไปจนถึงปัญญาประดิษฐ์ (AI) เราได้แก้ปัญหาที่ยากลำบากแล้ว เพื่อให้คุณไม่ต้องทำเอง</value>
   </data>
+  <data name="The gateway decodes both sides through its canonical chat model. Only semantics representable by the target protocol can cross this route." xml:space="preserve">
+    <value>เกตเวย์จะถอดรหัสทั้งสองด้านผ่านโมเดลแชทมาตรฐาน โดยเฉพาะความหมายที่สามารถแทนได้ด้วยโปรโตคอลเป้าหมายเท่านั้นที่จะสามารถส่งผ่านเส้นทางนี้ได้</value>
+  </data>
+  <data name="The gateway keeps the protocol shape and rewrites only gateway-owned values and configured policy fields." xml:space="preserve">
+    <value>เกตเวย์รักษาโครงสร้างโปรโตคอลและเขียนใหม่เฉพาะค่าที่เกตเวย์เป็นเจ้าของและฟิลด์นโยบายที่กำหนดค่าไว้เท่านั้น</value>
+  </data>
   <data name="The navigation bar automatically adjusts based on user roles and permissions." xml:space="preserve">
     <value>แถบนำทางจะปรับเปลี่ยนโดยอัตโนมัติตามบทบาทและสิทธิ์ของผู้ใช้</value>
+  </data>
+  <data name="The original request and successful response JSON are cloned; unknown fields are preserved; model identity is rewritten." xml:space="preserve">
+    <value>JSON ของคำขอเดิมและคำตอบที่สำเร็จจะถูกคัดลอก; ฟิลด์ที่ไม่รู้จักจะถูกรักษาไว้; เอกลักษณ์ของโมเดลจะถูกเขียนใหม่</value>
+  </data>
+  <data name="The original request and successful response JSON are cloned; unknown OpenAI embedding fields are preserved; only model identity is rewritten." xml:space="preserve">
+    <value>JSON ของคำขอเดิมและ응답ที่สำเร็จจะถูกคัดลอก; ฟิลด์การฝังของ OpenAI ที่ไม่รู้จักจะถูกรักษาไว้; มีเพียงตัวตนของโมเดลเท่านั้นที่ถูกเขียนใหม่</value>
   </data>
   <data name="The Philosophy" xml:space="preserve">
     <value>ปรัชญา</value>
   </data>
+  <data name="The provider-level &lt;code&gt;keep_alive&lt;/code&gt; replaces the client value on this route." xml:space="preserve">
+    <value>ค่า &lt;code&gt;keep_alive&lt;/code&gt; ระดับผู้ให้บริการจะแทนที่ค่าไคลเอนต์บนเส้นทางนี้</value>
+  </data>
+  <data name="The request adapter deep-clones the original Responses JSON. &lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt; preserves unknown output Items and SSE event names/data/comments/id/retry without passing the payload through canonical IL." xml:space="preserve">
+    <value>ตัวปรับแต่งคำขอได้ทำการโคลน JSON ของ Responses ต้นฉบับแบบลึก &lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt; จะรักษา Items เอาต์พุตที่ไม่รู้จัก และชื่อ/ข้อมูล/ความคิดเห็น/id/retry ของเหตุการณ์ SSE ไว้ โดยไม่ต้องส่งเพย์โหลดผ่าน IL มาตรฐาน</value>
+  </data>
   <data name="The template is built for easy deployment. It includes full Docker support, so you can containerize your app and run it anywhere. You can also deploy it directly to IIS, Azure App Service, or any server that supports ASP.NET Core." xml:space="preserve">
     <value>เทมเพลตนี้ถูกสร้างขึ้นเพื่อให้การปรับใช้เป็นเรื่องง่าย โดยมีระบบรองรับ Docker เต็มรูปแบบ ทำให้คุณสามารถสร้างคอนเทนเนอร์สำหรับแอปพลิเคชันและรันได้ทุกที่ นอกจากนี้คุณยังสามารถปรับใช้โดยตรงไปยัง IIS, Azure App Service หรือเซิร์ฟเวอร์ใดๆ ที่รองรับ ASP.NET Core ได้อีกด้วย</value>
+  </data>
+  <data name="There is no Chat Completions or Responses translation. A non-Ollama backend returns &lt;code&gt;501&lt;/code&gt;." xml:space="preserve">
+    <value>ไม่มีการแปล Chat Completions หรือ Responses หากใช้ backend ที่ไม่ใช่ Ollama จะส่งคืนค่า &lt;code&gt;501&lt;/code&gt;</value>
+  </data>
+  <data name="These endpoints do not proxy physical provider metadata. Ollama size/digest/runtime details are placeholders or omitted." xml:space="preserve">
+    <value>เอนดพอยต์เหล่านี้ไม่ทำหน้าที่เป็นพร็อกซีสำหรับข้อมูลเมตาของผู้ให้บริการจริง รายละเอียดขนาด/แฮช/รันไทม์ของ Ollama จะเป็นค่าแทนที่หรือถูกตัดออก</value>
   </data>
   <data name="Thinking" xml:space="preserve">
     <value>การคิด</value>
@@ -1004,6 +1394,12 @@
   </data>
   <data name="Thinking Mode (DeepSeek)" xml:space="preserve">
     <value>โหมดคิด (DeepSeek)</value>
+  </data>
+  <data name="Thinking signatures are discarded. Unknown content blocks remain a hard rejection. Anthropic-only top-level controls prefer a future Anthropic backend but are omitted when Chat is the only eligible route." xml:space="preserve">
+    <value>ลายเซ็นการคิดถูกทิ้งไว้ บล็อกเนื้อหาที่ไม่รู้จักยังคงเป็นการปฏิเสธอย่างเด็ดขาด การควบคุมระดับบนสุดเฉพาะของ Anthropic จะใช้แบ็กเอนด์ Anthropic ในอนาคตเป็นหลัก แต่จะถูกตัดออกเมื่อ Chat เป็นเส้นทางที่มีคุณสมบัติเพียงทางเดียว</value>
+  </data>
+  <data name="This avoids recursive upstream discovery when a Provider points back to the gateway and keeps the public catalog scoped to virtual models." xml:space="preserve">
+    <value>สิ่งนี้ช่วยหลีกเลี่ยงการค้นหาต้นทางแบบเรียกซ้ำเมื่อ Provider ชี้กลับไปที่เกตเวย์ และรักษาขอบเขตของแคตตาล็อกสาธารณะให้จำกัดเฉพาะโมเดลเสมือน</value>
   </data>
   <data name="This is a template project" xml:space="preserve">
     <value>นี่คือโครงการต้นแบบ</value>
@@ -1017,8 +1413,26 @@
   <data name="Timezone-aware fields" xml:space="preserve">
     <value>ฟิลด์ที่ตระหนักถึงเขตเวลา</value>
   </data>
+  <data name="Translated" xml:space="preserve">
+    <value>แปลแล้ว</value>
+  </data>
+  <data name="Translated subset" xml:space="preserve">
+    <value>ส่วนย่อยที่แปลแล้ว</value>
+  </data>
+  <data name="Translated through semantic layer" xml:space="preserve">
+    <value>แปลผ่านเลเยอร์ความหมาย</value>
+  </data>
+  <data name="Transparent" xml:space="preserve">
+    <value>โปร่งใส</value>
+  </data>
+  <data name="Transparent, state-aware" xml:space="preserve">
+    <value>โปร่งใส รับรู้สถานะ</value>
+  </data>
   <data name="Trusted by production-grade applications including AnduinOS, StatHub, and Warp. We don&apos;t just share this code; we run our entire business on it." xml:space="preserve">
     <value>ได้รับการไว้วางใจจากแอปพลิเคชันระดับการผลิต รวมถึง AnduinOS, StatHub, และ Warp เรายังไม่เพียงแค่แบ่งปันโค้ดเท่านั้น แต่เราใช้โค้ดนี้ในการดำเนินธุรกิจทั้งหมดของเรา</value>
+  </data>
+  <data name="Two client dialects × two Provider types" xml:space="preserve">
+    <value>ไวยากรณ์ฝั่งไคลเอนต์ 2 แบบ × ประเภทผู้ให้บริการ 2 แบบ</value>
   </data>
   <data name="Unified Env" xml:space="preserve">
     <value>Unified Env</value>
@@ -1028,6 +1442,15 @@
   </data>
   <data name="Universal API Compatibility" xml:space="preserve">
     <value>ความเข้ากันได้ของ API ทั่วไป</value>
+  </data>
+  <data name="Unknown request fields, &lt;code&gt;messages&lt;/code&gt;, &lt;code&gt;tools&lt;/code&gt;, &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;format&lt;/code&gt;, and unknown JSON response fields are retained. Malformed upstream NDJSON records are forwarded raw." xml:space="preserve">
+    <value>ฟิลด์คำขอที่ไม่รู้จัก &lt;code&gt;messages&lt;/code&gt;, &lt;code&gt;tools&lt;/code&gt;, &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;format&lt;/code&gt; และฟิลด์ JSON ในคำตอบที่ไม่รู้จักจะถูกคงไว้ บันทึก NDJSON จากฝั่งต้นทางที่ผิดปกติจะถูกส่งต่อในรูปแบบดิบ</value>
+  </data>
+  <data name="Unknown request fields, message/content extensions, &lt;code&gt;response_format&lt;/code&gt;, &lt;code&gt;reasoning_effort&lt;/code&gt;, vendor fields, unknown response fields, null values, and unrecognized SSE lines remain in the Chat dialect." xml:space="preserve">
+    <value>ฟิลด์คำขอที่ไม่รู้จัก ส่วนขยายข้อความ/เนื้อหา &lt;code&gt;response_format&lt;/code&gt; &lt;code&gt;reasoning_effort&lt;/code&gt; ฟิลด์ของผู้ขาย ฟิลด์การตอบกลับที่ไม่ทราบค่า ค่า null และบรรทัด SSE ที่ไม่ได้รับการยอมรับยังคงอยู่ในรูปแบบ Chat</value>
+  </data>
+  <data name="Unknown top-level and nested request fields, native tools, metadata, future Items, annotations, citations, unknown response fields, future SSE event types, and JSON/non-JSON event data are retained." xml:space="preserve">
+    <value>จะรักษาฟิลด์คำขอระดับบนสุดและแบบซ้อนที่ทราบไม่ไว้ เครื่องมือแบบเนทีฟ เมทาดาตา รายการในอนาคต หมายเหตุอ้างอิง การอ้างอิง ฟิลด์การตอบกลับที่ทราบไม่ไว้ ประเภทเหตุการณ์ SSE ในอนาคต และข้อมูลเหตุการณ์ JSON/ไม่ใช่ JSON ไว้</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>การใช้งาน</value>
@@ -1052,6 +1475,39 @@
   </data>
   <data name="Virtual Models" xml:space="preserve">
     <value>โมเดลเสมือน</value>
+  </data>
+  <data name="Virtual-model names and gateway-owned metadata are rendered directly in the requested client shape." xml:space="preserve">
+    <value>ชื่อโมเดลเสมือนและข้อมูลเมตาที่เกตเวย์เป็นเจ้าของจะถูกแสดงผลโดยตรงในรูปแบบไคลเอนต์ที่ร้องขอ</value>
+  </data>
+  <data name="VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are injected into Ollama &lt;code&gt;options&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt; และ &lt;code&gt;RepeatPenalty&lt;/code&gt; จะถูกแทรกเข้าไปใน &lt;code&gt;options&lt;/code&gt; ของ Ollama</value>
+  </data>
+  <data name="VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; hard-override Ollama &lt;code&gt;options&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt; และ &lt;code&gt;RepeatPenalty&lt;/code&gt; จะกำหนดค่าทับ Ollama &lt;code&gt;options&lt;/code&gt; อย่างเด็ดขาด</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override Chat target controls; Chat-only VM thinking is injected through &lt;code&gt;chat_template_kwargs&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt; และ &lt;code&gt;Thinking&lt;/code&gt; จะทับซ้อนการควบคุมเป้าหมายของ Chat; การคิดของ VM ที่ใช้เฉพาะใน Chat จะถูกส่งผ่าน &lt;code&gt;chat_template_kwargs&lt;/code&gt;</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override Chat target fields. Ollama-only DB sampling/context controls do not apply to Chat." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt; และ &lt;code&gt;Thinking&lt;/code&gt; จะแทนที่ฟิลด์เป้าหมายของ Chat การควบคุมการสุ่ม/บริบทจากฐานข้อมูลแบบเฉพาะ Ollama จะไม่ใช้กับ Chat</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override their target fields. Existing nested &lt;code&gt;chat_template_kwargs&lt;/code&gt; members are preserved around &lt;code&gt;enable_thinking&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt; และ &lt;code&gt;Thinking&lt;/code&gt; จะแทนที่ฟิลด์เป้าหมาย ฟิลด์ย่อยใน &lt;code&gt;chat_template_kwargs&lt;/code&gt; ที่มีอยู่เดิมจะถูกคงไว้รอบๆ &lt;code&gt;enable_thinking&lt;/code&gt;</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other nested Responses fields remain untouched." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; และ &lt;code&gt;NumPredict&lt;/code&gt; จะแทนที่ค่า &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; และ &lt;code&gt;max_output_tokens&lt;/code&gt; ฟิลด์ Responses อื่นๆ ที่ซ้อนอยู่จะคงไว้โดยไม่มีการเปลี่ยนแปลง</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other VM sampling fields are not applicable." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; และ &lt;code&gt;NumPredict&lt;/code&gt; จะแทนค่าของ &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; และ &lt;code&gt;max_output_tokens&lt;/code&gt; โดยลำดับฟิลด์การสุ่มตัวอย่างอื่น ๆ ของ VM ไม่สามารถใช้งานได้</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; และ &lt;code&gt;NumPredict&lt;/code&gt; จะแทนที่ฟิลด์ของ Responses ส่วน VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt; และ &lt;code&gt;RepeatPenalty&lt;/code&gt; ไม่มีฟิลด์เป้าหมายใน Responses</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; และ &lt;code&gt;NumPredict&lt;/code&gt; จะเขียนทับฟิลด์เป้าหมายของ Responses VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt; และ &lt;code&gt;RepeatPenalty&lt;/code&gt; ไม่ใช่ตัวควบคุมของ Responses</value>
+  </data>
+  <data name="VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
+    <value>VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict และ RepeatPenalty จะกำหนดค่าทับคำขอ; หากไม่มี &lt;code&gt;keep_alive&lt;/code&gt; จะใช้ค่าจาก Provider</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>ยินดีต้อนรับ</value>

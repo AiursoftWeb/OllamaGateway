@@ -21,8 +21,14 @@
       <data name="(fallback)" xml:space="preserve">
     <value>（フォールバック）</value>
   </data>
+  <data name="/api/ps: 3 s · /api/version: 5 s · /v1/models: 10 s. UI-only; no health state is persisted." xml:space="preserve">
+    <value>/api/ps: 3秒 · /api/version: 5秒 · /v1/models: 10秒。UIのみで、ヘルスステータスは永続化されません。</value>
+  </data>
   <data name="1. Client Request" xml:space="preserve">
     <value>1. クライアントリクエスト</value>
+  </data>
+  <data name="2 provider types ≠ 3 wire protocols" xml:space="preserve">
+    <value>2つのプロバイダータイプ ≠ 3つのワイヤープロトコル</value>
   </data>
   <data name="2. Authentication &amp; Rate Limiting" xml:space="preserve">
     <value>2. 認証とレート制限</value>
@@ -42,11 +48,26 @@
   <data name="7. Observability Pipeline — Dual Logging &amp; Usage Tracking" xml:space="preserve">
     <value>7. 可観測性パイプライン — ダブルロギングと利用状況の追跡</value>
   </data>
+  <data name="active" xml:space="preserve">
+    <value>アクティブ</value>
+  </data>
+  <data name="After response headers:" xml:space="preserve">
+    <value>レスポンスヘッダー受信後：</value>
+  </data>
+  <data name="after slot acquired" xml:space="preserve">
+    <value>スロット取得後</value>
+  </data>
   <data name="Any OpenAI-compatible or Ollama-native client sends a request." xml:space="preserve">
     <value>OpenAI互換またはOllamaネイティブのクライアントは、リクエストを送信します。</value>
   </data>
+  <data name="API key · virtual model · underlying model" xml:space="preserve">
+    <value>API キー · 仮想モデル · 基盤モデル</value>
+  </data>
   <data name="API Key Verification" xml:space="preserve">
     <value>APIキーの確認</value>
+  </data>
+  <data name="API keys" xml:space="preserve">
+    <value>API キー</value>
   </data>
   <data name="Architecture Guide" xml:space="preserve">
     <value>アーキテクチャガイド</value>
@@ -54,11 +75,23 @@
   <data name="attempts and" xml:space="preserve">
     <value>試行および</value>
   </data>
+  <data name="AUDIT EVENTS" xml:space="preserve">
+    <value>監査イベント</value>
+  </data>
+  <data name="Auth + Rate Limit" xml:space="preserve">
+    <value>認証とレート制限</value>
+  </data>
   <data name="Authentication &amp; API key validation" xml:space="preserve">
     <value>認証とAPIキーの検証</value>
   </data>
   <data name="Authentication &amp; rate limit" xml:space="preserve">
     <value>認証とレート制限</value>
+  </data>
+  <data name="Authentication and per-key rate-limit wait" xml:space="preserve">
+    <value>認証およびキーごとのレート制限の待機時間</value>
+  </data>
+  <data name="Backend DNS, TCP handshake, and TLS" xml:space="preserve">
+    <value>バックエンド DNS、TCP ハンドシェイク、および TLS</value>
   </data>
   <data name="Backend protocol" xml:space="preserve">
     <value>バックエンドプロトコル</value>
@@ -69,17 +102,35 @@
   <data name="Backend protocol is selected per request and provider capability" xml:space="preserve">
     <value>バックエンドプロトコルはリクエストとプロバイダーの機能ごとに選択されます</value>
   </data>
+  <data name="Backend protocols" xml:space="preserve">
+    <value>バックエンドプロトコル</value>
+  </data>
+  <data name="Backend response" xml:space="preserve">
+    <value>バックエンド応答</value>
+  </data>
   <data name="Backends" xml:space="preserve">
     <value>バックエンド</value>
   </data>
   <data name="Bearer token or x-api-key is validated." xml:space="preserve">
     <value>Bearer トークンまたは x-api-key が検証されます。</value>
   </data>
+  <data name="Before model timeout" xml:space="preserve">
+    <value>モデルタイムアウト前</value>
+  </data>
   <data name="Both pipelines are fire-and-forget from the request hot-path. If ClickHouse is down or the buffer is full, requests still succeed — logs are simply dropped (DropWrite). The system never blocks a user request to write a log." xml:space="preserve">
     <value>両方のパイプラインは、リクエストのホットパスに対してファイア・アンド・フォーゲット方式です。ClickHouse がダウンしているか、バッファが満杯でも、リクエストは成功し続けます（ログは単に破棄されます：DropWrite）。システムはログ書き込みのためにユーザーのリクエストをブロックすることはありません。</value>
   </data>
+  <data name="Bounded Channel&lt;RequestLog&gt;: 10,000 entries" xml:space="preserve">
+    <value>有界チャネル&lt;RequestLog&gt;: 10,000 エントリ</value>
+  </data>
   <data name="bounded to" xml:space="preserve">
     <value>に限定された</value>
+  </data>
+  <data name="Buffer" xml:space="preserve">
+    <value>バッファ</value>
+  </data>
+  <data name="Bulk update" xml:space="preserve">
+    <value>一括更新</value>
   </data>
   <data name="but no virtual model with that name and type &apos;Chat&apos; exists in the database." xml:space="preserve">
     <value>データベースにその名前とタイプ &apos;Chat&apos; を持つ仮想モデルは存在しません。</value>
@@ -90,8 +141,20 @@
   <data name="ClickHouse Log Pipeline" xml:space="preserve">
     <value>ClickHouse ログパイプライン</value>
   </data>
+  <data name="Client Decoder" xml:space="preserve">
+    <value>クライアントデコーダー</value>
+  </data>
+  <data name="Client JSON" xml:space="preserve">
+    <value>クライアント JSON</value>
+  </data>
+  <data name="Cold-start model loading" xml:space="preserve">
+    <value>コールドスタートモデル読み込み</value>
+  </data>
   <data name="Configuration" xml:space="preserve">
     <value>設定</value>
+  </data>
+  <data name="CONFIGURATION REQUIRED" xml:space="preserve">
+    <value>設定が必要です</value>
   </data>
   <data name="Control Plane" xml:space="preserve">
     <value>コントロールプレーン</value>
@@ -108,14 +171,32 @@
   <data name="create it here → New Virtual Model" xml:space="preserve">
     <value>ここで作成 → 新しい仮想モデル</value>
   </data>
+  <data name="CROSS DIALECT" xml:space="preserve">
+    <value>クロスダイアレクト</value>
+  </data>
+  <data name="CURRENT INSTANCE · LIVE" xml:space="preserve">
+    <value>現在のインスタンス · ライブ</value>
+  </data>
   <data name="Current Value" xml:space="preserve">
     <value>現在の値</value>
   </data>
   <data name="Dashboard Plane" xml:space="preserve">
     <value>ダッシュボードプレーン</value>
   </data>
+  <data name="Dashboard totals are DB-backed, with nominal ≤ 3 minute lag" xml:space="preserve">
+    <value>ダッシュボードの合計はデータベースで管理されており、標準的に3分以内の遅延があります</value>
+  </data>
   <data name="Data Plane" xml:space="preserve">
     <value>データプレーン</value>
+  </data>
+  <data name="Decoder" xml:space="preserve">
+    <value>デコーダ</value>
+  </data>
+  <data name="Decoder → Event IR → Client Writer" xml:space="preserve">
+    <value>デコーダー → イベント IR → クライアントライター</value>
+  </data>
+  <data name="Deep clone" xml:space="preserve">
+    <value>ディープクローン</value>
   </data>
   <data name="Default chat model is unavailable" xml:space="preserve">
     <value>デフォルトのチャットモデルは利用できません</value>
@@ -126,11 +207,17 @@
   <data name="Default virtual model" xml:space="preserve">
     <value>デフォルト仮想モデル</value>
   </data>
+  <data name="Dialect contract" xml:space="preserve">
+    <value>方言契約</value>
+  </data>
   <data name="does not match a Chat virtual model in the database. Requests without an explicit model cannot be resolved." xml:space="preserve">
     <value>データベース内のチャット仮想モデルと一致しません。明示的なモデルを指定しないリクエストは解決できません。</value>
   </data>
   <data name="drains buffer, batch-inserts into ClickHouse" xml:space="preserve">
     <value>バッファを排空し、ClickHouse にバッチ挿入します</value>
+  </data>
+  <data name="DropWrite when full; enqueue never blocks the request" xml:space="preserve">
+    <value>満杯時は DropWrite; キューへの追加はリクエストをブロックしません</value>
   </data>
   <data name="Dual observability pipeline" xml:space="preserve">
     <value>デュアル可観測性パイプライン</value>
@@ -138,8 +225,14 @@
   <data name="Each API key has its own rate-limit window. Two modes:" xml:space="preserve">
     <value>各APIキーには独自のレート制限ウィンドウがあります。2つのモード：</value>
   </data>
+  <data name="Each eligible backend is attempted once before a second pass. Three consecutive failures activate the circuit breaker; a later success clears it." xml:space="preserve">
+    <value>2回目の試行前に、条件を満たす各バックエンドを1回ずつ試行します。連続3回の失敗でサーキットブレーカーが作動し、その後の成功で解除されます。</value>
+  </data>
   <data name="Embedding and non-chat APIs" xml:space="preserve">
     <value>埋め込みおよびチャット以外のAPI</value>
+  </data>
+  <data name="Embeddings" xml:space="preserve">
+    <value>埋め込み</value>
   </data>
   <data name="entries, DropWrite when full" xml:space="preserve">
     <value>エントリ、満杯時は DropWrite</value>
@@ -153,8 +246,14 @@
   <data name="Example" xml:space="preserve">
     <value>例</value>
   </data>
+  <data name="EXECUTION BOUNDARIES" xml:space="preserve">
+    <value>実行境界</value>
+  </data>
   <data name="Fallback budget for the current default model" xml:space="preserve">
     <value>現在のデフォルトモデルのフォールバック予算</value>
+  </data>
+  <data name="Fallback per-model loading timeout. Native Ollama only; the background job runs every 5 minutes." xml:space="preserve">
+    <value>モデルごとの読み込みタイムアウトのフォールバック。ネイティブ Ollama のみ適用; バックグラウンドジョブは5分間隔で実行されます。</value>
   </data>
   <data name="Fallback Timeline" xml:space="preserve">
     <value>フォールバックタイムライン</value>
@@ -165,11 +264,29 @@
   <data name="Fix it here → Global Settings" xml:space="preserve">
     <value>ここで修正 → グローバル設定</value>
   </data>
+  <data name="FIXED ARCHITECTURE CONTRACT" xml:space="preserve">
+    <value>固定アーキテクチャ契約</value>
+  </data>
+  <data name="Flush every 2 minutes in batches" xml:space="preserve">
+    <value>2分ごとにバッチ処理でフラッシュします</value>
+  </data>
+  <data name="Flush every 3 minutes" xml:space="preserve">
+    <value>3分ごとにフラッシュ</value>
+  </data>
   <data name="Four independent timeout planes" xml:space="preserve">
     <value>4つの独立したタイムアウトプレーン</value>
   </data>
+  <data name="Gateway overrides" xml:space="preserve">
+    <value>ゲートウェイ上書き</value>
+  </data>
+  <data name="Gateway-owned responses expose virtual models and avoid recursive upstream discovery." xml:space="preserve">
+    <value>ゲートウェイ管理のレスポンスは仮想モデルを公開し、再帰的なアップストリーム検索を回避します。</value>
+  </data>
   <data name="GPU processes tokens. Once loaded, subsequent requests skip loading → straight to inference." xml:space="preserve">
     <value>GPUがトークンを処理します。ロード後は、以降のリクエストで読み込みをスキップし、推論に直接進みます。</value>
+  </data>
+  <data name="Hang" xml:space="preserve">
+    <value>保留</value>
   </data>
   <data name="Hang mode" xml:space="preserve">
     <value>待機モード</value>
@@ -177,8 +294,17 @@
   <data name="Hardcoded" xml:space="preserve">
     <value>ハードコード済み</value>
   </data>
+  <data name="Header timeout" xml:space="preserve">
+    <value>ヘッダータイムアウト</value>
+  </data>
   <data name="Health Check" xml:space="preserve">
     <value>ヘルスチェック</value>
+  </data>
+  <data name="health timeout" xml:space="preserve">
+    <value>ヘルスチェックタイムアウト</value>
+  </data>
+  <data name="Hot-path increment" xml:space="preserve">
+    <value>ホットパスのインクリメント</value>
   </data>
   <data name="How a request flows through the Ollama Gateway — from client contract to selected backend protocol." xml:space="preserve">
     <value>クライアント契約から選択されたバックエンドプロトコルまで、リクエストがOllama Gatewayをどのように処理するか。</value>
@@ -204,8 +330,14 @@
   <data name="Immediately return HTTP 429." xml:space="preserve">
     <value>即座にHTTP 429を返します。</value>
   </data>
+  <data name="In-memory to relational DB" xml:space="preserve">
+    <value>メモリからリレーショナルDBへ</value>
+  </data>
   <data name="In-Memory Usage Tracking" xml:space="preserve">
     <value>メモリ内使用量追跡</value>
+  </data>
+  <data name="Inbound dialects" xml:space="preserve">
+    <value>入力プロトコル</value>
   </data>
   <data name="Inference" xml:space="preserve">
     <value>推論</value>
@@ -225,11 +357,17 @@
   <data name="Limit" xml:space="preserve">
     <value>制限</value>
   </data>
+  <data name="Live configuration" xml:space="preserve">
+    <value>ライブ構成</value>
+  </data>
   <data name="Logs include: user, model, provider, tokens, latency, status code, conversation count" xml:space="preserve">
     <value>ログには、ユーザー、モデル、プロバイダー、トークン数、レイテンシ、ステータスコード、会話数が含まれます。</value>
   </data>
   <data name="Max" xml:space="preserve">
     <value>最大</value>
+  </data>
+  <data name="Max attempts" xml:space="preserve">
+    <value>最大試行回数</value>
   </data>
   <data name="Max Retries" xml:space="preserve">
     <value>最大リトライ回数</value>
@@ -240,11 +378,23 @@
   <data name="Model" xml:space="preserve">
     <value>モデル</value>
   </data>
+  <data name="Model and capabilities" xml:space="preserve">
+    <value>モデルと機能</value>
+  </data>
+  <data name="Model discovery" xml:space="preserve">
+    <value>モデルの検出</value>
+  </data>
   <data name="Model Loading" xml:space="preserve">
     <value>モデルの読み込み</value>
   </data>
   <data name="Model loading time (cold start on GPU)" xml:space="preserve">
     <value>モデルの読み込み時間（GPU でのコールドスタート）</value>
+  </data>
+  <data name="Native Ollama only. A non-Ollama selected backend returns HTTP 501." xml:space="preserve">
+    <value>ネイティブ Ollama のみ。Ollama 以外のバックエンドを選択すると、HTTP 501 が返されます。</value>
+  </data>
+  <data name="Native Responses" xml:space="preserve">
+    <value>ネイティブレスポンス</value>
   </data>
   <data name="needs another 30 s to finish → completely fine ✅" xml:space="preserve">
     <value>完了まであと30秒必要 → 問題なし ✅</value>
@@ -255,8 +405,17 @@
   <data name="No concurrency limit — requests pass through immediately" xml:space="preserve">
     <value>並行処理の制限なし — リクエストは即時通過します</value>
   </data>
+  <data name="No database write on every model request" xml:space="preserve">
+    <value>モデルリクエストごとにデータベース書き込みを行わない</value>
+  </data>
+  <data name="No default chat virtual model is available." xml:space="preserve">
+    <value>デフォルトのチャット仮想モデルが利用できません。</value>
+  </data>
   <data name="No providers configured yet." xml:space="preserve">
     <value>まだプロバイダーが設定されていません。</value>
+  </data>
+  <data name="NON-BLOCKING HOT PATH" xml:space="preserve">
+    <value>ノンブロッキングホットパス</value>
   </data>
   <data name="not found. Create it to see real configuration here." xml:space="preserve">
     <value>見つかりません。実際の設定を表示するには作成してください。</value>
@@ -267,17 +426,32 @@
   <data name="Observability" xml:space="preserve">
     <value>可観測性</value>
   </data>
+  <data name="Ollama model warmup" xml:space="preserve">
+    <value>Ollama モデルのウォームアップ</value>
+  </data>
+  <data name="Ollama uses its configured timeout for /api/tags and /api/ps. OpenAI /v1/models is fixed at 10 s." xml:space="preserve">
+    <value>Ollamaは/api/tagsおよび/api/psに対して設定されたタイムアウトを使用します。OpenAIの/v1/modelsは10秒に固定されています。</value>
+  </data>
   <data name="Once the backend sends HTTP headers, the timeout is PASSED. The model can stream tokens for hours — only client disconnection stops it." xml:space="preserve">
     <value>バックエンドがHTTPヘッダーを送信すると、タイムアウトはクリアされます。モデルは何時間もの間トークンをストリーミングし続けることができ、クライアントの切断のみがこれを停止させます。</value>
   </data>
   <data name="One semantic core, protocol-aware edges" xml:space="preserve">
     <value>1つのセマンティックコア、プロトコル対応のエッジ</value>
   </data>
+  <data name="Only shared semantics are translated. Wire extensions prefer a matching backend and fall back to the documented semantic subset; opaque content and unsupported stateful operations remain hard rejections." xml:space="preserve">
+    <value>共有セマンティクスのみが翻訳されます。ワイヤ拡張は一致するバックエンドを優先し、文書化されたセマンティックサブセットにフォールバックします。不透明なコンテンツおよびサポートされていないステートフル操作は、硬性拒否のままです。</value>
+  </data>
   <data name="Open Traffic Visualization" xml:space="preserve">
     <value>トラフィック可視化を開く</value>
   </data>
+  <data name="OpenAI Responses state is preserved only on native Responses routes" xml:space="preserve">
+    <value>OpenAI Responses の状態は、ネイティブの Responses ルートでのみ保持されます</value>
+  </data>
   <data name="or" xml:space="preserve">
     <value>または</value>
+  </data>
+  <data name="Original JSON" xml:space="preserve">
+    <value>元の JSON</value>
   </data>
   <data name="Outside the VM timeout" xml:space="preserve">
     <value>VM タイムアウトの対象外</value>
@@ -287,6 +461,12 @@
   </data>
   <data name="Physical model" xml:space="preserve">
     <value>物理モデル</value>
+  </data>
+  <data name="Preserve protocol-specific payload" xml:space="preserve">
+    <value>プロトコル固有のペイロードを保持する</value>
+  </data>
+  <data name="previous_response_id, conversation, store:true, and background:true pass through unchanged to Responses-capable providers; translated routes return an explicit 400 unsupported_feature." xml:space="preserve">
+    <value>previous_response_id、conversation、store:true、および background:true は Responses 対応プロバイダーに変更されずに渡されます。変換されたルートは明示的な 400 unsupported_feature を返します。</value>
   </data>
   <data name="Pri" xml:space="preserve">
     <value>優先度</value>
@@ -309,14 +489,41 @@
   <data name="Provider concurrency — live process state" xml:space="preserve">
     <value>プロバイダー並列処理 — ライブプロセス状態</value>
   </data>
+  <data name="Provider concurrency queue wait" xml:space="preserve">
+    <value>プロバイダー並列処理キュー待機時間</value>
+  </data>
   <data name="Provider concurrency slot queuing" xml:space="preserve">
     <value>プロバイダー並行スロットのキューイング</value>
+  </data>
+  <data name="Provider health probes" xml:space="preserve">
+    <value>プロバイダーヘルスプローブ</value>
+  </data>
+  <data name="Provider type: Ollama" xml:space="preserve">
+    <value>プロバイダータイプ: Ollama</value>
+  </data>
+  <data name="Provider type: OpenAI" xml:space="preserve">
+    <value>プロバイダー タイプ: OpenAI</value>
+  </data>
+  <data name="Provider types" xml:space="preserve">
+    <value>プロバイダーの種類</value>
   </data>
   <data name="Queue until a slot opens — does NOT consume the virtual model timeout." xml:space="preserve">
     <value>スロットが空くまでキューイングされます（仮想モデルのタイムアウトは消費されません）。</value>
   </data>
+  <data name="queue wait" xml:space="preserve">
+    <value>キュー待ち時間</value>
+  </data>
+  <data name="Queue wait is outside the VM timeout" xml:space="preserve">
+    <value>キュー待機はVMタイムアウトの範囲外です</value>
+  </data>
   <data name="Quick admin dashboard ping. Does NOT write to DB — UI-only." xml:space="preserve">
     <value>管理者ダッシュボードのクイックピング。DBへの書き込みは行われません（UIのみ）。</value>
+  </data>
+  <data name="Quick admin probes" xml:space="preserve">
+    <value>クイック管理プローブ</value>
+  </data>
+  <data name="Rate queue → provider queue → upstream → response lifecycle" xml:space="preserve">
+    <value>レートキュー → プロバイダキュー → アップストリーム → レスポンスライフサイクル</value>
   </data>
   <data name="Rate-limit queue waiting (Hang mode)" xml:space="preserve">
     <value>レート制限キュー待機（ハングモード）</value>
@@ -327,14 +534,38 @@
   <data name="Reads model weights from disk into GPU VRAM. 27GB on NVMe ≈ 5–15s; on HDD/NAS ≈ 3–10 min." xml:space="preserve">
     <value>ディスクからモデルの重みをGPU VRAMに読み込みます。NVMeの場合（27GB）は約5～15秒、HDD/NASの場合は約3～10分です。</value>
   </data>
+  <data name="Reconstruct client JSON or streaming events" xml:space="preserve">
+    <value>クライアントのJSONまたはストリーミングイベントを再構築</value>
+  </data>
+  <data name="Reject" xml:space="preserve">
+    <value>拒否</value>
+  </data>
   <data name="Reject mode" xml:space="preserve">
     <value>拒否モード</value>
+  </data>
+  <data name="Request IR" xml:space="preserve">
+    <value>リクエスト IR</value>
   </data>
   <data name="Request Path" xml:space="preserve">
     <value>リクエストパス</value>
   </data>
   <data name="Request Timeout" xml:space="preserve">
     <value>リクエストタイムアウト</value>
+  </data>
+  <data name="Resolved AI request" xml:space="preserve">
+    <value>完了したAIリクエスト</value>
+  </data>
+  <data name="Resolver + Planner" xml:space="preserve">
+    <value>リゾルバー + プランナー</value>
+  </data>
+  <data name="Response body after headers, streaming or buffered" xml:space="preserve">
+    <value>ヘッダー後のレスポンスボディ（ストリーミングまたはバッファリング）</value>
+  </data>
+  <data name="Response-header deadline" xml:space="preserve">
+    <value>レスポンスヘッダー期限</value>
+  </data>
+  <data name="Return HTTP 429 immediately." xml:space="preserve">
+    <value>HTTP 429を即座に返します。</value>
   </data>
   <data name="runs every" xml:space="preserve">
     <value>ごとに実行されます</value>
@@ -345,11 +576,29 @@
   <data name="Runtime configuration" xml:space="preserve">
     <value>ランタイム設定</value>
   </data>
+  <data name="SAME DIALECT" xml:space="preserve">
+    <value>同じ方言</value>
+  </data>
+  <data name="SEMANTIC GATEWAY · V2" xml:space="preserve">
+    <value>セマンティックゲートウェイ · V2</value>
+  </data>
+  <data name="Semantic Request IR" xml:space="preserve">
+    <value>セマンティックリクエストIR</value>
+  </data>
+  <data name="Semantic translation path" xml:space="preserve">
+    <value>意味変換パス</value>
+  </data>
   <data name="Separate, narrower contracts" xml:space="preserve">
     <value>独立した、より狭い契約</value>
   </data>
+  <data name="Starts after a provider concurrency slot is acquired. Covers DNS, connection, TLS, cold model loading, and waiting for upstream headers." xml:space="preserve">
+    <value>プロバイダーの並行スロットの取得後に開始されます。DNS、接続、TLS、コールドモデルの読み込み、および上流ヘッダーの待機をカバーします。</value>
+  </data>
   <data name="State" xml:space="preserve">
     <value>ステートレス</value>
+  </data>
+  <data name="State-aware" xml:space="preserve">
+    <value>ステート認識型</value>
   </data>
   <data name="Strategy" xml:space="preserve">
     <value>戦略</value>
@@ -357,8 +606,14 @@
   <data name="Streaming response body (after headers received)" xml:space="preserve">
     <value>ストリーミング応答本文（ヘッダー受信後）</value>
   </data>
+  <data name="Swap" xml:space="preserve">
+    <value>スワップ</value>
+  </data>
   <data name="swaps buffers and bulk-updates DB (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)" xml:space="preserve">
     <value>バッファを切り替え、DB (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages) を一括更新します</value>
+  </data>
+  <data name="Target adapter" xml:space="preserve">
+    <value>ターゲットアダプター</value>
   </data>
   <data name="Temperature" xml:space="preserve">
     <value>温度</value>
@@ -372,6 +627,9 @@
   <data name="The global default chat model is set to" xml:space="preserve">
     <value>グローバルのデフォルトチャットモデルはに設定されています</value>
   </data>
+  <data name="The virtual-model deadline no longer applies to the response body. Streaming may continue for hours, but transport failure, upstream closure, client cancellation, gateway shutdown, or decoding errors can still end it." xml:space="preserve">
+    <value>仮想モデルの期限はレスポンスボディには適用されなくなります。ストリーミングは数時間継続する可能性がありますが、トランスポート障害、アップストリーム接続の閉じ、クライアントによるキャンセル、ゲートウェイのシャットダウン、またはデコードエラーによって終了する可能性があります。</value>
+  </data>
   <data name="The warmup background job pings configured models every 5 min to prevent unloading." xml:space="preserve">
     <value>ウォームアップ用のバックグラウンドジョブは、モデルのアンロードを防ぐために、設定されたモデルを5分ごとにピングします。</value>
   </data>
@@ -384,17 +642,38 @@
   <data name="Timeouts &amp; Queues" xml:space="preserve">
     <value>タイムアウトとキュー</value>
   </data>
+  <data name="Total wall-clock time has no fixed upper bound because rate-limit and concurrency queues are outside this budget." xml:space="preserve">
+    <value>レート制限と並列処理キューがこの予算の対象外であるため、合計の経過時間には固定された上限がありません。</value>
+  </data>
   <data name="tracks API key usage, virtual model usage, underlying model usage — feeds the Dashboard charts in real-time" xml:space="preserve">
     <value>API キーの使用状況、仮想モデルの使用状況、基盤モデルの使用状況を追跡し、ダッシュボードのチャートにリアルタイムでデータを供給します</value>
   </data>
   <data name="tracks live in-flight requests — powers the &quot;Live Inference&quot; table and Monitor page" xml:space="preserve">
     <value>実行中のリクエストを追跡 — 「Live Inference」テーブルと Monitor ページを駆動します</value>
   </data>
+  <data name="Transparent wire path" xml:space="preserve">
+    <value>透過型ワイヤパス</value>
+  </data>
   <data name="Tries backends from lowest priority to highest. If backend #1 fails or times out, falls back to #2, then #3." xml:space="preserve">
     <value>優先度が低い順にバックエンドを試行します。バックエンド #1 が失敗またはタイムアウトした場合、#2 にフォールバックし、次に #3 へ移ります。</value>
   </data>
+  <data name="unbounded" xml:space="preserve">
+    <value>上限なし</value>
+  </data>
+  <data name="Unknown representable fields survive. The gateway changes owned fields such as physical model identity and configured VM parameters; translated Responses requests use store:false." xml:space="preserve">
+    <value>不明な表現可能なフィールドは保持されます。ゲートウェイは、物理モデルIDや設定済みVMパラメータなど、所有するフィールドを変更します。翻訳されたResponsesリクエストではstore:falseが使用されます。</value>
+  </data>
   <data name="Unlimited" xml:space="preserve">
     <value>無制限</value>
+  </data>
+  <data name="USAGE COUNTERS" xml:space="preserve">
+    <value>使用カウンター</value>
+  </data>
+  <data name="User, model, provider, token, latency, status, and conversation fields" xml:space="preserve">
+    <value>ユーザー、モデル、プロバイダー、トークン、レイテンシ、ステータス、および会話フィールド</value>
+  </data>
+  <data name="Uses its own two-dialect adapter pipeline. It does not pass through the chat Request/Event IR." xml:space="preserve">
+    <value>独自の実装パイプラインを使用します。チャットの要求/イベント中間表現(IR)は通過しません。</value>
   </data>
   <data name="Virtual model" xml:space="preserve">
     <value>仮想モデル</value>
@@ -402,8 +681,14 @@
   <data name="Virtual Model → Request Timeout (s)" xml:space="preserve">
     <value>バーチャルモデル → リクエストタイムアウト（秒）</value>
   </data>
+  <data name="Wait for the per-key rate window. Waiting does not consume VM timeout." xml:space="preserve">
+    <value>キーごとのレート制限ウィンドウを待機します。待機中はVMのタイムアウトは消費されません。</value>
+  </data>
   <data name="waiting" xml:space="preserve">
     <value>待機</value>
+  </data>
+  <data name="Waiting for backend HTTP response headers" xml:space="preserve">
+    <value>バックエンドの HTTP レスポンスヘッダーを待機中</value>
   </data>
   <data name="Waiting for backend to send HTTP response headers" xml:space="preserve">
     <value>バックエンドからHTTPレスポンスヘッダーを送信するのを待機中</value>
@@ -414,6 +699,9 @@
   <data name="Warmup Plane" xml:space="preserve">
     <value>ウォームアッププレーン</value>
   </data>
+  <data name="Web session" xml:space="preserve">
+    <value>Webセッション</value>
+  </data>
   <data name="What IS counted" xml:space="preserve">
     <value>カウントされる対象</value>
   </data>
@@ -422,6 +710,9 @@
   </data>
   <data name="Where configured" xml:space="preserve">
     <value>設定場所</value>
+  </data>
+  <data name="Wire Writer" xml:space="preserve">
+    <value>ワイターライター</value>
   </data>
   <data name="With" xml:space="preserve">
     <value>～と共に</value>

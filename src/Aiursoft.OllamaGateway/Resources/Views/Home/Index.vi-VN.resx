@@ -30,6 +30,78 @@
   <data name="→ OpenAI-compatible provider" xml:space="preserve">
     <value>→ Nhà cung cấp tương thích OpenAI</value>
   </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama JSON/NDJSON becomes Anthropic message JSON or &lt;code&gt;message_start/content_block_*/message_delta/message_stop&lt;/code&gt; SSE." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → IL chuẩn → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Dữ liệu JSON/NDJSON từ Ollama được chuyển đổi thành JSON tin nhắn Anthropic hoặc các sự kiện SSE &lt;code&gt;message_start/content_block_*/message_delta/message_stop&lt;/code&gt;.</value>
+  </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat JSON/SSE is decoded and reconstructed as Anthropic Messages output." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → IL chuẩn hóa → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat JSON/SSE được giải mã và tái cấu trúc dưới dạng đầu ra Anthropic Messages.</value>
+  </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses Items/events are decoded and rebuilt as Anthropic content blocks and SSE." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → IL chuẩn hóa → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Các Mục/sự kiện Responses được giải mã và xây dựng lại dưới dạng các khối nội dung Anthropic và SSE.</value>
+  </data>
+  <data name="&lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt; has no Responses mapping. Chat-only controls prefer a Chat backend and are omitted on fallback. Responses annotations, citations, and noncanonical output Items cannot be reconstructed in a Chat Completion response." xml:space="preserve">
+    <value>&lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt; không có ánh xạ Responses. Các tùy chỉnh chỉ dành cho Chat ưu tiên backend Chat và bị bỏ qua khi thực hiện dự phòng. Ghi chú, trích dẫn và các mục đầu ra không chuẩn của Responses không thể được tái tạo trong phản hồi Chat Completion.</value>
+  </data>
+  <data name="&lt;code&gt;images[]&lt;/code&gt; → OpenAI &lt;code&gt;image_url&lt;/code&gt; data parts; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;think&lt;/code&gt; → &lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt;; Ollama tool calls and responses are rebuilt as OpenAI tools and back again." xml:space="preserve">
+    <value>&lt;code&gt;images[]&lt;/code&gt; → các phần dữ liệu &lt;code&gt;image_url&lt;/code&gt; của OpenAI; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;think&lt;/code&gt; → &lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt;; lệnh gọi công cụ và phản hồi từ Ollama được xây dựng lại thành công cụ OpenAI và ngược lại.</value>
+  </data>
+  <data name="&lt;code&gt;instructions&lt;/code&gt; → system message; &lt;code&gt;input_text&lt;/code&gt;/&lt;code&gt;input_image&lt;/code&gt; → Ollama content/images; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt;; response events are synthesized with stable output indexes." xml:space="preserve">
+    <value>&lt;code&gt;instructions&lt;/code&gt; → tin nhắn hệ thống; &lt;code&gt;input_text&lt;/code&gt;/&lt;code&gt;input_image&lt;/code&gt; → nội dung/hình ảnh Ollama; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt;; các sự kiện phản hồi được tổng hợp với chỉ mục đầu ra ổn định.</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. The response reverses through &lt;code&gt;OpenAiChatProviderResponseDecoder&lt;/code&gt; and &lt;code&gt;OllamaChatClientResponseWriter&lt;/code&gt;." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Phản hồi đi ngược lại qua &lt;code&gt;OpenAiChatProviderResponseDecoder&lt;/code&gt; và &lt;code&gt;OllamaChatClientResponseWriter&lt;/code&gt;.</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → canonical messages/items → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Typed Responses Items/events are decoded and rebuilt as Ollama JSON/NDJSON." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → tin nhắn/mục tiêu chuẩn hóa → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Các mục/sự kiện Responses đã phân loại được giải mã và xây dựng lại dưới dạng JSON/NDJSON của Ollama.</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; performs capability inspection; &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt; clones the original JSON; &lt;code&gt;OllamaChatWireResponseWriter&lt;/code&gt; keeps NDJSON records in the Ollama dialect." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; thực hiện kiểm tra khả năng; &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt; sao chép JSON gốc; &lt;code&gt;OllamaChatWireResponseWriter&lt;/code&gt; giữ các bản ghi NDJSON theo phương ngữ Ollama.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama response records are decoded into canonical events and emitted as Chat Completion JSON/SSE." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Các bản ghi phản hồi Ollama được giải mã thành các sự kiện chuẩn và phát ra dưới dạng JSON/SSE của Chat Completion.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses output Items/events return through the Responses decoder and Chat client writer." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → IL chuẩn hóa → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Các mục/sự kiện đầu ra Responses được trả về thông qua bộ giải mã Responses và trình ghi máy khách Chat.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; inspects capabilities; the provider adapter clones the source JSON; &lt;code&gt;OpenAiChatWireResponseWriter&lt;/code&gt; forwards Chat JSON/SSE while observing text, reasoning, tools, and usage." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; kiểm tra khả năng; bộ thích ứng nhà cung cấp sao chép JSON nguồn; &lt;code&gt;OpenAiChatWireResponseWriter&lt;/code&gt; chuyển tiếp Chat JSON/SSE trong khi theo dõi văn bản, lập luận, công cụ và tình trạng sử dụng.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiEmbeddingClientAdapter&lt;/code&gt; + &lt;code&gt;OpenAiEmbeddingProviderAdapter&lt;/code&gt;. No VM sampling/context override is injected into an OpenAI embedding request." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiEmbeddingClientAdapter&lt;/code&gt; + &lt;code&gt;OpenAiEmbeddingProviderAdapter&lt;/code&gt;. Không có ghi mẫu/ghi đè ngữ cảnh VM nào được chèn vào yêu cầu nhúng OpenAI.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama output becomes typed Responses Items and typed SSE events." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → IL chuẩn → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Đầu ra Ollama được chuyển thành các phần tử Responses có kiểu và sự kiện SSE có kiểu.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat completions/chunks are decoded and emitted as Responses JSON/typed SSE." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Các phần hoàn thiện/mảng tin trò chuyện được giải mã và phát ra dưới dạng JSON Responses/SSE phân loại.</value>
+  </data>
+  <data name="&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;background&lt;/code&gt;, and &lt;code&gt;store&lt;/code&gt; retain their native Responses semantics. This is not byte-transparent because JSON may be reserialized." xml:space="preserve">
+    <value>&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;background&lt;/code&gt; và &lt;code&gt;store&lt;/code&gt; giữ nguyên ngữ nghĩa Responses gốc. Điều này không trong suốt ở cấp độ byte vì JSON có thể được tuần tự hóa lại.</value>
+  </data>
+  <data name="&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;store:true&lt;/code&gt;, &lt;code&gt;background:true&lt;/code&gt;, native tools, and unknown Items require a Responses backend. Stateless representable requests fall back to translation." xml:space="preserve">
+    <value>&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;store:true&lt;/code&gt;, &lt;code&gt;background:true&lt;/code&gt;, công cụ gốc và các mục không xác định yêu cầu máy chủ Responses. Các yêu cầu có thể biểu diễn không trạng thái sẽ chuyển sang dịch thuật.</value>
+  </data>
+  <data name="&lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt; are hard-overridden when configured." xml:space="preserve">
+    <value>&lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, và &lt;code&gt;think&lt;/code&gt; sẽ bị ghi đè cứng khi được cấu hình.</value>
+  </data>
+  <data name="&lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;keep_alive&lt;/code&gt; have no OpenAI Chat mapping. Unknown Ollama controls prefer a native backend but are omitted when this translation path is the only eligible route." xml:space="preserve">
+    <value>&lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt; và &lt;code&gt;keep_alive&lt;/code&gt; không có bản đồ tương ứng với OpenAI Chat. Các tham số điều khiển Ollama không xác định ưu tiên sử dụng backend gốc nhưng sẽ bị loại bỏ khi đường dẫn dịch thuật này là lựa chọn duy nhất hợp lệ.</value>
+  </data>
+  <data name="2 client dialects × 2 Provider types" xml:space="preserve">
+    <value>2 phương ngữ client × 2 loại Provider</value>
+  </data>
+  <data name="3 backend protocols" xml:space="preserve">
+    <value>3 giao thức backend</value>
+  </data>
+  <data name="3 backend protocols · native state passthrough" xml:space="preserve">
+    <value>3 giao thức backend · truyền trạng thái gốc</value>
+  </data>
+  <data name="3 backend protocols · no physical Anthropic adapter" xml:space="preserve">
+    <value>3 giao thức phía máy chủ · không có bộ chuyển đổi Anthropic vật lý</value>
+  </data>
+  <data name="4 client dialects × 3 backend protocols" xml:space="preserve">
+    <value>4 phương ngữ máy khách × 3 giao thức phía sau</value>
+  </data>
   <data name="A built-in Role-Based Access Control (RBAC) system for fine-grained permission management." xml:space="preserve">
     <value>Hệ thống Kiểm soát Truy cập Dựa trên Vai trò (RBAC) được tích hợp sẵn để quản lý quyền chi tiết.</value>
   </data>
@@ -42,6 +114,9 @@
   <data name="A complete solution for user authentication and profile management." xml:space="preserve">
     <value>Một giải pháp toàn diện cho xác thực người dùng và quản lý hồ sơ.</value>
   </data>
+  <data name="A configured virtual-model value replaces the client-derived value after translation. An unset value leaves the translated value unchanged." xml:space="preserve">
+    <value>Giá trị mô hình ảo được cấu hình sẽ thay thế giá trị do máy khách suy ra sau khi dịch. Giá trị chưa đặt giữ nguyên giá trị đã dịch.</value>
+  </data>
   <data name="A fully responsive layout that looks great on both desktop and mobile devices." xml:space="preserve">
     <value>Bố cục hoàn toàn thích ứng, hiển thị đẹp mắt trên cả thiết bị máy tính để bàn và thiết bị di động.</value>
   </data>
@@ -50,6 +125,9 @@
   </data>
   <data name="Achieve more with Aiursoft Template" xml:space="preserve">
     <value>Đạt được nhiều hơn với Aiursoft Template</value>
+  </data>
+  <data name="Active route" xml:space="preserve">
+    <value>Tuyến đường hoạt động</value>
   </data>
   <data name="Admin Management GUI" xml:space="preserve">
     <value>Giao diện Quản trị Admin</value>
@@ -81,6 +159,15 @@
   <data name="All dependencies are automatically registered and always available via constructor injection." xml:space="preserve">
     <value>Tất cả các dependency đều được tự động đăng ký và luôn sẵn sàng thông qua constructor injection.</value>
   </data>
+  <data name="All Ollama VM controls apply and override translated values: sampling, context, repeat penalty, token limit, and thinking. Ollama-only DB controls may be injected." xml:space="preserve">
+    <value>Tất cả các điều khiển VM của Ollama đều áp dụng và ghi đè lên các giá trị đã dịch: lấy mẫu, ngữ cảnh, phạt lặp lại, giới hạn token và suy nghĩ. Các điều khiển DB chỉ dành cho Ollama có thể được chèn vào.</value>
+  </data>
+  <data name="All Ollama VM controls apply: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt;. Ollama-only values may therefore be injected even though the client dialect cannot express them." xml:space="preserve">
+    <value>Tất cả các điều khiển VM của Ollama đều áp dụng: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, và &lt;code&gt;think&lt;/code&gt;. Do đó, các giá trị chỉ dành cho Ollama có thể được chèn vào ngay cả khi phương ngữ của client không thể biểu diễn chúng.</value>
+  </data>
+  <data name="All Ollama VM controls apply. &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;RepeatPenalty&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; can be injected from DB even though Anthropic request fields do not directly express them." xml:space="preserve">
+    <value>Tất cả các tùy chọn điều khiển VM của Ollama đều được áp dụng. &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;RepeatPenalty&lt;/code&gt; và &lt;code&gt;Thinking&lt;/code&gt; có thể được chèn từ cơ sở dữ liệu mặc dù các trường yêu cầu của Anthropic không trực tiếp biểu diễn chúng.</value>
+  </data>
   <data name="Anduin" xml:space="preserve">
     <value>Anduin</value>
   </data>
@@ -104,6 +191,18 @@
   </data>
   <data name="Anthropic image content blocks are not yet translated to OpenAI format." xml:space="preserve">
     <value>Khối nội dung hình ảnh Anthropic chưa được dịch sang định dạng OpenAI.</value>
+  </data>
+  <data name="Anthropic image sources → Ollama &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt; → function call; &lt;code&gt;tool_result&lt;/code&gt; → tool message; reasoning text → Ollama thinking; Ollama output is rebuilt as Anthropic content blocks." xml:space="preserve">
+    <value>Nguồn hình ảnh Anthropic → Ollama &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt; → lệnh gọi hàm; &lt;code&gt;tool_result&lt;/code&gt; → tin nhắn công cụ; văn bản lập luận → suy nghĩ Ollama; đầu ra Ollama được xây dựng lại dưới dạng khối nội dung Anthropic.</value>
+  </data>
+  <data name="Anthropic input thinking blocks and signatures are not encoded into Responses input. Unknown content blocks cannot use this route; unknown top-level controls are omitted on fallback. Native Responses-only output Items, annotations, and citations cannot be represented in Anthropic output." xml:space="preserve">
+    <value>Các khối suy nghĩ đầu vào và chữ ký của Anthropic không được mã hóa vào đầu vào Responses. Các khối nội dung chưa xác định không thể sử dụng tuyến đường này; các điều khiển cấp cao nhất chưa xác định sẽ bị lược bỏ khi dùng phương án dự phòng. Các mục đầu ra, chú thích và trích dẫn chỉ dành riêng cho Responses không thể được biểu diễn trong đầu ra Anthropic.</value>
+  </data>
+  <data name="Anthropic Messages client routes" xml:space="preserve">
+    <value>Tuyến đường máy khách Anthropic Messages</value>
+  </data>
+  <data name="Anthropic system content → system message; image blocks → OpenAI &lt;code&gt;image_url&lt;/code&gt;; &lt;code&gt;input_schema&lt;/code&gt; → function &lt;code&gt;parameters&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt; → Chat tool calls/messages; &lt;code&gt;max_tokens&lt;/code&gt; remains the Chat token limit." xml:space="preserve">
+    <value>Nội dung hệ thống Anthropic → tin nhắn hệ thống; khối hình ảnh → &lt;code&gt;image_url&lt;/code&gt; của OpenAI; &lt;code&gt;input_schema&lt;/code&gt; → &lt;code&gt;parameters&lt;/code&gt; của hàm; &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt; → lời gọi/tin nhắn công cụ Chat; &lt;code&gt;max_tokens&lt;/code&gt; vẫn là giới hạn token của Chat.</value>
   </data>
   <data name="API Authentication (Bearer)" xml:space="preserve">
     <value>Xác thực API (Bearer)</value>
@@ -162,6 +261,12 @@
   <data name="Automatically sync OpenID roles. Unified Rule management." xml:space="preserve">
     <value>Tự động đồng bộ vai trò OpenID. Quản lý quy tắc thống nhất.</value>
   </data>
+  <data name="Backend" xml:space="preserve">
+    <value>Backend</value>
+  </data>
+  <data name="Backend Provider type" xml:space="preserve">
+    <value>Loại nhà cung cấp Backend</value>
+  </data>
   <data name="Background Job Processing" xml:space="preserve">
     <value>Xử lý công việc nền</value>
   </data>
@@ -207,14 +312,26 @@
   <data name="Built-in User Management" xml:space="preserve">
     <value>Quản lý Người dùng Tích hợp sẵn</value>
   </data>
+  <data name="Chat" xml:space="preserve">
+    <value>Trò chuyện</value>
+  </data>
   <data name="Chat Models" xml:space="preserve">
     <value>Mô hình Chat</value>
   </data>
   <data name="Chat/Embedding Segregation" xml:space="preserve">
     <value>Phân tách Chat/Embedding</value>
   </data>
+  <data name="Choose the API your client sends on the left and the protocol spoken by the physical backend on the right. The active route shows exactly what is preserved, translated, rejected, and overridden." xml:space="preserve">
+    <value>Chọn API mà máy khách của bạn gửi ở bên trái và giao thức được sử dụng bởi backend vật lý ở bên phải. Lộ trình đang hoạt động sẽ hiển thị chính xác những gì được giữ nguyên, dịch, từ chối và ghi đè.</value>
+  </data>
   <data name="Clickhouse Auditing" xml:space="preserve">
     <value>Kiểm toán Clickhouse</value>
+  </data>
+  <data name="Client" xml:space="preserve">
+    <value>Khách hàng</value>
+  </data>
+  <data name="Client endpoint" xml:space="preserve">
+    <value>Điểm cuối máy khách</value>
   </data>
   <data name="Comes with Docker support for simplified and consistent deployments." xml:space="preserve">
     <value>Được tích hợp hỗ trợ Docker để triển khai đơn giản và nhất quán.</value>
@@ -233,6 +350,9 @@
   </data>
   <data name="Concise Docs" xml:space="preserve">
     <value>Tài liệu ngắn gọn</value>
+  </data>
+  <data name="Configuration precedence" xml:space="preserve">
+    <value>Thứ tự ưu tiên cấu hình</value>
   </data>
   <data name="Consistency Validation" xml:space="preserve">
     <value>Xác thực tính nhất quán</value>
@@ -261,6 +381,15 @@
   <data name="Cross Platform" xml:space="preserve">
     <value>Đa nền tảng</value>
   </data>
+  <data name="Cross-Protocol Compatibility" xml:space="preserve">
+    <value>Tương thích đa giao thức</value>
+  </data>
+  <data name="Current route contract" xml:space="preserve">
+    <value>Hợp đồng tuyến đường hiện tại</value>
+  </data>
+  <data name="Current route only" xml:space="preserve">
+    <value>Chỉ tuyến đường hiện tại</value>
+  </data>
   <data name="Custom dev required" xml:space="preserve">
     <value>Yêu cầu phát triển tùy chỉnh</value>
   </data>
@@ -272,6 +401,12 @@
   </data>
   <data name="Dashboard Website" xml:space="preserve">
     <value>Trang Tổng quan</value>
+  </data>
+  <data name="Database override" xml:space="preserve">
+    <value>Ghi đè cơ sở dữ liệu</value>
+  </data>
+  <data name="Database values are hard assignments" xml:space="preserve">
+    <value>Giá trị cơ sở dữ liệu là các chỉ định cứng</value>
   </data>
   <data name="Day 1 Compliance &amp; Security." xml:space="preserve">
     <value>Tuần lễ 1 Tuân thủ &amp; Bảo mật.</value>
@@ -336,6 +471,15 @@
   <data name="DevOps Native" xml:space="preserve">
     <value>Phù hợp với DevOps</value>
   </data>
+  <data name="Direction" xml:space="preserve">
+    <value>Hướng</value>
+  </data>
+  <data name="Discarded / restriction" xml:space="preserve">
+    <value>Bị loại bỏ / hạn chế</value>
+  </data>
+  <data name="Discarded, rejected, or preferred" xml:space="preserve">
+    <value>Bỏ qua, từ chối hoặc ưu tiên</value>
+  </data>
   <data name="Discussions page" xml:space="preserve">
     <value>Trang Thảo luận</value>
   </data>
@@ -363,8 +507,20 @@
   <data name="Effortlessly write integration tests using in-memory databases, temporary file systems, built-in mocking, and real-world HTTP request simulation." xml:space="preserve">
     <value>Viết các bài kiểm thử tích hợp một cách dễ dàng bằng cách sử dụng cơ sở dữ liệu trong bộ nhớ, hệ thống tệp tạm thời, mô phỏng tích hợp sẵn và mô phỏng yêu cầu HTTP thực tế.</value>
   </data>
+  <data name="Embedding" xml:space="preserve">
+    <value>Nhúng</value>
+  </data>
+  <data name="Embedding adapters select by ProviderType, not chat BackendProtocol" xml:space="preserve">
+    <value>Bộ chuyển đổi nhúng được chọn dựa trên ProviderType, không phải BackendProtocol trò chuyện</value>
+  </data>
   <data name="Embedding Models" xml:space="preserve">
     <value>Mô hình Nhúng</value>
+  </data>
+  <data name="Embedding route" xml:space="preserve">
+    <value>Tuyến nhúng</value>
+  </data>
+  <data name="Embedding route inspector" xml:space="preserve">
+    <value>Kiểm tra đường dẫn nhúng</value>
   </data>
   <data name="Enforced" xml:space="preserve">
     <value>Bắt buộc</value>
@@ -456,6 +612,12 @@
   <data name="Function call" xml:space="preserve">
     <value>Gọi hàm</value>
   </data>
+  <data name="Gateway-generated response" xml:space="preserve">
+    <value>Phản hồi do Gateway tạo ra</value>
+  </data>
+  <data name="Gateway-owned operation" xml:space="preserve">
+    <value>Thao tác do Gateway sở hữu</value>
+  </data>
   <data name="Generic configuration" xml:space="preserve">
     <value>Cấu hình chung</value>
   </data>
@@ -531,6 +693,9 @@
   <data name="Images array passes through as-is to native Ollama." xml:space="preserve">
     <value>Mảng hình ảnh được truyền qua nguyên trạng đến Ollama gốc.</value>
   </data>
+  <data name="Implementation method" xml:space="preserve">
+    <value>Phương pháp triển khai</value>
+  </data>
   <data name="Included" xml:space="preserve">
     <value>Đã bao gồm</value>
   </data>
@@ -539,6 +704,18 @@
   </data>
   <data name="Includes Tutorials" xml:space="preserve">
     <value>Bao gồm Hướng dẫn</value>
+  </data>
+  <data name="Input Items → Chat &lt;code&gt;messages&lt;/code&gt;; instructions → system message; Responses function tool/choice shapes → Chat wrappers; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;reasoning_effort&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;response_format&lt;/code&gt;." xml:space="preserve">
+    <value>Mục nhập → Chat &lt;code&gt;messages&lt;/code&gt;; hướng dẫn → tin nhắn hệ thống; định dạng công cụ/lựa chọn của Responses → trình bao bọc Chat; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;reasoning_effort&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;response_format&lt;/code&gt;.</value>
+  </data>
+  <data name="Inspect one translation route at a time." xml:space="preserve">
+    <value>Kiểm tra từng tuyến dịch tại một thời điểm.</value>
+  </data>
+  <data name="Instructions, message Items, text, images, function calls/results, function tool definitions, temperature, top-p, output-token limit, reasoning effort/output, structured format, stream, finish reason, and usage." xml:space="preserve">
+    <value>Hướng dẫn, mục tin nhắn, văn bản, hình ảnh, lệnh gọi/kết quả hàm, định nghĩa công cụ hàm, nhiệt độ, top-p, giới hạn token đầu ra, nỗ lực/đầu ra suy luận, định dạng cấu trúc, luồng dữ liệu, lý do kết thúc, và tình trạng sử dụng.</value>
+  </data>
+  <data name="Instructions, text/images, function tools/calls/results, temperature, top-p, token limit, reasoning effort/output, structured output, stream, finish state, and usage." xml:space="preserve">
+    <value>Hướng dẫn, văn bản/hình ảnh, công cụ hàm/gọi/kết quả, nhiệt độ, top-p, giới hạn token, nỗ lực/đầu ra suy luận, đầu ra có cấu trúc, luồng truyền, trạng thái hoàn thành, và thông tin sử dụng.</value>
   </data>
   <data name="Integrated File Management" xml:space="preserve">
     <value>Quản lý Tập tin Tích hợp</value>
@@ -585,11 +762,17 @@
   <data name="Management Dashboard" xml:space="preserve">
     <value>Bảng Điều Khiển Quản Lý</value>
   </data>
+  <data name="Mapped / reconstructed" xml:space="preserve">
+    <value>Ánh xạ / tái cấu trúc</value>
+  </data>
   <data name="Markdown To HTML" xml:space="preserve">
     <value>Chuyển Đổi Markdown Sang HTML</value>
   </data>
   <data name="MCP" xml:space="preserve">
     <value>MCP</value>
+  </data>
+  <data name="Message roles/text, function definitions, function calls/results, streaming intent, temperature, top-p, token limit, images, structured format, and token usage survive when representable." xml:space="preserve">
+    <value>Vai trò/nội dung tin nhắn, định nghĩa hàm, lời gọi/kết quả hàm, ý định truyền trực tiếp, nhiệt độ, top-p, giới hạn token, hình ảnh, định dạng cấu trúc và lượng sử dụng token được giữ nguyên khi có thể biểu diễn.</value>
   </data>
   <data name="MIT Licence" xml:space="preserve">
     <value>Giấy phép MIT</value>
@@ -600,8 +783,17 @@
   <data name="Mix Any Client with Any Backend" xml:space="preserve">
     <value>Trộn bất kỳ Client nào với bất kỳ Backend nào</value>
   </data>
+  <data name="Model discovery" xml:space="preserve">
+    <value>Khám phá mô hình</value>
+  </data>
+  <data name="Model discovery endpoints" xml:space="preserve">
+    <value>Điểm cuối khám phá mô hình</value>
+  </data>
   <data name="Model Hosting &amp; Inference" xml:space="preserve">
     <value>Chạy và Suy luận Mô hình</value>
+  </data>
+  <data name="Model identity is masked in both directions; &lt;code&gt;stream&lt;/code&gt; is normalized; streaming requests merge &lt;code&gt;stream_options.include_usage=true&lt;/code&gt;; null message content is normalized to an empty string." xml:space="preserve">
+    <value>Danh tính mô hình bị ẩn ở cả hai chiều; &lt;code&gt;stream&lt;/code&gt; được chuẩn hóa; các yêu cầu truyền trực tiếp hợp nhất &lt;code&gt;stream_options.include_usage=true&lt;/code&gt;; nội dung tin nhắn null được chuẩn hóa thành chuỗi rỗng.</value>
   </data>
   <data name="Model Keep-alive" xml:space="preserve">
     <value>Giữ mô hình luôn hoạt động</value>
@@ -642,6 +834,12 @@
   <data name="Music Tools" xml:space="preserve">
     <value>Công cụ Âm nhạc</value>
   </data>
+  <data name="Narrow operation" xml:space="preserve">
+    <value>Hoạt động chuyên biệt</value>
+  </data>
+  <data name="Native / same dialect" xml:space="preserve">
+    <value>Bản địa / cùng phương ngữ</value>
+  </data>
   <data name="Native Ollama" xml:space="preserve">
     <value>Native Ollama</value>
   </data>
@@ -653,6 +851,9 @@
   </data>
   <data name="Native Power, AI Development" xml:space="preserve">
     <value>Sức mạnh bản địa, Phát triển AI</value>
+  </data>
+  <data name="Native state passthrough" xml:space="preserve">
+    <value>Truyền trạng thái gốc</value>
   </data>
   <data name="Native vs. Gateway" xml:space="preserve">
     <value>Bản địa so với Cổng</value>
@@ -699,8 +900,23 @@
   <data name="Needs TypeORM or similar" xml:space="preserve">
     <value>Cần TypeORM hoặc tương tự</value>
   </data>
+  <data name="No Chat Completions or Responses translation. A non-Ollama backend returns &lt;code&gt;501&lt;/code&gt;." xml:space="preserve">
+    <value>Không có dịch thuật cho Chat Completions hoặc Responses. Backend không phải Ollama sẽ trả về &lt;code&gt;501&lt;/code&gt;.</value>
+  </data>
+  <data name="No chat protocol translation occurs. Backend &lt;code&gt;Protocol&lt;/code&gt; is not consulted for embeddings." xml:space="preserve">
+    <value>Không xảy ra dịch chuyển giao thức trò chuyện. Backend &lt;code&gt;Protocol&lt;/code&gt; không được tham vấn cho embeddings.</value>
+  </data>
   <data name="No dependency on any cloud vendor. Run anywhere, any time." xml:space="preserve">
     <value>Không phụ thuộc vào nhà cung cấp dịch vụ đám mây nào. Chạy ở bất kỳ đâu, bất kỳ lúc nào.</value>
+  </data>
+  <data name="No known Chat field is intentionally dropped on this route. Unknown/Chat-only fields prefer a Chat Completions backend, with semantic translation as fallback when no matching backend is available. Valid JSON may be reserialized." xml:space="preserve">
+    <value>Không có trường Chat nào được biết đến bị loại bỏ cố ý trên tuyến đường này. Các trường không xác định/chỉ dành cho Chat ưu tiên sử dụng backend Chat Completions, với bản dịch ngữ nghĩa là phương án dự phòng khi không có backend phù hợp khả dụng. JSON hợp lệ có thể được tuần tự hóa lại.</value>
+  </data>
+  <data name="No known Ollama field is intentionally dropped on this route. Unknown fields make an Ollama-native backend preferred; if none is available, the request may use a documented translated subset. Valid JSON may be reserialized." xml:space="preserve">
+    <value>Không có trường Ollama nào được biết đến bị loại bỏ cố ý trên tuyến đường này. Các trường không xác định ưu tiên backend gốc Ollama; nếu không có sẵn, yêu cầu có thể sử dụng một tập con đã dịch và được tài liệu hóa. JSON hợp lệ có thể được tuần tự hóa lại.</value>
+  </data>
+  <data name="No upstream call" xml:space="preserve">
+    <value>Không có cuộc gọi upstream</value>
   </data>
   <data name="Not supported" xml:space="preserve">
     <value>Không được hỗ trợ</value>
@@ -717,11 +933,23 @@
   <data name="Ollama → OpenAI" xml:space="preserve">
     <value>Ollama → OpenAI</value>
   </data>
+  <data name="Ollama &lt;code&gt;input&lt;/code&gt; or legacy &lt;code&gt;prompt&lt;/code&gt; becomes OpenAI &lt;code&gt;input&lt;/code&gt;; OpenAI &lt;code&gt;data[].embedding&lt;/code&gt; is reconstructed as Ollama &lt;code&gt;embeddings[]&lt;/code&gt;." xml:space="preserve">
+    <value>Ollama &lt;code&gt;input&lt;/code&gt; hoặc &lt;code&gt;prompt&lt;/code&gt; cũ trở thành OpenAI &lt;code&gt;input&lt;/code&gt;; OpenAI &lt;code&gt;data[].embedding&lt;/code&gt; được tái tạo thành Ollama &lt;code&gt;embeddings[]&lt;/code&gt;.</value>
+  </data>
+  <data name="Ollama &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, &lt;code&gt;keep_alive&lt;/code&gt;, and boolean &lt;code&gt;think&lt;/code&gt; are not encoded into Responses. Responses-native tools cannot be requested from the Ollama dialect." xml:space="preserve">
+    <value>Các tham số &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, &lt;code&gt;keep_alive&lt;/code&gt; và giá trị boolean &lt;code&gt;think&lt;/code&gt; của Ollama không được mã hóa vào Responses. Các công cụ đặc thù của Responses không thể được yêu cầu từ phương thức Ollama.</value>
+  </data>
   <data name="Ollama Backend" xml:space="preserve">
     <value>Backend Ollama</value>
   </data>
+  <data name="Ollama Chat client routes" xml:space="preserve">
+    <value>Tuyến đường client Ollama Chat</value>
+  </data>
   <data name="Ollama Client" xml:space="preserve">
     <value>Ollama Client</value>
+  </data>
+  <data name="Ollama embedding input" xml:space="preserve">
+    <value>Đầu vào nhúng Ollama</value>
   </data>
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: Tăng cường sức mạnh cho Ollama bản địa của bạn với xác thực API cấp doanh nghiệp, kiểm toán yêu cầu và quản lý mô hình ảo—cổng AI an toàn và riêng tư của bạn.</value>
@@ -729,11 +957,29 @@
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: Tăng cường sức mạnh cho Ollama của bạn với xác thực API, kiểm toán yêu cầu, giới hạn tốc độ và quản lý mô hình ảo ở cấp độ doanh nghiệp—cổng AI an toàn, riêng tư của bạn.</value>
   </data>
+  <data name="Ollama generate JSON/NDJSON is forwarded in the same dialect; model identity, answer text, finish data, and usage are observed and the virtual model name is restored." xml:space="preserve">
+    <value>JSON/NDJSON từ Ollama generate được chuyển tiếp bằng cùng một phương thức; danh tính mô hình, văn bản trả lời, dữ liệu kết thúc và tình trạng sử dụng được ghi nhận và tên mô hình ảo được khôi phục.</value>
+  </data>
   <data name="Ollama images array is converted to OpenAI multimodal content parts (text + image_url with data URI)." xml:space="preserve">
     <value>Mảng hình ảnh Ollama được chuyển đổi thành các phần nội dung đa phương thức của OpenAI (văn bản + image_url với data URI).</value>
   </data>
+  <data name="Ollama JSON/NDJSON stays in the native dialect; model identity, answer, finish data, and usage are observed and rewritten." xml:space="preserve">
+    <value>JSON/NDJSON của Ollama giữ nguyên phương ngữ gốc; danh tính mô hình, câu trả lời, dữ liệu kết thúc và thông tin sử dụng được quan sát và viết lại.</value>
+  </data>
+  <data name="Ollama Native only" xml:space="preserve">
+    <value>Chỉ dành cho Ollama Native</value>
+  </data>
+  <data name="Ollama only" xml:space="preserve">
+    <value>Chỉ Ollama</value>
+  </data>
+  <data name="Ollama-only embedding fields such as &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;truncate&lt;/code&gt;, &lt;code&gt;dimensions&lt;/code&gt; variants, and &lt;code&gt;keep_alive&lt;/code&gt; are not copied into the OpenAI request unless represented by the shared input." xml:space="preserve">
+    <value>Các trường nhúng chỉ dành cho Ollama như &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;truncate&lt;/code&gt;, các biến thể của &lt;code&gt;dimensions&lt;/code&gt;, và &lt;code&gt;keep_alive&lt;/code&gt; sẽ không được sao chép vào yêu cầu OpenAI trừ khi chúng được đại diện bởi đầu vào chung.</value>
+  </data>
   <data name="Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently." xml:space="preserve">
     <value>Tham số chỉ dành riêng cho Ollama. OpenAI hỗ trợ native frequency_penalty và presence_penalty thay thế, các tham số này được truyền độc lập.</value>
+  </data>
+  <data name="Ollama-type Provider" xml:space="preserve">
+    <value>Nhà cung cấp kiểu Ollama</value>
   </data>
   <data name="Ollama." xml:space="preserve">
     <value>Ollama.</value>
@@ -753,6 +999,12 @@
   <data name="OllamaGateway High Availability Routing" xml:space="preserve">
     <value>OllamaGateway Cân bằng tải cao khả dụng</value>
   </data>
+  <data name="OllamaGateway in Docker" xml:space="preserve">
+    <value>OllamaGateway trong Docker</value>
+  </data>
+  <data name="OllamaGateway main screenshot" xml:space="preserve">
+    <value>Ảnh chụp màn hình chính của OllamaGateway</value>
+  </data>
   <data name="OllamaGateway seamlessly connects your local Ollama capabilities to professional AI development tools. Whether you are using Claude Code, Opencode or Qwen Code, you can now leverage your own hardware for automated coding and development tasks—all verified and officially supported by our team." xml:space="preserve">
     <value>OllamaGateway kết nối liền mạch các khả năng Ollama cục bộ của bạn với các công cụ phát triển AI chuyên nghiệp. Dù bạn đang sử dụng Claude Code, Opencode hay Qwen Code, bạn giờ đây có thể tận dụng phần cứng của mình cho các tác vụ lập trình và phát triển tự động—tất cả đều đã được xác minh và hỗ trợ chính thức bởi đội ngũ của chúng tôi.</value>
   </data>
@@ -768,6 +1020,15 @@
   <data name="One Click Start" xml:space="preserve">
     <value>Một Click Bắt Đầu</value>
   </data>
+  <data name="Only gateway-owned fields are rewritten: virtual model → physical model upstream, physical model → virtual model downstream; &lt;code&gt;stream&lt;/code&gt; is normalized; missing &lt;code&gt;keep_alive&lt;/code&gt; receives the request/provider default." xml:space="preserve">
+    <value>Chỉ các trường thuộc sở hữu của gateway mới được ghi lại: mô hình ảo → mô hình vật lý phía nguồn, mô hình vật lý → mô hình ảo phía đích; &lt;code&gt;stream&lt;/code&gt; được chuẩn hóa; thiếu &lt;code&gt;keep_alive&lt;/code&gt; sẽ nhận giá trị mặc định của yêu cầu/nhà cung cấp.</value>
+  </data>
+  <data name="Only model identity, stream intent, and configured VM options are gateway-owned. Upstream physical model names are replaced with the virtual model in response objects and events." xml:space="preserve">
+    <value>Chỉ danh tính mô hình, ý định phát trực tuyến và các tùy chọn VM đã cấu hình là do gateway sở hữu. Tên mô hình vật lý nguồn sẽ được thay thế bằng mô hình ảo trong các đối tượng phản hồi và sự kiện.</value>
+  </data>
+  <data name="Only the selected route is shown" xml:space="preserve">
+    <value>Chỉ hiển thị tuyến đường đã chọn</value>
+  </data>
   <data name="Open Source" xml:space="preserve">
     <value>Mã nguồn mở</value>
   </data>
@@ -777,17 +1038,44 @@
   <data name="OpenAI → OpenAI" xml:space="preserve">
     <value>OpenAI → OpenAI</value>
   </data>
+  <data name="OpenAI &lt;code&gt;input&lt;/code&gt; is sent as Ollama &lt;code&gt;input&lt;/code&gt;; &lt;code&gt;embeddings[]&lt;/code&gt; and &lt;code&gt;prompt_eval_count&lt;/code&gt; are reconstructed as OpenAI &lt;code&gt;data[]&lt;/code&gt; and &lt;code&gt;usage&lt;/code&gt;." xml:space="preserve">
+    <value>OpenAI &lt;code&gt;input&lt;/code&gt; được gửi dưới dạng Ollama &lt;code&gt;input&lt;/code&gt;; &lt;code&gt;embeddings[]&lt;/code&gt; và &lt;code&gt;prompt_eval_count&lt;/code&gt; được tái cấu trúc thành OpenAI &lt;code&gt;data[]&lt;/code&gt; và &lt;code&gt;usage&lt;/code&gt;.</value>
+  </data>
   <data name="OpenAI API Translation" xml:space="preserve">
     <value>Dịch API OpenAI</value>
   </data>
   <data name="OpenAI Backend" xml:space="preserve">
     <value>Backend OpenAI</value>
   </data>
+  <data name="OpenAI Chat Completions client routes" xml:space="preserve">
+    <value>Tuyến đường client OpenAI Chat Completions</value>
+  </data>
   <data name="OpenAI Client" xml:space="preserve">
     <value>Trình khách OpenAI</value>
   </data>
+  <data name="OpenAI content parts → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → boolean &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;." xml:space="preserve">
+    <value>Các phần nội dung OpenAI → &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt; của Ollama; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → boolean &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt; của Ollama.</value>
+  </data>
+  <data name="OpenAI embedding extensions outside the shared input are not copied into the cross-dialect request or reconstructed response." xml:space="preserve">
+    <value>Các phần mở rộng nhúng OpenAI nằm ngoài đầu vào chung sẽ không được sao chép vào yêu cầu đa phương ngữ hoặc phản hồi đã tái cấu trúc.</value>
+  </data>
+  <data name="OpenAI embedding input" xml:space="preserve">
+    <value>Đầu vào nhúng OpenAI</value>
+  </data>
   <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
     <value>Mảng nội dung đa phương thức của OpenAI được trích xuất: dữ liệu image_url chuyển vào mảng images của Ollama, văn bản trở thành content.</value>
+  </data>
+  <data name="OpenAI Responses client routes" xml:space="preserve">
+    <value>Tuyến đường máy khách OpenAI Responses</value>
+  </data>
+  <data name="OpenAI target fields &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_tokens&lt;/code&gt; use VM values when set. VM &lt;code&gt;Thinking&lt;/code&gt; overrides the translated client value." xml:space="preserve">
+    <value>Các trường đích OpenAI &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, và &lt;code&gt;max_tokens&lt;/code&gt; sử dụng giá trị VM khi được đặt. VM &lt;code&gt;Thinking&lt;/code&gt; ghi đè lên giá trị client đã dịch.</value>
+  </data>
+  <data name="OpenAI-type Provider" xml:space="preserve">
+    <value>Nhà cung cấp kiểu OpenAI</value>
+  </data>
+  <data name="Opencode and Qwen Code working with OllamaGateway" xml:space="preserve">
+    <value>Opencode và Qwen Code hoạt động với OllamaGateway</value>
   </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>Tích hợp OpenID Connect</value>
@@ -831,6 +1119,15 @@
   <data name="Permission discovery and sync" xml:space="preserve">
     <value>Phát hiện và đồng bộ quyền</value>
   </data>
+  <data name="Physical backend protocol" xml:space="preserve">
+    <value>Giao thức backend vật lý</value>
+  </data>
+  <data name="Physical provider metadata is not proxied; Ollama runtime details are placeholders or omitted." xml:space="preserve">
+    <value>Metadata của nhà cung cấp vật lý không được chuyển tiếp; các chi tiết thời gian chạy của Ollama là giá trị giả định hoặc bị bỏ qua.</value>
+  </data>
+  <data name="Policy and implementation" xml:space="preserve">
+    <value>Chính sách và triển khai</value>
+  </data>
   <data name="Pre-configured and tested" xml:space="preserve">
     <value>Đã được cấu hình sẵn và kiểm tra</value>
   </data>
@@ -840,8 +1137,23 @@
   <data name="Pre-configured pipelines for dev/prod" xml:space="preserve">
     <value>Quy trình đã cấu hình sẵn cho môi trường phát triển/sản xuất</value>
   </data>
+  <data name="Preserved" xml:space="preserve">
+    <value>Được bảo toàn</value>
+  </data>
+  <data name="Preserved / mapped" xml:space="preserve">
+    <value>Được bảo toàn / ánh xạ</value>
+  </data>
   <data name="Private AI" xml:space="preserve">
     <value>Trí tuệ nhân tạo riêng tư</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Nhà cung cấp</value>
+  </data>
+  <data name="Provider adapter selection uses &lt;code&gt;ProviderType&lt;/code&gt;, not chat &lt;code&gt;BackendProtocol&lt;/code&gt;. No Ollama VM options are injected into an OpenAI embedding target." xml:space="preserve">
+    <value>Việc chọn bộ điều hợp nhà cung cấp sử dụng &lt;code&gt;ProviderType&lt;/code&gt;, không phải giao thức trò chuyện &lt;code&gt;BackendProtocol&lt;/code&gt;. Không có tùy chọn VM Ollama nào được đưa vào đích nhúng OpenAI.</value>
+  </data>
+  <data name="Provider type and backend protocol are separate. No physical Anthropic backend adapter exists today." xml:space="preserve">
+    <value>Loại nhà cung cấp và giao thức phía sau là riêng biệt. Hiện chưa có bộ chuyển đổi phía sau Anthropic vật lý nào tồn tại.</value>
   </data>
   <data name="Quality Gate" xml:space="preserve">
     <value>Cổng chất lượng</value>
@@ -858,11 +1170,23 @@
   <data name="Recommended Models" xml:space="preserve">
     <value>Mô hình được đề xuất</value>
   </data>
+  <data name="Remote image URLs are not a portable Ollama-native contract; base64 is the verified path. Thinking signatures are discarded. Unknown content blocks remain a hard rejection; unknown top-level controls are omitted when this translated fallback is used." xml:space="preserve">
+    <value>URL hình ảnh từ xa không phải là hợp đồng gốc Ollama di động; base64 là phương pháp đã được xác minh. Chữ ký suy luận sẽ bị loại bỏ. Các khối nội dung không xác định vẫn bị từ chối cứng; các điều khiển cấp cao nhất không xác định sẽ bị bỏ qua khi sử dụng chế độ dự phòng dịch này.</value>
+  </data>
+  <data name="Remote image URLs have no portable Ollama-native representation; base64/data-URI is the verified conversion. Chat-only controls such as penalties/logprobs/seed prefer a Chat backend and are omitted when Ollama is the only eligible route." xml:space="preserve">
+    <value>Các URL hình ảnh từ xa không có biểu diễn gốc Ollama di động; base64/data-URI là phương thức chuyển đổi đã được xác minh. Các bộ điều khiển chỉ dành cho Chat như penalties/logprobs/seed ưu tiên backend Chat và sẽ bị loại bỏ khi Ollama là tuyến đường hợp lệ duy nhất.</value>
+  </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Hình phạt lặp lại</value>
   </data>
   <data name="Request &amp; Response Auditing" xml:space="preserve">
     <value>Kiểm toán Yêu cầu &amp; Phản hồi</value>
+  </data>
+  <data name="Requester&apos;s API" xml:space="preserve">
+    <value>API của người yêu cầu</value>
+  </data>
+  <data name="requires a Responses-capable provider" xml:space="preserve">
+    <value>yêu cầu nhà cung cấp hỗ trợ Responses</value>
   </data>
   <data name="Requires Laravel Socialite config" xml:space="preserve">
     <value>Yêu cầu cấu hình Laravel Socialite</value>
@@ -878,6 +1202,15 @@
   </data>
   <data name="Robust Integration Testing" xml:space="preserve">
     <value>Kiểm thử tích hợp mạnh mẽ</value>
+  </data>
+  <data name="Roles, text, system/developer instructions, images, function tools, function calls/results, temperature, top-p, token limit, structured format, stream, reasoning output, finish state, and usage." xml:space="preserve">
+    <value>Vai trò, văn bản, hướng dẫn hệ thống/nhà phát triển, hình ảnh, công cụ hàm, lệnh/kết quả gọi hàm, nhiệt độ, top-p, giới hạn token, định dạng có cấu trúc, luồng, đầu ra suy luận, trạng thái kết thúc và thông tin sử dụng.</value>
+  </data>
+  <data name="Roles/text, data-URI images, function tools/calls/results, temperature, top-p, token limit, reasoning text, structured output intent, stream, finish reason, and usage." xml:space="preserve">
+    <value>Vai trò/văn bản, hình ảnh data-URI, công cụ/chọi/kết quả hàm, nhiệt độ, top-p, giới hạn token, văn bản lập luận, ý định đầu ra có cấu trúc, luồng, lý do kết thúc và tình trạng sử dụng.</value>
+  </data>
+  <data name="Roles/text, images, function tools/calls/results, temperature, top-p, maximum output tokens, reasoning effort/output, structured output, streaming, finish reason, and usage." xml:space="preserve">
+    <value>Vai trò/văn bản, hình ảnh, công cụ hàm/gọi hàm/kết quả, nhiệt độ, top-p, số lượng token đầu ra tối đa, nỗ lực/đầu ra suy luận, đầu ra có cấu trúc, phát trực tiếp, lý do kết thúc và tình trạng sử dụng.</value>
   </data>
   <data name="Runs without any internet connection required." xml:space="preserve">
     <value>Chạy mà không cần kết nối internet.</value>
@@ -896,6 +1229,12 @@
   </data>
   <data name="Security and Auditing by Design." xml:space="preserve">
     <value>Bảo mật và Kiểm toán được thiết kế ngay từ đầu.</value>
+  </data>
+  <data name="Select backend protocol" xml:space="preserve">
+    <value>Chọn giao thức backend</value>
+  </data>
+  <data name="Select requester API" xml:space="preserve">
+    <value>Chọn API của người yêu cầu</value>
   </data>
   <data name="Shift with confidence" xml:space="preserve">
     <value>Chuyển đổi với sự tự tin</value>
@@ -942,6 +1281,15 @@
   <data name="Starts without any configuration" xml:space="preserve">
     <value>Bắt đầu mà không cần cấu hình</value>
   </data>
+  <data name="state-aware" xml:space="preserve">
+    <value>nhận thức trạng thái</value>
+  </data>
+  <data name="State/background requests require a Responses backend. Native Responses tools and unknown Items also require Responses. Metadata and unknown top-level controls prefer Responses and are omitted on fallback. Responses-only annotations/citations cannot be recreated from Chat output." xml:space="preserve">
+    <value>Các yêu cầu có trạng thái/nền tảng cần một backend Responses. Các công cụ Responses bản địa và các mục không xác định cũng yêu cầu Responses. Metadata và các điều khiển cấp cao nhất không xác định ưu tiên Responses và bị bỏ qua khi sử dụng cơ chế dự phòng. Các chú thích/trích dẫn chỉ dành cho Responses không thể được tái tạo từ đầu ra của Chat.</value>
+  </data>
+  <data name="Stateful controls pass through to native Responses providers and are never silently translated." xml:space="preserve">
+    <value>Các điều khiển trạng thái được chuyển tiếp trực tiếp đến các nhà cung cấp Responses gốc và không bao giờ được dịch thầm lặng.</value>
+  </data>
   <data name="Stop Coding Boilerplate." xml:space="preserve">
     <value>Ngừng viết mã boilerplate.</value>
   </data>
@@ -978,6 +1326,24 @@
   <data name="Supports JetBrains Rider for easy code style fixes." xml:space="preserve">
     <value>Hỗ trợ JetBrains Rider để dễ dàng sửa lỗi định dạng mã nguồn.</value>
   </data>
+  <data name="System → &lt;code&gt;instructions&lt;/code&gt;; messages/images → Responses input Items; Anthropic tools → Responses function tools; named tool choice → Responses &lt;code&gt;name&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; Responses reasoning/text/function output → Anthropic blocks." xml:space="preserve">
+    <value>System → &lt;code&gt;instructions&lt;/code&gt;; tin nhắn/hình ảnh → Các mục đầu vào của Responses; công cụ Anthropic → công cụ hàm của Responses; lựa chọn công cụ theo tên → &lt;code&gt;name&lt;/code&gt; của Responses; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; đầu ra suy luận/văn bản/hàm của Responses → khối nội dung Anthropic.</value>
+  </data>
+  <data name="System instructions, text, base64/URL images, function tools/calls/results, tool choice, temperature, top-p, max tokens, response reasoning text, stream, finish state, and usage." xml:space="preserve">
+    <value>Hướng dẫn hệ thống, văn bản, hình ảnh base64/URL, công cụ hàm/gọi/kết quả, lựa chọn công cụ, nhiệt độ, top-p, token tối đa, văn bản lập luận phản hồi, luồng dữ liệu, trạng thái kết thúc và thông tin sử dụng.</value>
+  </data>
+  <data name="System messages → &lt;code&gt;instructions&lt;/code&gt;; messages → Responses &lt;code&gt;input&lt;/code&gt; Items; images → &lt;code&gt;input_image&lt;/code&gt;; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;; function tool shapes are flattened." xml:space="preserve">
+    <value>Tin nhắn hệ thống → &lt;code&gt;instructions&lt;/code&gt;; tin nhắn → Mục &lt;code&gt;input&lt;/code&gt; của Responses; hình ảnh → &lt;code&gt;input_image&lt;/code&gt;; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;; cấu trúc công cụ hàm được làm phẳng.</value>
+  </data>
+  <data name="System text, message text, base64 images, tool definitions, &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt;, tool choice modes, temperature, top-p, max tokens, visible reasoning text, stream, finish reason, and usage." xml:space="preserve">
+    <value>Văn bản hệ thống, văn bản tin nhắn, hình ảnh base64, định nghĩa công cụ, &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt;, chế độ lựa chọn công cụ, nhiệt độ, top-p, số token tối đa, văn bản lập luận hiển thị, luồng, lý do kết thúc và thông tin sử dụng.</value>
+  </data>
+  <data name="System/developer messages → &lt;code&gt;instructions&lt;/code&gt;; messages → &lt;code&gt;input&lt;/code&gt; Items; function schemas are flattened; named &lt;code&gt;tool_choice.function.name&lt;/code&gt; → Responses &lt;code&gt;tool_choice.name&lt;/code&gt;; &lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;." xml:space="preserve">
+    <value>Tin nhắn hệ thống/người phát triển → &lt;code&gt;instructions&lt;/code&gt;; tin nhắn → Mục &lt;code&gt;input&lt;/code&gt; của Responses; lược đồ hàm được làm phẳng; &lt;code&gt;tool_choice.function.name&lt;/code&gt; có tên → &lt;code&gt;tool_choice.name&lt;/code&gt; của Responses; &lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;.</value>
+  </data>
+  <data name="System/messages, text, base64 and URL images, function tools/calls/results, tool choice, temperature, top-p, max tokens, reasoning text, stream, finish reason, and usage." xml:space="preserve">
+    <value>Tin nhắn hệ thống, văn bản, hình ảnh base64 và URL, công cụ hàm/gọi/kết quả, lựa chọn công cụ, nhiệt độ, top-p, số token tối đa, văn bản lập luận, luồng dữ liệu, lý do kết thúc và thông tin sử dụng.</value>
+  </data>
   <data name="Task Runner" xml:space="preserve">
     <value>Trình chạy tác vụ</value>
   </data>
@@ -990,14 +1356,38 @@
   <data name="The definitive, battle-tested .NET enterprise foundation. From Auth to AI, we&apos;ve solved the hard parts so you don&apos;t have to." xml:space="preserve">
     <value>Nền tảng doanh nghiệp .NET chính xác, đã được kiểm chứng qua thực tế. Từ Xác thực đến Trí tuệ nhân tạo, chúng tôi đã giải quyết những phần khó khăn để bạn không phải lo lắng.</value>
   </data>
+  <data name="The gateway decodes both sides through its canonical chat model. Only semantics representable by the target protocol can cross this route." xml:space="preserve">
+    <value>Cổng giải mã cả hai phía thông qua mô hình trò chuyện chuẩn của nó. Chỉ các ngữ nghĩa có thể biểu diễn bằng giao thức đích mới có thể đi qua tuyến đường này.</value>
+  </data>
+  <data name="The gateway keeps the protocol shape and rewrites only gateway-owned values and configured policy fields." xml:space="preserve">
+    <value>Cổng giữ nguyên cấu trúc giao thức và chỉ ghi lại các giá trị do cổng quản lý cũng như các trường chính sách được cấu hình.</value>
+  </data>
   <data name="The navigation bar automatically adjusts based on user roles and permissions." xml:space="preserve">
     <value>Thanh điều hướng tự động điều chỉnh dựa trên vai trò và quyền của người dùng.</value>
+  </data>
+  <data name="The original request and successful response JSON are cloned; unknown fields are preserved; model identity is rewritten." xml:space="preserve">
+    <value>JSON của yêu cầu gốc và phản hồi thành công được sao chép; các trường không xác định được giữ nguyên; danh tính mô hình được ghi đè.</value>
+  </data>
+  <data name="The original request and successful response JSON are cloned; unknown OpenAI embedding fields are preserved; only model identity is rewritten." xml:space="preserve">
+    <value>JSON yêu cầu gốc và phản hồi thành công được sao chép; các trường nhúng OpenAI không xác định được giữ nguyên; chỉ có danh tính mô hình được ghi đè.</value>
   </data>
   <data name="The Philosophy" xml:space="preserve">
     <value>Triết lý</value>
   </data>
+  <data name="The provider-level &lt;code&gt;keep_alive&lt;/code&gt; replaces the client value on this route." xml:space="preserve">
+    <value>Giá trị &lt;code&gt;keep_alive&lt;/code&gt; ở cấp nhà cung cấp sẽ thay thế giá trị từ client trên tuyến đường này.</value>
+  </data>
+  <data name="The request adapter deep-clones the original Responses JSON. &lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt; preserves unknown output Items and SSE event names/data/comments/id/retry without passing the payload through canonical IL." xml:space="preserve">
+    <value>Bộ điều hợp yêu cầu sao chép sâu JSON Responses gốc. &lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt; bảo toàn các mục đầu ra chưa biết và tên/dữ liệu/chú thích/id/retry của sự kiện SSE mà không truyền tải trọng qua IL chuẩn.</value>
+  </data>
   <data name="The template is built for easy deployment. It includes full Docker support, so you can containerize your app and run it anywhere. You can also deploy it directly to IIS, Azure App Service, or any server that supports ASP.NET Core." xml:space="preserve">
     <value>Mẫu này được xây dựng để triển khai dễ dàng. Nó bao gồm hỗ trợ Docker đầy đủ, vì vậy bạn có thể đóng gói ứng dụng của mình và chạy nó ở bất cứ đâu. Bạn cũng có thể triển khai trực tiếp lên IIS, Azure App Service hoặc bất kỳ máy chủ nào hỗ trợ ASP.NET Core.</value>
+  </data>
+  <data name="There is no Chat Completions or Responses translation. A non-Ollama backend returns &lt;code&gt;501&lt;/code&gt;." xml:space="preserve">
+    <value>Không có bản dịch cho Chat Completions hoặc Responses. Backend không phải Ollama sẽ trả về &lt;code&gt;501&lt;/code&gt;.</value>
+  </data>
+  <data name="These endpoints do not proxy physical provider metadata. Ollama size/digest/runtime details are placeholders or omitted." xml:space="preserve">
+    <value>Các điểm cuối này không trung chuyển siêu dữ liệu của nhà cung cấp vật lý. Các chi tiết kích thước/tổng kiểm tra/thời gian chạy của Ollama là giá trị giữ chỗ hoặc bị bỏ qua.</value>
   </data>
   <data name="Thinking" xml:space="preserve">
     <value>Suy nghĩ</value>
@@ -1007,6 +1397,12 @@
   </data>
   <data name="Thinking Mode (DeepSeek)" xml:space="preserve">
     <value>Chế độ Suy luận (DeepSeek)</value>
+  </data>
+  <data name="Thinking signatures are discarded. Unknown content blocks remain a hard rejection. Anthropic-only top-level controls prefer a future Anthropic backend but are omitted when Chat is the only eligible route." xml:space="preserve">
+    <value>Chữ ký suy luận bị loại bỏ. Các khối nội dung không xác định vẫn bị từ chối cứng. Các điều khiển cấp cao chỉ dành cho Anthropic ưu tiên backend Anthropic trong tương lai nhưng sẽ bị bỏ qua khi Chat là tuyến duy nhất đủ điều kiện.</value>
+  </data>
+  <data name="This avoids recursive upstream discovery when a Provider points back to the gateway and keeps the public catalog scoped to virtual models." xml:space="preserve">
+    <value>Điều này tránh việc khám phá nguồn gốc đệ quy khi một Nhà cung cấp trỏ lại về cổng và giữ phạm vi của danh mục công khai giới hạn ở các mô hình ảo.</value>
   </data>
   <data name="This is a template project" xml:space="preserve">
     <value>Đây là một dự án mẫu</value>
@@ -1020,8 +1416,26 @@
   <data name="Timezone-aware fields" xml:space="preserve">
     <value>Trường nhận biết múi giờ</value>
   </data>
+  <data name="Translated" xml:space="preserve">
+    <value>Đã dịch</value>
+  </data>
+  <data name="Translated subset" xml:space="preserve">
+    <value>Tập hợp được dịch</value>
+  </data>
+  <data name="Translated through semantic layer" xml:space="preserve">
+    <value>Được dịch qua lớp ngữ nghĩa</value>
+  </data>
+  <data name="Transparent" xml:space="preserve">
+    <value>Trong suốt</value>
+  </data>
+  <data name="Transparent, state-aware" xml:space="preserve">
+    <value>Minh bạch, nhận thức trạng thái</value>
+  </data>
   <data name="Trusted by production-grade applications including AnduinOS, StatHub, and Warp. We don&apos;t just share this code; we run our entire business on it." xml:space="preserve">
     <value>Được tin tưởng bởi các ứng dụng sản xuất cấp độ cao, bao gồm AnduinOS, StatHub, và Warp. Chúng tôi không chỉ chia sẻ mã nguồn này; chúng tôi vận hành toàn bộ doanh nghiệp của mình dựa trên nó.</value>
+  </data>
+  <data name="Two client dialects × two Provider types" xml:space="preserve">
+    <value>Hai phương ngữ khách hàng × hai loại Nhà cung cấp</value>
   </data>
   <data name="Unified Env" xml:space="preserve">
     <value>Môi trường thống nhất</value>
@@ -1031,6 +1445,15 @@
   </data>
   <data name="Universal API Compatibility" xml:space="preserve">
     <value>Tương thích API Toàn cầu</value>
+  </data>
+  <data name="Unknown request fields, &lt;code&gt;messages&lt;/code&gt;, &lt;code&gt;tools&lt;/code&gt;, &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;format&lt;/code&gt;, and unknown JSON response fields are retained. Malformed upstream NDJSON records are forwarded raw." xml:space="preserve">
+    <value>Các trường yêu cầu không xác định, &lt;code&gt;messages&lt;/code&gt;, &lt;code&gt;tools&lt;/code&gt;, &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;format&lt;/code&gt;, và các trường phản hồi JSON không xác định được giữ lại. Các bản ghi NDJSON từ nguồn đầu vào bị lỗi cú pháp được chuyển tiếp nguyên vẹn.</value>
+  </data>
+  <data name="Unknown request fields, message/content extensions, &lt;code&gt;response_format&lt;/code&gt;, &lt;code&gt;reasoning_effort&lt;/code&gt;, vendor fields, unknown response fields, null values, and unrecognized SSE lines remain in the Chat dialect." xml:space="preserve">
+    <value>Các trường yêu cầu không xác định, phần mở rộng tin nhắn/nội dung, &lt;code&gt;response_format&lt;/code&gt;, &lt;code&gt;reasoning_effort&lt;/code&gt;, trường của nhà cung cấp, các trường phản hồi không xác định, giá trị null và các dòng SSE không được nhận diện vẫn giữ nguyên trong phương ngữ Chat.</value>
+  </data>
+  <data name="Unknown top-level and nested request fields, native tools, metadata, future Items, annotations, citations, unknown response fields, future SSE event types, and JSON/non-JSON event data are retained." xml:space="preserve">
+    <value>Các trường yêu cầu cấp cao nhất và lồng nhau không xác định, công cụ gốc, siêu dữ liệu, mục trong tương lai, chú thích, trích dẫn, các trường phản hồi không xác định, các loại sự kiện SSE trong tương lai, và dữ liệu sự kiện JSON/không phải JSON được giữ nguyên.</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>Cách sử dụng</value>
@@ -1055,6 +1478,39 @@
   </data>
   <data name="Virtual Models" xml:space="preserve">
     <value>Mô hình Ảo</value>
+  </data>
+  <data name="Virtual-model names and gateway-owned metadata are rendered directly in the requested client shape." xml:space="preserve">
+    <value>Tên mô hình ảo và siêu dữ liệu do gateway quản lý được hiển thị trực tiếp theo định dạng mà client yêu cầu.</value>
+  </data>
+  <data name="VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are injected into Ollama &lt;code&gt;options&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, và &lt;code&gt;RepeatPenalty&lt;/code&gt; được chèn vào &lt;code&gt;options&lt;/code&gt; của Ollama.</value>
+  </data>
+  <data name="VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; hard-override Ollama &lt;code&gt;options&lt;/code&gt;." xml:space="preserve">
+    <value>Các tham số VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, và &lt;code&gt;RepeatPenalty&lt;/code&gt; ghi đè mạnh lên các &lt;code&gt;tùy chọn&lt;/code&gt; (options) của Ollama.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override Chat target controls; Chat-only VM thinking is injected through &lt;code&gt;chat_template_kwargs&lt;/code&gt;." xml:space="preserve">
+    <value>Các tham số VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt; và &lt;code&gt;Thinking&lt;/code&gt; ghi đè lên các điều khiển đích của Chat; chức năng suy nghĩ chỉ dành cho VM trong Chat được đưa vào thông qua &lt;code&gt;chat_template_kwargs&lt;/code&gt;.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override Chat target fields. Ollama-only DB sampling/context controls do not apply to Chat." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, và &lt;code&gt;Thinking&lt;/code&gt; ghi đè các trường đích của Chat. Các tùy chọn lấy mẫu/ngữ cảnh chỉ dành cho Ollama từ DB không áp dụng cho Chat.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override their target fields. Existing nested &lt;code&gt;chat_template_kwargs&lt;/code&gt; members are preserved around &lt;code&gt;enable_thinking&lt;/code&gt;." xml:space="preserve">
+    <value>Các giá trị VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt; và &lt;code&gt;Thinking&lt;/code&gt; ghi đè lên các trường đích của chúng. Các thành viên lồng nhau hiện có trong &lt;code&gt;chat_template_kwargs&lt;/code&gt; được giữ nguyên xung quanh &lt;code&gt;enable_thinking&lt;/code&gt;.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other nested Responses fields remain untouched." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, và &lt;code&gt;NumPredict&lt;/code&gt; ghi đè lên &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, và &lt;code&gt;max_output_tokens&lt;/code&gt;. Các trường Responses lồng nhau khác vẫn giữ nguyên.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other VM sampling fields are not applicable." xml:space="preserve">
+    <value>Các trường `Temperature`, `TopP` và `NumPredict` của VM sẽ ghi đè lên `temperature`, `top_p` và `max_output_tokens`. Các trường lấy mẫu VM khác không áp dụng.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, và &lt;code&gt;NumPredict&lt;/code&gt; ghi đè lên các trường của Responses. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, và &lt;code&gt;RepeatPenalty&lt;/code&gt; không có trường đích trong Responses.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, và &lt;code&gt;NumPredict&lt;/code&gt; ghi đè các trường đích của Responses. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, và &lt;code&gt;RepeatPenalty&lt;/code&gt; không phải là các bộ điều khiển của Responses.</value>
+  </data>
+  <data name="VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
+    <value>VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict và RepeatPenalty ghi đè yêu cầu; nếu thiếu &lt;code&gt;keep_alive&lt;/code&gt; sẽ sử dụng giá trị của Provider.</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>Chào mừng</value>
