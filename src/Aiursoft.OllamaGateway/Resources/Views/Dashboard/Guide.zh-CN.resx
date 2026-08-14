@@ -21,8 +21,14 @@
       <data name="(fallback)" xml:space="preserve">
     <value>（备用值）</value>
   </data>
+  <data name="/api/ps: 3 s · /api/version: 5 s · /v1/models: 10 s. UI-only; no health state is persisted." xml:space="preserve">
+    <value>/api/ps：3 秒 · /api/version：5 秒 · /v1/models：10 秒。仅用于界面显示；不持久化健康状态。</value>
+  </data>
   <data name="1. Client Request" xml:space="preserve">
     <value>1. 客户端请求</value>
+  </data>
+  <data name="2 provider types ≠ 3 wire protocols" xml:space="preserve">
+    <value>2 种提供商类型 ≠ 3 种传输协议</value>
   </data>
   <data name="2. Authentication &amp; Rate Limiting" xml:space="preserve">
     <value>2. 身份验证与速率限制</value>
@@ -42,11 +48,26 @@
   <data name="7. Observability Pipeline — Dual Logging &amp; Usage Tracking" xml:space="preserve">
     <value>7. 可观测性流水线——双重日志记录与使用追踪</value>
   </data>
+  <data name="active" xml:space="preserve">
+    <value>活动</value>
+  </data>
+  <data name="After response headers:" xml:space="preserve">
+    <value>响应标头之后：</value>
+  </data>
+  <data name="after slot acquired" xml:space="preserve">
+    <value>获取槽位后</value>
+  </data>
   <data name="Any OpenAI-compatible or Ollama-native client sends a request." xml:space="preserve">
     <value>任何兼容 OpenAI 或原生 Ollama 的客户端都会发送请求。</value>
   </data>
+  <data name="API key · virtual model · underlying model" xml:space="preserve">
+    <value>API 密钥 · 虚拟模型 · 基础模型</value>
+  </data>
   <data name="API Key Verification" xml:space="preserve">
     <value>API 密钥验证</value>
+  </data>
+  <data name="API keys" xml:space="preserve">
+    <value>API 密钥</value>
   </data>
   <data name="Architecture Guide" xml:space="preserve">
     <value>架构指南</value>
@@ -54,11 +75,23 @@
   <data name="attempts and" xml:space="preserve">
     <value>次重试，以及</value>
   </data>
+  <data name="AUDIT EVENTS" xml:space="preserve">
+    <value>审计事件</value>
+  </data>
+  <data name="Auth + Rate Limit" xml:space="preserve">
+    <value>身份验证 + 速率限制</value>
+  </data>
   <data name="Authentication &amp; API key validation" xml:space="preserve">
     <value>身份验证与 API 密钥校验</value>
   </data>
   <data name="Authentication &amp; rate limit" xml:space="preserve">
     <value>身份验证与速率限制</value>
+  </data>
+  <data name="Authentication and per-key rate-limit wait" xml:space="preserve">
+    <value>身份验证及按密钥限流等待</value>
+  </data>
+  <data name="Backend DNS, TCP handshake, and TLS" xml:space="preserve">
+    <value>后端 DNS、TCP 握手和 TLS</value>
   </data>
   <data name="Backend protocol" xml:space="preserve">
     <value>后端协议</value>
@@ -69,17 +102,35 @@
   <data name="Backend protocol is selected per request and provider capability" xml:space="preserve">
     <value>后端协议根据请求和提供程序能力进行选择</value>
   </data>
+  <data name="Backend protocols" xml:space="preserve">
+    <value>后端协议</value>
+  </data>
+  <data name="Backend response" xml:space="preserve">
+    <value>后端响应</value>
+  </data>
   <data name="Backends" xml:space="preserve">
     <value>后端</value>
   </data>
   <data name="Bearer token or x-api-key is validated." xml:space="preserve">
     <value>Bearer token 或 x-api-key 已通过验证。</value>
   </data>
+  <data name="Before model timeout" xml:space="preserve">
+    <value>模型超时前</value>
+  </data>
   <data name="Both pipelines are fire-and-forget from the request hot-path. If ClickHouse is down or the buffer is full, requests still succeed — logs are simply dropped (DropWrite). The system never blocks a user request to write a log." xml:space="preserve">
     <value>两条管道在请求热路径上均采用“发送即忘”模式。如果 ClickHouse 宕机或缓冲区已满，请求仍会成功——日志将被直接丢弃（DropWrite）。系统绝不会因写入日志而阻塞用户请求。</value>
   </data>
+  <data name="Bounded Channel&lt;RequestLog&gt;: 10,000 entries" xml:space="preserve">
+    <value>有界通道&lt;RequestLog&gt;：10,000 条记录</value>
+  </data>
   <data name="bounded to" xml:space="preserve">
     <value>限制为</value>
+  </data>
+  <data name="Buffer" xml:space="preserve">
+    <value>缓冲</value>
+  </data>
+  <data name="Bulk update" xml:space="preserve">
+    <value>批量更新</value>
   </data>
   <data name="but no virtual model with that name and type &apos;Chat&apos; exists in the database." xml:space="preserve">
     <value>但数据库中不存在具有该名称且类型为“Chat”的虚拟模型。</value>
@@ -90,8 +141,20 @@
   <data name="ClickHouse Log Pipeline" xml:space="preserve">
     <value>ClickHouse 日志管道</value>
   </data>
+  <data name="Client Decoder" xml:space="preserve">
+    <value>客户端解码器</value>
+  </data>
+  <data name="Client JSON" xml:space="preserve">
+    <value>客户端 JSON</value>
+  </data>
+  <data name="Cold-start model loading" xml:space="preserve">
+    <value>冷启动模型加载</value>
+  </data>
   <data name="Configuration" xml:space="preserve">
     <value>配置</value>
+  </data>
+  <data name="CONFIGURATION REQUIRED" xml:space="preserve">
+    <value>需要配置</value>
   </data>
   <data name="Control Plane" xml:space="preserve">
     <value>控制平面</value>
@@ -108,14 +171,32 @@
   <data name="create it here → New Virtual Model" xml:space="preserve">
     <value>在此创建 → 新建虚拟模型</value>
   </data>
+  <data name="CROSS DIALECT" xml:space="preserve">
+    <value>跨方言</value>
+  </data>
+  <data name="CURRENT INSTANCE · LIVE" xml:space="preserve">
+    <value>当前实例 · 实时</value>
+  </data>
   <data name="Current Value" xml:space="preserve">
     <value>当前值</value>
   </data>
   <data name="Dashboard Plane" xml:space="preserve">
     <value>仪表盘平面</value>
   </data>
+  <data name="Dashboard totals are DB-backed, with nominal ≤ 3 minute lag" xml:space="preserve">
+    <value>仪表板总计由数据库支持，名义延迟 ≤ 3 分钟</value>
+  </data>
   <data name="Data Plane" xml:space="preserve">
     <value>数据平面</value>
+  </data>
+  <data name="Decoder" xml:space="preserve">
+    <value>解码器</value>
+  </data>
+  <data name="Decoder → Event IR → Client Writer" xml:space="preserve">
+    <value>解码器 → 事件 IR → 客户端写入器</value>
+  </data>
+  <data name="Deep clone" xml:space="preserve">
+    <value>深拷贝</value>
   </data>
   <data name="Default chat model is unavailable" xml:space="preserve">
     <value>默认聊天模型不可用</value>
@@ -126,11 +207,17 @@
   <data name="Default virtual model" xml:space="preserve">
     <value>默认虚拟模型</value>
   </data>
+  <data name="Dialect contract" xml:space="preserve">
+    <value>方言契约</value>
+  </data>
   <data name="does not match a Chat virtual model in the database. Requests without an explicit model cannot be resolved." xml:space="preserve">
     <value>与数据库中的 Chat 虚拟模型不匹配。无法解析未指定模型的请求。</value>
   </data>
   <data name="drains buffer, batch-inserts into ClickHouse" xml:space="preserve">
     <value>清空缓冲区，批量插入 ClickHouse</value>
+  </data>
+  <data name="DropWrite when full; enqueue never blocks the request" xml:space="preserve">
+    <value>缓冲区满时丢弃写入；入队操作永不阻塞请求</value>
   </data>
   <data name="Dual observability pipeline" xml:space="preserve">
     <value>双可观测性管道</value>
@@ -138,8 +225,14 @@
   <data name="Each API key has its own rate-limit window. Two modes:" xml:space="preserve">
     <value>每个 API 密钥都有独立的速率限制窗口。两种模式：</value>
   </data>
+  <data name="Each eligible backend is attempted once before a second pass. Three consecutive failures activate the circuit breaker; a later success clears it." xml:space="preserve">
+    <value>在开始第二轮尝试前，会对每个符合条件的后端进行一次尝试。连续三次失败将触发熔断器；随后的成功会将其清除。</value>
+  </data>
   <data name="Embedding and non-chat APIs" xml:space="preserve">
     <value>嵌入与非聊天 API</value>
+  </data>
+  <data name="Embeddings" xml:space="preserve">
+    <value>嵌入</value>
   </data>
   <data name="entries, DropWrite when full" xml:space="preserve">
     <value>条目，满时丢弃写入</value>
@@ -153,8 +246,14 @@
   <data name="Example" xml:space="preserve">
     <value>示例</value>
   </data>
+  <data name="EXECUTION BOUNDARIES" xml:space="preserve">
+    <value>执行边界</value>
+  </data>
   <data name="Fallback budget for the current default model" xml:space="preserve">
     <value>当前默认模型的备用预算</value>
+  </data>
+  <data name="Fallback per-model loading timeout. Native Ollama only; the background job runs every 5 minutes." xml:space="preserve">
+    <value>每个模型加载的备用超时。仅限原生 Ollama；后台任务每 5 分钟运行一次。</value>
   </data>
   <data name="Fallback Timeline" xml:space="preserve">
     <value>回退时间线</value>
@@ -165,11 +264,29 @@
   <data name="Fix it here → Global Settings" xml:space="preserve">
     <value>在此修复 → 全局设置</value>
   </data>
+  <data name="FIXED ARCHITECTURE CONTRACT" xml:space="preserve">
+    <value>固定架构契约</value>
+  </data>
+  <data name="Flush every 2 minutes in batches" xml:space="preserve">
+    <value>每 2 分钟批量刷新</value>
+  </data>
+  <data name="Flush every 3 minutes" xml:space="preserve">
+    <value>每 3 分钟刷新一次</value>
+  </data>
   <data name="Four independent timeout planes" xml:space="preserve">
     <value>四个独立的超时层面</value>
   </data>
+  <data name="Gateway overrides" xml:space="preserve">
+    <value>网关覆盖</value>
+  </data>
+  <data name="Gateway-owned responses expose virtual models and avoid recursive upstream discovery." xml:space="preserve">
+    <value>网关托管的响应会暴露虚拟模型，并避免递归的上游发现。</value>
+  </data>
   <data name="GPU processes tokens. Once loaded, subsequent requests skip loading → straight to inference." xml:space="preserve">
     <value>GPU 处理 Token。加载完成后，后续请求将跳过加载步骤，直接进入推理阶段。</value>
+  </data>
+  <data name="Hang" xml:space="preserve">
+    <value>挂起</value>
   </data>
   <data name="Hang mode" xml:space="preserve">
     <value>挂起模式</value>
@@ -177,8 +294,17 @@
   <data name="Hardcoded" xml:space="preserve">
     <value>硬编码</value>
   </data>
+  <data name="Header timeout" xml:space="preserve">
+    <value>标头超时</value>
+  </data>
   <data name="Health Check" xml:space="preserve">
     <value>健康检查</value>
+  </data>
+  <data name="health timeout" xml:space="preserve">
+    <value>健康检查超时</value>
+  </data>
+  <data name="Hot-path increment" xml:space="preserve">
+    <value>热路径递增</value>
   </data>
   <data name="How a request flows through the Ollama Gateway — from client contract to selected backend protocol." xml:space="preserve">
     <value>请求在 Ollama 网关中的流转过程——从客户端契约到选定的后端协议。</value>
@@ -204,8 +330,14 @@
   <data name="Immediately return HTTP 429." xml:space="preserve">
     <value>立即返回 HTTP 429。</value>
   </data>
+  <data name="In-memory to relational DB" xml:space="preserve">
+    <value>内存至关系型数据库</value>
+  </data>
   <data name="In-Memory Usage Tracking" xml:space="preserve">
     <value>内存使用跟踪</value>
+  </data>
+  <data name="Inbound dialects" xml:space="preserve">
+    <value>入站方言</value>
   </data>
   <data name="Inference" xml:space="preserve">
     <value>推理</value>
@@ -225,11 +357,17 @@
   <data name="Limit" xml:space="preserve">
     <value>限制</value>
   </data>
+  <data name="Live configuration" xml:space="preserve">
+    <value>实时配置</value>
+  </data>
   <data name="Logs include: user, model, provider, tokens, latency, status code, conversation count" xml:space="preserve">
     <value>日志内容包括：用户、模型、提供商、令牌、延迟、状态码、会话次数</value>
   </data>
   <data name="Max" xml:space="preserve">
     <value>最大</value>
+  </data>
+  <data name="Max attempts" xml:space="preserve">
+    <value>最大重试次数</value>
   </data>
   <data name="Max Retries" xml:space="preserve">
     <value>最大重试次数</value>
@@ -240,11 +378,23 @@
   <data name="Model" xml:space="preserve">
     <value>模型</value>
   </data>
+  <data name="Model and capabilities" xml:space="preserve">
+    <value>模型与能力</value>
+  </data>
+  <data name="Model discovery" xml:space="preserve">
+    <value>模型发现</value>
+  </data>
   <data name="Model Loading" xml:space="preserve">
     <value>模型加载</value>
   </data>
   <data name="Model loading time (cold start on GPU)" xml:space="preserve">
     <value>模型加载时间（GPU 冷启动）</value>
+  </data>
+  <data name="Native Ollama only. A non-Ollama selected backend returns HTTP 501." xml:space="preserve">
+    <value>仅限原生 Ollama。选定的非 Ollama 后端将返回 HTTP 501。</value>
+  </data>
+  <data name="Native Responses" xml:space="preserve">
+    <value>原生响应</value>
   </data>
   <data name="needs another 30 s to finish → completely fine ✅" xml:space="preserve">
     <value>还需 30 秒完成 → 完全没问题 ✅</value>
@@ -255,8 +405,17 @@
   <data name="No concurrency limit — requests pass through immediately" xml:space="preserve">
     <value>无并发限制 — 请求立即通过</value>
   </data>
+  <data name="No database write on every model request" xml:space="preserve">
+    <value>每次模型请求不写入数据库</value>
+  </data>
+  <data name="No default chat virtual model is available." xml:space="preserve">
+    <value>没有可用的默认聊天虚拟模型。</value>
+  </data>
   <data name="No providers configured yet." xml:space="preserve">
     <value>尚未配置任何提供者。</value>
+  </data>
+  <data name="NON-BLOCKING HOT PATH" xml:space="preserve">
+    <value>非阻塞热点路径</value>
   </data>
   <data name="not found. Create it to see real configuration here." xml:space="preserve">
     <value>未找到。创建它以在此处查看实际配置。</value>
@@ -267,17 +426,32 @@
   <data name="Observability" xml:space="preserve">
     <value>可观测性</value>
   </data>
+  <data name="Ollama model warmup" xml:space="preserve">
+    <value>Ollama 模型预热</value>
+  </data>
+  <data name="Ollama uses its configured timeout for /api/tags and /api/ps. OpenAI /v1/models is fixed at 10 s." xml:space="preserve">
+    <value>Ollama 对 /api/tags 和 /api/ps 使用其配置的超时时间。OpenAI /v1/models 固定为 10 秒。</value>
+  </data>
   <data name="Once the backend sends HTTP headers, the timeout is PASSED. The model can stream tokens for hours — only client disconnection stops it." xml:space="preserve">
     <value>一旦后端发送 HTTP 响应头，即视为通过超时检查。模型可以持续流式传输 Token 数小时——只有客户端断开连接才会停止该过程。</value>
   </data>
   <data name="One semantic core, protocol-aware edges" xml:space="preserve">
     <value>一个语义核心，感知协议的边缘</value>
   </data>
+  <data name="Only shared semantics are translated. Wire extensions prefer a matching backend and fall back to the documented semantic subset; opaque content and unsupported stateful operations remain hard rejections." xml:space="preserve">
+    <value>仅翻译共享语义。Wire 扩展优先匹配后端，并回退至文档中定义的语义子集；不透明内容和不受支持的状态操作将被硬性拒绝。</value>
+  </data>
   <data name="Open Traffic Visualization" xml:space="preserve">
     <value>打开流量可视化</value>
   </data>
+  <data name="OpenAI Responses state is preserved only on native Responses routes" xml:space="preserve">
+    <value>OpenAI Responses 状态仅在原生 Responses 路由中保留</value>
+  </data>
   <data name="or" xml:space="preserve">
     <value>或</value>
+  </data>
+  <data name="Original JSON" xml:space="preserve">
+    <value>原始 JSON</value>
   </data>
   <data name="Outside the VM timeout" xml:space="preserve">
     <value>不计入 VM 超时</value>
@@ -287,6 +461,12 @@
   </data>
   <data name="Physical model" xml:space="preserve">
     <value>物理模型</value>
+  </data>
+  <data name="Preserve protocol-specific payload" xml:space="preserve">
+    <value>保留协议特定的有效负载</value>
+  </data>
+  <data name="previous_response_id, conversation, store:true, and background:true pass through unchanged to Responses-capable providers; translated routes return an explicit 400 unsupported_feature." xml:space="preserve">
+    <value>previous_response_id、conversation、store:true 和 background:true 将原样传递给支持 Responses 的提供商；转换后的路由将返回明确的 400 unsupported_feature。</value>
   </data>
   <data name="Pri" xml:space="preserve">
     <value>优先级</value>
@@ -309,14 +489,41 @@
   <data name="Provider concurrency — live process state" xml:space="preserve">
     <value>提供商并发 — 实时进程状态</value>
   </data>
+  <data name="Provider concurrency queue wait" xml:space="preserve">
+    <value>提供商并发队列等待</value>
+  </data>
   <data name="Provider concurrency slot queuing" xml:space="preserve">
     <value>提供商并发槽排队</value>
+  </data>
+  <data name="Provider health probes" xml:space="preserve">
+    <value>提供商健康探测</value>
+  </data>
+  <data name="Provider type: Ollama" xml:space="preserve">
+    <value>提供商类型：Ollama</value>
+  </data>
+  <data name="Provider type: OpenAI" xml:space="preserve">
+    <value>提供者类型：OpenAI</value>
+  </data>
+  <data name="Provider types" xml:space="preserve">
+    <value>提供商类型</value>
   </data>
   <data name="Queue until a slot opens — does NOT consume the virtual model timeout." xml:space="preserve">
     <value>排队等待空位出现——不会消耗虚拟模型超时时间。</value>
   </data>
+  <data name="queue wait" xml:space="preserve">
+    <value>队列等待</value>
+  </data>
+  <data name="Queue wait is outside the VM timeout" xml:space="preserve">
+    <value>队列等待时间超出 VM 超时限制</value>
+  </data>
   <data name="Quick admin dashboard ping. Does NOT write to DB — UI-only." xml:space="preserve">
     <value>快速的管理后台心跳检测。不写入数据库——仅用于界面展示。</value>
+  </data>
+  <data name="Quick admin probes" xml:space="preserve">
+    <value>快速管理探测</value>
+  </data>
+  <data name="Rate queue → provider queue → upstream → response lifecycle" xml:space="preserve">
+    <value>速率队列 → 提供商队列 → 上游 → 响应生命周期</value>
   </data>
   <data name="Rate-limit queue waiting (Hang mode)" xml:space="preserve">
     <value>速率限制队列等待（挂起模式）</value>
@@ -327,14 +534,38 @@
   <data name="Reads model weights from disk into GPU VRAM. 27GB on NVMe ≈ 5–15s; on HDD/NAS ≈ 3–10 min." xml:space="preserve">
     <value>将模型权重从磁盘读取到 GPU 显存。27GB 数据在 NVMe 上耗时约 5–15 秒；在 HDD/NAS 上耗时约 3–10 分钟。</value>
   </data>
+  <data name="Reconstruct client JSON or streaming events" xml:space="preserve">
+    <value>重建客户端 JSON 或流式事件</value>
+  </data>
+  <data name="Reject" xml:space="preserve">
+    <value>拒绝</value>
+  </data>
   <data name="Reject mode" xml:space="preserve">
     <value>拒绝模式</value>
+  </data>
+  <data name="Request IR" xml:space="preserve">
+    <value>请求 IR</value>
   </data>
   <data name="Request Path" xml:space="preserve">
     <value>请求路径</value>
   </data>
   <data name="Request Timeout" xml:space="preserve">
     <value>请求超时</value>
+  </data>
+  <data name="Resolved AI request" xml:space="preserve">
+    <value>已解决的 AI 请求</value>
+  </data>
+  <data name="Resolver + Planner" xml:space="preserve">
+    <value>解析器 + 规划器</value>
+  </data>
+  <data name="Response body after headers, streaming or buffered" xml:space="preserve">
+    <value>响应头之后的响应体（流式或缓冲）</value>
+  </data>
+  <data name="Response-header deadline" xml:space="preserve">
+    <value>响应头截止时间</value>
+  </data>
+  <data name="Return HTTP 429 immediately." xml:space="preserve">
+    <value>立即返回 HTTP 429。</value>
   </data>
   <data name="runs every" xml:space="preserve">
     <value>每</value>
@@ -345,11 +576,29 @@
   <data name="Runtime configuration" xml:space="preserve">
     <value>运行时配置</value>
   </data>
+  <data name="SAME DIALECT" xml:space="preserve">
+    <value>同协议方言</value>
+  </data>
+  <data name="SEMANTIC GATEWAY · V2" xml:space="preserve">
+    <value>语义网关 · V2</value>
+  </data>
+  <data name="Semantic Request IR" xml:space="preserve">
+    <value>语义请求中间表示</value>
+  </data>
+  <data name="Semantic translation path" xml:space="preserve">
+    <value>语义转换路径</value>
+  </data>
   <data name="Separate, narrower contracts" xml:space="preserve">
     <value>独立且更窄的契约</value>
   </data>
+  <data name="Starts after a provider concurrency slot is acquired. Covers DNS, connection, TLS, cold model loading, and waiting for upstream headers." xml:space="preserve">
+    <value>在获取提供商并发槽位后开始计时。涵盖 DNS 解析、连接建立、TLS 握手、冷模型加载以及等待上游响应头的时间。</value>
+  </data>
   <data name="State" xml:space="preserve">
     <value>无状态</value>
+  </data>
+  <data name="State-aware" xml:space="preserve">
+    <value>支持状态感知</value>
   </data>
   <data name="Strategy" xml:space="preserve">
     <value>策略</value>
@@ -357,8 +606,14 @@
   <data name="Streaming response body (after headers received)" xml:space="preserve">
     <value>流式响应正文（接收标头后）</value>
   </data>
+  <data name="Swap" xml:space="preserve">
+    <value>交换</value>
+  </data>
   <data name="swaps buffers and bulk-updates DB (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)" xml:space="preserve">
     <value>交换缓冲区并批量更新数据库（ApiKeys.UsageCount、VirtualModels.UsageCount、UnderlyingModelUsages）</value>
+  </data>
+  <data name="Target adapter" xml:space="preserve">
+    <value>目标适配器</value>
   </data>
   <data name="Temperature" xml:space="preserve">
     <value>温度</value>
@@ -372,6 +627,9 @@
   <data name="The global default chat model is set to" xml:space="preserve">
     <value>全局默认聊天模型已设置为</value>
   </data>
+  <data name="The virtual-model deadline no longer applies to the response body. Streaming may continue for hours, but transport failure, upstream closure, client cancellation, gateway shutdown, or decoding errors can still end it." xml:space="preserve">
+    <value>虚拟模型截止时间不再适用于响应正文。流式传输可能持续数小时，但传输故障、上游关闭、客户端取消、网关关闭或解码错误仍会终止它。</value>
+  </data>
   <data name="The warmup background job pings configured models every 5 min to prevent unloading." xml:space="preserve">
     <value>预热后台任务每 5 分钟向已配置的模型发送一次心跳，以防止其被卸载。</value>
   </data>
@@ -384,17 +642,38 @@
   <data name="Timeouts &amp; Queues" xml:space="preserve">
     <value>超时与队列</value>
   </data>
+  <data name="Total wall-clock time has no fixed upper bound because rate-limit and concurrency queues are outside this budget." xml:space="preserve">
+    <value>由于速率限制和并发队列不计入此预算，总挂钟时间没有固定的上限。</value>
+  </data>
   <data name="tracks API key usage, virtual model usage, underlying model usage — feeds the Dashboard charts in real-time" xml:space="preserve">
     <value>追踪 API 密钥用量、虚拟模型用量及底层模型用量——实时为仪表盘图表提供数据</value>
   </data>
   <data name="tracks live in-flight requests — powers the &quot;Live Inference&quot; table and Monitor page" xml:space="preserve">
     <value>跟踪实时飞行中的请求——为“实时推理”表和监控页面提供数据支持</value>
   </data>
+  <data name="Transparent wire path" xml:space="preserve">
+    <value>透明传输路径</value>
+  </data>
   <data name="Tries backends from lowest priority to highest. If backend #1 fails or times out, falls back to #2, then #3." xml:space="preserve">
     <value>按优先级从低到高尝试后端。如果后端 #1 失败或超时，则回退到 #2，再到 #3。</value>
   </data>
+  <data name="unbounded" xml:space="preserve">
+    <value>无上限</value>
+  </data>
+  <data name="Unknown representable fields survive. The gateway changes owned fields such as physical model identity and configured VM parameters; translated Responses requests use store:false." xml:space="preserve">
+    <value>未知的可表示字段将保留。网关会修改自有字段，如物理模型标识和配置的虚拟机参数；转换后的 Responses 请求使用 store:false。</value>
+  </data>
   <data name="Unlimited" xml:space="preserve">
     <value>无限</value>
+  </data>
+  <data name="USAGE COUNTERS" xml:space="preserve">
+    <value>用量计数器</value>
+  </data>
+  <data name="User, model, provider, token, latency, status, and conversation fields" xml:space="preserve">
+    <value>用户、模型、提供商、Token、延迟、状态和会话字段</value>
+  </data>
+  <data name="Uses its own two-dialect adapter pipeline. It does not pass through the chat Request/Event IR." xml:space="preserve">
+    <value>使用其专用的双方言适配器管道。它不经过聊天请求/事件 IR。</value>
   </data>
   <data name="Virtual model" xml:space="preserve">
     <value>虚拟模型</value>
@@ -402,8 +681,14 @@
   <data name="Virtual Model → Request Timeout (s)" xml:space="preserve">
     <value>虚拟模型 → 请求超时（秒）</value>
   </data>
+  <data name="Wait for the per-key rate window. Waiting does not consume VM timeout." xml:space="preserve">
+    <value>等待每个密钥的速率限制窗口。等待不会消耗虚拟模型超时时间。</value>
+  </data>
   <data name="waiting" xml:space="preserve">
     <value>等待</value>
+  </data>
+  <data name="Waiting for backend HTTP response headers" xml:space="preserve">
+    <value>等待后端 HTTP 响应头</value>
   </data>
   <data name="Waiting for backend to send HTTP response headers" xml:space="preserve">
     <value>等待后端发送 HTTP 响应头</value>
@@ -414,6 +699,9 @@
   <data name="Warmup Plane" xml:space="preserve">
     <value>预热平面</value>
   </data>
+  <data name="Web session" xml:space="preserve">
+    <value>Web 会话</value>
+  </data>
   <data name="What IS counted" xml:space="preserve">
     <value>计入的内容</value>
   </data>
@@ -422,6 +710,9 @@
   </data>
   <data name="Where configured" xml:space="preserve">
     <value>配置位置</value>
+  </data>
+  <data name="Wire Writer" xml:space="preserve">
+    <value>线路写入器</value>
   </data>
   <data name="With" xml:space="preserve">
     <value>如果未指定模型，网关将使用</value>

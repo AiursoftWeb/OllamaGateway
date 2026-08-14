@@ -45,6 +45,9 @@
   <data name="Backend Protocol" xml:space="preserve">
     <value>Backend Protocol</value>
   </data>
+  <data name="Banned (Till" xml:space="preserve">
+    <value>Banned (Until</value>
+  </data>
   <data name="Configuration Guide:" xml:space="preserve">
     <value>Configuration Guide:</value>
   </data>
@@ -60,11 +63,17 @@
   <data name="Disabled" xml:space="preserve">
     <value>Disabled</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Down</value>
+  </data>
   <data name="Edit Virtual Model" xml:space="preserve">
     <value>Edit Virtual Model</value>
   </data>
   <data name="Enabled" xml:space="preserve">
     <value>Enabled</value>
+  </data>
+  <data name="Healthy" xml:space="preserve">
+    <value>Healthy</value>
   </data>
   <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies. SUGGESTED VALUES: small models (≤8B, NVMe SSD) → 60–120s; large models (≥27B or HDD/NAS storage) → 600–1800s; embedding models → 30–60s." xml:space="preserve">
     <value>How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies. SUGGESTED VALUES: small models (≤8B, NVMe SSD) → 60–120s; large models (≥27B or HDD/NAS storage) → 600–1800s; embedding models → 30–60s.</value>
@@ -110,6 +119,9 @@
   </data>
   <data name="Provider" xml:space="preserve">
     <value>Provider</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Ready</value>
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Repeat Penalty</value>

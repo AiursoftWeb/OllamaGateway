@@ -27,29 +27,56 @@
   <data name="Ooops, something wrong happended." xml:space="preserve">
     <value>哎呀，發生錯誤了。</value>
   </data>
+  <data name="Oops, something went wrong." xml:space="preserve">
+    <value>哎呀，發生錯誤。</value>
+  </data>
   <data name="Remove" xml:space="preserve">
     <value>移除</value>
   </data>
   <data name="The file is not allowed ({{ value }} only)." xml:space="preserve">
     <value>不允許此檔案類型（僅允許 {{ value }}）。</value>
   </data>
+  <data name="The file is not allowed ({{{{ value }}}} only)." xml:space="preserve">
+    <value>不允許此檔案（僅限 {{{{ value }}}}）。</value>
+  </data>
   <data name="The file size is too big ({{ value }} max)." xml:space="preserve">
     <value>檔案大小過大（最大 {{ value }}）。</value>
+  </data>
+  <data name="The file size is too big ({{{{ value }}}} max)." xml:space="preserve">
+    <value>檔案大小過大（上限 {{{{ value }}}}）。</value>
   </data>
   <data name="The image format is not allowed ({{ value }} only)." xml:space="preserve">
     <value>不支援此圖片格式（僅允許 {{ value }}）。</value>
   </data>
+  <data name="The image format is not allowed ({{{{ value }}}} only)." xml:space="preserve">
+    <value>不允許此圖片格式（僅限 {{{{ value }}}}）。</value>
+  </data>
   <data name="The image height is too big ({{ value }}px max)." xml:space="preserve">
     <value>圖片高度過大（最大 {{ value }}px）。</value>
+  </data>
+  <data name="The image height is too big ({{{{ value }}}}px max)." xml:space="preserve">
+    <value>圖片高度過大（最大 {{{{ value }}}}px）。</value>
   </data>
   <data name="The image height is too small ({{ value }}px min)." xml:space="preserve">
     <value>圖片高度過小（至少需 {{ value }} 像素）。</value>
   </data>
+  <data name="The image height is too small ({{{{ value }}}}px min)." xml:space="preserve">
+    <value>圖片高度太小（最小 {{{{ value }}}}px）。</value>
+  </data>
   <data name="The image width is too big ({{ value }}px max)." xml:space="preserve">
     <value>圖片寬度過大（最大 {{ value }} 像素）。</value>
   </data>
+  <data name="The image width is too big ({{{{ value }}}}px max)." xml:space="preserve">
+    <value>圖片寬度太大（上限 {{{{ value }}}}px）。</value>
+  </data>
   <data name="The image width is too small ({{ value }}px min)." xml:space="preserve">
     <value>圖片寬度過小（至少需 {{ value }} 像素）。</value>
+  </data>
+  <data name="The image width is too small ({{{{ value }}}}px min)." xml:space="preserve">
+    <value>圖片寬度太小（最小 {{{{ value }}}}px）。</value>
+  </data>
+  <data name="Your file is still uploading. Are you sure you want to leave?" xml:space="preserve">
+    <value>您的檔案仍在上傳中。您確定要離開嗎？</value>
   </data>
 
 </root>
