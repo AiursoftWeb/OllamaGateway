@@ -744,6 +744,9 @@
   <data name="Native Power, AI Development" xml:space="preserve">
     <value>原生算力，AI 開發</value>
   </data>
+  <data name="Native state passthrough" xml:space="preserve">
+    <value>原生狀態透傳</value>
+  </data>
   <data name="Native vs. Gateway" xml:space="preserve">
     <value>原生版 vs. 閘道版</value>
   </data>
@@ -984,6 +987,9 @@
   <data name="Requester&apos;s API" xml:space="preserve">
     <value>請求者 API</value>
   </data>
+  <data name="requires a Responses-capable provider" xml:space="preserve">
+    <value>需要支援 Responses 的供應商</value>
+  </data>
   <data name="Requires Laravel Socialite config" xml:space="preserve">
     <value>需要 Laravel Socialite 配置</value>
   </data>
@@ -1067,6 +1073,9 @@
   </data>
   <data name="Starts without any configuration" xml:space="preserve">
     <value>無需任何配置即可啟動</value>
+  </data>
+  <data name="Stateful controls pass through to native Responses providers and are never silently translated." xml:space="preserve">
+    <value>有狀態控制項會直接傳遞至原生 Responses 提供者，且絕不會被靜默轉換。</value>
   </data>
   <data name="Stateless only" xml:space="preserve">
     <value>僅支援無狀態模式</value>
@@ -1166,6 +1175,9 @@
   </data>
   <data name="Transparent" xml:space="preserve">
     <value>透明</value>
+  </data>
+  <data name="Transparent, state-aware" xml:space="preserve">
+    <value>透明、感知狀態</value>
   </data>
   <data name="Transparent, stateless" xml:space="preserve">
     <value>透明、無狀態</value>

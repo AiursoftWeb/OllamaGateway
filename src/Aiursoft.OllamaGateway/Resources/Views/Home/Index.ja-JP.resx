@@ -744,6 +744,9 @@
   <data name="Native Power, AI Development" xml:space="preserve">
     <value>ネイティブなパワー、AI 開発</value>
   </data>
+  <data name="Native state passthrough" xml:space="preserve">
+    <value>ネイティブ状態のパススルー</value>
+  </data>
   <data name="Native vs. Gateway" xml:space="preserve">
     <value>ネイティブ対ゲートウェイ</value>
   </data>
@@ -984,6 +987,9 @@
   <data name="Requester&apos;s API" xml:space="preserve">
     <value>リクエスターのAPI</value>
   </data>
+  <data name="requires a Responses-capable provider" xml:space="preserve">
+    <value>Responses 対応プロバイダーが必要です</value>
+  </data>
   <data name="Requires Laravel Socialite config" xml:space="preserve">
     <value>Laravel Socialite の設定が必要です</value>
   </data>
@@ -1067,6 +1073,9 @@
   </data>
   <data name="Starts without any configuration" xml:space="preserve">
     <value>設定不要で起動します</value>
+  </data>
+  <data name="Stateful controls pass through to native Responses providers and are never silently translated." xml:space="preserve">
+    <value>ステートフルな制御はネイティブの Responses プロバイダにそのまま渡され、サイレントに翻訳されることはありません。</value>
   </data>
   <data name="Stateless only" xml:space="preserve">
     <value>ステートレスのみ</value>
@@ -1166,6 +1175,9 @@
   </data>
   <data name="Transparent" xml:space="preserve">
     <value>透過的</value>
+  </data>
+  <data name="Transparent, state-aware" xml:space="preserve">
+    <value>透過的、ステート対応</value>
   </data>
   <data name="Transparent, stateless" xml:space="preserve">
     <value>透過的、ステートレス</value>
