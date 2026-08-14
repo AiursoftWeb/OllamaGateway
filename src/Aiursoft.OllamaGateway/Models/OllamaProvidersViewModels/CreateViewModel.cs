@@ -30,6 +30,10 @@ public class CreateViewModel : UiStackLayoutViewModel
 
     public ProviderType ProviderType { get; set; } = ProviderType.Ollama;
 
+    public bool SupportsOpenAiChatCompletions { get; set; } = true;
+
+    public bool SupportsOpenAiResponses { get; set; }
+
     [Range(0, 1000)]
     public int MaxParallelism { get; set; }
 

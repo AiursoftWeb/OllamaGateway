@@ -26,10 +26,36 @@
 
                         <div class="mb-3">
                             <label asp-for="ProviderType" class="form-label">@Localizer["Provider Type"]</label>
-                            <select asp-for="ProviderType" class="form-select">
+                            <select asp-for="ProviderType" id="providerTypeSelect" class="form-select">
                                 <option value="0">@Localizer["Ollama"]</option>
                                 <option value="1">@Localizer["OpenAI Compatible"]</option>
                             </select>
+                        </div>
+
+                        <div id="openAiProtocolOptions" class="mb-3 @(Model.ProviderType == ProviderType.OpenAI ? string.Empty : "d-none")">
+                            <label class="form-label">@Localizer["Supported OpenAI generation protocols"]</label>
+                            @if (ViewData["OpenAiProtocolsInferred"] as bool? == true)
+                            {
+                                <div class="alert alert-warning py-2 small" role="note">
+                                    @Localizer["These values were inferred from legacy backend settings. Saving this provider makes them explicit."]
+                                </div>
+                            }
+                            <div class="form-check">
+                                <input asp-for="SupportsOpenAiChatCompletions" class="form-check-input" />
+                                <label asp-for="SupportsOpenAiChatCompletions" class="form-check-label">
+                                    <code>/v1/chat/completions</code> @Localizer["(Chat Completions)"]
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input asp-for="SupportsOpenAiResponses" class="form-check-input" />
+                                <label asp-for="SupportsOpenAiResponses" class="form-check-label">
+                                    <code>/v1/responses</code> @Localizer["(Responses)"]
+                                </label>
+                            </div>
+                            <span asp-validation-for="SupportsOpenAiChatCompletions" class="text-danger"></span>
+                            <div class="form-text">
+                                @Localizer["Matching client protocols are forwarded directly. Other supported requests are translated."]
+                            </div>
                         </div>
 
                         <div class="mb-3">
@@ -201,6 +227,12 @@
 @* ReSharper disable once Razor.SectionNotResolved *@
 @section scripts {
     <script>
+        const providerTypeSelect = document.getElementById('providerTypeSelect');
+        const openAiProtocolOptions = document.getElementById('openAiProtocolOptions');
+        providerTypeSelect.addEventListener('change', function () {
+            openAiProtocolOptions.classList.toggle('d-none', this.value !== '1');
+        });
+
         async function testConnection() {
             const baseUrl = document.getElementById('baseUrl').value;
             const bearerToken = document.getElementById('bearerToken').value;
@@ -214,7 +246,7 @@
                 const response = await fetch('@Url.Action("Test")', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ providerId: @ViewData["Id"], baseUrl, bearerToken, providerType: parseInt(document.querySelector('select[name="ProviderType"]')?.value ?? '0') })
+                    body: JSON.stringify({ providerId: @ViewData["Id"], baseUrl, bearerToken, providerType: parseInt(providerTypeSelect?.value ?? '0') })
                 });
                 const data = await response.json();
                 

@@ -39,7 +39,10 @@ public sealed class OpenAiResponsesRequestDecoder : IChatRequestDecoder
         }
 
         var streaming = ChatRequestDecoding.BoolValue(root["stream"]) ?? false;
-        var isStateful = root["previous_response_id"] != null || root["conversation"] != null;
+        var requiresNativeResponses = root["previous_response_id"] != null ||
+                                      root["conversation"] != null ||
+                                      ChatRequestDecoding.BoolValue(root["background"]) == true ||
+                                      ChatRequestDecoding.BoolValue(root["store"]) == true;
         var structuredOutput = root["text"]?["format"];
         var hasOpaqueContent = messages
             .SelectMany(message => message.Content)
@@ -50,13 +53,13 @@ public sealed class OpenAiResponsesRequestDecoder : IChatRequestDecoder
             tools,
             structuredOutput != null,
             hasNativeTools,
-            isStateful,
+            requiresNativeResponses,
             root["reasoning"] != null);
         if (hasOpaqueContent)
             requiredCapabilities |= GatewayCapability.OpenAiResponsesPassthrough;
-        var preferredCapabilities = HasUntranslatedTopLevelFields(root)
-            ? GatewayCapability.OpenAiResponsesPassthrough
-            : GatewayCapability.None;
+        // Prefer native Responses for every Responses request. If no such backend
+        // exists, representable stateless requests may still be translated.
+        var preferredCapabilities = GatewayCapability.OpenAiResponsesPassthrough;
         var request = new GatewayChatRequest(
             streaming,
             messages,
@@ -182,14 +185,4 @@ public sealed class OpenAiResponsesRequestDecoder : IChatRequestDecoder
         return string.Join("\n", summary.Select(part => ChatRequestDecoding.StringValue(part?["text"] ?? part)));
     }
 
-    private static bool HasUntranslatedTopLevelFields(JsonObject root)
-    {
-        var translated = new HashSet<string>(StringComparer.Ordinal)
-        {
-            "model", "input", "instructions", "stream", "temperature", "top_p",
-            "max_output_tokens", "tools", "tool_choice", "text", "reasoning",
-            "store", "background", "previous_response_id", "conversation"
-        };
-        return root.Any(property => !translated.Contains(property.Key));
-    }
 }

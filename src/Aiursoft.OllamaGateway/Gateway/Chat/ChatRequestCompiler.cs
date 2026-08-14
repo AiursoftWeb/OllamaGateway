@@ -16,7 +16,7 @@ public sealed class ChatRequestCompiler(
         VirtualModel virtualModel,
         VirtualModelBackend backend)
     {
-        var protocol = BackendProtocolResolver.Resolve(backend);
+        var protocol = BackendProtocolResolver.Resolve(backend, request.SourceDialect);
         return providerAdapters.Single(adapter => adapter.Protocol == protocol)
             .CreateRequest(request, virtualModel, backend);
     }

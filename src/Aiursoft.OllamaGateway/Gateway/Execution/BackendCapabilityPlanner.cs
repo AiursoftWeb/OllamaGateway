@@ -13,7 +13,13 @@ public sealed class BackendCapabilityPlanner : IBackendCapabilityPlanner
         if (backend.Provider == null)
             return false;
 
-        var supported = BackendProtocolResolver.Resolve(backend) switch
+        return BackendProtocolResolver.GetSupportedProtocols(backend)
+            .Any(protocol => Supports(protocol, capability));
+    }
+
+    private static bool Supports(BackendProtocol protocol, GatewayCapability capability)
+    {
+        var supported = protocol switch
         {
             BackendProtocol.OllamaNative =>
                 GatewayCapability.ChatCompletion |
@@ -43,6 +49,7 @@ public sealed class BackendCapabilityPlanner : IBackendCapabilityPlanner
                 GatewayCapability.Reasoning |
                 GatewayCapability.StructuredOutput |
                 GatewayCapability.NativeTools |
+                GatewayCapability.StatefulResponses |
                 GatewayCapability.OpenAiResponsesPassthrough,
             _ => GatewayCapability.None
         };

@@ -51,7 +51,7 @@ public class HomeControllerTests : TestBase
         }
 
         Assert.Contains("data-db-override-policy=\"hard-assignment\"", html);
-        Assert.Contains("data-responses-state=\"stateless-only\"", html);
+        Assert.Contains("data-responses-state=\"native-only\"", html);
         Assert.Contains("data-auxiliary-api-contract=\"embedding-and-ollama-operations\"", html);
         Assert.Contains("data-embedding-inspector", html);
         Assert.Contains("data-embedding-source=\"openai-embedding\"", html);

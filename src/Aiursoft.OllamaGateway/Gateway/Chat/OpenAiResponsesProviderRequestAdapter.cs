@@ -20,9 +20,9 @@ public sealed class OpenAiResponsesProviderRequestAdapter : IChatProviderRequest
 
         body["model"] = backend.UnderlyingModelName;
         body["stream"] = decoded.Request.Stream;
-        // This first gateway implementation is deliberately stateless. Prevent
-        // an omitted store option from inheriting the upstream default of true.
-        body["store"] = false;
+        // Cross-dialect requests cannot preserve Responses server-side state.
+        // Same-dialect requests retain the client's exact storage semantics.
+        if (!sameDialect) body["store"] = false;
         if (sameDialect)
             ApplyVirtualModelOptions(body, virtualModel);
         else

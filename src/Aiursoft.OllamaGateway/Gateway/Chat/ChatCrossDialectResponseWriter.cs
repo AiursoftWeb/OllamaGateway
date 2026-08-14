@@ -11,14 +11,13 @@ public sealed class ChatCrossDialectResponseWriter(
 {
     public async Task WriteAsync(
         ProtocolDialect clientDialect,
+        BackendProtocol providerProtocol,
         HttpResponseMessage upstreamResponse,
         VirtualModel virtualModel,
-        VirtualModelBackend actualBackend,
         bool streaming,
         HttpContext httpContext)
     {
-        var protocol = BackendProtocolResolver.Resolve(actualBackend);
-        var decoder = providerDecoders.Single(item => item.Protocol == protocol);
+        var decoder = providerDecoders.Single(item => item.Protocol == providerProtocol);
         var writer = clientWriters.Single(item => item.Dialect == clientDialect);
         await using var responseStream = await upstreamResponse.Content.ReadAsStreamAsync(httpContext.RequestAborted);
         var events = decoder.DecodeAsync(responseStream, streaming, httpContext.RequestAborted);

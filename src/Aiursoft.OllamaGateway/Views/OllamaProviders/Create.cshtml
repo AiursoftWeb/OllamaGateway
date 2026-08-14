@@ -29,6 +29,25 @@
                             </select>
                             <div class="form-text">@Localizer["Select the API format used by the downstream provider."]</div>
                         </div>
+                        <div id="openAiProtocolOptions" class="mb-3 d-none">
+                            <label class="form-label">@Localizer["Supported OpenAI generation protocols"]</label>
+                            <div class="form-check">
+                                <input asp-for="SupportsOpenAiChatCompletions" class="form-check-input" />
+                                <label asp-for="SupportsOpenAiChatCompletions" class="form-check-label">
+                                    <code>/v1/chat/completions</code> @Localizer["(Chat Completions)"]
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input asp-for="SupportsOpenAiResponses" class="form-check-input" />
+                                <label asp-for="SupportsOpenAiResponses" class="form-check-label">
+                                    <code>/v1/responses</code> @Localizer["(Responses)"]
+                                </label>
+                            </div>
+                            <span asp-validation-for="SupportsOpenAiChatCompletions" class="text-danger"></span>
+                            <div class="form-text">
+                                @Localizer["Matching client protocols are forwarded directly. Other supported requests are translated."]
+                            </div>
+                        </div>
                         <div class="mb-3">
                             <label asp-for="BaseUrl" class="form-label">@Localizer["Base URL"]</label>
                             <div class="input-group">
@@ -120,9 +139,15 @@
         const providerTypeSelect = document.getElementById('providerTypeSelect');
         const baseUrlInput = document.getElementById('baseUrlInput');
         const placeholders = { '0': 'http://localhost:11434', '1': 'https://api.openai.com' };
+        const openAiProtocolOptions = document.getElementById('openAiProtocolOptions');
+        function updateProviderOptions() {
+            openAiProtocolOptions.classList.toggle('d-none', providerTypeSelect.value !== '1');
+        }
         providerTypeSelect.addEventListener('change', function() {
             baseUrlInput.placeholder = placeholders[this.value] || 'http://localhost:11434';
+            updateProviderOptions();
         });
+        updateProviderOptions();
 
         document.getElementById('btnTestConnection').addEventListener('click', async function() {
             const baseUrl = document.getElementById('baseUrlInput').value;

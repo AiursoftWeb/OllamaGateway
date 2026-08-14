@@ -6,9 +6,9 @@ public interface IChatCrossDialectResponseWriter
 {
     Task WriteAsync(
         ProtocolDialect clientDialect,
+        BackendProtocol providerProtocol,
         HttpResponseMessage upstreamResponse,
         VirtualModel virtualModel,
-        VirtualModelBackend actualBackend,
         bool streaming,
         HttpContext httpContext);
 }

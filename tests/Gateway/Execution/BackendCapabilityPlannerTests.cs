@@ -41,6 +41,8 @@ public class BackendCapabilityPlannerTests
     {
         var responses = CreateBackend(ProviderType.OpenAI);
         responses.Protocol = BackendProtocol.OpenAiResponses;
+        responses.Provider!.SupportsOpenAiChatCompletions = false;
+        responses.Provider.SupportsOpenAiResponses = true;
         var chat = CreateBackend(ProviderType.OpenAI);
         chat.Protocol = BackendProtocol.OpenAiChatCompletions;
 
@@ -52,12 +54,26 @@ public class BackendCapabilityPlannerTests
     }
 
     [TestMethod]
-    public void ResponsesBackend_DoesNotAdvertiseStatefulResponses()
+    public void ResponsesBackend_AdvertisesStatefulResponses()
     {
         var responses = CreateBackend(ProviderType.OpenAI);
         responses.Protocol = BackendProtocol.OpenAiResponses;
+        responses.Provider!.SupportsOpenAiChatCompletions = false;
+        responses.Provider.SupportsOpenAiResponses = true;
 
-        Assert.IsFalse(_planner.Supports(responses, GatewayCapability.StatefulResponses));
+        Assert.IsTrue(_planner.Supports(responses, GatewayCapability.StatefulResponses));
+    }
+
+    [TestMethod]
+    public void DualProtocolProvider_AdvertisesBothNativePassthroughCapabilities()
+    {
+        var backend = CreateBackend(ProviderType.OpenAI);
+        backend.Provider!.SupportsOpenAiChatCompletions = true;
+        backend.Provider!.SupportsOpenAiResponses = true;
+
+        Assert.IsTrue(_planner.Supports(backend, GatewayCapability.OpenAiChatPassthrough));
+        Assert.IsTrue(_planner.Supports(backend, GatewayCapability.OpenAiResponsesPassthrough));
+        Assert.IsTrue(_planner.Supports(backend, GatewayCapability.StatefulResponses));
     }
 
     [TestMethod]

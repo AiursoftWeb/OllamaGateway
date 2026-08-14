@@ -51,7 +51,7 @@
                     <div class="guide-fact"><strong>4</strong><span>Inbound dialects</span></div>
                     <div class="guide-fact"><strong>3</strong><span>Backend protocols</span></div>
                     <div class="guide-fact"><strong>2</strong><span>Provider types</span></div>
-                    <div class="guide-fact guide-fact-warning"><strong>Stateless</strong><span>Responses contract</span></div>
+                    <div class="guide-fact guide-fact-warning"><strong>State-aware</strong><span>Native Responses</span></div>
                 </div>
             </div>
         </div>
@@ -131,7 +131,7 @@
                                 <code>Original JSON</code><span>→</span><code>Deep clone</code><span>→</span><code>Gateway overrides</code>
                             </div>
                             <p class="text-body-secondary mb-0">
-                                Unknown representable fields survive. The gateway changes owned fields such as physical model identity, configured VM parameters, and <code>store:false</code> for Responses.
+                                Unknown representable fields survive. The gateway changes owned fields such as physical model identity and configured VM parameters; translated Responses requests use <code>store:false</code>.
                             </p>
                         </div>
                     </div>
@@ -156,7 +156,7 @@
 
             <div class="card guide-card mb-4" data-stage="per-attempt-adapter">
                 <div class="card-header guide-card-header">
-                    <div><i data-lucide="server-cog"></i><strong>@Localizer["Backend protocol is selected per physical model"]</strong></div>
+                    <div><i data-lucide="server-cog"></i><strong>@Localizer["Backend protocol is selected per request and provider capability"]</strong></div>
                     <span class="text-body-secondary small">2 provider types ≠ 3 wire protocols</span>
                 </div>
                 <div class="card-body">
@@ -193,11 +193,11 @@
                 <div class="guide-response-branch guide-response-cross"><span>Cross dialect</span><strong>Decoder → Event IR → Client Writer</strong><small>Reconstruct client JSON or streaming events</small></div>
             </div>
 
-            <div class="alert guide-boundary-alert mb-4" role="note" data-responses-contract="stateless-only">
+            <div class="alert guide-boundary-alert mb-4" role="note" data-responses-contract="native-state">
                 <div class="guide-boundary-icon"><i data-lucide="triangle-alert"></i></div>
                 <div>
-                    <strong>OpenAI Responses is stateless at the gateway boundary</strong>
-                    <p class="mb-0">Clients must send the complete input. <code>previous_response_id</code>, <code>conversation</code>, <code>store:true</code>, and <code>background:true</code> return an explicit <code>400 unsupported_feature</code>.</p>
+                    <strong>OpenAI Responses state is preserved only on native Responses routes</strong>
+                    <p class="mb-0"><code>previous_response_id</code>, <code>conversation</code>, <code>store:true</code>, and <code>background:true</code> pass through unchanged to Responses-capable providers; translated routes return an explicit <code>400 unsupported_feature</code>.</p>
                 </div>
             </div>
 

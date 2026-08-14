@@ -106,7 +106,7 @@ Requests are decoded into a protocol-neutral representation and then encoded for
 
 When the client and physical backend use the same dialect, the gateway takes a transparent fast path: it preserves unknown request fields, response items, and stream events while changing only gateway-owned fields such as the model name. Cross-dialect calls use the neutral representation.
 
-The initial Responses implementation supports stateless text, image, custom-function, structured-output, reasoning, and streaming translation. Native Responses tools are passed through only to Responses-capable backends. `previous_response_id`, Conversations, stored responses, and background mode return an explicit `unsupported_feature` error instead of being silently ignored.
+Responses supports text, image, custom-function, structured-output, reasoning, and streaming translation. Native Responses tools and stateful controls (`previous_response_id`, Conversations, stored responses, and background mode) are forwarded only to Responses-capable backends. If no native Responses route is available, those features return an explicit `unsupported_feature` error instead of being silently ignored.
 
 ## Legacy parameter behavior by provider and API format
 

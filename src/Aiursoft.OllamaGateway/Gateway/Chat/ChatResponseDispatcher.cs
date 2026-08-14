@@ -14,7 +14,7 @@ public sealed class ChatResponseDispatcher(
         bool streaming,
         HttpContext httpContext)
     {
-        var protocol = BackendProtocolResolver.Resolve(actualBackend);
+        var protocol = BackendProtocolResolver.Resolve(actualBackend, clientDialect);
         var wireWriter = wireWriters.SingleOrDefault(writer =>
             writer.Dialect == clientDialect && writer.Protocol == protocol);
 
@@ -22,9 +22,9 @@ public sealed class ChatResponseDispatcher(
             ? wireWriter.WriteAsync(upstreamResponse, virtualModel, streaming, httpContext)
             : crossDialectWriter.WriteAsync(
                 clientDialect,
+                protocol,
                 upstreamResponse,
                 virtualModel,
-                actualBackend,
                 streaming,
                 httpContext);
     }

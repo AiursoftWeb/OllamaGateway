@@ -60,9 +60,9 @@
                                 <span asp-validation-for="ProviderId" class="text-danger"></span>
                             </div>
                             <div class="col-md-4 mb-3">
-                                <label asp-for="Protocol" class="form-label">@Localizer["Backend Protocol"]</label>
+                                <label asp-for="Protocol" class="form-label">@Localizer["Preferred Backend Protocol"]</label>
                                 <select asp-for="Protocol" class="form-select" asp-items="Html.GetEnumSelectList<BackendProtocol>()" required></select>
-                                <div class="form-text small">@Localizer["The HTTP dialect used by this physical model endpoint."]</div>
+                                <div class="form-text small">@Localizer["OpenAI clients use their matching provider protocol when available. This protocol is the fallback for other client dialects."]</div>
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label asp-for="UnderlyingModel" class="form-label">@Localizer["Underlying Model"]</label>

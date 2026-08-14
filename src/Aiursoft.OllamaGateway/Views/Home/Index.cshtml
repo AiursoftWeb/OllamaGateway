@@ -321,7 +321,7 @@
                                 <i class="fas fa-comments"></i><span><strong>OpenAI Chat</strong><small>/v1/chat/completions</small></span>
                             </button>
                             <button type="button" class="compatibility-choice" data-compatibility-source="openai-responses" data-endpoint="/v1/responses" data-label="OpenAI Responses" aria-pressed="false">
-                                <i class="fas fa-stream"></i><span><strong>OpenAI Responses</strong><small>/v1/responses · stateless</small></span>
+                                <i class="fas fa-stream"></i><span><strong>OpenAI Responses</strong><small>/v1/responses · state-aware</small></span>
                             </button>
                             <button type="button" class="compatibility-choice" data-compatibility-source="anthropic" data-endpoint="/v1/messages" data-label="Anthropic Messages" aria-pressed="false">
                                 <i class="fas fa-message"></i><span><strong>Anthropic Messages</strong><small>/v1/messages</small></span>
@@ -497,14 +497,14 @@
                         <td>VM <code>Temperature</code>, <code>TopP</code>, and <code>NumPredict</code> override Responses target fields. VM <code>Thinking</code>, <code>TopK</code>, <code>NumCtx</code>, and <code>RepeatPenalty</code> are not Responses controls.</td>
                     </tr>
                     <tr class="compatibility-group compatibility-group-responses">
-                        <th colspan="6"><i class="fas fa-stream me-2"></i>@Localizer["OpenAI Responses client routes"] <span class="fw-normal opacity-75 ms-2"><code>/v1/responses</code> → 3 backend protocols · stateless contract</span></th>
+                        <th colspan="6"><i class="fas fa-stream me-2"></i>@Localizer["OpenAI Responses client routes"] <span class="fw-normal opacity-75 ms-2"><code>/v1/responses</code> → 3 backend protocols · native state passthrough</span></th>
                     </tr>
                     <tr data-direction="openai-responses-to-ollama" data-mode="translated">
                         <th><code>/v1/responses</code><br>Responses → Ollama<br><span class="badge bg-info text-dark mt-2">@Localizer["Translated subset"]</span></th>
                         <td><code>OpenAiResponsesRequestDecoder</code> → canonical IL → <code>OllamaChatProviderRequestAdapter</code>. Ollama output becomes typed Responses Items and typed SSE events.</td>
                         <td>Instructions, message Items, text, images, function calls/results, function tool definitions, temperature, top-p, output-token limit, reasoning effort/output, structured format, stream, finish reason, and usage.</td>
                         <td><code>instructions</code> → system message; <code>input_text</code>/<code>input_image</code> → Ollama content/images; <code>max_output_tokens</code> → <code>num_predict</code>; <code>reasoning.effort</code> → <code>think</code>; <code>text.format</code> → <code>format</code>; response events are synthesized with stable output indexes.</td>
-                        <td><code>previous_response_id</code>, <code>conversation</code>, <code>store:true</code>, and <code>background:true</code> are rejected before routing. Native tools and unknown Items require a Responses backend. Unknown top-level controls prefer Responses and are omitted on fallback.</td>
+                        <td><code>previous_response_id</code>, <code>conversation</code>, <code>store:true</code>, <code>background:true</code>, native tools, and unknown Items require a Responses backend. Stateless representable requests fall back to translation.</td>
                         <td>All Ollama VM controls apply and override translated values: sampling, context, repeat penalty, token limit, and thinking. Ollama-only DB controls may be injected.</td>
                     </tr>
                     <tr data-direction="openai-responses-to-openai-chat" data-mode="translated">
@@ -512,15 +512,15 @@
                         <td><code>OpenAiResponsesRequestDecoder</code> → canonical IL → <code>OpenAiChatProviderRequestAdapter</code>. Chat completions/chunks are decoded and emitted as Responses JSON/typed SSE.</td>
                         <td>Instructions, text/images, function tools/calls/results, temperature, top-p, token limit, reasoning effort/output, structured output, stream, finish state, and usage.</td>
                         <td>Input Items → Chat <code>messages</code>; instructions → system message; Responses function tool/choice shapes → Chat wrappers; <code>max_output_tokens</code> → <code>max_tokens</code>; <code>reasoning.effort</code> → <code>reasoning_effort</code>; <code>text.format</code> → <code>response_format</code>.</td>
-                        <td>State/background requests are rejected. Native Responses tools and unknown Items require a Responses backend. Metadata and unknown top-level controls prefer Responses and are omitted on fallback. Responses-only annotations/citations cannot be recreated from Chat output.</td>
+                        <td>State/background requests require a Responses backend. Native Responses tools and unknown Items also require Responses. Metadata and unknown top-level controls prefer Responses and are omitted on fallback. Responses-only annotations/citations cannot be recreated from Chat output.</td>
                         <td>VM <code>Temperature</code>, <code>TopP</code>, <code>NumPredict</code>, and <code>Thinking</code> override Chat target controls; Chat-only VM thinking is injected through <code>chat_template_kwargs</code>.</td>
                     </tr>
                     <tr data-direction="openai-responses-to-openai-responses" data-mode="transparent">
-                        <th><code>/v1/responses</code><br>Responses → Responses<br><span class="badge bg-success mt-2">@Localizer["Transparent, stateless"]</span></th>
+                        <th><code>/v1/responses</code><br>Responses → Responses<br><span class="badge bg-success mt-2">@Localizer["Transparent, state-aware"]</span></th>
                         <td>The request adapter deep-clones the original Responses JSON. <code>OpenAiResponsesWireResponseWriter</code> preserves unknown output Items and SSE event names/data/comments/id/retry without passing the payload through canonical IL.</td>
                         <td>Unknown top-level and nested request fields, native tools, metadata, future Items, annotations, citations, unknown response fields, future SSE event types, and JSON/non-JSON event data are retained.</td>
-                        <td>Only model identity, stream intent, configured VM options, and storage policy are gateway-owned. Upstream physical model names are replaced with the virtual model in response objects and events.</td>
-                        <td>The gateway currently rejects <code>previous_response_id</code>, <code>conversation</code>, <code>background:true</code>, and <code>store:true</code>; every forwarded request is forced to <code>store:false</code>. This is not byte-transparent because JSON may be reserialized.</td>
+                        <td>Only model identity, stream intent, and configured VM options are gateway-owned. Upstream physical model names are replaced with the virtual model in response objects and events.</td>
+                        <td><code>previous_response_id</code>, <code>conversation</code>, <code>background</code>, and <code>store</code> retain their native Responses semantics. This is not byte-transparent because JSON may be reserialized.</td>
                         <td>VM <code>Temperature</code>, <code>TopP</code>, and <code>NumPredict</code> override <code>temperature</code>, <code>top_p</code>, and <code>max_output_tokens</code>. Other nested Responses fields remain untouched.</td>
                     </tr>
                     <tr class="compatibility-group compatibility-group-anthropic">
@@ -570,16 +570,16 @@
                         </div>
                     </div>
                     <div class="col-12 col-xl-5">
-                        <div class="compatibility-policy-card policy-responses h-100" role="note" data-responses-state="stateless-only">
+                        <div class="compatibility-policy-card policy-responses h-100" role="note" data-responses-state="native-only">
                             <div class="compatibility-policy-heading">
                                 <span class="compatibility-policy-icon"><i class="fas fa-exclamation-triangle"></i></span>
-                                <div><small>OpenAI Responses</small><h4>@Localizer["Stateless only"]</h4></div>
+                                <div><small>OpenAI Responses</small><h4>@Localizer["Native state passthrough"]</h4></div>
                             </div>
-                            <p>@Localizer["Clients must send the complete input history. The gateway does not retain or resume response state."]</p>
+                            <p>@Localizer["Stateful controls pass through to native Responses providers and are never silently translated."]</p>
                             <div class="compatibility-unsupported-options">
                                 <code>previous_response_id</code><code>conversation</code><code>store:true</code><code>background:true</code>
                             </div>
-                            <p class="mb-0">→ <strong>@Localizer["explicit unsupported_feature error"]</strong></p>
+                            <p class="mb-0">→ <strong>@Localizer["requires a Responses-capable provider"]</strong></p>
                         </div>
                     </div>
                 </div>

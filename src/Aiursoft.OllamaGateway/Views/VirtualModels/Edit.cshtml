@@ -101,7 +101,7 @@
                             <tr>
                                 <th>@Localizer["Provider"]</th>
                                 <th>@Localizer["Underlying"]</th>
-                                <th>@Localizer["Protocol"]</th>
+                                <th>@Localizer["Preferred Protocol"]</th>
                                 <th>@Localizer["Priority"]</th>
                                 <th>@Localizer["Weight"]</th>
                                 <th>@Localizer["Status"]</th>
@@ -193,7 +193,7 @@
                             </select>
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label small mb-1">@Localizer["Backend Protocol"]</label>
+                            <label class="form-label small mb-1">@Localizer["Preferred Backend Protocol"]</label>
                             <select name="protocol" class="form-select form-select-sm" required>
                                 @foreach (var protocol in Enum.GetValues<BackendProtocol>())
                                 {

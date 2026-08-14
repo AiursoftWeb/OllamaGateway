@@ -43,28 +43,6 @@ public sealed class OpenAIResponsesController(
                 return;
             }
 
-            if (root["previous_response_id"] != null || root["conversation"] != null)
-            {
-                await WriteErrorAsync(
-                    400,
-                    "invalid_request_error",
-                    "unsupported_feature",
-                    "This gateway currently supports stateless Responses requests only. Send the complete input instead of previous_response_id or conversation.");
-                return;
-            }
-            if (ChatRequestDecoding.BoolValue(root["background"]) == true)
-            {
-                await WriteErrorAsync(400, "invalid_request_error", "unsupported_feature",
-                    "Background Responses are not supported by this gateway.");
-                return;
-            }
-            if (ChatRequestDecoding.BoolValue(root["store"]) == true)
-            {
-                await WriteErrorAsync(400, "invalid_request_error", "unsupported_feature",
-                    "Stored Responses are not supported by this gateway. Use store: false.");
-                return;
-            }
-
             var requestedModel = ChatRequestDecoding.StringValue(root["model"]);
             var resolution = await modelResolver.ResolveChatAsync(
                 requestedModel,

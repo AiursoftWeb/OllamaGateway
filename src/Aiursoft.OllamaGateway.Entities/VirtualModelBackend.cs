@@ -4,10 +4,9 @@ using System.Diagnostics.CodeAnalysis;
 namespace Aiursoft.OllamaGateway.Entities;
 
 /// <summary>
-/// The HTTP protocol used to invoke one physical model. This belongs to the
-/// backend rather than the provider because one provider can expose multiple
-/// protocols and individual models may support different endpoint families.
-/// Null is retained for existing rows and means "infer from ProviderType".
+/// The preferred HTTP protocol for one physical model. OpenAI client requests
+/// first use their matching protocol when the provider supports it; this value
+/// controls the fallback for other client dialects. Null retains legacy inference.
 /// </summary>
 public enum BackendProtocol
 {

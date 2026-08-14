@@ -127,7 +127,7 @@ public class VirtualModelsController(
     [HttpGet]
     public async Task<IActionResult> Create(ModelType type = ModelType.Chat, int? providerId = null)
     {
-        var providers = await dbContext.OllamaProviders.ToListAsync();
+        var providers = await dbContext.OllamaProviders.Include(provider => provider.VirtualModelBackends).ToListAsync();
         var underlyingModels = new List<string>();
         if (providerId.HasValue)
         {
@@ -169,7 +169,7 @@ public class VirtualModelsController(
     {
         var selectedProvider = model.ProviderId == 0
             ? null
-            : await dbContext.OllamaProviders.AsNoTracking().FirstOrDefaultAsync(provider => provider.Id == model.ProviderId);
+            : await dbContext.OllamaProviders.AsNoTracking().Include(provider => provider.VirtualModelBackends).FirstOrDefaultAsync(provider => provider.Id == model.ProviderId);
         if (!model.Protocol.HasValue && selectedProvider != null)
         {
             model.Protocol = DefaultProtocol(selectedProvider);
@@ -269,7 +269,7 @@ public class VirtualModelsController(
 
         var firstBackend = virtualModel.VirtualModelBackends.FirstOrDefault();
 
-        var providers = await dbContext.OllamaProviders.ToListAsync();
+        var providers = await dbContext.OllamaProviders.Include(provider => provider.VirtualModelBackends).ToListAsync();
         providerId ??= firstBackend?.ProviderId;
 
         var provider = providers.FirstOrDefault(p => p.Id == providerId);
@@ -397,7 +397,7 @@ public class VirtualModelsController(
 
         var provider = providerId <= 0
             ? null
-            : await dbContext.OllamaProviders.AsNoTracking().FirstOrDefaultAsync(item => item.Id == providerId);
+            : await dbContext.OllamaProviders.AsNoTracking().Include(item => item.VirtualModelBackends).FirstOrDefaultAsync(item => item.Id == providerId);
         protocol ??= provider == null ? null : DefaultProtocol(provider);
 
         if (string.IsNullOrEmpty(underlyingModel) || provider == null || !protocol.HasValue || !Enum.IsDefined(protocol.Value))
@@ -533,9 +533,11 @@ public class VirtualModelsController(
             : await ollamaService.GetUnderlyingModelsAsync(provider.BaseUrl, provider.BearerToken) ?? new List<string>();
     }
 
-    private static BackendProtocol DefaultProtocol(OllamaProvider provider) => provider.ProviderType switch
+    private static BackendProtocol DefaultProtocol(OllamaProvider provider)
     {
-        ProviderType.OpenAI => BackendProtocol.OpenAiChatCompletions,
-        _ => BackendProtocol.OllamaNative
-    };
+        var supportedProtocols = BackendProtocolResolver.GetProviderSupportedProtocols(provider);
+        return supportedProtocols.Contains(BackendProtocol.OpenAiChatCompletions)
+            ? BackendProtocol.OpenAiChatCompletions
+            : supportedProtocols[0];
+    }
 }

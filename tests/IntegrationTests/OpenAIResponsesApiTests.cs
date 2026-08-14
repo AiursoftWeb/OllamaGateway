@@ -240,7 +240,7 @@ public class OpenAIResponsesApiTests : TestBase
         """));
 
         Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-        StringAssert.Contains(await response.Content.ReadAsStringAsync(), "stateless");
+        StringAssert.Contains(await response.Content.ReadAsStringAsync(), "unsupported_feature");
         Assert.IsNull(MockUpstreamState.LastRequest);
     }
 
@@ -297,7 +297,9 @@ public class OpenAIResponsesApiTests : TestBase
         {
             Name = $"OpenAI Responses {Guid.NewGuid():N}",
             BaseUrl = "http://fake-openai.test",
-            ProviderType = ProviderType.OpenAI
+            ProviderType = ProviderType.OpenAI,
+            SupportsOpenAiChatCompletions = false,
+            SupportsOpenAiResponses = true
         };
         db.OllamaProviders.Add(provider);
         await db.SaveChangesAsync();

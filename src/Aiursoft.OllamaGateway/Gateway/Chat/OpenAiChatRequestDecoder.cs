@@ -32,9 +32,9 @@ public sealed class OpenAiChatRequestDecoder : IChatRequestDecoder
             reasoningRequested: root["reasoning_effort"] != null);
         if (messages.SelectMany(message => message.Content).Any(part => part is GatewayOpaqueContent))
             requiredCapabilities |= GatewayCapability.OpenAiChatPassthrough;
-        var preferredCapabilities = HasUntranslatedTopLevelFields(root)
-            ? GatewayCapability.OpenAiChatPassthrough
-            : GatewayCapability.None;
+        // Prefer a native Chat Completions backend for every Chat request. This is
+        // deliberately soft: a Responses or Ollama backend remains a valid fallback.
+        var preferredCapabilities = GatewayCapability.OpenAiChatPassthrough;
         var request = new GatewayChatRequest(
             streaming,
             messages,
@@ -68,14 +68,4 @@ public sealed class OpenAiChatRequestDecoder : IChatRequestDecoder
         }.ToJsonString();
     }
 
-    private static bool HasUntranslatedTopLevelFields(JsonObject root)
-    {
-        var translated = new HashSet<string>(StringComparer.Ordinal)
-        {
-            "model", "messages", "stream", "stream_options", "temperature", "top_p", "max_tokens",
-            "max_completion_tokens", "tools", "tool_choice", "response_format",
-            "reasoning_effort", "chat_template_kwargs"
-        };
-        return root.Any(property => !translated.Contains(property.Key));
-    }
 }

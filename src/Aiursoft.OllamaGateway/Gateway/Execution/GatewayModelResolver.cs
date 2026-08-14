@@ -65,7 +65,9 @@ public sealed class GatewayModelResolver(
                 "Forbidden. You don't have permission to chat with underlying models.");
         }
 
-        var provider = await dbContext.OllamaProviders.FindAsync([providerId], cancellationToken);
+        var provider = await dbContext.OllamaProviders
+            .Include(item => item.VirtualModelBackends)
+            .FirstOrDefaultAsync(item => item.Id == providerId, cancellationToken);
         if (provider == null)
         {
             return GatewayModelResolution.Failure(

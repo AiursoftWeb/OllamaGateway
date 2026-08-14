@@ -9,6 +9,9 @@ namespace Aiursoft.OllamaGateway.Models.OllamaProvidersViewModels;
 public class ProviderStatus
 {
     public required OllamaProvider Provider { get; set; }
+    public bool SupportsOpenAiChatCompletions { get; set; }
+    public bool SupportsOpenAiResponses { get; set; }
+    public bool OpenAiProtocolsInferred { get; set; }
     public bool IsAlive { get; set; }
     public string? Version { get; set; }
     public List<OllamaService.OllamaRunningModel>? RunningModels { get; set; }

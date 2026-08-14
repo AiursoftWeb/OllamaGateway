@@ -578,6 +578,8 @@ public class OpenAIBackendProviderTests : TestBase
                 .Where(provider => provider.Name == "OpenAI Backend")
                 .OrderByDescending(provider => provider.Id)
                 .FirstAsync();
+            openAiProvider.SupportsOpenAiChatCompletions = false;
+            openAiProvider.SupportsOpenAiResponses = true;
             var ollamaProvider = new OllamaProvider
             {
                 Name = "Primary Ollama Chat",
@@ -605,6 +607,7 @@ public class OpenAIBackendProviderTests : TestBase
             {
                 ProviderId = openAiProvider.Id,
                 UnderlyingModelName = PhysicalModelName,
+                Protocol = BackendProtocol.OpenAiResponses,
                 Priority = 1,
                 Enabled = true,
                 IsHealthy = true
@@ -632,7 +635,7 @@ public class OpenAIBackendProviderTests : TestBase
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(
-                    """{"id":"fallback","object":"chat.completion","model":"gpt-4o-mini","choices":[{"index":0,"message":{"role":"assistant","content":"fallback worked"},"finish_reason":"stop"}],"usage":{"prompt_tokens":3,"completion_tokens":2,"total_tokens":5}}""",
+                    """{"id":"resp_fallback","object":"response","created_at":1,"status":"completed","model":"gpt-4o-mini","output":[{"id":"msg_fallback","type":"message","status":"completed","role":"assistant","content":[{"type":"output_text","text":"fallback worked","annotations":[]}]}],"usage":{"input_tokens":3,"output_tokens":2,"total_tokens":5}}""",
                     Encoding.UTF8,
                     "application/json")
             };
@@ -645,7 +648,7 @@ public class OpenAIBackendProviderTests : TestBase
         Assert.AreEqual(2, attempts.Count);
         Assert.AreEqual("/api/chat", attempts[0].Path);
         Assert.AreEqual(ollamaPhysicalModel, JsonNode.Parse(attempts[0].Body)?["model"]?.ToString());
-        Assert.AreEqual("/v1/chat/completions", attempts[1].Path);
+        Assert.AreEqual("/v1/responses", attempts[1].Path);
         Assert.AreEqual(PhysicalModelName, JsonNode.Parse(attempts[1].Body)?["model"]?.ToString());
 
         var responseBody = JsonNode.Parse(await response.Content.ReadAsStringAsync());

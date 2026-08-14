@@ -77,7 +77,7 @@ public class DashboardControllerTests : TestBase
         Assert.Contains("data-stage=\"event-ir\"", html);
         Assert.Contains("data-route-mode=\"same-dialect\"", html);
         Assert.Contains("data-route-mode=\"cross-dialect\"", html);
-        Assert.Contains("data-responses-contract=\"stateless-only\"", html);
+        Assert.Contains("data-responses-contract=\"native-state\"", html);
         Assert.Contains("data-guide-status=\"default-model-missing\"", html);
         Assert.Contains("data-retry-semantics=\"attempt-budget\"", html);
         Assert.Contains("data-timeout-scope=\"headers-only\"", html);

@@ -1,5 +1,6 @@
 using Aiursoft.OllamaGateway.Authorization;
 using Aiursoft.OllamaGateway.Entities;
+using Aiursoft.OllamaGateway.Gateway;
 using Aiursoft.OllamaGateway.Models.OllamaProvidersViewModels;
 using Aiursoft.OllamaGateway.Services;
 using Aiursoft.UiStack.Navigation;
@@ -28,17 +29,22 @@ public class OllamaProvidersController(
     public async Task<IActionResult> Index()
     {
         var providers = await dbContext.OllamaProviders
+            .Include(p => p.VirtualModelBackends)
             .OrderByDescending(p => p.CreatedAt)
             .ToListAsync();
 
         var statusTasks = providers.Select(async p =>
         {
+            var supportedProtocols = BackendProtocolResolver.GetProviderSupportedProtocols(p);
             if (p.ProviderType == ProviderType.OpenAI)
             {
                 var oaiModels = await ollamaService.GetOpenAIAvailableModelsAsync(p.BaseUrl, p.BearerToken);
                 return new ProviderStatus
                 {
                     Provider = p,
+                    SupportsOpenAiChatCompletions = supportedProtocols.Contains(BackendProtocol.OpenAiChatCompletions),
+                    SupportsOpenAiResponses = supportedProtocols.Contains(BackendProtocol.OpenAiResponses),
+                    OpenAiProtocolsInferred = !p.SupportsOpenAiChatCompletions.HasValue && !p.SupportsOpenAiResponses.HasValue,
                     IsAlive = oaiModels != null,
                     Version = "OpenAI API",
                     RunningModels = oaiModels?.Select(m => new OllamaService.OllamaRunningModel { Name = m, Model = m }).ToList()
@@ -50,6 +56,9 @@ public class OllamaProvidersController(
             return new ProviderStatus
             {
                 Provider = p,
+                SupportsOpenAiChatCompletions = false,
+                SupportsOpenAiResponses = false,
+                OpenAiProtocolsInferred = false,
                 IsAlive = runningModels != null,
                 Version = version,
                 RunningModels = runningModels
@@ -132,6 +141,7 @@ public class OllamaProvidersController(
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(CreateViewModel model)
     {
+        ValidateOpenAiProtocols(model);
         if (!ModelState.IsValid)
         {
             return this.StackView(model);
@@ -170,6 +180,8 @@ public class OllamaProvidersController(
             BearerToken = model.BearerToken,
             KeepAlive = model.KeepAlive,
             ProviderType = model.ProviderType,
+            SupportsOpenAiChatCompletions = model.SupportsOpenAiChatCompletions,
+            SupportsOpenAiResponses = model.SupportsOpenAiResponses,
             MaxParallelism = model.MaxParallelism,
             HealthCheckTimeoutSeconds = model.HealthCheckTimeoutSeconds
         };
@@ -183,7 +195,9 @@ public class OllamaProvidersController(
     [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {
-        var provider = await dbContext.OllamaProviders.FindAsync(id);
+        var provider = await dbContext.OllamaProviders
+            .Include(p => p.VirtualModelBackends)
+            .FirstOrDefaultAsync(p => p.Id == id);
         if (provider == null) return NotFound();
 
         List<string> physicalModels;
@@ -192,6 +206,7 @@ public class OllamaProvidersController(
         else
             physicalModels = await ollamaService.GetUnderlyingModelsAsync(provider.BaseUrl, provider.BearerToken) ?? new List<string>();
 
+        var supportedProtocols = BackendProtocolResolver.GetProviderSupportedProtocols(provider);
         var model = new CreateViewModel
         {
             Name = provider.Name,
@@ -199,10 +214,16 @@ public class OllamaProvidersController(
             BearerToken = provider.BearerToken,
             KeepAlive = provider.KeepAlive,
             ProviderType = provider.ProviderType,
+            SupportsOpenAiChatCompletions = supportedProtocols.Contains(BackendProtocol.OpenAiChatCompletions),
+            SupportsOpenAiResponses = supportedProtocols.Contains(BackendProtocol.OpenAiResponses),
             MaxParallelism = provider.MaxParallelism,
             HealthCheckTimeoutSeconds = provider.HealthCheckTimeoutSeconds
         };
         ViewData["Id"] = id;
+        ViewData["OpenAiProtocolsInferred"] =
+            provider.ProviderType == ProviderType.OpenAI &&
+            !provider.SupportsOpenAiChatCompletions.HasValue &&
+            !provider.SupportsOpenAiResponses.HasValue;
         ViewData["PhysicalModels"] = physicalModels;
         ViewData["WarmupModels"] = System.Text.Json.JsonSerializer.Deserialize<List<WarmupModel>>(provider.WarmupModelsJson) ?? new List<WarmupModel>();
         return this.StackView(model);
@@ -261,6 +282,7 @@ public class OllamaProvidersController(
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, CreateViewModel model)
     {
+        ValidateOpenAiProtocols(model);
         if (!ModelState.IsValid)
         {
             ViewData["Id"] = id;
@@ -278,11 +300,25 @@ public class OllamaProvidersController(
         }
         provider.KeepAlive = model.KeepAlive;
         provider.ProviderType = model.ProviderType;
+        provider.SupportsOpenAiChatCompletions = model.SupportsOpenAiChatCompletions;
+        provider.SupportsOpenAiResponses = model.SupportsOpenAiResponses;
         provider.MaxParallelism = model.MaxParallelism;
         provider.HealthCheckTimeoutSeconds = model.HealthCheckTimeoutSeconds;
 
         await dbContext.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
+    }
+
+    private void ValidateOpenAiProtocols(CreateViewModel model)
+    {
+        if (model.ProviderType == ProviderType.OpenAI &&
+            !model.SupportsOpenAiChatCompletions &&
+            !model.SupportsOpenAiResponses)
+        {
+            ModelState.AddModelError(
+                nameof(model.SupportsOpenAiChatCompletions),
+                "Select at least one OpenAI generation protocol.");
+        }
     }
 
     [HttpPost]

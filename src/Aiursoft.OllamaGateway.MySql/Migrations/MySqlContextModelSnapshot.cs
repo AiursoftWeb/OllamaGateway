@@ -127,6 +127,12 @@ namespace Aiursoft.OllamaGateway.MySql.Migrations
                     b.Property<int>("ProviderType")
                         .HasColumnType("int");
 
+                    b.Property<bool?>("SupportsOpenAiChatCompletions")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool?>("SupportsOpenAiResponses")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("WarmupModelsJson")
                         .IsRequired()
                         .HasMaxLength(4000)
