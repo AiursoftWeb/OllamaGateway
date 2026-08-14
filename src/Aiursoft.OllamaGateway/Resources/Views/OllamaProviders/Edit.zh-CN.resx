@@ -27,6 +27,12 @@
   <data name="(5 minutes)," xml:space="preserve">
     <value>（5 分钟），</value>
   </data>
+  <data name="(Chat Completions)" xml:space="preserve">
+    <value>（聊天补全）</value>
+  </data>
+  <data name="(Responses)" xml:space="preserve">
+    <value>（响应）</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= 永久保留。</value>
   </data>
@@ -81,6 +87,9 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>保活策略</value>
   </data>
+  <data name="Matching client protocols are forwarded directly. Other supported requests are translated." xml:space="preserve">
+    <value>匹配客户端协议会直接转发。其他受支持的请求将经过转换。</value>
+  </data>
   <data name="Max Concurrent Requests" xml:space="preserve">
     <value>最大并发请求数</value>
   </data>
@@ -120,8 +129,14 @@
   <data name="Select physical models that should be proactively kept loaded in this provider&apos;s VRAM. The gateway will periodically ping these models to prevent them from being unloaded." xml:space="preserve">
     <value>选择应主动保留在该提供商 VRAM 中的物理模型。网关将定期对这些模型进行 ping，以防止其被卸载。</value>
   </data>
+  <data name="Supported OpenAI generation protocols" xml:space="preserve">
+    <value>支持的 OpenAI 生成协议</value>
+  </data>
   <data name="Test Connection" xml:space="preserve">
     <value>测试连接</value>
+  </data>
+  <data name="These values were inferred from legacy backend settings. Saving this provider makes them explicit." xml:space="preserve">
+    <value>这些值是从旧版后端设置中推断得出的。保存此提供者将使它们显式化。</value>
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>底层模型名称</value>

@@ -27,6 +27,12 @@
   <data name="(5 minutes)," xml:space="preserve">
     <value>（5分）、</value>
   </data>
+  <data name="(Chat Completions)" xml:space="preserve">
+    <value>（チャットコンプリション）</value>
+  </data>
+  <data name="(Responses)" xml:space="preserve">
+    <value>（レスポンス）</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= 永久に保持。</value>
   </data>
@@ -84,6 +90,9 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>Keep Alive ポリシー</value>
   </data>
+  <data name="Matching client protocols are forwarded directly. Other supported requests are translated." xml:space="preserve">
+    <value>一致するクライアントプロトコルは直接転送されます。他のサポートされているリクエストは変換されます。</value>
+  </data>
   <data name="Max Concurrent Requests" xml:space="preserve">
     <value>最大同時リクエスト数</value>
   </data>
@@ -123,8 +132,14 @@
   <data name="Select physical models that should be proactively kept loaded in this provider&apos;s VRAM. The gateway will periodically ping these models to prevent them from being unloaded." xml:space="preserve">
     <value>VRAM にロードしたままにすべき物理モデルを選択してください。ゲートウェイはこのモデルに周期的にピングを送り、アンロードされないようにします。</value>
   </data>
+  <data name="Supported OpenAI generation protocols" xml:space="preserve">
+    <value>サポートされている OpenAI 生成プロトコル</value>
+  </data>
   <data name="Test Connection" xml:space="preserve">
     <value>接続テスト</value>
+  </data>
+  <data name="These values were inferred from legacy backend settings. Saving this provider makes them explicit." xml:space="preserve">
+    <value>これらの値は従来のバックエンド設定から推測されました。このプロバイダーを保存すると、それらが明示的に設定されます。</value>
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>基盤モデル名</value>
