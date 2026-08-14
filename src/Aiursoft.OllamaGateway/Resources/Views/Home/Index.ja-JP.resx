@@ -42,6 +42,9 @@
   <data name="A complete solution for user authentication and profile management." xml:space="preserve">
     <value>ユーザー認証およびプロファイル管理の完全なソリューション。</value>
   </data>
+  <data name="A configured virtual-model value replaces the client-derived value after translation. An unset value leaves the translated value unchanged." xml:space="preserve">
+    <value>設定済みの仮想モデル値は、変換後にクライアント由来の値を置き換えます。未設定の値では、変換後の値が変更されません。</value>
+  </data>
   <data name="A fully responsive layout that looks great on both desktop and mobile devices." xml:space="preserve">
     <value>デスクトップとモバイルの両方のデバイスで美しく表示される、完全なレスポンシブレイアウト。</value>
   </data>
@@ -50,6 +53,9 @@
   </data>
   <data name="Achieve more with Aiursoft Template" xml:space="preserve">
     <value>Aiursoft Templateでさらに多くのことを実現</value>
+  </data>
+  <data name="Active route" xml:space="preserve">
+    <value>アクティブなルート</value>
   </data>
   <data name="Admin Management GUI" xml:space="preserve">
     <value>管理者管理 GUI</value>
@@ -104,6 +110,9 @@
   </data>
   <data name="Anthropic image content blocks are not yet translated to OpenAI format." xml:space="preserve">
     <value>Anthropic の画像コンテンツブロックはまだOpenAI形式に変換されていません。</value>
+  </data>
+  <data name="Anthropic Messages client routes" xml:space="preserve">
+    <value>Anthropic Messages クライアント ルート</value>
   </data>
   <data name="API Authentication (Bearer)" xml:space="preserve">
     <value>API 認証 (ベアラー)</value>
@@ -162,6 +171,12 @@
   <data name="Automatically sync OpenID roles. Unified Rule management." xml:space="preserve">
     <value>OpenIDのロールを自動で同期します。統一されたルール管理。</value>
   </data>
+  <data name="Backend" xml:space="preserve">
+    <value>バックエンド</value>
+  </data>
+  <data name="Backend Provider type" xml:space="preserve">
+    <value>バックエンド プロバイダー タイプ</value>
+  </data>
   <data name="Background Job Processing" xml:space="preserve">
     <value>バックグラウンドジョブ処理</value>
   </data>
@@ -213,8 +228,20 @@
   <data name="Chat/Embedding Segregation" xml:space="preserve">
     <value>チャット/埋め込みの分離</value>
   </data>
+  <data name="Choose the API your client sends on the left and the protocol spoken by the physical backend on the right. The active route shows exactly what is preserved, translated, rejected, and overridden." xml:space="preserve">
+    <value>左側にはクライアントが送信するAPIを、右側には物理バックエンドで使用されるプロトコルを選択してください。アクティブなルートでは、保持、変換、拒否、上書きの対象が正確に表示されます。</value>
+  </data>
   <data name="Clickhouse Auditing" xml:space="preserve">
     <value>Clickhouse 監査</value>
+  </data>
+  <data name="Client" xml:space="preserve">
+    <value>クライアント</value>
+  </data>
+  <data name="Client endpoint" xml:space="preserve">
+    <value>クライアントエンドポイント</value>
+  </data>
+  <data name="Clients must send the complete input history. The gateway does not retain or resume response state." xml:space="preserve">
+    <value>クライアントは完全な入力履歴を送信する必要があります。ゲートウェイはレスポンスの状態を保持したり再開したりしません。</value>
   </data>
   <data name="Comes with Docker support for simplified and consistent deployments." xml:space="preserve">
     <value>Dockerサポートを備えており、簡単で一貫性のあるデプロイが可能になります。</value>
@@ -233,6 +260,9 @@
   </data>
   <data name="Concise Docs" xml:space="preserve">
     <value>簡潔なドキュメント</value>
+  </data>
+  <data name="Configuration precedence" xml:space="preserve">
+    <value>設定の優先順位</value>
   </data>
   <data name="Consistency Validation" xml:space="preserve">
     <value>整合性検証</value>
@@ -261,6 +291,15 @@
   <data name="Cross Platform" xml:space="preserve">
     <value>クロスプラットフォーム</value>
   </data>
+  <data name="Cross-Protocol Compatibility" xml:space="preserve">
+    <value>クロスプロトコル互換性</value>
+  </data>
+  <data name="Current route contract" xml:space="preserve">
+    <value>現在のルート契約</value>
+  </data>
+  <data name="Current route only" xml:space="preserve">
+    <value>現在のルートのみ</value>
+  </data>
   <data name="Custom dev required" xml:space="preserve">
     <value>カスタム開発が必要です</value>
   </data>
@@ -272,6 +311,12 @@
   </data>
   <data name="Dashboard Website" xml:space="preserve">
     <value>ダッシュボードウェブサイト</value>
+  </data>
+  <data name="Database override" xml:space="preserve">
+    <value>データベース上書き</value>
+  </data>
+  <data name="Database values are hard assignments" xml:space="preserve">
+    <value>データベース値は強制的に適用されます</value>
   </data>
   <data name="Day 1 Compliance &amp; Security." xml:space="preserve">
     <value>Day 1 コンプライアンス &amp; セキュリティ。</value>
@@ -336,6 +381,15 @@
   <data name="DevOps Native" xml:space="preserve">
     <value>DevOpsネイティブ</value>
   </data>
+  <data name="Direction" xml:space="preserve">
+    <value>方向</value>
+  </data>
+  <data name="Discarded / restriction" xml:space="preserve">
+    <value>廃棄 / 制限</value>
+  </data>
+  <data name="Discarded, rejected, or preferred" xml:space="preserve">
+    <value>廃棄、拒否、または優先</value>
+  </data>
   <data name="Discussions page" xml:space="preserve">
     <value>ディスカッションページ</value>
   </data>
@@ -363,8 +417,17 @@
   <data name="Effortlessly write integration tests using in-memory databases, temporary file systems, built-in mocking, and real-world HTTP request simulation." xml:space="preserve">
     <value>インメモリデータベース、一時ファイルシステム、組み込みモック、そして現実のHTTPリクエストシミュレーションを使用して、簡単に統合テストを書くことができます。</value>
   </data>
+  <data name="Embedding adapters select by ProviderType, not chat BackendProtocol" xml:space="preserve">
+    <value>埋め込みアダプターはチャットの BackendProtocol ではなく、ProviderType によって選択されます</value>
+  </data>
   <data name="Embedding Models" xml:space="preserve">
     <value>埋め込みモデル</value>
+  </data>
+  <data name="Embedding route" xml:space="preserve">
+    <value>埋め込みルート</value>
+  </data>
+  <data name="Embedding route inspector" xml:space="preserve">
+    <value>埋め込みルートインスペクター</value>
   </data>
   <data name="Enforced" xml:space="preserve">
     <value>強制された</value>
@@ -386,6 +449,9 @@
   </data>
   <data name="Entity Framework Core included" xml:space="preserve">
     <value>Entity Framework Core 搭載</value>
+  </data>
+  <data name="explicit unsupported_feature error" xml:space="preserve">
+    <value>明確な unsupported_feature エラー</value>
   </data>
   <data name="FAQ" xml:space="preserve">
     <value>よくある質問</value>
@@ -455,6 +521,12 @@
   </data>
   <data name="Function call" xml:space="preserve">
     <value>関数呼び出し</value>
+  </data>
+  <data name="Gateway-generated response" xml:space="preserve">
+    <value>ゲートウェイ生成レスポンス</value>
+  </data>
+  <data name="Gateway-owned operation" xml:space="preserve">
+    <value>ゲートウェイ管理オペレーション</value>
   </data>
   <data name="Generic configuration" xml:space="preserve">
     <value>汎用設定</value>
@@ -531,6 +603,9 @@
   <data name="Images array passes through as-is to native Ollama." xml:space="preserve">
     <value>画像配列はそのままネイティブOllamaに渡されます。</value>
   </data>
+  <data name="Implementation method" xml:space="preserve">
+    <value>実装方法</value>
+  </data>
   <data name="Included" xml:space="preserve">
     <value>含まれる</value>
   </data>
@@ -539,6 +614,9 @@
   </data>
   <data name="Includes Tutorials" xml:space="preserve">
     <value>チュートリアルを含む</value>
+  </data>
+  <data name="Inspect one translation route at a time." xml:space="preserve">
+    <value>1つの翻訳ルートを一度に確認する。</value>
   </data>
   <data name="Integrated File Management" xml:space="preserve">
     <value>統合ファイル管理</value>
@@ -585,6 +663,9 @@
   <data name="Management Dashboard" xml:space="preserve">
     <value>管理ダッシュボード</value>
   </data>
+  <data name="Mapped / reconstructed" xml:space="preserve">
+    <value>マッピング / 再構築</value>
+  </data>
   <data name="Markdown To HTML" xml:space="preserve">
     <value>MarkdownからHTMLへ</value>
   </data>
@@ -599,6 +680,9 @@
   </data>
   <data name="Mix Any Client with Any Backend" xml:space="preserve">
     <value>任意のクライアントを任意のバックエンドと組み合わせる</value>
+  </data>
+  <data name="Model discovery" xml:space="preserve">
+    <value>モデル発見</value>
   </data>
   <data name="Model Hosting &amp; Inference" xml:space="preserve">
     <value>モデルのホスティングと推論</value>
@@ -641,6 +725,12 @@
   </data>
   <data name="Music Tools" xml:space="preserve">
     <value>音楽ツール</value>
+  </data>
+  <data name="Narrow operation" xml:space="preserve">
+    <value>限定操作</value>
+  </data>
+  <data name="Native / same dialect" xml:space="preserve">
+    <value>ネイティブ / 同じダイアレクト</value>
   </data>
   <data name="Native Ollama" xml:space="preserve">
     <value>Native Ollama</value>
@@ -720,6 +810,9 @@
   <data name="Ollama Backend" xml:space="preserve">
     <value>Ollama Backend</value>
   </data>
+  <data name="Ollama Chat client routes" xml:space="preserve">
+    <value>Ollama チャットクライアントのルート</value>
+  </data>
   <data name="Ollama Client" xml:space="preserve">
     <value>Ollama Client</value>
   </data>
@@ -768,6 +861,9 @@
   <data name="One Click Start" xml:space="preserve">
     <value>ワンクリックスタート</value>
   </data>
+  <data name="Only the selected route is shown" xml:space="preserve">
+    <value>選択されたルートのみ表示されます</value>
+  </data>
   <data name="Open Source" xml:space="preserve">
     <value>オープンソース</value>
   </data>
@@ -783,11 +879,17 @@
   <data name="OpenAI Backend" xml:space="preserve">
     <value>OpenAI Backend</value>
   </data>
+  <data name="OpenAI Chat Completions client routes" xml:space="preserve">
+    <value>OpenAI Chat Completions クライアント ルート</value>
+  </data>
   <data name="OpenAI Client" xml:space="preserve">
     <value>OpenAI Client</value>
   </data>
   <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
     <value>OpenAIマルチモーダルコンテンツ配列が抽出されます：image_urlデータはOllama images配列に移動し、テキストはcontentになります。</value>
+  </data>
+  <data name="OpenAI Responses client routes" xml:space="preserve">
+    <value>OpenAI Responses クライアント ルート</value>
   </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>OpenID Connect 連携</value>
@@ -831,6 +933,12 @@
   <data name="Permission discovery and sync" xml:space="preserve">
     <value>権限の検出と同期</value>
   </data>
+  <data name="Physical backend protocol" xml:space="preserve">
+    <value>物理的なバックエンドプロトコル</value>
+  </data>
+  <data name="Policy and implementation" xml:space="preserve">
+    <value>ポリシーと実装</value>
+  </data>
   <data name="Pre-configured and tested" xml:space="preserve">
     <value>事前設定済みかつテスト済み</value>
   </data>
@@ -840,8 +948,17 @@
   <data name="Pre-configured pipelines for dev/prod" xml:space="preserve">
     <value>開発/本番環境用の事前設定済みパイプライン</value>
   </data>
+  <data name="Preserved" xml:space="preserve">
+    <value>保持された</value>
+  </data>
+  <data name="Preserved / mapped" xml:space="preserve">
+    <value>保持 / マップ済み</value>
+  </data>
   <data name="Private AI" xml:space="preserve">
     <value>プライベート AI</value>
+  </data>
+  <data name="Provider type and backend protocol are separate. No physical Anthropic backend adapter exists today." xml:space="preserve">
+    <value>プロバイダーの種類とバックエンドプロトコルは独立しています。現在、Anthropic用の物理的なバックエンドアダプターは存在しません。</value>
   </data>
   <data name="Quality Gate" xml:space="preserve">
     <value>品質ゲート</value>
@@ -863,6 +980,9 @@
   </data>
   <data name="Request &amp; Response Auditing" xml:space="preserve">
     <value>リクエストとレスポンスの監査</value>
+  </data>
+  <data name="Requester&apos;s API" xml:space="preserve">
+    <value>リクエスターのAPI</value>
   </data>
   <data name="Requires Laravel Socialite config" xml:space="preserve">
     <value>Laravel Socialite の設定が必要です</value>
@@ -896,6 +1016,12 @@
   </data>
   <data name="Security and Auditing by Design." xml:space="preserve">
     <value>設計によるセキュリティと監査</value>
+  </data>
+  <data name="Select backend protocol" xml:space="preserve">
+    <value>バックエンドプロトコルを選択</value>
+  </data>
+  <data name="Select requester API" xml:space="preserve">
+    <value>リクエスタAPIを選択</value>
   </data>
   <data name="Shift with confidence" xml:space="preserve">
     <value>自信を持ってシフト</value>
@@ -941,6 +1067,9 @@
   </data>
   <data name="Starts without any configuration" xml:space="preserve">
     <value>設定不要で起動します</value>
+  </data>
+  <data name="Stateless only" xml:space="preserve">
+    <value>ステートレスのみ</value>
   </data>
   <data name="Stop Coding Boilerplate." xml:space="preserve">
     <value>ボイラープレートのコーディングをやめよう。</value>
@@ -990,6 +1119,12 @@
   <data name="The definitive, battle-tested .NET enterprise foundation. From Auth to AI, we&apos;ve solved the hard parts so you don&apos;t have to." xml:space="preserve">
     <value>決定的な、実戦で検証された .NET エンタープライズ基盤。認証から AI まで、難しい部分はすべて解決済みなので、あなたはそれらを心配する必要がありません。</value>
   </data>
+  <data name="The gateway decodes both sides through its canonical chat model. Only semantics representable by the target protocol can cross this route." xml:space="preserve">
+    <value>ゲートウェイは標準的なチャットモデルを通じて両側をデコードします。ターゲットプロトコルで表現可能なセマンティクスのみがこのルートを経由できます。</value>
+  </data>
+  <data name="The gateway keeps the protocol shape and rewrites only gateway-owned values and configured policy fields." xml:space="preserve">
+    <value>ゲートウェイはプロトコルの構造を保持し、ゲートウェイ所有の値および構成されたポリシーフィールドのみを書き換えます。</value>
+  </data>
   <data name="The navigation bar automatically adjusts based on user roles and permissions." xml:space="preserve">
     <value>ナビゲーションバーは、ユーザーの役割と権限に基づいて自動的に調整されます。</value>
   </data>
@@ -1020,8 +1155,26 @@
   <data name="Timezone-aware fields" xml:space="preserve">
     <value>タイムゾーン対応フィールド</value>
   </data>
+  <data name="Translated" xml:space="preserve">
+    <value>翻訳済み</value>
+  </data>
+  <data name="Translated subset" xml:space="preserve">
+    <value>サブセットの翻訳</value>
+  </data>
+  <data name="Translated through semantic layer" xml:space="preserve">
+    <value>セマンティック層を介して変換</value>
+  </data>
+  <data name="Transparent" xml:space="preserve">
+    <value>透過的</value>
+  </data>
+  <data name="Transparent, stateless" xml:space="preserve">
+    <value>透過的、ステートレス</value>
+  </data>
   <data name="Trusted by production-grade applications including AnduinOS, StatHub, and Warp. We don&apos;t just share this code; we run our entire business on it." xml:space="preserve">
     <value>AnduinOS、StatHub、Warpを含むプロダクショングレードのアプリケーションに信頼されています。このコードを単に共有するだけでなく、私たちのビジネス全体をこのコードで運用しています。</value>
+  </data>
+  <data name="Two client dialects × two Provider types" xml:space="preserve">
+    <value>2つのクライアント方言 × 2つのプロバイダータイプ</value>
   </data>
   <data name="Unified Env" xml:space="preserve">
     <value>統合環境</value>

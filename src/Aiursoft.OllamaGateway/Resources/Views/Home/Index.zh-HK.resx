@@ -42,6 +42,9 @@
   <data name="A complete solution for user authentication and profile management." xml:space="preserve">
     <value>一個完整的用戶身分驗證和個人資料管理解決方案。</value>
   </data>
+  <data name="A configured virtual-model value replaces the client-derived value after translation. An unset value leaves the translated value unchanged." xml:space="preserve">
+    <value>經設定之虛擬模型值會於轉換後取代由客戶端衍生之值。未設定的值則保持轉換後的值不變。</value>
+  </data>
   <data name="A fully responsive layout that looks great on both desktop and mobile devices." xml:space="preserve">
     <value>完全響應式佈局，喺桌面同流動裝置上都睇落好靚。</value>
   </data>
@@ -50,6 +53,9 @@
   </data>
   <data name="Achieve more with Aiursoft Template" xml:space="preserve">
     <value>使用 Aiursoft 模板成就更多</value>
+  </data>
+  <data name="Active route" xml:space="preserve">
+    <value>目前路由</value>
   </data>
   <data name="Admin Management GUI" xml:space="preserve">
     <value>管理員管理圖形介面</value>
@@ -104,6 +110,9 @@
   </data>
   <data name="Anthropic image content blocks are not yet translated to OpenAI format." xml:space="preserve">
     <value>Anthropic 圖像內容區塊尚未轉換為 OpenAI 格式。</value>
+  </data>
+  <data name="Anthropic Messages client routes" xml:space="preserve">
+    <value>Anthropic Messages 用戶端路由</value>
   </data>
   <data name="API Authentication (Bearer)" xml:space="preserve">
     <value>API 認證 (Bearer)</value>
@@ -162,6 +171,12 @@
   <data name="Automatically sync OpenID roles. Unified Rule management." xml:space="preserve">
     <value>自動同步 OpenID 權限。統一規則管理。</value>
   </data>
+  <data name="Backend" xml:space="preserve">
+    <value>後端</value>
+  </data>
+  <data name="Backend Provider type" xml:space="preserve">
+    <value>後端供應商類型</value>
+  </data>
   <data name="Background Job Processing" xml:space="preserve">
     <value>背景工作處理</value>
   </data>
@@ -213,8 +228,20 @@
   <data name="Chat/Embedding Segregation" xml:space="preserve">
     <value>對話/嵌入分離</value>
   </data>
+  <data name="Choose the API your client sends on the left and the protocol spoken by the physical backend on the right. The active route shows exactly what is preserved, translated, rejected, and overridden." xml:space="preserve">
+    <value>喺左邊揀你嘅客戶端所發送嘅 API，右邊揀物理後端所使用嘅協議。目前活躍嘅路由會清楚顯示哪些內容被保留、翻譯、拒絕同覆蓋。</value>
+  </data>
   <data name="Clickhouse Auditing" xml:space="preserve">
     <value>Clickhouse 審計</value>
+  </data>
+  <data name="Client" xml:space="preserve">
+    <value>用戶端</value>
+  </data>
+  <data name="Client endpoint" xml:space="preserve">
+    <value>用戶端端點</value>
+  </data>
+  <data name="Clients must send the complete input history. The gateway does not retain or resume response state." xml:space="preserve">
+    <value>用戶端必須傳送完整的輸入歷史記錄。網關不會保留或恢復回應狀態。</value>
   </data>
   <data name="Comes with Docker support for simplified and consistent deployments." xml:space="preserve">
     <value>內建 Docker 支援，可簡化並確保部署的一致性。</value>
@@ -233,6 +260,9 @@
   </data>
   <data name="Concise Docs" xml:space="preserve">
     <value>簡明文件</value>
+  </data>
+  <data name="Configuration precedence" xml:space="preserve">
+    <value>設定優先順序</value>
   </data>
   <data name="Consistency Validation" xml:space="preserve">
     <value>一致性驗證</value>
@@ -261,6 +291,15 @@
   <data name="Cross Platform" xml:space="preserve">
     <value>跨平台</value>
   </data>
+  <data name="Cross-Protocol Compatibility" xml:space="preserve">
+    <value>跨協定相容性</value>
+  </data>
+  <data name="Current route contract" xml:space="preserve">
+    <value>目前路由合約</value>
+  </data>
+  <data name="Current route only" xml:space="preserve">
+    <value>僅限當前路由</value>
+  </data>
   <data name="Custom dev required" xml:space="preserve">
     <value>需要自訂開發</value>
   </data>
@@ -272,6 +311,12 @@
   </data>
   <data name="Dashboard Website" xml:space="preserve">
     <value>儀表板網站</value>
+  </data>
+  <data name="Database override" xml:space="preserve">
+    <value>資料庫覆寫</value>
+  </data>
+  <data name="Database values are hard assignments" xml:space="preserve">
+    <value>資料庫值為強制賦值</value>
   </data>
   <data name="Day 1 Compliance &amp; Security." xml:space="preserve">
     <value>第一天合規與安全。</value>
@@ -336,6 +381,15 @@
   <data name="DevOps Native" xml:space="preserve">
     <value>DevOps 原生</value>
   </data>
+  <data name="Direction" xml:space="preserve">
+    <value>方向</value>
+  </data>
+  <data name="Discarded / restriction" xml:space="preserve">
+    <value>已捨棄 / 限制</value>
+  </data>
+  <data name="Discarded, rejected, or preferred" xml:space="preserve">
+    <value>已棄用、拒絕或偏好</value>
+  </data>
   <data name="Discussions page" xml:space="preserve">
     <value>討論頁面</value>
   </data>
@@ -363,8 +417,17 @@
   <data name="Effortlessly write integration tests using in-memory databases, temporary file systems, built-in mocking, and real-world HTTP request simulation." xml:space="preserve">
     <value>輕鬆撰寫整合測試，使用記憶體資料庫、暫存檔案系統、內建模擬及真實世界的 HTTP 請求模擬。</value>
   </data>
+  <data name="Embedding adapters select by ProviderType, not chat BackendProtocol" xml:space="preserve">
+    <value>Embedding 適配器按 ProviderType 選擇，而非 chat BackendProtocol</value>
+  </data>
   <data name="Embedding Models" xml:space="preserve">
     <value>嵌入模型</value>
+  </data>
+  <data name="Embedding route" xml:space="preserve">
+    <value>嵌入路由</value>
+  </data>
+  <data name="Embedding route inspector" xml:space="preserve">
+    <value>嵌入路由檢查器</value>
   </data>
   <data name="Enforced" xml:space="preserve">
     <value>強制執行</value>
@@ -386,6 +449,9 @@
   </data>
   <data name="Entity Framework Core included" xml:space="preserve">
     <value>內置 Entity Framework Core</value>
+  </data>
+  <data name="explicit unsupported_feature error" xml:space="preserve">
+    <value>明確的 unsupported_feature 錯誤</value>
   </data>
   <data name="FAQ" xml:space="preserve">
     <value>常見問題</value>
@@ -455,6 +521,12 @@
   </data>
   <data name="Function call" xml:space="preserve">
     <value>函數調用</value>
+  </data>
+  <data name="Gateway-generated response" xml:space="preserve">
+    <value>閘道器產生的回應</value>
+  </data>
+  <data name="Gateway-owned operation" xml:space="preserve">
+    <value>閘道器自有操作</value>
   </data>
   <data name="Generic configuration" xml:space="preserve">
     <value>通用配置</value>
@@ -531,6 +603,9 @@
   <data name="Images array passes through as-is to native Ollama." xml:space="preserve">
     <value>图像阵列原样传递至原生 Ollama。</value>
   </data>
+  <data name="Implementation method" xml:space="preserve">
+    <value>實作方法</value>
+  </data>
   <data name="Included" xml:space="preserve">
     <value>包含在內</value>
   </data>
@@ -539,6 +614,9 @@
   </data>
   <data name="Includes Tutorials" xml:space="preserve">
     <value>包含教學指南</value>
+  </data>
+  <data name="Inspect one translation route at a time." xml:space="preserve">
+    <value>逐一檢查翻譯路徑。</value>
   </data>
   <data name="Integrated File Management" xml:space="preserve">
     <value>整合式檔案管理</value>
@@ -585,6 +663,9 @@
   <data name="Management Dashboard" xml:space="preserve">
     <value>管理儀表板</value>
   </data>
+  <data name="Mapped / reconstructed" xml:space="preserve">
+    <value>映射 / 重構</value>
+  </data>
   <data name="Markdown To HTML" xml:space="preserve">
     <value>Markdown 轉 HTML</value>
   </data>
@@ -599,6 +680,9 @@
   </data>
   <data name="Mix Any Client with Any Backend" xml:space="preserve">
     <value>混合任何客戶與任何後端</value>
+  </data>
+  <data name="Model discovery" xml:space="preserve">
+    <value>模型發現</value>
   </data>
   <data name="Model Hosting &amp; Inference" xml:space="preserve">
     <value>模型託管與推論</value>
@@ -641,6 +725,12 @@
   </data>
   <data name="Music Tools" xml:space="preserve">
     <value>音樂工具</value>
+  </data>
+  <data name="Narrow operation" xml:space="preserve">
+    <value>狹義操作</value>
+  </data>
+  <data name="Native / same dialect" xml:space="preserve">
+    <value>原生 / 相同協定</value>
   </data>
   <data name="Native Ollama" xml:space="preserve">
     <value>原生 Ollama</value>
@@ -720,6 +810,9 @@
   <data name="Ollama Backend" xml:space="preserve">
     <value>Ollama 後端</value>
   </data>
+  <data name="Ollama Chat client routes" xml:space="preserve">
+    <value>Ollama 聊天用戶端路由</value>
+  </data>
   <data name="Ollama Client" xml:space="preserve">
     <value>Ollama Client</value>
   </data>
@@ -768,6 +861,9 @@
   <data name="One Click Start" xml:space="preserve">
     <value>一鍵啟動</value>
   </data>
+  <data name="Only the selected route is shown" xml:space="preserve">
+    <value>僅顯示選定路線</value>
+  </data>
   <data name="Open Source" xml:space="preserve">
     <value>開源</value>
   </data>
@@ -783,11 +879,17 @@
   <data name="OpenAI Backend" xml:space="preserve">
     <value>OpenAI Backend</value>
   </data>
+  <data name="OpenAI Chat Completions client routes" xml:space="preserve">
+    <value>OpenAI Chat Completions 用戶端路由</value>
+  </data>
   <data name="OpenAI Client" xml:space="preserve">
     <value>OpenAI 客戶端</value>
   </data>
   <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
     <value>OpenAI多模態內容陣列被提取：image_url數據進入Ollama images陣列，文字成為content。</value>
+  </data>
+  <data name="OpenAI Responses client routes" xml:space="preserve">
+    <value>OpenAI Responses 用戶端路由</value>
   </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>OpenID Connect 整合</value>
@@ -831,6 +933,12 @@
   <data name="Permission discovery and sync" xml:space="preserve">
     <value>權限發現與同步</value>
   </data>
+  <data name="Physical backend protocol" xml:space="preserve">
+    <value>實體後端通訊協定</value>
+  </data>
+  <data name="Policy and implementation" xml:space="preserve">
+    <value>政策與實作</value>
+  </data>
   <data name="Pre-configured and tested" xml:space="preserve">
     <value>預先配置並經過測試</value>
   </data>
@@ -840,8 +948,17 @@
   <data name="Pre-configured pipelines for dev/prod" xml:space="preserve">
     <value>預設的開發/生產環境管線</value>
   </data>
+  <data name="Preserved" xml:space="preserve">
+    <value>保留</value>
+  </data>
+  <data name="Preserved / mapped" xml:space="preserve">
+    <value>保留／映射</value>
+  </data>
   <data name="Private AI" xml:space="preserve">
     <value>私人 AI</value>
+  </data>
+  <data name="Provider type and backend protocol are separate. No physical Anthropic backend adapter exists today." xml:space="preserve">
+    <value>供應商類型與後端協定相互獨立。目前尚無實體 Anthropic 後端適配器。</value>
   </data>
   <data name="Quality Gate" xml:space="preserve">
     <value>品質門檻</value>
@@ -863,6 +980,9 @@
   </data>
   <data name="Request &amp; Response Auditing" xml:space="preserve">
     <value>請求與回應審計</value>
+  </data>
+  <data name="Requester&apos;s API" xml:space="preserve">
+    <value>請求者 API</value>
   </data>
   <data name="Requires Laravel Socialite config" xml:space="preserve">
     <value>需要 Laravel Socialite 配置</value>
@@ -896,6 +1016,12 @@
   </data>
   <data name="Security and Auditing by Design." xml:space="preserve">
     <value>安全與審計由設計而起。</value>
+  </data>
+  <data name="Select backend protocol" xml:space="preserve">
+    <value>選擇後端協定</value>
+  </data>
+  <data name="Select requester API" xml:space="preserve">
+    <value>選擇請求方 API</value>
   </data>
   <data name="Shift with confidence" xml:space="preserve">
     <value>放心轉移</value>
@@ -941,6 +1067,9 @@
   </data>
   <data name="Starts without any configuration" xml:space="preserve">
     <value>無需任何配置即可啟動</value>
+  </data>
+  <data name="Stateless only" xml:space="preserve">
+    <value>僅支援無狀態模式</value>
   </data>
   <data name="Stop Coding Boilerplate." xml:space="preserve">
     <value>停止編寫重複代碼。</value>
@@ -990,6 +1119,12 @@
   <data name="The definitive, battle-tested .NET enterprise foundation. From Auth to AI, we&apos;ve solved the hard parts so you don&apos;t have to." xml:space="preserve">
     <value>最穩健、經過實戰考驗的 .NET 企業級基礎架構。從身份認證到人工智能，我們已解決所有難題，讓你無需再煩惱。</value>
   </data>
+  <data name="The gateway decodes both sides through its canonical chat model. Only semantics representable by the target protocol can cross this route." xml:space="preserve">
+    <value>閘道透過其標準聊天模型解碼雙方。僅能由目標協定表示的語義方可通過此路由。</value>
+  </data>
+  <data name="The gateway keeps the protocol shape and rewrites only gateway-owned values and configured policy fields." xml:space="preserve">
+    <value>閘道器會保持協定結構，僅重寫閘道器自有的值及已設定的策略欄位。</value>
+  </data>
   <data name="The navigation bar automatically adjusts based on user roles and permissions." xml:space="preserve">
     <value>導覽列會根據用戶角色同權限自動調整。</value>
   </data>
@@ -1020,8 +1155,26 @@
   <data name="Timezone-aware fields" xml:space="preserve">
     <value>時區感知欄位</value>
   </data>
+  <data name="Translated" xml:space="preserve">
+    <value>已翻譯</value>
+  </data>
+  <data name="Translated subset" xml:space="preserve">
+    <value>已翻譯子集</value>
+  </data>
+  <data name="Translated through semantic layer" xml:space="preserve">
+    <value>透過語義層翻譯</value>
+  </data>
+  <data name="Transparent" xml:space="preserve">
+    <value>透明</value>
+  </data>
+  <data name="Transparent, stateless" xml:space="preserve">
+    <value>透明、無狀態</value>
+  </data>
   <data name="Trusted by production-grade applications including AnduinOS, StatHub, and Warp. We don&apos;t just share this code; we run our entire business on it." xml:space="preserve">
     <value>由包括 AnduinOS、StatHub 和 Warp 在內的生產級應用程式信賴。我們不僅分享這段程式碼；我們更將整個業務運作於其上。</value>
+  </data>
+  <data name="Two client dialects × two Provider types" xml:space="preserve">
+    <value>兩種用戶端方言 × 兩種提供者類型</value>
   </data>
   <data name="Unified Env" xml:space="preserve">
     <value>統一環境</value>
