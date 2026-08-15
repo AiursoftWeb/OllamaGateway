@@ -42,6 +42,9 @@
   <data name="Back to List" xml:space="preserve">
     <value>กลับสู่รายการ</value>
   </data>
+  <data name="Banned (Till" xml:space="preserve">
+    <value>ถูกระงับ (ถึง</value>
+  </data>
   <data name="Configuration Guide:" xml:space="preserve">
     <value>คู่มือการตั้งค่า:</value>
   </data>
@@ -57,11 +60,17 @@
   <data name="Disabled" xml:space="preserve">
     <value>ปิดใช้งาน</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>หยุดทำงาน</value>
+  </data>
   <data name="Edit Virtual Model" xml:space="preserve">
     <value>แก้ไขแบบจำลองเสมือน</value>
   </data>
   <data name="Enabled" xml:space="preserve">
     <value>เปิดใช้งาน</value>
+  </data>
+  <data name="Healthy" xml:space="preserve">
+    <value>สุขภาพดี</value>
   </data>
   <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies. SUGGESTED VALUES: small models (≤8B, NVMe SSD) → 60–120s; large models (≥27B or HDD/NAS storage) → 600–1800s; embedding models → 30–60s." xml:space="preserve">
     <value>ระยะเวลาที่เกตเวย์รอให้แบ็กเอนด์เริ่มตอบสนอง ไม่รวมการตรวจสอบสิทธิ์ คิวจำกัดอัตรา หรือการรอช่องพร้อมกัน เมื่อเริ่มสตรีมแล้ว จะไม่มีข้อจำกัดด้านเวลา ค่าที่แนะนำ: โมเดลขนาดเล็ก (≤8B, NVMe SSD) → 60–120 วินาที; โมเดลขนาดใหญ่ (≥27B หรือพื้นที่จัดเก็บ HDD/NAS) → 600–1800 วินาที; โมเดลฝังตัว → 30–60 วินาที</value>
@@ -93,11 +102,20 @@
   <data name="Optional Overrides" xml:space="preserve">
     <value>การกำหนดค่าเพิ่มเติมแบบเลือกได้</value>
   </data>
+  <data name="Preferred Backend Protocol" xml:space="preserve">
+    <value>โปรโตคอลแบ็กเอนด์ที่ต้องการใช้</value>
+  </data>
+  <data name="Preferred Protocol" xml:space="preserve">
+    <value>โปรโตคอลที่แนะนำ</value>
+  </data>
   <data name="Priority" xml:space="preserve">
     <value>ลำดับความสำคัญ</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>ผู้ให้บริการ</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>พร้อมใช้งาน</value>
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>บทลงโทษการทำซ้ำ</value>
