@@ -42,6 +42,9 @@
   <data name="Back to List" xml:space="preserve">
     <value>Retour à la liste</value>
   </data>
+  <data name="Banned (Till" xml:space="preserve">
+    <value>Banni (Jusqu&apos;au</value>
+  </data>
   <data name="Configuration Guide:" xml:space="preserve">
     <value>Guide de configuration</value>
   </data>
@@ -57,11 +60,17 @@
   <data name="Disabled" xml:space="preserve">
     <value>Désactivé</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Hors ligne</value>
+  </data>
   <data name="Edit Virtual Model" xml:space="preserve">
     <value>Modifier le modèle virtuel</value>
   </data>
   <data name="Enabled" xml:space="preserve">
     <value>Activé</value>
+  </data>
+  <data name="Healthy" xml:space="preserve">
+    <value>Sain</value>
   </data>
   <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies. SUGGESTED VALUES: small models (≤8B, NVMe SSD) → 60–120s; large models (≥27B or HDD/NAS storage) → 600–1800s; embedding models → 30–60s." xml:space="preserve">
     <value>Durée pendant laquelle la passerelle attend que le backend COMMENCE à répondre. N&apos;inclut PAS l&apos;authentification, la file d&apos;attente de limitation de débit ou l&apos;attente de créneaux de concurrence. Une fois le streaming lancé, aucune limite de temps ne s&apos;applique. VALEURS SUGGÉRÉES : petits modèles (≤8B, NVMe SSD) → 60–120s ; grands modèles (≥27B ou stockage HDD/NAS) → 600–1800s ; modèles d&apos;embedding → 30–60s.</value>
@@ -93,11 +102,20 @@
   <data name="Optional Overrides" xml:space="preserve">
     <value>Modifications optionnelles</value>
   </data>
+  <data name="Preferred Backend Protocol" xml:space="preserve">
+    <value>Protocole backend préféré</value>
+  </data>
+  <data name="Preferred Protocol" xml:space="preserve">
+    <value>Protocole préféré</value>
+  </data>
   <data name="Priority" xml:space="preserve">
     <value>Priorité</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>Fournisseur</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Prêt</value>
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Pénalité de répétition</value>
