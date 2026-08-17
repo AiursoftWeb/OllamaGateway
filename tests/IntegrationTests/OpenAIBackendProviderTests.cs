@@ -4,6 +4,7 @@ using System.Text.Json.Nodes;
 using Aiursoft.DbTools;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
+using Aiursoft.OllamaGateway.Services.Clickhouse;
 using Microsoft.EntityFrameworkCore;
 using static Aiursoft.WebTools.Extends;
 using Moq;
@@ -178,7 +179,8 @@ public class OpenAIBackendProviderTests : TestBase
         {
             const string sse =
                 "data: {\"id\":\"1\",\"object\":\"chat.completion.chunk\",\"model\":\"gpt-4o-mini\",\"choices\":[{\"index\":0,\"delta\":{\"role\":\"assistant\",\"content\":\"Hi\"},\"finish_reason\":null}]}\n\n" +
-                "data: {\"id\":\"1\",\"object\":\"chat.completion.chunk\",\"model\":\"gpt-4o-mini\",\"choices\":[{\"index\":0,\"delta\":{},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":5,\"completion_tokens\":1,\"total_tokens\":6}}\n\n" +
+                "data: {\"id\":\"1\",\"object\":\"chat.completion.chunk\",\"model\":\"gpt-4o-mini\",\"choices\":[{\"index\":0,\"delta\":{},\"finish_reason\":\"stop\"}]}\n\n" +
+                "data: {\"id\":\"1\",\"object\":\"chat.completion.chunk\",\"model\":\"gpt-4o-mini\",\"choices\":[],\"usage\":{\"prompt_tokens\":5,\"completion_tokens\":1,\"total_tokens\":6}}\n\n" +
                 "data: [DONE]\n\n";
             return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -187,6 +189,8 @@ public class OpenAIBackendProviderTests : TestBase
         };
 
         var payload = $$"""{"model":"{{ChatModelName}}","messages":[{"role":"user","content":"Hi"}],"stream":true}""";
+        var logBuffer = Server!.Services.GetRequiredService<RequestLogBuffer>();
+        logBuffer.Drain([]);
         var response = await Http.SendAsync(AuthedPost("/api/chat", payload));
 
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
@@ -201,6 +205,30 @@ public class OpenAIBackendProviderTests : TestBase
         Assert.IsNotNull(firstChunk);
         Assert.AreEqual("Hi", firstChunk["message"]?["content"]?.ToString());
         Assert.AreEqual(ChatModelName, firstChunk["model"]?.ToString(), "Model must be masked in NDJSON chunks");
+
+        var completed = lines
+            .Select(line => JsonNode.Parse(line))
+            .Where(item => item?["done"]?.GetValue<bool>() == true)
+            .ToList();
+        Assert.AreEqual(1, completed.Count, "Should produce exactly one terminal NDJSON line");
+        Assert.AreEqual("Hi", completed[0]?["message"]?["content"]?.ToString());
+        Assert.AreEqual(5L, completed[0]?["prompt_eval_count"]?.GetValue<long>());
+        Assert.AreEqual(1L, completed[0]?["eval_count"]?.GetValue<long>());
+
+        var logs = new List<RequestLog>();
+        logBuffer.Drain(logs);
+        Assert.AreEqual(1, logs.Count);
+        Assert.IsTrue(logs[0].Success);
+        Assert.AreEqual("Hi", logs[0].Answer);
+        Assert.AreEqual(5, logs[0].PromptTokens);
+        Assert.AreEqual(1, logs[0].CompletionTokens);
+        Assert.AreEqual(6, logs[0].TotalTokens);
+
+        var recent = Server.Services.GetRequiredService<ActiveRequestTracker>().GetRecentRequests();
+        Assert.AreEqual(1, recent.Count);
+        Assert.AreEqual("Completed", recent[0].Status);
+        Assert.AreEqual("", recent[0].ErrorMessage);
+        Assert.AreEqual("Hi", recent[0].Answer);
     }
 
     [TestMethod]
