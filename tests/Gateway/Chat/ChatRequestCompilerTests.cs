@@ -94,6 +94,40 @@ public class ChatRequestCompilerTests
     }
 
     [TestMethod]
+    public async Task OllamaToOpenAi_PreservesToolCallAndResultIds()
+    {
+        const string body = """
+        {
+          "model":"virtual",
+          "messages":[
+            {"role":"user","content":"What time is it?"},
+            {"role":"assistant","content":"","tool_calls":[{
+              "id":"call_timestamp_1",
+              "function":{"name":"get_current_timestamp","arguments":{}}
+            }]},
+            {"role":"tool","tool_call_id":"call_timestamp_1","content":"{\"current_iso\":\"2026-08-17T12:34:45Z\"}"}
+          ]
+        }
+        """;
+        var decoded = _compiler.Decode(ProtocolDialect.OllamaNative, body);
+
+        using var request = _compiler.CreateProviderRequest(
+            decoded,
+            Model(),
+            Backend(ProviderType.OpenAI, "gpt-physical"));
+        var messages = JsonNode.Parse(await request.Content!.ReadAsStringAsync())?["messages"]?.AsArray();
+
+        Assert.IsNotNull(messages);
+        Assert.AreEqual(3, messages.Count);
+        Assert.AreEqual("call_timestamp_1", messages[1]?["tool_calls"]?[0]?["id"]?.ToString());
+        Assert.AreEqual("tool", messages[2]?["role"]?.ToString());
+        Assert.AreEqual("call_timestamp_1", messages[2]?["tool_call_id"]?.ToString());
+        Assert.AreEqual(
+            "{\"current_iso\":\"2026-08-17T12:34:45Z\"}",
+            messages[2]?["content"]?.ToString());
+    }
+
+    [TestMethod]
     public async Task OllamaToOllama_PreservesToolsAndDatabaseOverrideWins()
     {
         const string body = """{"model":"virtual","messages":[{"role":"user","content":"hi"}],"tools":[{"type":"function","function":{"name":"read","parameters":{}}}],"tool_choice":"auto","options":{"repeat_penalty":1.1}}""";

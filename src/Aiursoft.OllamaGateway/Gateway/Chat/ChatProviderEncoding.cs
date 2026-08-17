@@ -9,7 +9,10 @@ internal static class ChatProviderEncoding
         var result = new JsonArray();
         foreach (var message in decoded.Request.Messages)
         {
-            if (message.Role == "user" && message.Content.Any(part => part is GatewayToolResultContent))
+            // Anthropic carries tool results in user messages, while Ollama and OpenAI
+            // use tool messages. Encode the semantic content independently of its
+            // source role so the tool_call_id survives every cross-dialect route.
+            if (message.Content.Any(part => part is GatewayToolResultContent))
             {
                 var ordinaryParts = new List<GatewayContentPart>();
                 foreach (var part in message.Content)

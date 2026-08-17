@@ -129,6 +129,50 @@ public class OpenAIBackendProviderTests : TestBase
     }
 
     [TestMethod]
+    public async Task OllamaToOpenAIBackend_ToolResultHistory_PreservesCallId()
+    {
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            const string body =
+                """{"id":"cmpl-tool","object":"chat.completion","model":"gpt-4o-mini","choices":[{"message":{"role":"assistant","content":"The current time is known."},"finish_reason":"stop","index":0}],"usage":{"prompt_tokens":20,"completion_tokens":6,"total_tokens":26}}""";
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body, Encoding.UTF8, "application/json")
+            });
+        };
+
+        var payload = $$$"""
+        {
+          "model":"{{{ChatModelName}}}",
+          "messages":[
+            {"role":"user","content":"What time is it?"},
+            {"role":"assistant","content":"","tool_calls":[{
+              "id":"call_timestamp_1",
+              "function":{"name":"get_current_timestamp","arguments":{}}
+            }]},
+            {"role":"tool","tool_call_id":"call_timestamp_1","content":"{\"current_iso\":\"2026-08-17T12:34:45Z\"}"}
+          ],
+          "stream":false
+        }
+        """;
+
+        var response = await Http.SendAsync(AuthedPost("/api/chat", payload));
+
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.IsNotNull(MockUpstreamState.LastRequestBody);
+        var messages = JsonNode.Parse(MockUpstreamState.LastRequestBody)?["messages"]?.AsArray();
+        Assert.IsNotNull(messages);
+        Assert.AreEqual(3, messages.Count);
+        Assert.AreEqual("assistant", messages[1]?["role"]?.ToString());
+        Assert.AreEqual("call_timestamp_1", messages[1]?["tool_calls"]?[0]?["id"]?.ToString());
+        Assert.AreEqual("tool", messages[2]?["role"]?.ToString());
+        Assert.AreEqual("call_timestamp_1", messages[2]?["tool_call_id"]?.ToString());
+        Assert.AreEqual(
+            "{\"current_iso\":\"2026-08-17T12:34:45Z\"}",
+            messages[2]?["content"]?.ToString());
+    }
+
+    [TestMethod]
     public async Task OllamaToOpenAIBackend_NonStreaming_BearerTokenForwarded()
     {
         string? capturedAuth = null;
