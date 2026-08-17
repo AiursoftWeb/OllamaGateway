@@ -25,13 +25,15 @@ public sealed class OpenAiChatProviderResponseDecoder : IChatProviderResponseDec
         }
 
         var started = false;
-        var completed = false;
         var startedTools = new HashSet<int>();
+        GatewayFinishReason? finishReason = null;
         await foreach (var frame in SseFrameReader.ReadAsync(responseStream, cancellationToken))
         {
             if (frame.Data == "[DONE]")
             {
-                if (!completed) yield return new GatewayResponseCompleted(GatewayFinishReason.Stop);
+                foreach (var toolIndex in startedTools)
+                    yield return new GatewayToolCallCompleted(toolIndex);
+                yield return new GatewayResponseCompleted(finishReason ?? GatewayFinishReason.Stop);
                 yield break;
             }
 
@@ -57,7 +59,7 @@ public sealed class OpenAiChatProviderResponseDecoder : IChatProviderResponseDec
                 yield return ResponseStarted(root);
             }
 
-            var choice = root["choices"]?[0];
+            var choice = FirstChoice(root);
             var delta = choice?["delta"];
             var reasoning = delta?["reasoning_content"]?.ToString();
             if (!string.IsNullOrEmpty(reasoning)) yield return new GatewayReasoningDelta(reasoning);
@@ -84,20 +86,18 @@ public sealed class OpenAiChatProviderResponseDecoder : IChatProviderResponseDec
 
             var finish = choice?["finish_reason"]?.ToString();
             if (!string.IsNullOrEmpty(finish))
-            {
-                foreach (var toolIndex in startedTools) yield return new GatewayToolCallCompleted(toolIndex);
-                yield return new GatewayResponseCompleted(MapFinishReason(finish));
-                completed = true;
-            }
+                finishReason = MapFinishReason(finish);
         }
 
-        if (!completed) yield return new GatewayResponseCompleted(GatewayFinishReason.Stop);
+        foreach (var toolIndex in startedTools)
+            yield return new GatewayToolCallCompleted(toolIndex);
+        yield return new GatewayResponseCompleted(finishReason ?? GatewayFinishReason.Stop);
     }
 
     private static IEnumerable<GatewayChatEvent> DecodeObject(JsonNode root, bool completed)
     {
         yield return ResponseStarted(root);
-        var choice = root["choices"]?[0];
+        var choice = FirstChoice(root);
         var message = choice?["message"];
         var reasoning = message?["reasoning_content"]?.ToString();
         if (!string.IsNullOrEmpty(reasoning)) yield return new GatewayReasoningDelta(reasoning);
@@ -123,6 +123,13 @@ public sealed class OpenAiChatProviderResponseDecoder : IChatProviderResponseDec
         if (root["usage"] != null) yield return Usage(root["usage"]!);
         if (completed)
             yield return new GatewayResponseCompleted(MapFinishReason(choice?["finish_reason"]?.ToString()));
+    }
+
+    private static JsonNode? FirstChoice(JsonNode root)
+    {
+        return root["choices"] is JsonArray { Count: > 0 } choices
+            ? choices[0]
+            : null;
     }
 
     private static GatewayResponseStarted ResponseStarted(JsonNode root)
