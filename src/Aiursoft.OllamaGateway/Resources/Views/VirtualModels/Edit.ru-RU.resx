@@ -42,6 +42,9 @@
   <data name="Back to List" xml:space="preserve">
     <value>Назад к списку</value>
   </data>
+  <data name="Banned (Till" xml:space="preserve">
+    <value>Заблокирован (до</value>
+  </data>
   <data name="Configuration Guide:" xml:space="preserve">
     <value>Руководство по конфигурации:</value>
   </data>
@@ -57,11 +60,17 @@
   <data name="Disabled" xml:space="preserve">
     <value>Отключено</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Недоступен</value>
+  </data>
   <data name="Edit Virtual Model" xml:space="preserve">
     <value>Редактировать виртуальную модель</value>
   </data>
   <data name="Enabled" xml:space="preserve">
     <value>Включено</value>
+  </data>
+  <data name="Healthy" xml:space="preserve">
+    <value>Здоров</value>
   </data>
   <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies. SUGGESTED VALUES: small models (≤8B, NVMe SSD) → 60–120s; large models (≥27B or HDD/NAS storage) → 600–1800s; embedding models → 30–60s." xml:space="preserve">
     <value>Время ожидания шлюзом начала ответа от бэкенда. Не включает время на аутентификацию, ожидание в очереди ограничения частоты запросов или ожидание слота параллельности. После начала потоковой передачи ограничение времени не применяется. РЕКОМЕНДУЕМЫЕ ЗНАЧЕНИЯ: небольшие модели (≤8B, NVMe SSD) → 60–120 с; крупные модели (≥27B или хранилище HDD/NAS) → 600–1800 с; модели эмбеддингов → 30–60 с.</value>
@@ -93,11 +102,20 @@
   <data name="Optional Overrides" xml:space="preserve">
     <value>Дополнительные переопределения</value>
   </data>
+  <data name="Preferred Backend Protocol" xml:space="preserve">
+    <value>Предпочитаемый протокол бэкенда</value>
+  </data>
+  <data name="Preferred Protocol" xml:space="preserve">
+    <value>Предпочитаемый протокол</value>
+  </data>
   <data name="Priority" xml:space="preserve">
     <value>Приоритет</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>Провайдер</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Готов</value>
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Штраф за повторение</value>
