@@ -27,6 +27,12 @@
   <data name="(5 minutes)," xml:space="preserve">
     <value>(5 minutos),</value>
   </data>
+  <data name="(Chat Completions)" xml:space="preserve">
+    <value>(Chat Completions)</value>
+  </data>
+  <data name="(Responses)" xml:space="preserve">
+    <value>(Responses)</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= manter para sempre.</value>
   </data>
@@ -35,6 +41,9 @@
   </data>
   <data name="Advanced Warmup Options" xml:space="preserve">
     <value>Opções Avançadas de Aquecimento do Modelo</value>
+  </data>
+  <data name="An error occurred. Please check the browser console." xml:space="preserve">
+    <value>Ocorreu um erro. Por favor, verifique a consola do navegador.</value>
   </data>
   <data name="Back to List" xml:space="preserve">
     <value>Voltar à Lista</value>
@@ -45,14 +54,23 @@
   <data name="Bearer Token" xml:space="preserve">
     <value>Token Bearer</value>
   </data>
+  <data name="Connecting..." xml:space="preserve">
+    <value>A ligar...</value>
+  </data>
   <data name="Connection Test" xml:space="preserve">
     <value>Teste de Ligação</value>
+  </data>
+  <data name="Context size" xml:space="preserve">
+    <value>Tamanho do contexto</value>
   </data>
   <data name="Controls how long models stay in memory after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep forever." xml:space="preserve">
     <value>Define como tempo as modelos permanecem na memória após uma requisição. Formato Ollama (por exemplo, &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Utilize &apos;0&apos; para descarregar imediatamente, ou &apos;-1&apos; para manter para sempre.</value>
   </data>
   <data name="Controls how long the AI model weights stay loaded in GPU VRAM after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep in VRAM forever." xml:space="preserve">
     <value>Controla quanto tempo os pesos do modelo de IA permanecem carregados na VRAM da GPU após um pedido. Formato Ollama (ex.: &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; para descarregar imediatamente ou &apos;-1&apos; para manter na VRAM permanentemente.</value>
+  </data>
+  <data name="Ctx" xml:space="preserve">
+    <value>Ctx</value>
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>NÃO utilize segundos brutos como &apos;300&apos;. Escreva &apos;5m&apos; em vez disso. Formatos inválidos são ignorados silenciosamente pelo Ollama.</value>
@@ -65,6 +83,15 @@
   </data>
   <data name="Embed" xml:space="preserve">
     <value>Embed</value>
+  </data>
+  <data name="Embedding model" xml:space="preserve">
+    <value>Modelo de incorporação</value>
+  </data>
+  <data name="Error: " xml:space="preserve">
+    <value>Erro:</value>
+  </data>
+  <data name="Failed to toggle warmup. Please try again." xml:space="preserve">
+    <value>Falha ao alternar o aquecimento. Por favor, tente novamente.</value>
   </data>
   <data name="Health Check Timeout (s)" xml:space="preserve">
     <value>Tempo limite de verificação de saúde (s)</value>
@@ -83,6 +110,9 @@
   </data>
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>Política de Permanência</value>
+  </data>
+  <data name="Matching client protocols are forwarded directly. Other supported requests are translated." xml:space="preserve">
+    <value>Os protocolos de cliente correspondentes são encaminhados diretamente. As restantes solicitações suportadas são traduzidas.</value>
   </data>
   <data name="Max Concurrent Requests" xml:space="preserve">
     <value>Número Máximo de Pedidos Concorrentes</value>
@@ -123,8 +153,17 @@
   <data name="Select physical models that should be proactively kept loaded in this provider&apos;s VRAM. The gateway will periodically ping these models to prevent them from being unloaded." xml:space="preserve">
     <value>Selecione os modelos físicos que devem ser mantidos proativamente carregados na VRAM deste provedor. O gateway irá consultar periodicamente estes modelos para evitar que sejam descarregados.</value>
   </data>
+  <data name="Supported OpenAI generation protocols" xml:space="preserve">
+    <value>Protocolos de geração OpenAI suportados</value>
+  </data>
   <data name="Test Connection" xml:space="preserve">
     <value>Testar Ligação</value>
+  </data>
+  <data name="These values were inferred from legacy backend settings. Saving this provider makes them explicit." xml:space="preserve">
+    <value>Estes valores foram inferidos a partir de definições de backend legadas. Guardar este prestador torna-os explícitos.</value>
+  </data>
+  <data name="Timeout (s)" xml:space="preserve">
+    <value>Tempo limite (s)</value>
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>Nome do Modelo Subjacente</value>
@@ -134,6 +173,9 @@
   </data>
   <data name="Warmup is not applicable to OpenAI-compatible providers. The upstream service manages model loading automatically." xml:space="preserve">
     <value>O aquecimento não se aplica a provedores compatíveis com OpenAI. O serviço upstream gere o carregamento dos modelos automaticamente.</value>
+  </data>
+  <data name="Warmup timeout" xml:space="preserve">
+    <value>Tempo limite de aquecimento</value>
   </data>
 
 </root>
