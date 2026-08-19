@@ -42,6 +42,9 @@
   <data name="Back to List" xml:space="preserve">
     <value>Voltar à Lista</value>
   </data>
+  <data name="Banned (Till" xml:space="preserve">
+    <value>Banido (Até</value>
+  </data>
   <data name="Configuration Guide:" xml:space="preserve">
     <value>Guia de Configuração:</value>
   </data>
@@ -57,11 +60,17 @@
   <data name="Disabled" xml:space="preserve">
     <value>Desativado</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Fora de serviço</value>
+  </data>
   <data name="Edit Virtual Model" xml:space="preserve">
     <value>Editar Modelo Virtual</value>
   </data>
   <data name="Enabled" xml:space="preserve">
     <value>Ativado</value>
+  </data>
+  <data name="Healthy" xml:space="preserve">
+    <value>Saudável</value>
   </data>
   <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies. SUGGESTED VALUES: small models (≤8B, NVMe SSD) → 60–120s; large models (≥27B or HDD/NAS storage) → 600–1800s; embedding models → 30–60s." xml:space="preserve">
     <value>Tempo que o gateway aguarda pela resposta inicial do backend. NÃO inclui autenticação, fila de limite de taxa ou espera por slot de concorrência. Uma vez iniciado o streaming, não há limite de tempo. VALORES SUGERIDOS: modelos pequenos (≤8B, NVMe SSD) → 60–120s; modelos grandes (≥27B ou armazenamento HDD/NAS) → 600–1800s; modelos de embedding → 30–60s.</value>
@@ -93,11 +102,20 @@
   <data name="Optional Overrides" xml:space="preserve">
     <value>Sobreposições Opcionais</value>
   </data>
+  <data name="Preferred Backend Protocol" xml:space="preserve">
+    <value>Protocolo de Backend Preferido</value>
+  </data>
+  <data name="Preferred Protocol" xml:space="preserve">
+    <value>Protocolo Preferido</value>
+  </data>
   <data name="Priority" xml:space="preserve">
     <value>Prioridade</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>Prestador</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Pronto</value>
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Punição de Repetição</value>
