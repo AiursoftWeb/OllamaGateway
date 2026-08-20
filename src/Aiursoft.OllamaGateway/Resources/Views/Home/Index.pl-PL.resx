@@ -30,6 +30,78 @@
   <data name="→ OpenAI-compatible provider" xml:space="preserve">
     <value>→ Kompatybilny z OpenAI dostawca</value>
   </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama JSON/NDJSON becomes Anthropic message JSON or &lt;code&gt;message_start/content_block_*/message_delta/message_stop&lt;/code&gt; SSE." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → kanoniczne IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. JSON/NDJSON Ollama staje się JSON wiadomości Anthropic lub SSE &lt;code&gt;message_start/content_block_*/message_delta/message_stop&lt;/code&gt;.</value>
+  </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat JSON/SSE is decoded and reconstructed as Anthropic Messages output." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → kanoniczne IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Dane JSON/SSE czatu są dekodowane i odtwarzane jako wyjście Anthropic Messages.</value>
+  </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses Items/events are decoded and rebuilt as Anthropic content blocks and SSE." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → kanoniczne IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Elementy/zdarzenia Responses są dekodowane i przebudowywane jako bloki treści Anthropic oraz SSE.</value>
+  </data>
+  <data name="&lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt; has no Responses mapping. Chat-only controls prefer a Chat backend and are omitted on fallback. Responses annotations, citations, and noncanonical output Items cannot be reconstructed in a Chat Completion response." xml:space="preserve">
+    <value>&lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt; nie ma odpowiednika w protokole Responses. Sterowanie dostępne wyłącznie w trybie Chat preferuje backend Chat i jest pomijane przy rezerwowym przełączaniu. Adnotacje, cytowania oraz niestandardowe elementy wyjściowe protokołu Responses nie mogą zostać odtworzone w odpowiedzi typu Chat Completion.</value>
+  </data>
+  <data name="&lt;code&gt;images[]&lt;/code&gt; → OpenAI &lt;code&gt;image_url&lt;/code&gt; data parts; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;think&lt;/code&gt; → &lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt;; Ollama tool calls and responses are rebuilt as OpenAI tools and back again." xml:space="preserve">
+    <value>&lt;code&gt;images[]&lt;/code&gt; → części danych &lt;code&gt;image_url&lt;/code&gt; OpenAI; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;think&lt;/code&gt; → &lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt;; wywołania narzędzi i odpowiedzi Ollama są przebudowywane jako narzędzia OpenAI i z powrotem.</value>
+  </data>
+  <data name="&lt;code&gt;instructions&lt;/code&gt; → system message; &lt;code&gt;input_text&lt;/code&gt;/&lt;code&gt;input_image&lt;/code&gt; → Ollama content/images; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt;; response events are synthesized with stable output indexes." xml:space="preserve">
+    <value>&lt;code&gt;instructions&lt;/code&gt; → komunikat systemowy; &lt;code&gt;input_text&lt;/code&gt;/&lt;code&gt;input_image&lt;/code&gt; → zawartość/obrazy Ollama; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt;; zdarzenia odpowiedzi są syntezowane ze stabilnymi indeksami wyjściowymi.</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. The response reverses through &lt;code&gt;OpenAiChatProviderResponseDecoder&lt;/code&gt; and &lt;code&gt;OllamaChatClientResponseWriter&lt;/code&gt;." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Odpowiedź przechodzi w odwrotnej kolejności przez &lt;code&gt;OpenAiChatProviderResponseDecoder&lt;/code&gt; i &lt;code&gt;OllamaChatClientResponseWriter&lt;/code&gt;.</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → canonical messages/items → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Typed Responses Items/events are decoded and rebuilt as Ollama JSON/NDJSON." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → kanoniczne wiadomości/elementy → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Typowane elementy/zdarzenia Responses są dekodowane i odtwarzane jako Ollama JSON/NDJSON.</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; performs capability inspection; &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt; clones the original JSON; &lt;code&gt;OllamaChatWireResponseWriter&lt;/code&gt; keeps NDJSON records in the Ollama dialect." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; wykonuje inspekcję funkcjonalności; &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt; klonuje oryginalny JSON; &lt;code&gt;OllamaChatWireResponseWriter&lt;/code&gt; zachowuje rekordy NDJSON w dialekcie Ollama.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama response records are decoded into canonical events and emitted as Chat Completion JSON/SSE." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Rekordy odpowiedzi Ollama są dekodowane na kanoniczne zdarzenia i emitowane jako Chat Completion JSON/SSE.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses output Items/events return through the Responses decoder and Chat client writer." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → kanoniczne IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Elementy Wyjścia/Eventy Responses zwracane są przez dekodery Responses i pisarkę klienta Chat.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; inspects capabilities; the provider adapter clones the source JSON; &lt;code&gt;OpenAiChatWireResponseWriter&lt;/code&gt; forwards Chat JSON/SSE while observing text, reasoning, tools, and usage." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; inspekcjonuje możliwości; adapter dostawcy klonuje źródłowy JSON; &lt;code&gt;OpenAiChatWireResponseWriter&lt;/code&gt; przesyła JSON/SSE czatu, obserwując tekst, rozumowanie, narzędzia i zużycie.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiEmbeddingClientAdapter&lt;/code&gt; + &lt;code&gt;OpenAiEmbeddingProviderAdapter&lt;/code&gt;. No VM sampling/context override is injected into an OpenAI embedding request." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiEmbeddingClientAdapter&lt;/code&gt; + &lt;code&gt;OpenAiEmbeddingProviderAdapter&lt;/code&gt;. Do żądania osadzania OpenAI nie jest wstrzykiwane nadpisanie próbkowania/kontekstu VM.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama output becomes typed Responses Items and typed SSE events." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → kanoniczny IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Wyjście Ollama staje się typowanymi elementami Responses i typowanymi zdarzeniami SSE.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat completions/chunks are decoded and emitted as Responses JSON/typed SSE." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → kanoniczny IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Ukończenia Chat są dekodowane i emitowane jako JSON Responses / typowane SSE.</value>
+  </data>
+  <data name="&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;background&lt;/code&gt;, and &lt;code&gt;store&lt;/code&gt; retain their native Responses semantics. This is not byte-transparent because JSON may be reserialized." xml:space="preserve">
+    <value>&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;background&lt;/code&gt; oraz &lt;code&gt;store&lt;/code&gt; zachowują swoją natywną semantykę Responses. Nie jest to przejrzyste na poziomie bajtów, ponieważ JSON może zostać zdeserializowany i zserializowany ponownie.</value>
+  </data>
+  <data name="&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;store:true&lt;/code&gt;, &lt;code&gt;background:true&lt;/code&gt;, native tools, and unknown Items require a Responses backend. Stateless representable requests fall back to translation." xml:space="preserve">
+    <value>&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;store:true&lt;/code&gt;, &lt;code&gt;background:true&lt;/code&gt;, natywne narzędzia oraz nieznane elementy wymagają backendu Responses. Bezstanowe, reprezentowalne żądania są przekazywane do tłumaczenia jako rozwiązanie zastępcze.</value>
+  </data>
+  <data name="&lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt; are hard-overridden when configured." xml:space="preserve">
+    <value>&lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt; oraz &lt;code&gt;think&lt;/code&gt; są nadpisywane sztywno, gdy skonfigurowane.</value>
+  </data>
+  <data name="&lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;keep_alive&lt;/code&gt; have no OpenAI Chat mapping. Unknown Ollama controls prefer a native backend but are omitted when this translation path is the only eligible route." xml:space="preserve">
+    <value>&lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt; i &lt;code&gt;keep_alive&lt;/code&gt; nie mają odpowiednika w OpenAI Chat. Nieznane parametry sterujące Ollamy preferują natywny backend, ale są pomijane, gdy ta ścieżka tłumaczenia jest jedyną dostępną opcją.</value>
+  </data>
+  <data name="2 client dialects × 2 Provider types" xml:space="preserve">
+    <value>2 dialekty klienckie × 2 typy dostawców</value>
+  </data>
+  <data name="3 backend protocols" xml:space="preserve">
+    <value>3 protokoły backendowe</value>
+  </data>
+  <data name="3 backend protocols · native state passthrough" xml:space="preserve">
+    <value>3 protokoły backendowe · natywne przechodzenie stanu</value>
+  </data>
+  <data name="3 backend protocols · no physical Anthropic adapter" xml:space="preserve">
+    <value>3 protokoły backendowe · brak fizycznego adaptera Anthropic</value>
+  </data>
+  <data name="4 client dialects × 3 backend protocols" xml:space="preserve">
+    <value>4 dialekty klienckie × 3 protokoły backendowe</value>
+  </data>
   <data name="A built-in Role-Based Access Control (RBAC) system for fine-grained permission management." xml:space="preserve">
     <value>Wbudowany system kontroli dostępu opartej na rolach (RBAC) do szczegółowego zarządzania uprawnieniami.</value>
   </data>
@@ -42,6 +114,9 @@
   <data name="A complete solution for user authentication and profile management." xml:space="preserve">
     <value>Pełne rozwiązanie do uwierzytelniania użytkowników i zarządzania profilami.</value>
   </data>
+  <data name="A configured virtual-model value replaces the client-derived value after translation. An unset value leaves the translated value unchanged." xml:space="preserve">
+    <value>Skonfigurowana wartość modelu wirtualnego zastępuje wartość pochodzącą od klienta po translacji. Nieustawiona wartość pozostawia przetłumaczoną wartość bez zmian.</value>
+  </data>
   <data name="A fully responsive layout that looks great on both desktop and mobile devices." xml:space="preserve">
     <value>W pełni responsywny układ, który doskonale wygląda zarówno na komputerach stacjonarnych, jak i urządzeniach mobilnych.</value>
   </data>
@@ -50,6 +125,9 @@
   </data>
   <data name="Achieve more with Aiursoft Template" xml:space="preserve">
     <value>Osiągaj więcej z Aiursoft Template</value>
+  </data>
+  <data name="Active route" xml:space="preserve">
+    <value>Aktywna trasa</value>
   </data>
   <data name="Admin Management GUI" xml:space="preserve">
     <value>Panel zarządzania administracyjnego</value>
@@ -81,6 +159,15 @@
   <data name="All dependencies are automatically registered and always available via constructor injection." xml:space="preserve">
     <value>Wszystkie zależności są automatycznie rejestrowane i zawsze dostępne poprzez wstrzykiwanie konstruktora.</value>
   </data>
+  <data name="All Ollama VM controls apply and override translated values: sampling, context, repeat penalty, token limit, and thinking. Ollama-only DB controls may be injected." xml:space="preserve">
+    <value>Wszystkie sterowanie VM Ollama mają zastosowanie i nadpisują przetłumaczone wartości: sampling, kontekst, karę za powtórzenie, limit tokenów i tryb myślenia. Sterowanie DB tylko Ollama może zostać wstrzyknięte.</value>
+  </data>
+  <data name="All Ollama VM controls apply: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt;. Ollama-only values may therefore be injected even though the client dialect cannot express them." xml:space="preserve">
+    <value>Wszystkie parametry sterujące VM Ollama mają zastosowanie: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt; oraz &lt;code&gt;think&lt;/code&gt;. Wartości specyficzne dla Ollama mogą zatem być wstrzyknięte, nawet jeśli dialekt klienta nie może ich wyrazić.</value>
+  </data>
+  <data name="All Ollama VM controls apply. &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;RepeatPenalty&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; can be injected from DB even though Anthropic request fields do not directly express them." xml:space="preserve">
+    <value>Wszystkie sterowanie VM Ollama mają zastosowanie. Parametry &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;RepeatPenalty&lt;/code&gt; oraz &lt;code&gt;Thinking&lt;/code&gt; mogą być wstrzyknięte z bazy danych, nawet jeśli pola żądań Anthropic nie wyrażają ich bezpośrednio.</value>
+  </data>
   <data name="Anduin" xml:space="preserve">
     <value>Anduin</value>
   </data>
@@ -104,6 +191,18 @@
   </data>
   <data name="Anthropic image content blocks are not yet translated to OpenAI format." xml:space="preserve">
     <value>Bloki treści obrazów Anthropic nie są jeszcze przetłumaczone do formatu OpenAI.</value>
+  </data>
+  <data name="Anthropic image sources → Ollama &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt; → function call; &lt;code&gt;tool_result&lt;/code&gt; → tool message; reasoning text → Ollama thinking; Ollama output is rebuilt as Anthropic content blocks." xml:space="preserve">
+    <value>Źródła obrazów Anthropic → &lt;code&gt;images[]&lt;/code&gt; Ollama; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt; → wywołanie funkcji; &lt;code&gt;tool_result&lt;/code&gt; → wiadomość narzędzia; tekst rozumowania → myślenie Ollama; wyjście Ollama jest odtwarzane jako bloki zawartości Anthropic.</value>
+  </data>
+  <data name="Anthropic input thinking blocks and signatures are not encoded into Responses input. Unknown content blocks cannot use this route; unknown top-level controls are omitted on fallback. Native Responses-only output Items, annotations, and citations cannot be represented in Anthropic output." xml:space="preserve">
+    <value>Bloki myślenia i podpisy z wejścia Anthropic nie są kodowane do wejścia Responses. Nieznane bloki treści nie mogą korzystać z tej ścieżki; nieznane sterowania najwyższego poziomu są pomijane w przypadku awaryjnym. Natywne elementy wyjściowe, adnotacje i cytaty dostępne wyłącznie w Responses nie mogą być reprezentowane w wyjściu Anthropic.</value>
+  </data>
+  <data name="Anthropic Messages client routes" xml:space="preserve">
+    <value>Trasy klienta Anthropic Messages</value>
+  </data>
+  <data name="Anthropic system content → system message; image blocks → OpenAI &lt;code&gt;image_url&lt;/code&gt;; &lt;code&gt;input_schema&lt;/code&gt; → function &lt;code&gt;parameters&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt; → Chat tool calls/messages; &lt;code&gt;max_tokens&lt;/code&gt; remains the Chat token limit." xml:space="preserve">
+    <value>Treść systemowa Anthropic → wiadomość systemowa; bloki obrazów → &lt;code&gt;image_url&lt;/code&gt; OpenAI; &lt;code&gt;input_schema&lt;/code&gt; → parametry funkcji &lt;code&gt;parameters&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt; → wywołania/narzędzia/wiadomości Chat; &lt;code&gt;max_tokens&lt;/code&gt; pozostaje limitem tokenów Chat.</value>
   </data>
   <data name="API Authentication (Bearer)" xml:space="preserve">
     <value>Autoryzacja API (Bearer)</value>
@@ -162,6 +261,12 @@
   <data name="Automatically sync OpenID roles. Unified Rule management." xml:space="preserve">
     <value>Automatyczne synchronizowanie ról OpenID. Zintegrowane zarządzanie zasadami.</value>
   </data>
+  <data name="Backend" xml:space="preserve">
+    <value>Backend</value>
+  </data>
+  <data name="Backend Provider type" xml:space="preserve">
+    <value>Typ dostawcy backendu</value>
+  </data>
   <data name="Background Job Processing" xml:space="preserve">
     <value>Przetwarzanie zadań w tle</value>
   </data>
@@ -207,14 +312,26 @@
   <data name="Built-in User Management" xml:space="preserve">
     <value>Wbudowane zarządzanie użytkownikami</value>
   </data>
+  <data name="Chat" xml:space="preserve">
+    <value>Chat</value>
+  </data>
   <data name="Chat Models" xml:space="preserve">
     <value>Modele czatu</value>
   </data>
   <data name="Chat/Embedding Segregation" xml:space="preserve">
     <value>Separacja czatu i osadzania</value>
   </data>
+  <data name="Choose the API your client sends on the left and the protocol spoken by the physical backend on the right. The active route shows exactly what is preserved, translated, rejected, and overridden." xml:space="preserve">
+    <value>Wybierz API wysyłane przez klienta po lewej stronie oraz protokół używany przez fizyczny backend po prawej stronie. Aktywna trasa dokładnie pokazuje, co jest zachowane, tłumaczone, odrzucane i nadpisywane.</value>
+  </data>
   <data name="Clickhouse Auditing" xml:space="preserve">
     <value>Audytowanie Clickhouse</value>
+  </data>
+  <data name="Client" xml:space="preserve">
+    <value>Klient</value>
+  </data>
+  <data name="Client endpoint" xml:space="preserve">
+    <value>Punkt końcowy klienta</value>
   </data>
   <data name="Comes with Docker support for simplified and consistent deployments." xml:space="preserve">
     <value>Zawiera obsługę Dockera dla uproszczonych i spójnych wdrożeń.</value>
@@ -233,6 +350,9 @@
   </data>
   <data name="Concise Docs" xml:space="preserve">
     <value>Krótkie dokumenty</value>
+  </data>
+  <data name="Configuration precedence" xml:space="preserve">
+    <value>Priorytet konfiguracji</value>
   </data>
   <data name="Consistency Validation" xml:space="preserve">
     <value>Weryfikacja spójności</value>
@@ -261,6 +381,15 @@
   <data name="Cross Platform" xml:space="preserve">
     <value>Wieloplatformowy</value>
   </data>
+  <data name="Cross-Protocol Compatibility" xml:space="preserve">
+    <value>Zgodność międzyprotokołowa</value>
+  </data>
+  <data name="Current route contract" xml:space="preserve">
+    <value>Aktualna umowa trasy</value>
+  </data>
+  <data name="Current route only" xml:space="preserve">
+    <value>Tylko bieżąca trasa</value>
+  </data>
   <data name="Custom dev required" xml:space="preserve">
     <value>Wymagany niestandardowy rozwój</value>
   </data>
@@ -272,6 +401,12 @@
   </data>
   <data name="Dashboard Website" xml:space="preserve">
     <value>Strona pulpitu</value>
+  </data>
+  <data name="Database override" xml:space="preserve">
+    <value>Nadpisanie bazy danych</value>
+  </data>
+  <data name="Database values are hard assignments" xml:space="preserve">
+    <value>Wartości z bazy danych to twarde przypisania</value>
   </data>
   <data name="Day 1 Compliance &amp; Security." xml:space="preserve">
     <value>Dzień 1 Zgodność i Bezpieczeństwo.</value>
@@ -336,6 +471,15 @@
   <data name="DevOps Native" xml:space="preserve">
     <value>Natywny DevOps</value>
   </data>
+  <data name="Direction" xml:space="preserve">
+    <value>Kierunek</value>
+  </data>
+  <data name="Discarded / restriction" xml:space="preserve">
+    <value>Odrzucone / ograniczenie</value>
+  </data>
+  <data name="Discarded, rejected, or preferred" xml:space="preserve">
+    <value>Odrzucone, nieakceptowane lub preferowane</value>
+  </data>
   <data name="Discussions page" xml:space="preserve">
     <value>Strona dyskusji</value>
   </data>
@@ -363,8 +507,20 @@
   <data name="Effortlessly write integration tests using in-memory databases, temporary file systems, built-in mocking, and real-world HTTP request simulation." xml:space="preserve">
     <value>Bezproblemowo twórz testy integracyjne przy użyciu baz danych w pamięci, tymczasowych systemów plików, wbudowanego mockowania oraz symulacji rzeczywistych żądań HTTP.</value>
   </data>
+  <data name="Embedding" xml:space="preserve">
+    <value>Wbudowanie</value>
+  </data>
+  <data name="Embedding adapters select by ProviderType, not chat BackendProtocol" xml:space="preserve">
+    <value>Adaptery osadzania wybierane są przez ProviderType, a nie przez BackendProtocol czatu</value>
+  </data>
   <data name="Embedding Models" xml:space="preserve">
     <value>Modele osadzania</value>
+  </data>
+  <data name="Embedding route" xml:space="preserve">
+    <value>Ścieżka osadzania</value>
+  </data>
+  <data name="Embedding route inspector" xml:space="preserve">
+    <value>Inspektor trasy osadzania</value>
   </data>
   <data name="Enforced" xml:space="preserve">
     <value>Wymuszony</value>
@@ -456,6 +612,12 @@
   <data name="Function call" xml:space="preserve">
     <value>Wywołanie funkcji</value>
   </data>
+  <data name="Gateway-generated response" xml:space="preserve">
+    <value>Odpowiedź generowana przez bramkę</value>
+  </data>
+  <data name="Gateway-owned operation" xml:space="preserve">
+    <value>Operacja obsługiwana przez bramkę</value>
+  </data>
   <data name="Generic configuration" xml:space="preserve">
     <value>Konfiguracja ogólna</value>
   </data>
@@ -531,6 +693,9 @@
   <data name="Images array passes through as-is to native Ollama." xml:space="preserve">
     <value>Tablica obrazów jest przekazywana bez zmian do natywnego Ollamy.</value>
   </data>
+  <data name="Implementation method" xml:space="preserve">
+    <value>Metoda implementacji</value>
+  </data>
   <data name="Included" xml:space="preserve">
     <value>Dołączone</value>
   </data>
@@ -539,6 +704,18 @@
   </data>
   <data name="Includes Tutorials" xml:space="preserve">
     <value>Zawiera samouczki</value>
+  </data>
+  <data name="Input Items → Chat &lt;code&gt;messages&lt;/code&gt;; instructions → system message; Responses function tool/choice shapes → Chat wrappers; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;reasoning_effort&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;response_format&lt;/code&gt;." xml:space="preserve">
+    <value>Elementy wejściowe → Chat &lt;code&gt;messages&lt;/code&gt;; instrukcje → wiadomość systemowa; formy narzędzi/wybioru funkcji Responses → opakowania Chat; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;reasoning_effort&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;response_format&lt;/code&gt;.</value>
+  </data>
+  <data name="Inspect one translation route at a time." xml:space="preserve">
+    <value>Przejrzyj jedną trasę translacji naraz.</value>
+  </data>
+  <data name="Instructions, message Items, text, images, function calls/results, function tool definitions, temperature, top-p, output-token limit, reasoning effort/output, structured format, stream, finish reason, and usage." xml:space="preserve">
+    <value>Instrukcje, elementy wiadomości, tekst, obrazy, wywołania/wyniki funkcji, definicje narzędzi funkcji, temperatura, top-p, limit tokenów wyjściowych, wysiłek/wynik rozumowania, sformatowany format, strumień, powód zakończenia oraz użycie.</value>
+  </data>
+  <data name="Instructions, text/images, function tools/calls/results, temperature, top-p, token limit, reasoning effort/output, structured output, stream, finish state, and usage." xml:space="preserve">
+    <value>Instrukcje, tekst/obrazy, narzędzia funkcji/wezwania/wyniki, temperatura, top-p, limit tokenów, wysiłek/wynik rozumowania, strukturalny wynik, strumień, stan zakończenia i zużycie.</value>
   </data>
   <data name="Integrated File Management" xml:space="preserve">
     <value>Zintegrowany System Zarządzania Plikami</value>
@@ -585,11 +762,17 @@
   <data name="Management Dashboard" xml:space="preserve">
     <value>Panel Zarządzania</value>
   </data>
+  <data name="Mapped / reconstructed" xml:space="preserve">
+    <value>Zmapowane / odtworzone</value>
+  </data>
   <data name="Markdown To HTML" xml:space="preserve">
     <value>Markdown na HTML</value>
   </data>
   <data name="MCP" xml:space="preserve">
     <value>MCP</value>
+  </data>
+  <data name="Message roles/text, function definitions, function calls/results, streaming intent, temperature, top-p, token limit, images, structured format, and token usage survive when representable." xml:space="preserve">
+    <value>Role i tekst wiadomości, definicje funkcji, wywołania/wyniki funkcji, intencja strumieniowania, temperatura, top-p, limit tokenów, obrazy, sformatowany format oraz zużycie tokenów są zachowywane, o ile jest to możliwe do reprezentacji.</value>
   </data>
   <data name="MIT Licence" xml:space="preserve">
     <value>Licencja MIT</value>
@@ -600,8 +783,17 @@
   <data name="Mix Any Client with Any Backend" xml:space="preserve">
     <value>Miksuj dowolnego klienta z dowolnym backendem</value>
   </data>
+  <data name="Model discovery" xml:space="preserve">
+    <value>Odkrywanie modeli</value>
+  </data>
+  <data name="Model discovery endpoints" xml:space="preserve">
+    <value>Punkty końcowe odkrywania modeli</value>
+  </data>
   <data name="Model Hosting &amp; Inference" xml:space="preserve">
     <value>Hosting i wnioskowanie modeli</value>
+  </data>
+  <data name="Model identity is masked in both directions; &lt;code&gt;stream&lt;/code&gt; is normalized; streaming requests merge &lt;code&gt;stream_options.include_usage=true&lt;/code&gt;; null message content is normalized to an empty string." xml:space="preserve">
+    <value>Tożsamość modelu jest maskowana w obu kierunkach; &lt;code&gt;stream&lt;/code&gt; jest normalizowany; żądania strumieniowe scalają &lt;code&gt;stream_options.include_usage=true&lt;/code&gt;; zawartość wiadomości o wartości null jest normalizowana do pustego ciągu.</value>
   </data>
   <data name="Model Keep-alive" xml:space="preserve">
     <value>Utrzymywanie modelu</value>
@@ -642,6 +834,12 @@
   <data name="Music Tools" xml:space="preserve">
     <value>Narzędzia Muzyczne</value>
   </data>
+  <data name="Narrow operation" xml:space="preserve">
+    <value>Ograniczona operacja</value>
+  </data>
+  <data name="Native / same dialect" xml:space="preserve">
+    <value>Natywny / ten sam dialekt</value>
+  </data>
   <data name="Native Ollama" xml:space="preserve">
     <value>Native Ollama</value>
   </data>
@@ -653,6 +851,9 @@
   </data>
   <data name="Native Power, AI Development" xml:space="preserve">
     <value>Wydajność natywna, rozwój AI</value>
+  </data>
+  <data name="Native state passthrough" xml:space="preserve">
+    <value>Przepuszczanie natywnego stanu</value>
   </data>
   <data name="Native vs. Gateway" xml:space="preserve">
     <value>Native vs. Gateway</value>
@@ -699,8 +900,23 @@
   <data name="Needs TypeORM or similar" xml:space="preserve">
     <value>Wymaga TypeORM lub podobnego narzędzia</value>
   </data>
+  <data name="No Chat Completions or Responses translation. A non-Ollama backend returns &lt;code&gt;501&lt;/code&gt;." xml:space="preserve">
+    <value>Brak tłumaczenia na Chat Completions ani Responses. Backend inny niż Ollama zwraca &lt;code&gt;501&lt;/code&gt;.</value>
+  </data>
+  <data name="No chat protocol translation occurs. Backend &lt;code&gt;Protocol&lt;/code&gt; is not consulted for embeddings." xml:space="preserve">
+    <value>Nie dochodzi do tłumaczenia protokołu czatu. Protokół &lt;code&gt;Protocol&lt;/code&gt; backendu nie jest uwzględniany w przypadku osadzeń.</value>
+  </data>
   <data name="No dependency on any cloud vendor. Run anywhere, any time." xml:space="preserve">
     <value>Brak zależności od żadnego dostawcy chmury. Uruchamiaj wszędzie, kiedy chcesz.</value>
+  </data>
+  <data name="No known Chat field is intentionally dropped on this route. Unknown/Chat-only fields prefer a Chat Completions backend, with semantic translation as fallback when no matching backend is available. Valid JSON may be reserialized." xml:space="preserve">
+    <value>Żaden znany pol Chat nie jest celowo pomijany na tej trasie. Nieznane/pola wyłącznie Chat preferują backend Chat Completions, z semantycznym tłumaczeniem jako rozwiązaniem awaryjnym, gdy brak odpowiedniego backendu. Poprawny JSON może zostać ponownie zserializowany.</value>
+  </data>
+  <data name="No known Ollama field is intentionally dropped on this route. Unknown fields make an Ollama-native backend preferred; if none is available, the request may use a documented translated subset. Valid JSON may be reserialized." xml:space="preserve">
+    <value>Żadne znane pole Ollama nie jest świadomie pomijane na tej trasie. Nieznane pola sprawiają, że preferowany jest backend natywny Ollama; jeśli nie jest dostępny, żądanie może korzystać z udokumentowanego przetłumaczonego podzbioru. Poprawny JSON może zostać ponownie zserializowany.</value>
+  </data>
+  <data name="No upstream call" xml:space="preserve">
+    <value>Brak wywołania górnego</value>
   </data>
   <data name="Not supported" xml:space="preserve">
     <value>Nieobsługiwane</value>
@@ -717,11 +933,23 @@
   <data name="Ollama → OpenAI" xml:space="preserve">
     <value>Ollama → OpenAI</value>
   </data>
+  <data name="Ollama &lt;code&gt;input&lt;/code&gt; or legacy &lt;code&gt;prompt&lt;/code&gt; becomes OpenAI &lt;code&gt;input&lt;/code&gt;; OpenAI &lt;code&gt;data[].embedding&lt;/code&gt; is reconstructed as Ollama &lt;code&gt;embeddings[]&lt;/code&gt;." xml:space="preserve">
+    <value>Ollama &lt;code&gt;input&lt;/code&gt; lub starsze &lt;code&gt;prompt&lt;/code&gt; staje się OpenAI &lt;code&gt;input&lt;/code&gt;; OpenAI &lt;code&gt;data[].embedding&lt;/code&gt; jest odtwarzane jako Ollama &lt;code&gt;embeddings[]&lt;/code&gt;.</value>
+  </data>
+  <data name="Ollama &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, &lt;code&gt;keep_alive&lt;/code&gt;, and boolean &lt;code&gt;think&lt;/code&gt; are not encoded into Responses. Responses-native tools cannot be requested from the Ollama dialect." xml:space="preserve">
+    <value>Parametry Ollama &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, &lt;code&gt;keep_alive&lt;/code&gt; oraz logiczny &lt;code&gt;think&lt;/code&gt; nie są kodowane do formatu Responses. Narzędzia natywne dla Responses nie mogą być żądane z dialektu Ollama.</value>
+  </data>
   <data name="Ollama Backend" xml:space="preserve">
     <value>Ollama Backend</value>
   </data>
+  <data name="Ollama Chat client routes" xml:space="preserve">
+    <value>Trasy klienta Ollama Chat</value>
+  </data>
   <data name="Ollama Client" xml:space="preserve">
     <value>Klient Ollama</value>
+  </data>
+  <data name="Ollama embedding input" xml:space="preserve">
+    <value>Wejście do osadzania Ollama</value>
   </data>
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: Wzmocnij swój natywny Ollama za pomocą enterprise&apos;owego uwierzytelniania API, audytu żądań i wirtualnego zarządzania modelami — Twoja bezpieczna, prywatna brama AI.</value>
@@ -729,11 +957,29 @@
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: Wzmocnij swój natywny Ollama za pomocą enterprise&apos;owego uwierzytelniania API, audytu żądań, limitowania żądań oraz wirtualnego zarządzania modelami — Twojego bezpiecznego, prywatnego bramki AI.</value>
   </data>
+  <data name="Ollama generate JSON/NDJSON is forwarded in the same dialect; model identity, answer text, finish data, and usage are observed and the virtual model name is restored." xml:space="preserve">
+    <value>Ollama generate JSON/NDJSON jest przekazywany w tym samym dialekcie; tożsamość modelu, tekst odpowiedzi, dane zakończenia i użycie są obserwowane, a nazwa wirtualnego modelu jest przywracana.</value>
+  </data>
   <data name="Ollama images array is converted to OpenAI multimodal content parts (text + image_url with data URI)." xml:space="preserve">
     <value>Tablica obrazów Ollama jest konwertowana na multimodalne części treści OpenAI (tekst + image_url z data URI).</value>
   </data>
+  <data name="Ollama JSON/NDJSON stays in the native dialect; model identity, answer, finish data, and usage are observed and rewritten." xml:space="preserve">
+    <value>Ollama JSON/NDJSON pozostaje w natywnym dialekcie; tożsamość modelu, odpowiedź, dane zakończenia oraz użycie są obserwowane i przepisywane.</value>
+  </data>
+  <data name="Ollama Native only" xml:space="preserve">
+    <value>Tylko natywne Ollama</value>
+  </data>
+  <data name="Ollama only" xml:space="preserve">
+    <value>Tylko Ollama</value>
+  </data>
+  <data name="Ollama-only embedding fields such as &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;truncate&lt;/code&gt;, &lt;code&gt;dimensions&lt;/code&gt; variants, and &lt;code&gt;keep_alive&lt;/code&gt; are not copied into the OpenAI request unless represented by the shared input." xml:space="preserve">
+    <value>Własne dla Ollama pola wbudowań, takie jak &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;truncate&lt;/code&gt;, warianty &lt;code&gt;dimensions&lt;/code&gt; oraz &lt;code&gt;keep_alive&lt;/code&gt;, nie są kopiowane do żądania OpenAI, chyba że są reprezentowane przez wspólny wpis.</value>
+  </data>
   <data name="Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently." xml:space="preserve">
     <value>Parametr specyficzny dla Ollamy. OpenAI natywnie obsługuje zamiast tego frequency_penalty i presence_penalty, które są przekazywane niezależnie.</value>
+  </data>
+  <data name="Ollama-type Provider" xml:space="preserve">
+    <value>Dostawca typu Ollama</value>
   </data>
   <data name="Ollama." xml:space="preserve">
     <value>Ollama.</value>
@@ -753,6 +999,12 @@
   <data name="OllamaGateway High Availability Routing" xml:space="preserve">
     <value>Wysoka dostępność routingu OllamaGateway</value>
   </data>
+  <data name="OllamaGateway in Docker" xml:space="preserve">
+    <value>OllamaGateway w Dockerze</value>
+  </data>
+  <data name="OllamaGateway main screenshot" xml:space="preserve">
+    <value>Główny zrzut ekranu OllamaGateway</value>
+  </data>
   <data name="OllamaGateway seamlessly connects your local Ollama capabilities to professional AI development tools. Whether you are using Claude Code, Opencode or Qwen Code, you can now leverage your own hardware for automated coding and development tasks—all verified and officially supported by our team." xml:space="preserve">
     <value>OllamaGateway płynnie łączy Twoje lokalne możliwości Ollama z profesjonalnymi narzędziami do tworzenia AI. Niezależnie od tego, czy korzystasz z Claude Code, Opencode, czy Qwen Code, możesz teraz wykorzystać swój własny sprzęt do zautomatyzowanych zadań programistycznych i rozwojowych – wszystko zweryfikowane i oficjalnie wspierane przez nasz zespół.</value>
   </data>
@@ -765,6 +1017,15 @@
   <data name="One Click Start" xml:space="preserve">
     <value>Jedno kliknięcie, start</value>
   </data>
+  <data name="Only gateway-owned fields are rewritten: virtual model → physical model upstream, physical model → virtual model downstream; &lt;code&gt;stream&lt;/code&gt; is normalized; missing &lt;code&gt;keep_alive&lt;/code&gt; receives the request/provider default." xml:space="preserve">
+    <value>Przepisywane są wyłącznie pola należące do bramki: model wirtualny → model fizyczny w kierunku górnym, model fizyczny → model wirtualny w kierunku dolnym; &lt;code&gt;stream&lt;/code&gt; jest normalizowany; brakujące &lt;code&gt;keep_alive&lt;/code&gt; otrzymuje wartość domyślną żądania/dostawcy.</value>
+  </data>
+  <data name="Only model identity, stream intent, and configured VM options are gateway-owned. Upstream physical model names are replaced with the virtual model in response objects and events." xml:space="preserve">
+    <value>Tylko tożsamość modelu, intencja strumienia oraz skonfigurowane opcje VM są zarządzane przez bramkę. Fizyczne nazwy modeli górnego poziomu są zastępowane wirtualnym modelem w obiektach odpowiedzi i zdarzeniach.</value>
+  </data>
+  <data name="Only the selected route is shown" xml:space="preserve">
+    <value>Wyświetlana jest tylko wybrana trasa</value>
+  </data>
   <data name="Open Source" xml:space="preserve">
     <value>Otwarte Źródło</value>
   </data>
@@ -774,17 +1035,44 @@
   <data name="OpenAI → OpenAI" xml:space="preserve">
     <value>OpenAI → OpenAI</value>
   </data>
+  <data name="OpenAI &lt;code&gt;input&lt;/code&gt; is sent as Ollama &lt;code&gt;input&lt;/code&gt;; &lt;code&gt;embeddings[]&lt;/code&gt; and &lt;code&gt;prompt_eval_count&lt;/code&gt; are reconstructed as OpenAI &lt;code&gt;data[]&lt;/code&gt; and &lt;code&gt;usage&lt;/code&gt;." xml:space="preserve">
+    <value>Wejście &lt;code&gt;input&lt;/code&gt; OpenAI jest wysyłane jako &lt;code&gt;input&lt;/code&gt; Ollama; &lt;code&gt;embeddings[]&lt;/code&gt; oraz &lt;code&gt;prompt_eval_count&lt;/code&gt; są odtwarzane jako &lt;code&gt;data[]&lt;/code&gt; i &lt;code&gt;usage&lt;/code&gt; OpenAI.</value>
+  </data>
   <data name="OpenAI API Translation" xml:space="preserve">
     <value>Tłumaczenie API OpenAI</value>
   </data>
   <data name="OpenAI Backend" xml:space="preserve">
     <value>Backend OpenAI</value>
   </data>
+  <data name="OpenAI Chat Completions client routes" xml:space="preserve">
+    <value>Trasy klienta OpenAI Chat Completions</value>
+  </data>
   <data name="OpenAI Client" xml:space="preserve">
     <value>Klient OpenAI</value>
   </data>
+  <data name="OpenAI content parts → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → boolean &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;." xml:space="preserve">
+    <value>Elementy treści OpenAI → &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt; w Ollama; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → wartość logiczna &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt; w Ollama.</value>
+  </data>
+  <data name="OpenAI embedding extensions outside the shared input are not copied into the cross-dialect request or reconstructed response." xml:space="preserve">
+    <value>Rozszerzenia embeddingów OpenAI spoza wspólnego wejścia nie są kopiowane do żądania międzydialektycznego ani odtworzonej odpowiedzi.</value>
+  </data>
+  <data name="OpenAI embedding input" xml:space="preserve">
+    <value>Wejście do wbudowań OpenAI</value>
+  </data>
   <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
     <value>Tablica multimodalnych treści OpenAI jest wyodrębniana: dane image_url trafiają do tablicy obrazów Ollama, a tekst staje się treścią.</value>
+  </data>
+  <data name="OpenAI Responses client routes" xml:space="preserve">
+    <value>Ścieżki klienta OpenAI Responses</value>
+  </data>
+  <data name="OpenAI target fields &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_tokens&lt;/code&gt; use VM values when set. VM &lt;code&gt;Thinking&lt;/code&gt; overrides the translated client value." xml:space="preserve">
+    <value>Pola docelowe OpenAI &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; i &lt;code&gt;max_tokens&lt;/code&gt; używają wartości VM, gdy są ustawione. &lt;code&gt;Thinking&lt;/code&gt; VM nadpisuje przetłumaczoną wartość klienta.</value>
+  </data>
+  <data name="OpenAI-type Provider" xml:space="preserve">
+    <value>Dostawca typu OpenAI</value>
+  </data>
+  <data name="Opencode and Qwen Code working with OllamaGateway" xml:space="preserve">
+    <value>Opencode i Qwen Code działające z OllamaGateway</value>
   </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>Integracja OpenID Connect</value>
@@ -828,6 +1116,15 @@
   <data name="Permission discovery and sync" xml:space="preserve">
     <value>Wykrywanie i synchronizacja uprawnień</value>
   </data>
+  <data name="Physical backend protocol" xml:space="preserve">
+    <value>Fizyczny protokół backendu</value>
+  </data>
+  <data name="Physical provider metadata is not proxied; Ollama runtime details are placeholders or omitted." xml:space="preserve">
+    <value>Metadane fizycznego dostawcy nie są przekazywane przez proxy; szczegóły środowiska uruchomieniowego Ollama są zastępowane wartościami zastępczymi lub pomijane.</value>
+  </data>
+  <data name="Policy and implementation" xml:space="preserve">
+    <value>Polityka i implementacja</value>
+  </data>
   <data name="Pre-configured and tested" xml:space="preserve">
     <value>Wstępnie skonfigurowane i przetestowane</value>
   </data>
@@ -837,8 +1134,23 @@
   <data name="Pre-configured pipelines for dev/prod" xml:space="preserve">
     <value>Wstępnie skonfigurowane potoki dla środowisk dev/prod</value>
   </data>
+  <data name="Preserved" xml:space="preserve">
+    <value>Zachowane</value>
+  </data>
+  <data name="Preserved / mapped" xml:space="preserve">
+    <value>Zachowane / zmapowane</value>
+  </data>
   <data name="Private AI" xml:space="preserve">
     <value>Prywatna sztuczna inteligencja</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Dostawca</value>
+  </data>
+  <data name="Provider adapter selection uses &lt;code&gt;ProviderType&lt;/code&gt;, not chat &lt;code&gt;BackendProtocol&lt;/code&gt;. No Ollama VM options are injected into an OpenAI embedding target." xml:space="preserve">
+    <value>Wybór adaptera dostawcy wykorzystuje &lt;code&gt;ProviderType&lt;/code&gt;, a nie protokół czatu &lt;code&gt;BackendProtocol&lt;/code&gt;. Opcje VM Ollama nie są wstrzykiwane do celu osadzania OpenAI.</value>
+  </data>
+  <data name="Provider type and backend protocol are separate. No physical Anthropic backend adapter exists today." xml:space="preserve">
+    <value>Typ dostawcy i protokół backendu są od siebie niezależne. Obecnie nie istnieje fizyczny adapter backendu Anthropic.</value>
   </data>
   <data name="Quality Gate" xml:space="preserve">
     <value>Brama jakości</value>
@@ -855,11 +1167,23 @@
   <data name="Recommended Models" xml:space="preserve">
     <value>Poleczone modele</value>
   </data>
+  <data name="Remote image URLs are not a portable Ollama-native contract; base64 is the verified path. Thinking signatures are discarded. Unknown content blocks remain a hard rejection; unknown top-level controls are omitted when this translated fallback is used." xml:space="preserve">
+    <value>Zdalne adresy URL obrazów nie są przenośną umową natywną dla Ollama; base64 to zweryfikowana ścieżka. Sygnatury myślowe są odrzucane. Nieznane bloki treści pozostają twardym odrzuceniem; nieznane sterowania najwyższego poziomu są pomijane, gdy używany jest ten przetłumaczony fallback.</value>
+  </data>
+  <data name="Remote image URLs have no portable Ollama-native representation; base64/data-URI is the verified conversion. Chat-only controls such as penalties/logprobs/seed prefer a Chat backend and are omitted when Ollama is the only eligible route." xml:space="preserve">
+    <value>Zdalne adresy URL obrazów nie mają przenośnej natywnej reprezentacji Ollama; base64/data-URI to zweryfikowana konwersja. Sterowanie dostępne wyłącznie w Chat, takie jak kary/logprobs/seed, preferuje backend Chat i jest pomijane, gdy Ollama jest jedyną kwalifikującą się ścieżką.</value>
+  </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Kara za powtórzenie</value>
   </data>
   <data name="Request &amp; Response Auditing" xml:space="preserve">
     <value>Audyt żądań i odpowiedzi</value>
+  </data>
+  <data name="Requester&apos;s API" xml:space="preserve">
+    <value>API żądającego</value>
+  </data>
+  <data name="requires a Responses-capable provider" xml:space="preserve">
+    <value>wymaga dostawcy obsługującego Responses</value>
   </data>
   <data name="Requires Laravel Socialite config" xml:space="preserve">
     <value>Wymaga konfiguracji Laravel Socialite</value>
@@ -875,6 +1199,15 @@
   </data>
   <data name="Robust Integration Testing" xml:space="preserve">
     <value>Solidne testy integracyjne</value>
+  </data>
+  <data name="Roles, text, system/developer instructions, images, function tools, function calls/results, temperature, top-p, token limit, structured format, stream, reasoning output, finish state, and usage." xml:space="preserve">
+    <value>Role, tekst, instrukcje systemowe/developerskie, obrazy, narzędzia funkcyjne, wywołania/wyniki funkcji, temperatura, top-p, limit tokenów, sformatowany format, strumień, wynik rozumowania, stan zakończenia i zużycie.</value>
+  </data>
+  <data name="Roles/text, data-URI images, function tools/calls/results, temperature, top-p, token limit, reasoning text, structured output intent, stream, finish reason, and usage." xml:space="preserve">
+    <value>Role/text, obrazy data-URI, narzędzia funkcji/wołania/wyniki, temperatura, top-p, limit tokenów, tekst rozumowania, intencja strukturalnego wyjścia, strumień, powód zakończenia i użycie.</value>
+  </data>
+  <data name="Roles/text, images, function tools/calls/results, temperature, top-p, maximum output tokens, reasoning effort/output, structured output, streaming, finish reason, and usage." xml:space="preserve">
+    <value>Role/tekst, obrazy, narzędzia funkcji/wołania/wyniki, temperatura, top-p, maksymalna liczba tokenów wyjściowych, wysiłek/wynik rozumowania, strukturalne wyjście, strumieniowanie, powód zakończenia oraz użycie.</value>
   </data>
   <data name="Runs without any internet connection required." xml:space="preserve">
     <value>Działa bez wymagania połączenia internetowego.</value>
@@ -893,6 +1226,12 @@
   </data>
   <data name="Security and Auditing by Design." xml:space="preserve">
     <value>Bezpieczeństwo i audyt wbudowane w projekt.</value>
+  </data>
+  <data name="Select backend protocol" xml:space="preserve">
+    <value>Wybierz protokół backendu</value>
+  </data>
+  <data name="Select requester API" xml:space="preserve">
+    <value>Wybierz API zleceniodawcy</value>
   </data>
   <data name="Shift with confidence" xml:space="preserve">
     <value>Przenieś się z pewnością</value>
@@ -939,6 +1278,15 @@
   <data name="Starts without any configuration" xml:space="preserve">
     <value>Uruchamia się bez żadnej konfiguracji</value>
   </data>
+  <data name="state-aware" xml:space="preserve">
+    <value>z uwzględnieniem stanu</value>
+  </data>
+  <data name="State/background requests require a Responses backend. Native Responses tools and unknown Items also require Responses. Metadata and unknown top-level controls prefer Responses and are omitted on fallback. Responses-only annotations/citations cannot be recreated from Chat output." xml:space="preserve">
+    <value>Żądania z zachowaniem stanu/w tle wymagają backendu Responses. Natywne narzędzia Responses oraz nieznane elementy (Items) również wymagają Responses. Metadane i nieznane sterowania najwyższego poziomu preferują Responses i są pomijane przy przełączaniu na rozwiązanie awaryjne (fallback). Adnotacje/cytowania wyłącznie z Responses nie mogą zostać odtworzone z wyniku Chat.</value>
+  </data>
+  <data name="Stateful controls pass through to native Responses providers and are never silently translated." xml:space="preserve">
+    <value>Kontrola stanowa jest przekazywana bezpośrednio do natywnych dostawców Responses i nigdy nie jest tłumaczona w sposób niewidoczny.</value>
+  </data>
   <data name="Stop Coding Boilerplate." xml:space="preserve">
     <value>Przestań pisać szablonów.</value>
   </data>
@@ -975,6 +1323,24 @@
   <data name="Supports JetBrains Rider for easy code style fixes." xml:space="preserve">
     <value>Obsługuje JetBrains Rider do łatwego poprawiania stylu kodu.</value>
   </data>
+  <data name="System → &lt;code&gt;instructions&lt;/code&gt;; messages/images → Responses input Items; Anthropic tools → Responses function tools; named tool choice → Responses &lt;code&gt;name&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; Responses reasoning/text/function output → Anthropic blocks." xml:space="preserve">
+    <value>System → &lt;code&gt;instructions&lt;/code&gt;; wiadomości/obrazy → elementy wejściowe Responses; narzędzia Anthropic → narzędzia funkcji Responses; nazwany wybór narzędzia → &lt;code&gt;name&lt;/code&gt; w Responses; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; wynik rozumowania/tekstu/funkcji Responses → bloki Anthropic.</value>
+  </data>
+  <data name="System instructions, text, base64/URL images, function tools/calls/results, tool choice, temperature, top-p, max tokens, response reasoning text, stream, finish state, and usage." xml:space="preserve">
+    <value>Instrukcje systemowe, tekst, obrazy base64/URL, narzędzia funkcyjne/wywołania/wyniki, wybór narzędzia, temperatura, top-p, maksymalna liczba tokenów, tekst rozumowania odpowiedzi, strumień, stan zakończenia i zużycie.</value>
+  </data>
+  <data name="System messages → &lt;code&gt;instructions&lt;/code&gt;; messages → Responses &lt;code&gt;input&lt;/code&gt; Items; images → &lt;code&gt;input_image&lt;/code&gt;; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;; function tool shapes are flattened." xml:space="preserve">
+    <value>Komunikaty systemowe → &lt;code&gt;instructions&lt;/code&gt;; komunikaty → elementy &lt;code&gt;input&lt;/code&gt; w Responses; obrazy → &lt;code&gt;input_image&lt;/code&gt;; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;; struktury narzędzi funkcyjnych są spłaszczane.</value>
+  </data>
+  <data name="System text, message text, base64 images, tool definitions, &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt;, tool choice modes, temperature, top-p, max tokens, visible reasoning text, stream, finish reason, and usage." xml:space="preserve">
+    <value>Tekst systemowy, tekst wiadomości, obrazy base64, definicje narzędzi, &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt;, tryby wyboru narzędzi, temperatura, top-p, maksymalna liczba tokenów, widoczny tekst rozumowania, strumień, powód zakończenia oraz zużycie.</value>
+  </data>
+  <data name="System/developer messages → &lt;code&gt;instructions&lt;/code&gt;; messages → &lt;code&gt;input&lt;/code&gt; Items; function schemas are flattened; named &lt;code&gt;tool_choice.function.name&lt;/code&gt; → Responses &lt;code&gt;tool_choice.name&lt;/code&gt;; &lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;." xml:space="preserve">
+    <value>Wiadomości systemowe/developerskie → &lt;code&gt;instructions&lt;/code&gt;; wiadomości → elementy &lt;code&gt;input&lt;/code&gt; Responses; schematy funkcji są spłaszczane; nazwany &lt;code&gt;tool_choice.function.name&lt;/code&gt; → &lt;code&gt;tool_choice.name&lt;/code&gt; Responses; &lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;.</value>
+  </data>
+  <data name="System/messages, text, base64 and URL images, function tools/calls/results, tool choice, temperature, top-p, max tokens, reasoning text, stream, finish reason, and usage." xml:space="preserve">
+    <value>System/messages, tekst, obrazy base64 i URL, funkcje narzędzia/wywołania/wyniki, wybór narzędzia, temperatura, top-p, maksymalna liczba tokenów, tekst rozumowania, strumień, powód zakończenia oraz użycie.</value>
+  </data>
   <data name="Task Runner" xml:space="preserve">
     <value>Uruchomnik zadań</value>
   </data>
@@ -987,14 +1353,38 @@
   <data name="The definitive, battle-tested .NET enterprise foundation. From Auth to AI, we&apos;ve solved the hard parts so you don&apos;t have to." xml:space="preserve">
     <value>Definitywny, sprawdzony w praktyce fundament dla firmowego środowiska .NET. Od uwierzytelniania po sztuczną inteligencję — rozwiązaliśmy trudne problemy, dzięki czemu nie musisz tego robić sam.</value>
   </data>
+  <data name="The gateway decodes both sides through its canonical chat model. Only semantics representable by the target protocol can cross this route." xml:space="preserve">
+    <value>Brama dekoduje obie strony za pomocą swojego kanonicznego modelu czatu. Tylko semantyka reprezentowalna przez docelowy protokół może przejść przez tę trasę.</value>
+  </data>
+  <data name="The gateway keeps the protocol shape and rewrites only gateway-owned values and configured policy fields." xml:space="preserve">
+    <value>Brama zachowuje strukturę protokołu i przepisuje wyłącznie wartości należące do bramy oraz skonfigurowane pola polityki.</value>
+  </data>
   <data name="The navigation bar automatically adjusts based on user roles and permissions." xml:space="preserve">
     <value>Pasek nawigacyjny automatycznie dostosowuje się w oparciu o role i uprawnienia użytkownika.</value>
+  </data>
+  <data name="The original request and successful response JSON are cloned; unknown fields are preserved; model identity is rewritten." xml:space="preserve">
+    <value>Oryginalny żądanie i udany odpowiedź JSON są klonowane; nieznane pola są zachowywane; tożsamość modelu jest przepisywana.</value>
+  </data>
+  <data name="The original request and successful response JSON are cloned; unknown OpenAI embedding fields are preserved; only model identity is rewritten." xml:space="preserve">
+    <value>Oryginalne żądanie oraz udana odpowiedź JSON są klonowane; nieznane pola embeddingów OpenAI są zachowane; przepisywana jest wyłącznie tożsamość modelu.</value>
   </data>
   <data name="The Philosophy" xml:space="preserve">
     <value>Filozofia</value>
   </data>
+  <data name="The provider-level &lt;code&gt;keep_alive&lt;/code&gt; replaces the client value on this route." xml:space="preserve">
+    <value>Poziom dostawcy &lt;code&gt;keep_alive&lt;/code&gt; zastępuje wartość klienta na tej trasie.</value>
+  </data>
+  <data name="The request adapter deep-clones the original Responses JSON. &lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt; preserves unknown output Items and SSE event names/data/comments/id/retry without passing the payload through canonical IL." xml:space="preserve">
+    <value>Adapter żądania tworzy głęboki klon oryginalnego JSON-a Responses. &lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt; zachowuje nieznane elementy wyjściowe (Items) oraz nazwy zdarzeń SSE, dane, komentarze, id i retry, bez przekazywania obciążenia (payload) przez kanoniczny IL.</value>
+  </data>
   <data name="The template is built for easy deployment. It includes full Docker support, so you can containerize your app and run it anywhere. You can also deploy it directly to IIS, Azure App Service, or any server that supports ASP.NET Core." xml:space="preserve">
     <value>Szablon został zaprojektowany z myślą o łatwym wdrażaniu. Zawiera pełne wsparcie dla Dockera, więc możesz skonteneryzować swoją aplikację i uruchomić ją wszędzie. Możesz również wdrożyć ją bezpośrednio na IIS, Azure App Service lub dowolnym serwerze obsługującym ASP.NET Core.</value>
+  </data>
+  <data name="There is no Chat Completions or Responses translation. A non-Ollama backend returns &lt;code&gt;501&lt;/code&gt;." xml:space="preserve">
+    <value>Brak tłumaczenia na protokół Chat Completions ani Responses. Backend inny niż Ollama zwraca &lt;code&gt;501&lt;/code&gt;.</value>
+  </data>
+  <data name="These endpoints do not proxy physical provider metadata. Ollama size/digest/runtime details are placeholders or omitted." xml:space="preserve">
+    <value>Te punkty końcowe nie przekierowują metadanych fizycznych dostawców. Szczegóły rozmiaru, sumy kontrolnej i środowiska uruchomieniowego Ollamy są zastępcze lub pominięte.</value>
   </data>
   <data name="Thinking" xml:space="preserve">
     <value>Myślenie</value>
@@ -1004,6 +1394,12 @@
   </data>
   <data name="Thinking Mode (DeepSeek)" xml:space="preserve">
     <value>Tryb Myślenia (DeepSeek)</value>
+  </data>
+  <data name="Thinking signatures are discarded. Unknown content blocks remain a hard rejection. Anthropic-only top-level controls prefer a future Anthropic backend but are omitted when Chat is the only eligible route." xml:space="preserve">
+    <value>Sygnatury myślenia są odrzucane. Nieznane bloki treści pozostają twardą odmową. Kontrolki najwyższego poziomu dostępne wyłącznie w Anthropic preferują przyszły backend Anthropic, ale są pomijane, gdy Chat jest jedyną dopuszczalną ścieżką.</value>
+  </data>
+  <data name="This avoids recursive upstream discovery when a Provider points back to the gateway and keeps the public catalog scoped to virtual models." xml:space="preserve">
+    <value>Uniknie to rekurencyjnego wykrywania górnego poziomu, gdy Provider wskazuje z powrotem na bramkę, i ograniczy publiczny katalog do modeli wirtualnych.</value>
   </data>
   <data name="This is a template project" xml:space="preserve">
     <value>To jest projekt szablonowy</value>
@@ -1017,8 +1413,26 @@
   <data name="Timezone-aware fields" xml:space="preserve">
     <value>Pola uwzględniające strefy czasowe</value>
   </data>
+  <data name="Translated" xml:space="preserve">
+    <value>Przetłumaczony</value>
+  </data>
+  <data name="Translated subset" xml:space="preserve">
+    <value>Przetłumaczony podzbiór</value>
+  </data>
+  <data name="Translated through semantic layer" xml:space="preserve">
+    <value>Przetłumaczone przez semantyczną warstwę</value>
+  </data>
+  <data name="Transparent" xml:space="preserve">
+    <value>Przezroczysta</value>
+  </data>
+  <data name="Transparent, state-aware" xml:space="preserve">
+    <value>Przezroczysta, świadoma stanu</value>
+  </data>
   <data name="Trusted by production-grade applications including AnduinOS, StatHub, and Warp. We don&apos;t just share this code; we run our entire business on it." xml:space="preserve">
     <value>Uwierzytelnione przez aplikacje produkcyjne, w tym AnduinOS, StatHub i Warp. Nie tylko udostępniamy ten kod; działamy na nim całą swoją firmę.</value>
+  </data>
+  <data name="Two client dialects × two Provider types" xml:space="preserve">
+    <value>Dwa dialekty klienckie × dwa typy dostawcy</value>
   </data>
   <data name="Unified Env" xml:space="preserve">
     <value>Zintegrowane środowisko</value>
@@ -1028,6 +1442,15 @@
   </data>
   <data name="Universal API Compatibility" xml:space="preserve">
     <value>Uniwersalna kompatybilność API</value>
+  </data>
+  <data name="Unknown request fields, &lt;code&gt;messages&lt;/code&gt;, &lt;code&gt;tools&lt;/code&gt;, &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;format&lt;/code&gt;, and unknown JSON response fields are retained. Malformed upstream NDJSON records are forwarded raw." xml:space="preserve">
+    <value>Nieznane pola żądania, &lt;code&gt;messages&lt;/code&gt;, &lt;code&gt;tools&lt;/code&gt;, &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;format&lt;/code&gt; oraz nieznane pola odpowiedzi JSON są zachowywane. Niepoprawne rekordy NDJSON z górnego poziomu są przesyłane bez zmian.</value>
+  </data>
+  <data name="Unknown request fields, message/content extensions, &lt;code&gt;response_format&lt;/code&gt;, &lt;code&gt;reasoning_effort&lt;/code&gt;, vendor fields, unknown response fields, null values, and unrecognized SSE lines remain in the Chat dialect." xml:space="preserve">
+    <value>Nieznane pola żądania, rozszerzenia wiadomości/treści, &lt;code&gt;response_format&lt;/code&gt;, &lt;code&gt;reasoning_effort&lt;/code&gt;, pola dostawcy, nieznane pola odpowiedzi, wartości null oraz nierozpoznane wiersze SSE pozostają w dialekcie Chat.</value>
+  </data>
+  <data name="Unknown top-level and nested request fields, native tools, metadata, future Items, annotations, citations, unknown response fields, future SSE event types, and JSON/non-JSON event data are retained." xml:space="preserve">
+    <value>Nieznane pola żądań najwyższego i zagnieżdżonego poziomu, natywne narzędzia, metadane, przyszłe elementy (Items), adnotacje, cytowania, nieznane pola odpowiedzi, przyszłe typy zdarzeń SSE oraz dane zdarzeń JSON/nie-JSON są zachowywane.</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>Wykorzystanie</value>
@@ -1052,6 +1475,39 @@
   </data>
   <data name="Virtual Models" xml:space="preserve">
     <value>Wirtualne modele</value>
+  </data>
+  <data name="Virtual-model names and gateway-owned metadata are rendered directly in the requested client shape." xml:space="preserve">
+    <value>Nazwy modeli wirtualnych i metadane należące do bramki są renderowane bezpośrednio w żądanym kształcie klienta.</value>
+  </data>
+  <data name="VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are injected into Ollama &lt;code&gt;options&lt;/code&gt;." xml:space="preserve">
+    <value>Parametry VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt; oraz &lt;code&gt;RepeatPenalty&lt;/code&gt; są wstrzykiwane do opcji &lt;code&gt;options&lt;/code&gt; Ollama.</value>
+  </data>
+  <data name="VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; hard-override Ollama &lt;code&gt;options&lt;/code&gt;." xml:space="preserve">
+    <value>Parametry VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt; oraz &lt;code&gt;RepeatPenalty&lt;/code&gt; nadpisują wymuszająco opcje Ollama &lt;code&gt;options&lt;/code&gt;.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override Chat target controls; Chat-only VM thinking is injected through &lt;code&gt;chat_template_kwargs&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt; i &lt;code&gt;Thinking&lt;/code&gt; nadpisują sterowanie docelowe Chat; myślenie VM tylko dla Chat jest wstrzykiwane przez &lt;code&gt;chat_template_kwargs&lt;/code&gt;.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override Chat target fields. Ollama-only DB sampling/context controls do not apply to Chat." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt; i &lt;code&gt;Thinking&lt;/code&gt; nadpisują pola docelowe Chat. Sterowanie próbkowaniem/kontekstem w bazie danych, dostępne tylko w Ollama, nie ma zastosowania do Chat.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override their target fields. Existing nested &lt;code&gt;chat_template_kwargs&lt;/code&gt; members are preserved around &lt;code&gt;enable_thinking&lt;/code&gt;." xml:space="preserve">
+    <value>Pola &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt; oraz &lt;code&gt;Thinking&lt;/code&gt; nadpisują swoje pola docelowe. Istniejące zagnieżdżone członki &lt;code&gt;chat_template_kwargs&lt;/code&gt; są zachowane wokół &lt;code&gt;enable_thinking&lt;/code&gt;.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other nested Responses fields remain untouched." xml:space="preserve">
+    <value>Parametry VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; oraz &lt;code&gt;NumPredict&lt;/code&gt; nadpisują pola &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; i &lt;code&gt;max_output_tokens&lt;/code&gt;. Pozostałe zagnieżdżone pola Responses pozostają niezmienione.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other VM sampling fields are not applicable." xml:space="preserve">
+    <value>Wartości VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; i &lt;code&gt;NumPredict&lt;/code&gt; nadpisują &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; oraz &lt;code&gt;max_output_tokens&lt;/code&gt;. Pozostałe pola próbkowania VM nie mają zastosowania.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; oraz &lt;code&gt;NumPredict&lt;/code&gt; nadpisują pola Responses. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt; oraz &lt;code&gt;RepeatPenalty&lt;/code&gt; nie mają odpowiedniego pola w Responses.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; i &lt;code&gt;NumPredict&lt;/code&gt; nadpisują pola docelowe Responses. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt; i &lt;code&gt;RepeatPenalty&lt;/code&gt; nie są kontrolami Responses.</value>
+  </data>
+  <data name="VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
+    <value>VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict oraz RepeatPenalty nadpisują żądanie; brakujące &lt;code&gt;keep_alive&lt;/code&gt; używa wartości z Providera.</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>Witaj</value>
