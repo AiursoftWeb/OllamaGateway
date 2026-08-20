@@ -42,6 +42,9 @@
   <data name="Back to List" xml:space="preserve">
     <value>Tillbaka till listan</value>
   </data>
+  <data name="Banned (Till" xml:space="preserve">
+    <value>Bannad (Till</value>
+  </data>
   <data name="Configuration Guide:" xml:space="preserve">
     <value>Konfigurationsguide:</value>
   </data>
@@ -57,11 +60,17 @@
   <data name="Disabled" xml:space="preserve">
     <value>Inaktiverad</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Nere</value>
+  </data>
   <data name="Edit Virtual Model" xml:space="preserve">
     <value>Redigera virtuell modell</value>
   </data>
   <data name="Enabled" xml:space="preserve">
     <value>Aktiverad</value>
+  </data>
+  <data name="Healthy" xml:space="preserve">
+    <value>Frisk</value>
   </data>
   <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies. SUGGESTED VALUES: small models (≤8B, NVMe SSD) → 60–120s; large models (≥27B or HDD/NAS storage) → 600–1800s; embedding models → 30–60s." xml:space="preserve">
     <value>Hur länge gateway:n väntar på att bakänden ska BÖJA Svara. Inkluderar INTE autentisering, kö för hastighetsbegränsning eller väntan på konkurrenslotter. När strömningen påbörjas gäller ingen tidsgräns. FÖRESLAGNA VÄRDEN: små modeller (≤8B, NVMe SSD) → 60–120 s; stora modeller (≥27B eller HDD/NAS-lagring) → 600–1800 s; inbäddningsmodeller → 30–60 s.</value>
@@ -93,11 +102,20 @@
   <data name="Optional Overrides" xml:space="preserve">
     <value>Valfria justeringar</value>
   </data>
+  <data name="Preferred Backend Protocol" xml:space="preserve">
+    <value>Föredragen backendprotokoll</value>
+  </data>
+  <data name="Preferred Protocol" xml:space="preserve">
+    <value>Föredragen protokoll</value>
+  </data>
   <data name="Priority" xml:space="preserve">
     <value>Prioritet</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>Tillhandahållare</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Klar</value>
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Upprepningsstraff</value>

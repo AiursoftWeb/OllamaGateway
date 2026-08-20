@@ -42,6 +42,9 @@
   <data name="Back to List" xml:space="preserve">
     <value>Wróć do listy</value>
   </data>
+  <data name="Banned (Till" xml:space="preserve">
+    <value>Zbanowany (do</value>
+  </data>
   <data name="Configuration Guide:" xml:space="preserve">
     <value>Przewodnik konfiguracji:</value>
   </data>
@@ -57,11 +60,17 @@
   <data name="Disabled" xml:space="preserve">
     <value>Wyłączone</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Niestabilny</value>
+  </data>
   <data name="Edit Virtual Model" xml:space="preserve">
     <value>Edytuj wirtualny model</value>
   </data>
   <data name="Enabled" xml:space="preserve">
     <value>Włączony</value>
+  </data>
+  <data name="Healthy" xml:space="preserve">
+    <value>Zdrowy</value>
   </data>
   <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies. SUGGESTED VALUES: small models (≤8B, NVMe SSD) → 60–120s; large models (≥27B or HDD/NAS storage) → 600–1800s; embedding models → 30–60s." xml:space="preserve">
     <value>Jak długo bramka czeka na rozpoczęcie odpowiedzi przez backend. Nie obejmuje to czasu oczekiwania na uwierzytelnianie, kolejkę limitów szybkości ani przydziału współbieżności. Po rozpoczęciu transmisji strumieniowej nie ma ograniczeń czasowych. ZAPROPOZOWANE WARTOŚCI: małe modele (≤8B, NVMe SSD) → 60–120 s; duże modele (≥27B lub pamięć HDD/NAS) → 600–1800 s; modele osadzeń → 30–60 s.</value>
@@ -93,11 +102,20 @@
   <data name="Optional Overrides" xml:space="preserve">
     <value>Opcjonalne zastąpienia</value>
   </data>
+  <data name="Preferred Backend Protocol" xml:space="preserve">
+    <value>Preferowany protokół backendu</value>
+  </data>
+  <data name="Preferred Protocol" xml:space="preserve">
+    <value>Preferowany protokół</value>
+  </data>
   <data name="Priority" xml:space="preserve">
     <value>Priorytet</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>Dostawca</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Gotowy</value>
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Kara za powtórzenia</value>
