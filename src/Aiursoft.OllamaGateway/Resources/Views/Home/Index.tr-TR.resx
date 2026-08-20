@@ -30,6 +30,78 @@
   <data name="→ OpenAI-compatible provider" xml:space="preserve">
     <value>→ OpenAI uyumlu sağlayıcı</value>
   </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama JSON/NDJSON becomes Anthropic message JSON or &lt;code&gt;message_start/content_block_*/message_delta/message_stop&lt;/code&gt; SSE." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → kanonik IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama JSON/NDJSON, Anthropic mesaj JSON&apos;ına veya &lt;code&gt;message_start/content_block_*/message_delta/message_stop&lt;/code&gt; SSE&apos;sine dönüşür.</value>
+  </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat JSON/SSE is decoded and reconstructed as Anthropic Messages output." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → kanonik IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat JSON/SSE çözümlenir ve Anthropic Messages çıktısı olarak yeniden oluşturulur.</value>
+  </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses Items/events are decoded and rebuilt as Anthropic content blocks and SSE." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → kanonik IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses Öğeleri/olayları çözümlenir ve Anthropic içerik blokları ve SSE olarak yeniden oluşturulur.</value>
+  </data>
+  <data name="&lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt; has no Responses mapping. Chat-only controls prefer a Chat backend and are omitted on fallback. Responses annotations, citations, and noncanonical output Items cannot be reconstructed in a Chat Completion response." xml:space="preserve">
+    <value>&lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt; için bir Responses eşlemesi yoktur. Sadece Chat olan denetimler bir Chat arka ucunu tercih eder ve geri dönüşte (fallback) atlanır. Responses ekleri, alıntıları ve standart dışı çıktı Öğeleri, bir Chat Completion yanıtında yeniden oluşturulamaz.</value>
+  </data>
+  <data name="&lt;code&gt;images[]&lt;/code&gt; → OpenAI &lt;code&gt;image_url&lt;/code&gt; data parts; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;think&lt;/code&gt; → &lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt;; Ollama tool calls and responses are rebuilt as OpenAI tools and back again." xml:space="preserve">
+    <value>&lt;code&gt;images[]&lt;/code&gt; → OpenAI &lt;code&gt;image_url&lt;/code&gt; veri parçaları; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;think&lt;/code&gt; → &lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt;; Ollama araç çağrıları ve yanıtları OpenAI araçları olarak yeniden oluşturulur ve tekrar geri dönüştürülür.</value>
+  </data>
+  <data name="&lt;code&gt;instructions&lt;/code&gt; → system message; &lt;code&gt;input_text&lt;/code&gt;/&lt;code&gt;input_image&lt;/code&gt; → Ollama content/images; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt;; response events are synthesized with stable output indexes." xml:space="preserve">
+    <value>&lt;code&gt;instructions&lt;/code&gt; → sistem mesajı; &lt;code&gt;input_text&lt;/code&gt;/&lt;code&gt;input_image&lt;/code&gt; → Ollama içeriği/görseller; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt;; yanıt olayları, kararlı çıktı dizinleriyle sentezlenir.</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. The response reverses through &lt;code&gt;OpenAiChatProviderResponseDecoder&lt;/code&gt; and &lt;code&gt;OllamaChatClientResponseWriter&lt;/code&gt;." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Yanıt, &lt;code&gt;OpenAiChatProviderResponseDecoder&lt;/code&gt; ve &lt;code&gt;OllamaChatClientResponseWriter&lt;/code&gt; üzerinden tersine döner.</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → canonical messages/items → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Typed Responses Items/events are decoded and rebuilt as Ollama JSON/NDJSON." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → kanonik mesajlar/öğeler → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Biçimlendirilmiş Responses Öğeleri/olayları çözümlenir ve Ollama JSON/NDJSON olarak yeniden oluşturulur.</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; performs capability inspection; &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt; clones the original JSON; &lt;code&gt;OllamaChatWireResponseWriter&lt;/code&gt; keeps NDJSON records in the Ollama dialect." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; yetenek denetimi yapar; &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt; orijinal JSON&apos;un bir kopyasını oluşturur; &lt;code&gt;OllamaChatWireResponseWriter&lt;/code&gt; NDJSON kayıtlarını Ollama diyalektinde tutar.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama response records are decoded into canonical events and emitted as Chat Completion JSON/SSE." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama yanıt kayıtları, kanonik olaylara çözümlenir ve Chat Completion JSON/SSE olarak yayımlanır.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses output Items/events return through the Responses decoder and Chat client writer." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → kanonik IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses çıktı Öğeleri/olayları, Responses kod çözücü ve Chat istemci yazarı üzerinden döner.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; inspects capabilities; the provider adapter clones the source JSON; &lt;code&gt;OpenAiChatWireResponseWriter&lt;/code&gt; forwards Chat JSON/SSE while observing text, reasoning, tools, and usage." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; yetenekleri denetler; sağlayıcı adaptörü kaynak JSON&apos;ı klonlar; &lt;code&gt;OpenAiChatWireResponseWriter&lt;/code&gt;, metni, akıl yürütmeyi, araçları ve kullanımı gözlemleyerek Chat JSON/SSE&apos;yi iletir.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiEmbeddingClientAdapter&lt;/code&gt; + &lt;code&gt;OpenAiEmbeddingProviderAdapter&lt;/code&gt;. No VM sampling/context override is injected into an OpenAI embedding request." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiEmbeddingClientAdapter&lt;/code&gt; + &lt;code&gt;OpenAiEmbeddingProviderAdapter&lt;/code&gt;. Bir OpenAI gömme (embedding) isteğine sanal model örneklem bağlamı (sampling/context) geçersiz kılma işlenmez.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama output becomes typed Responses Items and typed SSE events." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → kanonik IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama çıktısı, tipli Responses Öğeleri ve tipli SSE olaylarına dönüşür.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat completions/chunks are decoded and emitted as Responses JSON/typed SSE." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → kanonik IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat tamamlamaları/parçaları, Responses JSON/şablonlu SSE olarak çözümlenir ve yayınlanır.</value>
+  </data>
+  <data name="&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;background&lt;/code&gt;, and &lt;code&gt;store&lt;/code&gt; retain their native Responses semantics. This is not byte-transparent because JSON may be reserialized." xml:space="preserve">
+    <value>&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;background&lt;/code&gt; ve &lt;code&gt;store&lt;/code&gt; yerel Responses anlamlarını korur. JSON yeniden serileştirilebileceğinden bu bayt saydam değildir.</value>
+  </data>
+  <data name="&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;store:true&lt;/code&gt;, &lt;code&gt;background:true&lt;/code&gt;, native tools, and unknown Items require a Responses backend. Stateless representable requests fall back to translation." xml:space="preserve">
+    <value>&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;store:true&lt;/code&gt;, &lt;code&gt;background:true&lt;/code&gt;, yerel araçlar ve bilinmeyen Öğeler bir Responses arka ucu gerektirir. Durumsuz temsil edilebilir istekler çeviriye geri düşer.</value>
+  </data>
+  <data name="&lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt; are hard-overridden when configured." xml:space="preserve">
+    <value>&lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt; ve &lt;code&gt;think&lt;/code&gt; yapılandırıldığında zorla geçersiz kılınır.</value>
+  </data>
+  <data name="&lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;keep_alive&lt;/code&gt; have no OpenAI Chat mapping. Unknown Ollama controls prefer a native backend but are omitted when this translation path is the only eligible route." xml:space="preserve">
+    <value>&lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt; ve &lt;code&gt;keep_alive&lt;/code&gt; için OpenAI Chat eşlemesi yoktur. Bilinmeyen Ollama denetimleri yerel bir arka uca öncelik tanır ancak bu çeviri yolu tek uygun seçenek olduğunda bunlar atlanır.</value>
+  </data>
+  <data name="2 client dialects × 2 Provider types" xml:space="preserve">
+    <value>2 istemci diyalekti × 2 sağlayıcı türü</value>
+  </data>
+  <data name="3 backend protocols" xml:space="preserve">
+    <value>3 arka uç protokolü</value>
+  </data>
+  <data name="3 backend protocols · native state passthrough" xml:space="preserve">
+    <value>3 arka uç protokolü · yerel durum geçişine doğrudan erişim</value>
+  </data>
+  <data name="3 backend protocols · no physical Anthropic adapter" xml:space="preserve">
+    <value>3 arka uç protokolü · fiziksel Anthropic adaptörü yok</value>
+  </data>
+  <data name="4 client dialects × 3 backend protocols" xml:space="preserve">
+    <value>4 istemci diyalekti × 3 arka uç protokolü</value>
+  </data>
   <data name="A built-in Role-Based Access Control (RBAC) system for fine-grained permission management." xml:space="preserve">
     <value>İnce taneli izin yönetimi için yerleşik bir Rol Tabanlı Erişim Kontrolü (RBAC) sistemi.</value>
   </data>
@@ -42,6 +114,9 @@
   <data name="A complete solution for user authentication and profile management." xml:space="preserve">
     <value>Kullanıcı kimlik doğrulama ve profil yönetimi için tam bir çözüm.</value>
   </data>
+  <data name="A configured virtual-model value replaces the client-derived value after translation. An unset value leaves the translated value unchanged." xml:space="preserve">
+    <value>Yapılandırılmış sanal model değeri, çeviri sonrasında istemci kaynaklı değeri değiştirir. Ayarlanmamış bir değer, çevrilmiş değeri değiştirmez.</value>
+  </data>
   <data name="A fully responsive layout that looks great on both desktop and mobile devices." xml:space="preserve">
     <value>Hem masaüstü hem de mobil cihazlarda harika görünen tamamen duyarlı bir düzen.</value>
   </data>
@@ -50,6 +125,9 @@
   </data>
   <data name="Achieve more with Aiursoft Template" xml:space="preserve">
     <value>Aiursoft Template ile daha fazlasını başarın</value>
+  </data>
+  <data name="Active route" xml:space="preserve">
+    <value>Aktif rota</value>
   </data>
   <data name="Admin Management GUI" xml:space="preserve">
     <value>Yönetici Yönetim Arayüzü</value>
@@ -81,6 +159,15 @@
   <data name="All dependencies are automatically registered and always available via constructor injection." xml:space="preserve">
     <value>Tüm bağımlılıklar otomatik olere kaydedilir ve constructor injection yoluyla her zaman kullanılabilir.</value>
   </data>
+  <data name="All Ollama VM controls apply and override translated values: sampling, context, repeat penalty, token limit, and thinking. Ollama-only DB controls may be injected." xml:space="preserve">
+    <value>Tüm Ollama VM kontrolleri geçerlidir ve çevrilen değerleri geçersiz kılar: örneklem, bağlam, tekrar cezası, jeton sınırı ve düşünme. Sadece Ollama&apos;ya özgü DB kontrolleri enjekte edilebilir.</value>
+  </data>
+  <data name="All Ollama VM controls apply: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt;. Ollama-only values may therefore be injected even though the client dialect cannot express them." xml:space="preserve">
+    <value>Tüm Ollama VM kontrolleri geçerlidir: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt; ve &lt;code&gt;think&lt;/code&gt;. Bu nedenle, istemci diyalekti bunları ifade edemese bile yalnızca Ollama&apos;ya özgü değerler enjekte edilebilir.</value>
+  </data>
+  <data name="All Ollama VM controls apply. &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;RepeatPenalty&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; can be injected from DB even though Anthropic request fields do not directly express them." xml:space="preserve">
+    <value>Tüm Ollama VM kontrolleri geçerlidir. &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;RepeatPenalty&lt;/code&gt; ve &lt;code&gt;Thinking&lt;/code&gt;, Anthropic istek alanları bunları doğrudan ifade etmese bile DB&apos;den enjekte edilebilir.</value>
+  </data>
   <data name="Anduin" xml:space="preserve">
     <value>Anduin</value>
   </data>
@@ -104,6 +191,18 @@
   </data>
   <data name="Anthropic image content blocks are not yet translated to OpenAI format." xml:space="preserve">
     <value>Anthropic görüntü içerik blokları henüz OpenAI formatına çevrilmedi.</value>
+  </data>
+  <data name="Anthropic image sources → Ollama &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt; → function call; &lt;code&gt;tool_result&lt;/code&gt; → tool message; reasoning text → Ollama thinking; Ollama output is rebuilt as Anthropic content blocks." xml:space="preserve">
+    <value>Anthropic görüntü kaynakları → Ollama &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt; → fonksiyon çağrısı; &lt;code&gt;tool_result&lt;/code&gt; → araç mesajı; akıl yürütme metni → Ollama düşünme; Ollama çıktısı Anthropic içerik blokları olarak yeniden oluşturulur.</value>
+  </data>
+  <data name="Anthropic input thinking blocks and signatures are not encoded into Responses input. Unknown content blocks cannot use this route; unknown top-level controls are omitted on fallback. Native Responses-only output Items, annotations, and citations cannot be represented in Anthropic output." xml:space="preserve">
+    <value>Anthropic girdiş düşünce blokları ve imzaları Responses girdisine kodlanmaz. Bilinmeyen içerik blokları bu yolu kullanamaz; bilinmeyen üst düzey denetimler yedeklemede atlanır. Yalnızca yerel Responses çıktı Öğeleri, ek açıklamaları ve alıntıları Anthropic çıktısında temsil edilemez.</value>
+  </data>
+  <data name="Anthropic Messages client routes" xml:space="preserve">
+    <value>Anthropic Messages istemci yolları</value>
+  </data>
+  <data name="Anthropic system content → system message; image blocks → OpenAI &lt;code&gt;image_url&lt;/code&gt;; &lt;code&gt;input_schema&lt;/code&gt; → function &lt;code&gt;parameters&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt; → Chat tool calls/messages; &lt;code&gt;max_tokens&lt;/code&gt; remains the Chat token limit." xml:space="preserve">
+    <value>Anthropic sistem içeriği → sistem mesajı; görüntü blokları → OpenAI &lt;code&gt;image_url&lt;/code&gt;; &lt;code&gt;input_schema&lt;/code&gt; → fonksiyon &lt;code&gt;parameters&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt; → Chat araç çağrıları/mesajları; &lt;code&gt;max_tokens&lt;/code&gt;, Chat jeton sınırını korur.</value>
   </data>
   <data name="API Authentication (Bearer)" xml:space="preserve">
     <value>API Kimlik Doğrulama (Bearer)</value>
@@ -162,6 +261,12 @@
   <data name="Automatically sync OpenID roles. Unified Rule management." xml:space="preserve">
     <value>Açık Kimlik rollerini otomatik senkronize et. Birleşik Kural Yönetimi.</value>
   </data>
+  <data name="Backend" xml:space="preserve">
+    <value>Arka Uç</value>
+  </data>
+  <data name="Backend Provider type" xml:space="preserve">
+    <value>Arka Uç Sağlayıcı türü</value>
+  </data>
   <data name="Background Job Processing" xml:space="preserve">
     <value>Arka Plan İşlem İşleme</value>
   </data>
@@ -207,14 +312,26 @@
   <data name="Built-in User Management" xml:space="preserve">
     <value>Dahili Kullanıcı Yönetimi</value>
   </data>
+  <data name="Chat" xml:space="preserve">
+    <value>Sohbet</value>
+  </data>
   <data name="Chat Models" xml:space="preserve">
     <value>Sohbet Modelleri</value>
   </data>
   <data name="Chat/Embedding Segregation" xml:space="preserve">
     <value>Sohbet/Gömme Ayrımı</value>
   </data>
+  <data name="Choose the API your client sends on the left and the protocol spoken by the physical backend on the right. The active route shows exactly what is preserved, translated, rejected, and overridden." xml:space="preserve">
+    <value>Sol tarafta istemcinizin gönderdiği API&apos;yi, sağ tarafta ise fiziksel arka uç tarafından konuşulan protokolü seçin. Aktif rota, tam olarak nelerin korunduğunu, çevrildiğini, reddedildiğini ve geçersiz kılındığını gösterir.</value>
+  </data>
   <data name="Clickhouse Auditing" xml:space="preserve">
     <value>Clickhouse Denetimi</value>
+  </data>
+  <data name="Client" xml:space="preserve">
+    <value>İstemci</value>
+  </data>
+  <data name="Client endpoint" xml:space="preserve">
+    <value>İstemci uç noktası</value>
   </data>
   <data name="Comes with Docker support for simplified and consistent deployments." xml:space="preserve">
     <value>Kolay ve tutarlı dağıtımlar için Docker desteğiyle birlikte gelir.</value>
@@ -233,6 +350,9 @@
   </data>
   <data name="Concise Docs" xml:space="preserve">
     <value>Kısa Belgeler</value>
+  </data>
+  <data name="Configuration precedence" xml:space="preserve">
+    <value>Yapılandırma önceliği</value>
   </data>
   <data name="Consistency Validation" xml:space="preserve">
     <value>Tutarlılık Doğrulama</value>
@@ -261,6 +381,15 @@
   <data name="Cross Platform" xml:space="preserve">
     <value>Çapraz Platform</value>
   </data>
+  <data name="Cross-Protocol Compatibility" xml:space="preserve">
+    <value>Çapraz Protokol Uyumluluğu</value>
+  </data>
+  <data name="Current route contract" xml:space="preserve">
+    <value>Güncel yönlendirme sözleşmesi</value>
+  </data>
+  <data name="Current route only" xml:space="preserve">
+    <value>Sadece mevcut rota</value>
+  </data>
   <data name="Custom dev required" xml:space="preserve">
     <value>Özel geliştirme gerekli</value>
   </data>
@@ -272,6 +401,12 @@
   </data>
   <data name="Dashboard Website" xml:space="preserve">
     <value>Kontrol Paneli Web Sitesi</value>
+  </data>
+  <data name="Database override" xml:space="preserve">
+    <value>Veritabanı geçersiz kılma</value>
+  </data>
+  <data name="Database values are hard assignments" xml:space="preserve">
+    <value>Veritabanı değerleri kesin atamalardır</value>
   </data>
   <data name="Day 1 Compliance &amp; Security." xml:space="preserve">
     <value>Gün 1 Uyumluluk &amp; Güvenlik.</value>
@@ -336,6 +471,15 @@
   <data name="DevOps Native" xml:space="preserve">
     <value>DevOps Uyumlu</value>
   </data>
+  <data name="Direction" xml:space="preserve">
+    <value>Yön</value>
+  </data>
+  <data name="Discarded / restriction" xml:space="preserve">
+    <value>Atılan / kısıtlama</value>
+  </data>
+  <data name="Discarded, rejected, or preferred" xml:space="preserve">
+    <value>Atılan, reddedilen veya tercih edilen</value>
+  </data>
   <data name="Discussions page" xml:space="preserve">
     <value>Tartışmalar sayfası</value>
   </data>
@@ -363,8 +507,20 @@
   <data name="Effortlessly write integration tests using in-memory databases, temporary file systems, built-in mocking, and real-world HTTP request simulation." xml:space="preserve">
     <value>Anımsatmadan entegrasyon testleri yazın, bellek içi veritabanları, geçici dosya sistemleri, yerleşik mocklama ve gerçek dünya HTTP isteği simülasyonu kullanarak.</value>
   </data>
+  <data name="Embedding" xml:space="preserve">
+    <value>Gömme</value>
+  </data>
+  <data name="Embedding adapters select by ProviderType, not chat BackendProtocol" xml:space="preserve">
+    <value>Gömme adaptörleri ProviderType ile seçilir, sohbet BackendProtocol ile değil</value>
+  </data>
   <data name="Embedding Models" xml:space="preserve">
     <value>Embedding Models</value>
+  </data>
+  <data name="Embedding route" xml:space="preserve">
+    <value>Gömme yolu</value>
+  </data>
+  <data name="Embedding route inspector" xml:space="preserve">
+    <value>Gömme rotası denetçisi</value>
   </data>
   <data name="Enforced" xml:space="preserve">
     <value>Zorunlu</value>
@@ -456,6 +612,12 @@
   <data name="Function call" xml:space="preserve">
     <value>Fonksiyon çağrısı</value>
   </data>
+  <data name="Gateway-generated response" xml:space="preserve">
+    <value>Ağ geçidi tarafından oluşturulan yanıt</value>
+  </data>
+  <data name="Gateway-owned operation" xml:space="preserve">
+    <value>Gateway&apos;a ait işlem</value>
+  </data>
   <data name="Generic configuration" xml:space="preserve">
     <value>Genel yapılandırma</value>
   </data>
@@ -531,6 +693,9 @@
   <data name="Images array passes through as-is to native Ollama." xml:space="preserve">
     <value>Görüntü dizisi olduğu gibi yerel Ollama&apos;ya geçer.</value>
   </data>
+  <data name="Implementation method" xml:space="preserve">
+    <value>Uygulama yöntemi</value>
+  </data>
   <data name="Included" xml:space="preserve">
     <value>Dahil</value>
   </data>
@@ -539,6 +704,18 @@
   </data>
   <data name="Includes Tutorials" xml:space="preserve">
     <value>Kılavuzlar Dahil</value>
+  </data>
+  <data name="Input Items → Chat &lt;code&gt;messages&lt;/code&gt;; instructions → system message; Responses function tool/choice shapes → Chat wrappers; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;reasoning_effort&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;response_format&lt;/code&gt;." xml:space="preserve">
+    <value>Girdi Öğeleri → Chat &lt;code&gt;messages&lt;/code&gt;; talimatlar → sistem mesajı; Responses işlev araç/seçim biçimleri → Chat sarmalayıcıları; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;reasoning_effort&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;response_format&lt;/code&gt;.</value>
+  </data>
+  <data name="Inspect one translation route at a time." xml:space="preserve">
+    <value>Bir çeviri yolunu bir anda inceleyin.</value>
+  </data>
+  <data name="Instructions, message Items, text, images, function calls/results, function tool definitions, temperature, top-p, output-token limit, reasoning effort/output, structured format, stream, finish reason, and usage." xml:space="preserve">
+    <value>Talimatlar, mesaj Öğeleri, metin, görüntüler, işlev çağrıları/sonuçları, işlev araç tanımları, sıcaklık, top-p, çıktı-token sınırı, akıl yürütme çabası/çıktısı, yapılandırılmış biçim, akış, bitiş nedeni ve kullanım.</value>
+  </data>
+  <data name="Instructions, text/images, function tools/calls/results, temperature, top-p, token limit, reasoning effort/output, structured output, stream, finish state, and usage." xml:space="preserve">
+    <value>Talimatlar, metin/görseller, fonksiyon araçları/çağrıları/sonuçları, sıcaklık, top-p, jeton sınırı, akıl yürütme çabası/çıktısı, yapılandırılmış çıktı, akış, bitiş durumu ve kullanım.</value>
   </data>
   <data name="Integrated File Management" xml:space="preserve">
     <value>Entegre Dosya Yönetimi</value>
@@ -585,11 +762,17 @@
   <data name="Management Dashboard" xml:space="preserve">
     <value>Yönetim Paneli</value>
   </data>
+  <data name="Mapped / reconstructed" xml:space="preserve">
+    <value>Eşlenmiş / yeniden oluşturulmuş</value>
+  </data>
   <data name="Markdown To HTML" xml:space="preserve">
     <value>Markdown&apos;dan HTML&apos;e</value>
   </data>
   <data name="MCP" xml:space="preserve">
     <value>MCP</value>
+  </data>
+  <data name="Message roles/text, function definitions, function calls/results, streaming intent, temperature, top-p, token limit, images, structured format, and token usage survive when representable." xml:space="preserve">
+    <value>Mesaj rolleri/metin, fonksiyon tanımları, fonksiyon çağrıları/sonuçları, akış amaçlılığı, sıcaklık, top-p, jeton sınırı, görseller, yapılandırılmış biçim ve jeton kullanımı temsil edilebildiğinde korunur.</value>
   </data>
   <data name="MIT Licence" xml:space="preserve">
     <value>MIT Lisansı</value>
@@ -600,8 +783,17 @@
   <data name="Mix Any Client with Any Backend" xml:space="preserve">
     <value>İstediğiniz İstemciyi İstediğiniz Arka Uçla Birleştirin</value>
   </data>
+  <data name="Model discovery" xml:space="preserve">
+    <value>Model keşfi</value>
+  </data>
+  <data name="Model discovery endpoints" xml:space="preserve">
+    <value>Model keşif uç noktaları</value>
+  </data>
   <data name="Model Hosting &amp; Inference" xml:space="preserve">
     <value>Model Barındırma &amp; Çıkarım</value>
+  </data>
+  <data name="Model identity is masked in both directions; &lt;code&gt;stream&lt;/code&gt; is normalized; streaming requests merge &lt;code&gt;stream_options.include_usage=true&lt;/code&gt;; null message content is normalized to an empty string." xml:space="preserve">
+    <value>Model kimliği her iki yönde de maskelemedir; &lt;code&gt;stream&lt;/code&gt; normalize edilir; akış istekleri &lt;code&gt;stream_options.include_usage=true&lt;/code&gt; birleştirilir; null mesaj içeriği boş bir dizeye normalize edilir.</value>
   </data>
   <data name="Model Keep-alive" xml:space="preserve">
     <value>Model Sürekli Bağlantı</value>
@@ -642,6 +834,12 @@
   <data name="Music Tools" xml:space="preserve">
     <value>Müzik Araçları</value>
   </data>
+  <data name="Narrow operation" xml:space="preserve">
+    <value>Dar işlem</value>
+  </data>
+  <data name="Native / same dialect" xml:space="preserve">
+    <value>Yerel / aynı diyalekt</value>
+  </data>
   <data name="Native Ollama" xml:space="preserve">
     <value>Orijinal Ollama</value>
   </data>
@@ -653,6 +851,9 @@
   </data>
   <data name="Native Power, AI Development" xml:space="preserve">
     <value>Yerel Güç, Yapay Zeka Geliştirme</value>
+  </data>
+  <data name="Native state passthrough" xml:space="preserve">
+    <value>Yerel durum geçişi</value>
   </data>
   <data name="Native vs. Gateway" xml:space="preserve">
     <value>Yerel vs. Geçit</value>
@@ -699,8 +900,23 @@
   <data name="Needs TypeORM or similar" xml:space="preserve">
     <value>TypeORM veya benzeri gereklidir</value>
   </data>
+  <data name="No Chat Completions or Responses translation. A non-Ollama backend returns &lt;code&gt;501&lt;/code&gt;." xml:space="preserve">
+    <value>Chat Completions veya Responses çevirisi yoktur. Ollama dışı bir arka uç &lt;code&gt;501&lt;/code&gt; döndürür.</value>
+  </data>
+  <data name="No chat protocol translation occurs. Backend &lt;code&gt;Protocol&lt;/code&gt; is not consulted for embeddings." xml:space="preserve">
+    <value>Sohbet protokolü çevirisi gerçekleşmez. Arka uç &lt;code&gt;Protocol&lt;/code&gt; değeri gömme (embedding) işlemleri için sorgulanmaz.</value>
+  </data>
   <data name="No dependency on any cloud vendor. Run anywhere, any time." xml:space="preserve">
     <value>Herhangi bir bulut sağlayıcısına bağımlılık yok. Her yerde, her zaman çalıştırılabilir.</value>
+  </data>
+  <data name="No known Chat field is intentionally dropped on this route. Unknown/Chat-only fields prefer a Chat Completions backend, with semantic translation as fallback when no matching backend is available. Valid JSON may be reserialized." xml:space="preserve">
+    <value>Bu rotada bilinen hiçbir Chat alanı bilinçli olarak düşürülmez. Bilinmeyen/yalnızca Chat alanları bir Chat Completions arka ucunu tercih eder; eşleşen bir arka uç yoksa geri dönüş olarak anlamsal çeviri kullanılır. Geçerli JSON yeniden serileştirilebilir.</value>
+  </data>
+  <data name="No known Ollama field is intentionally dropped on this route. Unknown fields make an Ollama-native backend preferred; if none is available, the request may use a documented translated subset. Valid JSON may be reserialized." xml:space="preserve">
+    <value>Bu yolda bilinen hiçbir Ollama alanı bilinçli olarak düşürülmez. Bilinmeyen alanlar, Ollama yerel bir arka uçun tercih edilmesini sağlar; böyle bir arka uç mevcut değilse, istek belgelenmiş bir çevrilmiş alt küme kullanabilir. Geçerli JSON yeniden serileştirilebilir.</value>
+  </data>
+  <data name="No upstream call" xml:space="preserve">
+    <value>Yukarı yönlü çağrı yok</value>
   </data>
   <data name="Not supported" xml:space="preserve">
     <value>Desteklenmiyor</value>
@@ -717,11 +933,23 @@
   <data name="Ollama → OpenAI" xml:space="preserve">
     <value>Ollama → OpenAI</value>
   </data>
+  <data name="Ollama &lt;code&gt;input&lt;/code&gt; or legacy &lt;code&gt;prompt&lt;/code&gt; becomes OpenAI &lt;code&gt;input&lt;/code&gt;; OpenAI &lt;code&gt;data[].embedding&lt;/code&gt; is reconstructed as Ollama &lt;code&gt;embeddings[]&lt;/code&gt;." xml:space="preserve">
+    <value>Ollama &lt;code&gt;input&lt;/code&gt; veya eski &lt;code&gt;prompt&lt;/code&gt; alanı, OpenAI &lt;code&gt;input&lt;/code&gt; alanına dönüşür; OpenAI &lt;code&gt;data[].embedding&lt;/code&gt; değeri, Ollama &lt;code&gt;embeddings[]&lt;/code&gt; olarak yeniden oluşturulur.</value>
+  </data>
+  <data name="Ollama &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, &lt;code&gt;keep_alive&lt;/code&gt;, and boolean &lt;code&gt;think&lt;/code&gt; are not encoded into Responses. Responses-native tools cannot be requested from the Ollama dialect." xml:space="preserve">
+    <value>Ollama &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, &lt;code&gt;keep_alive&lt;/code&gt; ve boolean &lt;code&gt;think&lt;/code&gt; değerleri Responses&apos;a kodlanmaz. Responses-yerel araçlar Ollama diyalektinden istenemez.</value>
+  </data>
   <data name="Ollama Backend" xml:space="preserve">
     <value>Ollama Backend</value>
   </data>
+  <data name="Ollama Chat client routes" xml:space="preserve">
+    <value>Ollama Chat istemci rotaları</value>
+  </data>
   <data name="Ollama Client" xml:space="preserve">
     <value>Ollama Client</value>
+  </data>
+  <data name="Ollama embedding input" xml:space="preserve">
+    <value>Ollama gömme girişi</value>
   </data>
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: Yerel Ollama&apos;nızı kurumsal düzeyde API kimlik doğrulama, istek denetimi ve sanal model yönetimi ile güçlendirin—güvenli, özel AI geçidiniz.</value>
@@ -729,11 +957,29 @@
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: Yerel Ollama&apos;nızı kurumsal düzeyde API kimlik doğrulama, istek denetimi, hız sınırlama ve sanal model yönetimi ile güçlendirin—güvenli, özel AI geçidiniz.</value>
   </data>
+  <data name="Ollama generate JSON/NDJSON is forwarded in the same dialect; model identity, answer text, finish data, and usage are observed and the virtual model name is restored." xml:space="preserve">
+    <value>Ollama generate JSON/NDJSON aynı diyalekte iletilir; model kimliği, yanıt metni, bitirme verileri ve kullanım gözlemlenir ve sanal model adı geri yüklenir.</value>
+  </data>
   <data name="Ollama images array is converted to OpenAI multimodal content parts (text + image_url with data URI)." xml:space="preserve">
     <value>Ollama görüntü dizisi, OpenAI çoklu ortam içerik parçalarına (metin + veri URI&apos;si ile image_url) dönüştürülür.</value>
   </data>
+  <data name="Ollama JSON/NDJSON stays in the native dialect; model identity, answer, finish data, and usage are observed and rewritten." xml:space="preserve">
+    <value>Ollama JSON/NDJSON yerel diyalekte kalır; model kimliği, yanıt, bitirme verisi ve kullanım gözlemlenir ve yeniden yazılır.</value>
+  </data>
+  <data name="Ollama Native only" xml:space="preserve">
+    <value>Sadece Ollama Yerli</value>
+  </data>
+  <data name="Ollama only" xml:space="preserve">
+    <value>Yalnızca Ollama</value>
+  </data>
+  <data name="Ollama-only embedding fields such as &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;truncate&lt;/code&gt;, &lt;code&gt;dimensions&lt;/code&gt; variants, and &lt;code&gt;keep_alive&lt;/code&gt; are not copied into the OpenAI request unless represented by the shared input." xml:space="preserve">
+    <value>&lt;code&gt;options&lt;/code&gt;, &lt;code&gt;truncate&lt;/code&gt;, &lt;code&gt;dimensions&lt;/code&gt; türevleri ve &lt;code&gt;keep_alive&lt;/code&gt; gibi yalnızca Ollama&apos;ya özgü gömme (embedding) alanları, paylaşılan girdi tarafından temsil edilmedikçe OpenAI isteğine kopyalanmaz.</value>
+  </data>
   <data name="Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently." xml:space="preserve">
     <value>Ollama&apos;ya özgü parametre. OpenAI, bunun yerine frequency_penalty ve presence_penalty&apos;yi doğrudan destekler ve bunlar bağımsız olarak iletilir.</value>
+  </data>
+  <data name="Ollama-type Provider" xml:space="preserve">
+    <value>Ollama türü Sağlayıcı</value>
   </data>
   <data name="Ollama." xml:space="preserve">
     <value>Ollama.</value>
@@ -753,6 +999,12 @@
   <data name="OllamaGateway High Availability Routing" xml:space="preserve">
     <value>OllamaGateway Yüksek Erişilebilirlik Yönlendirmesi</value>
   </data>
+  <data name="OllamaGateway in Docker" xml:space="preserve">
+    <value>Docker&apos;da OllamaGateway</value>
+  </data>
+  <data name="OllamaGateway main screenshot" xml:space="preserve">
+    <value>OllamaGateway ana ekran görüntüsü</value>
+  </data>
   <data name="OllamaGateway seamlessly connects your local Ollama capabilities to professional AI development tools. Whether you are using Claude Code, Opencode or Qwen Code, you can now leverage your own hardware for automated coding and development tasks—all verified and officially supported by our team." xml:space="preserve">
     <value>OllamaGateway, yerel Ollama yeteneklerinizi profesyonel AI geliştirme araçlarıyla sorunsuz şekilde bağlar. Claude Code, Opencode veya Qwen Code kullanıyor olun, artık otomatik kodlama ve geliştirme görevleri için kendi donanımınızı kullanabilirsiniz—hepsi ekibimiz tarafından doğrulanmış ve resmi olarak desteklenmektedir.</value>
   </data>
@@ -765,6 +1017,15 @@
   <data name="One Click Start" xml:space="preserve">
     <value>Bir Tıkla Başlat</value>
   </data>
+  <data name="Only gateway-owned fields are rewritten: virtual model → physical model upstream, physical model → virtual model downstream; &lt;code&gt;stream&lt;/code&gt; is normalized; missing &lt;code&gt;keep_alive&lt;/code&gt; receives the request/provider default." xml:space="preserve">
+    <value>Yalnızca geçit (gateway) tarafından sahip olunan alanlar yeniden yazılır: sanal model → fiziksel model (yukarı akış), fiziksel model → sanal model (aşağı akış); &lt;code&gt;stream&lt;/code&gt; normalize edilir; eksik &lt;code&gt;keep_alive&lt;/code&gt;, istek/sağlayıcı varsayılanını alır.</value>
+  </data>
+  <data name="Only model identity, stream intent, and configured VM options are gateway-owned. Upstream physical model names are replaced with the virtual model in response objects and events." xml:space="preserve">
+    <value>Yalnızca model kimliği, akış niyeti ve yapılandırılmış VM seçenekleri geçit (gateway) tarafından sahiplenilir. Yönlendirme (upstream) fiziksel model adları, yanıt nesnelerinde ve olaylarda sanal modelle değiştirilir.</value>
+  </data>
+  <data name="Only the selected route is shown" xml:space="preserve">
+    <value>Yalnızca seçilen rota gösterilir</value>
+  </data>
   <data name="Open Source" xml:space="preserve">
     <value>Açık Kaynak</value>
   </data>
@@ -774,17 +1035,44 @@
   <data name="OpenAI → OpenAI" xml:space="preserve">
     <value>OpenAI → OpenAI</value>
   </data>
+  <data name="OpenAI &lt;code&gt;input&lt;/code&gt; is sent as Ollama &lt;code&gt;input&lt;/code&gt;; &lt;code&gt;embeddings[]&lt;/code&gt; and &lt;code&gt;prompt_eval_count&lt;/code&gt; are reconstructed as OpenAI &lt;code&gt;data[]&lt;/code&gt; and &lt;code&gt;usage&lt;/code&gt;." xml:space="preserve">
+    <value>OpenAI &lt;code&gt;input&lt;/code&gt; değeri Ollama &lt;code&gt;input&lt;/code&gt; olarak gönderilir; &lt;code&gt;embeddings[]&lt;/code&gt; ve &lt;code&gt;prompt_eval_count&lt;/code&gt; alanları OpenAI &lt;code&gt;data[]&lt;/code&gt; ve &lt;code&gt;usage&lt;/code&gt; olarak yeniden oluşturulur.</value>
+  </data>
   <data name="OpenAI API Translation" xml:space="preserve">
     <value>OpenAI API Çevirisi</value>
   </data>
   <data name="OpenAI Backend" xml:space="preserve">
     <value>OpenAI Backend</value>
   </data>
+  <data name="OpenAI Chat Completions client routes" xml:space="preserve">
+    <value>OpenAI Chat Completions istemci rotaları</value>
+  </data>
   <data name="OpenAI Client" xml:space="preserve">
     <value>OpenAI Client</value>
   </data>
+  <data name="OpenAI content parts → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → boolean &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;." xml:space="preserve">
+    <value>OpenAI içerik parçaları → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → boolean &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;.</value>
+  </data>
+  <data name="OpenAI embedding extensions outside the shared input are not copied into the cross-dialect request or reconstructed response." xml:space="preserve">
+    <value>Ortak girdinin dışındaki OpenAI gömme (embedding) uzantıları, çapraz diyalekt isteğine veya yeniden oluşturulan yanıtına kopyalanmaz.</value>
+  </data>
+  <data name="OpenAI embedding input" xml:space="preserve">
+    <value>OpenAI gömme girdisi</value>
+  </data>
   <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
     <value>OpenAI çok modlu içerik dizisi çıkarılır: image_url verileri Ollama görseller dizisine gider, metin içerik haline gelir.</value>
+  </data>
+  <data name="OpenAI Responses client routes" xml:space="preserve">
+    <value>OpenAI Responses istemci rotaları</value>
+  </data>
+  <data name="OpenAI target fields &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_tokens&lt;/code&gt; use VM values when set. VM &lt;code&gt;Thinking&lt;/code&gt; overrides the translated client value." xml:space="preserve">
+    <value>OpenAI hedef alanları &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; ve &lt;code&gt;max_tokens&lt;/code&gt;, ayarlandığında VM değerlerini kullanır. VM &lt;code&gt;Thinking&lt;/code&gt;, çevrilmiş istemci değerini devre dışı bırakır.</value>
+  </data>
+  <data name="OpenAI-type Provider" xml:space="preserve">
+    <value>OpenAI türü Sağlayıcı</value>
+  </data>
+  <data name="Opencode and Qwen Code working with OllamaGateway" xml:space="preserve">
+    <value>OllamaGateway ile çalışan Opencode ve Qwen Code</value>
   </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>OpenID Connect Entegrasyonu</value>
@@ -828,6 +1116,15 @@
   <data name="Permission discovery and sync" xml:space="preserve">
     <value>İzin keşfi ve senkronizasyonu</value>
   </data>
+  <data name="Physical backend protocol" xml:space="preserve">
+    <value>Fiziksel arka uç protokolü</value>
+  </data>
+  <data name="Physical provider metadata is not proxied; Ollama runtime details are placeholders or omitted." xml:space="preserve">
+    <value>Fiziksel sağlayıcı meta verileri proxy edilmez; Ollama çalışma zamanı ayrıntıları yer tutuculardır veya atlanır.</value>
+  </data>
+  <data name="Policy and implementation" xml:space="preserve">
+    <value>Politika ve uygulama</value>
+  </data>
   <data name="Pre-configured and tested" xml:space="preserve">
     <value>Ön yapılandırılmış ve test edilmiş</value>
   </data>
@@ -837,8 +1134,23 @@
   <data name="Pre-configured pipelines for dev/prod" xml:space="preserve">
     <value>Geliştirme/üretim için önceden yapılandırılmış boru hatları</value>
   </data>
+  <data name="Preserved" xml:space="preserve">
+    <value>Korunan</value>
+  </data>
+  <data name="Preserved / mapped" xml:space="preserve">
+    <value>Korunan / eşlenen</value>
+  </data>
   <data name="Private AI" xml:space="preserve">
     <value>Özel Yapay Zeka</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Sağlayıcı</value>
+  </data>
+  <data name="Provider adapter selection uses &lt;code&gt;ProviderType&lt;/code&gt;, not chat &lt;code&gt;BackendProtocol&lt;/code&gt;. No Ollama VM options are injected into an OpenAI embedding target." xml:space="preserve">
+    <value>Sağlayıcı uyarlayıcı seçimi sohbet &lt;code&gt;BackendProtocol&lt;/code&gt;&apos;ü değil, &lt;code&gt;ProviderType&lt;/code&gt;&apos;i kullanır. Bir OpenAI gömme hedefine Ollama VM seçenekleri enjekte edilmez.</value>
+  </data>
+  <data name="Provider type and backend protocol are separate. No physical Anthropic backend adapter exists today." xml:space="preserve">
+    <value>Sağlayıcı türü ve arka uç protokolü ayrıdır. Bugün fiziksel bir Anthropic arka uç adaptörü mevcut değildir.</value>
   </data>
   <data name="Quality Gate" xml:space="preserve">
     <value>Kalite Kapısı</value>
@@ -855,11 +1167,23 @@
   <data name="Recommended Models" xml:space="preserve">
     <value>Önerilen Modeller</value>
   </data>
+  <data name="Remote image URLs are not a portable Ollama-native contract; base64 is the verified path. Thinking signatures are discarded. Unknown content blocks remain a hard rejection; unknown top-level controls are omitted when this translated fallback is used." xml:space="preserve">
+    <value>Uzak görüntü URL&apos;leri taşınabilir bir Ollama yerel sözleşmesi değildir; base64 doğrulanmış yoldur. Düşünce imzaları atılır. Bilinmeyen içerik blokları kesin bir reddi korur; bu çevrilmiş yedek yol kullanıldığında bilinmeyen üst düzey denetimler atlanır.</value>
+  </data>
+  <data name="Remote image URLs have no portable Ollama-native representation; base64/data-URI is the verified conversion. Chat-only controls such as penalties/logprobs/seed prefer a Chat backend and are omitted when Ollama is the only eligible route." xml:space="preserve">
+    <value>Uzak görüntü URL&apos;lerinin taşınabilir bir Ollama yerel karşılığı yoktur; base64/data-URI doğrulanmış dönüşümdür. Cezalar/logprobs/seed gibi yalnızca Sohbet&apos;e özgü denetimler bir Sohbet arka ucunu tercih eder ve Ollama tek uygun yol olduğunda atlanır.</value>
+  </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Tekrar Cezası</value>
   </data>
   <data name="Request &amp; Response Auditing" xml:space="preserve">
     <value>İstek &amp; Yanıt Denetimi</value>
+  </data>
+  <data name="Requester&apos;s API" xml:space="preserve">
+    <value>İsteminin API&apos;si</value>
+  </data>
+  <data name="requires a Responses-capable provider" xml:space="preserve">
+    <value>Responses yetenekli bir sağlayıcı gerektirir</value>
   </data>
   <data name="Requires Laravel Socialite config" xml:space="preserve">
     <value>Laravel Socialite yapılandırması gerektirir</value>
@@ -875,6 +1199,15 @@
   </data>
   <data name="Robust Integration Testing" xml:space="preserve">
     <value>Güçlü Entegrasyon Testi</value>
+  </data>
+  <data name="Roles, text, system/developer instructions, images, function tools, function calls/results, temperature, top-p, token limit, structured format, stream, reasoning output, finish state, and usage." xml:space="preserve">
+    <value>Roller, metin, sistem/geliştirici talimatları, görseller, işlev araçları, işlev çağrıları/sonuçları, sıcaklık, top-p, jeton sınırı, yapılandırılmış biçim, akış, akıl yürütme çıktısı, bitiş durumu ve kullanım.</value>
+  </data>
+  <data name="Roles/text, data-URI images, function tools/calls/results, temperature, top-p, token limit, reasoning text, structured output intent, stream, finish reason, and usage." xml:space="preserve">
+    <value>Roller/metin, data-URI görüntüleri, fonksiyon araçları/çağrıları/sonuçları, sıcaklık, top-p, jeton sınırı, akıl yürütme metni, yapılandırılmış çıktı niyeti, akış, bitiş nedeni ve kullanım.</value>
+  </data>
+  <data name="Roles/text, images, function tools/calls/results, temperature, top-p, maximum output tokens, reasoning effort/output, structured output, streaming, finish reason, and usage." xml:space="preserve">
+    <value>Roller/metin, görseller, işlev araçları/çağrıları/sonuçları, sıcaklık, top-p, maksimum çıktı jetonları, akıl yürütme çabası/çıktısı, yapılandırılmış çıktı, akış (streaming), bitiş nedeni ve kullanım.</value>
   </data>
   <data name="Runs without any internet connection required." xml:space="preserve">
     <value>Herhangi bir internet bağlantısına gerek kalmadan çalışır.</value>
@@ -893,6 +1226,12 @@
   </data>
   <data name="Security and Auditing by Design." xml:space="preserve">
     <value>Tasarım Güvenliği ve Denetim</value>
+  </data>
+  <data name="Select backend protocol" xml:space="preserve">
+    <value>Arka uç protokolünü seçin</value>
+  </data>
+  <data name="Select requester API" xml:space="preserve">
+    <value>İstemi API seçin</value>
   </data>
   <data name="Shift with confidence" xml:space="preserve">
     <value>Güvenle geçiş yapın</value>
@@ -939,6 +1278,15 @@
   <data name="Starts without any configuration" xml:space="preserve">
     <value>Hiç yapılandırma gerektirmeden başlar</value>
   </data>
+  <data name="state-aware" xml:space="preserve">
+    <value>durum farkında</value>
+  </data>
+  <data name="State/background requests require a Responses backend. Native Responses tools and unknown Items also require Responses. Metadata and unknown top-level controls prefer Responses and are omitted on fallback. Responses-only annotations/citations cannot be recreated from Chat output." xml:space="preserve">
+    <value>Durum/arka plan istekleri bir Responses arka ucunu gerektirir. Yerel Responses araçları ve bilinmeyen Öğeler de Responses gerektirir. Meta veriler ve bilinmeyen üst düzey denetimler Responses&apos;u tercih eder ve yedekte atlanır. Yalnızca Responses&apos;ta olan açıklamalar/alıntılar, Chat çıktısından yeniden oluşturulamaz.</value>
+  </data>
+  <data name="Stateful controls pass through to native Responses providers and are never silently translated." xml:space="preserve">
+    <value>Durumlu kontroller, yerel Responses sağlayıcılarına doğrudan iletilir ve asla sessizce çevrilmez.</value>
+  </data>
   <data name="Stop Coding Boilerplate." xml:space="preserve">
     <value>Kodlama Şablonlarından Vazgeçin.</value>
   </data>
@@ -975,6 +1323,24 @@
   <data name="Supports JetBrains Rider for easy code style fixes." xml:space="preserve">
     <value>JetBrains Rider destekler, kolay kod stili düzeltmeleri için.</value>
   </data>
+  <data name="System → &lt;code&gt;instructions&lt;/code&gt;; messages/images → Responses input Items; Anthropic tools → Responses function tools; named tool choice → Responses &lt;code&gt;name&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; Responses reasoning/text/function output → Anthropic blocks." xml:space="preserve">
+    <value>Sistem → &lt;code&gt;instructions&lt;/code&gt;; mesajlar/görseller → Responses girdi öğeleri; Anthropic araçları → Responses işlev araçları; adlandırılmış araç seçimi → Responses &lt;code&gt;name&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; Responses akıl yürütme/metin/işlev çıktısı → Anthropic blokları.</value>
+  </data>
+  <data name="System instructions, text, base64/URL images, function tools/calls/results, tool choice, temperature, top-p, max tokens, response reasoning text, stream, finish state, and usage." xml:space="preserve">
+    <value>Sistem talimatları, metin, base64/URL görüntüleri, işlev araçları/çağrıları/sonuçları, araç seçimi, sıcaklık, top-p, maksimum token, yanıt akıl yürütme metni, akış, bitiş durumu ve kullanım.</value>
+  </data>
+  <data name="System messages → &lt;code&gt;instructions&lt;/code&gt;; messages → Responses &lt;code&gt;input&lt;/code&gt; Items; images → &lt;code&gt;input_image&lt;/code&gt;; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;; function tool shapes are flattened." xml:space="preserve">
+    <value>Sistem mesajları → &lt;code&gt;instructions&lt;/code&gt;; mesajlar → Responses &lt;code&gt;input&lt;/code&gt; öğeleri; görseller → &lt;code&gt;input_image&lt;/code&gt;; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;; işlev aracı yapıları düzleştirilir.</value>
+  </data>
+  <data name="System text, message text, base64 images, tool definitions, &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt;, tool choice modes, temperature, top-p, max tokens, visible reasoning text, stream, finish reason, and usage." xml:space="preserve">
+    <value>Sistem metni, mesaj metni, base64 görüntüler, araç tanımları, &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt;, araç seçim modları, sıcaklık, top-p, en yüksek token sayısı, görünür akıl yürütme metni, akış, bitiş nedeni ve kullanım.</value>
+  </data>
+  <data name="System/developer messages → &lt;code&gt;instructions&lt;/code&gt;; messages → &lt;code&gt;input&lt;/code&gt; Items; function schemas are flattened; named &lt;code&gt;tool_choice.function.name&lt;/code&gt; → Responses &lt;code&gt;tool_choice.name&lt;/code&gt;; &lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;." xml:space="preserve">
+    <value>Sistem/geliştirici mesajları → &lt;code&gt;instructions&lt;/code&gt;; mesajlar → &lt;code&gt;input&lt;/code&gt; Öğeleri; işlev şemaları düzleştirilir; adlandırılmış &lt;code&gt;tool_choice.function.name&lt;/code&gt; → Responses &lt;code&gt;tool_choice.name&lt;/code&gt;; &lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;.</value>
+  </data>
+  <data name="System/messages, text, base64 and URL images, function tools/calls/results, tool choice, temperature, top-p, max tokens, reasoning text, stream, finish reason, and usage." xml:space="preserve">
+    <value>Sistem/mesajlar, metin, base64 ve URL görüntüleri, fonksiyon araçları/çağrıları/sonuçları, araç seçimi, sıcaklık, top-p, en fazla jeton, akıl yürütme metni, akış, bitirme nedeni ve kullanım.</value>
+  </data>
   <data name="Task Runner" xml:space="preserve">
     <value>Görev Çalıştırıcı</value>
   </data>
@@ -987,14 +1353,38 @@
   <data name="The definitive, battle-tested .NET enterprise foundation. From Auth to AI, we&apos;ve solved the hard parts so you don&apos;t have to." xml:space="preserve">
     <value>Kesin, savaştan sıyrılmış .NET enterprise temeli. Kimlik doğrulamadan yapay zekâya kadar, zor kısımları çözdük, sizin için yapmanıza gerek kalmadı.</value>
   </data>
+  <data name="The gateway decodes both sides through its canonical chat model. Only semantics representable by the target protocol can cross this route." xml:space="preserve">
+    <value>Geçit, her iki tarafı da kanonik sohbet modeli aracılığıyla çözer. Yalnızca hedef protokol tarafından temsil edilebilen anlambilim bu güzergahtan geçebilir.</value>
+  </data>
+  <data name="The gateway keeps the protocol shape and rewrites only gateway-owned values and configured policy fields." xml:space="preserve">
+    <value>Ağ geçidi protokol biçimini korur ve yalnızca ağ geçidine ait değerleri ile yapılandırılmış politika alanlarını yeniden yazar.</value>
+  </data>
   <data name="The navigation bar automatically adjusts based on user roles and permissions." xml:space="preserve">
     <value>Gezinme çubuğu, kullanıcı rollerine ve izinlerine göre otomatik olarak ayarlanır.</value>
+  </data>
+  <data name="The original request and successful response JSON are cloned; unknown fields are preserved; model identity is rewritten." xml:space="preserve">
+    <value>Orijinal istek ve başarılı yanıt JSON&apos;ları kopyalanır; bilinmeyen alanlar korunur; model kimliği yeniden yazılır.</value>
+  </data>
+  <data name="The original request and successful response JSON are cloned; unknown OpenAI embedding fields are preserved; only model identity is rewritten." xml:space="preserve">
+    <value>Orijinal istek ve başarılı yanıt JSON&apos;ı kopyalanır; bilinmeyen OpenAI gömme alanları korunur; yalnızca model kimliği yeniden yazılır.</value>
   </data>
   <data name="The Philosophy" xml:space="preserve">
     <value>Felsefe</value>
   </data>
+  <data name="The provider-level &lt;code&gt;keep_alive&lt;/code&gt; replaces the client value on this route." xml:space="preserve">
+    <value>Sağlayıcı düzeyindeki &lt;code&gt;keep_alive&lt;/code&gt;, bu yolda istemci değerinin yerini alır.</value>
+  </data>
+  <data name="The request adapter deep-clones the original Responses JSON. &lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt; preserves unknown output Items and SSE event names/data/comments/id/retry without passing the payload through canonical IL." xml:space="preserve">
+    <value>İstek adaptörü, orijinal Responses JSON&apos;unu derin klonlar. &lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt;, bilinmeyen çıktı Öğelerini ve SSE olay adlarını/verilerini/yorumlarını/id&apos;sini/yeniden denemesini, yükü standart IL&apos;den geçirmeden korur.</value>
+  </data>
   <data name="The template is built for easy deployment. It includes full Docker support, so you can containerize your app and run it anywhere. You can also deploy it directly to IIS, Azure App Service, or any server that supports ASP.NET Core." xml:space="preserve">
     <value>Şablon, kolay dağıtım için oluşturulmuştur. Tam Docker desteği içerir, böylece uygulamanızı konteynerleştirip her yerde çalıştırabilirsiniz. Ayrıca doğrudan IIS, Azure App Service veya ASP.NET Core destekleyen herhangi bir sunucuya dağıtabilirsiniz.</value>
+  </data>
+  <data name="There is no Chat Completions or Responses translation. A non-Ollama backend returns &lt;code&gt;501&lt;/code&gt;." xml:space="preserve">
+    <value>Chat Completions veya Responses çevirisi yoktur. Ollama dışı bir geri uç &lt;code&gt;501&lt;/code&gt; döndürür.</value>
+  </data>
+  <data name="These endpoints do not proxy physical provider metadata. Ollama size/digest/runtime details are placeholders or omitted." xml:space="preserve">
+    <value>Bu uç noktalar fiziksel sağlayıcı meta verilerini vekil olarak iletmemektedir. Ollama boyut/sağlama/çalışma zamanı ayrıntıları yer tutucular olarak bırakılır veya çıkarılır.</value>
   </data>
   <data name="Thinking" xml:space="preserve">
     <value>Düşünce</value>
@@ -1004,6 +1394,12 @@
   </data>
   <data name="Thinking Mode (DeepSeek)" xml:space="preserve">
     <value>Düşünme Modu (DeepSeek)</value>
+  </data>
+  <data name="Thinking signatures are discarded. Unknown content blocks remain a hard rejection. Anthropic-only top-level controls prefer a future Anthropic backend but are omitted when Chat is the only eligible route." xml:space="preserve">
+    <value>Düşünce imzaları yok sayılır. Bilinmeyen içerik blokları kesin bir reddi korur. Yalnızca Anthropic&apos;e özgü üst düzey kontroller gelecekteki bir Anthropic arka uçunu tercih eder, ancak Chat tek uygun yol olduğunda bunlar atılır.</value>
+  </data>
+  <data name="This avoids recursive upstream discovery when a Provider points back to the gateway and keeps the public catalog scoped to virtual models." xml:space="preserve">
+    <value>Bu, bir Sağlayıcının (Provider) kendisini yönlendirdiği durumlarda geriye dönük keşfi önler ve genel kataloğu sanal modellere odaklar.</value>
   </data>
   <data name="This is a template project" xml:space="preserve">
     <value>Bu bir şablon projedir</value>
@@ -1017,8 +1413,26 @@
   <data name="Timezone-aware fields" xml:space="preserve">
     <value>Zaman dilimi farkındalığına sahip alanlar</value>
   </data>
+  <data name="Translated" xml:space="preserve">
+    <value>Çevrildi</value>
+  </data>
+  <data name="Translated subset" xml:space="preserve">
+    <value>Çevrilmiş alt küme</value>
+  </data>
+  <data name="Translated through semantic layer" xml:space="preserve">
+    <value>Anlamsal katman üzerinden çevrildi</value>
+  </data>
+  <data name="Transparent" xml:space="preserve">
+    <value>Şeffaf</value>
+  </data>
+  <data name="Transparent, state-aware" xml:space="preserve">
+    <value>Şeffaf, durum farkında</value>
+  </data>
   <data name="Trusted by production-grade applications including AnduinOS, StatHub, and Warp. We don&apos;t just share this code; we run our entire business on it." xml:space="preserve">
     <value>AnduinOS, StatHub ve Warp gibi üretim düzeyindeki uygulamalar tarafından güvenilir. Sadece bu kodu paylaşmakla kalmıyoruz; tamamen bu kodla işimizi yürütüyoruz.</value>
+  </data>
+  <data name="Two client dialects × two Provider types" xml:space="preserve">
+    <value>İki istemci diyalekti × iki sağlayıcı türü</value>
   </data>
   <data name="Unified Env" xml:space="preserve">
     <value>Birleşik Ortam</value>
@@ -1028,6 +1442,15 @@
   </data>
   <data name="Universal API Compatibility" xml:space="preserve">
     <value>Evrensel API Uyumluluğu</value>
+  </data>
+  <data name="Unknown request fields, &lt;code&gt;messages&lt;/code&gt;, &lt;code&gt;tools&lt;/code&gt;, &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;format&lt;/code&gt;, and unknown JSON response fields are retained. Malformed upstream NDJSON records are forwarded raw." xml:space="preserve">
+    <value>Bilinmeyen istek alanları, &lt;code&gt;messages&lt;/code&gt;, &lt;code&gt;tools&lt;/code&gt;, &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;format&lt;/code&gt; ve bilinmeyen JSON yanıt alanları korunur. Biçimi bozuk üst akış NDJSON kayıtları olduğu gibi iletir.</value>
+  </data>
+  <data name="Unknown request fields, message/content extensions, &lt;code&gt;response_format&lt;/code&gt;, &lt;code&gt;reasoning_effort&lt;/code&gt;, vendor fields, unknown response fields, null values, and unrecognized SSE lines remain in the Chat dialect." xml:space="preserve">
+    <value>Bilinmeyen istek alanları, mesaj/içerik genişletmeleri, &lt;code&gt;response_format&lt;/code&gt;, &lt;code&gt;reasoning_effort&lt;/code&gt;, sağlayıcı alanları, bilinmeyen yanıt alanları, null değerler ve tanınmayan SSE satırları Chat diyalektinde kalır.</value>
+  </data>
+  <data name="Unknown top-level and nested request fields, native tools, metadata, future Items, annotations, citations, unknown response fields, future SSE event types, and JSON/non-JSON event data are retained." xml:space="preserve">
+    <value>Bilinmeyen üst düzey ve iç içe istek alanları, yerel araçlar, metadata, gelecekteki Items, açıklamalar, alıntılar, bilinmeyen yanıt alanları, gelecekteki SSE olay türleri ve JSON/JSON dışı olay verileri korunur.</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>Kullanım</value>
@@ -1052,6 +1475,39 @@
   </data>
   <data name="Virtual Models" xml:space="preserve">
     <value>Sanal Modeller</value>
+  </data>
+  <data name="Virtual-model names and gateway-owned metadata are rendered directly in the requested client shape." xml:space="preserve">
+    <value>Sanal model adları ve ağ geçidi tarafından sağlanan üst veriler, istenen istemci biçiminde doğrudan oluşturulur.</value>
+  </data>
+  <data name="VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are injected into Ollama &lt;code&gt;options&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt; ve &lt;code&gt;RepeatPenalty&lt;/code&gt;, Ollama &lt;code&gt;options&lt;/code&gt; alanına enjekte edilir.</value>
+  </data>
+  <data name="VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; hard-override Ollama &lt;code&gt;options&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt; ve &lt;code&gt;RepeatPenalty&lt;/code&gt;, Ollama &lt;code&gt;options&lt;/code&gt; değerlerini zorla yazar.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override Chat target controls; Chat-only VM thinking is injected through &lt;code&gt;chat_template_kwargs&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt; ve &lt;code&gt;Thinking&lt;/code&gt;, Chat hedef denetimlerini geçersiz kılar; yalnızca Chat için olan VM düşünme özelliği &lt;code&gt;chat_template_kwargs&lt;/code&gt; üzerinden enjekte edilir.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override Chat target fields. Ollama-only DB sampling/context controls do not apply to Chat." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt; ve &lt;code&gt;Thinking&lt;/code&gt; alanları, Chat hedef alanlarının üzerine yazar. Sadece Ollama&apos;ya özgü DB örneklem/bağlam kontrolleri Chat için geçerli değildir.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override their target fields. Existing nested &lt;code&gt;chat_template_kwargs&lt;/code&gt; members are preserved around &lt;code&gt;enable_thinking&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt; ve &lt;code&gt;Thinking&lt;/code&gt; değerleri hedef alanlarını geçersiz kılar. &lt;code&gt;enable_thinking&lt;/code&gt; alanının etrafındaki mevcut iç içe geçmiş &lt;code&gt;chat_template_kwargs&lt;/code&gt; üyeleri korunur.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other nested Responses fields remain untouched." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; ve &lt;code&gt;NumPredict&lt;/code&gt;, &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; ve &lt;code&gt;max_output_tokens&lt;/code&gt; alanlarını geçersiz kılar. Diğer iç içe Responses alanları değiştirilmeden kalır.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other VM sampling fields are not applicable." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; ve &lt;code&gt;NumPredict&lt;/code&gt; alanları &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; ve &lt;code&gt;max_output_tokens&lt;/code&gt; değerlerini üzerine yazar. Diğer VM örneklem alanları geçerli değildir.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; ve &lt;code&gt;NumPredict&lt;/code&gt; alanları, Responses alanlarını geçersiz kılar. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt; ve &lt;code&gt;RepeatPenalty&lt;/code&gt; için Responses hedef alanı yoktur.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; ve &lt;code&gt;NumPredict&lt;/code&gt;, Responses hedef alanlarını yazar. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt; ve &lt;code&gt;RepeatPenalty&lt;/code&gt; Responses denetimleri değildir.</value>
+  </data>
+  <data name="VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
+    <value>VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict ve RepeatPenalty isteği üst yazar; eksik &lt;code&gt;keep_alive&lt;/code&gt; değeri, Sağlayıcı değerini kullanır.</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>Hoş Geldiniz</value>
