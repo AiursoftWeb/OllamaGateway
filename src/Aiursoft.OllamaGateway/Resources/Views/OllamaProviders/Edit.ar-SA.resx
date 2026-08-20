@@ -27,6 +27,12 @@
   <data name="(5 minutes)," xml:space="preserve">
     <value>(5 دقائق)،</value>
   </data>
+  <data name="(Chat Completions)" xml:space="preserve">
+    <value>(إكمال المحادثة)</value>
+  </data>
+  <data name="(Responses)" xml:space="preserve">
+    <value>(الاستجابات)</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= الإبقاء دائمًا.</value>
   </data>
@@ -35,6 +41,9 @@
   </data>
   <data name="Advanced Warmup Options" xml:space="preserve">
     <value>خيارات التسخين المتقدم</value>
+  </data>
+  <data name="An error occurred. Please check the browser console." xml:space="preserve">
+    <value>حدث خطأ. يرجى التحقق من وحدة تحكم المتصفح.</value>
   </data>
   <data name="Back to List" xml:space="preserve">
     <value>العودة إلى القائمة</value>
@@ -45,14 +54,23 @@
   <data name="Bearer Token" xml:space="preserve">
     <value>رمز المصادقة</value>
   </data>
+  <data name="Connecting..." xml:space="preserve">
+    <value>جارٍ الاتصال...</value>
+  </data>
   <data name="Connection Test" xml:space="preserve">
     <value>اختبار الاتصال</value>
+  </data>
+  <data name="Context size" xml:space="preserve">
+    <value>حجم السياق</value>
   </data>
   <data name="Controls how long models stay in memory after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep forever." xml:space="preserve">
     <value>يتحكم في المدة التي تظل فيها النماذج في الذاكرة بعد طلب معين. بتنسيق Ollama (مثل &apos;5m&apos;، &apos;1h&apos;، &apos;24h&apos;). استخدم &apos;0&apos; لفك التحميل فورًا، أو &apos;-1&apos; للاحتفاظ بها للأبد.</value>
   </data>
   <data name="Controls how long the AI model weights stay loaded in GPU VRAM after a request. Ollama format (e.g., &apos;5m&apos;, &apos;1h&apos;, &apos;24h&apos;). Use &apos;0&apos; to unload immediately, or &apos;-1&apos; to keep in VRAM forever." xml:space="preserve">
     <value>يتحكم في مدة بقاء أوزان نموذج الذكاء الاصطناعي محمّلة في ذاكرة الوصول العشوائي للوحدة المركزية للمعالج الرسومي (GPU VRAM) بعد الطلب. بتنسيق Ollama (مثال: &apos;5m&apos;، &apos;1h&apos;، &apos;24h&apos;). استخدم &apos;0&apos; لإلغاء التحميل فوراً، أو &apos;-1&apos; للحفاظ عليها في الذاكرة إلى الأبد.</value>
+  </data>
+  <data name="Ctx" xml:space="preserve">
+    <value>السياق</value>
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>لا تستخدم الثواني الخام مثل &apos;300&apos;. اكتب &apos;5m&apos; بدلاً من ذلك. يتم تجاهل التنسيقات غير الصالحة بصمت بواسطة Ollama.</value>
@@ -65,6 +83,15 @@
   </data>
   <data name="Embed" xml:space="preserve">
     <value>تضمين</value>
+  </data>
+  <data name="Embedding model" xml:space="preserve">
+    <value>نموذج التضمين</value>
+  </data>
+  <data name="Error: " xml:space="preserve">
+    <value>خطأ:</value>
+  </data>
+  <data name="Failed to toggle warmup. Please try again." xml:space="preserve">
+    <value>فشل في تبديل التسخين المسبق. يرجى المحاولة مرة أخرى.</value>
   </data>
   <data name="Health Check Timeout (s)" xml:space="preserve">
     <value>مهلة فحص الصحة (ثانية)</value>
@@ -83,6 +110,9 @@
   </data>
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>سياسة البقاء نشطًا</value>
+  </data>
+  <data name="Matching client protocols are forwarded directly. Other supported requests are translated." xml:space="preserve">
+    <value>تُمرَّر بروتوكولات العميل المطابقة مباشرةً. وتُترجم الطلبات المدعومة الأخرى.</value>
   </data>
   <data name="Max Concurrent Requests" xml:space="preserve">
     <value>أقصى عدد من الطلبات المتزامنة</value>
@@ -123,8 +153,17 @@
   <data name="Select physical models that should be proactively kept loaded in this provider&apos;s VRAM. The gateway will periodically ping these models to prevent them from being unloaded." xml:space="preserve">
     <value>حدد النماذج الفعلية التي يجب الاحتفاظ بها محملة بشكل استباقي في ذاكرة الفيديو (VRAM) الخاصة بهذا المزود. سيقوم البوابة بإرسال نبضات إلى هذه النماذج بشكل دوري لمنع تحميلها خارجًا.</value>
   </data>
+  <data name="Supported OpenAI generation protocols" xml:space="preserve">
+    <value>بروتوكولات التوليد المدعومة من OpenAI</value>
+  </data>
   <data name="Test Connection" xml:space="preserve">
     <value>اختبار الاتصال</value>
+  </data>
+  <data name="These values were inferred from legacy backend settings. Saving this provider makes them explicit." xml:space="preserve">
+    <value>تم استنتاج هذه القيم من إعدادات الخلفية القديمة. حفظ هذا المزوّد يجعلها صريحة.</value>
+  </data>
+  <data name="Timeout (s)" xml:space="preserve">
+    <value>مهلة الانتظار (ثوانٍ)</value>
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>اسم النموذج الأساسي</value>
@@ -134,6 +173,9 @@
   </data>
   <data name="Warmup is not applicable to OpenAI-compatible providers. The upstream service manages model loading automatically." xml:space="preserve">
     <value>لا ينطبق التسخين على مزودي واجهة OpenAI المتوافقة. تدير الخدمة العلوية تحميل النماذج تلقائيًا.</value>
+  </data>
+  <data name="Warmup timeout" xml:space="preserve">
+    <value>مهلة الإحماء</value>
   </data>
 
 </root>
