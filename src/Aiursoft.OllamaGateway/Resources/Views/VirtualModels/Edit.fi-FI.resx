@@ -42,6 +42,9 @@
   <data name="Back to List" xml:space="preserve">
     <value>Takaisin listaan</value>
   </data>
+  <data name="Banned (Till" xml:space="preserve">
+    <value>Kielletty (Asti</value>
+  </data>
   <data name="Configuration Guide:" xml:space="preserve">
     <value>Mukautusopas:</value>
   </data>
@@ -57,11 +60,17 @@
   <data name="Disabled" xml:space="preserve">
     <value>Ei käytössä</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Alas</value>
+  </data>
   <data name="Edit Virtual Model" xml:space="preserve">
     <value>Muokkaa virtuaalimallia</value>
   </data>
   <data name="Enabled" xml:space="preserve">
     <value>Käytössä</value>
+  </data>
+  <data name="Healthy" xml:space="preserve">
+    <value>Terve</value>
   </data>
   <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies. SUGGESTED VALUES: small models (≤8B, NVMe SSD) → 60–120s; large models (≥27B or HDD/NAS storage) → 600–1800s; embedding models → 30–60s." xml:space="preserve">
     <value>Kuinka kauan gateway odottaa backendin ALOITTAMAA vastaamista. Ei sisällä todennusta, nopeusrajoitusjonotusta tai samanaikaisuusajoneuvon odotusaikaa. Kun suoratoisto alkaa, aikarajoitetta ei ole. SUOSITELLUT ARVOT: pienet mallit (≤8B, NVMe SSD) → 60–120s; suuret mallit (≥27B tai HDD/NAS-tallennus) → 600–1800s; upotusmallit → 30–60s.</value>
@@ -93,11 +102,20 @@
   <data name="Optional Overrides" xml:space="preserve">
     <value>Valinnaiset ohitukset</value>
   </data>
+  <data name="Preferred Backend Protocol" xml:space="preserve">
+    <value>Suositeltu backend-protokolla</value>
+  </data>
+  <data name="Preferred Protocol" xml:space="preserve">
+    <value>Suosittu protokolla</value>
+  </data>
   <data name="Priority" xml:space="preserve">
     <value>Tärkeys</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>Toimittaja</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Valmis</value>
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Toistopekka</value>
