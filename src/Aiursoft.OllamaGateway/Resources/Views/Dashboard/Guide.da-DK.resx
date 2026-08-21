@@ -21,8 +21,14 @@
       <data name="(fallback)" xml:space="preserve">
     <value>(fallback)</value>
   </data>
+  <data name="/api/ps: 3 s · /api/version: 5 s · /v1/models: 10 s. UI-only; no health state is persisted." xml:space="preserve">
+    <value>/api/ps: 3 s · /api/version: 5 s · /v1/models: 10 s. Kun til UI; ingen sundhedsstatus gemmes.</value>
+  </data>
   <data name="1. Client Request" xml:space="preserve">
     <value>1. Klientanmodning</value>
+  </data>
+  <data name="2 provider types ≠ 3 wire protocols" xml:space="preserve">
+    <value>2 provider-typer ≠ 3 wire-protokoller</value>
   </data>
   <data name="2. Authentication &amp; Rate Limiting" xml:space="preserve">
     <value>2. Godkendelse og hastighedsbegrænsning</value>
@@ -42,11 +48,26 @@
   <data name="7. Observability Pipeline — Dual Logging &amp; Usage Tracking" xml:space="preserve">
     <value>7. Observerbarheds-pipeline — Dobbelt logning og brugsregistrering</value>
   </data>
+  <data name="active" xml:space="preserve">
+    <value>active</value>
+  </data>
+  <data name="After response headers:" xml:space="preserve">
+    <value>Efter responsheaders:</value>
+  </data>
+  <data name="after slot acquired" xml:space="preserve">
+    <value>efter slot er anskaffet</value>
+  </data>
   <data name="Any OpenAI-compatible or Ollama-native client sends a request." xml:space="preserve">
     <value>Enhver OpenAI-kompatibel eller Ollama-native klient sender en anmodning.</value>
   </data>
+  <data name="API key · virtual model · underlying model" xml:space="preserve">
+    <value>API-nøgle · virtuel model · underliggende model</value>
+  </data>
   <data name="API Key Verification" xml:space="preserve">
     <value>API-nøgleverifikation</value>
+  </data>
+  <data name="API keys" xml:space="preserve">
+    <value>API-nøgler</value>
   </data>
   <data name="Architecture Guide" xml:space="preserve">
     <value>Arkitekturguide</value>
@@ -54,8 +75,35 @@
   <data name="attempts and" xml:space="preserve">
     <value>forsøg og</value>
   </data>
+  <data name="AUDIT EVENTS" xml:space="preserve">
+    <value>REVISIONSHENDELSE</value>
+  </data>
+  <data name="Auth + Rate Limit" xml:space="preserve">
+    <value>Autentificering + Ratebegrænsning</value>
+  </data>
   <data name="Authentication &amp; API key validation" xml:space="preserve">
     <value>Godkendelse og validering af API-nøgle</value>
+  </data>
+  <data name="Authentication &amp; rate limit" xml:space="preserve">
+    <value>Autentificering og hastighedsbegrænsning</value>
+  </data>
+  <data name="Authentication and per-key rate-limit wait" xml:space="preserve">
+    <value>Autentificering og ventetid for ratebegrænsning pr. nøgle</value>
+  </data>
+  <data name="Backend DNS, TCP handshake, and TLS" xml:space="preserve">
+    <value>Backend DNS, TCP-håndtryk og TLS</value>
+  </data>
+  <data name="Backend protocol" xml:space="preserve">
+    <value>Backend-protokol</value>
+  </data>
+  <data name="Backend protocol is selected per request and provider capability" xml:space="preserve">
+    <value>Backendprotokol valges pr. anmodning og udbyderfunktion</value>
+  </data>
+  <data name="Backend protocols" xml:space="preserve">
+    <value>Backend-protokoller</value>
+  </data>
+  <data name="Backend response" xml:space="preserve">
+    <value>Backendrespons</value>
   </data>
   <data name="Backends" xml:space="preserve">
     <value>Bagende systemer</value>
@@ -63,20 +111,47 @@
   <data name="Bearer token or x-api-key is validated." xml:space="preserve">
     <value>Bearer token eller x-api-key valideres.</value>
   </data>
+  <data name="Before model timeout" xml:space="preserve">
+    <value>Før modeltimeout</value>
+  </data>
   <data name="Both pipelines are fire-and-forget from the request hot-path. If ClickHouse is down or the buffer is full, requests still succeed — logs are simply dropped (DropWrite). The system never blocks a user request to write a log." xml:space="preserve">
     <value>Begge pipelines er fire-and-forget fra request-hot-paden. Hvis ClickHouse er nede eller bufferen er fuld, lykkes anmodninger stadig — logs droppes blot (DropWrite). Systemet blokerer aldrig en brugeranmodning for at skrive en log.</value>
+  </data>
+  <data name="Bounded Channel&lt;RequestLog&gt;: 10,000 entries" xml:space="preserve">
+    <value>Begrænset Channel&lt;RequestLog&gt;: 10.000 poster</value>
   </data>
   <data name="bounded to" xml:space="preserve">
     <value>begrænset til</value>
   </data>
+  <data name="Buffer" xml:space="preserve">
+    <value>Buffer</value>
+  </data>
+  <data name="Bulk update" xml:space="preserve">
+    <value>Batchopdatering</value>
+  </data>
   <data name="but no virtual model with that name and type &apos;Chat&apos; exists in the database." xml:space="preserve">
     <value>men der findes ingen virtuel model med det navn og typen &apos;Chat&apos; i databasen.</value>
+  </data>
+  <data name="Change default" xml:space="preserve">
+    <value>Ændr standard</value>
   </data>
   <data name="ClickHouse Log Pipeline" xml:space="preserve">
     <value>ClickHouse-logpipeline</value>
   </data>
+  <data name="Client Decoder" xml:space="preserve">
+    <value>Klientdekoder</value>
+  </data>
+  <data name="Client JSON" xml:space="preserve">
+    <value>Klient-JSON</value>
+  </data>
+  <data name="Cold-start model loading" xml:space="preserve">
+    <value>Koldstart-modelindlæsning</value>
+  </data>
   <data name="Configuration" xml:space="preserve">
     <value>Konfiguration</value>
+  </data>
+  <data name="CONFIGURATION REQUIRED" xml:space="preserve">
+    <value>KONFIGURATION PÅKRÆVET</value>
   </data>
   <data name="Control Plane" xml:space="preserve">
     <value>Kontrolplanen</value>
@@ -84,8 +159,20 @@
   <data name="Controls" xml:space="preserve">
     <value>Kontrollerer</value>
   </data>
+  <data name="Counted by the VM timeout" xml:space="preserve">
+    <value>Talt af VM-timeout</value>
+  </data>
+  <data name="Create chat model" xml:space="preserve">
+    <value>Opret chatmodel</value>
+  </data>
   <data name="create it here → New Virtual Model" xml:space="preserve">
     <value>opret det her → Ny virtuel model</value>
+  </data>
+  <data name="CROSS DIALECT" xml:space="preserve">
+    <value>Kryssedialekt</value>
+  </data>
+  <data name="CURRENT INSTANCE · LIVE" xml:space="preserve">
+    <value>AKTUEL INSTANS · LIVE</value>
   </data>
   <data name="Current Value" xml:space="preserve">
     <value>Nuværende værdi</value>
@@ -93,17 +180,56 @@
   <data name="Dashboard Plane" xml:space="preserve">
     <value>Dashboard-plan</value>
   </data>
+  <data name="Dashboard totals are DB-backed, with nominal ≤ 3 minute lag" xml:space="preserve">
+    <value>Dashboard-totaler er DB-baserede med nominelt ≤ 3 minutters forsinkelse</value>
+  </data>
   <data name="Data Plane" xml:space="preserve">
     <value>Dataplan</value>
+  </data>
+  <data name="Decoder" xml:space="preserve">
+    <value>Decoder</value>
+  </data>
+  <data name="Decoder → Event IR → Client Writer" xml:space="preserve">
+    <value>Decoder → Event IR → Client Writer</value>
+  </data>
+  <data name="Deep clone" xml:space="preserve">
+    <value>Dybk klon</value>
+  </data>
+  <data name="Default chat model is unavailable" xml:space="preserve">
+    <value>Standard chatmodel er utilgængelig</value>
   </data>
   <data name="Default Chat Model Not Found!" xml:space="preserve">
     <value>Standard chatmodel ikke fundet!</value>
   </data>
+  <data name="Default virtual model" xml:space="preserve">
+    <value>Standard virtuelt model</value>
+  </data>
+  <data name="Dialect contract" xml:space="preserve">
+    <value>Dialektkontrakt</value>
+  </data>
+  <data name="does not match a Chat virtual model in the database. Requests without an explicit model cannot be resolved." xml:space="preserve">
+    <value>svarede ikke til en Chat-virtuel model i databasen. Anmodninger uden en eksplicit model kan ikke løses.</value>
+  </data>
   <data name="drains buffer, batch-inserts into ClickHouse" xml:space="preserve">
     <value>tømmer bufferen, batch-indsætter i ClickHouse</value>
   </data>
+  <data name="DropWrite when full; enqueue never blocks the request" xml:space="preserve">
+    <value>DropWrite ved mæthed; enqueue blokerer aldrig anmodningen</value>
+  </data>
+  <data name="Dual observability pipeline" xml:space="preserve">
+    <value>Dobbelt observabilitetspipeline</value>
+  </data>
   <data name="Each API key has its own rate-limit window. Two modes:" xml:space="preserve">
     <value>Hver API-nøgle har sit eget hastighedsbegrænsningsvindue. To tilstande:</value>
+  </data>
+  <data name="Each eligible backend is attempted once before a second pass. Three consecutive failures activate the circuit breaker; a later success clears it." xml:space="preserve">
+    <value>Hver kvalificeret backend forsøges én gang, før der foretages en anden runde. Tre på hinanden følgende fejl aktiverer kredsløbsafbryderen; en senere succes nulstiller den.</value>
+  </data>
+  <data name="Embedding and non-chat APIs" xml:space="preserve">
+    <value>Embedding- og ikke-chat-API&apos;er</value>
+  </data>
+  <data name="Embeddings" xml:space="preserve">
+    <value>Embeddings</value>
   </data>
   <data name="entries, DropWrite when full" xml:space="preserve">
     <value>poster, DropWrite når fuld</value>
@@ -117,6 +243,15 @@
   <data name="Example" xml:space="preserve">
     <value>Eksempel</value>
   </data>
+  <data name="EXECUTION BOUNDARIES" xml:space="preserve">
+    <value>EKSEKVERINGSGRÆNSER</value>
+  </data>
+  <data name="Fallback budget for the current default model" xml:space="preserve">
+    <value>Fallbackbudget for the current default model</value>
+  </data>
+  <data name="Fallback per-model loading timeout. Native Ollama only; the background job runs every 5 minutes." xml:space="preserve">
+    <value>Reserve timeout til modelindlæsning. Kun for nativ Ollama; baggrundsjobbet køres hver 5. minut.</value>
+  </data>
   <data name="Fallback Timeline" xml:space="preserve">
     <value>Tidslinje for fallback</value>
   </data>
@@ -126,8 +261,29 @@
   <data name="Fix it here → Global Settings" xml:space="preserve">
     <value>Løs det her → Globale indstillinger</value>
   </data>
+  <data name="FIXED ARCHITECTURE CONTRACT" xml:space="preserve">
+    <value>FAST ARKITEKTURKONTRAKT</value>
+  </data>
+  <data name="Flush every 2 minutes in batches" xml:space="preserve">
+    <value>Udskriv hver 2. minut i partier</value>
+  </data>
+  <data name="Flush every 3 minutes" xml:space="preserve">
+    <value>Udløs hvert 3. minut</value>
+  </data>
+  <data name="Four independent timeout planes" xml:space="preserve">
+    <value>Fire uafhængige timeout-planer</value>
+  </data>
+  <data name="Gateway overrides" xml:space="preserve">
+    <value>Gateway-overridinger</value>
+  </data>
+  <data name="Gateway-owned responses expose virtual models and avoid recursive upstream discovery." xml:space="preserve">
+    <value>Gateway-ejede svarer udstiller virtuelle modeller og undgår rekursiv opstrømsopdagelse.</value>
+  </data>
   <data name="GPU processes tokens. Once loaded, subsequent requests skip loading → straight to inference." xml:space="preserve">
     <value>GPU&apos;en behandler tokens. Når modellen er indlæst, springer efterfølgende anmodninger indlæsningen over → direkte til inferens.</value>
+  </data>
+  <data name="Hang" xml:space="preserve">
+    <value>Afvent</value>
   </data>
   <data name="Hang mode" xml:space="preserve">
     <value>Ventetilstand</value>
@@ -135,8 +291,20 @@
   <data name="Hardcoded" xml:space="preserve">
     <value>Indkodet</value>
   </data>
+  <data name="Header timeout" xml:space="preserve">
+    <value>Header timeout</value>
+  </data>
   <data name="Health Check" xml:space="preserve">
     <value>Sundhedstjek</value>
+  </data>
+  <data name="health timeout" xml:space="preserve">
+    <value>sundhedstid</value>
+  </data>
+  <data name="Hot-path increment" xml:space="preserve">
+    <value>Hot-path-increment</value>
+  </data>
+  <data name="How a request flows through the Ollama Gateway — from client contract to selected backend protocol." xml:space="preserve">
+    <value>Sådan flyder en anmodning gennem Ollama Gateway — fra klientkontrakt til valgt backendprotokol.</value>
   </data>
   <data name="How a request flows through the Ollama Gateway — from client to backend" xml:space="preserve">
     <value>Sådan flyder en anmodning gennem Ollama Gateway — fra klient til backend</value>
@@ -159,8 +327,14 @@
   <data name="Immediately return HTTP 429." xml:space="preserve">
     <value>Returnér straks HTTP 429.</value>
   </data>
+  <data name="In-memory to relational DB" xml:space="preserve">
+    <value>Hukommelsebaseret til relationel DB</value>
+  </data>
   <data name="In-Memory Usage Tracking" xml:space="preserve">
     <value>Sporing af hukommelsesforbrug</value>
+  </data>
+  <data name="Inbound dialects" xml:space="preserve">
+    <value>Indgående dialekter</value>
   </data>
   <data name="Inference" xml:space="preserve">
     <value>Inference</value>
@@ -180,11 +354,17 @@
   <data name="Limit" xml:space="preserve">
     <value>Grænse</value>
   </data>
+  <data name="Live configuration" xml:space="preserve">
+    <value>Live konfiguration</value>
+  </data>
   <data name="Logs include: user, model, provider, tokens, latency, status code, conversation count" xml:space="preserve">
     <value>Logs indeholder: bruger, model, udbyder, tokens, latenstid, statuskode, samtaleantal</value>
   </data>
   <data name="Max" xml:space="preserve">
     <value>Max</value>
+  </data>
+  <data name="Max attempts" xml:space="preserve">
+    <value>Maks. forsøg</value>
   </data>
   <data name="Max Retries" xml:space="preserve">
     <value>Maks. gentagsforsøg</value>
@@ -195,11 +375,23 @@
   <data name="Model" xml:space="preserve">
     <value>Model</value>
   </data>
+  <data name="Model and capabilities" xml:space="preserve">
+    <value>Model og evner</value>
+  </data>
+  <data name="Model discovery" xml:space="preserve">
+    <value>Modelopdagelse</value>
+  </data>
   <data name="Model Loading" xml:space="preserve">
     <value>Modelindlæsning</value>
   </data>
   <data name="Model loading time (cold start on GPU)" xml:space="preserve">
     <value>Tid til modelindlæsning (kold start på GPU)</value>
+  </data>
+  <data name="Native Ollama only. A non-Ollama selected backend returns HTTP 501." xml:space="preserve">
+    <value>Kun native Ollama. Et valgt backend, der ikke er Ollama, returnerer HTTP 501.</value>
+  </data>
+  <data name="Native Responses" xml:space="preserve">
+    <value>Native Responses</value>
   </data>
   <data name="needs another 30 s to finish → completely fine ✅" xml:space="preserve">
     <value>behøver yderligere 30 s for at fuldføre → helt fint ✅</value>
@@ -210,8 +402,17 @@
   <data name="No concurrency limit — requests pass through immediately" xml:space="preserve">
     <value>Ingen samtidighedsbegrænsning — anmodninger går straks videre</value>
   </data>
+  <data name="No database write on every model request" xml:space="preserve">
+    <value>Ingen databasetskrivning ved hver modelanmodning</value>
+  </data>
+  <data name="No default chat virtual model is available." xml:space="preserve">
+    <value>Der er ingen standard chat-virtuel model tilgængelig.</value>
+  </data>
   <data name="No providers configured yet." xml:space="preserve">
     <value>Ingen udbydere konfigureret endnu.</value>
+  </data>
+  <data name="NON-BLOCKING HOT PATH" xml:space="preserve">
+    <value>NON-BLOKERENDE HOT PATH</value>
   </data>
   <data name="not found. Create it to see real configuration here." xml:space="preserve">
     <value>ikke fundet. Opret det for at se den faktiske konfiguration her.</value>
@@ -219,16 +420,55 @@
   <data name="NumCtx" xml:space="preserve">
     <value>NumCtx</value>
   </data>
+  <data name="Observability" xml:space="preserve">
+    <value>Observability</value>
+  </data>
+  <data name="Ollama model warmup" xml:space="preserve">
+    <value>Ollama-modelopvarmning</value>
+  </data>
+  <data name="Ollama uses its configured timeout for /api/tags and /api/ps. OpenAI /v1/models is fixed at 10 s." xml:space="preserve">
+    <value>Ollama bruger den konfigurerede tidsgrænse for /api/tags og /api/ps. OpenAI /v1/models er fastsat til 10 s.</value>
+  </data>
   <data name="Once the backend sends HTTP headers, the timeout is PASSED. The model can stream tokens for hours — only client disconnection stops it." xml:space="preserve">
     <value>Når backenden sender HTTP-headere, er timeout-perioden overstået. Modellen kan streame tokens i timevis — kun klientens afslutning af forbindelsen stopper den.</value>
+  </data>
+  <data name="One semantic core, protocol-aware edges" xml:space="preserve">
+    <value>Én semantisk kerne, protokolbevidste kanter</value>
+  </data>
+  <data name="Only shared semantics are translated. Wire extensions prefer a matching backend and fall back to the documented semantic subset; opaque content and unsupported stateful operations remain hard rejections." xml:space="preserve">
+    <value>Kun fælles semantik oversættes. Wire-udvidelser foretrækker en matchende backend og falder tilbage til det dokumenterede semantiske delmængde; uigennemsigtigt indhold og ikke-understøttede stateful operationer forbliver hårde afvisninger.</value>
+  </data>
+  <data name="Open Traffic Visualization" xml:space="preserve">
+    <value>Åbn trafikvisualisering</value>
+  </data>
+  <data name="OpenAI Responses state is preserved only on native Responses routes" xml:space="preserve">
+    <value>OpenAI Responses-tilstand bevares kun på native Responses-ruter</value>
   </data>
   <data name="or" xml:space="preserve">
     <value>eller</value>
   </data>
+  <data name="Original JSON" xml:space="preserve">
+    <value>Original JSON</value>
+  </data>
+  <data name="Outside the VM timeout" xml:space="preserve">
+    <value>Uden for VM-timeout</value>
+  </data>
   <data name="Per-Key Rate Limiter" xml:space="preserve">
     <value>Prøvebegrænsning pr. nøgle</value>
   </data>
+  <data name="Physical model" xml:space="preserve">
+    <value>Fysisk model</value>
+  </data>
+  <data name="Preserve protocol-specific payload" xml:space="preserve">
+    <value>Bevare protokolspecifikke payloads</value>
+  </data>
+  <data name="previous_response_id, conversation, store:true, and background:true pass through unchanged to Responses-capable providers; translated routes return an explicit 400 unsupported_feature." xml:space="preserve">
+    <value>previous_response_id, conversation, store:true og background:true går uændet videre til leverandører, der understøtter Responses; oversatte ruter returnerer en eksplicit 400 unsupported_feature.</value>
+  </data>
   <data name="Pri" xml:space="preserve">
+    <value>Prioritet</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
     <value>Prioritet</value>
   </data>
   <data name="processing" xml:space="preserve">
@@ -243,14 +483,44 @@
   <data name="Provider → Warmup Model → Timeout (s)" xml:space="preserve">
     <value>Udbyder → Opvarmningsmodel → Timeout (s)</value>
   </data>
+  <data name="Provider concurrency — live process state" xml:space="preserve">
+    <value>Udbyders samtidighed — live processtatus</value>
+  </data>
+  <data name="Provider concurrency queue wait" xml:space="preserve">
+    <value>Ventetid i providerens samtidighedskø</value>
+  </data>
   <data name="Provider concurrency slot queuing" xml:space="preserve">
     <value>Kødannelse for udbyders konkurrenceplads</value>
+  </data>
+  <data name="Provider health probes" xml:space="preserve">
+    <value>Provider-sundhedstjek</value>
+  </data>
+  <data name="Provider type: Ollama" xml:space="preserve">
+    <value>Udbydertype: Ollama</value>
+  </data>
+  <data name="Provider type: OpenAI" xml:space="preserve">
+    <value>Provider type: OpenAI</value>
+  </data>
+  <data name="Provider types" xml:space="preserve">
+    <value>Providertyper</value>
   </data>
   <data name="Queue until a slot opens — does NOT consume the virtual model timeout." xml:space="preserve">
     <value>Kø til en plads frigøres — bruger IKKE den virtuelle models timeout.</value>
   </data>
+  <data name="queue wait" xml:space="preserve">
+    <value>køvent</value>
+  </data>
+  <data name="Queue wait is outside the VM timeout" xml:space="preserve">
+    <value>Køventetid ligger uden for VM-timeout</value>
+  </data>
   <data name="Quick admin dashboard ping. Does NOT write to DB — UI-only." xml:space="preserve">
     <value>Hurtig admin-dashboard-ping. Skriver IKKE til DB — kun UI.</value>
+  </data>
+  <data name="Quick admin probes" xml:space="preserve">
+    <value>Hurtige administratorprober</value>
+  </data>
+  <data name="Rate queue → provider queue → upstream → response lifecycle" xml:space="preserve">
+    <value>Ratekø → udbyderkø → upstream → responslivscyklus</value>
   </data>
   <data name="Rate-limit queue waiting (Hang mode)" xml:space="preserve">
     <value>Køventen for hastighedsbegrænsning (Hang-tilstand)</value>
@@ -261,14 +531,71 @@
   <data name="Reads model weights from disk into GPU VRAM. 27GB on NVMe ≈ 5–15s; on HDD/NAS ≈ 3–10 min." xml:space="preserve">
     <value>Læser modelvægte fra disk til GPU VRAM. 27 GB på NVMe ≈ 5–15 s; på HDD/NAS ≈ 3–10 min.</value>
   </data>
+  <data name="Reconstruct client JSON or streaming events" xml:space="preserve">
+    <value>Genopbyg klient-JSON eller streaming-hændelser</value>
+  </data>
+  <data name="Reject" xml:space="preserve">
+    <value>Afvise</value>
+  </data>
   <data name="Reject mode" xml:space="preserve">
     <value>Afvis-tilstand</value>
+  </data>
+  <data name="Request IR" xml:space="preserve">
+    <value>Request IR</value>
+  </data>
+  <data name="Request Path" xml:space="preserve">
+    <value>Anmodningssti</value>
   </data>
   <data name="Request Timeout" xml:space="preserve">
     <value>Forespørgsels-timeout</value>
   </data>
+  <data name="Resolved AI request" xml:space="preserve">
+    <value>Løst AI-anmodning</value>
+  </data>
+  <data name="Resolver + Planner" xml:space="preserve">
+    <value>Resolver + Planner</value>
+  </data>
+  <data name="Response body after headers, streaming or buffered" xml:space="preserve">
+    <value>Responskrop efter headers, streaming eller bufferet</value>
+  </data>
+  <data name="Response-header deadline" xml:space="preserve">
+    <value>Deadline for response headers</value>
+  </data>
+  <data name="Return HTTP 429 immediately." xml:space="preserve">
+    <value>Returnér HTTP 429 med det samme.</value>
+  </data>
   <data name="runs every" xml:space="preserve">
     <value>kører hver</value>
+  </data>
+  <data name="Runtime" xml:space="preserve">
+    <value>Køretid</value>
+  </data>
+  <data name="Runtime configuration" xml:space="preserve">
+    <value>Kørselskonfiguration</value>
+  </data>
+  <data name="SAME DIALECT" xml:space="preserve">
+    <value>Samt dialekt</value>
+  </data>
+  <data name="SEMANTIC GATEWAY · V2" xml:space="preserve">
+    <value>SEMANTIC GATEWAY · V2</value>
+  </data>
+  <data name="Semantic Request IR" xml:space="preserve">
+    <value>Semantisk anmodnings-IR</value>
+  </data>
+  <data name="Semantic translation path" xml:space="preserve">
+    <value>Semantisk oversættelsessti</value>
+  </data>
+  <data name="Separate, narrower contracts" xml:space="preserve">
+    <value>Separate, snævrere kontrakter</value>
+  </data>
+  <data name="Starts after a provider concurrency slot is acquired. Covers DNS, connection, TLS, cold model loading, and waiting for upstream headers." xml:space="preserve">
+    <value>Startes, efter at en paralleliseringsplads for leverandøren er oprettet. Omfatter DNS, forbindelse, TLS, kold modelindlæsning og ventetid på opstrømsheaders.</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>Tilstand</value>
+  </data>
+  <data name="State-aware" xml:space="preserve">
+    <value>Tilstandsbewegt</value>
   </data>
   <data name="Strategy" xml:space="preserve">
     <value>Strategi</value>
@@ -276,8 +603,14 @@
   <data name="Streaming response body (after headers received)" xml:space="preserve">
     <value>Streaming af responskrop (efter modtagelse af headers)</value>
   </data>
+  <data name="Swap" xml:space="preserve">
+    <value>Udskift</value>
+  </data>
   <data name="swaps buffers and bulk-updates DB (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)" xml:space="preserve">
     <value>bytter buffere og opdaterer DB i bulk (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)</value>
+  </data>
+  <data name="Target adapter" xml:space="preserve">
+    <value>Måladaptér</value>
   </data>
   <data name="Temperature" xml:space="preserve">
     <value>Temperatur</value>
@@ -285,8 +618,14 @@
   <data name="The 4-Layer Timeout Architecture" xml:space="preserve">
     <value>Den 4-laggede timeout-arkitektur</value>
   </data>
+  <data name="The configured default" xml:space="preserve">
+    <value>Den konfigurerede standard</value>
+  </data>
   <data name="The global default chat model is set to" xml:space="preserve">
     <value>Den globale standard chat-model er indstillet til</value>
+  </data>
+  <data name="The virtual-model deadline no longer applies to the response body. Streaming may continue for hours, but transport failure, upstream closure, client cancellation, gateway shutdown, or decoding errors can still end it." xml:space="preserve">
+    <value>Tidsfristen for det virtuelle model gælder ikke længere for responskroppen. Streaming kan fortsætte i timer, men transportfejl, lukning af upstream, klientannullering, gateway-lukning eller afkodningsfejl kan stadig afslutte den.</value>
   </data>
   <data name="The warmup background job pings configured models every 5 min to prevent unloading." xml:space="preserve">
     <value>Baggrundsopgaven for opvarmning pinger de konfigurerede modeller hvert 5. minut for at forhindre, at de bliver fjernet fra hukommelsen.</value>
@@ -297,17 +636,41 @@
   <data name="timeout. Backend starts streaming at" xml:space="preserve">
     <value>timeout. Backend starter streaming ved</value>
   </data>
+  <data name="Timeouts &amp; Queues" xml:space="preserve">
+    <value>Timeouts &amp; køer</value>
+  </data>
+  <data name="Total wall-clock time has no fixed upper bound because rate-limit and concurrency queues are outside this budget." xml:space="preserve">
+    <value>Den samlede vægtid har ingen fast øvre grænse, da ratebegrænsnings- og konkurrencekøer ligger uden for dette budget.</value>
+  </data>
   <data name="tracks API key usage, virtual model usage, underlying model usage — feeds the Dashboard charts in real-time" xml:space="preserve">
     <value>sparer API-nøgleanvendelse, virtuel modelanvendelse og underliggende modelanvendelse — opdaterer Dashboard-diagrammerne i realtid</value>
   </data>
   <data name="tracks live in-flight requests — powers the &quot;Live Inference&quot; table and Monitor page" xml:space="preserve">
     <value>sporer aktive anmodninger — driver &quot;Live Inference&quot;-tabellen og Monitor-siden</value>
   </data>
+  <data name="Transparent wire path" xml:space="preserve">
+    <value>Transparent wire-path</value>
+  </data>
   <data name="Tries backends from lowest priority to highest. If backend #1 fails or times out, falls back to #2, then #3." xml:space="preserve">
     <value>Prøver bagender fra laveste til højeste prioritet. Hvis bagend #1 fejler eller udløber, skiftes der til #2, derefter #3.</value>
   </data>
+  <data name="unbounded" xml:space="preserve">
+    <value>ubegrænset</value>
+  </data>
+  <data name="Unknown representable fields survive. The gateway changes owned fields such as physical model identity and configured VM parameters; translated Responses requests use store:false." xml:space="preserve">
+    <value>Ukendte repræsentabelde felter overlever. Gatewayet ændrer ejede felter såsom fysisk modelidentitet og konfigurerede VM-parametre; oversatte Responses-anmodninger bruger store:false.</value>
+  </data>
   <data name="Unlimited" xml:space="preserve">
     <value>Ubegrænset</value>
+  </data>
+  <data name="USAGE COUNTERS" xml:space="preserve">
+    <value>BRUGSTALING</value>
+  </data>
+  <data name="User, model, provider, token, latency, status, and conversation fields" xml:space="preserve">
+    <value>Bruger, model, provider, token, latens, status og samtalefelter</value>
+  </data>
+  <data name="Uses its own two-dialect adapter pipeline. It does not pass through the chat Request/Event IR." xml:space="preserve">
+    <value>Bruger sit eget to-dialekt adapterpipeline. Det går ikke gennem chat Request/Event IR.</value>
   </data>
   <data name="Virtual model" xml:space="preserve">
     <value>Virtuel model</value>
@@ -315,8 +678,14 @@
   <data name="Virtual Model → Request Timeout (s)" xml:space="preserve">
     <value>Virtuel model → Forespørgselstidsgrænse (s)</value>
   </data>
+  <data name="Wait for the per-key rate window. Waiting does not consume VM timeout." xml:space="preserve">
+    <value>Vent på ratevinduet for nøglen. Afventning forbruger ikke VM-tidsløbet.</value>
+  </data>
   <data name="waiting" xml:space="preserve">
     <value>venter</value>
+  </data>
+  <data name="Waiting for backend HTTP response headers" xml:space="preserve">
+    <value>Afventer bagendens HTTP-svarheaders</value>
   </data>
   <data name="Waiting for backend to send HTTP response headers" xml:space="preserve">
     <value>Venter på, at backend sender HTTP-svarshoveder</value>
@@ -327,6 +696,9 @@
   <data name="Warmup Plane" xml:space="preserve">
     <value>Opvarmningsplan</value>
   </data>
+  <data name="Web session" xml:space="preserve">
+    <value>Websession</value>
+  </data>
   <data name="What IS counted" xml:space="preserve">
     <value>Hvad TÆLLES med</value>
   </data>
@@ -335,6 +707,9 @@
   </data>
   <data name="Where configured" xml:space="preserve">
     <value>Hvor konfigureret</value>
+  </data>
+  <data name="Wire Writer" xml:space="preserve">
+    <value>Wire Writer</value>
   </data>
   <data name="With" xml:space="preserve">
     <value>Med</value>

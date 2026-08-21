@@ -42,6 +42,9 @@
   <data name="Back to List" xml:space="preserve">
     <value>Tilbage til liste</value>
   </data>
+  <data name="Banned (Till" xml:space="preserve">
+    <value>Bannet (Indtil</value>
+  </data>
   <data name="Configuration Guide:" xml:space="preserve">
     <value>Konfigurationsguide:</value>
   </data>
@@ -57,11 +60,17 @@
   <data name="Disabled" xml:space="preserve">
     <value>Deaktiveret</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Nede</value>
+  </data>
   <data name="Edit Virtual Model" xml:space="preserve">
     <value>Redigér virtuel model</value>
   </data>
   <data name="Enabled" xml:space="preserve">
     <value>Aktiveret</value>
+  </data>
+  <data name="Healthy" xml:space="preserve">
+    <value>Sund</value>
   </data>
   <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies. SUGGESTED VALUES: small models (≤8B, NVMe SSD) → 60–120s; large models (≥27B or HDD/NAS storage) → 600–1800s; embedding models → 30–60s." xml:space="preserve">
     <value>Hvor længe gateway&apos;en venter på, at backend&apos;EN STARTER med at svare. Inkluderer IKKE auth, rate-limit kø eller ventetid for concurrency-slot. Når streaming begynder, gælder der ingen tidsbegrænsning. ANBEFALEDE VÆRDIER: små modeller (≤8B, NVMe SSD) → 60–120s; store modeller (≥27B eller HDD/NAS-opbevaring) → 600–1800s; embedding-modeller → 30–60s.</value>
@@ -93,11 +102,20 @@
   <data name="Optional Overrides" xml:space="preserve">
     <value>Valgfrie overstyringer</value>
   </data>
+  <data name="Preferred Backend Protocol" xml:space="preserve">
+    <value>Foretrukken bagkendsprotokol</value>
+  </data>
+  <data name="Preferred Protocol" xml:space="preserve">
+    <value>Foretrukket protokol</value>
+  </data>
   <data name="Priority" xml:space="preserve">
     <value>Prioritet</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>Provider</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Klar</value>
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Gentagelsesstraf</value>
