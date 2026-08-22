@@ -30,6 +30,78 @@
   <data name="→ OpenAI-compatible provider" xml:space="preserve">
     <value>→ Παροχέας συμβατός με OpenAI</value>
   </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama JSON/NDJSON becomes Anthropic message JSON or &lt;code&gt;message_start/content_block_*/message_delta/message_stop&lt;/code&gt; SSE." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → κανονικό IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Το JSON/NDJSON του Ollama γίνεται JSON μηνύματος Anthropic ή SSE &lt;code&gt;message_start/content_block_*/message_delta/message_stop&lt;/code&gt;.</value>
+  </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat JSON/SSE is decoded and reconstructed as Anthropic Messages output." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → τυπικό IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Το JSON/SSE του Chat αποκωδικοποιείται και ανακατασκευάζεται ως έξοδος Anthropic Messages.</value>
+  </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses Items/events are decoded and rebuilt as Anthropic content blocks and SSE." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → κανονικό IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Τα αντικείμενα/εκδηλώσεις Responses αποκωδικοποιούνται και ξαναχτίζονται ως μπλοκ περιεχομένου Anthropic και SSE.</value>
+  </data>
+  <data name="&lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt; has no Responses mapping. Chat-only controls prefer a Chat backend and are omitted on fallback. Responses annotations, citations, and noncanonical output Items cannot be reconstructed in a Chat Completion response." xml:space="preserve">
+    <value>Το &lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt; δεν έχει αντιστοίχιση στο Responses. Οι ελεγκτικοί παράμετροι που αφορούν αποκλειστικά το Chat προτιμούν ένα backend Chat και παραλείπονται σε περίπτωση υποκατάστασης (fallback). Οι σημειώσεις (annotations), οι παραπομπές (citations) και τα μη τυποποιημένα (noncanonical) στοιχεία εξόδου (Items) των Responses δεν μπορούν να ανακατασκευαστούν σε μια απόκριση Chat Completion.</value>
+  </data>
+  <data name="&lt;code&gt;images[]&lt;/code&gt; → OpenAI &lt;code&gt;image_url&lt;/code&gt; data parts; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;think&lt;/code&gt; → &lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt;; Ollama tool calls and responses are rebuilt as OpenAI tools and back again." xml:space="preserve">
+    <value>&lt;code&gt;images[]&lt;/code&gt; → μέρη δεδομένων OpenAI &lt;code&gt;image_url&lt;/code&gt;; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;think&lt;/code&gt; → &lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt;; οι κλήσεις εργαλείων και οι απαντήσεις Ollama αναδημιουργούνται ως εργαλεία OpenAI και ξανά.</value>
+  </data>
+  <data name="&lt;code&gt;instructions&lt;/code&gt; → system message; &lt;code&gt;input_text&lt;/code&gt;/&lt;code&gt;input_image&lt;/code&gt; → Ollama content/images; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt;; response events are synthesized with stable output indexes." xml:space="preserve">
+    <value>&lt;code&gt;instructions&lt;/code&gt; → μήνυμα συστήματος; &lt;code&gt;input_text&lt;/code&gt;/&lt;code&gt;input_image&lt;/code&gt; → περιεχόμενο/εικόνες Ollama; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt;; τα γεγονότα απόκρισης συνθέτονται με σταθερούς δείκτες εξόδου.</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. The response reverses through &lt;code&gt;OpenAiChatProviderResponseDecoder&lt;/code&gt; and &lt;code&gt;OllamaChatClientResponseWriter&lt;/code&gt;." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Η απάντηση αντιστρέφεται μέσω &lt;code&gt;OpenAiChatProviderResponseDecoder&lt;/code&gt; και &lt;code&gt;OllamaChatClientResponseWriter&lt;/code&gt;.</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → canonical messages/items → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Typed Responses Items/events are decoded and rebuilt as Ollama JSON/NDJSON." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → κανονικοποιημένα μηνύματα/στοιχεία → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Τα στοιχειοθετημένα Items/γεγονότα Responses αποκωδικοποιούνται και ξαναχτίζονται ως Ollama JSON/NDJSON.</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; performs capability inspection; &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt; clones the original JSON; &lt;code&gt;OllamaChatWireResponseWriter&lt;/code&gt; keeps NDJSON records in the Ollama dialect." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; εκτελεί έλεγχο δυνατοτήτων· &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt; αντιγράφει το αρχικό JSON· &lt;code&gt;OllamaChatWireResponseWriter&lt;/code&gt; διατηρεί τα εγγραφές NDJSON στον διαλεκτό Ollama.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama response records are decoded into canonical events and emitted as Chat Completion JSON/SSE." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Τα εγγραφές απάντησης Ollama αποκωδικοποιούνται σε τυπικά γεγονότα και εκδίδονται ως JSON/SSE Chat Completion.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses output Items/events return through the Responses decoder and Chat client writer." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → τυπικό IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Τα στοιχεία/εκδηλώσεις εξόδου Responses επιστρέφουν μέσω του αποκωδικοποιητή Responses και του συγγραφέα πελάτη Chat.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; inspects capabilities; the provider adapter clones the source JSON; &lt;code&gt;OpenAiChatWireResponseWriter&lt;/code&gt; forwards Chat JSON/SSE while observing text, reasoning, tools, and usage." xml:space="preserve">
+    <value>Το &lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; εξετάζει τις δυνατότητες· ο προσαρμογέας παρόχου κλωνοποιεί το JSON της πηγής· το &lt;code&gt;OpenAiChatWireResponseWriter&lt;/code&gt; προωθεί το Chat JSON/SSE παρακολουθώντας ταυτόχρονα κείμενο, σκεψιμοποίηση, εργαλεία και χρήση.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiEmbeddingClientAdapter&lt;/code&gt; + &lt;code&gt;OpenAiEmbeddingProviderAdapter&lt;/code&gt;. No VM sampling/context override is injected into an OpenAI embedding request." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiEmbeddingClientAdapter&lt;/code&gt; + &lt;code&gt;OpenAiEmbeddingProviderAdapter&lt;/code&gt;. Δεν εγχέεται καμία αναδρομή δειγματοληψίας/περιβάλλοντος VM σε ένα αίτημα ενσωμάτωσης OpenAI.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama output becomes typed Responses Items and typed SSE events." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → τυπικό IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Η έξοδος του Ollama γίνεται τυποποιημένα Responses Items και τυποποιημένα SSE events.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat completions/chunks are decoded and emitted as Responses JSON/typed SSE." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → κανονικό IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Τα Chat completions/chunks αποκωδικοποιούνται και εκπεμφτούν ως Responses JSON/τυπωμένο SSE.</value>
+  </data>
+  <data name="&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;background&lt;/code&gt;, and &lt;code&gt;store&lt;/code&gt; retain their native Responses semantics. This is not byte-transparent because JSON may be reserialized." xml:space="preserve">
+    <value>Τα &lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;background&lt;/code&gt; και &lt;code&gt;store&lt;/code&gt; διατηρούν τη νατίβ τους σημασία Responses. Αυτό δεν είναι διαφανές στο επίπεδο των bytes, καθώς το JSON μπορεί να επανασειριακοποιηθεί.</value>
+  </data>
+  <data name="&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;store:true&lt;/code&gt;, &lt;code&gt;background:true&lt;/code&gt;, native tools, and unknown Items require a Responses backend. Stateless representable requests fall back to translation." xml:space="preserve">
+    <value>Τα &lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;store:true&lt;/code&gt;, &lt;code&gt;background:true&lt;/code&gt;, τα εγγενή εργαλεία και τα άγνωστα Items απαιτούν backend Responses. Τα αιτήματα χωρίς κατάσταση που μπορούν να αναπαρασταθούν υποβαθμίζονται σε μετάφραση.</value>
+  </data>
+  <data name="&lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt; are hard-overridden when configured." xml:space="preserve">
+    <value>Τα &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt; και &lt;code&gt;think&lt;/code&gt; υπερβάλλονται σκληρά όταν ρυθμίζονται.</value>
+  </data>
+  <data name="&lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;keep_alive&lt;/code&gt; have no OpenAI Chat mapping. Unknown Ollama controls prefer a native backend but are omitted when this translation path is the only eligible route." xml:space="preserve">
+    <value>Τα &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt; και &lt;code&gt;keep_alive&lt;/code&gt; δεν έχουν αντιστοίχιση στο OpenAI Chat. Τα άγνωστα ελεγκτικά Ollama προτιμούν ένα νησί backend, αλλά παραλείπονται όταν αυτή η διαδρομή μετάφρασης είναι η μόνη επιλέξιμη διαδρομή.</value>
+  </data>
+  <data name="2 client dialects × 2 Provider types" xml:space="preserve">
+    <value>2 διαλέκτοι πελάτη × 2 τύποι παρόχων</value>
+  </data>
+  <data name="3 backend protocols" xml:space="preserve">
+    <value>3 πρωτόκολλα backend</value>
+  </data>
+  <data name="3 backend protocols · native state passthrough" xml:space="preserve">
+    <value>3 πρωτόκολλα backend · αυτόχθονη διαβίβαση κατάστασης</value>
+  </data>
+  <data name="3 backend protocols · no physical Anthropic adapter" xml:space="preserve">
+    <value>3 πρωτόκολλα backend · χωρίς φυσικό προσαρμοστή Anthropic</value>
+  </data>
+  <data name="4 client dialects × 3 backend protocols" xml:space="preserve">
+    <value>4 διαλέκτοι πελάτη × 3 πρωτόκολλα backend</value>
+  </data>
   <data name="A built-in Role-Based Access Control (RBAC) system for fine-grained permission management." xml:space="preserve">
     <value>Ένα ενσωματωμένο σύστημα Ελέγχου Πρόσβασης Βάσει Ρόλων (RBAC) για λεπτομερή διαχείριση δικαιωμάτων.</value>
   </data>
@@ -42,6 +114,9 @@
   <data name="A complete solution for user authentication and profile management." xml:space="preserve">
     <value>Μια πλήρης λύση για την πιστοποίηση χρηστών και τη διαχείριση προφίλ.</value>
   </data>
+  <data name="A configured virtual-model value replaces the client-derived value after translation. An unset value leaves the translated value unchanged." xml:space="preserve">
+    <value>Μια ρυθμισμένη τιμή εικονικού μοντέλου αντικαθιστά την τιμή που προέρχεται από τον πελάτη μετά τη μετάφραση. Μια μη ορισμένη τιμή αφήνει την μεταφρασμένη τιμή αμετάβλητη.</value>
+  </data>
   <data name="A fully responsive layout that looks great on both desktop and mobile devices." xml:space="preserve">
     <value>Μια πλήρως ανταποκρινόμενη διάταξη που φαίνεται εξαιρετική τόσο σε επιτραπέζιους υπολογιστές όσο και σε κινητές συσκευές.</value>
   </data>
@@ -50,6 +125,9 @@
   </data>
   <data name="Achieve more with Aiursoft Template" xml:space="preserve">
     <value>Κερδίστε περισσότερα με το Aiursoft Template</value>
+  </data>
+  <data name="Active route" xml:space="preserve">
+    <value>Ενεργή διαδρομή</value>
   </data>
   <data name="Admin Management GUI" xml:space="preserve">
     <value>Διαχείριση GUI Διαχειριστή</value>
@@ -81,6 +159,15 @@
   <data name="All dependencies are automatically registered and always available via constructor injection." xml:space="preserve">
     <value>Όλες οι εξαρτήσεις εγγράφονται αυτόματα και είναι πάντα διαθέσιμες μέσω της εισαγωγής από κατασκευαστή.</value>
   </data>
+  <data name="All Ollama VM controls apply and override translated values: sampling, context, repeat penalty, token limit, and thinking. Ollama-only DB controls may be injected." xml:space="preserve">
+    <value>Ισχύουν και υπερισχύουν των μεταφρασμένων τιμών όλα τα ελεγκτικά στοιχεία VM του Ollama: δειγματοληψία, πλαίσιο, ποινή επανάληψης, όριο token και σκέψη. Μπορεί να εγχυθούν ελεγκτικά στοιχεία βάσης δεδομένων μόνο για Ollama.</value>
+  </data>
+  <data name="All Ollama VM controls apply: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt;. Ollama-only values may therefore be injected even though the client dialect cannot express them." xml:space="preserve">
+    <value>Εφαρμόζονται όλα τα ελέγχου VM του Ollama: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt; και &lt;code&gt;think&lt;/code&gt;. Επομένως, μπορούν να εγχυθούν τιμές που αφορούν αποκλειστικά το Ollama, ακόμα κι αν ο διαλέκτος του πελάτη δεν μπορεί να τις εκφράσει.</value>
+  </data>
+  <data name="All Ollama VM controls apply. &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;RepeatPenalty&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; can be injected from DB even though Anthropic request fields do not directly express them." xml:space="preserve">
+    <value>Ισχύουν tutti i controlli VM di Ollama. &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;RepeatPenalty&lt;/code&gt; e &lt;code&gt;Thinking&lt;/code&gt; possono essere iniettati dal DB anche se i campi della richiesta Anthropic non li esprimono direttamente.</value>
+  </data>
   <data name="Anduin" xml:space="preserve">
     <value>Anduin</value>
   </data>
@@ -104,6 +191,18 @@
   </data>
   <data name="Anthropic image content blocks are not yet translated to OpenAI format." xml:space="preserve">
     <value>Τα μπλοκ περιεχομένου εικόνας του Anthropic δεν έχουν ακόμη μεταφραστεί στη μορφή OpenAI.</value>
+  </data>
+  <data name="Anthropic image sources → Ollama &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt; → function call; &lt;code&gt;tool_result&lt;/code&gt; → tool message; reasoning text → Ollama thinking; Ollama output is rebuilt as Anthropic content blocks." xml:space="preserve">
+    <value>Πηγές εικόνων Anthropic → &lt;code&gt;images[]&lt;/code&gt; του Ollama; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt; → κλήση συνάρτησης; &lt;code&gt;tool_result&lt;/code&gt; → μήνυμα εργαλείου; κείμενο συλλογισμού → σκέψη Ollama; η έξοδος του Ollama επικονστρουείται ως μπλοκ περιεχομένου Anthropic.</value>
+  </data>
+  <data name="Anthropic input thinking blocks and signatures are not encoded into Responses input. Unknown content blocks cannot use this route; unknown top-level controls are omitted on fallback. Native Responses-only output Items, annotations, and citations cannot be represented in Anthropic output." xml:space="preserve">
+    <value>Τα μπλοκ σκέψης και οι υπογραφές των εισόδων Anthropic δεν κωδικοποιούνται στην είσοδο Responses. Τα άγνωστα μπλοκ περιεχομένου δεν μπορούν να χρησιμοποιήσουν αυτή τη διαδρομή· τα άγνωστα ρυθμιστικά верхнего уровня παραλείπονται σε εναλλακτική διαδρομή. Τα Items εξόδου, οι σχολιασμοί και οι παραπομπές που είναι αποκλειστικά του Responses δεν μπορούν να αναπαρασταθούν στην έξοδο Anthropic.</value>
+  </data>
+  <data name="Anthropic Messages client routes" xml:space="preserve">
+    <value>Διαδρομές πελάτη Anthropic Messages</value>
+  </data>
+  <data name="Anthropic system content → system message; image blocks → OpenAI &lt;code&gt;image_url&lt;/code&gt;; &lt;code&gt;input_schema&lt;/code&gt; → function &lt;code&gt;parameters&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt; → Chat tool calls/messages; &lt;code&gt;max_tokens&lt;/code&gt; remains the Chat token limit." xml:space="preserve">
+    <value>Περιεχόμενο συστήματος Anthropic → μήνυμα συστήματος; μπλοκ εικόνων → OpenAI &lt;code&gt;image_url&lt;/code&gt;; &lt;code&gt;input_schema&lt;/code&gt; → παράμετροι &lt;code&gt;parameters&lt;/code&gt; συνάρτησης; &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt; → κλήσεις/μήνυμα εργαλείων Chat; &lt;code&gt;max_tokens&lt;/code&gt; παραμένει το όριο tokens Chat.</value>
   </data>
   <data name="API Authentication (Bearer)" xml:space="preserve">
     <value>API Authentication (Bearer)</value>
@@ -162,6 +261,12 @@
   <data name="Automatically sync OpenID roles. Unified Rule management." xml:space="preserve">
     <value>Αυτόματη συγχρονισμός ρόλων OpenID. Ομοιομορφισμός διαχείρισης κανόνων.</value>
   </data>
+  <data name="Backend" xml:space="preserve">
+    <value>Backend</value>
+  </data>
+  <data name="Backend Provider type" xml:space="preserve">
+    <value>Τύπος παρόχου backend</value>
+  </data>
   <data name="Background Job Processing" xml:space="preserve">
     <value>Επεξεργασία Υπόβαθρο Εργασίας</value>
   </data>
@@ -207,14 +312,26 @@
   <data name="Built-in User Management" xml:space="preserve">
     <value>Ενσωματωμένη Διαχείριση Χρηστών</value>
   </data>
+  <data name="Chat" xml:space="preserve">
+    <value>Chat</value>
+  </data>
   <data name="Chat Models" xml:space="preserve">
     <value>Προγράμματα Συνομιλίας</value>
   </data>
   <data name="Chat/Embedding Segregation" xml:space="preserve">
     <value>Διαχωρισμός Συνομιλίας/Ενσωμάτωσης</value>
   </data>
+  <data name="Choose the API your client sends on the left and the protocol spoken by the physical backend on the right. The active route shows exactly what is preserved, translated, rejected, and overridden." xml:space="preserve">
+    <value>Επιλέξτε το API που αποστέλλει ο πελάτης σας στα αριστερά και το πρωτόκολλο που χρησιμοποιεί το φυσικό backend στα δεξιά. Η ενεργή διαδρομή δείχνει ακριβώς τι διατηρείται, μεταφράζεται, απορρίπτεται και παρακάμπτεται.</value>
+  </data>
   <data name="Clickhouse Auditing" xml:space="preserve">
     <value>Αρχείο ελέγχου Clickhouse</value>
+  </data>
+  <data name="Client" xml:space="preserve">
+    <value>Πελάτης</value>
+  </data>
+  <data name="Client endpoint" xml:space="preserve">
+    <value>Σημείο τερματισμού πελάτη</value>
   </data>
   <data name="Comes with Docker support for simplified and consistent deployments." xml:space="preserve">
     <value>Διαθέτει υποστήριξη για Docker για απλούς και συνεκτικούς τρόπους μεταφοράς.</value>
@@ -233,6 +350,9 @@
   </data>
   <data name="Concise Docs" xml:space="preserve">
     <value>Συνοπτική Αποσπασματική Αποσπασματική</value>
+  </data>
+  <data name="Configuration precedence" xml:space="preserve">
+    <value>Συνέπεια ρυθμίσεων</value>
   </data>
   <data name="Consistency Validation" xml:space="preserve">
     <value>Έλεγχος Συνοχής</value>
@@ -261,6 +381,15 @@
   <data name="Cross Platform" xml:space="preserve">
     <value>Διαπλατφορμικό</value>
   </data>
+  <data name="Cross-Protocol Compatibility" xml:space="preserve">
+    <value>Συμβατότητα Δια-Πρωτοκόλλου</value>
+  </data>
+  <data name="Current route contract" xml:space="preserve">
+    <value>Τρέχον σύμβαση διαδρομής</value>
+  </data>
+  <data name="Current route only" xml:space="preserve">
+    <value>Μόνο τρέχουσα διαδρομή</value>
+  </data>
   <data name="Custom dev required" xml:space="preserve">
     <value>Απαιτείται προσαρμοσμένη ανάπτυξη</value>
   </data>
@@ -272,6 +401,12 @@
   </data>
   <data name="Dashboard Website" xml:space="preserve">
     <value>Ιστοσελίδα Πίνακα Ελέγχου</value>
+  </data>
+  <data name="Database override" xml:space="preserve">
+    <value>Επικάλυψη βάσης δεδομένων</value>
+  </data>
+  <data name="Database values are hard assignments" xml:space="preserve">
+    <value>Οι τιμές της βάσης δεδομένων είναι σταθερές αποδράσεις</value>
   </data>
   <data name="Day 1 Compliance &amp; Security." xml:space="preserve">
     <value>Ημέρα 1 Συμμόρφωση &amp; Ασφάλεια.</value>
@@ -336,6 +471,15 @@
   <data name="DevOps Native" xml:space="preserve">
     <value>DevOps Φυσικός</value>
   </data>
+  <data name="Direction" xml:space="preserve">
+    <value>Κατεύθυνση</value>
+  </data>
+  <data name="Discarded / restriction" xml:space="preserve">
+    <value>Απορρίφθηκε / περιορισμός</value>
+  </data>
+  <data name="Discarded, rejected, or preferred" xml:space="preserve">
+    <value>Απορρίφθηκαν, απορρίφθηκαν ή προτιμήθηκαν</value>
+  </data>
   <data name="Discussions page" xml:space="preserve">
     <value>Σελίδα Συζητήσεων</value>
   </data>
@@ -363,8 +507,20 @@
   <data name="Effortlessly write integration tests using in-memory databases, temporary file systems, built-in mocking, and real-world HTTP request simulation." xml:space="preserve">
     <value>Εύκολα γράψτε δοκιμές ενοποίησης χρησιμοποιώντας βάσεις δεδομένων στη μνήμη, προσωρινά συστήματα αρχείων, ενσωματωμένη μοκινγκ και πραγματικές εξελίξεις HTTP αιτήσεων.</value>
   </data>
+  <data name="Embedding" xml:space="preserve">
+    <value>Embedding</value>
+  </data>
+  <data name="Embedding adapters select by ProviderType, not chat BackendProtocol" xml:space="preserve">
+    <value>Τα προσαρμοστικά embedding επιλέγονται με βάση το ProviderType, όχι το chat BackendProtocol</value>
+  </data>
   <data name="Embedding Models" xml:space="preserve">
     <value>Πρότυπα Εμβάθυνσης</value>
+  </data>
+  <data name="Embedding route" xml:space="preserve">
+    <value>Διαδρομή ενσωμάτωσης</value>
+  </data>
+  <data name="Embedding route inspector" xml:space="preserve">
+    <value>Ελεγκτής διαδρομής ενσωματωμάτων</value>
   </data>
   <data name="Enforced" xml:space="preserve">
     <value>Επιβεβαιωμένο</value>
@@ -456,6 +612,12 @@
   <data name="Function call" xml:space="preserve">
     <value>Κλήση συνάρτησης</value>
   </data>
+  <data name="Gateway-generated response" xml:space="preserve">
+    <value>Απόκριση που δημιουργείται από το πύλη</value>
+  </data>
+  <data name="Gateway-owned operation" xml:space="preserve">
+    <value>Λειτουργία που διαχειρίζεται το πύλη</value>
+  </data>
   <data name="Generic configuration" xml:space="preserve">
     <value>Γενική διαμόρφωση</value>
   </data>
@@ -531,6 +693,9 @@
   <data name="Images array passes through as-is to native Ollama." xml:space="preserve">
     <value>Ο πίνακας εικόνων περνάει ως έχει στο εγγενές Ollama.</value>
   </data>
+  <data name="Implementation method" xml:space="preserve">
+    <value>Μέθοδος υλοποίησης</value>
+  </data>
   <data name="Included" xml:space="preserve">
     <value>Συμπεριλαμβανόμενο</value>
   </data>
@@ -539,6 +704,18 @@
   </data>
   <data name="Includes Tutorials" xml:space="preserve">
     <value>Περιλαμβάνει Οδηγούς</value>
+  </data>
+  <data name="Input Items → Chat &lt;code&gt;messages&lt;/code&gt;; instructions → system message; Responses function tool/choice shapes → Chat wrappers; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;reasoning_effort&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;response_format&lt;/code&gt;." xml:space="preserve">
+    <value>Στοιχεία εισόδου → μηνύματα &lt;code&gt;messages&lt;/code&gt; του Chat; οδηγίες → μήνυμα συστήματος; μορφές εργαλείων/επιλογών λειτουργιών των Responses → περιβλήματα Chat; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;reasoning_effort&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;response_format&lt;/code&gt;.</value>
+  </data>
+  <data name="Inspect one translation route at a time." xml:space="preserve">
+    <value>Εξετάστε μία διαδρομή μετάφρασης τη φορά.</value>
+  </data>
+  <data name="Instructions, message Items, text, images, function calls/results, function tool definitions, temperature, top-p, output-token limit, reasoning effort/output, structured format, stream, finish reason, and usage." xml:space="preserve">
+    <value>Οδηγίες, στοιχεία μηνυμάτων, κείμενο, εικόνες, κλήσεις/αποτελέσματα λειτουργιών, ορισμοί εργαλείων λειτουργιών, θερμοκρασία, top-p, όριο token εξόδου, προσπάθεια/έξοδος σκέψης, δομημένη μορφή, ροή, λόγος λήξης και χρήση.</value>
+  </data>
+  <data name="Instructions, text/images, function tools/calls/results, temperature, top-p, token limit, reasoning effort/output, structured output, stream, finish state, and usage." xml:space="preserve">
+    <value>Οδηγίες, κείμενο/εικόνες, εργαλεία/κλήσεις/αποτελέσματα συνάρτησης, θερμοκρασία, top-p, όριο токенов, προσπάθεια/έξοδος σκεψίματος, δομημένη έξοδος, ροή, κατάσταση ολοκλήρωσης και χρήση.</value>
   </data>
   <data name="Integrated File Management" xml:space="preserve">
     <value>Ενσωματωμένη Διαχείριση Αρχείων</value>
@@ -585,11 +762,17 @@
   <data name="Management Dashboard" xml:space="preserve">
     <value>Πίνακας Ελέγχου Διαχείρισης</value>
   </data>
+  <data name="Mapped / reconstructed" xml:space="preserve">
+    <value>Χαρτογραφημένα / επανακατασκευασμένα</value>
+  </data>
   <data name="Markdown To HTML" xml:space="preserve">
     <value>Markdown σε HTML</value>
   </data>
   <data name="MCP" xml:space="preserve">
     <value>MCP</value>
+  </data>
+  <data name="Message roles/text, function definitions, function calls/results, streaming intent, temperature, top-p, token limit, images, structured format, and token usage survive when representable." xml:space="preserve">
+    <value>Οι ρόλοι/κείμενα μηνυμάτων, οι ορισμοί συναρτήσεων, οι κλήσεις/αποκρίσεις συναρτήσεων, η πρόθεση ροής, η θερμοκρασία, το top-p, το όριο token, οι εικόνες, η δομημένη μορφή και η χρήση token διατηρούνται όταν είναι αναπαραστάσιμα.</value>
   </data>
   <data name="MIT Licence" xml:space="preserve">
     <value>Άδεια MIT</value>
@@ -600,8 +783,17 @@
   <data name="Mix Any Client with Any Backend" xml:space="preserve">
     <value>Συνδυάστε οποιονδήποτε πελάτη με οποιονδήποτε διακομιστή</value>
   </data>
+  <data name="Model discovery" xml:space="preserve">
+    <value>Ανακάλυψη μοντέλων</value>
+  </data>
+  <data name="Model discovery endpoints" xml:space="preserve">
+    <value>Τελικά σημεία ανακάλυψης μοντέλων</value>
+  </data>
   <data name="Model Hosting &amp; Inference" xml:space="preserve">
     <value>Εγκατάσταση και Εκτέλεση Μοντέλων</value>
+  </data>
+  <data name="Model identity is masked in both directions; &lt;code&gt;stream&lt;/code&gt; is normalized; streaming requests merge &lt;code&gt;stream_options.include_usage=true&lt;/code&gt;; null message content is normalized to an empty string." xml:space="preserve">
+    <value>Η ταυτότητα του μοντέλου αποκρύπτεται και στις δύο κατευθύνσεις· το &lt;code&gt;stream&lt;/code&gt; κανονικοποιείται· οι αιτήσεις streaming ενσωματώνουν το &lt;code&gt;stream_options.include_usage=true&lt;/code&gt;· το περιεχόμενο μηνύματος με τιμή null κανονικοποιείται σε άδειο string.</value>
   </data>
   <data name="Model Keep-alive" xml:space="preserve">
     <value>Διατήρηση Μοντέλου</value>
@@ -642,6 +834,12 @@
   <data name="Music Tools" xml:space="preserve">
     <value>Εργαλεία Μουσικής</value>
   </data>
+  <data name="Narrow operation" xml:space="preserve">
+    <value>Στενή λειτουργία</value>
+  </data>
+  <data name="Native / same dialect" xml:space="preserve">
+    <value>Νατιβ / ίδια διαλέκτος</value>
+  </data>
   <data name="Native Ollama" xml:space="preserve">
     <value>Native Ollama</value>
   </data>
@@ -653,6 +851,9 @@
   </data>
   <data name="Native Power, AI Development" xml:space="preserve">
     <value>Φυσική Ισχύς, Ανάπτυξη Τεχνητής Νοημοσύνης</value>
+  </data>
+  <data name="Native state passthrough" xml:space="preserve">
+    <value>Διακίνηση αρχέγου καταστάσεων</value>
   </data>
   <data name="Native vs. Gateway" xml:space="preserve">
     <value>Φυσικό σε Αντίθεση με Gateway</value>
@@ -699,8 +900,23 @@
   <data name="Needs TypeORM or similar" xml:space="preserve">
     <value>Απαιτεί το TypeORM ή παρόμοιο</value>
   </data>
+  <data name="No Chat Completions or Responses translation. A non-Ollama backend returns &lt;code&gt;501&lt;/code&gt;." xml:space="preserve">
+    <value>Δεν υπάρχει μετάφραση Chat Completions ή Responses. Ένας backend που δεν είναι Ollama επιστρέφει &lt;code&gt;501&lt;/code&gt;.</value>
+  </data>
+  <data name="No chat protocol translation occurs. Backend &lt;code&gt;Protocol&lt;/code&gt; is not consulted for embeddings." xml:space="preserve">
+    <value>Δεν γίνεται μετάφραση πρωτοκόλλου συνομιλίας. Το πρωτόκολλο &lt;code&gt;Protocol&lt;/code&gt; του backend δεν λαμβάνεται υπόψη για embeddings.</value>
+  </data>
   <data name="No dependency on any cloud vendor. Run anywhere, any time." xml:space="preserve">
     <value>Χωρίς εξάρτηση από κάποιον πάροχο cloud. Εκτελέστε παντού, παντότε.</value>
+  </data>
+  <data name="No known Chat field is intentionally dropped on this route. Unknown/Chat-only fields prefer a Chat Completions backend, with semantic translation as fallback when no matching backend is available. Valid JSON may be reserialized." xml:space="preserve">
+    <value>Καμία γνωστή πεδία Chat δεν παραλείπεται σκόπιμα σε αυτή τη διαδρομή. Τα άγνωστα/μόνο για Chat πεδία προτιμούν έναν backend Chat Completions, με τη σημασιολογική μετάφραση ως εναλλακτική λύση όταν δεν υπάρχει διαθέσιμος αντίστοιχος backend. Έγκυρα JSON μπορεί να επανασειριαστούν.</value>
+  </data>
+  <data name="No known Ollama field is intentionally dropped on this route. Unknown fields make an Ollama-native backend preferred; if none is available, the request may use a documented translated subset. Valid JSON may be reserialized." xml:space="preserve">
+    <value>Δεν πετάνε συνειδητά γνωστά πεδία Ollama σε αυτή τη διαδρομή. Τα άγνωστα πεδία καθιστούν προτιμώμενη μια αυτόχθονα υποδομή Ollama· αν δεν υπάρχει διαθέσιμη, το αίτημα μπορεί να χρησιμοποιήσει ένα τεκμηριωμένο μεταφρασμένο υποσύνολο. Επικρατές JSON μπορεί να επανασειριοποιηθεί.</value>
+  </data>
+  <data name="No upstream call" xml:space="preserve">
+    <value>Καμία upstream κλήση</value>
   </data>
   <data name="Not supported" xml:space="preserve">
     <value>Δεν υποστηρίζεται</value>
@@ -717,11 +933,23 @@
   <data name="Ollama → OpenAI" xml:space="preserve">
     <value>Ollama → OpenAI</value>
   </data>
+  <data name="Ollama &lt;code&gt;input&lt;/code&gt; or legacy &lt;code&gt;prompt&lt;/code&gt; becomes OpenAI &lt;code&gt;input&lt;/code&gt;; OpenAI &lt;code&gt;data[].embedding&lt;/code&gt; is reconstructed as Ollama &lt;code&gt;embeddings[]&lt;/code&gt;." xml:space="preserve">
+    <value>Το &lt;code&gt;input&lt;/code&gt; του Ollama ή το παλαιότερο &lt;code&gt;prompt&lt;/code&gt; γίνεται &lt;code&gt;input&lt;/code&gt; του OpenAI· το &lt;code&gt;data[].embedding&lt;/code&gt; του OpenAI ανακατασκευάζεται ως &lt;code&gt;embeddings[]&lt;/code&gt; του Ollama.</value>
+  </data>
+  <data name="Ollama &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, &lt;code&gt;keep_alive&lt;/code&gt;, and boolean &lt;code&gt;think&lt;/code&gt; are not encoded into Responses. Responses-native tools cannot be requested from the Ollama dialect." xml:space="preserve">
+    <value>Τα πεδία &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, &lt;code&gt;keep_alive&lt;/code&gt; και το boolean &lt;code&gt;think&lt;/code&gt; του Ollama δεν κωδικοποιούνται στις Responses. Τα εργαλεία nativa των Responses δεν μπορούν να ζητηθούν από τον διαλέκτο Ollama.</value>
+  </data>
   <data name="Ollama Backend" xml:space="preserve">
     <value>Ollama Backend</value>
   </data>
+  <data name="Ollama Chat client routes" xml:space="preserve">
+    <value>Οδοί πελάτη Ollama Chat</value>
+  </data>
   <data name="Ollama Client" xml:space="preserve">
     <value>Πελάτης Ollama</value>
+  </data>
+  <data name="Ollama embedding input" xml:space="preserve">
+    <value>Είσοδος ενσωμάτωσης Ollama</value>
   </data>
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: Ενισχύστε το δικό σας Ollama με πιστοποίηση API επιχειρηματικού επιπέδου, ελεγχόμενη διεκπεραίωση αιτημάτων και διαχείριση εικονικών μοντέλων—το ασφαλές, ιδιωτικό σας AI gateway.</value>
@@ -729,11 +957,29 @@
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: Ενισχύστε το τοπικό Ollama με πιστοποίηση API επιπέδου επιχειρήσεων, έλεγχο αιτημάτων, περιορισμό ρυθμών και διαχείριση εικονικών μοντέλων—ο ασφαλής, ιδιωτικός σας πυλώνας τεχνητής νοημοσύνης.</value>
   </data>
+  <data name="Ollama generate JSON/NDJSON is forwarded in the same dialect; model identity, answer text, finish data, and usage are observed and the virtual model name is restored." xml:space="preserve">
+    <value>Το Ollama generate JSON/NDJSON διαβιβάζεται στον ίδιο διάλεκτο; η ταυτότητα του μοντέλου, το κείμενο απάντησης, τα δεδομένα ολοκλήρωσης και η χρήση παρατηρούνται και το όνομα του εικονικού μοντέλου επανακάθεται.</value>
+  </data>
   <data name="Ollama images array is converted to OpenAI multimodal content parts (text + image_url with data URI)." xml:space="preserve">
     <value>Ο πίνακας εικόνων του Ollama μετατρέπεται σε πολυτροπικά τμήματα περιεχομένου του OpenAI (κείμενο + image_url με data URI).</value>
   </data>
+  <data name="Ollama JSON/NDJSON stays in the native dialect; model identity, answer, finish data, and usage are observed and rewritten." xml:space="preserve">
+    <value>Το JSON/NDJSON του Ollama παραμένει στη γηγενή διάλεκτο; η ταυτότητα του μοντέλου, η απάντηση, τα δεδομένα ολοκλήρωσης και η χρήση παρακολουθούνται και переγράφονται.</value>
+  </data>
+  <data name="Ollama Native only" xml:space="preserve">
+    <value>Μόνο Ollama Native</value>
+  </data>
+  <data name="Ollama only" xml:space="preserve">
+    <value>Μόνο Ollama</value>
+  </data>
+  <data name="Ollama-only embedding fields such as &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;truncate&lt;/code&gt;, &lt;code&gt;dimensions&lt;/code&gt; variants, and &lt;code&gt;keep_alive&lt;/code&gt; are not copied into the OpenAI request unless represented by the shared input." xml:space="preserve">
+    <value>Τα πεδία embedding αποκλειστικά του Ollama, όπως &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;truncate&lt;/code&gt;, παραλλαγές &lt;code&gt;dimensions&lt;/code&gt; και &lt;code&gt;keep_alive&lt;/code&gt;, δεν αντιγράφονται στο αίτημα OpenAI, εκτός εάν αναπαριστούνται από την κοινή είσοδο.</value>
+  </data>
   <data name="Ollama-specific parameter. OpenAI natively supports frequency_penalty and presence_penalty instead, which are passed through independently." xml:space="preserve">
     <value>Παράμετρος συγκεκριμένη για το Ollama. Το OpenAI υποστηρίζει εγγενώς τα frequency_penalty και presence_penalty, τα οποία μεταδίδονται ανεξάρτητα.</value>
+  </data>
+  <data name="Ollama-type Provider" xml:space="preserve">
+    <value>Πάροχος τύπου Ollama</value>
   </data>
   <data name="Ollama." xml:space="preserve">
     <value>Ollama.</value>
@@ -753,6 +999,12 @@
   <data name="OllamaGateway High Availability Routing" xml:space="preserve">
     <value>Υψηλή Διαθεσιμότητα Δρομολόγησης OllamaGateway</value>
   </data>
+  <data name="OllamaGateway in Docker" xml:space="preserve">
+    <value>OllamaGateway σε Docker</value>
+  </data>
+  <data name="OllamaGateway main screenshot" xml:space="preserve">
+    <value>Κύριο στιγμιότυπο οθόνης OllamaGateway</value>
+  </data>
   <data name="OllamaGateway seamlessly connects your local Ollama capabilities to professional AI development tools. Whether you are using Claude Code, Opencode or Qwen Code, you can now leverage your own hardware for automated coding and development tasks—all verified and officially supported by our team." xml:space="preserve">
     <value>Το OllamaGateway συνδέει άψογα τις τοπικές σας δυνατότητες Ollama με επαγγελματικά εργαλεία ανάπτυξης AI. Είτε χρησιμοποιείτε Claude Code, Opencode ή Qwen Code, μπορείτε πλέον να αξιοποιήσετε το δικό σας υλικό για αυτοματοποιημένες εργασίες κωδικοποίησης και ανάπτυξης — όλα ελεγμένα και επίσημα υποστηριζόμενα από την ομάδα μας.</value>
   </data>
@@ -765,6 +1017,15 @@
   <data name="One Click Start" xml:space="preserve">
     <value>Μία κλικ για έναρξη</value>
   </data>
+  <data name="Only gateway-owned fields are rewritten: virtual model → physical model upstream, physical model → virtual model downstream; &lt;code&gt;stream&lt;/code&gt; is normalized; missing &lt;code&gt;keep_alive&lt;/code&gt; receives the request/provider default." xml:space="preserve">
+    <value>Μόνο τα πεδία που ανήκουν στο gateway αναγράφονται εκ νέου: εικονικό μοντέλο → φυσικό μοντέλο προς τα επάνω, φυσικό μοντέλο → εικονικό μοντέλο προς τα κάτω; το &lt;code&gt;stream&lt;/code&gt; κανονικοποιείται; το λειπόμενο &lt;code&gt;keep_alive&lt;/code&gt; λαμβάνει την τιμή εξ ορισμού του αιτήματος/παραγωγού.</value>
+  </data>
+  <data name="Only model identity, stream intent, and configured VM options are gateway-owned. Upstream physical model names are replaced with the virtual model in response objects and events." xml:space="preserve">
+    <value>Μόνο η ταυτότητα του μοντέλου, η πρόθεση ροής και τα ρυθμισμένα επιλογές VM ανήκουν στην πύλη. Τα φυσικά ονόματα μοντέλων από το upstream αντικαθίστανται με το εικονικό μοντέλο στα αντικείμενα και τα γεγονότα απόκρισης.</value>
+  </data>
+  <data name="Only the selected route is shown" xml:space="preserve">
+    <value>Εμφανίζεται μόνο η επιλεγμένη διαδρομή</value>
+  </data>
   <data name="Open Source" xml:space="preserve">
     <value>Ανοιχτού Κώδικα</value>
   </data>
@@ -774,17 +1035,44 @@
   <data name="OpenAI → OpenAI" xml:space="preserve">
     <value>OpenAI → OpenAI</value>
   </data>
+  <data name="OpenAI &lt;code&gt;input&lt;/code&gt; is sent as Ollama &lt;code&gt;input&lt;/code&gt;; &lt;code&gt;embeddings[]&lt;/code&gt; and &lt;code&gt;prompt_eval_count&lt;/code&gt; are reconstructed as OpenAI &lt;code&gt;data[]&lt;/code&gt; and &lt;code&gt;usage&lt;/code&gt;." xml:space="preserve">
+    <value>Το &lt;code&gt;input&lt;/code&gt; της OpenAI αποστέλλεται ως &lt;code&gt;input&lt;/code&gt; της Ollama; τα &lt;code&gt;embeddings[]&lt;/code&gt; και το &lt;code&gt;prompt_eval_count&lt;/code&gt; αναδημιουργούνται ως &lt;code&gt;data[]&lt;/code&gt; και &lt;code&gt;usage&lt;/code&gt; της OpenAI.</value>
+  </data>
   <data name="OpenAI API Translation" xml:space="preserve">
     <value>Μετάφραση OpenAI API</value>
   </data>
   <data name="OpenAI Backend" xml:space="preserve">
     <value>OpenAI Backend</value>
   </data>
+  <data name="OpenAI Chat Completions client routes" xml:space="preserve">
+    <value>Οδές πελάτη OpenAI Chat Completions</value>
+  </data>
   <data name="OpenAI Client" xml:space="preserve">
     <value>Πελάτης OpenAI</value>
   </data>
+  <data name="OpenAI content parts → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → boolean &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;." xml:space="preserve">
+    <value>Μέρη περιεχομένου OpenAI → &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt; του Ollama; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → διακόσμητο &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt; του Ollama.</value>
+  </data>
+  <data name="OpenAI embedding extensions outside the shared input are not copied into the cross-dialect request or reconstructed response." xml:space="preserve">
+    <value>Οι επεκτάσεις embedding του OpenAI εκτός του κοινού εισοδήματος δεν αντιγράφονται στο αίτημα δια-διαλέκτου ή στην ανακατασκευασμένη απάντηση.</value>
+  </data>
+  <data name="OpenAI embedding input" xml:space="preserve">
+    <value>Είσοδος ενσωμάτωσης OpenAI</value>
+  </data>
   <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
     <value>Το πολυτροπικό πίνακα περιεχομένου του OpenAI εξάγεται: τα δεδομένα image_url πηγαίνουν στον πίνακα εικόνων του Ollama, το κείμενο γίνεται περιεχόμενο.</value>
+  </data>
+  <data name="OpenAI Responses client routes" xml:space="preserve">
+    <value>Διαδρομές πελάτη OpenAI Responses</value>
+  </data>
+  <data name="OpenAI target fields &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_tokens&lt;/code&gt; use VM values when set. VM &lt;code&gt;Thinking&lt;/code&gt; overrides the translated client value." xml:space="preserve">
+    <value>Τα πεδία στόχου OpenAI &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; και &lt;code&gt;max_tokens&lt;/code&gt; χρησιμοποιούν τις τιμές VM όταν έχουν οριστεί. Το VM &lt;code&gt;Thinking&lt;/code&gt; υπερισχύει της μεταφρασμένης τιμής του πελάτη.</value>
+  </data>
+  <data name="OpenAI-type Provider" xml:space="preserve">
+    <value>Πάροχος τύπου OpenAI</value>
+  </data>
+  <data name="Opencode and Qwen Code working with OllamaGateway" xml:space="preserve">
+    <value>Opencode και Qwen Code σε λειτουργία με το OllamaGateway</value>
   </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>Ενσωμάτωση OpenID Connect</value>
@@ -828,6 +1116,15 @@
   <data name="Permission discovery and sync" xml:space="preserve">
     <value>Ανίχνευση και συγχρονισμός δικαιωμάτων</value>
   </data>
+  <data name="Physical backend protocol" xml:space="preserve">
+    <value>Φυσικό πρωτόκολλο backend</value>
+  </data>
+  <data name="Physical provider metadata is not proxied; Ollama runtime details are placeholders or omitted." xml:space="preserve">
+    <value>Τα μεταδεδομένα του φυσικού παρόχου δεν προσαυξάνονται· τα λεπτομέρειες εκτέλεσης του Ollama είναι προσωρινές τιμές ή παραλείπονται.</value>
+  </data>
+  <data name="Policy and implementation" xml:space="preserve">
+    <value>Πολιτική και εφαρμογή</value>
+  </data>
   <data name="Pre-configured and tested" xml:space="preserve">
     <value>Προ-διαμορφωμένο και δοκιμασμένο</value>
   </data>
@@ -837,8 +1134,23 @@
   <data name="Pre-configured pipelines for dev/prod" xml:space="preserve">
     <value>Προκαθορισμένες αλυσίδες για dev/prod</value>
   </data>
+  <data name="Preserved" xml:space="preserve">
+    <value>Διατηρούμενο</value>
+  </data>
+  <data name="Preserved / mapped" xml:space="preserve">
+    <value>Διατηρούμενα / χαρτογραφήματα</value>
+  </data>
   <data name="Private AI" xml:space="preserve">
     <value>Ιδιωτική Τεχνητή Νοημοσύνη</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Πάροχος</value>
+  </data>
+  <data name="Provider adapter selection uses &lt;code&gt;ProviderType&lt;/code&gt;, not chat &lt;code&gt;BackendProtocol&lt;/code&gt;. No Ollama VM options are injected into an OpenAI embedding target." xml:space="preserve">
+    <value>Η επιλογή προσαρμογέα παρόχου χρησιμοποιεί &lt;code&gt;ProviderType&lt;/code&gt;, όχι το &lt;code&gt;BackendProtocol&lt;/code&gt; συνομιλίας. Δεν εισάγονται επιλογές VM Ollama σε έναν στόχο ενσωμάτωσης OpenAI.</value>
+  </data>
+  <data name="Provider type and backend protocol are separate. No physical Anthropic backend adapter exists today." xml:space="preserve">
+    <value>Ο τύπος παρόχου και το πρωτόκολλο backend είναι ξεχωριστά. Δεν υπάρχει σήμερα φυσικός προσαρμογέας backend Anthropic.</value>
   </data>
   <data name="Quality Gate" xml:space="preserve">
     <value>Ποιότητα Πύλης</value>
@@ -855,11 +1167,23 @@
   <data name="Recommended Models" xml:space="preserve">
     <value>Προτεινόμενα Πρότυπα</value>
   </data>
+  <data name="Remote image URLs are not a portable Ollama-native contract; base64 is the verified path. Thinking signatures are discarded. Unknown content blocks remain a hard rejection; unknown top-level controls are omitted when this translated fallback is used." xml:space="preserve">
+    <value>Τα απομακρυσμένα URL εικόνων δεν αποτελούν φορητό εγγενές σύμβαση Ollama; η base64 είναι η επαληθευμένη διαδρομή. Οι υπογραφές σκέψης απορρίπτονται. Τα άγνωστα μπλοκ περιεχομένου παραμένουν απόλυτη απόρριψη· τα άγνωστα ελεγκτικά στοιχεία ανώτατου επιπέδου παραλείπονται όταν χρησιμοποιείται αυτή η μεταφρασμένη εναλλακτική διαδρομή.</value>
+  </data>
+  <data name="Remote image URLs have no portable Ollama-native representation; base64/data-URI is the verified conversion. Chat-only controls such as penalties/logprobs/seed prefer a Chat backend and are omitted when Ollama is the only eligible route." xml:space="preserve">
+    <value>Οι απομακρυσμένοι σύνδεσμοι εικόνων (URLs) δεν έχουν φορητή本机κή αναπαράσταση Ollama· η μετατροπή σε base64/data-URI είναι η επαληθευμένη λύση. Ελέγχοι που αφορούν αποκλειστικά το Chat, όπως ποινές (penalties)/logprobs/σπόρος (seed), προτιμούν backend τύπου Chat και παραλείπονται όταν το Ollama είναι η μόνη επιλέξιμη διαδρομή.</value>
+  </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Τιμωρία Επανάληψης</value>
   </data>
   <data name="Request &amp; Response Auditing" xml:space="preserve">
     <value>Έλεγχος αιτημάτων &amp; αντιδράσεων</value>
+  </data>
+  <data name="Requester&apos;s API" xml:space="preserve">
+    <value>API του αιτητή</value>
+  </data>
+  <data name="requires a Responses-capable provider" xml:space="preserve">
+    <value>απαιτεί πάροχο ικανό για Responses</value>
   </data>
   <data name="Requires Laravel Socialite config" xml:space="preserve">
     <value>Απαιτεί ρύθμιση Laravel Socialite</value>
@@ -875,6 +1199,15 @@
   </data>
   <data name="Robust Integration Testing" xml:space="preserve">
     <value>Ενισχυμένος Έλεγχος Ολοκλήρωσης</value>
+  </data>
+  <data name="Roles, text, system/developer instructions, images, function tools, function calls/results, temperature, top-p, token limit, structured format, stream, reasoning output, finish state, and usage." xml:space="preserve">
+    <value>Ρόλοι, κείμενο, οδηγίες συστήματος/αναπτύκτη, εικόνες, εργαλεία λειτουργιών, κλήσεις/αποτελέσματα λειτουργιών, θερμοκρασία, top-p, όριο token, δομημένη μορφή, ροή, έξοδος σκέψης, κατάσταση ολοκλήρωσης και χρήση.</value>
+  </data>
+  <data name="Roles/text, data-URI images, function tools/calls/results, temperature, top-p, token limit, reasoning text, structured output intent, stream, finish reason, and usage." xml:space="preserve">
+    <value>Ρόλοι/κείμενο, εικόνες data-URI, εργαλεία/κλήσεις/αποτελέσματα λειτουργιών, θερμοκρασία, top-p, όριο token, κείμενο συλλογιστικής, προθεσμία δομημένης εξόδου, ροή, λόγος ολοκλήρωσης και χρήση.</value>
+  </data>
+  <data name="Roles/text, images, function tools/calls/results, temperature, top-p, maximum output tokens, reasoning effort/output, structured output, streaming, finish reason, and usage." xml:space="preserve">
+    <value>Ρόλοι/κείμενο, εικόνες, εργαλεία λειτουργιών/κλήσεις/αποτελέσματα, θερμοκρασία, top-p, μέγιστο πλήθος εξερχόμενων tokens, προσπάθεια/εξαγωγή σκέψης, δομημένη έξοδος, ροή (streaming), λόγος ολοκλήρωσης και χρήση.</value>
   </data>
   <data name="Runs without any internet connection required." xml:space="preserve">
     <value>Λειτουργεί χωρίς να απαιτείται σύνδεση στο διαδίκτυο.</value>
@@ -893,6 +1226,12 @@
   </data>
   <data name="Security and Auditing by Design." xml:space="preserve">
     <value>Ασφάλεια και Αυστηροποίηση με Σχεδιασμό.</value>
+  </data>
+  <data name="Select backend protocol" xml:space="preserve">
+    <value>Επιλέξτε πρωτόκολλο backend</value>
+  </data>
+  <data name="Select requester API" xml:space="preserve">
+    <value>Επιλέξτε το API του αιτούντα</value>
   </data>
   <data name="Shift with confidence" xml:space="preserve">
     <value>Μετακινηθείτε με αυτοπεποίθηση</value>
@@ -939,6 +1278,15 @@
   <data name="Starts without any configuration" xml:space="preserve">
     <value>Ξεκινά χωρίς καμία ρύθμιση</value>
   </data>
+  <data name="state-aware" xml:space="preserve">
+    <value>με συνειδητότητα κατάστασης</value>
+  </data>
+  <data name="State/background requests require a Responses backend. Native Responses tools and unknown Items also require Responses. Metadata and unknown top-level controls prefer Responses and are omitted on fallback. Responses-only annotations/citations cannot be recreated from Chat output." xml:space="preserve">
+    <value>Τα αιτήματα κατάστασης/υποβάθρου απαιτούν backend Responses. Τα αυτόχθονα εργαλεία Responses και τα άγνωστα Items απαιτούν επίσης Responses. Τα μεταδεδομένα και τα άγνωστα ελεγκτικά στοιχεία ανώτερου επιπέδου προτιμούν τα Responses και παραλείπονται κατά την υποβάθμιση. Οι σελιδοδείκτες/περιλήψεις που ανήκουν μόνο στα Responses δεν μπορούν να αναδημιουργηθούν από την έξοδο Chat.</value>
+  </data>
+  <data name="Stateful controls pass through to native Responses providers and are never silently translated." xml:space="preserve">
+    <value>Οι ελεγκτές με κατάσταση περνούν απευθείας στους αυτόχθονες παρόχους Responses και δεν μεταφράζονται ποτέ σιωπηλά.</value>
+  </data>
   <data name="Stop Coding Boilerplate." xml:space="preserve">
     <value>Σταματήστε την κωδικοποίηση επαναλαμβανόμενου κώδικα.</value>
   </data>
@@ -975,6 +1323,24 @@
   <data name="Supports JetBrains Rider for easy code style fixes." xml:space="preserve">
     <value>Υποστηρίζει το JetBrains Rider για εύκολη διόρθωση του στυλ κώδικα.</value>
   </data>
+  <data name="System → &lt;code&gt;instructions&lt;/code&gt;; messages/images → Responses input Items; Anthropic tools → Responses function tools; named tool choice → Responses &lt;code&gt;name&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; Responses reasoning/text/function output → Anthropic blocks." xml:space="preserve">
+    <value>System → &lt;code&gt;instructions&lt;/code&gt;; μηνύματα/εικόνες → εισαγωγικά Items Responses; εργαλεία Anthropic → εργαλεία λειτουργιών Responses; ονομαστική επιλογή εργαλείου → &lt;code&gt;name&lt;/code&gt; Responses; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; έξοδος σκέψης/κειμένου/λειτουργίας Responses → μπλοκ Anthropic.</value>
+  </data>
+  <data name="System instructions, text, base64/URL images, function tools/calls/results, tool choice, temperature, top-p, max tokens, response reasoning text, stream, finish state, and usage." xml:space="preserve">
+    <value>Οδηγίες συστήματος, κείμενο, εικόνες base64/URL, εργαλεία/κλήσεις/αποτελέσματα συναρτήσεων, επιλογή εργαλείου, θερμοκρασία, top-p, μέγιστα tokens, κείμενο σκέψης απόκρισης, ροή, κατάσταση ολοκλήρωσης και χρήση.</value>
+  </data>
+  <data name="System messages → &lt;code&gt;instructions&lt;/code&gt;; messages → Responses &lt;code&gt;input&lt;/code&gt; Items; images → &lt;code&gt;input_image&lt;/code&gt;; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;; function tool shapes are flattened." xml:space="preserve">
+    <value>Συνομιλίες συστήματος → &lt;code&gt;instructions&lt;/code&gt;; μηνύματα → Στοιχεία &lt;code&gt;input&lt;/code&gt; των Responses; εικόνες → &lt;code&gt;input_image&lt;/code&gt;; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;; τα σχήματα των εργαλείων συνάρτησης ισοπεδώνονται.</value>
+  </data>
+  <data name="System text, message text, base64 images, tool definitions, &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt;, tool choice modes, temperature, top-p, max tokens, visible reasoning text, stream, finish reason, and usage." xml:space="preserve">
+    <value>Σύστημα κειμένου, κείμενο μηνύματος, εικόνες base64, ορισμοί εργαλείων, &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt;, λειτουργίες επιλογής εργαλείου, θερμοκρασία, top-p, μέγιστο όριο token, ορατό κείμενο σκέψης, ροή, λόγος ολοκλήρωσης και χρήση.</value>
+  </data>
+  <data name="System/developer messages → &lt;code&gt;instructions&lt;/code&gt;; messages → &lt;code&gt;input&lt;/code&gt; Items; function schemas are flattened; named &lt;code&gt;tool_choice.function.name&lt;/code&gt; → Responses &lt;code&gt;tool_choice.name&lt;/code&gt;; &lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;." xml:space="preserve">
+    <value>Μηνύματα συστήματος/ανάπτυξης → &lt;code&gt;instructions&lt;/code&gt;; μηνύματα → &lt;code&gt;input&lt;/code&gt; Items; τα σχήματα συντελεστών είναι επίπεδα; ονομασμένο &lt;code&gt;tool_choice.function.name&lt;/code&gt; → Responses &lt;code&gt;tool_choice.name&lt;/code&gt;; &lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;.</value>
+  </data>
+  <data name="System/messages, text, base64 and URL images, function tools/calls/results, tool choice, temperature, top-p, max tokens, reasoning text, stream, finish reason, and usage." xml:space="preserve">
+    <value>Συνομιλίες συστήματος, κείμενο, εικόνες base64 και URL, εργαλεία/κλήσεις/αποτελέσματα συναρτήσεων, επιλογή εργαλείου, θερμοκρασία, top-p, μέγιστο όριο token, κείμενο σκέψης, ροή, λόγος ολοκλήρωσης και χρήση.</value>
+  </data>
   <data name="Task Runner" xml:space="preserve">
     <value>Task Runner</value>
   </data>
@@ -987,14 +1353,38 @@
   <data name="The definitive, battle-tested .NET enterprise foundation. From Auth to AI, we&apos;ve solved the hard parts so you don&apos;t have to." xml:space="preserve">
     <value>Η αποφασιστική, δοκιμασμένη στην πράξη βάση επιχειρηματικών εφαρμογών .NET. Από την Αυθεντικοποίηση μέχρι την Τεχνητή Νοημοσύνη, έχουμε λύσει τα δύσκολα μέρη, ώστε να μην χρειαστεί να τα κάνετε εσείς.</value>
   </data>
+  <data name="The gateway decodes both sides through its canonical chat model. Only semantics representable by the target protocol can cross this route." xml:space="preserve">
+    <value>Η πύλη αποκωδικοποιεί και τα δύο άκρα μέσω του τυπικού της μοντέλου συνομιλίας. Μόνο η σημασιολογία που μπορεί να αναπαρασταθεί από τον στόχο πρωτοκόλλου μπορεί να διασχίσει αυτή τη διαδρομή.</value>
+  </data>
+  <data name="The gateway keeps the protocol shape and rewrites only gateway-owned values and configured policy fields." xml:space="preserve">
+    <value>Το gateway διατηρεί τη δομή του πρωτοκόλλου και επαναγράφει μόνο τις τιμές που ανήκουν στο gateway και τα ρυθμισμένα πεδία πολιτικής.</value>
+  </data>
   <data name="The navigation bar automatically adjusts based on user roles and permissions." xml:space="preserve">
     <value>Η γραμμή πλοήγησης προσαρμόζεται αυτόματα με βάση τους ρόλους και τα δικαιώματα των χρηστών.</value>
+  </data>
+  <data name="The original request and successful response JSON are cloned; unknown fields are preserved; model identity is rewritten." xml:space="preserve">
+    <value>Το αρχικό αίτημα και η επιτυχημένη απάντηση JSON αναπαράγονται; τα άγνωστα πεδία διατηρούνται; η ταυτότητα του μοντέλου γράφεται εκ νέου.</value>
+  </data>
+  <data name="The original request and successful response JSON are cloned; unknown OpenAI embedding fields are preserved; only model identity is rewritten." xml:space="preserve">
+    <value>Το JSON της αρχικής αίτησης και της επιτυχημένης απάντησης αναπαράγεται· τα άγνωστα πεδία embedding OpenAI διατηρούνται· μόνο η ταυτότητα του μοντέλου переγράφεται.</value>
   </data>
   <data name="The Philosophy" xml:space="preserve">
     <value>Η Φιλοσοφία</value>
   </data>
+  <data name="The provider-level &lt;code&gt;keep_alive&lt;/code&gt; replaces the client value on this route." xml:space="preserve">
+    <value>Η τιμή &lt;code&gt;keep_alive&lt;/code&gt; σε επίπεδο provider αντικαθιστά την τιμή του client σε αυτή τη διαδρομή.</value>
+  </data>
+  <data name="The request adapter deep-clones the original Responses JSON. &lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt; preserves unknown output Items and SSE event names/data/comments/id/retry without passing the payload through canonical IL." xml:space="preserve">
+    <value>Ο προσαρμογής αιτήματος δημιουργεί βαθύ αντίγραφο του αρχικού JSON Responses. Το &lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt; διατηρεί άγνωστα στοιχεία εξόδου και ονόματα δεδομένων/σχόλια/id/retry συμβάντων SSE χωρίς να διαβιβάσει το φορτίο μέσω του κανονικού IL.</value>
+  </data>
   <data name="The template is built for easy deployment. It includes full Docker support, so you can containerize your app and run it anywhere. You can also deploy it directly to IIS, Azure App Service, or any server that supports ASP.NET Core." xml:space="preserve">
     <value>Το πρότυπο είναι κατασκευασμένο για εύκολη ανάπτυξη. Περιλαμβάνει πλήρη υποστήριξη Docker, ώστε να μπορείτε να συσκευάσετε την εφαρμογή σας σε containers και να την εκτελέσετε οπουδήποτε. Μπορείτε επίσης να την αναπτύξετε απευθείας στο IIS, στο Azure App Service ή σε οποιονδήποτε διακομιστή που υποστηρίζει ASP.NET Core.</value>
+  </data>
+  <data name="There is no Chat Completions or Responses translation. A non-Ollama backend returns &lt;code&gt;501&lt;/code&gt;." xml:space="preserve">
+    <value>Δεν υπάρχει μετάφραση Chat Completions ή Responses. Ένας backend εκτός Ollama επιστρέφει &lt;code&gt;501&lt;/code&gt;.</value>
+  </data>
+  <data name="These endpoints do not proxy physical provider metadata. Ollama size/digest/runtime details are placeholders or omitted." xml:space="preserve">
+    <value>Αυτά τα τελικά σημεία δεν διαμεσολαβούν μεταδεδομένα φυσικού προμηθευτή. Τα λεπτομερή μεγέθους/περίληψης/εκτέλεσης του Ollama είναι υποκατάστατα ή παραλείπονται.</value>
   </data>
   <data name="Thinking" xml:space="preserve">
     <value>Σκέψη</value>
@@ -1004,6 +1394,12 @@
   </data>
   <data name="Thinking Mode (DeepSeek)" xml:space="preserve">
     <value>Λειτουργία Σκέψης (DeepSeek)</value>
+  </data>
+  <data name="Thinking signatures are discarded. Unknown content blocks remain a hard rejection. Anthropic-only top-level controls prefer a future Anthropic backend but are omitted when Chat is the only eligible route." xml:space="preserve">
+    <value>Οι υπογραφές σκέψης απορρίπτονται. Τα άγνωστα μπλοκ περιεχομένου παραμένουν απόρριψη σκληρής απορρίψης. Οι ελεγκτές ανώτατου επιπέδου μόνο Anthropic προτιμούν ένα μελλοντικό backend Anthropic, αλλά παραλείπονται όταν το Chat είναι η μόνη εφικτή διαδρομή.</value>
+  </data>
+  <data name="This avoids recursive upstream discovery when a Provider points back to the gateway and keeps the public catalog scoped to virtual models." xml:space="preserve">
+    <value>Αυτό αποφεύγει την αναδρομική αναζήτηση ανωτέρω όταν ένας Provider δείχνει ξανά προς το gateway και διατηρεί τον δημόσιο κατάλογο περιορισμένο σε εικονικά μοντέλα.</value>
   </data>
   <data name="This is a template project" xml:space="preserve">
     <value>Αυτό είναι ένα πρότυπο έργο</value>
@@ -1017,8 +1413,26 @@
   <data name="Timezone-aware fields" xml:space="preserve">
     <value>Πεδία με συνειδητότητα ζώνης ώρας</value>
   </data>
+  <data name="Translated" xml:space="preserve">
+    <value>Μεταφρασμένο</value>
+  </data>
+  <data name="Translated subset" xml:space="preserve">
+    <value>Μεταφρασμένο υποσύνολο</value>
+  </data>
+  <data name="Translated through semantic layer" xml:space="preserve">
+    <value>Μεταφρασμένο μέσω στρώματος σημασιολογίας</value>
+  </data>
+  <data name="Transparent" xml:space="preserve">
+    <value>Διαφανής</value>
+  </data>
+  <data name="Transparent, state-aware" xml:space="preserve">
+    <value>Διαφανής, με συνειδητοποίηση κατάστασης</value>
+  </data>
   <data name="Trusted by production-grade applications including AnduinOS, StatHub, and Warp. We don&apos;t just share this code; we run our entire business on it." xml:space="preserve">
     <value>Εμπιστεύεται εφαρμογές προσαρμοσμένες για παραγωγή, συμπεριλαμβανομένων AnduinOS, StatHub και Warp. Δεν μοιραζόμαστε απλώς αυτόν τον κώδικα· τρέχουμε την επιχείρησή μας εντελώς με αυτόν.</value>
+  </data>
+  <data name="Two client dialects × two Provider types" xml:space="preserve">
+    <value>Δύο διαλέκτες πελάτη × δύο τύποι Provider</value>
   </data>
   <data name="Unified Env" xml:space="preserve">
     <value>Ομοστατικό Περιβάλλον</value>
@@ -1028,6 +1442,15 @@
   </data>
   <data name="Universal API Compatibility" xml:space="preserve">
     <value>Πανευρωπαϊκή συμβατότητα API</value>
+  </data>
+  <data name="Unknown request fields, &lt;code&gt;messages&lt;/code&gt;, &lt;code&gt;tools&lt;/code&gt;, &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;format&lt;/code&gt;, and unknown JSON response fields are retained. Malformed upstream NDJSON records are forwarded raw." xml:space="preserve">
+    <value>Τα άγνωστα πεδία αιτήματος, &lt;code&gt;messages&lt;/code&gt;, &lt;code&gt;tools&lt;/code&gt;, &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;format&lt;/code&gt;, και τα άγνωστα πεδία απόκρισης JSON διατηρούνται. Τα μη έγκυρα ρεκόρ NDJSON από το upstream αποστέλλονται ακατέργαστα.</value>
+  </data>
+  <data name="Unknown request fields, message/content extensions, &lt;code&gt;response_format&lt;/code&gt;, &lt;code&gt;reasoning_effort&lt;/code&gt;, vendor fields, unknown response fields, null values, and unrecognized SSE lines remain in the Chat dialect." xml:space="preserve">
+    <value>Άγνωστα πεδία αιτήματος, επεκτάσεις μηνύματος/περιεχομένου, &lt;code&gt;response_format&lt;/code&gt;, &lt;code&gt;reasoning_effort&lt;/code&gt;, πεδία προμηθευτή, άγνωστα πεδία απόκρισης, τιμές null και μη αναγνωρισμένες γραμμές SSE παραμένουν στον διαλεκτό Chat.</value>
+  </data>
+  <data name="Unknown top-level and nested request fields, native tools, metadata, future Items, annotations, citations, unknown response fields, future SSE event types, and JSON/non-JSON event data are retained." xml:space="preserve">
+    <value>Τα άγνωστα πεδία αιτήσεων верхнего уровня и вложенные, нативные инструменты, метаданные, будущие элементы (Items), аннотации, цитаты, неизвестные поля ответа, будущие типы событий SSE, а также данные событий JSON/не-JSON сохраняются.</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>Χρήση</value>
@@ -1052,6 +1475,39 @@
   </data>
   <data name="Virtual Models" xml:space="preserve">
     <value>Φανταστικά Πρότυπα</value>
+  </data>
+  <data name="Virtual-model names and gateway-owned metadata are rendered directly in the requested client shape." xml:space="preserve">
+    <value>Τα ονόματα εικονικών μοντέλων και τα μεταδεδομένα που διαχειρίζεται το gateway εμφανίζονται απευθείας στη ζητούμενη μορφή πελάτη.</value>
+  </data>
+  <data name="VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are injected into Ollama &lt;code&gt;options&lt;/code&gt;." xml:space="preserve">
+    <value>Οι παραμέτροι VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt; και &lt;code&gt;RepeatPenalty&lt;/code&gt; εγχέονται στις &lt;code&gt;options&lt;/code&gt; του Ollama.</value>
+  </data>
+  <data name="VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; hard-override Ollama &lt;code&gt;options&lt;/code&gt;." xml:space="preserve">
+    <value>Τα VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt; και &lt;code&gt;RepeatPenalty&lt;/code&gt; υπερισχύουν με απόλυτο τρόπο των επιλογών &lt;code&gt;options&lt;/code&gt; του Ollama.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override Chat target controls; Chat-only VM thinking is injected through &lt;code&gt;chat_template_kwargs&lt;/code&gt;." xml:space="preserve">
+    <value>Τα &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt; και &lt;code&gt;Thinking&lt;/code&gt; του VM υπερισχύουν των ελέγχων στόχου του Chat; η σκέψη VM μόνο για Chat εγχέεται μέσω &lt;code&gt;chat_template_kwargs&lt;/code&gt;.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override Chat target fields. Ollama-only DB sampling/context controls do not apply to Chat." xml:space="preserve">
+    <value>Τα VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt; και &lt;code&gt;Thinking&lt;/code&gt; αντικαθιστούν τα πεδία προορισμού του Chat. Οι ελεγκτές δειγματοληψίας/περιβάλλοντος ΒΔ μόνο για Ollama δεν εφαρμόζονται στο Chat.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override their target fields. Existing nested &lt;code&gt;chat_template_kwargs&lt;/code&gt; members are preserved around &lt;code&gt;enable_thinking&lt;/code&gt;." xml:space="preserve">
+    <value>Τα &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt; και &lt;code&gt;Thinking&lt;/code&gt; της VM υπερισχύουν των αντίστοιχων πεδίων προορισμού. Τα υπάρχοντα ενσωματωμένα μέλη του &lt;code&gt;chat_template_kwargs&lt;/code&gt; διατηρούνται γύρω από το &lt;code&gt;enable_thinking&lt;/code&gt;.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other nested Responses fields remain untouched." xml:space="preserve">
+    <value>Τα VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; και &lt;code&gt;NumPredict&lt;/code&gt; υπερισχύουν των &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; και &lt;code&gt;max_output_tokens&lt;/code&gt;. Τα άλλα ενσωματωμένα πεδία Responses παραμένουν αμετάβλητα.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other VM sampling fields are not applicable." xml:space="preserve">
+    <value>Τα πεδία VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; και &lt;code&gt;NumPredict&lt;/code&gt; αντικαθιστούν τα &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; και &lt;code&gt;max_output_tokens&lt;/code&gt;. Τα υπόλοιπα πεδία δειγματοληψίας VM δεν εφαρμόζονται.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
+    <value>Τα VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; και &lt;code&gt;NumPredict&lt;/code&gt; υπερισχύουν των πεδίων Responses. Τα VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt; και &lt;code&gt;RepeatPenalty&lt;/code&gt; δεν έχουν αντίστοιχο πεδίο στόχου στα Responses.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
+    <value>Τα &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; και &lt;code&gt;NumPredict&lt;/code&gt; της VM υπερισχύουν των πεδίων-στόχου των Responses. Τα &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt; και &lt;code&gt;RepeatPenalty&lt;/code&gt; της VM δεν είναι ελεγκτικά στοιχεία των Responses.</value>
+  </data>
+  <data name="VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
+    <value>Τα VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict και RepeatPenalty υπερέχουν της αιτήσης· η έλλειψη &lt;code&gt;keep_alive&lt;/code&gt; χρησιμοποιεί την τιμή του Provider.</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>Καλώς ήρθατε</value>
