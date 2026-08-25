@@ -9,12 +9,35 @@ public class ImageProcessingService(
     ILogger<ImageProcessingService> logger,
     FileLockProvider fileLockProvider) : ITransientDependency
 {
+    private const long MaxDecodedImagePixels = 100_000_000;
+
+    public Task<bool> IsValidImageAsync(IFormFile file)
+    {
+        try
+        {
+            using var stream = file.OpenReadStream();
+            using var codec = SKCodec.Create(stream);
+            return Task.FromResult(codec is not null &&
+                                   codec.Info.Width > 0 &&
+                                   codec.Info.Height > 0 &&
+                                   (long)codec.Info.Width * codec.Info.Height <= MaxDecodedImagePixels);
+        }
+        catch (Exception e)
+        {
+            logger.LogWarning(e, "Uploaded file {FileName} is not a valid raster image", file.FileName);
+            return Task.FromResult(false);
+        }
+    }
+
     public Task<bool> IsValidImageAsync(string imagePath)
     {
         try
         {
             using var codec = SKCodec.Create(imagePath);
-            if (codec != null)
+            if (codec is not null &&
+                codec.Info.Width > 0 &&
+                codec.Info.Height > 0 &&
+                (long)codec.Info.Width * codec.Info.Height <= MaxDecodedImagePixels)
             {
                 logger.LogTrace("File with path {ImagePath} is a valid image", imagePath);
                 return Task.FromResult(true);
