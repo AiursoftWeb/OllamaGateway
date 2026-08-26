@@ -9,7 +9,8 @@ public interface IBackendInvoker
     /// Sends an HTTP request to the selected backend with automatic retry, circuit breaking,
     /// concurrency limiting, and per-request timeout. On success, returns a result whose
     /// disposal releases the concurrency slot and the response. Returns null when all
-    /// backends are exhausted.
+    /// backends are exhausted. Preferred capabilities are diagnostic only and never
+    /// override the virtual model's backend selection strategy.
     /// </summary>
     Task<BackendInvocationResult?> SendAsync(
         VirtualModel virtualModel,

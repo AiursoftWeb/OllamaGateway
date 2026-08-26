@@ -130,22 +130,32 @@ public class OpenAIProtocolNegotiationTests : TestBase
     }
 
     [TestMethod]
-    public async Task MatchingDialect_IsPreferredOverHigherPriorityTranslationBackend()
+    public async Task SelectionStrategy_PrecedesDialectRouting()
     {
-        MockUpstreamState.Handler = (_, _) => Task.FromResult(ResponsesResponse("preferred native"));
+        MockUpstreamState.Handler = (_, _) => Task.FromResult(ChatResponse("selected by strategy"));
 
         var response = await Http.PostAsync("/v1/responses", Json(
             $$$"""{"model":"{{{PreferenceModel}}}","input":"hello","store":false}"""));
 
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        Assert.AreEqual("/v1/responses", MockUpstreamState.LastRequest?.RequestUri?.AbsolutePath);
-        Assert.AreEqual("responses-only.test", MockUpstreamState.LastRequest?.RequestUri?.Host);
+        Assert.AreEqual("/v1/chat/completions", MockUpstreamState.LastRequest?.RequestUri?.AbsolutePath);
+        Assert.AreEqual("chat-only.test", MockUpstreamState.LastRequest?.RequestUri?.Host);
+        var body = JsonNode.Parse(await response.Content.ReadAsStringAsync());
+        Assert.AreEqual("response", body?["object"]?.ToString());
+        Assert.AreEqual("selected by strategy", body?["output"]?[0]?["content"]?[0]?["text"]?.ToString());
     }
 
     [TestMethod]
     public async Task StatefulResponses_AreForwardedOnlyToNativeResponsesBackend()
     {
         MockUpstreamState.Handler = (_, _) => Task.FromResult(ResponsesResponse("continued"));
+
+        var mixed = await Http.PostAsync("/v1/responses", Json(
+            $$$"""{"model":"{{{PreferenceModel}}}","input":"continue","previous_response_id":"resp_previous","store":true}"""));
+        Assert.AreEqual(HttpStatusCode.OK, mixed.StatusCode);
+        Assert.AreEqual("/v1/responses", MockUpstreamState.LastRequest?.RequestUri?.AbsolutePath);
+        Assert.AreEqual("responses-only.test", MockUpstreamState.LastRequest?.RequestUri?.Host);
+
         var native = await Http.PostAsync("/v1/responses", Json(
             $$$"""{"model":"{{{ResponsesOnlyModel}}}","input":"continue","previous_response_id":"resp_previous","store":true}"""));
 

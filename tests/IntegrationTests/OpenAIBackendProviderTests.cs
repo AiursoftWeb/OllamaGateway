@@ -944,7 +944,7 @@ public class OpenAIBackendProviderTests : TestBase
     }
 
     [TestMethod]
-    public async Task OpenAiSoftPassthrough_PrefersMatchingBackendOverHigherPriorityTranslation()
+    public async Task OpenAiChat_RespectsWeightedSelectionAcrossProviderDialects()
     {
         const string modelName = "openai-soft-preference:latest";
         using (var scope = Server!.Services.CreateScope())
@@ -967,13 +967,14 @@ public class OpenAIBackendProviderTests : TestBase
             {
                 Name = modelName,
                 Type = ModelType.Chat,
-                SelectionStrategy = SelectionStrategy.PriorityFallback
+                SelectionStrategy = SelectionStrategy.WeightedRandom
             };
             virtualModel.VirtualModelBackends.Add(new VirtualModelBackend
             {
                 ProviderId = ollamaProvider.Id,
                 UnderlyingModelName = "llama-primary",
                 Priority = 0,
+                Weight = 1,
                 Enabled = true,
                 IsHealthy = true
             });
@@ -982,6 +983,7 @@ public class OpenAIBackendProviderTests : TestBase
                 ProviderId = openAiProvider.Id,
                 UnderlyingModelName = PhysicalModelName,
                 Priority = 1,
+                Weight = 0,
                 Enabled = true,
                 IsHealthy = true
             });
@@ -992,7 +994,7 @@ public class OpenAIBackendProviderTests : TestBase
         MockUpstreamState.Handler = (_, _) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
         {
             Content = new StringContent(
-                """{"id":"soft","object":"chat.completion","model":"gpt-4o-mini","choices":[{"index":0,"message":{"role":"assistant","content":"preserved"},"finish_reason":"stop"}],"usage":{"prompt_tokens":3,"completion_tokens":1,"total_tokens":4}}""",
+                """{"model":"llama-primary","message":{"role":"assistant","content":"selected by strategy"},"done":true,"prompt_eval_count":3,"eval_count":1}""",
                 Encoding.UTF8,
                 "application/json")
         });
@@ -1001,9 +1003,13 @@ public class OpenAIBackendProviderTests : TestBase
         var response = await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
 
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        Assert.AreEqual("/v1/chat/completions", MockUpstreamState.LastRequest?.RequestUri?.AbsolutePath);
-        Assert.AreEqual(true,
-            JsonNode.Parse(MockUpstreamState.LastRequestBody!)?["vendor_extension"]?["keep"]?.GetValue<bool>());
+        Assert.AreEqual("/api/chat", MockUpstreamState.LastRequest?.RequestUri?.AbsolutePath);
+        Assert.AreEqual("soft-preference-ollama.test", MockUpstreamState.LastRequest?.RequestUri?.Host);
+        var upstream = JsonNode.Parse(MockUpstreamState.LastRequestBody!);
+        Assert.AreEqual("llama-primary", upstream?["model"]?.ToString());
+        Assert.IsNull(upstream?["vendor_extension"]);
+        var body = JsonNode.Parse(await response.Content.ReadAsStringAsync());
+        Assert.AreEqual("selected by strategy", body?["choices"]?[0]?["message"]?["content"]?.ToString());
     }
 
     [TestMethod]

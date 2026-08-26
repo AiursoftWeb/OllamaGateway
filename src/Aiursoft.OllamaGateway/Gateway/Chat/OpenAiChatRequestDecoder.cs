@@ -32,8 +32,8 @@ public sealed class OpenAiChatRequestDecoder : IChatRequestDecoder
             reasoningRequested: root["reasoning_effort"] != null);
         if (messages.SelectMany(message => message.Content).Any(part => part is GatewayOpaqueContent))
             requiredCapabilities |= GatewayCapability.OpenAiChatPassthrough;
-        // Prefer a native Chat Completions backend for every Chat request. This is
-        // deliberately soft: a Responses or Ollama backend remains a valid fallback.
+        // Record when semantic translation will be needed. This is deliberately soft:
+        // the virtual model's selection strategy remains authoritative.
         var preferredCapabilities = GatewayCapability.OpenAiChatPassthrough;
         var request = new GatewayChatRequest(
             streaming,

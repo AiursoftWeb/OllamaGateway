@@ -23,7 +23,7 @@ public class BackendInvoker(
             capabilityPlanner.Supports(candidate, requiredCapabilities);
         bool SupportsPreferred(VirtualModelBackend candidate) =>
             preferredCapabilities == GatewayCapability.None ||
-            capabilityPlanner.Supports(candidate, requiredCapabilities | preferredCapabilities);
+            capabilityPlanner.Supports(candidate, preferredCapabilities);
 
         var attemptedBackendIds = new HashSet<int>();
 
@@ -32,34 +32,30 @@ public class BackendInvoker(
             var next = modelSelector.SelectBackend(
                 virtualModel,
                 candidate => SupportsRequired(candidate) &&
-                             SupportsPreferred(candidate) &&
                              !attemptedBackendIds.Contains(candidate.Id));
-            if (next != null)
-                return next;
-
-            next = modelSelector.SelectBackend(
-                virtualModel,
-                candidate => SupportsRequired(candidate) && !attemptedBackendIds.Contains(candidate.Id));
             if (next != null)
                 return next;
 
             // All currently eligible backends have been attempted. If the retry budget is
             // larger than the backend pool, begin another pass rather than stopping early.
             attemptedBackendIds.Clear();
-            return modelSelector.SelectBackend(
-                       virtualModel,
-                       candidate => SupportsRequired(candidate) && SupportsPreferred(candidate))
-                   ?? modelSelector.SelectBackend(virtualModel, SupportsRequired);
+            return modelSelector.SelectBackend(virtualModel, SupportsRequired);
         }
 
-        var backend = SupportsRequired(initialBackend) && SupportsPreferred(initialBackend)
+        // The administrator's selection strategy chooses the physical backend. A matching
+        // wire dialect only determines whether that selected route is direct or translated;
+        // it must never override priority, weight, or round-robin selection.
+        var backend = SupportsRequired(initialBackend)
             ? initialBackend
             : SelectNextBackend();
         if (backend != null && preferredCapabilities != GatewayCapability.None && !SupportsPreferred(backend))
         {
             logger.LogInformation(
-                "No available backend supports preferred capabilities {PreferredCapabilities}; falling back to semantic translation",
-                preferredCapabilities);
+                "Selected backend {BackendId} does not support preferred capabilities {PreferredCapabilities}; " +
+                "honoring {SelectionStrategy} and using semantic translation",
+                backend.Id,
+                preferredCapabilities,
+                virtualModel.SelectionStrategy);
         }
         IAsyncDisposable? concurrencySlot = null;
 

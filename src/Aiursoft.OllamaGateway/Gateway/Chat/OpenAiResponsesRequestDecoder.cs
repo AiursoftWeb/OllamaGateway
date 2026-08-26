@@ -57,8 +57,9 @@ public sealed class OpenAiResponsesRequestDecoder : IChatRequestDecoder
             root["reasoning"] != null);
         if (hasOpaqueContent)
             requiredCapabilities |= GatewayCapability.OpenAiResponsesPassthrough;
-        // Prefer native Responses for every Responses request. If no such backend
-        // exists, representable stateless requests may still be translated.
+        // Record when semantic translation will be needed. Stateful and opaque inputs
+        // are hard requirements above; ordinary stateless requests still honor the
+        // virtual model's selection strategy.
         var preferredCapabilities = GatewayCapability.OpenAiResponsesPassthrough;
         var request = new GatewayChatRequest(
             streaming,
