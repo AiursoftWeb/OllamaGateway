@@ -255,7 +255,8 @@ public class OpenAIBackendProviderTests : TestBase
             .Where(item => item?["done"]?.GetValue<bool>() == true)
             .ToList();
         Assert.AreEqual(1, completed.Count, "Should produce exactly one terminal NDJSON line");
-        Assert.AreEqual("Hi", completed[0]?["message"]?["content"]?.ToString());
+        Assert.AreEqual("Hi", string.Concat(lines.Select(line => JsonNode.Parse(line)?["message"]?["content"]?.ToString())));
+        Assert.AreEqual(string.Empty, completed[0]?["message"]?["content"]?.ToString());
         Assert.AreEqual(5L, completed[0]?["prompt_eval_count"]?.GetValue<long>());
         Assert.AreEqual(1L, completed[0]?["eval_count"]?.GetValue<long>());
 

@@ -60,7 +60,8 @@ public class ChatStreamingTranslationTests
             .ToList();
 
         Assert.AreEqual(1, completed.Count);
-        Assert.AreEqual("answer", completed[0]?["message"]?["content"]?.ToString());
+        Assert.AreEqual("answer", string.Concat(lines.Select(line => JsonNode.Parse(line)?["message"]?["content"]?.ToString())));
+        Assert.AreEqual(string.Empty, completed[0]?["message"]?["content"]?.ToString());
         Assert.AreEqual("length", completed[0]?["done_reason"]?.ToString());
         Assert.AreEqual(5L, completed[0]?["prompt_eval_count"]?.GetValue<long>());
         Assert.AreEqual(3L, completed[0]?["eval_count"]?.GetValue<long>());
@@ -126,6 +127,45 @@ public class ChatStreamingTranslationTests
         StringAssert.Contains(output, "\"completion_tokens\":2");
         StringAssert.Contains(output, "\"finish_reason\":\"stop\"");
         Assert.IsTrue(output.EndsWith("data: [DONE]\n\n", StringComparison.Ordinal));
+    }
+
+    [TestMethod]
+    [DataRow(true)]
+    [DataRow(false)]
+    public async Task OpenAiSseToOllama_PreservesContentReasoningAndToolsWithoutDuplication(bool streaming)
+    {
+        const string sse =
+            "data: {\"choices\":[{\"delta\":{\"reasoning_content\":\"think\",\"content\":\"hello\"}}]}\n\n" +
+            "data: {\"choices\":[{\"delta\":{\"reasoning_content\":\" more\",\"content\":\" world\"}}]}\n\n" +
+            "data: {\"choices\":[{\"delta\":{\"tool_calls\":[{\"index\":0,\"id\":\"call_1\",\"function\":{\"name\":\"lookup\",\"arguments\":\"{\\\"q\\\":\"}}]}}]}\n\n" +
+            "data: {\"choices\":[{\"delta\":{\"tool_calls\":[{\"index\":0,\"function\":{\"arguments\":\"\\\"x\\\"}\"}}]},\"finish_reason\":\"tool_calls\"}],\"usage\":{\"prompt_tokens\":5,\"completion_tokens\":3}}\n\n" +
+            "data: [DONE]\n\n";
+        await using var source = new MemoryStream(Encoding.UTF8.GetBytes(sse));
+        var decoder = new OpenAiChatProviderResponseDecoder();
+        var writer = new OllamaChatClientResponseWriter();
+        var context = Context();
+
+        await writer.WriteTranslatedAsync(
+            decoder.DecodeAsync(source, true, CancellationToken.None),
+            Model(),
+            streaming,
+            context.Response,
+            CancellationToken.None);
+
+        var frames = (await Body(context)).Split('\n', StringSplitOptions.RemoveEmptyEntries)
+            .Select(line => JsonNode.Parse(line)!).ToList();
+        Assert.AreEqual("hello world", string.Concat(frames.Select(frame => frame["message"]?["content"]?.ToString())));
+        Assert.AreEqual("think more", string.Concat(frames.Select(frame => frame["message"]?["thinking"]?.ToString())));
+        var completed = frames.Single(frame => frame["done"]!.GetValue<bool>());
+        Assert.AreEqual(streaming ? string.Empty : "hello world", completed["message"]?["content"]?.ToString());
+        Assert.AreEqual(streaming ? null : "think more", completed["message"]?["thinking"]?.ToString());
+        Assert.AreEqual(1, frames.Sum(frame => frame["message"]?["tool_calls"]?.AsArray().Count ?? 0));
+        Assert.AreEqual("lookup", completed["message"]?["tool_calls"]?[0]?["function"]?["name"]?.ToString());
+        Assert.AreEqual("x", completed["message"]?["tool_calls"]?[0]?["function"]?["arguments"]?["q"]?.ToString());
+        Assert.AreEqual("stop", completed["done_reason"]?.ToString());
+        Assert.AreEqual(5L, completed["prompt_eval_count"]?.GetValue<long>());
+        Assert.AreEqual(3L, completed["eval_count"]?.GetValue<long>());
+        if (!streaming) Assert.AreEqual(1, frames.Count);
     }
 
     private static DefaultHttpContext Context()
