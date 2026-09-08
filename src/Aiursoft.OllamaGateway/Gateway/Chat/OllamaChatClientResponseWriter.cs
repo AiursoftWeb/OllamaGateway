@@ -33,11 +33,9 @@ public sealed class OllamaChatClientResponseWriter : IChatClientResponseWriter
             switch (item)
             {
                 case GatewayTextDelta text:
-                    state.Text.Append(text.Text);
                     await WriteLineAsync(response, Chunk(virtualModel.Name, text.Text), cancellationToken);
                     break;
                 case GatewayReasoningDelta reasoning:
-                    state.Reasoning.Append(reasoning.Text);
                     var reasoningChunk = Chunk(virtualModel.Name, string.Empty);
                     reasoningChunk["message"]!["thinking"] = reasoning.Text;
                     await WriteLineAsync(response, reasoningChunk, cancellationToken);
