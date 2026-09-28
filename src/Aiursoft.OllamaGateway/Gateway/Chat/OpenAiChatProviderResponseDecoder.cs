@@ -61,7 +61,7 @@ public sealed class OpenAiChatProviderResponseDecoder : IChatProviderResponseDec
 
             var choice = FirstChoice(root);
             var delta = choice?["delta"];
-            var reasoning = delta?["reasoning_content"]?.ToString();
+            var reasoning = Reasoning(delta);
             if (!string.IsNullOrEmpty(reasoning)) yield return new GatewayReasoningDelta(reasoning);
             var text = delta?["content"]?.ToString();
             if (!string.IsNullOrEmpty(text)) yield return new GatewayTextDelta(text);
@@ -99,7 +99,7 @@ public sealed class OpenAiChatProviderResponseDecoder : IChatProviderResponseDec
         yield return ResponseStarted(root);
         var choice = FirstChoice(root);
         var message = choice?["message"];
-        var reasoning = message?["reasoning_content"]?.ToString();
+        var reasoning = Reasoning(message);
         if (!string.IsNullOrEmpty(reasoning)) yield return new GatewayReasoningDelta(reasoning);
         var text = message?["content"]?.ToString();
         if (!string.IsNullOrEmpty(text)) yield return new GatewayTextDelta(text);
@@ -130,6 +130,15 @@ public sealed class OpenAiChatProviderResponseDecoder : IChatProviderResponseDec
         return root["choices"] is JsonArray { Count: > 0 } choices
             ? choices[0]
             : null;
+    }
+
+    private static string? Reasoning(JsonNode? message)
+    {
+        // vLLM emits "reasoning" while other OpenAI-compatible servers use
+        // "reasoning_content". Some send both; prefer one to avoid duplication.
+        return message?["reasoning_content"]?.ToString() is { Length: > 0 } content
+            ? content
+            : message?["reasoning"]?.ToString();
     }
 
     private static GatewayResponseStarted ResponseStarted(JsonNode root)

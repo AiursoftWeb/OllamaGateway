@@ -54,6 +54,7 @@
                     <button class="btn btn-primary" type="submit" id="btnSend">
                         <i class="align-middle" data-lucide="send"></i>
                     </button>
+                    <button class="btn btn-outline-danger d-none" type="button" id="btnStop">@Localizer["Stop"]</button>
                 </form>
             </div>
         </div>
@@ -114,6 +115,10 @@
     <span data-key="session-cleared">@Localizer["Session cleared. Send a new message to start over."]</span>
     <span data-key="error-prefix">@Localizer["Error: "]</span>
     <span data-key="thinking">@Localizer["Thinking..."]</span>
+    <span data-key="waiting">@Localizer["Waiting for model response..."]</span>
+    <span data-key="stopped">@Localizer["Generation stopped."]</span>
+    <span data-key="interrupted">@Localizer["The response ended unexpectedly. Please try again."]</span>
+    <span data-key="no-answer">@Localizer["No final answer was generated."]</span>
 </div>
 
 @* ReSharper disable once Razor.SectionNotResolved *@
@@ -128,6 +133,7 @@
         const chatForm = document.getElementById('chatForm');
         const userInput = document.getElementById('userInput');
         const btnSend = document.getElementById('btnSend');
+        const btnStop = document.getElementById('btnStop');
         const btnClearChat = document.getElementById('btnClearChat');
         const btnUploadImage = document.getElementById('btnUploadImage');
         const imageInput = document.getElementById('imageInput');
@@ -138,6 +144,9 @@
         
         let history = [];
         let pendingImages = [];
+        let activeController = null;
+
+        btnStop.addEventListener('click', () => activeController?.abort());
 
         apiModeSelect.addEventListener('change', () => {
             if (apiModeSelect.value === 'ollama') {
@@ -300,6 +309,7 @@
         });
 
         btnClearChat.addEventListener('click', () => {
+            activeController?.abort();
             chatMessages.innerHTML = `
                 <div class="text-center text-muted my-5" id="welcomeMessage">
                     <i class="align-middle me-2" data-lucide="sparkles" style="width: 48px; height: 48px; color: #ffc107;"></i>
@@ -337,7 +347,7 @@
             }
             history.push(msgObj);
 
-            const assistantMsgDiv = appendMessage('assistant', '...');
+            const assistantMsgDiv = appendMessage('assistant', getLocalizedText('waiting', 'Waiting for model response...'));
             const contentDiv = assistantMsgDiv.querySelector('.message-content');
             const thinkContainer = assistantMsgDiv.querySelector('.thinking-container');
             const thinkContent = assistantMsgDiv.querySelector('.thinking-content');
@@ -345,7 +355,11 @@
             
             let assistantFullContent = '';
             let assistantFullThinking = '';
+            let streamCompleted = false;
             const mode = apiModeSelect.value;
+            const controller = new AbortController();
+            activeController = controller;
+            btnStop.classList.remove('d-none');
 
             try {
                 const endpoint = mode === 'ollama' ? '/api/chat' : (mode === 'anthropic' ? '/v1/messages' : '/v1/chat/completions');
@@ -366,14 +380,15 @@
                 const response = await fetch(endpoint, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(body)
+                    body: JSON.stringify(body),
+                    signal: controller.signal
                 });
 
                 if (!response.ok) throw new Error(await response.text());
 
+                if (!response.body) throw new Error(getLocalizedText('interrupted', 'The response ended unexpectedly. Please try again.'));
                 const reader = response.body.getReader();
                 const decoder = new TextDecoder();
-                contentDiv.innerText = '';
                 let lineBuffer = '';
 
                 while (true) {
@@ -387,24 +402,25 @@
                         lineBuffer = lines.pop() || '';
                         for (const line of lines) {
                             if (!line.trim()) continue;
-                            try {
-                                const data = JSON.parse(line);
-                                if (data.message) {
-                                    if (data.message.content) {
-                                        assistantFullContent += data.message.content;
-                                        contentDiv.innerText = assistantFullContent;
-                                    }
-                                    const thinkingContent = data.message.thinking || data.message.think;
-                                    if (thinkingContent) {
-                                        assistantFullThinking += thinkingContent;
-                                        thinkContent.innerText = assistantFullThinking;
-                                        thinkContainer.classList.remove('d-none');
-                                    }
-                                    if (data.done) {
-                                        thinkSpinner.classList.add('d-none');
-                                    }
+                            const data = JSON.parse(line);
+                            if (data.error) throw new Error(typeof data.error === 'string' ? data.error : JSON.stringify(data.error));
+                            if (data.message) {
+                                if (data.message.content) {
+                                    assistantFullContent += data.message.content;
+                                    contentDiv.innerText = assistantFullContent;
                                 }
-                            } catch (e) { console.error(e); }
+                                const thinkingContent = data.message.thinking || data.message.think;
+                                if (thinkingContent) {
+                                    assistantFullThinking += thinkingContent;
+                                    thinkContent.innerText = assistantFullThinking;
+                                    thinkContainer.classList.remove('d-none');
+                                    if (!assistantFullContent) contentDiv.innerText = getLocalizedText('thinking', 'Thinking...');
+                                }
+                                if (data.done) {
+                                    streamCompleted = true;
+                                    thinkSpinner.classList.add('d-none');
+                                }
+                            }
                         }
                     } else if (mode === 'anthropic') {
                         // Anthropic SSE
@@ -413,15 +429,20 @@
                         for (const line of lines) {
                             if (!line.startsWith('data: ')) continue;
                             const dataStr = line.substring(6).trim();
-                            try {
-                                const data = JSON.parse(dataStr);
-                                if (data.type === 'content_block_delta' && data.delta && data.delta.text) {
-                                    assistantFullContent += data.delta.text;
-                                    contentDiv.innerText = assistantFullContent;
-                                } else if (data.type === 'message_stop') {
-                                    thinkSpinner.classList.add('d-none');
-                                }
-                            } catch (e) { console.error(e); }
+                            const data = JSON.parse(dataStr);
+                            if (data.type === 'error') throw new Error(data.error?.message || JSON.stringify(data.error));
+                            if (data.type === 'content_block_delta' && data.delta?.text) {
+                                assistantFullContent += data.delta.text;
+                                contentDiv.innerText = assistantFullContent;
+                            } else if (data.type === 'content_block_delta' && data.delta?.thinking) {
+                                assistantFullThinking += data.delta.thinking;
+                                thinkContent.innerText = assistantFullThinking;
+                                thinkContainer.classList.remove('d-none');
+                                if (!assistantFullContent) contentDiv.innerText = getLocalizedText('thinking', 'Thinking...');
+                            } else if (data.type === 'message_stop') {
+                                streamCompleted = true;
+                                thinkSpinner.classList.add('d-none');
+                            }
                         }
                     } else {
                         // OpenAI SSE
@@ -431,34 +452,42 @@
                             if (!line.startsWith('data: ')) continue;
                             const dataStr = line.substring(6).trim();
                             if (dataStr === '[DONE]') {
+                                streamCompleted = true;
                                 thinkSpinner.classList.add('d-none');
                                 continue;
                             }
-                            try {
-                                const data = JSON.parse(dataStr);
-                                const delta = data.choices[0].delta;
-                                if (delta.content) {
-                                    assistantFullContent += delta.content;
-                                    contentDiv.innerText = assistantFullContent;
-                                }
-                                if (delta.reasoning_content) {
-                                    assistantFullThinking += delta.reasoning_content;
-                                    thinkContent.innerText = assistantFullThinking;
-                                    thinkContainer.classList.remove('d-none');
-                                }
-                            } catch (e) { console.error(e); }
+                            const data = JSON.parse(dataStr);
+                            if (data.error) throw new Error(data.error.message || JSON.stringify(data.error));
+                            const delta = data.choices?.[0]?.delta;
+                            if (delta?.content) {
+                                assistantFullContent += delta.content;
+                                contentDiv.innerText = assistantFullContent;
+                            }
+                            const reasoning = delta?.reasoning_content || delta?.reasoning;
+                            if (reasoning) {
+                                assistantFullThinking += reasoning;
+                                thinkContent.innerText = assistantFullThinking;
+                                thinkContainer.classList.remove('d-none');
+                                if (!assistantFullContent) contentDiv.innerText = getLocalizedText('thinking', 'Thinking...');
+                            }
                         }
                     }
                     chatMessages.scrollTop = chatMessages.scrollHeight;
                 }
                 
+                if (!streamCompleted) throw new Error(getLocalizedText('interrupted', 'The response ended unexpectedly. Please try again.'));
+                if (!assistantFullContent) contentDiv.innerText = getLocalizedText('no-answer', 'No final answer was generated.');
                 history.push({ role: 'assistant', content: assistantFullContent });
 
             } catch (error) {
                 contentDiv.classList.add('text-danger');
-                contentDiv.innerText = getLocalizedText('error-prefix', 'Error: ') + error.message;
+                contentDiv.innerText = error.name === 'AbortError'
+                    ? getLocalizedText('stopped', 'Generation stopped.')
+                    : getLocalizedText('error-prefix', 'Error: ') + error.message;
             } finally {
                 thinkSpinner.classList.add('d-none');
+                activeController = null;
+                btnStop.classList.add('d-none');
                 userInput.disabled = false;
                 btnSend.disabled = false;
                 btnUploadImage.disabled = false;

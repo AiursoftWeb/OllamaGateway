@@ -1,6 +1,6 @@
 using System.Net;
+using System.Net.Sockets;
 using System.Text.RegularExpressions;
-using Aiursoft.CSTools.Tools;
 using Aiursoft.DbTools;
 using Aiursoft.OllamaGateway.Entities;
 using static Aiursoft.WebTools.Extends;
@@ -9,6 +9,7 @@ namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
 
 public abstract class TestBase
 {
+    private static int nextPort = Random.Shared.Next(20000, 25000);
     protected readonly int Port;
     protected readonly HttpClient Http;
     protected IHost? Server;
@@ -21,11 +22,33 @@ public abstract class TestBase
             CookieContainer = cookieContainer,
             AllowAutoRedirect = false
         };
-        Port = Network.GetAvailablePort();
+        Port = FindTestPort();
         Http = new HttpClient(handler)
         {
             BaseAddress = new Uri($"http://localhost:{Port}")
         };
+    }
+
+    private static int FindTestPort()
+    {
+        // Keep each test's listening port distinct within this process. The OS's
+        // ephemeral client port range can race with a port-0 availability probe.
+        for (var attempt = 0; attempt < 1000; attempt++)
+        {
+            var candidate = Interlocked.Increment(ref nextPort);
+            using var listener = new TcpListener(IPAddress.Any, candidate);
+            try
+            {
+                listener.Start();
+                return candidate;
+            }
+            catch (SocketException)
+            {
+                // Another service owns this candidate; try the next one.
+            }
+        }
+
+        throw new InvalidOperationException("Could not reserve a free integration test port.");
     }
 
     [TestInitialize]

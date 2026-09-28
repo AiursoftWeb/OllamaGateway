@@ -8,6 +8,104 @@ namespace Aiursoft.OllamaGateway.Tests.Gateway.Chat;
 [TestClass]
 public class ChatStreamingTranslationTests
 {
+    [TestMethod]
+    [DataRow("reasoning")]
+    [DataRow("reasoning_content")]
+    public async Task OpenAiThinkingOnlyStream_ReachesOllamaBeforeFinalAnswer(string field)
+    {
+        var sse = $"data: {{\"choices\":[{{\"delta\":{{\"{field}\":\"thinking\"}}}}]}}\n\n" +
+                  "data: {\"choices\":[{\"delta\":{\"content\":\"answer\"},\"finish_reason\":\"stop\"}]}\n\n" +
+                  "data: [DONE]\n\n";
+        await using var source = new MemoryStream(Encoding.UTF8.GetBytes(sse));
+        var context = Context();
+        await new OllamaChatClientResponseWriter().WriteTranslatedAsync(
+            new OpenAiChatProviderResponseDecoder().DecodeAsync(source, true, CancellationToken.None),
+            Model(), true, context.Response, CancellationToken.None);
+
+        var frames = (await Body(context)).Split('\n', StringSplitOptions.RemoveEmptyEntries)
+            .Select(line => JsonNode.Parse(line)!).ToList();
+        Assert.AreEqual("thinking", frames[0]["message"]?["thinking"]?.ToString());
+        Assert.AreEqual(false, frames[0]["done"]?.GetValue<bool>());
+        Assert.AreEqual("answer", frames[1]["message"]?["content"]?.ToString());
+        Assert.AreEqual(true, frames[2]["done"]?.GetValue<bool>());
+    }
+
+    [TestMethod]
+    [DataRow("reasoning")]
+    [DataRow("reasoning_content")]
+    public async Task OpenAiBufferedThinkingOnly_PreservesReasoning(string field)
+    {
+        var json = $"{{\"choices\":[{{\"message\":{{\"{field}\":\"thinking\",\"content\":\"\"}},\"finish_reason\":\"stop\"}}]}}";
+        await using var source = new MemoryStream(Encoding.UTF8.GetBytes(json));
+        var context = Context();
+        await new OllamaChatClientResponseWriter().WriteTranslatedAsync(
+            new OpenAiChatProviderResponseDecoder().DecodeAsync(source, false, CancellationToken.None),
+            Model(), false, context.Response, CancellationToken.None);
+
+        var response = JsonNode.Parse(await Body(context));
+        Assert.AreEqual("thinking", response?["message"]?["thinking"]?.ToString());
+        Assert.AreEqual(string.Empty, response?["message"]?["content"]?.ToString());
+        Assert.AreEqual(true, response?["done"]?.GetValue<bool>());
+    }
+
+    [TestMethod]
+    [DataRow(true)]
+    [DataRow(false)]
+    public async Task OpenAiBothReasoningFields_EmitsOnlyOneCopy(bool streaming)
+    {
+        var json = streaming
+            ? "data: {\"choices\":[{\"delta\":{\"reasoning\":\"duplicate\",\"reasoning_content\":\"preferred\"}}]}\n\ndata: [DONE]\n\n"
+            : "{\"choices\":[{\"message\":{\"reasoning\":\"duplicate\",\"reasoning_content\":\"preferred\"}}]}";
+        await using var source = new MemoryStream(Encoding.UTF8.GetBytes(json));
+        var events = new List<GatewayChatEvent>();
+        await foreach (var item in new OpenAiChatProviderResponseDecoder().DecodeAsync(source, streaming, CancellationToken.None))
+            events.Add(item);
+
+        Assert.AreEqual("preferred", events.OfType<GatewayReasoningDelta>().Single().Text);
+        Assert.AreEqual(1, events.OfType<GatewayResponseCompleted>().Count());
+    }
+
+    [TestMethod]
+    public async Task OpenAiReasoningOnlyStream_CompletesWithoutInventingAnswer()
+    {
+        const string sse =
+            "data: {\"choices\":[{\"delta\":{\"reasoning\":\"thinking\"},\"finish_reason\":null}]}\n\n" +
+            "data: {\"choices\":[{\"delta\":{},\"finish_reason\":\"length\"}]}\n\n" +
+            "data: [DONE]\n\n";
+        await using var source = new MemoryStream(Encoding.UTF8.GetBytes(sse));
+        var context = Context();
+        await new OllamaChatClientResponseWriter().WriteTranslatedAsync(
+            new OpenAiChatProviderResponseDecoder().DecodeAsync(source, true, CancellationToken.None),
+            Model(), true, context.Response, CancellationToken.None);
+
+        var frames = (await Body(context)).Split('\n', StringSplitOptions.RemoveEmptyEntries)
+            .Select(line => JsonNode.Parse(line)!).ToList();
+        Assert.AreEqual("thinking", frames[0]["message"]?["thinking"]?.ToString());
+        Assert.AreEqual(string.Empty, frames[0]["message"]?["content"]?.ToString());
+        Assert.AreEqual(true, frames[1]["done"]?.GetValue<bool>());
+        Assert.AreEqual("length", frames[1]["done_reason"]?.ToString());
+    }
+
+    [TestMethod]
+    public async Task OpenAiReasoningAlias_ToOpenAiSseReachesPlayground()
+    {
+        const string sse =
+            "data: {\"choices\":[{\"delta\":{\"reasoning\":\"thinking\"},\"finish_reason\":null}]}\n\n" +
+            "data: {\"choices\":[{\"delta\":{\"content\":\"answer\"},\"finish_reason\":\"stop\"}]}\n\n" +
+            "data: [DONE]\n\n";
+        await using var source = new MemoryStream(Encoding.UTF8.GetBytes(sse));
+        var context = Context();
+        await new OpenAiChatClientResponseWriter().WriteTranslatedAsync(
+            new OpenAiChatProviderResponseDecoder().DecodeAsync(source, true, CancellationToken.None),
+            Model(), true, context.Response, CancellationToken.None);
+
+        var output = await Body(context);
+        StringAssert.Contains(output, "\"reasoning_content\":\"thinking\"");
+        StringAssert.Contains(output, "\"content\":\"answer\"");
+        Assert.IsTrue(output.IndexOf("reasoning_content", StringComparison.Ordinal) < output.IndexOf("\"content\":\"answer\"", StringComparison.Ordinal));
+        Assert.IsTrue(output.EndsWith("data: [DONE]\n\n", StringComparison.Ordinal));
+    }
+
     private const string OpenAiSseWithSeparateUsage =
         "data: {\"id\":\"r-usage\",\"model\":\"physical\",\"choices\":[{\"delta\":{\"content\":\"answer\"},\"finish_reason\":null}]}\n\n" +
         "data: {\"id\":\"r-usage\",\"model\":\"physical\",\"choices\":[{\"delta\":{},\"finish_reason\":\"length\"}]}\n\n" +

@@ -288,12 +288,14 @@ public class OllamaGatewayTests : TestBase
         await LoginAsAdmin();
 
         // 1. Setup Data
+        int providerId;
         using (var scope = Server!.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
             var provider = new OllamaProvider { Name = "Provider", BaseUrl = "http://localhost:11434" };
             db.OllamaProviders.Add(provider);
             await db.SaveChangesAsync();
+            providerId = provider.Id;
             var virtualModel = new VirtualModel
             {
                 Name = "chat-model:latest",
@@ -318,6 +320,15 @@ public class OllamaGatewayTests : TestBase
         Assert.Contains("chat-model:latest", html);
         Assert.Contains("Chatting with", html);
         Assert.Contains("chat-model:latest", html);
+        Assert.Contains("id=\"btnStop\"", html);
+        Assert.Contains("Waiting for model response...", html);
+        Assert.Contains("delta?.reasoning_content || delta?.reasoning", html);
+
+        var physicalResponse = await Http.GetAsync($"/ChatPlayground/PhysicalChat?providerId={providerId}&modelName=llama3.2");
+        physicalResponse.EnsureSuccessStatusCode();
+        var physicalHtml = await physicalResponse.Content.ReadAsStringAsync();
+        Assert.Contains("id=\"btnStop\"", physicalHtml);
+        Assert.Contains("Waiting for model response...", physicalHtml);
     }
 
     [TestMethod]

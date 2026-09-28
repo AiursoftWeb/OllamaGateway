@@ -1,4 +1,5 @@
 using System.Net;
+using System.IO.Pipelines;
 using System.Text;
 using System.Text.Json.Nodes;
 using Aiursoft.DbTools;
@@ -274,6 +275,97 @@ public class OpenAIBackendProviderTests : TestBase
         Assert.AreEqual("Completed", recent[0].Status);
         Assert.AreEqual("", recent[0].ErrorMessage);
         Assert.AreEqual("Hi", recent[0].Answer);
+    }
+
+    [TestMethod]
+    [DataRow("/api/chat", false)]
+    [DataRow("/v1/chat/completions", true)]
+    public async Task OpenAiBackend_ReasoningAlias_IsVisibleBeforeFinalAnswer(string path, bool openAi)
+    {
+        MockUpstreamState.Handler = (_, _) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+        {
+            Content = new StringContent(
+                "data: {\"id\":\"reasoning-test\",\"choices\":[{\"delta\":{\"reasoning\":\"thinking\"},\"finish_reason\":null}]}\n\n" +
+                "data: {\"id\":\"reasoning-test\",\"choices\":[{\"delta\":{\"content\":\"answer\"},\"finish_reason\":\"stop\"}]}\n\n" +
+                "data: [DONE]\n\n",
+                Encoding.UTF8,
+                "text/event-stream")
+        });
+
+        var payload = $$"""{"model":"{{ChatModelName}}","messages":[{"role":"user","content":"Hi"}],"stream":true}""";
+        var response = await Http.SendAsync(AuthedPost(path, payload));
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        var output = await response.Content.ReadAsStringAsync();
+        if (openAi)
+        {
+            Assert.IsTrue(output.IndexOf("\"reasoning_content\":\"thinking\"", StringComparison.Ordinal) <
+                          output.IndexOf("\"content\":\"answer\"", StringComparison.Ordinal));
+            Assert.IsTrue(output.EndsWith("data: [DONE]\n\n", StringComparison.Ordinal));
+        }
+        else
+        {
+            var frames = output.Split('\n', StringSplitOptions.RemoveEmptyEntries)
+                .Select(line => JsonNode.Parse(line)!).ToList();
+            Assert.AreEqual("thinking", frames[0]["message"]?["thinking"]?.ToString());
+            Assert.AreEqual(false, frames[0]["done"]?.GetValue<bool>());
+            Assert.AreEqual("answer", frames[1]["message"]?["content"]?.ToString());
+            Assert.AreEqual(true, frames[2]["done"]?.GetValue<bool>());
+        }
+    }
+
+    [TestMethod]
+    [DataRow("/api/chat", false)]
+    [DataRow("/v1/chat/completions", true)]
+    public async Task OpenAiBackend_ForwardsThinkingBeforeUpstreamFinishes(string path, bool openAi)
+    {
+        var releaseFinal = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            var pipe = new Pipe();
+            _ = Task.Run(async () =>
+            {
+                try
+                {
+                    await pipe.Writer.WriteAsync(Encoding.UTF8.GetBytes(
+                        "data: {\"id\":\"stream-first\",\"choices\":[{\"delta\":{\"reasoning\":\"thinking\"},\"finish_reason\":null}]}\n\n"));
+                    await releaseFinal.Task;
+                    await pipe.Writer.WriteAsync(Encoding.UTF8.GetBytes(
+                        "data: {\"id\":\"stream-first\",\"choices\":[{\"delta\":{\"content\":\"answer\"},\"finish_reason\":\"stop\"}]}\n\ndata: [DONE]\n\n"));
+                }
+                finally
+                {
+                    await pipe.Writer.CompleteAsync();
+                }
+            });
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StreamContent(pipe.Reader.AsStream())
+            });
+        };
+
+        try
+        {
+            using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            var payload = $$"""{"model":"{{ChatModelName}}","messages":[{"role":"user","content":"Hi"}],"stream":true}""";
+            using var response = await Http.SendAsync(
+                AuthedPost(path, payload), HttpCompletionOption.ResponseHeadersRead, timeout.Token);
+            response.EnsureSuccessStatusCode();
+            await using var stream = await response.Content.ReadAsStreamAsync(timeout.Token);
+            using var reader = new StreamReader(stream);
+            var firstLine = await reader.ReadLineAsync(timeout.Token);
+            Assert.IsNotNull(firstLine);
+            var frame = JsonNode.Parse(openAi ? firstLine["data: ".Length..] : firstLine);
+            var reasoning = openAi
+                ? frame?["choices"]?[0]?["delta"]?["reasoning_content"]?.ToString()
+                  ?? frame?["choices"]?[0]?["delta"]?["reasoning"]?.ToString()
+                : frame?["message"]?["thinking"]?.ToString();
+            Assert.AreEqual("thinking", reasoning);
+            Assert.IsFalse(releaseFinal.Task.IsCompleted, "The final answer was sent before the thinking chunk arrived.");
+        }
+        finally
+        {
+            releaseFinal.TrySetResult();
+        }
     }
 
     [TestMethod]
