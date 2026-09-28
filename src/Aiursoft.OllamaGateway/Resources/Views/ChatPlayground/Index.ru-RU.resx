@@ -42,8 +42,14 @@
   <data name="Error: " xml:space="preserve">
     <value>Ошибка:</value>
   </data>
+  <data name="Generation stopped." xml:space="preserve">
+    <value>Генерация остановлена.</value>
+  </data>
   <data name="Hello! Send a message to start testing your virtual model configuration." xml:space="preserve">
     <value>Привет! Отправьте сообщение, чтобы начать тестирование конфигурации вашей виртуальной модели.</value>
+  </data>
+  <data name="No final answer was generated." xml:space="preserve">
+    <value>Окончательный ответ не был сгенерирован.</value>
   </data>
   <data name="Num Ctx" xml:space="preserve">
     <value>Кол-во контекста</value>
@@ -54,11 +60,17 @@
   <data name="Session cleared. Send a new message to start over." xml:space="preserve">
     <value>Сессия очищена. Отправьте новое сообщение, чтобы начать заново.</value>
   </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Остановить</value>
+  </data>
   <data name="Switch Model:" xml:space="preserve">
     <value>Сменить модель:</value>
   </data>
   <data name="Temperature" xml:space="preserve">
     <value>Температура</value>
+  </data>
+  <data name="The response ended unexpectedly. Please try again." xml:space="preserve">
+    <value>Ответ был неожиданно прерван. Пожалуйста, попробуйте ещё раз.</value>
   </data>
   <data name="Thinking" xml:space="preserve">
     <value>Мышление</value>
@@ -71,6 +83,9 @@
   </data>
   <data name="Top P" xml:space="preserve">
     <value>Top P</value>
+  </data>
+  <data name="Waiting for model response..." xml:space="preserve">
+    <value>Ожидание ответа модели...</value>
   </data>
 
 </root>

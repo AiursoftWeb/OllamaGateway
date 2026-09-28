@@ -42,8 +42,14 @@
   <data name="Error: " xml:space="preserve">
     <value>Hata:</value>
   </data>
+  <data name="Generation stopped." xml:space="preserve">
+    <value>Oluşturma durduruldu.</value>
+  </data>
   <data name="Hello! Send a message to start testing your virtual model configuration." xml:space="preserve">
     <value>Merhaba! Sanal model yapılandırmanızı test etmeye başlamak için bir mesaj gönderin.</value>
+  </data>
+  <data name="No final answer was generated." xml:space="preserve">
+    <value>Nihai bir yanıt oluşturulmadı.</value>
   </data>
   <data name="Num Ctx" xml:space="preserve">
     <value>Num Ctx</value>
@@ -54,11 +60,17 @@
   <data name="Session cleared. Send a new message to start over." xml:space="preserve">
     <value>Oturum temizlendi. Başlamak için yeni bir mesaj gönderin.</value>
   </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Durdur</value>
+  </data>
   <data name="Switch Model:" xml:space="preserve">
     <value>Model Değiştir:</value>
   </data>
   <data name="Temperature" xml:space="preserve">
     <value>Sıcaklık</value>
+  </data>
+  <data name="The response ended unexpectedly. Please try again." xml:space="preserve">
+    <value>Yanıt beklenmedik şekilde sona erdi. Lütfen tekrar deneyin.</value>
   </data>
   <data name="Thinking" xml:space="preserve">
     <value>Düşünme</value>
@@ -71,6 +83,9 @@
   </data>
   <data name="Top P" xml:space="preserve">
     <value>Top P</value>
+  </data>
+  <data name="Waiting for model response..." xml:space="preserve">
+    <value>Model yanıtı bekleniyor...</value>
   </data>
 
 </root>
