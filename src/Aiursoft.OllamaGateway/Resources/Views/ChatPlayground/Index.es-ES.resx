@@ -42,8 +42,14 @@
   <data name="Error: " xml:space="preserve">
     <value>Error:</value>
   </data>
+  <data name="Generation stopped." xml:space="preserve">
+    <value>Generación detenida.</value>
+  </data>
   <data name="Hello! Send a message to start testing your virtual model configuration." xml:space="preserve">
     <value>¡Hola! Envía un mensaje para comenzar a probar la configuración de tu modelo virtual.</value>
+  </data>
+  <data name="No final answer was generated." xml:space="preserve">
+    <value>No se generó ninguna respuesta final.</value>
   </data>
   <data name="Num Ctx" xml:space="preserve">
     <value>Num Ctx</value>
@@ -54,11 +60,17 @@
   <data name="Session cleared. Send a new message to start over." xml:space="preserve">
     <value>Sesión borrada. Envía un nuevo mensaje para comenzar de nuevo.</value>
   </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Detener</value>
+  </data>
   <data name="Switch Model:" xml:space="preserve">
     <value>Cambiar modelo:</value>
   </data>
   <data name="Temperature" xml:space="preserve">
     <value>Temperatura</value>
+  </data>
+  <data name="The response ended unexpectedly. Please try again." xml:space="preserve">
+    <value>La respuesta ha terminado inesperadamente. Inténtalo de nuevo.</value>
   </data>
   <data name="Thinking" xml:space="preserve">
     <value>Pensar</value>
@@ -71,6 +83,9 @@
   </data>
   <data name="Top P" xml:space="preserve">
     <value>Top P</value>
+  </data>
+  <data name="Waiting for model response..." xml:space="preserve">
+    <value>Esperando la respuesta del modelo...</value>
   </data>
 
 </root>

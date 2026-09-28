@@ -42,8 +42,14 @@
   <data name="Error: " xml:space="preserve">
     <value>错误：</value>
   </data>
+  <data name="Generation stopped." xml:space="preserve">
+    <value>已停止生成。</value>
+  </data>
   <data name="Hello! Send a message to start testing your virtual model configuration." xml:space="preserve">
     <value>您好！发送一条消息以开始测试您的虚拟模型配置。</value>
+  </data>
+  <data name="No final answer was generated." xml:space="preserve">
+    <value>模型没有生成最终答复。</value>
   </data>
   <data name="Num Ctx" xml:space="preserve">
     <value>上下文数量</value>
@@ -54,11 +60,17 @@
   <data name="Session cleared. Send a new message to start over." xml:space="preserve">
     <value>会话已清除。请发送新消息以重新开始。</value>
   </data>
+  <data name="Stop" xml:space="preserve">
+    <value>停止</value>
+  </data>
   <data name="Switch Model:" xml:space="preserve">
     <value>切换模型：</value>
   </data>
   <data name="Temperature" xml:space="preserve">
     <value>温度</value>
+  </data>
+  <data name="The response ended unexpectedly. Please try again." xml:space="preserve">
+    <value>响应意外中断，请重试。</value>
   </data>
   <data name="Thinking" xml:space="preserve">
     <value>思维</value>
@@ -66,26 +78,14 @@
   <data name="Thinking..." xml:space="preserve">
     <value>思考中...</value>
   </data>
-  <data name="Stop" xml:space="preserve">
-    <value>停止</value>
-  </data>
-  <data name="Waiting for model response..." xml:space="preserve">
-    <value>等待模型响应...</value>
-  </data>
-  <data name="Generation stopped." xml:space="preserve">
-    <value>已停止生成。</value>
-  </data>
-  <data name="The response ended unexpectedly. Please try again." xml:space="preserve">
-    <value>响应意外中断，请重试。</value>
-  </data>
-  <data name="No final answer was generated." xml:space="preserve">
-    <value>模型没有生成最终答复。</value>
-  </data>
   <data name="Top K" xml:space="preserve">
     <value>Top K</value>
   </data>
   <data name="Top P" xml:space="preserve">
     <value>Top P</value>
+  </data>
+  <data name="Waiting for model response..." xml:space="preserve">
+    <value>等待模型响应...</value>
   </data>
 
 </root>

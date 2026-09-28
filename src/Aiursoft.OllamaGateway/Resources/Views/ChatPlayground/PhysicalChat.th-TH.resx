@@ -39,8 +39,14 @@
   <data name="Error: " xml:space="preserve">
     <value>ข้อผิดพลาด:</value>
   </data>
+  <data name="Generation stopped." xml:space="preserve">
+    <value>การสร้างหยุดลงแล้ว</value>
+  </data>
   <data name="Hello! Send a message to start testing your virtual model configuration." xml:space="preserve">
     <value>สวัสดี! ส่งข้อความเพื่อเริ่มทดสอบการกำหนดค่าโมเดลเสมือนของคุณ</value>
+  </data>
+  <data name="No final answer was generated." xml:space="preserve">
+    <value>ไม่มีการสร้างคำตอบสุดท้าย</value>
   </data>
   <data name="Num Ctx" xml:space="preserve">
     <value>จำนวนบริบท</value>
@@ -51,8 +57,14 @@
   <data name="Session cleared. Send a new message to start over." xml:space="preserve">
     <value>ล้างเซสชันแล้ว ส่งข้อความใหม่เพื่อเริ่มต้นใหม่</value>
   </data>
+  <data name="Stop" xml:space="preserve">
+    <value>หยุด</value>
+  </data>
   <data name="Temperature" xml:space="preserve">
     <value>อุณหภูมิ</value>
+  </data>
+  <data name="The response ended unexpectedly. Please try again." xml:space="preserve">
+    <value>การตอบกลับสิ้นสุดลงอย่างกะทันหัน โปรดลองอีกครั้ง</value>
   </data>
   <data name="Thinking" xml:space="preserve">
     <value>การคิด</value>
@@ -65,6 +77,9 @@
   </data>
   <data name="Top P" xml:space="preserve">
     <value>Top P</value>
+  </data>
+  <data name="Waiting for model response..." xml:space="preserve">
+    <value>กำลังรอการตอบกลับจากโมเดล...</value>
   </data>
 
 </root>

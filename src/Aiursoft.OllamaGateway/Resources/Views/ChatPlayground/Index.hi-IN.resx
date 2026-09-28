@@ -42,8 +42,14 @@
   <data name="Error: " xml:space="preserve">
     <value>त्रुटि:</value>
   </data>
+  <data name="Generation stopped." xml:space="preserve">
+    <value>जनरेशन रोक दिया गया।</value>
+  </data>
   <data name="Hello! Send a message to start testing your virtual model configuration." xml:space="preserve">
     <value>नमस्ते! अपनी वर्चुअल मॉडल कॉन्फ़िगरेशन का परीक्षण शुरू करने के लिए एक संदेश भेजें।</value>
+  </data>
+  <data name="No final answer was generated." xml:space="preserve">
+    <value>कोई अंतिम उत्तर उत्पन्न नहीं हुआ।</value>
   </data>
   <data name="Num Ctx" xml:space="preserve">
     <value>संदर्भ संख्या</value>
@@ -54,11 +60,17 @@
   <data name="Session cleared. Send a new message to start over." xml:space="preserve">
     <value>सत्र साफ़ कर दिया गया है। फिर से शुरू करने के लिए एक नया संदेश भेजें।</value>
   </data>
+  <data name="Stop" xml:space="preserve">
+    <value>रोकें</value>
+  </data>
   <data name="Switch Model:" xml:space="preserve">
     <value>मॉडल बदलें:</value>
   </data>
   <data name="Temperature" xml:space="preserve">
     <value>तापमान</value>
+  </data>
+  <data name="The response ended unexpectedly. Please try again." xml:space="preserve">
+    <value>उत्तर अप्रत्याशित रूप से समाप्त हो गया। कृपया फिर से प्रयास करें।</value>
   </data>
   <data name="Thinking" xml:space="preserve">
     <value>चिंतन</value>
@@ -71,6 +83,9 @@
   </data>
   <data name="Top P" xml:space="preserve">
     <value>टॉप पी</value>
+  </data>
+  <data name="Waiting for model response..." xml:space="preserve">
+    <value>मॉडल के जवाब की प्रतीक्षा है...</value>
   </data>
 
 </root>

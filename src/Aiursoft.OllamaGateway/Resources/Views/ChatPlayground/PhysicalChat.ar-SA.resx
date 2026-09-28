@@ -39,8 +39,14 @@
   <data name="Error: " xml:space="preserve">
     <value>خطأ:</value>
   </data>
+  <data name="Generation stopped." xml:space="preserve">
+    <value>تم إيقاف التوليد.</value>
+  </data>
   <data name="Hello! Send a message to start testing your virtual model configuration." xml:space="preserve">
     <value>مرحبًا! أرسل رسالة لبدء اختبار تكوين نموذجك الافتراضي.</value>
+  </data>
+  <data name="No final answer was generated." xml:space="preserve">
+    <value>لم يتم إنشاء إجابة نهائية.</value>
   </data>
   <data name="Num Ctx" xml:space="preserve">
     <value>عدد السياقات</value>
@@ -51,8 +57,14 @@
   <data name="Session cleared. Send a new message to start over." xml:space="preserve">
     <value>تم مسح الجلسة. أرسل رسالة جديدة للبدء من جديد.</value>
   </data>
+  <data name="Stop" xml:space="preserve">
+    <value>إيقاف</value>
+  </data>
   <data name="Temperature" xml:space="preserve">
     <value>درجة الحرارة</value>
+  </data>
+  <data name="The response ended unexpectedly. Please try again." xml:space="preserve">
+    <value>انتهى الرد بشكل غير متوقع. يُرجى المحاولة مرة أخرى.</value>
   </data>
   <data name="Thinking" xml:space="preserve">
     <value>التفكير</value>
@@ -65,6 +77,9 @@
   </data>
   <data name="Top P" xml:space="preserve">
     <value>أعلى P</value>
+  </data>
+  <data name="Waiting for model response..." xml:space="preserve">
+    <value>بانتظار ردّ النموذج...</value>
   </data>
 
 </root>
