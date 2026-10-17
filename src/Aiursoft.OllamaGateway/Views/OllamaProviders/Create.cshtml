@@ -105,7 +105,7 @@
                             <span asp-validation-for="HealthCheckTimeoutSeconds" class="text-danger"></span>
                         </div>
 
-                        <div id="testResult" class="alert d-none mb-3"></div>
+                        <div id="testResult" class="alert d-none mb-3" role="alert"><div class="alert-message"></div></div>
 
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-primary" id="btnSubmit">@Localizer["Add Provider"]</button>
@@ -157,6 +157,7 @@
             const spinner = document.getElementById('testSpinner');
             const text = document.getElementById('testText');
             const resultDiv = document.getElementById('testResult');
+            const resultMessage = resultDiv.querySelector('.alert-message');
             const submitBtn = document.getElementById('btnSubmit');
 
             if (!baseUrl) {
@@ -197,7 +198,7 @@
                     connectionSummary.innerText = getLocalizedText('success', 'Success!');
                     const modelsLabel = document.createElement('strong');
                     modelsLabel.innerText = getLocalizedText('models-found', 'Models found:');
-                    resultDiv.replaceChildren(
+                    resultMessage.replaceChildren(
                         connectionSummary,
                         document.createTextNode(' ' + getLocalizedText('successfully-connected', 'Successfully connected to Ollama.') + ' '),
                         document.createElement('br'),
@@ -206,12 +207,12 @@
                     submitBtn.disabled = false;
                 } else {
                     resultDiv.classList.add('alert-danger');
-                    resultDiv.innerText = data.message;
+                    resultMessage.innerText = data.message;
                 }
             } catch (error) {
                 resultDiv.classList.remove('d-none');
                 resultDiv.classList.add('alert-danger');
-                resultDiv.innerText = getLocalizedText('network-error', 'Network error or invalid request.');
+                resultMessage.innerText = getLocalizedText('network-error', 'Network error or invalid request.');
             } finally {
                 btn.disabled = false;
                 spinner.classList.add('d-none');

@@ -365,13 +365,15 @@
                                 @if (attempt < vm.MaxRetries) { <div class="guide-queue-gap"><i data-lucide="hourglass"></i><span>@Localizer["queue wait"]<br />@Localizer["unbounded"]</span></div> }
                             }
                         </div>
-                        <div class="alert alert-info mt-4 mb-0"><strong>@Localizer["Upstream header budget ≤ {0} s.", headerBudget]</strong> @Localizer["Total wall-clock time has no fixed upper bound because rate-limit and concurrency queues are outside this budget."]</div>
+                        <div class="alert alert-info mt-4 mb-0" role="alert"><div class="alert-message"><strong>@Localizer["Upstream header budget ≤ {0} s.", headerBudget]</strong> @Localizer["Total wall-clock time has no fixed upper bound because rate-limit and concurrency queues are outside this budget."]</div></div>
                     </div>
                 </div>
             }
 
-            <div class="alert alert-success mb-0">
-                <strong>@Localizer["After response headers:"]</strong> @Localizer["The virtual-model deadline no longer applies to the response body. Streaming may continue for hours, but transport failure, upstream closure, client cancellation, gateway shutdown, or decoding errors can still end it."]
+            <div class="alert alert-success mb-0" role="alert">
+                <div class="alert-message">
+                    <strong>@Localizer["After response headers:"]</strong> @Localizer["The virtual-model deadline no longer applies to the response body. Streaming may continue for hours, but transport failure, upstream closure, client cancellation, gateway shutdown, or decoding errors can still end it."]
+                </div>
             </div>
         </div>
 
