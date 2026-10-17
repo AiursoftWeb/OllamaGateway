@@ -3,7 +3,6 @@ using System.Text.Json;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
 using static Aiursoft.WebTools.Extends;
-using Moq;
 using Aiursoft.OllamaGateway.Configuration;
 using Aiursoft.DbTools;
 
@@ -15,9 +14,8 @@ public class OllamaApiCompatibilityTests : TestBase
     [TestInitialize]
     public override async Task CreateServer()
     {
-        TestStartup.MockOllamaService.Reset();
-        TestStartup.MockOllamaService.Setup(s => s.GetDetailedModelsAsync(It.IsAny<string>(), It.IsAny<string>()))
-            .ReturnsAsync(new List<OllamaService.OllamaModel>
+        TestStartup.OllamaStub.Reset();
+        TestStartup.OllamaStub.DetailedModels = new List<OllamaService.OllamaModel>
             {
                 new OllamaService.OllamaModel
                 {
@@ -33,7 +31,7 @@ public class OllamaApiCompatibilityTests : TestBase
                         QuantizationLevel = "Q4_K_M"
                     }
                 }
-            });
+            };
 
         using var reservation = new TestPortReservation();
         Http.BaseAddress = new Uri($"http://localhost:{reservation.Port}");

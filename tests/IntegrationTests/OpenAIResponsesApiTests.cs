@@ -5,7 +5,6 @@ using Aiursoft.DbTools;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
 using Microsoft.EntityFrameworkCore;
-using Moq;
 using static Aiursoft.WebTools.Extends;
 
 namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
@@ -19,12 +18,10 @@ public class OpenAIResponsesApiTests : TestBase
     [TestInitialize]
     public override async Task CreateServer()
     {
-        TestStartup.MockClickhouse.Reset();
-        TestStartup.MockClickhouse.Setup(client => client.Enabled).Returns(false);
-        TestStartup.MockOllamaService.Reset();
-        TestStartup.MockOllamaService
-            .Setup(service => service.GetUnderlyingModelsAsync(It.IsAny<string>(), It.IsAny<string>()))
-            .ReturnsAsync([PhysicalModelName]);
+        TestStartup.ClickhouseStub.Reset();
+        TestStartup.ClickhouseStub.IsEnabled = false;
+        TestStartup.OllamaStub.Reset();
+        TestStartup.OllamaStub.UnderlyingModels = [PhysicalModelName];
         MockUpstreamState.Reset();
 
         using var reservation = new TestPortReservation();

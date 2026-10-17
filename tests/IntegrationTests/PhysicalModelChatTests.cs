@@ -19,9 +19,9 @@ public class PhysicalModelChatTests : TestBase
     [TestInitialize]
     public override async Task CreateServer()
     {
-        TestStartup.MockClickhouse.Invocations.Clear();
-        TestStartup.MockClickhouse.Setup(c => c.Enabled).Returns(false);
-        TestStartup.MockOllamaService.Invocations.Clear();
+        TestStartup.ClickhouseStub.ClearCalls();
+        TestStartup.ClickhouseStub.IsEnabled = false;
+        TestStartup.OllamaStub.ClearCalls();
         MockUpstreamState.Reset();
 
         using var reservation = new TestPortReservation();

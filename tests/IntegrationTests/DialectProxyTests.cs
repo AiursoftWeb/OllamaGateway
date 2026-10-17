@@ -6,7 +6,6 @@ using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
 using Microsoft.EntityFrameworkCore;
 using static Aiursoft.WebTools.Extends;
-using Moq;
 
 namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
 
@@ -28,23 +27,20 @@ public class DialectProxyTests : TestBase
     public override async Task CreateServer()
     {
         // Setup mocks
-        TestStartup.MockClickhouse.Reset();
-        TestStartup.MockClickhouse.Setup(c => c.Enabled).Returns(false);
+        TestStartup.ClickhouseStub.Reset();
+        TestStartup.ClickhouseStub.IsEnabled = false;
 
-        TestStartup.MockOllamaService.Reset();
-        TestStartup.MockOllamaService.Setup(s => s.GetUnderlyingModelsAsync(It.IsAny<string>(), It.IsAny<string>()))
-            .ReturnsAsync(new List<string> { PhysicalModelName, PhysicalEmbeddingModel });
-        TestStartup.MockOllamaService.Setup(s => s.GetDetailedModelsAsync(It.IsAny<string>(), It.IsAny<string>()))
-            .ReturnsAsync(new List<OllamaService.OllamaModel>
+        TestStartup.OllamaStub.Reset();
+        TestStartup.OllamaStub.UnderlyingModels = new List<string> { PhysicalModelName, PhysicalEmbeddingModel };
+        TestStartup.OllamaStub.DetailedModels = new List<OllamaService.OllamaModel>
             {
                 new() { Name = PhysicalModelName, Size = 1024 * 1024 * 1024L },
                 new() { Name = PhysicalEmbeddingModel, Size = 512 * 1024 * 1024L }
-            });
-        TestStartup.MockOllamaService.Setup(s => s.GetRunningModelsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>()))
-            .ReturnsAsync(new List<OllamaService.OllamaRunningModel>
+            };
+        TestStartup.OllamaStub.RunningModels = new List<OllamaService.OllamaRunningModel>
             {
                 new() { Name = PhysicalModelName }
-            });
+            };
 
         // Reset mock upstream handler
         MockUpstreamState.Reset();

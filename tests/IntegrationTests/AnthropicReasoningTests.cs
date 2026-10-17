@@ -6,7 +6,6 @@ using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
 using Microsoft.EntityFrameworkCore;
 using static Aiursoft.WebTools.Extends;
-using Moq;
 
 namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
 
@@ -26,17 +25,15 @@ public class AnthropicReasoningTests : TestBase
     [TestInitialize]
     public override async Task CreateServer()
     {
-        TestStartup.MockClickhouse.Reset();
-        TestStartup.MockClickhouse.Setup(c => c.Enabled).Returns(false);
+        TestStartup.ClickhouseStub.Reset();
+        TestStartup.ClickhouseStub.IsEnabled = false;
 
-        TestStartup.MockOllamaService.Reset();
-        TestStartup.MockOllamaService.Setup(s => s.GetUnderlyingModelsAsync(It.IsAny<string>(), It.IsAny<string>()))
-            .ReturnsAsync(new List<string> { PhysicalModelName });
-        TestStartup.MockOllamaService.Setup(s => s.GetDetailedModelsAsync(It.IsAny<string>(), It.IsAny<string>()))
-            .ReturnsAsync(new List<OllamaService.OllamaModel>
+        TestStartup.OllamaStub.Reset();
+        TestStartup.OllamaStub.UnderlyingModels = new List<string> { PhysicalModelName };
+        TestStartup.OllamaStub.DetailedModels = new List<OllamaService.OllamaModel>
             {
                 new() { Name = PhysicalModelName, Size = 1024 * 1024 * 1024L }
-            });
+            };
 
         MockUpstreamState.Reset();
 

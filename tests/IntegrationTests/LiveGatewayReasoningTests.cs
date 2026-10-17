@@ -4,7 +4,6 @@ using Aiursoft.DbTools;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
 using Microsoft.Extensions.Http;
-using Moq;
 using static Aiursoft.WebTools.Extends;
 
 namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
@@ -35,8 +34,8 @@ public class LiveGatewayReasoningTests : TestBase
             return;
         }
 
-        TestStartup.MockClickhouse.Reset();
-        TestStartup.MockClickhouse.Setup(client => client.Enabled).Returns(false);
+        TestStartup.ClickhouseStub.Reset();
+        TestStartup.ClickhouseStub.IsEnabled = false;
         using var reservation = new TestPortReservation();
         Http.BaseAddress = new Uri($"http://localhost:{reservation.Port}");
         Server = await AppAsync<LiveGatewayStartup>([], port: reservation.Port);

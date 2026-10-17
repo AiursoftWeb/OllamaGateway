@@ -8,7 +8,6 @@ using Aiursoft.OllamaGateway.Services;
 using Aiursoft.OllamaGateway.Services.Clickhouse;
 using Microsoft.EntityFrameworkCore;
 using static Aiursoft.WebTools.Extends;
-using Moq;
 
 namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
 
@@ -29,13 +28,11 @@ public class OpenAIBackendProviderTests : TestBase
     [TestInitialize]
     public override async Task CreateServer()
     {
-        TestStartup.MockClickhouse.Reset();
-        TestStartup.MockClickhouse.Setup(c => c.Enabled).Returns(false);
+        TestStartup.ClickhouseStub.Reset();
+        TestStartup.ClickhouseStub.IsEnabled = false;
 
-        TestStartup.MockOllamaService.Reset();
-        TestStartup.MockOllamaService
-            .Setup(s => s.GetOpenAIAvailableModelsAsync(It.IsAny<string>(), It.IsAny<string?>()))
-            .ReturnsAsync(new List<string> { PhysicalModelName, PhysicalEmbedModel });
+        TestStartup.OllamaStub.Reset();
+        TestStartup.OllamaStub.OpenAIModels = new List<string> { PhysicalModelName, PhysicalEmbedModel };
 
         MockUpstreamState.Reset();
 
