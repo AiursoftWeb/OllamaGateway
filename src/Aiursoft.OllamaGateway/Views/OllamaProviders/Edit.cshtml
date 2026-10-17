@@ -36,8 +36,10 @@
                             <label class="form-label">@Localizer["Supported OpenAI generation protocols"]</label>
                             @if (ViewData["OpenAiProtocolsInferred"] as bool? == true)
                             {
-                                <div class="alert alert-warning py-2 small" role="note">
-                                    @Localizer["These values were inferred from legacy backend settings. Saving this provider makes them explicit."]
+                                <div class="alert alert-warning small" role="note">
+                                    <div class="alert-message">
+                                        @Localizer["These values were inferred from legacy backend settings. Saving this provider makes them explicit."]
+                                    </div>
                                 </div>
                             }
                             <div class="form-check">
@@ -272,18 +274,18 @@
                 const data = await response.json();
                 
                 if (data.success) {
-                    contentDiv.innerHTML = '<div class="alert alert-success mb-0"><i class="align-middle me-2" data-feather="check-circle"></i><span></span></div>';
+                    contentDiv.innerHTML = '<div class="alert alert-success mb-0" role="alert"><div class="alert-message"><i class="align-middle me-2" data-feather="check-circle"></i><span></span></div></div>';
                     contentDiv.querySelector('span').innerText = getLocalizedText('connected-models', 'Connected! Found {0} models.')
                         .replace('{0}', data.models.length);
                     if (window.feather) window.feather.replace();
                 } else {
-                    contentDiv.innerHTML = '<div class="alert alert-danger mb-0"><i class="align-middle me-2" data-feather="alert-triangle"></i><span></span></div>';
+                    contentDiv.innerHTML = '<div class="alert alert-danger mb-0" role="alert"><div class="alert-message"><i class="align-middle me-2" data-feather="alert-triangle"></i><span></span></div></div>';
                     contentDiv.querySelector('span').innerText = data.message;
                     if (window.feather) window.feather.replace();
                 }
             } catch (e) {
-                contentDiv.innerHTML = '<div class="alert alert-danger mb-0"></div>';
-                contentDiv.firstElementChild.innerText = getLocalizedText('error-prefix', 'Error: ') + e.message;
+                contentDiv.innerHTML = '<div class="alert alert-danger mb-0" role="alert"><div class="alert-message"></div></div>';
+                contentDiv.querySelector('.alert-message').innerText = getLocalizedText('error-prefix', 'Error: ') + e.message;
             }
         }
 
