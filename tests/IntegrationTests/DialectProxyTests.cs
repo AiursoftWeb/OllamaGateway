@@ -49,10 +49,22 @@ public class DialectProxyTests : TestBase
         // Reset mock upstream handler
         MockUpstreamState.Reset();
 
-        Server = await AppAsync<TestStartup>([], port: Port);
-        await Server.UpdateDbAsync<TemplateDbContext>();
-        await Server.SeedAsync();
-        await Server.StartAsync();
+        using var reservation = new TestPortReservation();
+        Http.BaseAddress = new Uri($"http://localhost:{reservation.Port}");
+        Server = await AppAsync<TestStartup>([], port: reservation.Port);
+        try
+        {
+            reservation.ConfigureServer(Server);
+            await Server.UpdateDbAsync<TemplateDbContext>();
+            await Server.SeedAsync();
+            await Server.StartAsync();
+        }
+        catch
+        {
+            Server.Dispose();
+            Server = null;
+            throw;
+        }
 
         // Seed: enable anonymous, create provider + virtual models + API key
         using var scope = Server.Services.CreateScope();
