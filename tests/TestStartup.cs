@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Http;
-using Moq;
 
 namespace Aiursoft.OllamaGateway.Tests;
 
@@ -66,8 +65,8 @@ public class MockUpstreamHandler : HttpMessageHandler
 
 public class TestStartup : Startup
 {
-    public static Mock<OllamaService> MockOllamaService { get; } = new(null!, null!);
-    public static Mock<ClickhouseDbContext> MockClickhouse { get; } = new();
+    public static StubOllamaService OllamaStub { get; } = new();
+    public static StubClickhouseDbContext ClickhouseStub { get; } = new();
 
     public override void ConfigureServices(IConfiguration configuration, IWebHostEnvironment environment, IServiceCollection services)
     {
@@ -75,10 +74,10 @@ public class TestStartup : Startup
 
         // Use TryAdd to ensure our mocks take precedence if possible, or RemoveAll then Add
         services.RemoveAll<OllamaService>();
-        services.AddScoped(_ => MockOllamaService.Object);
+        services.AddScoped<OllamaService>(_ => OllamaStub);
 
         services.RemoveAll<ClickhouseDbContext>();
-        services.AddScoped(_ => MockClickhouse.Object);
+        services.AddScoped<ClickhouseDbContext>(_ => ClickhouseStub);
 
         // Completely disable all background services for maximum speed and stability
         services.RemoveAll<Microsoft.Extensions.Hosting.IHostedService>();
@@ -106,5 +105,72 @@ public class TestStartupWithQueue : TestStartup
         base.ConfigureServices(configuration, environment, services);
         // Re-add the task queue worker since base removes all IHostedService registrations
         services.AddTaskQueueEngine();
+    }
+}
+
+public sealed class StubOllamaService() : OllamaService(null!, null!)
+{
+    public List<string>? UnderlyingModels { get; set; }
+    public List<OllamaModel>? DetailedModels { get; set; }
+    public List<OllamaRunningModel>? RunningModels { get; set; }
+    public List<string>? OpenAIModels { get; set; }
+    public int DetailedModelsCalls { get; private set; }
+    public int RunningModelsCalls { get; private set; }
+
+    public void Reset()
+    {
+        UnderlyingModels = null;
+        DetailedModels = null;
+        RunningModels = null;
+        OpenAIModels = null;
+        ClearCalls();
+    }
+
+    public void ClearCalls()
+    {
+        DetailedModelsCalls = 0;
+        RunningModelsCalls = 0;
+    }
+
+    public override Task<List<string>?> GetUnderlyingModelsAsync(string baseUrl, string? bearerToken = null, int timeoutSeconds = 60)
+        => Task.FromResult(UnderlyingModels);
+
+    public override Task<List<OllamaModel>?> GetDetailedModelsAsync(string baseUrl, string? bearerToken = null, int timeoutSeconds = 60)
+    {
+        DetailedModelsCalls++;
+        return Task.FromResult(DetailedModels);
+    }
+
+    public override Task<List<OllamaRunningModel>?> GetRunningModelsAsync(string baseUrl, string? bearerToken = null, int timeoutSeconds = 60)
+    {
+        RunningModelsCalls++;
+        return Task.FromResult(RunningModels);
+    }
+
+    public override Task<string?> GetVersionAsync(string baseUrl, string? bearerToken = null)
+        => Task.FromResult<string?>(null);
+
+    public override Task<List<string>?> GetOpenAIAvailableModelsAsync(string baseUrl, string? bearerToken = null)
+        => Task.FromResult(OpenAIModels);
+}
+
+public sealed class StubClickhouseDbContext : ClickhouseDbContext
+{
+    public bool IsEnabled { get; set; }
+    public override bool Enabled => IsEnabled;
+    public int SaveChangesCalls { get; private set; }
+
+    public void Reset()
+    {
+        IsEnabled = false;
+        ClearCalls();
+    }
+
+    public void ClearCalls() => SaveChangesCalls = 0;
+
+    public override Task SaveChangesAsync()
+    {
+        SaveChangesCalls++;
+        return Task.CompletedTask;
     }
 }

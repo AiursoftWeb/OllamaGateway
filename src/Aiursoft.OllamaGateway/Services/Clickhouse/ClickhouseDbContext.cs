@@ -10,7 +10,7 @@ public class ClickhouseDbContext : Aiursoft.ClickhouseSdk.ClickhouseDbContext, I
 {
     public ClickhouseSet<RequestLog> RequestLogs { get; }
 
-    // For Moq
+    // Allows test subclasses to avoid opening a database connection.
     protected ClickhouseDbContext() : base(new DummyOptionsMonitor())
     {
         RequestLogs = new ClickhouseSet<RequestLog>(() => null!, "RequestLogs", _ => []);

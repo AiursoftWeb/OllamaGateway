@@ -1,5 +1,4 @@
 using Aiursoft.OllamaGateway.Entities;
-using Moq;
 
 namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
 
@@ -41,10 +40,8 @@ public class OllamaProvidersControllerTests : TestBase
     public async Task Index_ShowsOpenAiProviderProtocolCapabilitiesAtAGlance()
     {
         await LoginAsAdmin();
-        TestStartup.MockOllamaService.Reset();
-        TestStartup.MockOllamaService
-            .Setup(service => service.GetOpenAIAvailableModelsAsync(It.IsAny<string>(), It.IsAny<string?>()))
-            .ReturnsAsync(["gpt-physical"]);
+        TestStartup.OllamaStub.Reset();
+        TestStartup.OllamaStub.OpenAIModels = ["gpt-physical"];
         using (var scope = Server!.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
@@ -102,10 +99,8 @@ public class OllamaProvidersControllerTests : TestBase
     public async Task CreateOpenAiProvider_PersistsBothProtocolCapabilities()
     {
         await LoginAsAdmin();
-        TestStartup.MockOllamaService.Reset();
-        TestStartup.MockOllamaService
-            .Setup(service => service.GetOpenAIAvailableModelsAsync(It.IsAny<string>(), It.IsAny<string?>()))
-            .ReturnsAsync(["gpt-physical"]);
+        TestStartup.OllamaStub.Reset();
+        TestStartup.OllamaStub.OpenAIModels = ["gpt-physical"];
 
         var response = await PostForm("/OllamaProviders/Create", new Dictionary<string, string>
         {

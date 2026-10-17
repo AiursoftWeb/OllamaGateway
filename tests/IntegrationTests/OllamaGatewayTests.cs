@@ -5,7 +5,6 @@ using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
 using Microsoft.EntityFrameworkCore;
 using static Aiursoft.WebTools.Extends;
-using Moq;
 using Microsoft.AspNetCore.Identity;
 
 namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
@@ -17,25 +16,22 @@ public class OllamaGatewayTests : TestBase
     public override async Task CreateServer()
     {
         // Setup mocks before creating server
-        TestStartup.MockClickhouse.Reset();
-        TestStartup.MockClickhouse.Setup(c => c.Enabled).Returns(false);
+        TestStartup.ClickhouseStub.Reset();
+        TestStartup.ClickhouseStub.IsEnabled = false;
 
-        TestStartup.MockOllamaService.Reset();
-        TestStartup.MockOllamaService.Setup(s => s.GetUnderlyingModelsAsync(It.IsAny<string>(), It.IsAny<string>()))
-            .ReturnsAsync(new List<string> { "llama3.2", "nomic-embed-text" });
+        TestStartup.OllamaStub.Reset();
+        TestStartup.OllamaStub.UnderlyingModels = new List<string> { "llama3.2", "nomic-embed-text" };
 
-        TestStartup.MockOllamaService.Setup(s => s.GetDetailedModelsAsync(It.IsAny<string>(), It.IsAny<string>()))
-            .ReturnsAsync(new List<OllamaService.OllamaModel>
+        TestStartup.OllamaStub.DetailedModels = new List<OllamaService.OllamaModel>
             {
                 new OllamaService.OllamaModel { Name = "llama3.2", Size = 1024 * 1024 * 1024L },
                 new OllamaService.OllamaModel { Name = "nomic-embed-text", Size = 512 * 1024 * 1024L }
-            });
+            };
 
-        TestStartup.MockOllamaService.Setup(s => s.GetRunningModelsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>()))
-            .ReturnsAsync(new List<OllamaService.OllamaRunningModel>
+        TestStartup.OllamaStub.RunningModels = new List<OllamaService.OllamaRunningModel>
             {
                 new OllamaService.OllamaRunningModel { Name = "llama3.2" }
-            });
+            };
 
         MockUpstreamState.Reset();
 

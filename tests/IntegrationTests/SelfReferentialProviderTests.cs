@@ -4,7 +4,6 @@ using Aiursoft.DbTools;
 using Aiursoft.OllamaGateway.Configuration;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
-using Moq;
 using static Aiursoft.WebTools.Extends;
 
 namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
@@ -33,7 +32,7 @@ public class SelfReferentialProviderTests : TestBase
     public override async Task CreateServer()
     {
         // Reset the mock — no upstream calls should be configured at all
-        TestStartup.MockOllamaService.Reset();
+        TestStartup.OllamaStub.Reset();
 
         using var reservation = new TestPortReservation();
         Http.BaseAddress = new Uri($"http://localhost:{reservation.Port}");
@@ -133,9 +132,7 @@ public class SelfReferentialProviderTests : TestBase
         await Http.GetAsync("/api/tags");
 
         // If this is called, the old recursive code path is still present
-        TestStartup.MockOllamaService.Verify(
-            s => s.GetDetailedModelsAsync(It.IsAny<string>(), It.IsAny<string>()),
-            Times.Never,
+        Assert.AreEqual(0, TestStartup.OllamaStub.DetailedModelsCalls,
             "GET /api/tags must not call GetDetailedModelsAsync on any upstream provider. " +
             "Doing so causes infinite recursion when a provider points back at this gateway.");
     }
@@ -165,9 +162,7 @@ public class SelfReferentialProviderTests : TestBase
         await Http.GetAsync("/api/ps");
 
         // If this is called, the old recursive code path is still present
-        TestStartup.MockOllamaService.Verify(
-            s => s.GetRunningModelsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>()),
-            Times.Never,
+        Assert.AreEqual(0, TestStartup.OllamaStub.RunningModelsCalls,
             "GET /api/ps must not call GetRunningModelsAsync on any upstream provider. " +
             "Doing so causes infinite recursion when a provider points back at this gateway.");
     }

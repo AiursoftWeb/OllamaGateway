@@ -4,7 +4,6 @@ using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
 using Microsoft.EntityFrameworkCore;
 using static Aiursoft.WebTools.Extends;
-using Moq;
 
 namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
 
@@ -15,12 +14,11 @@ public class UsageTrackingTests : TestBase
     public override async Task CreateServer()
     {
         // Setup mocks before creating server
-        TestStartup.MockClickhouse.Reset();
-        TestStartup.MockClickhouse.Setup(c => c.Enabled).Returns(false);
+        TestStartup.ClickhouseStub.Reset();
+        TestStartup.ClickhouseStub.IsEnabled = false;
 
-        TestStartup.MockOllamaService.Reset();
-        TestStartup.MockOllamaService.Setup(s => s.GetUnderlyingModelsAsync(It.IsAny<string>()))
-            .ReturnsAsync(new List<string> { "llama3.2" });
+        TestStartup.OllamaStub.Reset();
+        TestStartup.OllamaStub.UnderlyingModels = new List<string> { "llama3.2" };
 
         MockUpstreamState.Reset();
 

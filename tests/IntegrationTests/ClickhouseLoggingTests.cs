@@ -4,7 +4,6 @@ using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
 using Aiursoft.OllamaGateway.Services.Clickhouse;
 using static Aiursoft.WebTools.Extends;
-using Moq;
 
 namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
 
@@ -15,13 +14,12 @@ public class ClickhouseLoggingTests : TestBase
     public override async Task CreateServer()
     {
         // Setup mocks before creating server
-        TestStartup.MockClickhouse.Reset();
+        TestStartup.ClickhouseStub.Reset();
         // ENABLE Clickhouse for these tests
-        TestStartup.MockClickhouse.Setup(c => c.Enabled).Returns(true);
+        TestStartup.ClickhouseStub.IsEnabled = true;
 
-        TestStartup.MockOllamaService.Reset();
-        TestStartup.MockOllamaService.Setup(s => s.GetUnderlyingModelsAsync(It.IsAny<string>(), It.IsAny<string>()))
-            .ReturnsAsync(new List<string> { "llama3.2" });
+        TestStartup.OllamaStub.Reset();
+        TestStartup.OllamaStub.UnderlyingModels = new List<string> { "llama3.2" };
 
         MockUpstreamState.Reset();
 
@@ -242,6 +240,6 @@ public class ClickhouseLoggingTests : TestBase
             await flushService.ExecuteAsync();
         }
 
-        TestStartup.MockClickhouse.Verify(c => c.SaveChangesAsync(), Times.Once);
+        Assert.AreEqual(1, TestStartup.ClickhouseStub.SaveChangesCalls);
     }
 }

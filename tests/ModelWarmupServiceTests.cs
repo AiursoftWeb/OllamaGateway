@@ -2,9 +2,8 @@ using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.InMemory;
 using Aiursoft.OllamaGateway.Services.BackgroundJobs;
 using Microsoft.EntityFrameworkCore;
-using Moq;
-using Moq.Protected;
 using System.Net;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Aiursoft.OllamaGateway.Tests;
 
@@ -12,8 +11,7 @@ namespace Aiursoft.OllamaGateway.Tests;
 public class ModelWarmupServiceTests
 {
     private InMemoryContext _dbContext = null!;
-    private Mock<IHttpClientFactory> _httpClientFactoryMock = null!;
-    private Mock<ILogger<ModelWarmupService>> _loggerMock = null!;
+    private RecordingClientFactory _httpClientFactory = null!;
 
     [TestInitialize]
     public void Setup()
@@ -22,17 +20,16 @@ public class ModelWarmupServiceTests
             .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
             .Options;
         _dbContext = new InMemoryContext(options);
-        _httpClientFactoryMock = new Mock<IHttpClientFactory>();
-        _loggerMock = new Mock<ILogger<ModelWarmupService>>();
+        _httpClientFactory = new RecordingClientFactory();
     }
 
     [TestMethod]
     public async Task TestExecuteAsync_NoProviders()
     {
-        var service = new ModelWarmupService(_dbContext, _httpClientFactoryMock.Object, _loggerMock.Object);
+        var service = new ModelWarmupService(_dbContext, _httpClientFactory, NullLogger<ModelWarmupService>.Instance);
         await service.ExecuteAsync();
 
-        _httpClientFactoryMock.Verify(x => x.CreateClient(It.IsAny<string>()), Times.Never);
+        Assert.AreEqual(0, _httpClientFactory.CreateClientCalls);
     }
 
     [TestMethod]
@@ -50,33 +47,16 @@ public class ModelWarmupServiceTests
         _dbContext.OllamaProviders.Add(provider);
         await _dbContext.SaveChangesAsync();
 
-        var handlerMock = new Mock<HttpMessageHandler>();
-        handlerMock.Protected()
-            .Setup<Task<HttpResponseMessage>>(
-                "SendAsync",
-                ItExpr.IsAny<HttpRequestMessage>(),
-                ItExpr.IsAny<CancellationToken>()
-            )
-            .ReturnsAsync(new HttpResponseMessage
-            {
-                StatusCode = HttpStatusCode.OK,
-                Content = new StringContent("{}")
-            });
+        using var handler = new RecordingHandler();
+        using var client = new HttpClient(handler);
+        _httpClientFactory.Client = client;
 
-        var client = new HttpClient(handlerMock.Object);
-        _httpClientFactoryMock.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(client);
-
-        var service = new ModelWarmupService(_dbContext, _httpClientFactoryMock.Object, _loggerMock.Object);
+        var service = new ModelWarmupService(_dbContext, _httpClientFactory, NullLogger<ModelWarmupService>.Instance);
         await service.ExecuteAsync();
 
-        handlerMock.Protected().Verify(
-            "SendAsync",
-            Times.Once(),
-            ItExpr.Is<HttpRequestMessage>(req =>
-                req.Method == HttpMethod.Post &&
-                req.RequestUri!.ToString().Contains("/api/chat")),
-            ItExpr.IsAny<CancellationToken>()
-        );
+        Assert.AreEqual(1, handler.Requests.Count);
+        Assert.AreEqual(HttpMethod.Post, handler.Requests[0].Method);
+        StringAssert.Contains(handler.Requests[0].Uri, "/api/chat");
     }
 
     [TestMethod]
@@ -94,32 +74,40 @@ public class ModelWarmupServiceTests
         _dbContext.OllamaProviders.Add(provider);
         await _dbContext.SaveChangesAsync();
 
-        var handlerMock = new Mock<HttpMessageHandler>();
-        handlerMock.Protected()
-            .Setup<Task<HttpResponseMessage>>(
-                "SendAsync",
-                ItExpr.IsAny<HttpRequestMessage>(),
-                ItExpr.IsAny<CancellationToken>()
-            )
-            .ReturnsAsync(new HttpResponseMessage
-            {
-                StatusCode = HttpStatusCode.OK,
-                Content = new StringContent("{}")
-            });
+        using var handler = new RecordingHandler();
+        using var client = new HttpClient(handler);
+        _httpClientFactory.Client = client;
 
-        var client = new HttpClient(handlerMock.Object);
-        _httpClientFactoryMock.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(client);
-
-        var service = new ModelWarmupService(_dbContext, _httpClientFactoryMock.Object, _loggerMock.Object);
+        var service = new ModelWarmupService(_dbContext, _httpClientFactory, NullLogger<ModelWarmupService>.Instance);
         await service.ExecuteAsync();
 
-        handlerMock.Protected().Verify(
-            "SendAsync",
-            Times.Once(),
-            ItExpr.Is<HttpRequestMessage>(req =>
-                req.Method == HttpMethod.Post &&
-                req.RequestUri!.ToString().Contains("/api/embeddings")),
-            ItExpr.IsAny<CancellationToken>()
-        );
+        Assert.AreEqual(1, handler.Requests.Count);
+        Assert.AreEqual(HttpMethod.Post, handler.Requests[0].Method);
+        StringAssert.Contains(handler.Requests[0].Uri, "/api/embeddings");
+    }
+    [TestCleanup]
+    public void Cleanup() => _dbContext.Dispose();
+
+    private sealed class RecordingClientFactory : IHttpClientFactory
+    {
+        public HttpClient? Client { get; set; }
+        public int CreateClientCalls { get; private set; }
+
+        public HttpClient CreateClient(string name)
+        {
+            CreateClientCalls++;
+            return Client ?? throw new InvalidOperationException("No HTTP client was configured.");
+        }
+    }
+
+    private sealed class RecordingHandler : HttpMessageHandler
+    {
+        public List<(HttpMethod Method, string Uri)> Requests { get; } = [];
+
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            Requests.Add((request.Method, request.RequestUri!.ToString()));
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent("{}") });
+        }
     }
 }
