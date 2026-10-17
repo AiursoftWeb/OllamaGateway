@@ -15,10 +15,22 @@ public class BackgroundJobsTests : TestBase
     [TestInitialize]
     public override async Task CreateServer()
     {
-        Server = await AppAsync<TestStartupWithQueue>([], port: Port);
-        await Server.UpdateDbAsync<TemplateDbContext>();
-        await Server.SeedAsync();
-        await Server.StartAsync();
+        using var reservation = new TestPortReservation();
+        Http.BaseAddress = new Uri($"http://localhost:{reservation.Port}");
+        Server = await AppAsync<TestStartupWithQueue>([], port: reservation.Port);
+        try
+        {
+            reservation.ConfigureServer(Server);
+            await Server.UpdateDbAsync<TemplateDbContext>();
+            await Server.SeedAsync();
+            await Server.StartAsync();
+        }
+        catch
+        {
+            Server.Dispose();
+            Server = null;
+            throw;
+        }
     }
 
     [TestMethod]

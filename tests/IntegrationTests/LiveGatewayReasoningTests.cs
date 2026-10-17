@@ -37,10 +37,22 @@ public class LiveGatewayReasoningTests : TestBase
 
         TestStartup.MockClickhouse.Reset();
         TestStartup.MockClickhouse.Setup(client => client.Enabled).Returns(false);
-        Server = await AppAsync<LiveGatewayStartup>([], port: Port);
-        await Server.UpdateDbAsync<TemplateDbContext>();
-        await Server.SeedAsync();
-        await Server.StartAsync();
+        using var reservation = new TestPortReservation();
+        Http.BaseAddress = new Uri($"http://localhost:{reservation.Port}");
+        Server = await AppAsync<LiveGatewayStartup>([], port: reservation.Port);
+        try
+        {
+            reservation.ConfigureServer(Server);
+            await Server.UpdateDbAsync<TemplateDbContext>();
+            await Server.SeedAsync();
+            await Server.StartAsync();
+        }
+        catch
+        {
+            Server.Dispose();
+            Server = null;
+            throw;
+        }
 
         using var scope = Server.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
