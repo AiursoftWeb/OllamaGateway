@@ -27,23 +27,15 @@ For the best experience with AI agents, we recommend the following models:
 - `qwen3.6:27b-q8_0`
 - `qwen3.6:35b-a3b-q4_K_M`
 
-## Run in Ubuntu
+## Install with Docker
 
-The following script will install\update this app on your Ubuntu server. Supports Ubuntu 25.04.
-
-On your Ubuntu server, run the following command:
+Run the installer with the desired port (omit it to choose an available port):
 
 ```bash
-curl -sL https://github.com/aiursoftweb/ollamaGateway/raw/master/install.sh | sudo bash
+curl -fsSL https://raw.githubusercontent.com/aiursoftweb/ollamagateway/master/install.sh | sudo bash -s -- 8080
 ```
 
-Of course it is suggested that append a custom port number to the command:
-
-```bash
-curl -sL https://github.com/aiursoftweb/ollamaGateway/raw/master/install.sh | sudo bash -s 8080
-```
-
-It will install the app as a systemd service, and start it automatically. Binary files will be located at `/opt/apps`. Service files will be located at `/etc/systemd/system`.
+Installation starts after three seconds; press Ctrl+C to cancel. Then open `http://localhost:8080`.
 
 ## Run manually
 
