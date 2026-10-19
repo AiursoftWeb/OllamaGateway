@@ -103,7 +103,7 @@
                                         @if (m.Temperature.HasValue) { <span>@Localizer["Temp:"] @m.Temperature.Value </span> }
                                     </small>
                                 </td>
-                                <td>@m.CreatedAt.ToShortDateString()</td>
+                                <td><span data-utc-time="@m.CreatedAt.ToHtmlDateTime()"></span></td>
                                 <td>
                                     <div class="btn-group">
                                         @if (m.Type == ModelType.Chat)
