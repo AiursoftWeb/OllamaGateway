@@ -79,10 +79,15 @@ public class ApiKeyExpirationTests : TestBase
     }
 
     [TestMethod]
-    public async Task TestApiKeyExpirationWorkflow()
+    [DataRow("/ApiKeys", true)]
+    [DataRow("/ApiKeys", false)]
+    [DataRow("/AllApiKeys", true)]
+    [DataRow("/AllApiKeys", false)]
+    public async Task TestApiKeyExpirationWorkflow(string controller, bool includeOffset)
     {
         var (email, password) = await RegisterAndLoginAsync();
         await GrantPermissionToUser(email, Authorization.AppPermissionNames.CanManageApiKeys);
+        await GrantPermissionToUser(email, Authorization.AppPermissionNames.CanManageAnyApiKey);
 
         // RE-LOGIN to refresh claims in cookie
         await PostForm("/Account/Login", new Dictionary<string, string>
@@ -108,13 +113,15 @@ public class ApiKeyExpirationTests : TestBase
 
         // 3. Edit API Key to expire it
         var expiredTime = DateTime.UtcNow.AddDays(-1);
-        var editResponse = await PostForm("/ApiKeys/Edit", new Dictionary<string, string>
+        var editResponse = await PostForm($"{controller}/Edit", new Dictionary<string, string>
         {
             { "Id", key.Id.ToString() },
             { "Name", "Manually Expired" },
-            { "ExpirationTime", expiredTime.ToString("yyyy-MM-ddTHH:mm") }
+            { "ExpirationTime", includeOffset
+                ? new DateTimeOffset(expiredTime).ToOffset(TimeSpan.FromHours(8)).ToString("O")
+                : expiredTime.ToString("yyyy-MM-ddTHH:mm") }
         });
-        AssertRedirect(editResponse, "/ApiKeys", exact: false);
+        AssertRedirect(editResponse, controller, exact: false);
 
         // 4. Verify in DB
         var updatedKey = await db.ApiKeys.AsNoTracking().FirstOrDefaultAsync(k => k.Id == key.Id);

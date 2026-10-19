@@ -25,8 +25,9 @@
                         </div>
                         <div class="mb-3">
                             <label asp-for="ExpirationTime" class="form-label">@Localizer["Expiration Time"]</label>
-                            <input asp-for="ExpirationTime" class="form-control" type="datetime-local" />
+                            <input asp-for="ExpirationTime" class="form-control" type="datetime-local" data-utc-input />
                             <span asp-validation-for="ExpirationTime" class="text-danger"></span>
+                            <partial name="_UtcInput" />
                         </div>
                         <div class="mb-3 form-check form-switch">
                             <input asp-for="RateLimitEnabled" class="form-check-input" type="checkbox">
