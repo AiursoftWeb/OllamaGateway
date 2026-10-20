@@ -3,6 +3,7 @@
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/aiursoftweb/ollamaGateway/blob/master/LICENSE)
 [![Pipeline stat](https://gitlab.aiursoft.com/aiursoft/ollamaGateway/badges/master/pipeline.svg)](https://gitlab.aiursoft.com/aiursoft/ollamaGateway/-/pipelines)
 [![Test Coverage](https://gitlab.aiursoft.com/aiursoft/ollamaGateway/badges/master/coverage.svg)](https://gitlab.aiursoft.com/aiursoft/ollamaGateway/-/pipelines)
+[![S360 compliance](https://s360.aiursoft.com/badge.svg?project=aiursoft%2Follamagateway)](https://s360.aiursoft.com/SupplyChain?tab=projects&project=aiursoft%2Follamagateway&scope=baseline&ecosystem=all)
 [![Man hours](https://manhours.aiursoft.com/r/github.com/aiursoftweb/ollamaGateway.svg)](https://manhours.aiursoft.com/r/github.com/aiursoftweb/ollamaGateway.html)
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Follama.aiursoft.com)](https://ollama.aiursoft.com)
 [![Docker](https://img.shields.io/docker/pulls/aiursoft/ollamagateway.svg)](https://hub.docker.com/r/aiursoft/ollamagateway)
