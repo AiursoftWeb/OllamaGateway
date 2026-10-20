@@ -82,13 +82,29 @@ public sealed class OllamaChatRequestDecoder : IChatRequestDecoder
                 RepeatPenalty: ChatRequestDecoding.DoubleValue(options?["repeat_penalty"]),
                 Thinking: ChatRequestDecoding.BoolValue(root["think"]),
                 KeepAlive: ChatRequestDecoding.StringValue(root["keep_alive"], null!),
-                StructuredOutputJson: root["format"]?.ToJsonString()),
+                StructuredOutputJson: NormalizeFormat(root["format"])),
             tools,
             ChatProviderEncoding.DecodeOpenAiToolChoice(root["tool_choice"]),
             RequiredCapabilities: requiredCapabilities,
             PreferredCapabilities: preferredCapabilities);
 
         return new DecodedChatRequest(Dialect, request, root);
+    }
+
+    private static string? NormalizeFormat(JsonNode? format)
+    {
+        if (format is JsonValue value && value.TryGetValue<string>(out var mode) && mode == "json")
+            return new JsonObject { ["type"] = "json_object" }.ToJsonString();
+        if (format is not JsonObject) return format?.ToJsonString();
+
+        // Ollama accepts the schema itself, while the shared representation uses
+        // the Responses format envelope. Keep every schema keyword inside it.
+        return new JsonObject
+        {
+            ["type"] = "json_schema",
+            ["name"] = "response",
+            ["schema"] = format.DeepClone()
+        }.ToJsonString();
     }
 
     private static bool HasUntranslatedFields(JsonObject root, JsonNode? options)

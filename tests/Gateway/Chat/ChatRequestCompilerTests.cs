@@ -10,8 +10,8 @@ namespace Aiursoft.OllamaGateway.Tests.Gateway.Chat;
 public class ChatRequestCompilerTests
 {
     private readonly ChatRequestCompiler _compiler = new(
-        [new OpenAiChatRequestDecoder(), new OllamaChatRequestDecoder(), new AnthropicChatRequestDecoder()],
-        [new OpenAiChatProviderRequestAdapter(), new OllamaChatProviderRequestAdapter()]);
+        [new OpenAiChatRequestDecoder(), new OllamaChatRequestDecoder(), new AnthropicChatRequestDecoder(), new OpenAiResponsesRequestDecoder()],
+        [new OpenAiChatProviderRequestAdapter(), new OllamaChatProviderRequestAdapter(), new OpenAiResponsesProviderRequestAdapter()]);
 
     [TestMethod]
     public async Task OpenAiToOllama_CompilesImagesToolsAndOverrides()
@@ -307,6 +307,129 @@ public class ChatRequestCompilerTests
         Assert.AreEqual("result", messages[2]?["content"]?.ToString());
         Assert.AreEqual("after", messages[3]?["content"]?.ToString());
     }
+
+    [TestMethod]
+    [DataRow(ProtocolDialect.OllamaNative, BackendProtocol.OllamaNative)]
+    [DataRow(ProtocolDialect.OllamaNative, BackendProtocol.OpenAiChatCompletions)]
+    [DataRow(ProtocolDialect.OllamaNative, BackendProtocol.OpenAiResponses)]
+    [DataRow(ProtocolDialect.OpenAiChatCompletions, BackendProtocol.OllamaNative)]
+    [DataRow(ProtocolDialect.OpenAiChatCompletions, BackendProtocol.OpenAiChatCompletions)]
+    [DataRow(ProtocolDialect.OpenAiChatCompletions, BackendProtocol.OpenAiResponses)]
+    [DataRow(ProtocolDialect.OpenAiResponses, BackendProtocol.OllamaNative)]
+    [DataRow(ProtocolDialect.OpenAiResponses, BackendProtocol.OpenAiChatCompletions)]
+    [DataRow(ProtocolDialect.OpenAiResponses, BackendProtocol.OpenAiResponses)]
+    public async Task StructuredOutput_JsonMode_UsesTargetDialect(ProtocolDialect source, BackendProtocol target)
+    {
+        var decoded = _compiler.Decode(source, StructuredOutputBody(source, schema: false).ToJsonString());
+        Assert.IsTrue(decoded.Request.RequiredCapabilities.HasFlag(GatewayCapability.StructuredOutput));
+        var backend = Backend(target == BackendProtocol.OllamaNative ? ProviderType.Ollama : ProviderType.OpenAI, "physical");
+        backend.Protocol = target;
+
+        using var request = _compiler.CreateProviderRequest(decoded, Model(), backend);
+        var body = JsonNode.Parse(await request.Content!.ReadAsStringAsync())!.AsObject();
+        var format = TargetFormat(body, target);
+
+        Assert.IsTrue(JsonNode.DeepEquals(
+            target == BackendProtocol.OllamaNative ? JsonValue.Create("json") : JsonNode.Parse("""{"type":"json_object"}"""),
+            format), body.ToJsonString());
+    }
+
+    [TestMethod]
+    [DataRow(ProtocolDialect.OllamaNative, BackendProtocol.OllamaNative)]
+    [DataRow(ProtocolDialect.OllamaNative, BackendProtocol.OpenAiChatCompletions)]
+    [DataRow(ProtocolDialect.OllamaNative, BackendProtocol.OpenAiResponses)]
+    [DataRow(ProtocolDialect.OpenAiChatCompletions, BackendProtocol.OllamaNative)]
+    [DataRow(ProtocolDialect.OpenAiChatCompletions, BackendProtocol.OpenAiChatCompletions)]
+    [DataRow(ProtocolDialect.OpenAiChatCompletions, BackendProtocol.OpenAiResponses)]
+    [DataRow(ProtocolDialect.OpenAiResponses, BackendProtocol.OllamaNative)]
+    [DataRow(ProtocolDialect.OpenAiResponses, BackendProtocol.OpenAiChatCompletions)]
+    [DataRow(ProtocolDialect.OpenAiResponses, BackendProtocol.OpenAiResponses)]
+    public async Task StructuredOutput_Schema_PreservesSchemaAndTargetWrapper(ProtocolDialect source, BackendProtocol target)
+    {
+        var decoded = _compiler.Decode(source, StructuredOutputBody(source, schema: true).ToJsonString());
+        var backend = Backend(target == BackendProtocol.OllamaNative ? ProviderType.Ollama : ProviderType.OpenAI, "physical");
+        backend.Protocol = target;
+
+        using var request = _compiler.CreateProviderRequest(decoded, Model(), backend);
+        var body = JsonNode.Parse(await request.Content!.ReadAsStringAsync())!.AsObject();
+        var format = TargetFormat(body, target);
+        Assert.IsNotNull(format);
+        if (target == BackendProtocol.OllamaNative)
+        {
+            Assert.IsTrue(JsonNode.DeepEquals(JsonNode.Parse(OutputSchema), format), body.ToJsonString());
+            return;
+        }
+
+        Assert.AreEqual("json_schema", format["type"]?.ToString());
+        var wrapper = target == BackendProtocol.OpenAiChatCompletions ? format["json_schema"] : format;
+        Assert.IsNotNull(wrapper);
+        Assert.IsTrue(JsonNode.DeepEquals(JsonNode.Parse(OutputSchema), wrapper["schema"]), body.ToJsonString());
+        Assert.AreEqual(source == ProtocolDialect.OllamaNative ? "response" : "translation", wrapper["name"]?.ToString());
+        if (source != ProtocolDialect.OllamaNative) Assert.AreEqual(true, wrapper["strict"]?.GetValue<bool>());
+    }
+
+    [TestMethod]
+    [DataRow(ProtocolDialect.OllamaNative, BackendProtocol.OllamaNative)]
+    [DataRow(ProtocolDialect.OllamaNative, BackendProtocol.OpenAiChatCompletions)]
+    [DataRow(ProtocolDialect.OllamaNative, BackendProtocol.OpenAiResponses)]
+    [DataRow(ProtocolDialect.OpenAiChatCompletions, BackendProtocol.OllamaNative)]
+    [DataRow(ProtocolDialect.OpenAiChatCompletions, BackendProtocol.OpenAiChatCompletions)]
+    [DataRow(ProtocolDialect.OpenAiChatCompletions, BackendProtocol.OpenAiResponses)]
+    [DataRow(ProtocolDialect.OpenAiResponses, BackendProtocol.OllamaNative)]
+    [DataRow(ProtocolDialect.OpenAiResponses, BackendProtocol.OpenAiChatCompletions)]
+    [DataRow(ProtocolDialect.OpenAiResponses, BackendProtocol.OpenAiResponses)]
+    public async Task StructuredOutput_Unspecified_DoesNotAddFormat(ProtocolDialect source, BackendProtocol target)
+    {
+        var input = StructuredOutputBody(source, schema: false);
+        input.Remove("format");
+        input.Remove("response_format");
+        input.Remove("text");
+        var decoded = _compiler.Decode(source, input.ToJsonString());
+        Assert.IsFalse(decoded.Request.RequiredCapabilities.HasFlag(GatewayCapability.StructuredOutput));
+        var backend = Backend(target == BackendProtocol.OllamaNative ? ProviderType.Ollama : ProviderType.OpenAI, "physical");
+        backend.Protocol = target;
+
+        using var request = _compiler.CreateProviderRequest(decoded, Model(), backend);
+        var body = JsonNode.Parse(await request.Content!.ReadAsStringAsync())!.AsObject();
+        Assert.IsNull(TargetFormat(body, target));
+    }
+
+    private const string OutputSchema = """{"type":"object","properties":{"schema":{"type":"string"}},"required":["schema"],"additionalProperties":false,"schema":{"description":"Preserve this schema extension too."}}""";
+
+    private static JsonObject StructuredOutputBody(ProtocolDialect source, bool schema)
+    {
+        var body = JsonNode.Parse("""{"model":"virtual","messages":[{"role":"user","content":"Translate and return JSON."}],"stream":false}""")!.AsObject();
+        JsonNode format = schema
+            ? new JsonObject { ["type"] = "json_schema", ["name"] = "translation", ["schema"] = JsonNode.Parse(OutputSchema), ["strict"] = true }
+            : new JsonObject { ["type"] = "json_object" };
+        switch (source)
+        {
+            case ProtocolDialect.OllamaNative:
+                body["format"] = schema ? JsonNode.Parse(OutputSchema) : JsonValue.Create("json");
+                break;
+            case ProtocolDialect.OpenAiChatCompletions:
+                body["response_format"] = schema
+                    ? new JsonObject { ["type"] = "json_schema", ["json_schema"] = new JsonObject { ["name"] = "translation", ["schema"] = JsonNode.Parse(OutputSchema), ["strict"] = true } }
+                    : format;
+                break;
+            case ProtocolDialect.OpenAiResponses:
+                body.Remove("messages");
+                body["input"] = "Translate and return JSON.";
+                body["text"] = new JsonObject { ["format"] = format };
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(source), source, null);
+        }
+        return body;
+    }
+
+    private static JsonNode? TargetFormat(JsonObject body, BackendProtocol target) => target switch
+    {
+        BackendProtocol.OllamaNative => body["format"],
+        BackendProtocol.OpenAiChatCompletions => body["response_format"],
+        BackendProtocol.OpenAiResponses => body["text"]?["format"],
+        _ => throw new ArgumentOutOfRangeException(nameof(target), target, null)
+    };
 
     private static VirtualModel Model(float? temperature = null, float? repeatPenalty = null)
     {

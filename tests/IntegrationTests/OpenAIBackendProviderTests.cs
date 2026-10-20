@@ -110,6 +110,39 @@ public class OpenAIBackendProviderTests : TestBase
     // ========================================================================
 
     [TestMethod]
+    public async Task OllamaToOpenAIBackend_JsonFormat_PreservesConstraintAndReturnsAnswer()
+    {
+        const string answer = "{\"translation\":\"Bonjour\"}";
+        MockUpstreamState.Handler = (_, _) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+        {
+            Content = new StringContent(new JsonObject
+            {
+                ["id"] = "cmpl-json",
+                ["object"] = "chat.completion",
+                ["model"] = PhysicalModelName,
+                ["choices"] = new JsonArray(new JsonObject
+                {
+                    ["index"] = 0,
+                    ["finish_reason"] = "stop",
+                    ["message"] = new JsonObject { ["role"] = "assistant", ["content"] = answer }
+                })
+            }.ToJsonString(), Encoding.UTF8, "application/json")
+        });
+
+        var payload = $$"""{"model":"{{ChatModelName}}","messages":[{"role":"user","content":"Translate to French. Return JSON."}],"format":"json","stream":false}""";
+        using var response = await Http.SendAsync(AuthedPost("/api/chat", payload));
+
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        var upstream = JsonNode.Parse(MockUpstreamState.LastRequestBody!);
+        Assert.AreEqual("/v1/chat/completions", MockUpstreamState.LastRequest?.RequestUri?.AbsolutePath);
+        Assert.AreEqual("json_object", upstream?["response_format"]?["type"]?.ToString());
+        Assert.IsNull(upstream?["format"]);
+        var result = JsonNode.Parse(await response.Content.ReadAsStringAsync());
+        Assert.AreEqual(answer, result?["message"]?["content"]?.ToString());
+        Assert.AreEqual(ChatModelName, result?["model"]?.ToString());
+    }
+
+    [TestMethod]
     public async Task OllamaToOpenAIBackend_NonStreaming_ForwardsToV1Chat()
     {
         MockUpstreamState.Handler = (_, _) =>

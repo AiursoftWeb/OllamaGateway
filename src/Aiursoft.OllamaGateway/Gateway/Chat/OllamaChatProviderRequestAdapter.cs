@@ -83,7 +83,14 @@ public sealed class OllamaChatProviderRequestAdapter : IChatProviderRequestAdapt
             try
             {
                 var format = JsonNode.Parse(options.StructuredOutputJson);
-                body["format"] = format?["schema"]?.DeepClone() ?? format;
+                body["format"] = format is JsonObject formatObject
+                    ? formatObject["type"]?.ToString() switch
+                    {
+                        "json_object" => JsonValue.Create("json"),
+                        "json_schema" => formatObject["schema"]?.DeepClone(),
+                        _ => format
+                    }
+                    : format;
             }
             catch (System.Text.Json.JsonException) { /* Ignore an invalid optional format. */ }
         }
