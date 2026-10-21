@@ -1,3 +1,4 @@
+using Aiursoft.OllamaGateway.Services.Monitoring;
 using Aiursoft.Canon.BackgroundJobs;
 using Aiursoft.OllamaGateway.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +8,8 @@ namespace Aiursoft.OllamaGateway.Services.BackgroundJobs;
 public class BackendHealthMonitor(
     TemplateDbContext dbContext,
     OllamaService ollamaService,
-    ILogger<BackendHealthMonitor> logger) : IBackgroundJob
+    ILogger<BackendHealthMonitor> logger,
+    BackendMonitor monitor) : IBackgroundJob
 {
     public string Name => "Backend Health Monitor";
     public string Description => "Checks the health of all AI provider backends and updates their availability status in the database.";
@@ -64,8 +66,10 @@ public class BackendHealthMonitor(
                     backend.LastCheckedAt = DateTime.UtcNow;
                 }
             }
+            foreach (var backend in group) monitor.Health(backend, backend.IsHealthy);
         }
 
+        monitor.Retain(backends.Select(backend => new PhysicalModelKey(backend.ProviderId, backend.UnderlyingModelName)).ToHashSet());
         await dbContext.SaveChangesAsync();
     }
 }
