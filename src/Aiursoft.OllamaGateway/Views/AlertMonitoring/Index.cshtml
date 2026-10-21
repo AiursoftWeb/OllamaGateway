@@ -36,7 +36,7 @@
                                     <select name="kind" class="form-select"><option value="failures" selected="@(rule.Kind == "failures")">@Localizer["Failures in rolling window"]</option><option value="offline" selected="@(rule.Kind == "offline")">@Localizer["Continuously unavailable"]</option></select>
                                 </div>
                                 <div class="col-sm-3"><label class="form-label">@Localizer["Minutes"]</label><input name="minutes" type="number" min="1" max="60" value="@rule.Minutes" class="form-control" required /></div>
-                                <div class="col-sm-3"><label class="form-label">@Localizer["Severity"]</label><select name="severity" class="form-select">@foreach (var level in Enumerable.Range(0, 5)) { <option value="sev@level" selected="@(rule.Severity == $"sev{level}")">sev@level</option> }</select></div>
+                                <div class="col-sm-3"><label class="form-label">@Localizer["Severity"]</label><select name="severity" class="form-select">@foreach (var level in Enumerable.Range(0, 5)) { <option value="@($"sev{level}")" selected="@(rule.Severity == $"sev{level}")">@($"sev{level}")</option> }</select></div>
                                 <div class="col-sm-6"><label class="form-label">@Localizer["More than this many failures"]</label><input name="failureCount" type="number" min="0" max="1000000" value="@rule.FailureCount" class="form-control" required /><div class="form-text">@Localizer["Ignored for continuous unavailability rules."]</div></div>
                                 <div class="col-sm-6 d-flex align-items-center"><label class="form-check"><input name="isEnabled" value="true" type="checkbox" checked="@rule.IsEnabled" class="form-check-input" /><span class="form-check-label">@Localizer["Enabled"]</span></label></div>
                             </div>
@@ -52,7 +52,7 @@
                         <div class="row g-2">
                             <div class="col-sm-6"><label class="form-label">@Localizer["Condition"]</label><select name="kind" class="form-select"><option value="failures">@Localizer["Failures in rolling window"]</option><option value="offline">@Localizer["Continuously unavailable"]</option></select></div>
                             <div class="col-sm-3"><label class="form-label">@Localizer["Minutes"]</label><input name="minutes" type="number" min="1" max="60" value="10" class="form-control" required /></div>
-                            <div class="col-sm-3"><label class="form-label">@Localizer["Severity"]</label><select name="severity" class="form-select">@foreach (var level in Enumerable.Range(0, 5)) { <option value="sev@level" selected="@(level == 3)">sev@level</option> }</select></div>
+                            <div class="col-sm-3"><label class="form-label">@Localizer["Severity"]</label><select name="severity" class="form-select">@foreach (var level in Enumerable.Range(0, 5)) { <option value="@($"sev{level}")" selected="@(level == 3)">@($"sev{level}")</option> }</select></div>
                             <div class="col-sm-6"><label class="form-label">@Localizer["More than this many failures"]</label><input name="failureCount" type="number" min="0" max="1000000" value="5" class="form-control" required /></div>
                             <input type="hidden" name="isEnabled" value="true" />
                         </div>

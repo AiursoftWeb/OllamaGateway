@@ -298,6 +298,8 @@ public sealed class BackendMonitoringIntegrationTests : TestBase
         var html = await response.Content.ReadAsStringAsync();
         StringAssert.Contains(html, "More than 5 means the sixth failure");
         Assert.IsFalse(html.Contains(Key, StringComparison.Ordinal));
+        Assert.IsFalse(html.Contains("sev@level", StringComparison.Ordinal));
+        StringAssert.Contains(html, "value=\"sev3\"");
         Assert.AreEqual(HttpStatusCode.BadRequest, (await Http.PostAsync("/AlertMonitoring/SaveRecovery", new FormUrlEncodedContent(new Dictionary<string, string>()))).StatusCode);
         var version = Regex.Match(html, "name=\"version\" value=\"([^\"]+)\"").Groups[1].Value;
         var data = new Dictionary<string, string> { ["version"] = version, ["kind"] = "failures", ["minutes"] = "3", ["failureCount"] = "2", ["severity"] = "sev4", ["isEnabled"] = "true" };
