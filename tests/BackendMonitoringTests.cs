@@ -127,6 +127,7 @@ public sealed class BackendMonitoringTests
     [TestMethod]
     [DataRow("bad")]
     [DataRow("null")]
+    [DataRow("[null]")]
     [DataRow("[{\"Minutes\":0}]")]
     [DataRow("[{\"Minutes\":61}]")]
     [DataRow("[{\"Severity\":\"sev5\"}]")]
@@ -184,6 +185,19 @@ public sealed class BackendMonitoringTests
     {
         var failures = 0;
         using var content = FailureTrackingContent.Wrap(new StringContent(payload), () => failures++, CancellationToken.None, protocol);
+        Assert.AreEqual(payload, await content.ReadAsStringAsync());
+        Assert.AreEqual(expected, failures);
+    }
+
+    [TestMethod]
+    [DataRow("event: response.completed\n", 0)]
+    [DataRow("event: response.failed\n", 1)]
+    [DataRow("", 0)]
+    public async Task OversizedProviderRecords_DoNotCreateFalseTruncationAlerts(string prefix, int expected)
+    {
+        var payload = prefix + "data: {\"type\":\"response.completed\",\"output\":\"" + new string('x', 100000) + "\"}\n\n";
+        var failures = 0;
+        using var content = FailureTrackingContent.Wrap(new StringContent(payload), () => failures++, CancellationToken.None, BackendProtocol.OpenAiResponses);
         Assert.AreEqual(payload, await content.ReadAsStringAsync());
         Assert.AreEqual(expected, failures);
     }

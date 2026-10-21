@@ -56,6 +56,7 @@ public sealed class FailureTrackingContent(HttpContent inner, Action failure, Ca
         private readonly MemoryStream _line = new();
         private bool _lineTooLong;
         private bool _completed;
+        private bool _unrecognizedOversizedRecord;
 
         private void Observe(ReadOnlySpan<byte> bytes, bool end)
         {
@@ -67,16 +68,21 @@ public sealed class FailureTrackingContent(HttpContent inner, Action failure, Ca
             }
             if (!end) return;
             ObserveLine();
-            if (protocol.HasValue && !_completed) report(new IOException("The upstream model stream ended without a completion record."));
+            if (protocol.HasValue && !_completed && !_unrecognizedOversizedRecord) report(new IOException("The upstream model stream ended without a completion record."));
         }
 
         private void ObserveLine()
         {
+            // Large final response records are valid. Never infer truncation from a record
+            // we deliberately did not buffer; transport read errors are still observed.
+            if (_lineTooLong) _unrecognizedOversizedRecord = true;
             if (!_lineTooLong && _line.Length > 0)
             {
                 var line = Encoding.UTF8.GetString(_line.GetBuffer(), 0, (int)_line.Length).Trim();
                 if (line.StartsWith("data:", StringComparison.Ordinal)) line = line[5..].Trim();
-                if (line == "[DONE]") _completed = true;
+                if (line == "[DONE]" || line == "event: response.completed") _completed = true;
+                else if (line is "event: response.failed" or "event: response.incomplete" or "event: error")
+                    report(new IOException("The upstream model emitted a failure event."));
                 else
                 {
                     try
