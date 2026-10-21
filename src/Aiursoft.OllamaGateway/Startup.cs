@@ -1,3 +1,5 @@
+using Aiursoft.AiurProtocol;
+using Aiursoft.OllamaGateway.Services.Monitoring;
 using Aiursoft.CSTools.Tools;
 using Aiursoft.DbTools.Switchable;
 using Aiursoft.Scanner;
@@ -55,6 +57,11 @@ public class Startup : IWebStartup
         // Services
         services.AddMemoryCache();
         services.AddHttpClient();
+        services.AddAiurProtocolClient();
+        services.AddSingleton(TimeProvider.System);
+        services.AddSingleton<BackendMonitor>();
+        services.AddScoped<BackendMonitoringSettings>();
+        services.AddScoped<IMonitoringIncidentClient, MonitoringIncidentClient>();
         services.ConfigureHttpClientDefaults(builder =>
         {
             builder.ConfigurePrimaryHttpMessageHandler(() => new SocketsHttpHandler
@@ -104,6 +111,8 @@ public class Startup : IWebStartup
         services.RegisterBackgroundJob<Services.BackgroundJobs.DummyJob>();
         var orphanAvatarCleanupJob = services.RegisterBackgroundJob<Services.BackgroundJobs.OrphanAvatarCleanupJob>();
         services.RegisterScheduledTask(registration: orphanAvatarCleanupJob, period: TimeSpan.FromHours(6), startDelay: TimeSpan.FromMinutes(5));
+        var backendAlertJob = services.RegisterBackgroundJob<BackendMonitoringService>();
+        services.RegisterScheduledTask(registration: backendAlertJob, period: TimeSpan.FromSeconds(30), startDelay: TimeSpan.FromMinutes(1));
         var backendHealthJob = services.RegisterBackgroundJob<Services.BackgroundJobs.BackendHealthMonitor>();
         services.RegisterScheduledTask(registration: backendHealthJob, period: TimeSpan.FromMinutes(1), startDelay: TimeSpan.FromSeconds(30));
         var modelWarmupJob = services.RegisterBackgroundJob<Services.BackgroundJobs.ModelWarmupService>();

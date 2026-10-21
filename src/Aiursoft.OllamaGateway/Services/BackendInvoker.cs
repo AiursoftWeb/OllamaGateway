@@ -1,3 +1,4 @@
+using Aiursoft.OllamaGateway.Services.Monitoring;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Gateway.Execution;
 
@@ -9,7 +10,8 @@ public class BackendInvoker(
     IBackendCapabilityPlanner capabilityPlanner,
     IProviderConcurrencyLimiter concurrencyLimiter,
     GatewayRequestTracker requestTracker,
-    ILogger<BackendInvoker> logger) : IBackendInvoker
+    ILogger<BackendInvoker> logger,
+    BackendMonitor monitor) : IBackendInvoker
 {
     public async Task<BackendInvocationResult?> SendAsync(
         VirtualModel virtualModel,
@@ -110,8 +112,19 @@ public class BackendInvoker(
                 if (response.IsSuccessStatusCode)
                 {
                     modelSelector.ReportSuccess(backend.Id);
+                    var actualBackend = backend;
+                    response.Content = FailureTrackingContent.Wrap(response.Content,
+                        () => monitor.Failure(actualBackend), clientCancellation,
+                        requiredCapabilities.HasFlag(GatewayCapability.Streaming)
+                            ? request.RequestUri!.AbsolutePath.EndsWith("/responses", StringComparison.Ordinal)
+                                ? BackendProtocol.OpenAiResponses
+                                : request.RequestUri.AbsolutePath.EndsWith("/chat/completions", StringComparison.Ordinal)
+                                    ? BackendProtocol.OpenAiChatCompletions : BackendProtocol.OllamaNative
+                            : null);
                     return new BackendInvocationResult(response, backend, concurrencySlot);
                 }
+                if ((int)response.StatusCode >= 500 || (int)response.StatusCode is 401 or 403 or 429)
+                    monitor.Failure(backend);
                 if ((int)response.StatusCode >= 500)
                 {
                     modelSelector.ReportFailure(backend.Id);
@@ -151,6 +164,8 @@ public class BackendInvoker(
                     concurrencySlot = null;
                 }
                 requestTracker.EndBackendAttempt();
+                if (ex is HttpRequestException or IOException or OperationCanceledException)
+                    monitor.Failure(backend!);
                 modelSelector.ReportFailure(backend!.Id);
                 logger.LogWarning(ex, "Backend request attempt {Attempt} failed", i + 1);
 

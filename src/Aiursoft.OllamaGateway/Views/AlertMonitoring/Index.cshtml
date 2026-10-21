@@ -1,0 +1,85 @@
+@using Aiursoft.OllamaGateway.Authorization
+@model Aiursoft.OllamaGateway.Models.Monitoring.MonitoringViewModel
+
+<div class="row mb-3">
+    <div class="col"><h3>@Localizer["AlertCenter monitoring"]</h3></div>
+    @if (User.HasClaim(AppPermissions.Type, AppPermissionNames.CanManageGlobalSettings))
+    {
+        <div class="col-auto"><a asp-controller="GlobalSettings" asp-action="Index" class="btn btn-outline-primary">@Localizer["Connection settings"]</a></div>
+    }
+</div>
+<div class="row">
+    <div class="col-xl-8">
+        @if (!Model.Enabled || !Model.ApiKeyConfigured)
+        {
+            <div class="alert alert-warning" role="alert"><div class="alert-message">@Localizer["Synchronization is disabled or an application API key is missing. Configure the AlertCenter connection in Global Settings."]</div></div>
+        }
+        @if (Model.InvalidRules)
+        {
+            <div class="alert alert-danger" role="alert"><div class="alert-message">@Localizer["The monitoring rules are invalid. Correct the JSON in Global Settings before synchronization can resume."]</div></div>
+        }
+        @if (Model.RulesReadOnly)
+        {
+            <div class="alert alert-info" role="alert"><div class="alert-message">@Localizer["Rules are overridden by configuration and are read-only here."]</div></div>
+        }
+        <div class="card">
+            <div class="card-header"><h5 class="card-title">@Localizer["Monitoring rules"]</h5><p class="card-subtitle text-muted">@Localizer["All enabled physical models are monitored. The most severe matching rule wins."]</p></div>
+            <div class="card-body">
+                @foreach (var rule in Model.Rules)
+                {
+                    <form asp-action="SaveRule" method="post" class="border rounded p-3 mb-3">
+                        <input type="hidden" name="version" value="@Model.Version" />
+                        <input type="hidden" name="id" value="@rule.Id" />
+                        <fieldset disabled="@(Model.RulesReadOnly ? "disabled" : null)">
+                            <div class="row g-2">
+                                <div class="col-sm-6"><label class="form-label">@Localizer["Condition"]</label>
+                                    <select name="kind" class="form-select"><option value="failures" selected="@(rule.Kind == "failures")">@Localizer["Failures in rolling window"]</option><option value="offline" selected="@(rule.Kind == "offline")">@Localizer["Continuously unavailable"]</option></select>
+                                </div>
+                                <div class="col-sm-3"><label class="form-label">@Localizer["Minutes"]</label><input name="minutes" type="number" min="1" max="60" value="@rule.Minutes" class="form-control" required /></div>
+                                <div class="col-sm-3"><label class="form-label">@Localizer["Severity"]</label><select name="severity" class="form-select">@foreach (var level in Enumerable.Range(0, 5)) { <option value="@($"sev{level}")" selected="@(rule.Severity == $"sev{level}")">@($"sev{level}")</option> }</select></div>
+                                <div class="col-sm-6"><label class="form-label">@Localizer["More than this many failures"]</label><input name="failureCount" type="number" min="0" max="1000000" value="@rule.FailureCount" class="form-control" required /><div class="form-text">@Localizer["Ignored for continuous unavailability rules."]</div></div>
+                                <div class="col-sm-6 d-flex align-items-center"><label class="form-check"><input name="isEnabled" value="true" type="checkbox" checked="@rule.IsEnabled" class="form-check-input" /><span class="form-check-label">@Localizer["Enabled"]</span></label></div>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-2">@Localizer["Save rule"]</button>
+                            <button type="submit" asp-action="DeleteRule" class="btn btn-outline-danger mt-2">@Localizer["Delete rule"]</button>
+                        </fieldset>
+                    </form>
+                }
+                <form asp-action="SaveRule" method="post">
+                    <input type="hidden" name="version" value="@Model.Version" />
+                    <fieldset disabled="@(Model.RulesReadOnly ? "disabled" : null)">
+                        <h6>@Localizer["Add rule"]</h6>
+                        <div class="row g-2">
+                            <div class="col-sm-6"><label class="form-label">@Localizer["Condition"]</label><select name="kind" class="form-select"><option value="failures">@Localizer["Failures in rolling window"]</option><option value="offline">@Localizer["Continuously unavailable"]</option></select></div>
+                            <div class="col-sm-3"><label class="form-label">@Localizer["Minutes"]</label><input name="minutes" type="number" min="1" max="60" value="10" class="form-control" required /></div>
+                            <div class="col-sm-3"><label class="form-label">@Localizer["Severity"]</label><select name="severity" class="form-select">@foreach (var level in Enumerable.Range(0, 5)) { <option value="@($"sev{level}")" selected="@(level == 3)">@($"sev{level}")</option> }</select></div>
+                            <div class="col-sm-6"><label class="form-label">@Localizer["More than this many failures"]</label><input name="failureCount" type="number" min="0" max="1000000" value="5" class="form-control" required /></div>
+                            <input type="hidden" name="isEnabled" value="true" />
+                        </div>
+                        <button type="submit" class="btn btn-outline-primary mt-2">@Localizer["Add rule"]</button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div class="card"><div class="card-header"><h5 class="card-title">@Localizer["Recovery"]</h5></div><div class="card-body">
+            <form asp-action="SaveRecovery" method="post"><fieldset disabled="@(Model.AutoMitigateReadOnly ? "disabled" : null)">
+                <label class="form-check"><input name="autoMitigate" value="true" type="checkbox" checked="@Model.AutoMitigate" class="form-check-input" /><span class="form-check-label">@Localizer["Automatically mitigate when no rule matches and fresh health confirms recovery"]</span></label>
+                <button class="btn btn-primary mt-2" type="submit">@Localizer["Save recovery settings"]</button>
+            </fieldset></form>
+        </div></div>
+    </div>
+    <div class="col-xl-4"><div class="card"><div class="card-header"><h5 class="card-title">@Localizer["How monitoring works"]</h5></div><div class="card-body">
+        <p>@Localizer["A physical model is identified by provider and model name. Multiple virtual models sharing it do not create duplicate incidents."]</p>
+        <p>@Localizer["More than 5 means the sixth failure. More than 20 means the twenty-first. A successful request does not erase failures already in the rolling window."]</p>
+        <p>@Localizer["Backend timeouts, network errors, upstream 5xx, authentication rejection, rate limiting and interrupted upstream reads count. Client cancellation and ordinary invalid client requests do not count."]</p>
+        <p>@Localizer["Unavailability means the provider cannot be checked or its model is missing from the model directory. A model unloaded from memory is not offline. Directory availability does not guarantee successful inference."]</p>
+        <p>@Localizer["Health checks run every minute; synchronization runs every 30 seconds. Stale health observations are unknown, not healthy. Counters use one-second buckets and up to 60-minute windows."]</p>
+        <p>@Localizer["Statistics are held in bounded process memory. Restarting begins a new observation period. Recovery waits for a full failure window after restart, so missing history is not mistaken for recovery. Use a single gateway instance for complete counts."]</p>
+        <p>@Localizer["One active incident is maintained per physical model. Higher severity upgrades it. Automatic recovery mitigates; a person performs final resolution."]</p>
+        <p class="mb-0">@Localizer["Connection credentials use Global Settings, including encrypted secrets and read-only environment overrides."]</p>
+    </div></div></div>
+</div>
+<div class="card"><div class="card-header"><h5 class="card-title">@Localizer["Observed physical models"]</h5></div><div class="table-responsive"><table class="table mb-0">
+    <thead><tr><th>@Localizer["Provider"]</th><th>@Localizer["Model"]</th><th>@Localizer["Health"]</th><th>@Localizer["Last health check (UTC)"]</th><th>@Localizer["Failures in ten minutes"]</th><th>@Localizer["Unavailable since (UTC)"]</th><th>@Localizer["Matching severity"]</th></tr></thead>
+    <tbody>@foreach (var state in Model.Backends) { <tr><td>@state.ProviderName</td><td class="text-break">@state.Key.Model</td><td>@if (state.Healthy == true) { @Localizer["Available"] } else if (state.Healthy == false) { @Localizer["Unavailable"] } else { @Localizer["Unknown"] }</td><td>@state.LastHealth?.ToString("u")</td><td>@state.FailuresInTenMinutes</td><td>@state.OfflineSince?.ToString("u")</td><td>@(state.MatchingRule?.Severity ?? "—")</td></tr> }</tbody>
+</table></div></div>
