@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="A physical model is identified by provider and model name. Multiple virtual models sharing it do not create duplicate incidents." xml:space="preserve">
+    <value>Фізична модель ідентифікується за назвою постачальника та моделі. Кілька віртуальних моделей, що використовують її, не створюють дубльованих інцидентів.</value>
+  </data>
+  <data name="Add rule" xml:space="preserve">
+    <value>Додати правило</value>
+  </data>
+  <data name="AlertCenter monitoring" xml:space="preserve">
+    <value>Моніторинг AlertCenter</value>
+  </data>
+  <data name="All enabled physical models are monitored. The most severe matching rule wins." xml:space="preserve">
+    <value>Усі ввімкнені фізичні моделі перебувають під моніторингом. Якщо збігаються кілька правил, застосовується правило з найвищим рівнем серйозності.</value>
+  </data>
+  <data name="Automatically mitigate when no rule matches and fresh health confirms recovery" xml:space="preserve">
+    <value>Автоматично пом&apos;якшувати, якщо жодне правило не збігається, а свіжа діагностика підтверджує відновлення</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>Доступний</value>
+  </data>
+  <data name="Backend timeouts, network errors, upstream 5xx, authentication rejection, rate limiting and interrupted upstream reads count. Client cancellation and ordinary invalid client requests do not count." xml:space="preserve">
+    <value>Часові обмеження бекенду, мережеві помилки, помилки 5xx від upstream, відмова автентифікації, обмеження частоти запитів та перервані upstream-читання враховуються. Скасування клієнтом і звичайні некоректні запити клієнта не враховуються.</value>
+  </data>
+  <data name="Condition" xml:space="preserve">
+    <value>Умова</value>
+  </data>
+  <data name="Connection credentials use Global Settings, including encrypted secrets and read-only environment overrides." xml:space="preserve">
+    <value>Для облікових даних підключення використовуються глобальні налаштування, зокрема зашифровані секрети та доступні лише для читання перевизначення зі змінних середовища.</value>
+  </data>
+  <data name="Connection settings" xml:space="preserve">
+    <value>Параметри з&apos;єднання</value>
+  </data>
+  <data name="Continuously unavailable" xml:space="preserve">
+    <value>Безперервно недоступний</value>
+  </data>
+  <data name="Delete rule" xml:space="preserve">
+    <value>Видалити правило</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Увімкнено</value>
+  </data>
+  <data name="Failures in rolling window" xml:space="preserve">
+    <value>Збої у ковзаючому вікні</value>
+  </data>
+  <data name="Failures in ten minutes" xml:space="preserve">
+    <value>Кількість збоїв за десять хвилин</value>
+  </data>
+  <data name="Health" xml:space="preserve">
+    <value>Стан</value>
+  </data>
+  <data name="Health checks run every minute; synchronization runs every 30 seconds. Stale health observations are unknown, not healthy. Counters use one-second buckets and up to 60-minute windows." xml:space="preserve">
+    <value>Перевірки стану виконуються щохвилини; синхронізація — кожні 30 секунд. Застарілі дані про стан вважаються невідомими, а не свідченням справності. Лічильники використовують інтервали тривалістю одну секунду та часові вікна до 60 хвилин.</value>
+  </data>
+  <data name="How monitoring works" xml:space="preserve">
+    <value>Як працює моніторинг</value>
+  </data>
+  <data name="Ignored for continuous unavailability rules." xml:space="preserve">
+    <value>Ігнорується для правил безперервної недоступності.</value>
+  </data>
+  <data name="Last health check (UTC)" xml:space="preserve">
+    <value>Остання перевірка стану (UTC)</value>
+  </data>
+  <data name="Matching severity" xml:space="preserve">
+    <value>Відповідний рівень критичності</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Хвилини</value>
+  </data>
+  <data name="Model" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="Monitoring rules" xml:space="preserve">
+    <value>Правила моніторингу</value>
+  </data>
+  <data name="More than 5 means the sixth failure. More than 20 means the twenty-first. A successful request does not erase failures already in the rolling window." xml:space="preserve">
+    <value>Більше 5 означає шосту невдачу. Більше 20 означає двадцять першу. Успішний запит не стирає невдачі, які вже є в ковзаючому вікні.</value>
+  </data>
+  <data name="More than this many failures" xml:space="preserve">
+    <value>Більше зазначеної кількості збоїв</value>
+  </data>
+  <data name="Observed physical models" xml:space="preserve">
+    <value>Спостережувані фізичні моделі</value>
+  </data>
+  <data name="One active incident is maintained per physical model. Higher severity upgrades it. Automatic recovery mitigates; a person performs final resolution." xml:space="preserve">
+    <value>Для кожного фізичного modelu підтримується лише одна активна інцидент. Вищий рівень важливості покращує її. Автоматичне відновлення пом’якшує наслідки; остаточне вирішення виконує людина.</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Постачальник</value>
+  </data>
+  <data name="Recovery" xml:space="preserve">
+    <value>Відновлення</value>
+  </data>
+  <data name="Rules are overridden by configuration and are read-only here." xml:space="preserve">
+    <value>Правила перевизначаються конфігурацією та є лише для читання тут.</value>
+  </data>
+  <data name="Save recovery settings" xml:space="preserve">
+    <value>Зберегти налаштування відновлення</value>
+  </data>
+  <data name="Save rule" xml:space="preserve">
+    <value>Зберегти правило</value>
+  </data>
+  <data name="Severity" xml:space="preserve">
+    <value>Серйозність</value>
+  </data>
+  <data name="Statistics are held in bounded process memory. Restarting begins a new observation period. Recovery waits for a full failure window after restart, so missing history is not mistaken for recovery. Use a single gateway instance for complete counts." xml:space="preserve">
+    <value>Статистика зберігається в обмеженій за обсягом пам’яті процесу. Після перезапуску починається новий період спостереження. Після перезапуску для відновлення потрібно дочекатися повного вікна відмов, щоб відсутність історії не вважалася відновленням. Для отримання повної статистики використовуйте один екземпляр шлюзу.</value>
+  </data>
+  <data name="Synchronization is disabled or an application API key is missing. Configure the AlertCenter connection in Global Settings." xml:space="preserve">
+    <value>Синхронізацію вимкнено або відсутній API-ключ застосунку. Налаштуйте з&apos;єднання з AlertCenter у глобальних налаштуваннях.</value>
+  </data>
+  <data name="The monitoring rules are invalid. Correct the JSON in Global Settings before synchronization can resume." xml:space="preserve">
+    <value>Правила моніторингу є некоректними. Виправте JSON у глобальних налаштуваннях, щоб синхронізація могла відновитися.</value>
+  </data>
+  <data name="Unavailability means the provider cannot be checked or its model is missing from the model directory. A model unloaded from memory is not offline. Directory availability does not guarantee successful inference." xml:space="preserve">
+    <value>Недоступність означає, що провайдера не можна перевірити або його модель відсутня в каталозі моделей. Модель, знята з пам&apos;яті, не є офлайн. Доступність каталогу не гарантує успішного виведення.</value>
+  </data>
+  <data name="Unavailable" xml:space="preserve">
+    <value>Недоступно</value>
+  </data>
+  <data name="Unavailable since (UTC)" xml:space="preserve">
+    <value>Недоступна з (UTC)</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Невідомо</value>
+  </data>
+
+</root>

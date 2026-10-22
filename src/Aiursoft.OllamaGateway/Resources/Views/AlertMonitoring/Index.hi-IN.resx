@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="A physical model is identified by provider and model name. Multiple virtual models sharing it do not create duplicate incidents." xml:space="preserve">
+    <value>एक भौतिक मॉडल की पहचान प्रदाता और मॉडल के नाम से होती है। इसे साझा करने वाले कई वर्चुअल मॉडल डुप्लिकेट घटनाएँ उत्पन्न नहीं करते।</value>
+  </data>
+  <data name="Add rule" xml:space="preserve">
+    <value>नियम जोड़ें</value>
+  </data>
+  <data name="AlertCenter monitoring" xml:space="preserve">
+    <value>AlertCenter निगरानी</value>
+  </data>
+  <data name="All enabled physical models are monitored. The most severe matching rule wins." xml:space="preserve">
+    <value>सभी सक्षम भौतिक मॉडल की निगरानी की जाती है। सबसे गंभीर मेल खाती नियम लागू होती है।</value>
+  </data>
+  <data name="Automatically mitigate when no rule matches and fresh health confirms recovery" xml:space="preserve">
+    <value>जब कोई नियम मेल नहीं खाता और ताज़ा स्वास्थ्य पुष्टि करता है कि रिकवरी हो गई है, तो स्वतः संतुलन करें</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>उपलब्ध</value>
+  </data>
+  <data name="Backend timeouts, network errors, upstream 5xx, authentication rejection, rate limiting and interrupted upstream reads count. Client cancellation and ordinary invalid client requests do not count." xml:space="preserve">
+    <value>बैकएंड टाइमआउट, नेटवर्क त्रुटियाँ, अपस्ट्रीम 5xx, प्रमाणीकरण अस्वीकृति, अनुरोध दर सीमित होना और अपस्ट्रीम से डेटा पढ़ने में रुकावट—इनकी गणना होती है। क्लाइंट द्वारा अनुरोध रद्द करना और क्लाइंट के सामान्य अमान्य अनुरोधों की गणना नहीं होती।</value>
+  </data>
+  <data name="Condition" xml:space="preserve">
+    <value>अवस्था</value>
+  </data>
+  <data name="Connection credentials use Global Settings, including encrypted secrets and read-only environment overrides." xml:space="preserve">
+    <value>कनेक्शन क्रेडेंशियल्स ग्लोबल सेटिंग्स का उपयोग करते हैं, जिसमें एन्क्रिप्टेड सीक्रेट्स और रीड-ओनली एनवायरनमेंट ओवरराइड शामिल हैं।</value>
+  </data>
+  <data name="Connection settings" xml:space="preserve">
+    <value>कनेक्शन सेटिंग्स</value>
+  </data>
+  <data name="Continuously unavailable" xml:space="preserve">
+    <value>लगातार अनुपलब्ध</value>
+  </data>
+  <data name="Delete rule" xml:space="preserve">
+    <value>नियम हटाएँ</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>सक्षम</value>
+  </data>
+  <data name="Failures in rolling window" xml:space="preserve">
+    <value>गुलज़ार विंडो में विफलताएं</value>
+  </data>
+  <data name="Failures in ten minutes" xml:space="preserve">
+    <value>दस मिनट में विफलताएँ</value>
+  </data>
+  <data name="Health" xml:space="preserve">
+    <value>स्वास्थ्य</value>
+  </data>
+  <data name="Health checks run every minute; synchronization runs every 30 seconds. Stale health observations are unknown, not healthy. Counters use one-second buckets and up to 60-minute windows." xml:space="preserve">
+    <value>स्वास्थ्य जाँच हर मिनट चलती है; समन्वयन हर 30 सेकंड में चलता है। पुरानी स्वास्थ्य जानकारी की स्थिति अज्ञात होती है, स्वस्थ नहीं। काउंटर एक-सेकंड के अंतराल और अधिकतम 60 मिनट की समयावधियों का उपयोग करते हैं।</value>
+  </data>
+  <data name="How monitoring works" xml:space="preserve">
+    <value>निगरानी कैसे काम करती है</value>
+  </data>
+  <data name="Ignored for continuous unavailability rules." xml:space="preserve">
+    <value>निरंतर अनुपलब्धता वाले नियमों के लिए इसे अनदेखा किया जाता है।</value>
+  </data>
+  <data name="Last health check (UTC)" xml:space="preserve">
+    <value>अंतिम स्वास्थ्य जाँच (UTC)</value>
+  </data>
+  <data name="Matching severity" xml:space="preserve">
+    <value>मेल खाती गंभीरता</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>मिनट</value>
+  </data>
+  <data name="Model" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="Monitoring rules" xml:space="preserve">
+    <value>निगरानी नियम</value>
+  </data>
+  <data name="More than 5 means the sixth failure. More than 20 means the twenty-first. A successful request does not erase failures already in the rolling window." xml:space="preserve">
+    <value>5 से अधिक का अर्थ है छठी विफलता। 20 से अधिक का अर्थ है वीसवीं। एक सफल अनुरोध गोलिंग विंडो में पहले से मौजूद विफलताओं को मिटाता नहीं है।</value>
+  </data>
+  <data name="More than this many failures" xml:space="preserve">
+    <value>इतने से अधिक विफलताएँ</value>
+  </data>
+  <data name="Observed physical models" xml:space="preserve">
+    <value>प्रेक्षित भौतिक मॉडल</value>
+  </data>
+  <data name="One active incident is maintained per physical model. Higher severity upgrades it. Automatic recovery mitigates; a person performs final resolution." xml:space="preserve">
+    <value>प्रत्येक भौतिक मॉडल के लिए एक सक्रिय घटना बनाई जाती है। उच्च गंभीरता इसे अपग्रेड करती है। स्वतः प्रतिक्रिया को कम करती है; अंतिम समाधान एक व्यक्ति द्वारा किया जाता है।</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>प्रदाता</value>
+  </data>
+  <data name="Recovery" xml:space="preserve">
+    <value>पुनर्प्राप्ति</value>
+  </data>
+  <data name="Rules are overridden by configuration and are read-only here." xml:space="preserve">
+    <value>नियम कॉन्फ़िगरेशन द्वारा अधिग्रहित हैं और यहाँ केवल पढ़ने के लिए हैं।</value>
+  </data>
+  <data name="Save recovery settings" xml:space="preserve">
+    <value>पुनर्प्राप्ति सेटिंग्स सहेजें</value>
+  </data>
+  <data name="Save rule" xml:space="preserve">
+    <value>नियम सहेजें</value>
+  </data>
+  <data name="Severity" xml:space="preserve">
+    <value>गंभीरता</value>
+  </data>
+  <data name="Statistics are held in bounded process memory. Restarting begins a new observation period. Recovery waits for a full failure window after restart, so missing history is not mistaken for recovery. Use a single gateway instance for complete counts." xml:space="preserve">
+    <value>आँकड़े सीमित प्रक्रिया स्मृति में संग्रहीत किए जाते हैं। पुनरारंभ (रीस्टार्ट) एक नई निरीक्षण अवधि की शुरुआत करता है। रिकवरी पुनरारंभ के बाद एक पूर्ण विफलता विंडो का प्रतीक्षा करती है, ताकि गायब इतिहास को रिकवरी न समझा जाए। पूर्ण गणनाओं के लिए एक ही गेटवे इंस्टेंस का उपयोग करें।</value>
+  </data>
+  <data name="Synchronization is disabled or an application API key is missing. Configure the AlertCenter connection in Global Settings." xml:space="preserve">
+    <value>सिंकरोनाइज़ेशन अक्षम है या एप्लिकेशन API कुंजी अनुपस्थित है। वैश्विक सेटिंग्स में AlertCenter कनेक्शन कॉन्फ़िगर करें।</value>
+  </data>
+  <data name="The monitoring rules are invalid. Correct the JSON in Global Settings before synchronization can resume." xml:space="preserve">
+    <value>निगरानी नियम अमान्य हैं। सिंक्रनाइज़ेशन फिर से शुरू होने से पहले ग्लोबल सेटिंग्स में JSON को ठीक करें।</value>
+  </data>
+  <data name="Unavailability means the provider cannot be checked or its model is missing from the model directory. A model unloaded from memory is not offline. Directory availability does not guarantee successful inference." xml:space="preserve">
+    <value>अनुपलब्धता का अर्थ है कि प्रदाता की जाँच नहीं की जा सकती या मॉडल डायरेक्टरी में उसका मॉडल मौजूद नहीं है। मेमोरी से हटाया गया मॉडल ऑफ़लाइन नहीं होता। डायरेक्टरी की उपलब्धता से सफल अनुमान की गारंटी नहीं मिलती।</value>
+  </data>
+  <data name="Unavailable" xml:space="preserve">
+    <value>अनुपलब्ध</value>
+  </data>
+  <data name="Unavailable since (UTC)" xml:space="preserve">
+    <value>अनवailable होने के बाद से (UTC)</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>अज्ञात</value>
+  </data>
+
+</root>
