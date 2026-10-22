@@ -21,11 +21,20 @@
       <data name=" The link to the brand&apos;s home page." xml:space="preserve">
     <value>品牌主页链接</value>
   </data>
+  <data name="A dedicated application key with query, create, change severity and mitigate permissions." xml:space="preserve">
+    <value>具有查询、创建、更改严重级别和缓解权限的专用应用程序密钥。</value>
+  </data>
   <data name="A dummy choice for testing." xml:space="preserve">
     <value>用于测试的占位选项</value>
   </data>
   <data name="A dummy number for testing." xml:space="preserve">
     <value>用于测试的占位数字。</value>
+  </data>
+  <data name="AlertCenter application API key" xml:space="preserve">
+    <value>AlertCenter 应用程序 API 密钥</value>
+  </data>
+  <data name="AlertCenter endpoint" xml:space="preserve">
+    <value>AlertCenter 端点</value>
   </data>
   <data name="Allow Anonymous API Call" xml:space="preserve">
     <value>允许匿名 API 调用</value>
@@ -38,6 +47,12 @@
   </data>
   <data name="Allow users to adjust their nickname in the profile management page." xml:space="preserve">
     <value>允许用户在个人资料管理页面调整其昵称。</value>
+  </data>
+  <data name="Automatically mitigate recovered backends" xml:space="preserve">
+    <value>自动缓解已恢复的后端</value>
+  </data>
+  <data name="Backend monitoring rules" xml:space="preserve">
+    <value>后端监控规则</value>
   </data>
   <data name="Brand Home URL" xml:space="preserve">
     <value>品牌主页链接</value>
@@ -57,14 +72,26 @@
   <data name="Dummy Number" xml:space="preserve">
     <value>占位数字</value>
   </data>
+  <data name="Enable AlertCenter integration" xml:space="preserve">
+    <value>启用 AlertCenter 集成</value>
+  </data>
   <data name="Fake Ollama Version" xml:space="preserve">
     <value>虚假 Ollama 版本</value>
+  </data>
+  <data name="Gateway public URL" xml:space="preserve">
+    <value>网关公开 URL</value>
   </data>
   <data name="ICP Number" xml:space="preserve">
     <value>ICP 备案号</value>
   </data>
+  <data name="JSON monitoring rules. Use the AlertCenter monitoring page to edit them." xml:space="preserve">
+    <value>JSON 监控规则。请使用 AlertCenter 监控页面进行编辑。</value>
+  </data>
   <data name="Keep Alive Job Interval (Minutes)" xml:space="preserve">
     <value>保持活跃任务间隔（分钟）</value>
+  </data>
+  <data name="Mitigate when no rule matches and a fresh healthy observation confirms recovery. Final resolution remains manual." xml:space="preserve">
+    <value>当没有规则匹配且新的健康观测确认恢复时，执行缓解操作。最终解决仍需手动处理。</value>
   </data>
   <data name="Project Logo" xml:space="preserve">
     <value>项目标志</value>
@@ -75,6 +102,9 @@
   <data name="Request Timeout (Minutes)" xml:space="preserve">
     <value>请求超时（分钟）</value>
   </data>
+  <data name="Synchronize backend monitoring incidents with AlertCenter." xml:space="preserve">
+    <value>将后端监控事件与 AlertCenter 同步。</value>
+  </data>
   <data name="The brand name displayed in the footer." xml:space="preserve">
     <value>页脚中显示的品牌名称。</value>
   </data>
@@ -83,6 +113,9 @@
   </data>
   <data name="The default virtual model to use for embedding requests when no model is specified." xml:space="preserve">
     <value>当未指定模型时，用于嵌入请求的默认虚拟模型。</value>
+  </data>
+  <data name="The HTTP(S) base URL of AlertCenter." xml:space="preserve">
+    <value>AlertCenter 的 HTTP(S) 基础 URL。</value>
   </data>
   <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
     <value>中国大陆用户使用的 ICP 备案号。留空以隐藏。</value>
@@ -98,6 +131,9 @@
   </data>
   <data name="The name of the project displayed in the frontend." xml:space="preserve">
     <value>项目在前端显示的名称。</value>
+  </data>
+  <data name="The public HTTP(S) base URL used in incident descriptions." xml:space="preserve">
+    <value>用于事件描述的公开 HTTP(S) 基础 URL。</value>
   </data>
   <data name="The version reported by the gateway to clients (e.g., Open-WebUI)." xml:space="preserve">
     <value>网关向客户端报告的版本（例如：Open-WebUI）。</value>

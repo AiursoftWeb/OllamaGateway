@@ -122,6 +122,9 @@ public class ViewModelArgsInjector(
         _ = localizer["Delete Account"];
     
         _ = localizer["Architecture Guide"];
+    
+        _ = localizer["AlertCenter monitoring"];
+        _ = localizer["Monitoring"];
     }
 
     public void InjectSimple(

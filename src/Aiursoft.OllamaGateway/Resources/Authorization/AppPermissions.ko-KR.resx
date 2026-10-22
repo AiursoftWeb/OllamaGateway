@@ -33,6 +33,9 @@
   <data name="Allows chatting with virtual models through the gateway UI or API." xml:space="preserve">
     <value>게이트웨이 UI 또는 API 를 통해 가상 모델과 채팅할 수 있습니다.</value>
   </data>
+  <data name="Allows managing backend monitoring rules and viewing AlertCenter integration status." xml:space="preserve">
+    <value>백엔드 모니터링 규칙 관리 및 AlertCenter 통합 상태 확인을 허용합니다.</value>
+  </data>
   <data name="Allows managing the underlying Ollama model providers/servers." xml:space="preserve">
     <value>기저 Ollama 모델 제공자/서버를 관리할 수 있습니다.</value>
   </data>
@@ -104,6 +107,9 @@
   </data>
   <data name="Grants permission to restart the application instance. May cause availability interruptions but all settings and cache will be reloaded." xml:space="preserve">
     <value>애플리케이션 인스턴스를 재시작할 수 있는 권한을 부여합니다. 가용성 중단을 초래할 수 있으나 모든 설정과 캐시가 다시 로드됩니다.</value>
+  </data>
+  <data name="Manage AlertCenter Integration" xml:space="preserve">
+    <value>AlertCenter 연동 관리</value>
   </data>
   <data name="Manage Any API Key" xml:space="preserve">
     <value>모든 API 키 관리</value>

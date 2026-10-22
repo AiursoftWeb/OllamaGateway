@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="A physical model is identified by provider and model name. Multiple virtual models sharing it do not create duplicate incidents." xml:space="preserve">
+    <value>Un modello fisico è identificato dal provider e dal nome del modello. Più modelli virtuali che lo condividono non generano incidenti duplicati.</value>
+  </data>
+  <data name="Add rule" xml:space="preserve">
+    <value>Aggiungi regola</value>
+  </data>
+  <data name="AlertCenter monitoring" xml:space="preserve">
+    <value>Monitoraggio di AlertCenter</value>
+  </data>
+  <data name="All enabled physical models are monitored. The most severe matching rule wins." xml:space="preserve">
+    <value>Tutti i modelli fisici abilitati sono monitorati. Viene applicata la regola corrispondente con la gravità maggiore.</value>
+  </data>
+  <data name="Automatically mitigate when no rule matches and fresh health confirms recovery" xml:space="preserve">
+    <value>Mitiga automaticamente quando nessuna regola corrisponde e lo stato di salute aggiornato conferma il ripristino</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>Disponibile</value>
+  </data>
+  <data name="Backend timeouts, network errors, upstream 5xx, authentication rejection, rate limiting and interrupted upstream reads count. Client cancellation and ordinary invalid client requests do not count." xml:space="preserve">
+    <value>I timeout del backend, gli errori di rete, gli errori 5xx dei sistemi upstream, il rifiuto dell&apos;autenticazione, la limitazione della frequenza delle richieste e le letture interrotte dai sistemi upstream vengono conteggiati. L&apos;annullamento da parte del client e le normali richieste non valide del client non vengono conteggiati.</value>
+  </data>
+  <data name="Condition" xml:space="preserve">
+    <value>Condizione</value>
+  </data>
+  <data name="Connection credentials use Global Settings, including encrypted secrets and read-only environment overrides." xml:space="preserve">
+    <value>Le credenziali di connessione utilizzano le Impostazioni globali, inclusi segreti crittografati e override dell&apos;ambiente in sola lettura.</value>
+  </data>
+  <data name="Connection settings" xml:space="preserve">
+    <value>Impostazioni di connessione</value>
+  </data>
+  <data name="Continuously unavailable" xml:space="preserve">
+    <value>Costantemente non disponibile</value>
+  </data>
+  <data name="Delete rule" xml:space="preserve">
+    <value>Elimina regola</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Abilitato</value>
+  </data>
+  <data name="Failures in rolling window" xml:space="preserve">
+    <value>Errori nell&apos;intervallo temporale mobile</value>
+  </data>
+  <data name="Failures in ten minutes" xml:space="preserve">
+    <value>Fallite in dieci minuti</value>
+  </data>
+  <data name="Health" xml:space="preserve">
+    <value>Stato di salute</value>
+  </data>
+  <data name="Health checks run every minute; synchronization runs every 30 seconds. Stale health observations are unknown, not healthy. Counters use one-second buckets and up to 60-minute windows." xml:space="preserve">
+    <value>I controlli dello stato vengono eseguiti ogni minuto; la sincronizzazione ogni 30 secondi. Le osservazioni obsolete sullo stato sono considerate sconosciute, non positive. I contatori usano intervalli di un secondo e finestre fino a 60 minuti.</value>
+  </data>
+  <data name="How monitoring works" xml:space="preserve">
+    <value>Come funziona il monitoraggio</value>
+  </data>
+  <data name="Ignored for continuous unavailability rules." xml:space="preserve">
+    <value>Ignorato per le regole di indisponibilità continua.</value>
+  </data>
+  <data name="Last health check (UTC)" xml:space="preserve">
+    <value>Ultimo controllo dello stato (UTC)</value>
+  </data>
+  <data name="Matching severity" xml:space="preserve">
+    <value>Gravità corrispondente</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Minuti</value>
+  </data>
+  <data name="Model" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="Monitoring rules" xml:space="preserve">
+    <value>Regole di monitoraggio</value>
+  </data>
+  <data name="More than 5 means the sixth failure. More than 20 means the twenty-first. A successful request does not erase failures already in the rolling window." xml:space="preserve">
+    <value>Più di 5 significa il sesto errore. Più di 20 significa il ventunesimo. Una richiesta riuscita non cancella gli errori già presenti nella finestra mobile.</value>
+  </data>
+  <data name="More than this many failures" xml:space="preserve">
+    <value>Più di questo numero di errori</value>
+  </data>
+  <data name="Observed physical models" xml:space="preserve">
+    <value>Modelli fisici osservati</value>
+  </data>
+  <data name="One active incident is maintained per physical model. Higher severity upgrades it. Automatic recovery mitigates; a person performs final resolution." xml:space="preserve">
+    <value>Per ogni modello fisico viene mantenuto un solo incidente attivo. Una gravità maggiore ne aumenta il livello. Il ripristino automatico mitiga l&apos;incidente; la risoluzione definitiva spetta a una persona.</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Fornitore</value>
+  </data>
+  <data name="Recovery" xml:space="preserve">
+    <value>Ripristino</value>
+  </data>
+  <data name="Rules are overridden by configuration and are read-only here." xml:space="preserve">
+    <value>Le regole sono sovrascritte dalla configurazione e qui sono di sola lettura.</value>
+  </data>
+  <data name="Save recovery settings" xml:space="preserve">
+    <value>Salva le impostazioni di ripristino</value>
+  </data>
+  <data name="Save rule" xml:space="preserve">
+    <value>Salva regola</value>
+  </data>
+  <data name="Severity" xml:space="preserve">
+    <value>Gravità</value>
+  </data>
+  <data name="Statistics are held in bounded process memory. Restarting begins a new observation period. Recovery waits for a full failure window after restart, so missing history is not mistaken for recovery. Use a single gateway instance for complete counts." xml:space="preserve">
+    <value>Le statistiche sono conservate nella memoria del processo, entro limiti prestabiliti. Il riavvio avvia un nuovo periodo di osservazione. Dopo il riavvio, il ripristino viene considerato solo dopo un&apos;intera finestra di guasto, così l&apos;assenza di dati storici non viene scambiata per un ripristino. Per conteggi completi, utilizzare una sola istanza del gateway.</value>
+  </data>
+  <data name="Synchronization is disabled or an application API key is missing. Configure the AlertCenter connection in Global Settings." xml:space="preserve">
+    <value>La sincronizzazione è disabilitata oppure manca una chiave API dell&apos;applicazione. Configurare la connessione ad AlertCenter nelle Impostazioni globali.</value>
+  </data>
+  <data name="The monitoring rules are invalid. Correct the JSON in Global Settings before synchronization can resume." xml:space="preserve">
+    <value>Le regole di monitoraggio non sono valide. Correggi il JSON nelle Impostazioni globali prima di riprendere la sincronizzazione.</value>
+  </data>
+  <data name="Unavailability means the provider cannot be checked or its model is missing from the model directory. A model unloaded from memory is not offline. Directory availability does not guarantee successful inference." xml:space="preserve">
+    <value>Per indisponibilità si intende che non è possibile verificare il provider oppure che il suo modello non è presente nella directory dei modelli. Un modello scaricato dalla memoria non è offline. La disponibilità nella directory non garantisce che l&apos;inferenza abbia esito positivo.</value>
+  </data>
+  <data name="Unavailable" xml:space="preserve">
+    <value>Non disponibile</value>
+  </data>
+  <data name="Unavailable since (UTC)" xml:space="preserve">
+    <value>Indisponibile dal (UTC)</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Sconosciuto</value>
+  </data>
+
+</root>

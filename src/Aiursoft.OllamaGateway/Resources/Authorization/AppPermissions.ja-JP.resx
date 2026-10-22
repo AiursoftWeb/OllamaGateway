@@ -33,6 +33,9 @@
   <data name="Allows chatting with virtual models through the gateway UI or API." xml:space="preserve">
     <value>ゲートウェイUIまたはAPIを介して仮想モデルとのチャットを許可します。</value>
   </data>
+  <data name="Allows managing backend monitoring rules and viewing AlertCenter integration status." xml:space="preserve">
+    <value>バックエンドの監視ルールを管理し、AlertCenterの統合状況を確認できます。</value>
+  </data>
   <data name="Allows managing the underlying Ollama model providers/servers." xml:space="preserve">
     <value>基盤となる Ollama モデルプロバイダー/サーバーの管理を許可します。</value>
   </data>
@@ -104,6 +107,9 @@
   </data>
   <data name="Grants permission to restart the application instance. May cause availability interruptions but all settings and cache will be reloaded." xml:space="preserve">
     <value>アプリケーションインスタンスの再起動を許可します。可用性の中断を引き起こす可能性がありますが、すべての設定とキャッシュは再読み込みされます。</value>
+  </data>
+  <data name="Manage AlertCenter Integration" xml:space="preserve">
+    <value>AlertCenter統合の管理</value>
   </data>
   <data name="Manage Any API Key" xml:space="preserve">
     <value>任意の API キーを管理</value>

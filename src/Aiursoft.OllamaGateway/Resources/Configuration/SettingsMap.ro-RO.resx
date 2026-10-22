@@ -21,11 +21,20 @@
       <data name=" The link to the brand&apos;s home page." xml:space="preserve">
     <value>Linkul către pagina principală a mărcii.</value>
   </data>
+  <data name="A dedicated application key with query, create, change severity and mitigate permissions." xml:space="preserve">
+    <value>O cheie de aplicație dedicată cu permisiuni de interogare, creare, modificare severitate și mitigare.</value>
+  </data>
   <data name="A dummy choice for testing." xml:space="preserve">
     <value>O alegere dummy pentru testare.</value>
   </data>
   <data name="A dummy number for testing." xml:space="preserve">
     <value>Un număr dummy pentru testare.</value>
+  </data>
+  <data name="AlertCenter application API key" xml:space="preserve">
+    <value>Cheia API pentru aplicația AlertCenter</value>
+  </data>
+  <data name="AlertCenter endpoint" xml:space="preserve">
+    <value>Punct terminal AlertCenter</value>
   </data>
   <data name="Allow Anonymous API Call" xml:space="preserve">
     <value>Permite apeluri API anonime</value>
@@ -38,6 +47,12 @@
   </data>
   <data name="Allow users to adjust their nickname in the profile management page." xml:space="preserve">
     <value>Permite utilizatorilor să-și ajusteze nickname-ul în pagina de gestionare a profilului.</value>
+  </data>
+  <data name="Automatically mitigate recovered backends" xml:space="preserve">
+    <value>Remediază automat backendurile recuperate</value>
+  </data>
+  <data name="Backend monitoring rules" xml:space="preserve">
+    <value>Reguli de monitorizare a backend-ului</value>
   </data>
   <data name="Brand Home URL" xml:space="preserve">
     <value>URL pagină principală marcă</value>
@@ -57,14 +72,26 @@
   <data name="Dummy Number" xml:space="preserve">
     <value>Număr dummy</value>
   </data>
+  <data name="Enable AlertCenter integration" xml:space="preserve">
+    <value>Activare integrare AlertCenter</value>
+  </data>
   <data name="Fake Ollama Version" xml:space="preserve">
     <value>Versiune Ollama falsă</value>
+  </data>
+  <data name="Gateway public URL" xml:space="preserve">
+    <value>URL publică a gateway-ului</value>
   </data>
   <data name="ICP Number" xml:space="preserve">
     <value>Număr ICP</value>
   </data>
+  <data name="JSON monitoring rules. Use the AlertCenter monitoring page to edit them." xml:space="preserve">
+    <value>Reguli de monitorizare în format JSON. Folosiți pagina de monitorizare AlertCenter pentru a le edita.</value>
+  </data>
   <data name="Keep Alive Job Interval (Minutes)" xml:space="preserve">
     <value>Intervalul de menținere a activității job (Minute)</value>
+  </data>
+  <data name="Mitigate when no rule matches and a fresh healthy observation confirms recovery. Final resolution remains manual." xml:space="preserve">
+    <value>Aplicați măsurile de atenuare când nicio regulă nu se potrivește, iar o observație recentă și favorabilă confirmă revenirea la normal. Rezolvarea finală rămâne manuală.</value>
   </data>
   <data name="Project Logo" xml:space="preserve">
     <value>Logo Proiect</value>
@@ -75,6 +102,9 @@
   <data name="Request Timeout (Minutes)" xml:space="preserve">
     <value>Timp de Așteptare al Cererii (Minute)</value>
   </data>
+  <data name="Synchronize backend monitoring incidents with AlertCenter." xml:space="preserve">
+    <value>Sincronizați incidentele de monitorizare a backend-ului cu AlertCenter.</value>
+  </data>
   <data name="The brand name displayed in the footer." xml:space="preserve">
     <value>Numele mărcii afișat în subsol.</value>
   </data>
@@ -83,6 +113,9 @@
   </data>
   <data name="The default virtual model to use for embedding requests when no model is specified." xml:space="preserve">
     <value>Modelul virtual implicit de utilizat pentru cererile de embedding atunci când nu este specificat niciun model.</value>
+  </data>
+  <data name="The HTTP(S) base URL of AlertCenter." xml:space="preserve">
+    <value>URL-ul de bază HTTP(S) al AlertCenter.</value>
   </data>
   <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
     <value>Numărul de înregistrare ICP pentru utilizatorii din China continentală. Lăsați gol pentru a ascunde.</value>
@@ -98,6 +131,9 @@
   </data>
   <data name="The name of the project displayed in the frontend." xml:space="preserve">
     <value>Numele proiectului afișat în interfața frontend</value>
+  </data>
+  <data name="The public HTTP(S) base URL used in incident descriptions." xml:space="preserve">
+    <value>URL-ul de bază public (HTTP(S)) utilizat în descrierile incidentelor.</value>
   </data>
   <data name="The version reported by the gateway to clients (e.g., Open-WebUI)." xml:space="preserve">
     <value>Versiunea raportată de gateway către clienți (de exemplu, Open-WebUI).</value>
