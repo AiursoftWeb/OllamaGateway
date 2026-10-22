@@ -33,6 +33,9 @@
   <data name="Allows chatting with virtual models through the gateway UI or API." xml:space="preserve">
     <value>Разрешает общение с виртуальными моделями через интерфейс шлюза или API.</value>
   </data>
+  <data name="Allows managing backend monitoring rules and viewing AlertCenter integration status." xml:space="preserve">
+    <value>Позволяет управлять правилами мониторинга backend и просматривать статус интеграции AlertCenter.</value>
+  </data>
   <data name="Allows managing the underlying Ollama model providers/servers." xml:space="preserve">
     <value>Позволяет управлять базовыми провайдерами/серверами моделей Ollama.</value>
   </data>
@@ -104,6 +107,9 @@
   </data>
   <data name="Grants permission to restart the application instance. May cause availability interruptions but all settings and cache will be reloaded." xml:space="preserve">
     <value>Предоставляет разрешение на перезапуск экземпляра приложения. Может привести к перерывам в доступности, но все настройки и кэш будут перезагружены.</value>
+  </data>
+  <data name="Manage AlertCenter Integration" xml:space="preserve">
+    <value>Управление интеграцией с AlertCenter</value>
   </data>
   <data name="Manage Any API Key" xml:space="preserve">
     <value>Управление любым ключом API</value>

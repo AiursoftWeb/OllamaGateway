@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="A physical model is identified by provider and model name. Multiple virtual models sharing it do not create duplicate incidents." xml:space="preserve">
+    <value>實體模型由供應商及模型名稱識別。共用同一實體模型的多個虛擬模型不會產生重複事故。</value>
+  </data>
+  <data name="Add rule" xml:space="preserve">
+    <value>新增規則</value>
+  </data>
+  <data name="AlertCenter monitoring" xml:space="preserve">
+    <value>AlertCenter 監控</value>
+  </data>
+  <data name="All enabled physical models are monitored. The most severe matching rule wins." xml:space="preserve">
+    <value>所有已啟用的實體模型都會受到監察。符合條件的規則中，以嚴重程度最高者為準。</value>
+  </data>
+  <data name="Automatically mitigate when no rule matches and fresh health confirms recovery" xml:space="preserve">
+    <value>當沒有任何規則符合，而最新的健康狀態確認已復原時，自動緩解</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>可用</value>
+  </data>
+  <data name="Backend timeouts, network errors, upstream 5xx, authentication rejection, rate limiting and interrupted upstream reads count. Client cancellation and ordinary invalid client requests do not count." xml:space="preserve">
+    <value>後端逾時、網絡錯誤、上游 5xx、驗證被拒絕、速率限制以及中斷的上游讀取均計入。客戶端取消及一般的無效客戶端請求則不計入。</value>
+  </data>
+  <data name="Condition" xml:space="preserve">
+    <value>條件</value>
+  </data>
+  <data name="Connection credentials use Global Settings, including encrypted secrets and read-only environment overrides." xml:space="preserve">
+    <value>連線憑證使用全域設定，包括加密的機密資訊及唯讀的環境變數覆寫。</value>
+  </data>
+  <data name="Connection settings" xml:space="preserve">
+    <value>連線設定</value>
+  </data>
+  <data name="Continuously unavailable" xml:space="preserve">
+    <value>持續無法使用</value>
+  </data>
+  <data name="Delete rule" xml:space="preserve">
+    <value>刪除規則</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>已啟用</value>
+  </data>
+  <data name="Failures in rolling window" xml:space="preserve">
+    <value>滾動時間窗內的失敗次數</value>
+  </data>
+  <data name="Failures in ten minutes" xml:space="preserve">
+    <value>十分鐘內的失敗次數</value>
+  </data>
+  <data name="Health" xml:space="preserve">
+    <value>健康狀態</value>
+  </data>
+  <data name="Health checks run every minute; synchronization runs every 30 seconds. Stale health observations are unknown, not healthy. Counters use one-second buckets and up to 60-minute windows." xml:space="preserve">
+    <value>健康檢查每分鐘執行一次；同步每30秒執行一次。過期的健康觀察結果視為未知，而非健康。計數器使用一秒為單位，窗口最長可達60分鐘。</value>
+  </data>
+  <data name="How monitoring works" xml:space="preserve">
+    <value>監控的運作方式</value>
+  </data>
+  <data name="Ignored for continuous unavailability rules." xml:space="preserve">
+    <value>此欄位於持續無法使用規則中不適用。</value>
+  </data>
+  <data name="Last health check (UTC)" xml:space="preserve">
+    <value>最後健康檢查 (UTC)</value>
+  </data>
+  <data name="Matching severity" xml:space="preserve">
+    <value>符合的嚴重程度</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>分鐘</value>
+  </data>
+  <data name="Model" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="Monitoring rules" xml:space="preserve">
+    <value>監控規則</value>
+  </data>
+  <data name="More than 5 means the sixth failure. More than 20 means the twenty-first. A successful request does not erase failures already in the rolling window." xml:space="preserve">
+    <value>超過 5 次即代表第 6 次失敗；超過 20 次即代表第 21 次失敗。成功的請求不會清除滾動時間窗口內已有的失敗紀錄。</value>
+  </data>
+  <data name="More than this many failures" xml:space="preserve">
+    <value>超過此數量的失敗次數</value>
+  </data>
+  <data name="Observed physical models" xml:space="preserve">
+    <value>已觀察到的實體模型</value>
+  </data>
+  <data name="One active incident is maintained per physical model. Higher severity upgrades it. Automatic recovery mitigates; a person performs final resolution." xml:space="preserve">
+    <value>每個物理模型只維持一個活躍事件。較高的嚴重程度會將其升級。自動恢復會緩解問題；最終解決需由人員執行。</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>供應商</value>
+  </data>
+  <data name="Recovery" xml:space="preserve">
+    <value>恢復</value>
+  </data>
+  <data name="Rules are overridden by configuration and are read-only here." xml:space="preserve">
+    <value>規則已被設定覆蓋，在此處為唯讀。</value>
+  </data>
+  <data name="Save recovery settings" xml:space="preserve">
+    <value>儲存復原設定</value>
+  </data>
+  <data name="Save rule" xml:space="preserve">
+    <value>儲存規則</value>
+  </data>
+  <data name="Severity" xml:space="preserve">
+    <value>嚴重程度</value>
+  </data>
+  <data name="Statistics are held in bounded process memory. Restarting begins a new observation period. Recovery waits for a full failure window after restart, so missing history is not mistaken for recovery. Use a single gateway instance for complete counts." xml:space="preserve">
+    <value>統計數據儲存於有界的程序記憶體中。重新啟動將開始新的觀察期。恢復機制會等待重新啟動後完整的失敗窗口期，以免將缺失的歷史記錄誤判為已恢復。請使用單一閘道器實例以取得完整的計數。</value>
+  </data>
+  <data name="Synchronization is disabled or an application API key is missing. Configure the AlertCenter connection in Global Settings." xml:space="preserve">
+    <value>同步功能已停用，或缺少應用程式 API 金鑰。請在全域設定中設定 AlertCenter 連線。</value>
+  </data>
+  <data name="The monitoring rules are invalid. Correct the JSON in Global Settings before synchronization can resume." xml:space="preserve">
+    <value>監控規則無效。請在同步恢復前修正全域設定中的 JSON。</value>
+  </data>
+  <data name="Unavailability means the provider cannot be checked or its model is missing from the model directory. A model unloaded from memory is not offline. Directory availability does not guarantee successful inference." xml:space="preserve">
+    <value>「不可用」表示無法檢查供應商，或其模型未列於模型目錄中。從記憶體卸載的模型不屬於離線狀態。目錄可用並不代表推理一定能成功。</value>
+  </data>
+  <data name="Unavailable" xml:space="preserve">
+    <value>無法使用</value>
+  </data>
+  <data name="Unavailable since (UTC)" xml:space="preserve">
+    <value>（UTC）起無法使用時間</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>未知</value>
+  </data>
+
+</root>

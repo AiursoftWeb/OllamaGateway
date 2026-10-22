@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="A physical model is identified by provider and model name. Multiple virtual models sharing it do not create duplicate incidents." xml:space="preserve">
+    <value>물리적 모델은 제공자와 모델 이름으로 식별됩니다. 이를 공유하는 여러 가상 모델은 중복 장애를 생성하지 않습니다.</value>
+  </data>
+  <data name="Add rule" xml:space="preserve">
+    <value>규칙 추가</value>
+  </data>
+  <data name="AlertCenter monitoring" xml:space="preserve">
+    <value>AlertCenter 모니터링</value>
+  </data>
+  <data name="All enabled physical models are monitored. The most severe matching rule wins." xml:space="preserve">
+    <value>활성화된 모든 물리적 모델이 모니터링됩니다. 가장 심각한 일치 규칙이 우선합니다.</value>
+  </data>
+  <data name="Automatically mitigate when no rule matches and fresh health confirms recovery" xml:space="preserve">
+    <value>일치하는 규칙이 없고 최신 상태 확인 결과 복구가 확인되면 자동으로 완화합니다</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>사용 가능</value>
+  </data>
+  <data name="Backend timeouts, network errors, upstream 5xx, authentication rejection, rate limiting and interrupted upstream reads count. Client cancellation and ordinary invalid client requests do not count." xml:space="preserve">
+    <value>백엔드 시간 초과, 네트워크 오류, 업스트림 5xx 오류, 인증 거부, 요청 제한 초과 및 업스트림 응답 읽기 중단은 실패로 집계됩니다. 클라이언트 취소와 일반적인 잘못된 클라이언트 요청은 집계되지 않습니다.</value>
+  </data>
+  <data name="Condition" xml:space="preserve">
+    <value>조건</value>
+  </data>
+  <data name="Connection credentials use Global Settings, including encrypted secrets and read-only environment overrides." xml:space="preserve">
+    <value>연결 자격 증명은 암호화된 시크릿 및 읽기 전용 환경 변수 오버라이드를 포함하여 전역 설정을 사용합니다.</value>
+  </data>
+  <data name="Connection settings" xml:space="preserve">
+    <value>연결 설정</value>
+  </data>
+  <data name="Continuously unavailable" xml:space="preserve">
+    <value>지속적으로 사용 불가</value>
+  </data>
+  <data name="Delete rule" xml:space="preserve">
+    <value>규칙 삭제</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>사용 중</value>
+  </data>
+  <data name="Failures in rolling window" xml:space="preserve">
+    <value>기간 내 오류 발생 횟수</value>
+  </data>
+  <data name="Failures in ten minutes" xml:space="preserve">
+    <value>10분간 실패 횟수</value>
+  </data>
+  <data name="Health" xml:space="preserve">
+    <value>상태</value>
+  </data>
+  <data name="Health checks run every minute; synchronization runs every 30 seconds. Stale health observations are unknown, not healthy. Counters use one-second buckets and up to 60-minute windows." xml:space="preserve">
+    <value>건강 체크는 매 분마다, 동기화는 30초마다 실행됩니다. 오래된 건강 관측 값은 정상 상태가 아니라 미확인 상태로 처리됩니다. 카운터는 1초 단위 버킷과 최대 60분 윈도우를 사용합니다.</value>
+  </data>
+  <data name="How monitoring works" xml:space="preserve">
+    <value>모니터링 작동 방식</value>
+  </data>
+  <data name="Ignored for continuous unavailability rules." xml:space="preserve">
+    <value>지속적 사용 불가 규칙에는 적용되지 않습니다.</value>
+  </data>
+  <data name="Last health check (UTC)" xml:space="preserve">
+    <value>마지막 건강 체크 (UTC)</value>
+  </data>
+  <data name="Matching severity" xml:space="preserve">
+    <value>일치하는 심각도</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>분</value>
+  </data>
+  <data name="Model" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="Monitoring rules" xml:space="preserve">
+    <value>모니터링 규칙</value>
+  </data>
+  <data name="More than 5 means the sixth failure. More than 20 means the twenty-first. A successful request does not erase failures already in the rolling window." xml:space="preserve">
+    <value>5를 초과한다는 것은 6번째 실패를 의미합니다. 20을 초과한다는 것은 21번째 실패를 의미합니다. 성공적인 요청은 이미 롤링 윈도우에 있는 실패를 지우지 않습니다.</value>
+  </data>
+  <data name="More than this many failures" xml:space="preserve">
+    <value>실패 횟수가 다음 수를 초과할 때</value>
+  </data>
+  <data name="Observed physical models" xml:space="preserve">
+    <value>관측된 물리 모델</value>
+  </data>
+  <data name="One active incident is maintained per physical model. Higher severity upgrades it. Automatic recovery mitigates; a person performs final resolution." xml:space="preserve">
+    <value>물리 모델마다 활성 인시던트는 하나만 유지됩니다. 심각도가 더 높은 경우 기존 인시던트의 심각도가 높아집니다. 자동 복구는 완화 조치를 수행하며, 최종 해결은 사람이 담당합니다.</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>제공자</value>
+  </data>
+  <data name="Recovery" xml:space="preserve">
+    <value>복구</value>
+  </data>
+  <data name="Rules are overridden by configuration and are read-only here." xml:space="preserve">
+    <value>규칙은 구성 설정에 의해 재정의되므로 여기에서는 읽기 전용입니다.</value>
+  </data>
+  <data name="Save recovery settings" xml:space="preserve">
+    <value>복구 설정 저장</value>
+  </data>
+  <data name="Save rule" xml:space="preserve">
+    <value>규칙 저장</value>
+  </data>
+  <data name="Severity" xml:space="preserve">
+    <value>심각도</value>
+  </data>
+  <data name="Statistics are held in bounded process memory. Restarting begins a new observation period. Recovery waits for a full failure window after restart, so missing history is not mistaken for recovery. Use a single gateway instance for complete counts." xml:space="preserve">
+    <value>통계는 프로세스 메모리 내에 제한된 용량으로 저장됩니다. 재시작하면 새로운 관찰 기간이 시작됩니다. 재시작 후에는 누락된 이력을 복구로 오인하지 않도록 전체 장애 기간이 지난 뒤에야 복구를 판단합니다. 전체 횟수를 정확히 집계하려면 게이트웨이 인스턴스를 하나만 사용하세요.</value>
+  </data>
+  <data name="Synchronization is disabled or an application API key is missing. Configure the AlertCenter connection in Global Settings." xml:space="preserve">
+    <value>동기화가 비활성화되어 있거나 애플리케이션 API 키가 없습니다. 전역 설정에서 AlertCenter 연결을 구성하세요.</value>
+  </data>
+  <data name="The monitoring rules are invalid. Correct the JSON in Global Settings before synchronization can resume." xml:space="preserve">
+    <value>모니터링 규칙이 올바르지 않습니다. 동기화를 재개하려면 글로벌 설정에서 JSON을 수정하세요.</value>
+  </data>
+  <data name="Unavailability means the provider cannot be checked or its model is missing from the model directory. A model unloaded from memory is not offline. Directory availability does not guarantee successful inference." xml:space="preserve">
+    <value>사용 불가란 제공자를 확인하지 못하거나 모델 디렉터리에서 해당 모델이 누락된 상태를 의미합니다. 메모리에서 언로드된 모델은 오프라인으로 간주되지 않습니다. 디렉터리 사용 가용성은 성공적인 추론을 보장하지 않습니다.</value>
+  </data>
+  <data name="Unavailable" xml:space="preserve">
+    <value>사용 불가</value>
+  </data>
+  <data name="Unavailable since (UTC)" xml:space="preserve">
+    <value>사용 불가 시작 시각 (UTC)</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>알 수 없음</value>
+  </data>
+
+</root>

@@ -21,11 +21,20 @@
       <data name=" The link to the brand&apos;s home page." xml:space="preserve">
     <value>Ссылка на домашнюю страницу бренда.</value>
   </data>
+  <data name="A dedicated application key with query, create, change severity and mitigate permissions." xml:space="preserve">
+    <value>Специальный ключ приложения с правами на просмотр, создание, изменение уровня критичности и устранение инцидентов.</value>
+  </data>
   <data name="A dummy choice for testing." xml:space="preserve">
     <value>Временный выбор для тестирования.</value>
   </data>
   <data name="A dummy number for testing." xml:space="preserve">
     <value>Заглушка для тестирования.</value>
+  </data>
+  <data name="AlertCenter application API key" xml:space="preserve">
+    <value>Ключ API приложения AlertCenter</value>
+  </data>
+  <data name="AlertCenter endpoint" xml:space="preserve">
+    <value>Точка входа AlertCenter</value>
   </data>
   <data name="Allow Anonymous API Call" xml:space="preserve">
     <value>Разрешить анонимные вызовы API</value>
@@ -38,6 +47,12 @@
   </data>
   <data name="Allow users to adjust their nickname in the profile management page." xml:space="preserve">
     <value>Позволить пользователям изменять свой ник в странице управления профилем.</value>
+  </data>
+  <data name="Automatically mitigate recovered backends" xml:space="preserve">
+    <value>Автоматически устранять проблемы у восстановившихся серверов</value>
+  </data>
+  <data name="Backend monitoring rules" xml:space="preserve">
+    <value>Правила мониторинга backend</value>
   </data>
   <data name="Brand Home URL" xml:space="preserve">
     <value>URL домашней страницы бренда</value>
@@ -57,14 +72,26 @@
   <data name="Dummy Number" xml:space="preserve">
     <value>Временное число</value>
   </data>
+  <data name="Enable AlertCenter integration" xml:space="preserve">
+    <value>Включить интеграцию с AlertCenter</value>
+  </data>
   <data name="Fake Ollama Version" xml:space="preserve">
     <value>Фейковая версия Ollama</value>
+  </data>
+  <data name="Gateway public URL" xml:space="preserve">
+    <value>Публичный URL шлюза</value>
   </data>
   <data name="ICP Number" xml:space="preserve">
     <value>Номер ICP</value>
   </data>
+  <data name="JSON monitoring rules. Use the AlertCenter monitoring page to edit them." xml:space="preserve">
+    <value>Правила мониторинга в формате JSON. Используйте страницу мониторинга AlertCenter для их редактирования.</value>
+  </data>
   <data name="Keep Alive Job Interval (Minutes)" xml:space="preserve">
     <value>Интервал задачи поддержания активности (минуты)</value>
+  </data>
+  <data name="Mitigate when no rule matches and a fresh healthy observation confirms recovery. Final resolution remains manual." xml:space="preserve">
+    <value>Смягчить, если ни одно правило не совпало и свежее наблюдение о работоспособности подтверждает восстановление. Окончательное решение остаётся ручным.</value>
   </data>
   <data name="Project Logo" xml:space="preserve">
     <value>Логотип проекта</value>
@@ -75,6 +102,9 @@
   <data name="Request Timeout (Minutes)" xml:space="preserve">
     <value>Тайм-аут запроса (минуты)</value>
   </data>
+  <data name="Synchronize backend monitoring incidents with AlertCenter." xml:space="preserve">
+    <value>Синхронизировать инциденты мониторинга серверной части с AlertCenter.</value>
+  </data>
   <data name="The brand name displayed in the footer." xml:space="preserve">
     <value>Название бренда, отображаемое в подвале.</value>
   </data>
@@ -83,6 +113,9 @@
   </data>
   <data name="The default virtual model to use for embedding requests when no model is specified." xml:space="preserve">
     <value>Модель по умолчанию для запросов встраивания, используемая при отсутствии указанной модели.</value>
+  </data>
+  <data name="The HTTP(S) base URL of AlertCenter." xml:space="preserve">
+    <value>Базовый URL AlertCenter по HTTP(S).</value>
   </data>
   <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
     <value>Номер лицензии ICP для пользователей из материкового Китая. Оставьте пустым, чтобы скрыть.</value>
@@ -98,6 +131,9 @@
   </data>
   <data name="The name of the project displayed in the frontend." xml:space="preserve">
     <value>Название проекта, отображаемое на клиентской стороне.</value>
+  </data>
+  <data name="The public HTTP(S) base URL used in incident descriptions." xml:space="preserve">
+    <value>Публичный базовый URL HTTP(S), используемый в описаниях инцидентов.</value>
   </data>
   <data name="The version reported by the gateway to clients (e.g., Open-WebUI)." xml:space="preserve">
     <value>Версия, которую шлюз сообщает клиентам (например, Open-WebUI).</value>

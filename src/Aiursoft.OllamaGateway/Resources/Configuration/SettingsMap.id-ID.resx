@@ -21,11 +21,20 @@
       <data name=" The link to the brand&apos;s home page." xml:space="preserve">
     <value>Tautan ke halaman utama merek.</value>
   </data>
+  <data name="A dedicated application key with query, create, change severity and mitigate permissions." xml:space="preserve">
+    <value>Kunci aplikasi khusus dengan izin untuk mencari, membuat, mengubah tingkat keparahan, dan memitigasi.</value>
+  </data>
   <data name="A dummy choice for testing." xml:space="preserve">
     <value>Pilihan dummy untuk pengujian.</value>
   </data>
   <data name="A dummy number for testing." xml:space="preserve">
     <value>Sebuah angka contoh untuk pengujian.</value>
+  </data>
+  <data name="AlertCenter application API key" xml:space="preserve">
+    <value>Kunci API aplikasi AlertCenter</value>
+  </data>
+  <data name="AlertCenter endpoint" xml:space="preserve">
+    <value>endpoint AlertCenter</value>
   </data>
   <data name="Allow Anonymous API Call" xml:space="preserve">
     <value>Izinkan Panggilan API Anonim</value>
@@ -38,6 +47,12 @@
   </data>
   <data name="Allow users to adjust their nickname in the profile management page." xml:space="preserve">
     <value>Izinkan pengguna menyesuaikan nama panggilan mereka di halaman pengelolaan profil.</value>
+  </data>
+  <data name="Automatically mitigate recovered backends" xml:space="preserve">
+    <value>Meredam backend yang telah pulih secara otomatis</value>
+  </data>
+  <data name="Backend monitoring rules" xml:space="preserve">
+    <value>Aturan pemantauan backend</value>
   </data>
   <data name="Brand Home URL" xml:space="preserve">
     <value>URL Halaman Utama Merek</value>
@@ -57,14 +72,26 @@
   <data name="Dummy Number" xml:space="preserve">
     <value>Nomor Palsu</value>
   </data>
+  <data name="Enable AlertCenter integration" xml:space="preserve">
+    <value>Aktifkan integrasi dengan AlertCenter</value>
+  </data>
   <data name="Fake Ollama Version" xml:space="preserve">
     <value>Versi Ollama Palsu</value>
+  </data>
+  <data name="Gateway public URL" xml:space="preserve">
+    <value>URL publik Gateway</value>
   </data>
   <data name="ICP Number" xml:space="preserve">
     <value>Nomor ICP</value>
   </data>
+  <data name="JSON monitoring rules. Use the AlertCenter monitoring page to edit them." xml:space="preserve">
+    <value>Aturan pemantauan JSON. Gunakan halaman pemantauan AlertCenter untuk mengeditnya.</value>
+  </data>
   <data name="Keep Alive Job Interval (Minutes)" xml:space="preserve">
     <value>Interval Pekerjaan Tetap Hidup (Menit)</value>
+  </data>
+  <data name="Mitigate when no rule matches and a fresh healthy observation confirms recovery. Final resolution remains manual." xml:space="preserve">
+    <value>Mitigasi ketika tidak ada aturan yang cocok dan pengamatan sehat terbaru mengonfirmasi pemulihan. Resolusi akhir tetap manual.</value>
   </data>
   <data name="Project Logo" xml:space="preserve">
     <value>Logo Proyek</value>
@@ -75,6 +102,9 @@
   <data name="Request Timeout (Minutes)" xml:space="preserve">
     <value>Batas Waktu Permintaan (Menit)</value>
   </data>
+  <data name="Synchronize backend monitoring incidents with AlertCenter." xml:space="preserve">
+    <value>Sinkronkan insiden pemantauan backend dengan AlertCenter.</value>
+  </data>
   <data name="The brand name displayed in the footer." xml:space="preserve">
     <value>Nama merek yang ditampilkan di bagian footer.</value>
   </data>
@@ -83,6 +113,9 @@
   </data>
   <data name="The default virtual model to use for embedding requests when no model is specified." xml:space="preserve">
     <value>Model virtual default yang digunakan untuk permintaan embedding ketika tidak ada model yang ditentukan.</value>
+  </data>
+  <data name="The HTTP(S) base URL of AlertCenter." xml:space="preserve">
+    <value>URL dasar HTTP(S) dari AlertCenter.</value>
   </data>
   <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
     <value>Nomor izin ICP untuk pengguna daratan Tiongkok. Biarkan kosong untuk menyembunyikan.</value>
@@ -98,6 +131,9 @@
   </data>
   <data name="The name of the project displayed in the frontend." xml:space="preserve">
     <value>Nama proyek yang ditampilkan di antarmuka pengguna depan</value>
+  </data>
+  <data name="The public HTTP(S) base URL used in incident descriptions." xml:space="preserve">
+    <value>URL dasar publik HTTP(S) yang digunakan dalam deskripsi insiden.</value>
   </data>
   <data name="The version reported by the gateway to clients (e.g., Open-WebUI)." xml:space="preserve">
     <value>Versi yang dilaporkan oleh gateway kepada klien (mis., Open-WebUI).</value>

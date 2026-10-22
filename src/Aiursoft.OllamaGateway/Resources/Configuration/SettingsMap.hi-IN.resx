@@ -21,11 +21,20 @@
       <data name=" The link to the brand&apos;s home page." xml:space="preserve">
     <value>ब्रांड के होम पेज का लिंक</value>
   </data>
+  <data name="A dedicated application key with query, create, change severity and mitigate permissions." xml:space="preserve">
+    <value>क्वेरी करने, बनाने, गंभीरता बदलने और समस्या का समाधान करने की अनुमतियों वाली एक समर्पित एप्लिकेशन कुंजी।</value>
+  </data>
   <data name="A dummy choice for testing." xml:space="preserve">
     <value>परीक्षण के लिए एक काल्पनिक विकल्प।</value>
   </data>
   <data name="A dummy number for testing." xml:space="preserve">
     <value>परीक्षण के लिए एक डमी संख्या।</value>
+  </data>
+  <data name="AlertCenter application API key" xml:space="preserve">
+    <value>AlertCenter एप्लिकेशन API कुंजी</value>
+  </data>
+  <data name="AlertCenter endpoint" xml:space="preserve">
+    <value>AlertCenter एंडपॉइंट</value>
   </data>
   <data name="Allow Anonymous API Call" xml:space="preserve">
     <value>अज्ञात API कॉल की अनुमति दें</value>
@@ -38,6 +47,12 @@
   </data>
   <data name="Allow users to adjust their nickname in the profile management page." xml:space="preserve">
     <value>प्रोफ़ाइल प्रबंधन पृष्ठ पर उपयोगकर्ताओं को अपना निकनेम समायोजित करने की अनुमति दें।</value>
+  </data>
+  <data name="Automatically mitigate recovered backends" xml:space="preserve">
+    <value>स्वतः पुनर्प्राप्त बैकएंड का निवारण करें</value>
+  </data>
+  <data name="Backend monitoring rules" xml:space="preserve">
+    <value>बैकएंड निगरानी नियम</value>
   </data>
   <data name="Brand Home URL" xml:space="preserve">
     <value>ब्रांड होम URL</value>
@@ -57,14 +72,26 @@
   <data name="Dummy Number" xml:space="preserve">
     <value>डमी नंबर</value>
   </data>
+  <data name="Enable AlertCenter integration" xml:space="preserve">
+    <value>AlertCenter इंटीग्रेशन सक्षम करें</value>
+  </data>
   <data name="Fake Ollama Version" xml:space="preserve">
     <value>झूठा ओलमा संस्करण</value>
+  </data>
+  <data name="Gateway public URL" xml:space="preserve">
+    <value>गेटवे सार्वजनिक URL</value>
   </data>
   <data name="ICP Number" xml:space="preserve">
     <value>ICP संख्या</value>
   </data>
+  <data name="JSON monitoring rules. Use the AlertCenter monitoring page to edit them." xml:space="preserve">
+    <value>JSON निगरानी नियम। इन्हें संपादित करने के लिए AlertCenter निगरानी पेज का उपयोग करें।</value>
+  </data>
   <data name="Keep Alive Job Interval (Minutes)" xml:space="preserve">
     <value>लively रखने का कार्य अंतराल (मिनट)</value>
+  </data>
+  <data name="Mitigate when no rule matches and a fresh healthy observation confirms recovery. Final resolution remains manual." xml:space="preserve">
+    <value>जब कोई नियम मेल न खाए और नया स्वस्थ अवलोकन सुधार की पुष्टि करे, तो समस्या का प्रभाव कम करें। अंतिम समाधान अब भी मैन्युअल रूप से किया जाएगा।</value>
   </data>
   <data name="Project Logo" xml:space="preserve">
     <value>प्रोजेक्ट लोगो</value>
@@ -75,6 +102,9 @@
   <data name="Request Timeout (Minutes)" xml:space="preserve">
     <value>अनुरोध समय समाप्त (मिनट)</value>
   </data>
+  <data name="Synchronize backend monitoring incidents with AlertCenter." xml:space="preserve">
+    <value>बैकएंड मॉनिटरिंग की घटनाओं को AlertCenter के साथ सिंक्रनाइज़ करें।</value>
+  </data>
   <data name="The brand name displayed in the footer." xml:space="preserve">
     <value>फुटर में दिखाई देने वाला ब्रांड नाम</value>
   </data>
@@ -83,6 +113,9 @@
   </data>
   <data name="The default virtual model to use for embedding requests when no model is specified." xml:space="preserve">
     <value>जब कोई मॉडल निर्दिष्ट नहीं किया जाता है, तो एम्बेडिंग अनुरोधों के लिए उपयोग करने के लिए डिफ़ॉल्ट वर्चुअल मॉडल।</value>
+  </data>
+  <data name="The HTTP(S) base URL of AlertCenter." xml:space="preserve">
+    <value>AlertCenter का HTTP(S) बेस URL।</value>
   </data>
   <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
     <value>चीन मुख्यभूमि के उपयोगकर्ताओं के लिए ICP लाइसेंस संख्या। छिपाने के लिए खाली छोड़ दें।</value>
@@ -98,6 +131,9 @@
   </data>
   <data name="The name of the project displayed in the frontend." xml:space="preserve">
     <value>फ्रंटएंड में प्रदर्शित प्रोजेक्ट का नाम।</value>
+  </data>
+  <data name="The public HTTP(S) base URL used in incident descriptions." xml:space="preserve">
+    <value>घटना विवरणों में उपयोग किया जाने वाला सार्वजनिक HTTP(S) बेस URL।</value>
   </data>
   <data name="The version reported by the gateway to clients (e.g., Open-WebUI)." xml:space="preserve">
     <value>गेटवे द्वारा क्लाइंट्स को रिपोर्ट किया गया संस्करण (उदाहरण के लिए, Open-WebUI)।</value>

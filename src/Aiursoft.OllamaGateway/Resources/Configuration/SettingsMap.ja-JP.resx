@@ -21,11 +21,20 @@
       <data name=" The link to the brand&apos;s home page." xml:space="preserve">
     <value>ブランドのホームページへのリンク。</value>
   </data>
+  <data name="A dedicated application key with query, create, change severity and mitigate permissions." xml:space="preserve">
+    <value>クエリ、作成、重大度の変更、および緩和の権限を持つ専用のアプリケーションキー。</value>
+  </data>
   <data name="A dummy choice for testing." xml:space="preserve">
     <value>テスト用のダミー選択肢です。</value>
   </data>
   <data name="A dummy number for testing." xml:space="preserve">
     <value>テスト用のダミー番号です。</value>
+  </data>
+  <data name="AlertCenter application API key" xml:space="preserve">
+    <value>AlertCenterアプリケーションAPIキー</value>
+  </data>
+  <data name="AlertCenter endpoint" xml:space="preserve">
+    <value>AlertCenter エンドポイント</value>
   </data>
   <data name="Allow Anonymous API Call" xml:space="preserve">
     <value>匿名 API 呼び出しを許可する</value>
@@ -38,6 +47,12 @@
   </data>
   <data name="Allow users to adjust their nickname in the profile management page." xml:space="preserve">
     <value>プロフィール管理ページでユーザーがニックネームを調整できるようにする。</value>
+  </data>
+  <data name="Automatically mitigate recovered backends" xml:space="preserve">
+    <value>復旧したバックエンドを自動的に緩和する</value>
+  </data>
+  <data name="Backend monitoring rules" xml:space="preserve">
+    <value>バックエンド監視ルール</value>
   </data>
   <data name="Brand Home URL" xml:space="preserve">
     <value>ブランド ホーム URL</value>
@@ -57,14 +72,26 @@
   <data name="Dummy Number" xml:space="preserve">
     <value>ダミー番号</value>
   </data>
+  <data name="Enable AlertCenter integration" xml:space="preserve">
+    <value>AlertCenterとの連携を有効にする</value>
+  </data>
   <data name="Fake Ollama Version" xml:space="preserve">
     <value>フェイク Ollama バージョン</value>
+  </data>
+  <data name="Gateway public URL" xml:space="preserve">
+    <value>ゲートウェイの公開URL</value>
   </data>
   <data name="ICP Number" xml:space="preserve">
     <value>ICP番号</value>
   </data>
+  <data name="JSON monitoring rules. Use the AlertCenter monitoring page to edit them." xml:space="preserve">
+    <value>JSON監視ルールです。編集するには、AlertCenterの監視ページを使用してください。</value>
+  </data>
   <data name="Keep Alive Job Interval (Minutes)" xml:space="preserve">
     <value>キープアライブジョブ間隔（分）</value>
+  </data>
+  <data name="Mitigate when no rule matches and a fresh healthy observation confirms recovery. Final resolution remains manual." xml:space="preserve">
+    <value>ルールに一致せず、新しい健全な観測によって回復が確認された場合に軽減します。最終的な解決は手動のままです。</value>
   </data>
   <data name="Project Logo" xml:space="preserve">
     <value>プロジェクトロゴ</value>
@@ -75,6 +102,9 @@
   <data name="Request Timeout (Minutes)" xml:space="preserve">
     <value>リクエストタイムアウト（分）</value>
   </data>
+  <data name="Synchronize backend monitoring incidents with AlertCenter." xml:space="preserve">
+    <value>バックエンドの監視インシデントをAlertCenterと同期します。</value>
+  </data>
   <data name="The brand name displayed in the footer." xml:space="preserve">
     <value>フッターに表示されるブランド名。</value>
   </data>
@@ -83,6 +113,9 @@
   </data>
   <data name="The default virtual model to use for embedding requests when no model is specified." xml:space="preserve">
     <value>モデルが指定されていない場合に、埋め込みリクエストに使用するデフォルトの仮想モデル。</value>
+  </data>
+  <data name="The HTTP(S) base URL of AlertCenter." xml:space="preserve">
+    <value>AlertCenter の HTTP(S) ベース URL。</value>
   </data>
   <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
     <value>中国本土ユーザー向けのICPライセンス番号。空欄のままにすると非表示になります。</value>
@@ -98,6 +131,9 @@
   </data>
   <data name="The name of the project displayed in the frontend." xml:space="preserve">
     <value>フロントエンドに表示されるプロジェクト名</value>
+  </data>
+  <data name="The public HTTP(S) base URL used in incident descriptions." xml:space="preserve">
+    <value>インシデントの説明で使用する公開 HTTP(S) ベース URL。</value>
   </data>
   <data name="The version reported by the gateway to clients (e.g., Open-WebUI)." xml:space="preserve">
     <value>ゲートウェイがクライアント（例：Open-WebUI）に報告するバージョン。</value>

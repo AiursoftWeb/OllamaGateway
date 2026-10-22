@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="A physical model is identified by provider and model name. Multiple virtual models sharing it do not create duplicate incidents." xml:space="preserve">
+    <value>En fysisk modell identifieras av leverantör och modellnamn. Flera virtuella modeller som delar den skapar inte dubbla incidenter.</value>
+  </data>
+  <data name="Add rule" xml:space="preserve">
+    <value>Lägg till regel</value>
+  </data>
+  <data name="AlertCenter monitoring" xml:space="preserve">
+    <value>AlertCenter-övervakning</value>
+  </data>
+  <data name="All enabled physical models are monitored. The most severe matching rule wins." xml:space="preserve">
+    <value>Alla aktiverade fysiska modeller övervakas. Den matchande regeln med högst allvarlighetsgrad gäller.</value>
+  </data>
+  <data name="Automatically mitigate when no rule matches and fresh health confirms recovery" xml:space="preserve">
+    <value>Minska automatiskt när ingen regel matchar och färsk hälsokontroll bekräftar återhämtning</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>Tillgänglig</value>
+  </data>
+  <data name="Backend timeouts, network errors, upstream 5xx, authentication rejection, rate limiting and interrupted upstream reads count. Client cancellation and ordinary invalid client requests do not count." xml:space="preserve">
+    <value>Timeouts i backend, nätverksfel, 5xx-fel från uppströmstjänsten, nekad autentisering, hastighetsbegränsning och avbrutna läsningar från uppströmstjänsten räknas. Avbrutna förfrågningar från klienten och vanliga ogiltiga klientförfrågningar räknas inte.</value>
+  </data>
+  <data name="Condition" xml:space="preserve">
+    <value>Villkor</value>
+  </data>
+  <data name="Connection credentials use Global Settings, including encrypted secrets and read-only environment overrides." xml:space="preserve">
+    <value>Anslutningsuppgifter använder globala inställningar, inklusive krypterade hemligheter och skrivskyddade miljööverstyrningar.</value>
+  </data>
+  <data name="Connection settings" xml:space="preserve">
+    <value>Anslutningsinställningar</value>
+  </data>
+  <data name="Continuously unavailable" xml:space="preserve">
+    <value>Kontinuerligt otillgänglig</value>
+  </data>
+  <data name="Delete rule" xml:space="preserve">
+    <value>Ta bort regel</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Aktiverad</value>
+  </data>
+  <data name="Failures in rolling window" xml:space="preserve">
+    <value>Fel i rullande fönster</value>
+  </data>
+  <data name="Failures in ten minutes" xml:space="preserve">
+    <value>Fel under tio minuter</value>
+  </data>
+  <data name="Health" xml:space="preserve">
+    <value>Hälsa</value>
+  </data>
+  <data name="Health checks run every minute; synchronization runs every 30 seconds. Stale health observations are unknown, not healthy. Counters use one-second buckets and up to 60-minute windows." xml:space="preserve">
+    <value>Hälsokontroller körs varje minut; synkronisering körs var 30:e sekund. Inaktuella hälsoobservationer är okända, inte friska. Räknare använder ensekundsintervall och tidsfönster på upp till 60 minuter.</value>
+  </data>
+  <data name="How monitoring works" xml:space="preserve">
+    <value>Så fungerar övervakningen</value>
+  </data>
+  <data name="Ignored for continuous unavailability rules." xml:space="preserve">
+    <value>Ignoreras för regler om kontinuerlig otillgänglighet.</value>
+  </data>
+  <data name="Last health check (UTC)" xml:space="preserve">
+    <value>Senaste hälsokontroll (UTC)</value>
+  </data>
+  <data name="Matching severity" xml:space="preserve">
+    <value>Matchande allvarlighetsgrad</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Minuter</value>
+  </data>
+  <data name="Model" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="Monitoring rules" xml:space="preserve">
+    <value>Övervakningsregler</value>
+  </data>
+  <data name="More than 5 means the sixth failure. More than 20 means the twenty-first. A successful request does not erase failures already in the rolling window." xml:space="preserve">
+    <value>Fler än 5 innebär det sjätte misslyckandet. Fler än 20 innebär det tjugoförsta. En lyckad begäran tar inte bort misslyckanden som redan finns i det rullande tidsfönstret.</value>
+  </data>
+  <data name="More than this many failures" xml:space="preserve">
+    <value>Fler än så här många fel</value>
+  </data>
+  <data name="Observed physical models" xml:space="preserve">
+    <value>Observerade fysiska modeller</value>
+  </data>
+  <data name="One active incident is maintained per physical model. Higher severity upgrades it. Automatic recovery mitigates; a person performs final resolution." xml:space="preserve">
+    <value>En aktiv incident upprätthålls per fysisk modell. Högre allvarlighetsgrad höjer incidentens nivå. Automatisk återställning begränsar incidenten; en person slutför hanteringen.</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Tjänsteleverantör</value>
+  </data>
+  <data name="Recovery" xml:space="preserve">
+    <value>Återhämtning</value>
+  </data>
+  <data name="Rules are overridden by configuration and are read-only here." xml:space="preserve">
+    <value>Reglerna åsidosätts av konfigurationen och är skrivskyddade här.</value>
+  </data>
+  <data name="Save recovery settings" xml:space="preserve">
+    <value>Spara återställningsinställningar</value>
+  </data>
+  <data name="Save rule" xml:space="preserve">
+    <value>Spara regel</value>
+  </data>
+  <data name="Severity" xml:space="preserve">
+    <value>Allvarlighetsgrad</value>
+  </data>
+  <data name="Statistics are held in bounded process memory. Restarting begins a new observation period. Recovery waits for a full failure window after restart, so missing history is not mistaken for recovery. Use a single gateway instance for complete counts." xml:space="preserve">
+    <value>Statistik lagras i begränsat processminne. Omstart påbörjar en ny observationsperiod. Återhämtning väntar på ett fullt felstidsgenomförande efter omstart, så att saknad historik inte misstas för återhämtning. Använd en enda gatewayinstans för fullständiga räkningar.</value>
+  </data>
+  <data name="Synchronization is disabled or an application API key is missing. Configure the AlertCenter connection in Global Settings." xml:space="preserve">
+    <value>Synkroniseringen är inaktiverad eller så saknas en API-nyckel för programmet. Konfigurera anslutningen till AlertCenter i globala inställningar.</value>
+  </data>
+  <data name="The monitoring rules are invalid. Correct the JSON in Global Settings before synchronization can resume." xml:space="preserve">
+    <value>Övervakningsreglerna är ogiltiga. Korrigera JSON-koden under Globala inställningar innan synkroniseringen kan återupptas.</value>
+  </data>
+  <data name="Unavailability means the provider cannot be checked or its model is missing from the model directory. A model unloaded from memory is not offline. Directory availability does not guarantee successful inference." xml:space="preserve">
+    <value>Otillgänglighet innebär att leverantören inte kan kontrolleras eller att dess modell saknas i modellkatalogen. En modell som har laddats ur minnet är inte offline. Tillgänglighet i katalogen garanterar inte framgångsrik inferens.</value>
+  </data>
+  <data name="Unavailable" xml:space="preserve">
+    <value>Otillgänglig</value>
+  </data>
+  <data name="Unavailable since (UTC)" xml:space="preserve">
+    <value>Otillgänglig sedan (UTC)</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Okänd</value>
+  </data>
+
+</root>
