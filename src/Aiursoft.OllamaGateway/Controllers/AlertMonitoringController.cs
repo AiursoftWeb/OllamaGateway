@@ -21,7 +21,7 @@ public sealed class AlertMonitoringController(GlobalSettingsService settings, Ba
 {
     private static string Version(string value) => Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(value)));
 
-    [RenderInNavBar(NavGroupName = "Features", NavGroupOrder = 1, CascadedLinksGroupName = "Monitoring",
+    [RenderInNavBar(NavGroupName = "Administration", NavGroupOrder = 9999, CascadedLinksGroupName = "Monitoring",
         CascadedLinksIcon = "bell", CascadedLinksOrder = 2, LinkText = "AlertCenter monitoring", LinkOrder = 1)]
     public async Task<IActionResult> Index()
     {
