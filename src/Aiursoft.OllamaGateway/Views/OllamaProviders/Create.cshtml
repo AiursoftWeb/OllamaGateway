@@ -122,7 +122,7 @@
     <span data-key="please-enter-url">@Localizer["Please enter a URL first."]</span>
     <span data-key="testing">@Localizer["Testing..."]</span>
     <span data-key="success">@Localizer["Success!"]</span>
-    <span data-key="successfully-connected">@Localizer["Successfully connected to Ollama."]</span>
+    <span data-key="successfully-connected">@Localizer["Successfully connected to the provider."]</span>
     <span data-key="models-found">@Localizer["Models found:"]</span>
     <span data-key="network-error">@Localizer["Network error or invalid request."]</span>
     <span data-key="test-connection">@Localizer["Test Connection"]</span>
@@ -200,7 +200,7 @@
                     modelsLabel.innerText = getLocalizedText('models-found', 'Models found:');
                     resultMessage.replaceChildren(
                         connectionSummary,
-                        document.createTextNode(' ' + getLocalizedText('successfully-connected', 'Successfully connected to Ollama.') + ' '),
+                        document.createTextNode(' ' + getLocalizedText('successfully-connected', 'Successfully connected to the provider.') + ' '),
                         document.createElement('br'),
                         modelsLabel,
                         document.createTextNode(' ' + modelsText));
