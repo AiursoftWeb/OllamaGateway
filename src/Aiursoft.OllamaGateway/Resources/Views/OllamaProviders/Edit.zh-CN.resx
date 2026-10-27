@@ -39,6 +39,21 @@
   <data name="= unload immediately." xml:space="preserve">
     <value>= 立即卸载。</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = 不限。</value>
+  </data>
+  <data name="About concurrent requests" xml:space="preserve">
+    <value>关于并发请求</value>
+  </data>
+  <data name="About generation protocols" xml:space="preserve">
+    <value>关于生成协议</value>
+  </data>
+  <data name="About health checks" xml:space="preserve">
+    <value>关于健康检查</value>
+  </data>
+  <data name="About model retention" xml:space="preserve">
+    <value>关于模型保留</value>
+  </data>
   <data name="Advanced Warmup Options" xml:space="preserve">
     <value>高级预热选项</value>
   </data>
@@ -53,6 +68,9 @@
   </data>
   <data name="Bearer Token" xml:space="preserve">
     <value>Bearer 令牌</value>
+  </data>
+  <data name="Connected! Found {0} models." xml:space="preserve">
+    <value>已连接！找到 {0} 个模型。</value>
   </data>
   <data name="Connecting..." xml:space="preserve">
     <value>正在连接...</value>
@@ -77,6 +95,9 @@
   </data>
   <data name="Edit Ollama Provider" xml:space="preserve">
     <value>编辑 Ollama 提供商</value>
+  </data>
+  <data name="Edit Provider" xml:space="preserve">
+    <value>编辑服务提供商</value>
   </data>
   <data name="Embed" xml:space="preserve">
     <value>嵌入</value>
@@ -108,8 +129,14 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>保活策略</value>
   </data>
+  <data name="Keeps model weights loaded after the last request. Use 0 to unload immediately or -1 to keep them loaded. Ollama ignores invalid duration formats." xml:space="preserve">
+    <value>最后一次请求结束后仍保留模型权重。设置为 0 可立即卸载，设置为 -1 则会一直保留。Ollama 会忽略无效的时长格式。</value>
+  </data>
+  <data name="Limits simultaneous requests to this provider. Use 1 to process them one at a time. Waiting for a slot has no timeout and does not use the virtual model response timeout; disconnecting the client cancels the wait." xml:space="preserve">
+    <value>限制对此提供方的同时请求数。设为 1 可使请求逐个处理。等待可用名额没有超时时间，且不受虚拟模型响应超时限制；客户端断开连接后，等待将被取消。</value>
+  </data>
   <data name="Matching client protocols are forwarded directly. Other supported requests are translated." xml:space="preserve">
-    <value>匹配客户端协议会直接转发。其他受支持的请求将经过转换。</value>
+    <value>匹配的客户端协议将直接转发。其他受支持的请求将被转换。</value>
   </data>
   <data name="Max Concurrent Requests" xml:space="preserve">
     <value>最大并发请求数</value>
@@ -125,6 +152,9 @@
   </data>
   <data name="Ollama" xml:space="preserve">
     <value>Ollama</value>
+  </data>
+  <data name="Ollama only; include a unit, e.g. 5m." xml:space="preserve">
+    <value>仅适用于 Ollama；请包含时间单位，例如 5m。</value>
   </data>
   <data name="OpenAI Compatible" xml:space="preserve">
     <value>兼容 OpenAI</value>
@@ -161,6 +191,9 @@
   </data>
   <data name="Timeout (s)" xml:space="preserve">
     <value>超时（秒）</value>
+  </data>
+  <data name="Timeout for background model and status checks. Increase it for slow storage." xml:space="preserve">
+    <value>后台模型和状态检查的超时时间。存储速度较慢时，请适当增大此值。</value>
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>底层模型名称</value>
