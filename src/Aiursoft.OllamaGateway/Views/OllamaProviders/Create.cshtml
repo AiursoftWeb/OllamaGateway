@@ -3,12 +3,12 @@
 <div class="container-fluid p-0">
     <div class="row mb-3">
         <div class="col-auto">
-            <h1 class="h3 mb-3">@Localizer["Add New Ollama Provider"]</h1>
+            <h1 class="h3 mb-3">@Localizer["Add Provider"]</h1>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-6 col-lg-5">
+        <div class="col-md-8 col-xl-6">
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title mb-0">@Localizer["Provider Details"]</h5>
@@ -27,10 +27,13 @@
                                 <option value="0">@Localizer["Ollama"]</option>
                                 <option value="1">@Localizer["OpenAI Compatible"]</option>
                             </select>
-                            <div class="form-text">@Localizer["Select the API format used by the downstream provider."]</div>
                         </div>
                         <div id="openAiProtocolOptions" class="mb-3 d-none">
                             <label class="form-label">@Localizer["Supported OpenAI generation protocols"]</label>
+                            <button type="button" class="btn btn-sm btn-link text-muted" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="auto" data-bs-container="body"
+                                    aria-label="@Localizer["About generation protocols"]" data-bs-content="@Localizer["Matching client protocols are forwarded directly. Other supported requests are translated."]">
+                                <i class="align-middle" data-lucide="circle-help" aria-hidden="true" style="width: 16px; height: 16px;"></i>
+                            </button>
                             <div class="form-check">
                                 <input asp-for="SupportsOpenAiChatCompletions" class="form-check-input" />
                                 <label asp-for="SupportsOpenAiChatCompletions" class="form-check-label">
@@ -44,9 +47,6 @@
                                 </label>
                             </div>
                             <span asp-validation-for="SupportsOpenAiChatCompletions" class="text-danger"></span>
-                            <div class="form-text">
-                                @Localizer["Matching client protocols are forwarded directly. Other supported requests are translated."]
-                            </div>
                         </div>
                         <div class="mb-3">
                             <label asp-for="BaseUrl" class="form-label">@Localizer["Base URL"]</label>
@@ -58,50 +58,43 @@
                                 </button>
                             </div>
                             <span asp-validation-for="BaseUrl" class="text-danger"></span>
-                            <div class="form-text">@Localizer["The URL where Ollama is listening."]</div>
                         </div>
 
                         <div class="mb-3">
                             <label asp-for="BearerToken" class="form-label">@Localizer["Bearer Token (Optional)"]</label>
                             <input asp-for="BearerToken" id="bearerTokenInput" class="form-control" placeholder="@Localizer["e.g. sk-..."]" />
                             <span asp-validation-for="BearerToken" class="text-danger"></span>
-                            <div class="form-text">@Localizer["The Bearer Token for authorization if required by the upstream server."]</div>
                         </div>
 
                         <div class="mb-3">
                             <label asp-for="KeepAlive" class="form-label">@Localizer["Keep Alive Policy"]</label>
+                            <button type="button" class="btn btn-sm btn-link text-muted" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="auto" data-bs-container="body"
+                                    aria-label="@Localizer["About model retention"]" data-bs-content="@Localizer["Keeps model weights loaded after the last request. Use 0 to unload immediately or -1 to keep them loaded. Ollama ignores invalid duration formats."]">
+                                <i class="align-middle" data-lucide="circle-help" aria-hidden="true" style="width: 16px; height: 16px;"></i>
+                            </button>
                             <input asp-for="KeepAlive" class="form-control" placeholder="5m" />
-                            <div class="form-text small">
-                                @Localizer["How long model weights stay in GPU VRAM after the last request. Uses Ollama duration format: (number)(unit) — e.g."]
-                                <code>5m</code> @Localizer["(5 minutes),"] <code>1h</code> @Localizer["(1 hour),"] <code>24h</code> @Localizer["(24 hours)."]
-                                <code>0</code> @Localizer["= unload immediately."] <code>-1</code> @Localizer["= keep forever."]
-                                <span class="text-warning-emphasis d-block mt-1">
-                                    <i data-lucide="alert-triangle" style="width:12px;height:12px;" class="me-1"></i>
-                                    @Localizer["Do NOT use raw seconds like '300'. Write '5m' instead. Invalid formats are silently ignored by Ollama."]
-                                </span>
-                            </div>
+                            <div class="form-text">@Localizer["Ollama only; include a unit, e.g. 5m."]</div>
                             <span asp-validation-for="KeepAlive" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
                             <label asp-for="MaxParallelism" class="form-label">@Localizer["Max Concurrent Requests"]</label>
+                            <button type="button" class="btn btn-sm btn-link text-muted" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="auto" data-bs-container="body"
+                                    aria-label="@Localizer["About concurrent requests"]" data-bs-content="@Localizer["Limits simultaneous requests to this provider. Use 1 to process them one at a time. Waiting for a slot has no timeout and does not use the virtual model response timeout; disconnecting the client cancels the wait."]">
+                                <i class="align-middle" data-lucide="circle-help" aria-hidden="true" style="width: 16px; height: 16px;"></i>
+                            </button>
                             <input asp-for="MaxParallelism" class="form-control" type="number" min="0" max="1000" />
-                            <div class="form-text small">
-                                @Localizer["Maximum number of concurrent requests sent to this provider. 0 = unlimited (default). Set to 1 to serialize requests and prevent the backend from being overwhelmed."]
-                                <span class="d-block mt-1 text-info-emphasis">
-                                    <i data-lucide="info" style="width:12px;height:12px;" class="me-1"></i>
-                                    @Localizer["Waiting in the concurrency queue does NOT consume the virtual model's Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy."]
-                                </span>
-                            </div>
+                            <div class="form-text">@Localizer["0 = unlimited."]</div>
                             <span asp-validation-for="MaxParallelism" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
                             <label asp-for="HealthCheckTimeoutSeconds" class="form-label">@Localizer["Health Check Timeout (s)"]</label>
+                            <button type="button" class="btn btn-sm btn-link text-muted" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="auto" data-bs-container="body"
+                                    aria-label="@Localizer["About health checks"]" data-bs-content="@Localizer["Timeout for background model and status checks. Increase it for slow storage."]">
+                                <i class="align-middle" data-lucide="circle-help" aria-hidden="true" style="width: 16px; height: 16px;"></i>
+                            </button>
                             <input asp-for="HealthCheckTimeoutSeconds" class="form-control" type="number" min="1" max="3600" />
-                            <div class="form-text small">
-                                @Localizer["How long the background health monitor waits when probing this provider's /api/tags and /api/ps endpoints. Set higher for providers with slow storage (HDD/NAS) where scanning model directories may take tens of seconds."]
-                            </div>
                             <span asp-validation-for="HealthCheckTimeoutSeconds" class="text-danger"></span>
                         </div>
 
