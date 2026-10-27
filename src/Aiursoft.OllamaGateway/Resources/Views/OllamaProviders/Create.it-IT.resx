@@ -39,6 +39,21 @@
   <data name="= unload immediately." xml:space="preserve">
     <value>= scaricamento immediato.</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = illimitato.</value>
+  </data>
+  <data name="About concurrent requests" xml:space="preserve">
+    <value>Informazioni sulle richieste simultanee</value>
+  </data>
+  <data name="About generation protocols" xml:space="preserve">
+    <value>Informazioni sui protocolli di generazione</value>
+  </data>
+  <data name="About health checks" xml:space="preserve">
+    <value>Informazioni sui controlli di stato</value>
+  </data>
+  <data name="About model retention" xml:space="preserve">
+    <value>Informazioni sulla conservazione del modello</value>
+  </data>
   <data name="Add New Ollama Provider" xml:space="preserve">
     <value>Aggiungi nuovo provider Ollama</value>
   </data>
@@ -81,6 +96,12 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>Policy di mantenimento attivo</value>
   </data>
+  <data name="Keeps model weights loaded after the last request. Use 0 to unload immediately or -1 to keep them loaded. Ollama ignores invalid duration formats." xml:space="preserve">
+    <value>Mantiene caricati i pesi del modello dopo l’ultima richiesta. Usa 0 per scaricarli immediatamente o -1 per mantenerli caricati. Ollama ignora i formati di durata non validi.</value>
+  </data>
+  <data name="Limits simultaneous requests to this provider. Use 1 to process them one at a time. Waiting for a slot has no timeout and does not use the virtual model response timeout; disconnecting the client cancels the wait." xml:space="preserve">
+    <value>Limita le richieste simultanee a questo provider. Imposta 1 per elaborarle una alla volta. L’attesa di un posto non ha timeout e non utilizza il timeout di risposta del modello virtuale; se il client si disconnette, l’attesa viene annullata.</value>
+  </data>
   <data name="Matching client protocols are forwarded directly. Other supported requests are translated." xml:space="preserve">
     <value>I protocolli client corrispondenti vengono inoltrati direttamente. Le altre richieste supportate vengono tradotte.</value>
   </data>
@@ -101,6 +122,9 @@
   </data>
   <data name="Ollama" xml:space="preserve">
     <value>Ollama</value>
+  </data>
+  <data name="Ollama only; include a unit, e.g. 5m." xml:space="preserve">
+    <value>Solo per Ollama; includere un&apos;unità, ad es. 5m.</value>
   </data>
   <data name="OpenAI Compatible" xml:space="preserve">
     <value>Compatibile con OpenAI</value>
@@ -143,6 +167,9 @@
   </data>
   <data name="The URL where Ollama is listening." xml:space="preserve">
     <value>L&apos;URL in cui Ollama è in ascolto.</value>
+  </data>
+  <data name="Timeout for background model and status checks. Increase it for slow storage." xml:space="preserve">
+    <value>Timeout per i controlli in background del modello e dello stato. Aumentarlo se l&apos;archiviazione è lenta.</value>
   </data>
   <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
     <value>L&apos;attesa nella coda di concorrenza NON consuma il Timeout della richiesta del modello virtuale. Una richiesta aspetterà indefinitamente un posto disponibile — solo una disconnessione del client (chiusura del browser, timeout dell&apos;SDK) interrompe l&apos;attesa. Il modello virtuale non rinuncia a un backend solo perché è occupato.</value>

@@ -39,6 +39,21 @@
   <data name="= unload immediately." xml:space="preserve">
     <value>= purkaa välittömästi.</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = rajaton.</value>
+  </data>
+  <data name="About concurrent requests" xml:space="preserve">
+    <value>Tietoa samanaikaisista pyynnöistä</value>
+  </data>
+  <data name="About generation protocols" xml:space="preserve">
+    <value>Tietoa generointiprotokollista</value>
+  </data>
+  <data name="About health checks" xml:space="preserve">
+    <value>Terveystarkistuksista</value>
+  </data>
+  <data name="About model retention" xml:space="preserve">
+    <value>Tietoa mallin ylläpidosta</value>
+  </data>
   <data name="Advanced Warmup Options" xml:space="preserve">
     <value>Edistyneet lämmitysohjeet</value>
   </data>
@@ -53,6 +68,9 @@
   </data>
   <data name="Bearer Token" xml:space="preserve">
     <value>Kannusivauva-merkki</value>
+  </data>
+  <data name="Connected! Found {0} models." xml:space="preserve">
+    <value>Yhdistetty! Löydetty {0} mallia.</value>
   </data>
   <data name="Connecting..." xml:space="preserve">
     <value>Yhdistetään...</value>
@@ -80,6 +98,9 @@
   </data>
   <data name="Edit Ollama Provider" xml:space="preserve">
     <value>Muokkaa Ollama-toimittajaa</value>
+  </data>
+  <data name="Edit Provider" xml:space="preserve">
+    <value>Muokkaa palveluntarjoajaa</value>
   </data>
   <data name="Embed" xml:space="preserve">
     <value>Upotus</value>
@@ -111,6 +132,12 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>Pysyvyyskäytäntö</value>
   </data>
+  <data name="Keeps model weights loaded after the last request. Use 0 to unload immediately or -1 to keep them loaded. Ollama ignores invalid duration formats." xml:space="preserve">
+    <value>Säilyttää mallin painot ladattuina viimeisen pyynnön jälkeen. Poista ne latauksesta heti käyttämällä arvoa 0 tai pidä ne ladattuina käyttämällä arvoa -1. Ollama ohittaa virheelliset keston muodot.</value>
+  </data>
+  <data name="Limits simultaneous requests to this provider. Use 1 to process them one at a time. Waiting for a slot has no timeout and does not use the virtual model response timeout; disconnecting the client cancels the wait." xml:space="preserve">
+    <value>Rajoittaa tälle palveluntarjoajalle samanaikaisesti lähetettävien pyyntöjen määrää. Aseta arvoksi 1, jos haluat käsitellä pyynnöt yksi kerrallaan. Vapaan paikan odottamiselle ei ole aikakatkaisua, eikä odotus käytä virtuaalimallin vastauksen aikakatkaisua. Asiakkaan yhteyden katkaiseminen peruuttaa odotuksen.</value>
+  </data>
   <data name="Matching client protocols are forwarded directly. Other supported requests are translated." xml:space="preserve">
     <value>Vastaaavat asiakasprotokollat välitetään suoraan. Muut tuetut pyynnöt käännetään.</value>
   </data>
@@ -128,6 +155,9 @@
   </data>
   <data name="Ollama" xml:space="preserve">
     <value>Ollama</value>
+  </data>
+  <data name="Ollama only; include a unit, e.g. 5m." xml:space="preserve">
+    <value>Vain Ollamalle; ilmoita yksikkö, esim. 5m.</value>
   </data>
   <data name="OpenAI Compatible" xml:space="preserve">
     <value>OpenAI-yhteensopiva</value>
@@ -164,6 +194,9 @@
   </data>
   <data name="Timeout (s)" xml:space="preserve">
     <value>Aikakatkaisu (s)</value>
+  </data>
+  <data name="Timeout for background model and status checks. Increase it for slow storage." xml:space="preserve">
+    <value>Taustalla suoritettavien mallin ja tilan tarkistusten aikakatkaisu. Suurenna arvoa, jos tallennusväline on hidas.</value>
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>Alakäyttömallin nimi</value>

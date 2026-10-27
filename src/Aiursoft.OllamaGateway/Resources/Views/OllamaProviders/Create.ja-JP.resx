@@ -39,6 +39,21 @@
   <data name="= unload immediately." xml:space="preserve">
     <value>= 直ちにアンロード。</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = 無制限</value>
+  </data>
+  <data name="About concurrent requests" xml:space="preserve">
+    <value>同時リクエストについて</value>
+  </data>
+  <data name="About generation protocols" xml:space="preserve">
+    <value>生成プロトコルについて</value>
+  </data>
+  <data name="About health checks" xml:space="preserve">
+    <value>ヘルスチェックについて</value>
+  </data>
+  <data name="About model retention" xml:space="preserve">
+    <value>モデルの保持について</value>
+  </data>
   <data name="Add New Ollama Provider" xml:space="preserve">
     <value>新しい Ollama プロバイダーの追加</value>
   </data>
@@ -81,6 +96,12 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>KEEP_ALIVE ポリシー</value>
   </data>
+  <data name="Keeps model weights loaded after the last request. Use 0 to unload immediately or -1 to keep them loaded. Ollama ignores invalid duration formats." xml:space="preserve">
+    <value>最後のリクエスト後もモデルの重みをメモリに保持します。すぐにアンロードするには0を、保持し続けるには-1を指定してください。Ollamaは無効な時間形式を無視します。</value>
+  </data>
+  <data name="Limits simultaneous requests to this provider. Use 1 to process them one at a time. Waiting for a slot has no timeout and does not use the virtual model response timeout; disconnecting the client cancels the wait." xml:space="preserve">
+    <value>このプロバイダーへの同時リクエスト数を制限します。1に設定すると、リクエストを1件ずつ処理します。空き枠を待つ時間にタイムアウトはなく、仮想モデルの応答タイムアウトも適用されません。クライアントが切断されると、待機はキャンセルされます。</value>
+  </data>
   <data name="Matching client protocols are forwarded directly. Other supported requests are translated." xml:space="preserve">
     <value>一致するクライアントプロトコルはそのまま転送されます。他のサポートされているリクエストは変換されます。</value>
   </data>
@@ -101,6 +122,9 @@
   </data>
   <data name="Ollama" xml:space="preserve">
     <value>Ollama</value>
+  </data>
+  <data name="Ollama only; include a unit, e.g. 5m." xml:space="preserve">
+    <value>Ollama専用です。5mのように単位を付けてください。</value>
   </data>
   <data name="OpenAI Compatible" xml:space="preserve">
     <value>OpenAI 互換</value>
@@ -143,6 +167,9 @@
   </data>
   <data name="The URL where Ollama is listening." xml:space="preserve">
     <value>Ollama がリッスンしている URL</value>
+  </data>
+  <data name="Timeout for background model and status checks. Increase it for slow storage." xml:space="preserve">
+    <value>バックグラウンドでのモデルとステータスのチェックに対するタイムアウトです。ストレージの動作が遅い場合は、値を大きくしてください。</value>
   </data>
   <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
     <value>並行キューで待機している間は、仮想モデルのリクエストタイムアウトは消費されません。リクエストはスロットが空くまで無期限に待機します——待機を終了するのはクライアントの切断（ブラウザの閉鎖、SDK タイムアウト）のみです。バックエンドが混雑しているからといって、仮想モデルが処理を諦めることはありません。</value>

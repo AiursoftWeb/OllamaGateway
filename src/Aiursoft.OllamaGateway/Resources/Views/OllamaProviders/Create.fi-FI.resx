@@ -39,6 +39,21 @@
   <data name="= unload immediately." xml:space="preserve">
     <value>= purkaa välittömästi.</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = rajoittamaton.</value>
+  </data>
+  <data name="About concurrent requests" xml:space="preserve">
+    <value>Tietoja samanaikaisista pyynnöistä</value>
+  </data>
+  <data name="About generation protocols" xml:space="preserve">
+    <value>Tietoja generointiprotokollista</value>
+  </data>
+  <data name="About health checks" xml:space="preserve">
+    <value>Tietoja terveystarkistuksista</value>
+  </data>
+  <data name="About model retention" xml:space="preserve">
+    <value>Tietoja mallin säilyttämisestä</value>
+  </data>
   <data name="Add New Ollama Provider" xml:space="preserve">
     <value>Lisää uusi Ollama-tarjoaja</value>
   </data>
@@ -81,6 +96,12 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>Pidä elossa -politiikka</value>
   </data>
+  <data name="Keeps model weights loaded after the last request. Use 0 to unload immediately or -1 to keep them loaded. Ollama ignores invalid duration formats." xml:space="preserve">
+    <value>Pitää mallin painot ladattuina viimeisen pyynnön jälkeen. Poista malli latauksesta heti arvolla 0 tai pidä se ladattuna arvolla -1. Ollama ohittaa virheelliset keston muodot.</value>
+  </data>
+  <data name="Limits simultaneous requests to this provider. Use 1 to process them one at a time. Waiting for a slot has no timeout and does not use the virtual model response timeout; disconnecting the client cancels the wait." xml:space="preserve">
+    <value>Rajaa tämän palveluntarjoajan samanaikaiset pyynnöt. Käytä arvoa 1 käsitelläksesi ne yhdessä kerrallaan. Paikan odotuksessa ei ole aikakatkaisua eikä se käytä virtuaalimallin vastausaikakatkaisua; asiakasliitännäisen katkaisu peruuttaa odotuksen.</value>
+  </data>
   <data name="Matching client protocols are forwarded directly. Other supported requests are translated." xml:space="preserve">
     <value>Vastaavat asiakasprotokollat siirretään suoraan. Muut tuetut pyynnöt käännetään.</value>
   </data>
@@ -101,6 +122,9 @@
   </data>
   <data name="Ollama" xml:space="preserve">
     <value>Ollama</value>
+  </data>
+  <data name="Ollama only; include a unit, e.g. 5m." xml:space="preserve">
+    <value>Vain Ollama; sisällytä yksikkö, esim. 5m.</value>
   </data>
   <data name="OpenAI Compatible" xml:space="preserve">
     <value>Avoin tekoäly-yhteensopiva</value>
@@ -143,6 +167,9 @@
   </data>
   <data name="The URL where Ollama is listening." xml:space="preserve">
     <value>Ollama on kuunneltavissa tässä URL-osoitteessa.</value>
+  </data>
+  <data name="Timeout for background model and status checks. Increase it for slow storage." xml:space="preserve">
+    <value>Aikaraja taustalla tehtäville mallin ja tilan tarkistuksille. Pidennä sitä, jos tallennusväline on hidas.</value>
   </data>
   <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
     <value>Odottaminen rinnakkaisuusjonossa EI kuluta virtuaalimallin pyyntöaikaumoa. Pyyntö odottaa rajattomasti vapautuvaa aikapistettä — vasta asiakkaan yhteyden katkeaminen (selaimen sulkeminen, SDK:n aikaumovirhe) keskeyttää odotuksen. Virtuaalimalli ei luovu tausta-palvelimesta vain sen ollessa kiireinen.</value>

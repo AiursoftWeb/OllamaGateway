@@ -39,6 +39,21 @@
   <data name="= unload immediately." xml:space="preserve">
     <value>= 直ちにアンロード。</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = 無制限。</value>
+  </data>
+  <data name="About concurrent requests" xml:space="preserve">
+    <value>同時リクエストについて</value>
+  </data>
+  <data name="About generation protocols" xml:space="preserve">
+    <value>生成プロトコルについて</value>
+  </data>
+  <data name="About health checks" xml:space="preserve">
+    <value>ヘルスチェックについて</value>
+  </data>
+  <data name="About model retention" xml:space="preserve">
+    <value>モデルの保持について</value>
+  </data>
   <data name="Advanced Warmup Options" xml:space="preserve">
     <value>詳細なウォームアップオプション</value>
   </data>
@@ -53,6 +68,9 @@
   </data>
   <data name="Bearer Token" xml:space="preserve">
     <value>ベアータークン</value>
+  </data>
+  <data name="Connected! Found {0} models." xml:space="preserve">
+    <value>接続しました！{0} 個のモデルが見つかりました。</value>
   </data>
   <data name="Connecting..." xml:space="preserve">
     <value>接続中...</value>
@@ -80,6 +98,9 @@
   </data>
   <data name="Edit Ollama Provider" xml:space="preserve">
     <value>Ollama プロバイダーの編集</value>
+  </data>
+  <data name="Edit Provider" xml:space="preserve">
+    <value>プロバイダーを編集</value>
   </data>
   <data name="Embed" xml:space="preserve">
     <value>埋め込み</value>
@@ -111,6 +132,12 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>Keep Alive ポリシー</value>
   </data>
+  <data name="Keeps model weights loaded after the last request. Use 0 to unload immediately or -1 to keep them loaded. Ollama ignores invalid duration formats." xml:space="preserve">
+    <value>最後のリクエスト後もモデルの重みをメモリに保持します。すぐにアンロードするには0を、保持し続けるには-1を指定してください。Ollamaは無効な期間形式を無視します。</value>
+  </data>
+  <data name="Limits simultaneous requests to this provider. Use 1 to process them one at a time. Waiting for a slot has no timeout and does not use the virtual model response timeout; disconnecting the client cancels the wait." xml:space="preserve">
+    <value>このプロバイダーへの同時リクエスト数を制限します。1に設定すると、リクエストを1つずつ処理します。空き枠を待つ間にタイムアウトは発生せず、仮想モデルの応答タイムアウトも適用されません。クライアントが切断されると、待機はキャンセルされます。</value>
+  </data>
   <data name="Matching client protocols are forwarded directly. Other supported requests are translated." xml:space="preserve">
     <value>一致するクライアントプロトコルは直接転送されます。他のサポートされているリクエストは変換されます。</value>
   </data>
@@ -128,6 +155,9 @@
   </data>
   <data name="Ollama" xml:space="preserve">
     <value>Ollama</value>
+  </data>
+  <data name="Ollama only; include a unit, e.g. 5m." xml:space="preserve">
+    <value>Ollamaのみで使用できます。例：5mのように単位を付けてください。</value>
   </data>
   <data name="OpenAI Compatible" xml:space="preserve">
     <value>OpenAI 互換</value>
@@ -164,6 +194,9 @@
   </data>
   <data name="Timeout (s)" xml:space="preserve">
     <value>タイムアウト（秒）</value>
+  </data>
+  <data name="Timeout for background model and status checks. Increase it for slow storage." xml:space="preserve">
+    <value>バックグラウンドでのモデルとステータスの確認がタイムアウトするまでの時間です。ストレージの速度が遅い場合は、この値を大きくしてください。</value>
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>基盤モデル名</value>

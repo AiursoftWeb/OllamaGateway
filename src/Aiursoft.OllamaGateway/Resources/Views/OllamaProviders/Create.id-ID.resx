@@ -39,6 +39,21 @@
   <data name="= unload immediately." xml:space="preserve">
     <value>= buang segera.</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = tanpa batas.</value>
+  </data>
+  <data name="About concurrent requests" xml:space="preserve">
+    <value>Tentang permintaan bersamaan</value>
+  </data>
+  <data name="About generation protocols" xml:space="preserve">
+    <value>Tentang protokol generasi</value>
+  </data>
+  <data name="About health checks" xml:space="preserve">
+    <value>Tentang pemeriksaan kesehatan</value>
+  </data>
+  <data name="About model retention" xml:space="preserve">
+    <value>Tentang retensi model</value>
+  </data>
   <data name="Add New Ollama Provider" xml:space="preserve">
     <value>Tambah Penyedia Ollama Baru</value>
   </data>
@@ -81,6 +96,12 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>Kebijakan Pertahankan Aktif</value>
   </data>
+  <data name="Keeps model weights loaded after the last request. Use 0 to unload immediately or -1 to keep them loaded. Ollama ignores invalid duration formats." xml:space="preserve">
+    <value>Menjaga bobot model tetap dimuat setelah permintaan terakhir. Gunakan 0 untuk memuat ulang segera atau -1 untuk tetap memuatnya. Ollama mengabaikan format durasi yang tidak valid.</value>
+  </data>
+  <data name="Limits simultaneous requests to this provider. Use 1 to process them one at a time. Waiting for a slot has no timeout and does not use the virtual model response timeout; disconnecting the client cancels the wait." xml:space="preserve">
+    <value>Membatasi permintaan simultan ke penyedia ini. Gunakan 1 untuk memprosesnya satu per satu. Menunggu slot tidak memiliki batas waktu dan tidak menggunakan batas waktu respons model virtual; memutuskan koneksi klien membatalkan penantian.</value>
+  </data>
   <data name="Matching client protocols are forwarded directly. Other supported requests are translated." xml:space="preserve">
     <value>Protokol klien yang cocok diteruskan secara langsung. Permintaan lain yang didukung diterjemahkan.</value>
   </data>
@@ -101,6 +122,9 @@
   </data>
   <data name="Ollama" xml:space="preserve">
     <value>Ollama</value>
+  </data>
+  <data name="Ollama only; include a unit, e.g. 5m." xml:space="preserve">
+    <value>Khusus Ollama; sertakan satuan, misalnya 5m.</value>
   </data>
   <data name="OpenAI Compatible" xml:space="preserve">
     <value>Kompatibel OpenAI</value>
@@ -143,6 +167,9 @@
   </data>
   <data name="The URL where Ollama is listening." xml:space="preserve">
     <value>URL tempat Ollama mendengarkan.</value>
+  </data>
+  <data name="Timeout for background model and status checks. Increase it for slow storage." xml:space="preserve">
+    <value>Batas waktu untuk pemeriksaan model dan status di latar belakang. Tingkatkan nilainya jika penyimpanan lambat.</value>
   </data>
   <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
     <value>Menunggu di antrian konkurensi TIDAK mengonsumsi batas waktu permintaan (Request Timeout) model virtual. Permintaan akan menunggu selamanya hingga tersedia slot — hanya putuskan koneksi klien (penutupan browser, batas waktu SDK) yang menghentikan penantian tersebut. Model virtual tidak menyerah pada backend hanya karena sedang sibuk.</value>

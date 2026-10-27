@@ -39,6 +39,21 @@
   <data name="= unload immediately." xml:space="preserve">
     <value>= 立即卸載。</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = 無限制。</value>
+  </data>
+  <data name="About concurrent requests" xml:space="preserve">
+    <value>關於並行請求</value>
+  </data>
+  <data name="About generation protocols" xml:space="preserve">
+    <value>關於生成協定</value>
+  </data>
+  <data name="About health checks" xml:space="preserve">
+    <value>關於健康檢查</value>
+  </data>
+  <data name="About model retention" xml:space="preserve">
+    <value>關於模型保留</value>
+  </data>
   <data name="Add New Ollama Provider" xml:space="preserve">
     <value>新增 Ollama 提供者</value>
   </data>
@@ -81,6 +96,12 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>保持連線策略</value>
   </data>
+  <data name="Keeps model weights loaded after the last request. Use 0 to unload immediately or -1 to keep them loaded. Ollama ignores invalid duration formats." xml:space="preserve">
+    <value>在最後一個請求結束後，仍會保留已載入的模型權重。輸入 0 可立即卸載，輸入 -1 則會持續保留。Ollama 會忽略無效的時間長度格式。</value>
+  </data>
+  <data name="Limits simultaneous requests to this provider. Use 1 to process them one at a time. Waiting for a slot has no timeout and does not use the virtual model response timeout; disconnecting the client cancels the wait." xml:space="preserve">
+    <value>限制此提供者可同時處理的請求數量。設為 1 即可一次處理一個請求。等待可用名額時不設逾時，也不受虛擬模型回應逾時限制；用戶端中斷連線時，等待便會取消。</value>
+  </data>
   <data name="Matching client protocols are forwarded directly. Other supported requests are translated." xml:space="preserve">
     <value>符合的用戶端協定將直接轉送。其他支援的請求將進行轉換。</value>
   </data>
@@ -101,6 +122,9 @@
   </data>
   <data name="Ollama" xml:space="preserve">
     <value>Ollama</value>
+  </data>
+  <data name="Ollama only; include a unit, e.g. 5m." xml:space="preserve">
+    <value>僅適用於 Ollama；請包含時間單位，例如 5m。</value>
   </data>
   <data name="OpenAI Compatible" xml:space="preserve">
     <value>相容於 OpenAI</value>
@@ -143,6 +167,9 @@
   </data>
   <data name="The URL where Ollama is listening." xml:space="preserve">
     <value>Ollama 正在監聽的 URL。</value>
+  </data>
+  <data name="Timeout for background model and status checks. Increase it for slow storage." xml:space="preserve">
+    <value>背景模型與狀態檢查的逾時時間。若儲存速度較慢，請調高此值。</value>
   </data>
   <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
     <value>在併發佇列中等待並不會消耗虛擬模型的請求逾時時間。請求將無限期地等待空位，只有客戶端斷開連線（關閉瀏覽器、SDK 逾時）才會停止等待。虛擬模型不會僅因為後端忙碌就放棄請求。</value>
