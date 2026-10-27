@@ -39,6 +39,21 @@
   <data name="= unload immediately." xml:space="preserve">
     <value>= muat ulang segera.</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = tanpa batas.</value>
+  </data>
+  <data name="About concurrent requests" xml:space="preserve">
+    <value>Tentang permintaan bersamaan</value>
+  </data>
+  <data name="About generation protocols" xml:space="preserve">
+    <value>Tentang protokol generasi</value>
+  </data>
+  <data name="About health checks" xml:space="preserve">
+    <value>Tentang pemeriksaan kesehatan</value>
+  </data>
+  <data name="About model retention" xml:space="preserve">
+    <value>Tentang penyimpanan model</value>
+  </data>
   <data name="Advanced Warmup Options" xml:space="preserve">
     <value>Opsi Pemanasan Lanjutan</value>
   </data>
@@ -53,6 +68,9 @@
   </data>
   <data name="Bearer Token" xml:space="preserve">
     <value>Token Bearer</value>
+  </data>
+  <data name="Connected! Found {0} models." xml:space="preserve">
+    <value>Terhubung! Ditemukan {0} model.</value>
   </data>
   <data name="Connecting..." xml:space="preserve">
     <value>Menghubungkan...</value>
@@ -80,6 +98,9 @@
   </data>
   <data name="Edit Ollama Provider" xml:space="preserve">
     <value>Edit Ollama Provider</value>
+  </data>
+  <data name="Edit Provider" xml:space="preserve">
+    <value>Edit Penyedia</value>
   </data>
   <data name="Embed" xml:space="preserve">
     <value>Penyematan</value>
@@ -111,6 +132,12 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>Kebijakan Tahan Hidup</value>
   </data>
+  <data name="Keeps model weights loaded after the last request. Use 0 to unload immediately or -1 to keep them loaded. Ollama ignores invalid duration formats." xml:space="preserve">
+    <value>Mempertahankan bobot model tetap dimuat setelah permintaan terakhir. Gunakan 0 untuk segera membongkar model atau -1 agar tetap dimuat. Ollama mengabaikan format durasi yang tidak valid.</value>
+  </data>
+  <data name="Limits simultaneous requests to this provider. Use 1 to process them one at a time. Waiting for a slot has no timeout and does not use the virtual model response timeout; disconnecting the client cancels the wait." xml:space="preserve">
+    <value>Membatasi permintaan bersamaan ke penyedia ini. Gunakan 1 untuk memprosesnya satu per satu. Waktu tunggu untuk mendapatkan slot tidak memiliki batas waktu dan tidak menggunakan batas waktu respons model virtual; memutus koneksi klien akan membatalkan waktu tunggu.</value>
+  </data>
   <data name="Matching client protocols are forwarded directly. Other supported requests are translated." xml:space="preserve">
     <value>Protokol klien yang cocok diteruskan secara langsung. Permintaan lain yang didukung diterjemahkan.</value>
   </data>
@@ -128,6 +155,9 @@
   </data>
   <data name="Ollama" xml:space="preserve">
     <value>Ollama</value>
+  </data>
+  <data name="Ollama only; include a unit, e.g. 5m." xml:space="preserve">
+    <value>Khusus Ollama; sertakan satuan, misalnya 5m.</value>
   </data>
   <data name="OpenAI Compatible" xml:space="preserve">
     <value>Kompatibel OpenAI</value>
@@ -164,6 +194,9 @@
   </data>
   <data name="Timeout (s)" xml:space="preserve">
     <value>Waktu Habis (dtk)</value>
+  </data>
+  <data name="Timeout for background model and status checks. Increase it for slow storage." xml:space="preserve">
+    <value>Batas waktu untuk pemeriksaan model dan status di latar belakang. Tingkatkan nilainya jika penyimpanan lambat.</value>
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>Nama Model Dasar</value>

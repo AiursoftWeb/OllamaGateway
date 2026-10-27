@@ -39,6 +39,21 @@
   <data name="= unload immediately." xml:space="preserve">
     <value>= giải phóng ngay lập tức.</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = không giới hạn.</value>
+  </data>
+  <data name="About concurrent requests" xml:space="preserve">
+    <value>Thông tin về các yêu cầu đồng thời</value>
+  </data>
+  <data name="About generation protocols" xml:space="preserve">
+    <value>Giới thiệu về các giao thức tạo nội dung</value>
+  </data>
+  <data name="About health checks" xml:space="preserve">
+    <value>Thông tin về kiểm tra tình trạng</value>
+  </data>
+  <data name="About model retention" xml:space="preserve">
+    <value>Giới thiệu về thời gian lưu giữ mô hình</value>
+  </data>
   <data name="Add New Ollama Provider" xml:space="preserve">
     <value>Thêm nhà cung cấp Ollama mới</value>
   </data>
@@ -81,6 +96,12 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>Chính sách Giữ Kết Nối</value>
   </data>
+  <data name="Keeps model weights loaded after the last request. Use 0 to unload immediately or -1 to keep them loaded. Ollama ignores invalid duration formats." xml:space="preserve">
+    <value>Giữ trọng số mô hình ở trạng thái đã tải sau yêu cầu cuối cùng. Nhập 0 để dỡ tải ngay lập tức hoặc -1 để tiếp tục giữ mô hình ở trạng thái đã tải. Ollama bỏ qua các định dạng thời lượng không hợp lệ.</value>
+  </data>
+  <data name="Limits simultaneous requests to this provider. Use 1 to process them one at a time. Waiting for a slot has no timeout and does not use the virtual model response timeout; disconnecting the client cancels the wait." xml:space="preserve">
+    <value>Giới hạn số yêu cầu được gửi đồng thời đến nhà cung cấp này. Đặt giá trị là 1 để xử lý lần lượt từng yêu cầu. Thời gian chờ đến khi có chỗ không bị giới hạn và không áp dụng thời gian chờ phản hồi của mô hình ảo; nếu ngắt kết nối máy khách, quá trình chờ sẽ bị hủy.</value>
+  </data>
   <data name="Matching client protocols are forwarded directly. Other supported requests are translated." xml:space="preserve">
     <value>Các giao thức khách hàng phù hợp được chuyển tiếp trực tiếp. Các yêu cầu khác được hỗ trợ sẽ được dịch đổi.</value>
   </data>
@@ -101,6 +122,9 @@
   </data>
   <data name="Ollama" xml:space="preserve">
     <value>Ollama</value>
+  </data>
+  <data name="Ollama only; include a unit, e.g. 5m." xml:space="preserve">
+    <value>Chỉ dành cho Ollama; hãy ghi kèm đơn vị, ví dụ: 5m.</value>
   </data>
   <data name="OpenAI Compatible" xml:space="preserve">
     <value>Tương thích OpenAI</value>
@@ -143,6 +167,9 @@
   </data>
   <data name="The URL where Ollama is listening." xml:space="preserve">
     <value>URL mà Ollama đang lắng nghe.</value>
+  </data>
+  <data name="Timeout for background model and status checks. Increase it for slow storage." xml:space="preserve">
+    <value>Thời gian chờ cho các lần kiểm tra mô hình và trạng thái chạy nền. Hãy tăng thời gian này nếu bộ nhớ lưu trữ chậm.</value>
   </data>
   <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
     <value>Việc chờ trong hàng đợi đồng thời KHÔNG tiêu thụ Thời gian chờ Yêu cầu của mô hình ảo. Một yêu cầu sẽ chờ vô hạn để có một khe — chỉ có việc ngắt kết nối từ phía máy khách (đóng trình duyệt, hết giờ SDK) mới dừng việc chờ. Mô hình ảo không bỏ cuộc với backend chỉ vì nó đang bận.</value>

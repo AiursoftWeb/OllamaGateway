@@ -39,6 +39,21 @@
   <data name="= unload immediately." xml:space="preserve">
     <value>= hemen boşalt.</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = sınırsız.</value>
+  </data>
+  <data name="About concurrent requests" xml:space="preserve">
+    <value>Eş zamanlı istekler hakkında</value>
+  </data>
+  <data name="About generation protocols" xml:space="preserve">
+    <value>Üretim protokolleri hakkında</value>
+  </data>
+  <data name="About health checks" xml:space="preserve">
+    <value>Sağlık denetimleri hakkında</value>
+  </data>
+  <data name="About model retention" xml:space="preserve">
+    <value>Modelin bellekte tutulması hakkında</value>
+  </data>
   <data name="Advanced Warmup Options" xml:space="preserve">
     <value>Gelişmiş Isınma Seçenekleri</value>
   </data>
@@ -53,6 +68,9 @@
   </data>
   <data name="Bearer Token" xml:space="preserve">
     <value>Bearer Token</value>
+  </data>
+  <data name="Connected! Found {0} models." xml:space="preserve">
+    <value>Bağlantı kuruldu! {0} model bulundu.</value>
   </data>
   <data name="Connecting..." xml:space="preserve">
     <value>Bağlanıyor...</value>
@@ -80,6 +98,9 @@
   </data>
   <data name="Edit Ollama Provider" xml:space="preserve">
     <value>Ollama Sağlayıcısını Düzenle</value>
+  </data>
+  <data name="Edit Provider" xml:space="preserve">
+    <value>Sağlayıcıyı Düzenle</value>
   </data>
   <data name="Embed" xml:space="preserve">
     <value>Gömme</value>
@@ -111,6 +132,12 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>Canlı Tutma Politikası</value>
   </data>
+  <data name="Keeps model weights loaded after the last request. Use 0 to unload immediately or -1 to keep them loaded. Ollama ignores invalid duration formats." xml:space="preserve">
+    <value>Son isteğin ardından model ağırlıklarını yüklü tutar. Hemen kaldırmak için 0, yüklü tutmak için -1 kullanın. Ollama, geçersiz süre biçimlerini yok sayar.</value>
+  </data>
+  <data name="Limits simultaneous requests to this provider. Use 1 to process them one at a time. Waiting for a slot has no timeout and does not use the virtual model response timeout; disconnecting the client cancels the wait." xml:space="preserve">
+    <value>Bu sağlayıcıya aynı anda gönderilebilecek istek sayısını sınırlar. İstekleri sırayla işlemek için 1 değerini kullanın. Bir sıra beklemek için zaman aşımı yoktur ve sanal model yanıtı zaman aşımı süresini kullanmaz; istemcinin bağlantısını kesmek beklemeyi iptal eder.</value>
+  </data>
   <data name="Matching client protocols are forwarded directly. Other supported requests are translated." xml:space="preserve">
     <value>Eşleşen istemci protokolleri doğrudan iletilir. Desteklenen diğer istekler dönüştürülür.</value>
   </data>
@@ -128,6 +155,9 @@
   </data>
   <data name="Ollama" xml:space="preserve">
     <value>Ollama</value>
+  </data>
+  <data name="Ollama only; include a unit, e.g. 5m." xml:space="preserve">
+    <value>Yalnızca Ollama için geçerlidir; 5m gibi bir zaman birimi ekleyin.</value>
   </data>
   <data name="OpenAI Compatible" xml:space="preserve">
     <value>OpenAI Uyumlu</value>
@@ -164,6 +194,9 @@
   </data>
   <data name="Timeout (s)" xml:space="preserve">
     <value>Zaman Aşımı (sn)</value>
+  </data>
+  <data name="Timeout for background model and status checks. Increase it for slow storage." xml:space="preserve">
+    <value>Arka plan model ve durum kontrolleri için zaman aşımıdır. Depolama yavaşsa süreyi artırın.</value>
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>Alt Model Adı</value>

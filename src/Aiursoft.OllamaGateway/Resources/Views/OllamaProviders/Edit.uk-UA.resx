@@ -39,6 +39,21 @@
   <data name="= unload immediately." xml:space="preserve">
     <value>= вивантажити одразу.</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = без обмежень.</value>
+  </data>
+  <data name="About concurrent requests" xml:space="preserve">
+    <value>Про паралельні запити</value>
+  </data>
+  <data name="About generation protocols" xml:space="preserve">
+    <value>Про протоколи генерації</value>
+  </data>
+  <data name="About health checks" xml:space="preserve">
+    <value>Про перевірки працездатності</value>
+  </data>
+  <data name="About model retention" xml:space="preserve">
+    <value>Про утримання моделі</value>
+  </data>
   <data name="Advanced Warmup Options" xml:space="preserve">
     <value>Додаткові параметри попереднього нагріву</value>
   </data>
@@ -53,6 +68,9 @@
   </data>
   <data name="Bearer Token" xml:space="preserve">
     <value>Токен Bearer</value>
+  </data>
+  <data name="Connected! Found {0} models." xml:space="preserve">
+    <value>Підключено! Знайдено моделей: {0}.</value>
   </data>
   <data name="Connecting..." xml:space="preserve">
     <value>Підключення...</value>
@@ -80,6 +98,9 @@
   </data>
   <data name="Edit Ollama Provider" xml:space="preserve">
     <value>Змінити постачальника Ollama</value>
+  </data>
+  <data name="Edit Provider" xml:space="preserve">
+    <value>Редагувати постачальника</value>
   </data>
   <data name="Embed" xml:space="preserve">
     <value>Вбудовування</value>
@@ -111,6 +132,12 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>Політика збереження живим</value>
   </data>
+  <data name="Keeps model weights loaded after the last request. Use 0 to unload immediately or -1 to keep them loaded. Ollama ignores invalid duration formats." xml:space="preserve">
+    <value>Зберігає ваги моделі завантаженими після останнього запиту. Вкажіть 0, щоб негайно вивантажити модель, або -1, щоб залишити її завантаженою. Ollama ігнорує неправильні формати тривалості.</value>
+  </data>
+  <data name="Limits simultaneous requests to this provider. Use 1 to process them one at a time. Waiting for a slot has no timeout and does not use the virtual model response timeout; disconnecting the client cancels the wait." xml:space="preserve">
+    <value>Обмежує кількість одночасних запитів до цього постачальника. Значення 1 дає змогу обробляти їх по черзі. Очікування вільного слота не обмежене часом і не використовує тайм-аут відповіді віртуальної моделі; якщо клієнт від’єднається, очікування буде скасовано.</value>
+  </data>
   <data name="Matching client protocols are forwarded directly. Other supported requests are translated." xml:space="preserve">
     <value>Відповідні протоколи клієнтів пересилаються безпосередньо. Інші підтримувані запити перетворюються.</value>
   </data>
@@ -128,6 +155,9 @@
   </data>
   <data name="Ollama" xml:space="preserve">
     <value>Ollama</value>
+  </data>
+  <data name="Ollama only; include a unit, e.g. 5m." xml:space="preserve">
+    <value>Лише для Ollama; вкажіть одиницю виміру, наприклад 5m.</value>
   </data>
   <data name="OpenAI Compatible" xml:space="preserve">
     <value>сумісний з OpenAI</value>
@@ -164,6 +194,9 @@
   </data>
   <data name="Timeout (s)" xml:space="preserve">
     <value>Час очікування (с)</value>
+  </data>
+  <data name="Timeout for background model and status checks. Increase it for slow storage." xml:space="preserve">
+    <value>Час очікування для фонової перевірки моделі та її стану. Збільште його, якщо сховище працює повільно.</value>
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>Назва базової моделі</value>

@@ -39,6 +39,21 @@
   <data name="= unload immediately." xml:space="preserve">
     <value>= unload immediately.</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = unlimited.</value>
+  </data>
+  <data name="About concurrent requests" xml:space="preserve">
+    <value>About concurrent requests</value>
+  </data>
+  <data name="About generation protocols" xml:space="preserve">
+    <value>About generation protocols</value>
+  </data>
+  <data name="About health checks" xml:space="preserve">
+    <value>About health checks</value>
+  </data>
+  <data name="About model retention" xml:space="preserve">
+    <value>About model retention</value>
+  </data>
   <data name="Add New Ollama Provider" xml:space="preserve">
     <value>Add New Ollama Provider</value>
   </data>
@@ -81,6 +96,12 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>Keep Alive Policy</value>
   </data>
+  <data name="Keeps model weights loaded after the last request. Use 0 to unload immediately or -1 to keep them loaded. Ollama ignores invalid duration formats." xml:space="preserve">
+    <value>Keeps the model weights loaded after the last request. Use 0 to unload them immediately or -1 to keep them loaded. Ollama ignores invalid duration formats.</value>
+  </data>
+  <data name="Limits simultaneous requests to this provider. Use 1 to process them one at a time. Waiting for a slot has no timeout and does not use the virtual model response timeout; disconnecting the client cancels the wait." xml:space="preserve">
+    <value>Limits simultaneous requests to this provider. Use 1 to process them one at a time. Waiting for a slot has no timeout and does not use the virtual model response timeout; disconnecting the client cancels the wait.</value>
+  </data>
   <data name="Matching client protocols are forwarded directly. Other supported requests are translated." xml:space="preserve">
     <value>Matching client protocols are forwarded directly. Other supported requests are translated.</value>
   </data>
@@ -101,6 +122,9 @@
   </data>
   <data name="Ollama" xml:space="preserve">
     <value>Ollama</value>
+  </data>
+  <data name="Ollama only; include a unit, e.g. 5m." xml:space="preserve">
+    <value>Ollama only; include a unit, e.g. 5m.</value>
   </data>
   <data name="OpenAI Compatible" xml:space="preserve">
     <value>OpenAI Compatible</value>
@@ -143,6 +167,9 @@
   </data>
   <data name="The URL where Ollama is listening." xml:space="preserve">
     <value>The URL where Ollama is listening.</value>
+  </data>
+  <data name="Timeout for background model and status checks. Increase it for slow storage." xml:space="preserve">
+    <value>Timeout for background model and status checks. Increase it for slow storage.</value>
   </data>
   <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
     <value>Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy.</value>

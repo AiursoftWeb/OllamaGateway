@@ -39,6 +39,21 @@
   <data name="= unload immediately." xml:space="preserve">
     <value>= ถอดออกทันที</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = ไม่จำกัด</value>
+  </data>
+  <data name="About concurrent requests" xml:space="preserve">
+    <value>เกี่ยวกับคำขอที่ทำงานพร้อมกัน</value>
+  </data>
+  <data name="About generation protocols" xml:space="preserve">
+    <value>เกี่ยวกับโพรโทคอลการสร้าง</value>
+  </data>
+  <data name="About health checks" xml:space="preserve">
+    <value>เกี่ยวกับการตรวจสอบสถานะสุขภาพ</value>
+  </data>
+  <data name="About model retention" xml:space="preserve">
+    <value>เกี่ยวกับการคงโมเดลไว้ในหน่วยความจำ</value>
+  </data>
   <data name="Add New Ollama Provider" xml:space="preserve">
     <value>เพิ่มผู้ให้บริการ Ollama ใหม่</value>
   </data>
@@ -81,6 +96,12 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>นโยบายคงการเปิดใช้งาน</value>
   </data>
+  <data name="Keeps model weights loaded after the last request. Use 0 to unload immediately or -1 to keep them loaded. Ollama ignores invalid duration formats." xml:space="preserve">
+    <value>คงน้ำหนักโมเดลไว้ในหน่วยความจำหลังจากคำขอสุดท้าย ใช้ 0 เพื่อยกเลิกการโหลดทันที หรือ -1 เพื่อคงการโหลดไว้ Ollama จะไม่สนใจรูปแบบระยะเวลาที่ไม่ถูกต้อง</value>
+  </data>
+  <data name="Limits simultaneous requests to this provider. Use 1 to process them one at a time. Waiting for a slot has no timeout and does not use the virtual model response timeout; disconnecting the client cancels the wait." xml:space="preserve">
+    <value>จำกัดจำนวนคำขอที่ส่งไปยังผู้ให้บริการนี้พร้อมกัน หากต้องการประมวลผลทีละรายการ ให้กำหนดค่าเป็น 1 การรอจนกว่าจะมีช่องว่างไม่มีการหมดเวลา และไม่ใช้การหมดเวลาการตอบกลับของโมเดลเสมือน การตัดการเชื่อมต่อของไคลเอ็นต์จะยกเลิกการรอ</value>
+  </data>
   <data name="Matching client protocols are forwarded directly. Other supported requests are translated." xml:space="preserve">
     <value>โปรโตคอลไคลเอ็นต์ที่ตรงกันจะถูกส่งต่อโดยตรง คำขออื่น ๆ ที่รองรับจะได้รับการแปลงรูปแบบ</value>
   </data>
@@ -101,6 +122,9 @@
   </data>
   <data name="Ollama" xml:space="preserve">
     <value>Ollama</value>
+  </data>
+  <data name="Ollama only; include a unit, e.g. 5m." xml:space="preserve">
+    <value>เฉพาะ Ollama เท่านั้น; ระบุหน่วยด้วย เช่น 5m</value>
   </data>
   <data name="OpenAI Compatible" xml:space="preserve">
     <value>OpenAI Compatible</value>
@@ -143,6 +167,9 @@
   </data>
   <data name="The URL where Ollama is listening." xml:space="preserve">
     <value>URL ที่ Ollama กำลังรับฟัง</value>
+  </data>
+  <data name="Timeout for background model and status checks. Increase it for slow storage." xml:space="preserve">
+    <value>ระยะหมดเวลาสำหรับการตรวจสอบโมเดลและสถานะในเบื้องหลัง หากพื้นที่จัดเก็บข้อมูลทำงานช้า ให้เพิ่มระยะเวลานี้</value>
   </data>
   <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
     <value>การรอในคิวการทำงานพร้อมกันจะไม่ใช้เวลารอหมดอายุ (Request Timeout) ของโมเดลเสมือน คำขอจะรอสัญญาณเปิดช่องอย่างไม่จำกัดเวลา — จะมีเพียงการตัดการเชื่อมต่อของไคลเอนต์ (เช่น ปิดเบราว์เซอร์ หรือ SDK หมดเวลา) เท่านั้นที่จะหยุดการรอ โมเดลเสมือนจะไม่ละทิ้งแบ็กเอนด์เพียงเพราะมันกำลังทำงานอยู่</value>

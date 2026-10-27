@@ -39,6 +39,21 @@
   <data name="= unload immediately." xml:space="preserve">
     <value>= hemen boşalt.</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = sınırsız.</value>
+  </data>
+  <data name="About concurrent requests" xml:space="preserve">
+    <value>Eşzamanlı istekler hakkında</value>
+  </data>
+  <data name="About generation protocols" xml:space="preserve">
+    <value>Üretim protokolleri hakkında</value>
+  </data>
+  <data name="About health checks" xml:space="preserve">
+    <value>Sağlık kontrolleri hakkında</value>
+  </data>
+  <data name="About model retention" xml:space="preserve">
+    <value>Model saklama hakkında</value>
+  </data>
   <data name="Add New Ollama Provider" xml:space="preserve">
     <value>Yeni Ollama Sağlayıcı Ekle</value>
   </data>
@@ -81,6 +96,12 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>Canlı Tutma Politikası</value>
   </data>
+  <data name="Keeps model weights loaded after the last request. Use 0 to unload immediately or -1 to keep them loaded. Ollama ignores invalid duration formats." xml:space="preserve">
+    <value>Son isteğin ardından model ağırlıklarını bellekte tutar. Hemen bellekten kaldırmak için 0&apos;ı, bellekte tutmaya devam etmek için -1&apos;i kullanın. Ollama, geçersiz süre biçimlerini yok sayar.</value>
+  </data>
+  <data name="Limits simultaneous requests to this provider. Use 1 to process them one at a time. Waiting for a slot has no timeout and does not use the virtual model response timeout; disconnecting the client cancels the wait." xml:space="preserve">
+    <value>Bu sağlayıcıya yapılan eşzamanlı istekleri sınırlar. Sırayla işlemek için 1 kullanın. Boş yer beklemek için zaman aşımı yoktur ve sanal model yanıt zaman aşımını kullanmaz; istemcinin bağlantısını kesmesi bekleme işlemini iptal eder.</value>
+  </data>
   <data name="Matching client protocols are forwarded directly. Other supported requests are translated." xml:space="preserve">
     <value>Eşleşen istemci protokolleri doğrudan yönlendirilir. Diğer desteklenen istekler dönüştürülür.</value>
   </data>
@@ -101,6 +122,9 @@
   </data>
   <data name="Ollama" xml:space="preserve">
     <value>Ollama</value>
+  </data>
+  <data name="Ollama only; include a unit, e.g. 5m." xml:space="preserve">
+    <value>Yalnızca Ollama için; 5m gibi bir zaman birimi belirtin.</value>
   </data>
   <data name="OpenAI Compatible" xml:space="preserve">
     <value>OpenAI Uyumlu</value>
@@ -143,6 +167,9 @@
   </data>
   <data name="The URL where Ollama is listening." xml:space="preserve">
     <value>Ollama&apos;nın dinlediği URL.</value>
+  </data>
+  <data name="Timeout for background model and status checks. Increase it for slow storage." xml:space="preserve">
+    <value>Arka plan model ve durum denetimleri için zaman aşımı. Yavaş depolama için bunu artırın.</value>
   </data>
   <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
     <value>Eş zamanlılık kuyruğunda bekleme, sanal modelin İstek Zaman Aşımını (Request Timeout) tüketmez. Bir istek, bir yuva için sonsuza kadar bekler — bekleme durumunu sonlandıran tek şey istemcinin bağlantısının kesilmesidir (tarayıcıyı kapatma, SDK zaman aşımı). Sanal model, arka uç meşgul olduğu için onu bırakmaz.</value>

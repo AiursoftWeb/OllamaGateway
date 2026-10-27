@@ -39,6 +39,21 @@
   <data name="= unload immediately." xml:space="preserve">
     <value>= scaricamento immediato.</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = illimitato.</value>
+  </data>
+  <data name="About concurrent requests" xml:space="preserve">
+    <value>Informazioni sulle richieste simultanee</value>
+  </data>
+  <data name="About generation protocols" xml:space="preserve">
+    <value>Informazioni sui protocolli di generazione</value>
+  </data>
+  <data name="About health checks" xml:space="preserve">
+    <value>Informazioni sui controlli dello stato</value>
+  </data>
+  <data name="About model retention" xml:space="preserve">
+    <value>Informazioni sulla conservazione del modello</value>
+  </data>
   <data name="Advanced Warmup Options" xml:space="preserve">
     <value>Opzioni di warmup avanzate</value>
   </data>
@@ -53,6 +68,9 @@
   </data>
   <data name="Bearer Token" xml:space="preserve">
     <value>Token Bearer</value>
+  </data>
+  <data name="Connected! Found {0} models." xml:space="preserve">
+    <value>Connesso! Trovati {0} modelli.</value>
   </data>
   <data name="Connecting..." xml:space="preserve">
     <value>Connessione...</value>
@@ -80,6 +98,9 @@
   </data>
   <data name="Edit Ollama Provider" xml:space="preserve">
     <value>Modifica provider Ollama</value>
+  </data>
+  <data name="Edit Provider" xml:space="preserve">
+    <value>Modifica provider</value>
   </data>
   <data name="Embed" xml:space="preserve">
     <value>Embed</value>
@@ -111,6 +132,12 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>Policy di mantenimento in esecuzione</value>
   </data>
+  <data name="Keeps model weights loaded after the last request. Use 0 to unload immediately or -1 to keep them loaded. Ollama ignores invalid duration formats." xml:space="preserve">
+    <value>Mantiene i pesi del modello caricati dopo l’ultima richiesta. Usa 0 per scaricarli immediatamente o -1 per mantenerli caricati. Ollama ignora i formati di durata non validi.</value>
+  </data>
+  <data name="Limits simultaneous requests to this provider. Use 1 to process them one at a time. Waiting for a slot has no timeout and does not use the virtual model response timeout; disconnecting the client cancels the wait." xml:space="preserve">
+    <value>Limita le richieste simultanee a questo provider. Usa 1 per elaborarle una alla volta. L&apos;attesa di un posto disponibile non ha timeout e non utilizza il timeout di risposta del modello virtuale; se il client si disconnette, l&apos;attesa viene annullata.</value>
+  </data>
   <data name="Matching client protocols are forwarded directly. Other supported requests are translated." xml:space="preserve">
     <value>I protocolli client corrispondenti vengono inoltrati direttamente. Le altre richieste supportate vengono tradotte.</value>
   </data>
@@ -128,6 +155,9 @@
   </data>
   <data name="Ollama" xml:space="preserve">
     <value>Ollama</value>
+  </data>
+  <data name="Ollama only; include a unit, e.g. 5m." xml:space="preserve">
+    <value>Solo per Ollama; includere un&apos;unità, ad es. 5m.</value>
   </data>
   <data name="OpenAI Compatible" xml:space="preserve">
     <value>Compatibile con OpenAI</value>
@@ -164,6 +194,9 @@
   </data>
   <data name="Timeout (s)" xml:space="preserve">
     <value>Timeout (s)</value>
+  </data>
+  <data name="Timeout for background model and status checks. Increase it for slow storage." xml:space="preserve">
+    <value>Timeout per i controlli in background del modello e dello stato. Aumentarlo se l&apos;archiviazione è lenta.</value>
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>Nome modello sottostante</value>

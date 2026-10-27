@@ -39,6 +39,21 @@
   <data name="= unload immediately." xml:space="preserve">
     <value>= αφαίρεση άμεσα.</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = απεριόριστο.</value>
+  </data>
+  <data name="About concurrent requests" xml:space="preserve">
+    <value>Σχετικά με τα ταυτόχρονα αιτήματα</value>
+  </data>
+  <data name="About generation protocols" xml:space="preserve">
+    <value>Σχετικά με τα πρωτόκολλα δημιουργίας</value>
+  </data>
+  <data name="About health checks" xml:space="preserve">
+    <value>Σχετικά με τους ελέγχους κατάστασης</value>
+  </data>
+  <data name="About model retention" xml:space="preserve">
+    <value>Σχετικά με τη διατήρηση του μοντέλου</value>
+  </data>
   <data name="Advanced Warmup Options" xml:space="preserve">
     <value>Προηγμένες Επιλογές Θέρμανσης</value>
   </data>
@@ -53,6 +68,9 @@
   </data>
   <data name="Bearer Token" xml:space="preserve">
     <value>Διακριτικό Bearer</value>
+  </data>
+  <data name="Connected! Found {0} models." xml:space="preserve">
+    <value>Συνδέθηκε! Βρέθηκαν {0} μοντέλα.</value>
   </data>
   <data name="Connecting..." xml:space="preserve">
     <value>Σύνδεση...</value>
@@ -80,6 +98,9 @@
   </data>
   <data name="Edit Ollama Provider" xml:space="preserve">
     <value>Επεξεργασία παρόχου Ollama</value>
+  </data>
+  <data name="Edit Provider" xml:space="preserve">
+    <value>Επεξεργασία Προμηθευτή</value>
   </data>
   <data name="Embed" xml:space="preserve">
     <value>Εμφάσεις</value>
@@ -111,6 +132,12 @@
   <data name="Keep Alive Policy" xml:space="preserve">
     <value>Πολιτική Διατήρησης</value>
   </data>
+  <data name="Keeps model weights loaded after the last request. Use 0 to unload immediately or -1 to keep them loaded. Ollama ignores invalid duration formats." xml:space="preserve">
+    <value>Διατηρεί τα βάρη του μοντέλου φορτωμένα μετά το τελευταίο αίτημα. Χρησιμοποιήστε 0 για άμεση αποφόρτωση ή -1 για να παραμείνουν φορτωμένα. Το Ollama αγνοεί μη έγκυρες μορφές διάρκειας.</value>
+  </data>
+  <data name="Limits simultaneous requests to this provider. Use 1 to process them one at a time. Waiting for a slot has no timeout and does not use the virtual model response timeout; disconnecting the client cancels the wait." xml:space="preserve">
+    <value>Περιορίζει τα ταυτόχρονα αιτήματα προς αυτόν τον πάροχο. Χρησιμοποιήστε την τιμή 1 για να υποβάλλονται σε επεξεργασία ένα κάθε φορά. Η αναμονή για διαθέσιμη θέση δεν έχει χρονικό όριο και δεν χρησιμοποιεί το χρονικό όριο απόκρισης του εικονικού μοντέλου· αν αποσυνδεθεί ο πελάτης, η αναμονή ακυρώνεται.</value>
+  </data>
   <data name="Matching client protocols are forwarded directly. Other supported requests are translated." xml:space="preserve">
     <value>Τα αντίστοιχα πρωτόκολλα πελάτη μεταβαλλούνται απευθείας. Οι άλλες υποστηριζόμενες αιτήσεις μεταφράζονται.</value>
   </data>
@@ -128,6 +155,9 @@
   </data>
   <data name="Ollama" xml:space="preserve">
     <value>Ollama</value>
+  </data>
+  <data name="Ollama only; include a unit, e.g. 5m." xml:space="preserve">
+    <value>Μόνο για το Ollama· συμπεριλάβετε μονάδα μέτρησης, π.χ. 5m.</value>
   </data>
   <data name="OpenAI Compatible" xml:space="preserve">
     <value>Συμβατό με OpenAI</value>
@@ -164,6 +194,9 @@
   </data>
   <data name="Timeout (s)" xml:space="preserve">
     <value>Χρονικό όριο (δευτ.)</value>
+  </data>
+  <data name="Timeout for background model and status checks. Increase it for slow storage." xml:space="preserve">
+    <value>Χρονικό όριο για τους ελέγχους μοντέλου και κατάστασης στο παρασκήνιο. Αυξήστε το για αργά μέσα αποθήκευσης.</value>
   </data>
   <data name="Underlying Model Name" xml:space="preserve">
     <value>Όνομα Υποκείμενου Μοντέλου</value>
