@@ -23,7 +23,7 @@ public sealed class OllamaChatProviderRequestAdapter : IChatProviderRequestAdapt
         body["stream"] = decoded.Request.Stream;
         // Selected warmup models stay resident even when normal traffic arrives.
         if (backend.Provider!.KeepsModelLoaded(backend.UnderlyingModelName))
-            body["keep_alive"] = "-1";
+            body["keep_alive"] = "-1s";
         else if (decoded.SourceDialect == Dialect)
             body["keep_alive"] ??= decoded.Request.Options.KeepAlive ?? backend.Provider!.KeepAlive;
         ApplyOptions(body, decoded.Request.Options, virtualModel);

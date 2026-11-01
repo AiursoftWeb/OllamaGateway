@@ -22,7 +22,7 @@ public sealed class OllamaEmbeddingProviderAdapter : IEmbeddingProviderAdapter
 
         if (backend.Provider!.KeepsModelLoaded(backend.UnderlyingModelName))
         {
-            body["keep_alive"] = "-1";
+            body["keep_alive"] = "-1s";
         }
         else if (request.SourceDialect == Dialect)
         {

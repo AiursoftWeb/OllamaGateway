@@ -258,7 +258,7 @@ public class ProxyController(
             input.Model = backend.UnderlyingModelName;
             if (virtualModel.Thinking.HasValue) input.Think = virtualModel.Thinking.Value;
             if (backend.Provider.KeepsModelLoaded(backend.UnderlyingModelName))
-                input.KeepAlive = "-1";
+                input.KeepAlive = "-1s";
             else
                 input.KeepAlive ??= backend.Provider.KeepAlive;
 
