@@ -65,6 +65,7 @@ public class ModelWarmupService(
         int successCount = 0;
         var swTotal = System.Diagnostics.Stopwatch.StartNew();
 
+        // Ollama duration strings require a unit; a negative duration keeps the model resident.
         foreach (var warmupModel in warmupModels)
         {
             using var client = httpClientFactory.CreateClient();
@@ -80,7 +81,7 @@ public class ModelWarmupService(
                     {
                         model = warmupModel.Name,
                         prompt = "a",
-                        keep_alive = "-1"
+                        keep_alive = "-1s"
                     };
 
                     var json = System.Text.Json.JsonSerializer.Serialize(embeddingPayload);
@@ -104,7 +105,7 @@ public class ModelWarmupService(
                         successCount++;
                         logger.LogInformation(
                             "Successfully warmed up embedding model {Underlying} on provider {Provider} in {Elapsed}ms (keep_alive: {KeepAlive})",
-                            warmupModel.Name, provider.Name, sw.ElapsedMilliseconds, "-1");
+                            warmupModel.Name, provider.Name, sw.ElapsedMilliseconds, "-1s");
                     }
                     else
                     {
@@ -121,7 +122,7 @@ public class ModelWarmupService(
                         model = warmupModel.Name,
                         messages = new[] { new { role = "user", content = "keep alive" } },
                         stream = false,
-                        keep_alive = "-1",
+                        keep_alive = "-1s",
                         options = new
                         {
                             num_predict = 1,
@@ -152,7 +153,7 @@ public class ModelWarmupService(
                     {
                         successCount++;
                         logger.LogInformation("Successfully warmed up chat model {Underlying} on provider {Provider} in {Elapsed}ms (Status: {Status}, num_ctx: {NumCtx}, keep_alive: {KeepAlive})",
-                            warmupModel.Name, provider.Name, sw.ElapsedMilliseconds, response.StatusCode, warmupModel.NumCtx ?? 0, "-1");
+                            warmupModel.Name, provider.Name, sw.ElapsedMilliseconds, response.StatusCode, warmupModel.NumCtx ?? 0, "-1s");
                     }
                     else
                     {

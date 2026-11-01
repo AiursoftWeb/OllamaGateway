@@ -665,7 +665,7 @@ public class DialectProxyTests : TestBase
             using var response = await Http.SendAsync(AuthedPost(endpoint, payload));
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode, await response.Content.ReadAsStringAsync());
             var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody!);
-            Assert.AreEqual("-1", upstreamBody?["keep_alive"]?.ToString(),
+            Assert.AreEqual("-1s", upstreamBody?["keep_alive"]?.ToString(),
                 "Normal traffic must not replace a warmup model's residency with a five-minute expiry.");
 
             provider.WarmupModelsJson = originalWarmup;
@@ -709,7 +709,7 @@ public class DialectProxyTests : TestBase
             var job = ActivatorUtilities.CreateInstance<Services.BackgroundJobs.ModelWarmupService>(scope.ServiceProvider);
             await job.ExecuteAsync();
             Assert.AreEqual(2, requests.Count);
-            Assert.IsTrue(requests.All(request => request["keep_alive"]?.ToString() == "-1"),
+            Assert.IsTrue(requests.All(request => request["keep_alive"]?.ToString() == "-1s"),
                 "Warmup must keep models loaded even if the next scheduled pass is delayed.");
             Assert.AreEqual(24576, requests[0]["options"]?["num_ctx"]?.GetValue<int>());
         }
