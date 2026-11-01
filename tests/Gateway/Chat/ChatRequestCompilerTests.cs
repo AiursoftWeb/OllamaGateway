@@ -14,6 +14,23 @@ public class ChatRequestCompilerTests
         [new OpenAiChatProviderRequestAdapter(), new OllamaChatProviderRequestAdapter(), new OpenAiResponsesProviderRequestAdapter()]);
 
     [TestMethod]
+    [DataRow("[]")]
+    [DataRow("null")]
+    [DataRow("invalid-json")]
+    [DataRow("[{\"Name\":\"another-model\"}]")]
+    public async Task UnselectedOrInvalidWarmup_PreservesProviderKeepAlive(string warmupModels)
+    {
+        var backend = Backend(ProviderType.Ollama, "llama-physical");
+        backend.Provider!.KeepAlive = "10m";
+        backend.Provider.WarmupModelsJson = warmupModels;
+        var decoded = _compiler.Decode(ProtocolDialect.OllamaNative,
+            """{"model":"virtual","messages":[{"role":"user","content":"hi"}]}""");
+        using var request = _compiler.CreateProviderRequest(decoded, Model(), backend);
+        var body = JsonNode.Parse(await request.Content!.ReadAsStringAsync());
+        Assert.AreEqual("10m", body?["keep_alive"]?.ToString());
+    }
+
+    [TestMethod]
     public async Task OpenAiToOllama_CompilesImagesToolsAndOverrides()
     {
         const string body = """

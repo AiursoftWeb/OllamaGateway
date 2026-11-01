@@ -631,6 +631,95 @@ public class DialectProxyTests : TestBase
         Assert.AreEqual("5m", upstreamBody?["keep_alive"]?.ToString());
     }
 
+    [TestMethod]
+    [DataRow("/api/chat", false)]
+    [DataRow("/api/generate", false)]
+    [DataRow("/v1/chat/completions", false)]
+    [DataRow("/v1/responses", false)]
+    [DataRow("/v1/messages", false)]
+    [DataRow("/api/embed", true)]
+    [DataRow("/v1/embeddings", true)]
+    public async Task WarmupModel_StaysResidentDuringNormalRequests(string endpoint, bool embedding)
+    {
+        using var scope = Server!.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+        var provider = await db.OllamaProviders.FirstAsync(p => p.Name == "TestProvider");
+        var originalWarmup = provider.WarmupModelsJson;
+        provider.WarmupModelsJson = System.Text.Json.JsonSerializer.Serialize(new[]
+        {
+            new WarmupModel { Name = embedding ? PhysicalEmbeddingModel : PhysicalModelName, IsEmbedding = embedding }
+        });
+        await db.SaveChangesAsync();
+
+        try
+        {
+            MockUpstreamState.Handler = (_, _) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(embedding
+                    ? """{"embeddings":[[0.1,0.2,0.3]]}"""
+                    : """{"message":{"role":"assistant","content":"hello"},"response":"hello","done":true,"eval_count":1}""",
+                    Encoding.UTF8, "application/json")
+            });
+            var model = embedding ? EmbeddingModelName : VirtualModelName;
+            var payload = $$"""{"model":"{{model}}","messages":[{"role":"user","content":"hi"}],"prompt":"hi","input":"hi","max_tokens":10,"stream":false,"keep_alive":"5m"}""";
+            using var response = await Http.SendAsync(AuthedPost(endpoint, payload));
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode, await response.Content.ReadAsStringAsync());
+            var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody!);
+            Assert.AreEqual("-1", upstreamBody?["keep_alive"]?.ToString(),
+                "Normal traffic must not replace a warmup model's residency with a five-minute expiry.");
+
+            provider.WarmupModelsJson = originalWarmup;
+            await db.SaveChangesAsync();
+            using var unpinnedResponse = await Http.SendAsync(AuthedPost(endpoint, payload));
+            Assert.AreEqual(HttpStatusCode.OK, unpinnedResponse.StatusCode);
+            var unpinnedBody = JsonNode.Parse(MockUpstreamState.LastRequestBody!);
+            Assert.AreEqual(endpoint.StartsWith("/api/", StringComparison.Ordinal) ? "5m" : null,
+                unpinnedBody?["keep_alive"]?.ToString(),
+                "Removing a model from warmup must restore its original request policy.");
+        }
+        finally
+        {
+            provider.WarmupModelsJson = originalWarmup;
+            await db.SaveChangesAsync();
+        }
+    }
+
+    [TestMethod]
+    public async Task Warmup_RequestsPermanentResidencyForChatAndEmbedding()
+    {
+        using var scope = Server!.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+        var provider = await db.OllamaProviders.FirstAsync(p => p.Name == "TestProvider");
+        var originalWarmup = provider.WarmupModelsJson;
+        provider.KeepAlive = "5m";
+        provider.WarmupModelsJson = System.Text.Json.JsonSerializer.Serialize(new[]
+        {
+            new WarmupModel { Name = PhysicalModelName, NumCtx = 24576 },
+            new WarmupModel { Name = PhysicalEmbeddingModel, IsEmbedding = true }
+        });
+        await db.SaveChangesAsync();
+        var requests = new List<JsonNode>();
+        MockUpstreamState.Handler = async (request, cancellationToken) =>
+        {
+            requests.Add(JsonNode.Parse(await request.Content!.ReadAsStringAsync(cancellationToken))!);
+            return new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent("{}") };
+        };
+        try
+        {
+            var job = ActivatorUtilities.CreateInstance<Services.BackgroundJobs.ModelWarmupService>(scope.ServiceProvider);
+            await job.ExecuteAsync();
+            Assert.AreEqual(2, requests.Count);
+            Assert.IsTrue(requests.All(request => request["keep_alive"]?.ToString() == "-1"),
+                "Warmup must keep models loaded even if the next scheduled pass is delayed.");
+            Assert.AreEqual(24576, requests[0]["options"]?["num_ctx"]?.GetValue<int>());
+        }
+        finally
+        {
+            provider.WarmupModelsJson = originalWarmup;
+            await db.SaveChangesAsync();
+        }
+    }
+
     // ========================================================================
     // C. Gateway Robustness Tests
     // ========================================================================

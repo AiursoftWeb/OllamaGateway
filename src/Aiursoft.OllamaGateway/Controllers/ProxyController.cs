@@ -257,7 +257,10 @@ public class ProxyController(
 
             input.Model = backend.UnderlyingModelName;
             if (virtualModel.Thinking.HasValue) input.Think = virtualModel.Thinking.Value;
-            input.KeepAlive ??= backend.Provider.KeepAlive;
+            if (backend.Provider.KeepsModelLoaded(backend.UnderlyingModelName))
+                input.KeepAlive = "-1";
+            else
+                input.KeepAlive ??= backend.Provider.KeepAlive;
 
             input.Options ??= new OllamaRequestOptions();
             if (virtualModel.NumCtx.HasValue) input.Options.NumCtx = virtualModel.NumCtx;

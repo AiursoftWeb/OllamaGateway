@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 
 namespace Aiursoft.OllamaGateway.Entities;
 
@@ -29,6 +30,21 @@ public class OllamaProvider
 
     [MaxLength(4000)]
     public string WarmupModelsJson { get; set; } = "[]";
+
+    public bool KeepsModelLoaded(string modelName)
+    {
+        try
+        {
+            var models = JsonSerializer.Deserialize<List<WarmupModel>>(WarmupModelsJson,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            return models?.Any(model => model.Name == modelName) == true;
+        }
+        catch (JsonException)
+        {
+            // Invalid warmup configuration must not break ordinary inference.
+            return false;
+        }
+    }
 
     public ProviderType ProviderType { get; set; } = ProviderType.Ollama;
 
