@@ -80,7 +80,7 @@ public class ModelWarmupService(
                     {
                         model = warmupModel.Name,
                         prompt = "a",
-                        keep_alive = provider.KeepAlive
+                        keep_alive = "-1"
                     };
 
                     var json = System.Text.Json.JsonSerializer.Serialize(embeddingPayload);
@@ -104,7 +104,7 @@ public class ModelWarmupService(
                         successCount++;
                         logger.LogInformation(
                             "Successfully warmed up embedding model {Underlying} on provider {Provider} in {Elapsed}ms (keep_alive: {KeepAlive})",
-                            warmupModel.Name, provider.Name, sw.ElapsedMilliseconds, provider.KeepAlive);
+                            warmupModel.Name, provider.Name, sw.ElapsedMilliseconds, "-1");
                     }
                     else
                     {
@@ -121,7 +121,7 @@ public class ModelWarmupService(
                         model = warmupModel.Name,
                         messages = new[] { new { role = "user", content = "keep alive" } },
                         stream = false,
-                        keep_alive = provider.KeepAlive,
+                        keep_alive = "-1",
                         options = new
                         {
                             num_predict = 1,
@@ -152,7 +152,7 @@ public class ModelWarmupService(
                     {
                         successCount++;
                         logger.LogInformation("Successfully warmed up chat model {Underlying} on provider {Provider} in {Elapsed}ms (Status: {Status}, num_ctx: {NumCtx}, keep_alive: {KeepAlive})",
-                            warmupModel.Name, provider.Name, sw.ElapsedMilliseconds, response.StatusCode, warmupModel.NumCtx ?? 0, provider.KeepAlive);
+                            warmupModel.Name, provider.Name, sw.ElapsedMilliseconds, response.StatusCode, warmupModel.NumCtx ?? 0, "-1");
                     }
                     else
                     {

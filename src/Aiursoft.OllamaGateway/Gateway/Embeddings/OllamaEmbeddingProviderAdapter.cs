@@ -20,7 +20,11 @@ public sealed class OllamaEmbeddingProviderAdapter : IEmbeddingProviderAdapter
             : new JsonObject { ["input"] = JsonNode.Parse(request.Request.InputJson) };
         body["model"] = backend.UnderlyingModelName;
 
-        if (request.SourceDialect == Dialect)
+        if (backend.Provider!.KeepsModelLoaded(backend.UnderlyingModelName))
+        {
+            body["keep_alive"] = "-1";
+        }
+        else if (request.SourceDialect == Dialect)
         {
             body["keep_alive"] = backend.Provider!.KeepAlive;
         }
