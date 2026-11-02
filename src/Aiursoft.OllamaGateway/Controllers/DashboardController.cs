@@ -53,7 +53,7 @@ public class DashboardController(
         });
         // Subscribe before reading the initial snapshot so concurrent changes are not missed.
         pending.Writer.TryWrite(true);
-        var listener = ListenAsync();
+        var listener = ListenAsync(stop);
         try
         {
             await foreach (var _ in pending.Reader.ReadAllAsync(stop.Token))
@@ -77,15 +77,15 @@ public class DashboardController(
         }
         return;
 
-        async Task ListenAsync()
+        async Task ListenAsync(CancellationTokenSource lifetime)
         {
             try
             {
-                await pusher.Listen(stop.Token);
+                await pusher.Listen(lifetime.Token);
             }
             finally
             {
-                await stop.CancelAsync();
+                await lifetime.CancelAsync();
             }
         }
     }
