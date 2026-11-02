@@ -83,11 +83,16 @@ public class DashboardControllerTests : TestBase
     }
 
     [TestMethod]
-    public async Task LiveInferenceSocket_RejectsCrossOriginEvenForAdmin()
+    [DataRow(false)]
+    [DataRow(true)]
+    public async Task LiveInferenceSocket_RejectsCrossOriginEvenForAdmin(bool sameHostDifferentScheme)
     {
         await Assert.ThrowsExactlyAsync<WebSocketException>(async () =>
         {
-            using var socket = await ConnectLiveAsync("https://other.example");
+            var origin = sameHostDifferentScheme
+                ? new UriBuilder(Http.BaseAddress!) { Scheme = "https" }.Uri.GetLeftPart(UriPartial.Authority)
+                : "https://other.example";
+            using var socket = await ConnectLiveAsync(origin);
         });
     }
 

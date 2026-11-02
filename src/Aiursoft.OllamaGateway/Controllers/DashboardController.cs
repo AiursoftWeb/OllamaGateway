@@ -31,6 +31,7 @@ public class DashboardController(
         var origin = Request.Headers.Origin.ToString();
         if (!string.IsNullOrEmpty(origin) &&
             (!Uri.TryCreate(origin, UriKind.Absolute, out var originUri) ||
+             !string.Equals(originUri.Scheme, Request.Scheme, StringComparison.OrdinalIgnoreCase) ||
              !string.Equals(originUri.Authority, Request.Host.Value, StringComparison.OrdinalIgnoreCase)))
         {
             Response.StatusCode = StatusCodes.Status403Forbidden;
