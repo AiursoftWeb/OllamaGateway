@@ -1,3 +1,5 @@
+using System.Net.WebSockets;
+using System.Text.Json;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
 
@@ -6,6 +8,100 @@ namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
 [TestClass]
 public class DashboardControllerTests : TestBase
 {
+    private async Task<ClientWebSocket> ConnectLiveAsync(string? origin = null)
+    {
+        var response = await PostForm("/Account/Login", new Dictionary<string, string>
+        {
+            ["EmailOrUserName"] = "admin@default.com",
+            ["Password"] = "Admin@123456!"
+        });
+        var socket = new ClientWebSocket();
+        socket.Options.SetRequestHeader("Cookie", string.Join("; ",
+            response.Headers.GetValues("Set-Cookie").Select(value => value.Split(';')[0])));
+        socket.Options.SetRequestHeader("Origin", origin ?? Http.BaseAddress!.GetLeftPart(UriPartial.Authority));
+        try
+        {
+            using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            await socket.ConnectAsync(new UriBuilder(Http.BaseAddress!)
+            {
+                Scheme = "ws", Path = "/Dashboard/live-inference.ws"
+            }.Uri, timeout.Token);
+            return socket;
+        }
+        catch
+        {
+            socket.Dispose();
+            throw;
+        }
+    }
+
+    private static async Task<JsonElement> ReadLiveAsync(ClientWebSocket socket, Func<JsonElement, bool> matches)
+    {
+        using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+        while (true)
+        {
+            using var body = new MemoryStream();
+            var buffer = new byte[4096];
+            WebSocketReceiveResult frame;
+            do
+            {
+                frame = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), timeout.Token);
+                Assert.AreEqual(WebSocketMessageType.Text, frame.MessageType);
+                body.Write(buffer, 0, frame.Count);
+            } while (!frame.EndOfMessage);
+            using var document = JsonDocument.Parse(body.ToArray());
+            if (matches(document.RootElement))
+                return document.RootElement.Clone();
+        }
+    }
+
+    [TestMethod]
+    public async Task LiveInferenceSocket_StreamsArrivalCompletionAndReconnectSnapshot()
+    {
+        using var socket = await ConnectLiveAsync();
+        await ReadLiveAsync(socket, state => state.GetProperty("items").GetArrayLength() == 0);
+        var tracker = GetService<ActiveRequestTracker>();
+        var request = tracker.BeginRequest("live-model", "first question", "display name");
+        request.SetBackend(1, "physical-model");
+        var busy = await ReadLiveAsync(socket, state => state.GetProperty("items").GetArrayLength() == 1 &&
+            state.GetProperty("items")[0].GetProperty("backendModelName").GetString() == "physical-model");
+        Assert.IsTrue(busy.GetProperty("items")[0].GetProperty("isActive").GetBoolean());
+        Assert.AreEqual(string.Empty, busy.GetProperty("items")[0].GetProperty("answer").GetString());
+        request.Complete(true, answer: "completed answer");
+        await ReadLiveAsync(socket, state => state.GetProperty("items")[0].GetProperty("answer").GetString() == "completed answer");
+
+        var next = tracker.BeginRequest("live-model", "next question");
+        var nextBusy = await ReadLiveAsync(socket, state => state.GetProperty("items")[0].GetProperty("isActive").GetBoolean());
+        Assert.AreEqual(string.Empty, nextBusy.GetProperty("items")[0].GetProperty("answer").GetString());
+        using var closeTimeout = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+        await socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "disconnect", closeTimeout.Token);
+        next.Complete(true, answer: "answer while offline");
+        using var reconnected = await ConnectLiveAsync();
+        var restored = await ReadLiveAsync(reconnected, state => state.GetProperty("items").GetArrayLength() == 1);
+        Assert.AreEqual("answer while offline", restored.GetProperty("items")[0].GetProperty("answer").GetString());
+        await reconnected.CloseAsync(WebSocketCloseStatus.NormalClosure, "done", closeTimeout.Token);
+    }
+
+    [TestMethod]
+    public async Task LiveInferenceSocket_RejectsCrossOriginEvenForAdmin()
+    {
+        await Assert.ThrowsExactlyAsync<WebSocketException>(async () =>
+        {
+            using var socket = await ConnectLiveAsync("https://other.example");
+        });
+    }
+
+    [TestMethod]
+    public async Task LiveInferenceSocket_RequiresDashboardPermission()
+    {
+        var anonymous = await Http.GetAsync("/Dashboard/live-inference.ws");
+        Assert.AreEqual(System.Net.HttpStatusCode.Redirect, anonymous.StatusCode);
+        await RegisterAndLoginAsync();
+        var denied = await Http.GetAsync("/Dashboard/live-inference.ws");
+        Assert.AreEqual(System.Net.HttpStatusCode.Redirect, denied.StatusCode);
+        Assert.Contains("Code403", denied.Headers.Location!.OriginalString);
+    }
+
     [TestMethod]
     public async Task GetIndex_NotAuthenticated_RedirectsToLogin()
     {

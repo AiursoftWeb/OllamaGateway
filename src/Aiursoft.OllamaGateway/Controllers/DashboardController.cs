@@ -1,3 +1,8 @@
+using System.Text.Json;
+using System.Threading.Channels;
+using Aiursoft.AiurObserver;
+using Aiursoft.AiurObserver.WebSocket.Server;
+using Aiursoft.OllamaGateway.Views.Shared.Components.LiveInference;
 using Aiursoft.OllamaGateway.Authorization;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Models.DashboardViewModels;
@@ -19,6 +24,72 @@ public class DashboardController(
     IModelSelector modelSelector,
     GlobalSettingsService globalSettingsService) : Controller
 {
+    [HttpGet("Dashboard/live-inference.ws")]
+    [EnforceWebSocket]
+    public async Task LiveInferenceSocket()
+    {
+        var origin = Request.Headers.Origin.ToString();
+        if (!string.IsNullOrEmpty(origin) &&
+            (!Uri.TryCreate(origin, UriKind.Absolute, out var originUri) ||
+             !string.Equals(originUri.Authority, Request.Host.Value, StringComparison.OrdinalIgnoreCase)))
+        {
+            Response.StatusCode = StatusCodes.Status403Forbidden;
+            return;
+        }
+
+        var pusher = await HttpContext.AcceptWebSocketClient();
+        // A slow viewer only retains one pending refresh and never delays inference.
+        var pending = Channel.CreateBounded<bool>(new BoundedChannelOptions(1)
+        {
+            FullMode = BoundedChannelFullMode.DropOldest,
+            SingleReader = true,
+            SingleWriter = false
+        });
+        using var stop = CancellationTokenSource.CreateLinkedTokenSource(HttpContext.RequestAborted);
+        var subscription = activeRequestTracker.Changes.Subscribe(_ =>
+        {
+            pending.Writer.TryWrite(true);
+            return Task.CompletedTask;
+        });
+        // Subscribe before reading the initial snapshot so concurrent changes are not missed.
+        pending.Writer.TryWrite(true);
+        var listener = ListenAsync();
+        try
+        {
+            await foreach (var _ in pending.Reader.ReadAllAsync(stop.Token))
+            {
+                var snapshot = LiveInferenceViewModel.Create(activeRequestTracker);
+                await pusher.Send(JsonSerializer.Serialize(snapshot, JsonSerializerOptions.Web), stop.Token);
+                if (!pusher.Connected)
+                    break;
+            }
+        }
+        catch (OperationCanceledException) when (stop.IsCancellationRequested)
+        {
+            // The viewer disconnected or the server is shutting down.
+        }
+        finally
+        {
+            subscription.Unsubscribe();
+            pending.Writer.TryComplete();
+            await stop.CancelAsync();
+            await listener;
+        }
+        return;
+
+        async Task ListenAsync()
+        {
+            try
+            {
+                await pusher.Listen(stop.Token);
+            }
+            finally
+            {
+                await stop.CancelAsync();
+            }
+        }
+    }
+
     [Authorize(Policy = AppPermissionNames.CanViewSystemContext)]
     [RenderInNavBar(
         NavGroupName = "Dashboard",

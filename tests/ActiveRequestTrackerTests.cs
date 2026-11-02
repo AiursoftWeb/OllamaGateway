@@ -6,6 +6,43 @@ namespace Aiursoft.OllamaGateway.Tests;
 public class ActiveRequestTrackerTests
 {
     [TestMethod]
+    public void LiveSnapshot_ClearsAnswerOnArrivalAndKeepsLatestConcurrentAnswer()
+    {
+        var tracker = new ActiveRequestTracker();
+        var first = tracker.BeginRequest("model", "first");
+        first.Complete(true, answer: "old answer");
+        Assert.AreEqual("old answer", tracker.GetSnapshot()["model"].LastAnswer);
+
+        var older = tracker.BeginRequest("model", "older concurrent request");
+        Assert.AreEqual(string.Empty, tracker.GetSnapshot()["model"].LastAnswer);
+        var latest = tracker.BeginRequest("model", "latest request");
+        latest.SetBackend(2, "latest-backend");
+        older.SetBackend(1, "older-backend");
+        latest.Complete(true, answer: "latest answer");
+        Assert.AreEqual(string.Empty, tracker.GetSnapshot()["model"].LastAnswer);
+        older.Complete(true, answer: "late old answer");
+
+        var snapshot = tracker.GetSnapshot()["model"];
+        Assert.AreEqual("latest answer", snapshot.LastAnswer);
+        Assert.AreEqual("latest-backend", snapshot.BackendModelName);
+        Assert.AreEqual("latest request", snapshot.LastFullQuestion);
+        Assert.AreEqual(0, snapshot.ActiveCount);
+        tracker.BeginRequest("model", "next request");
+        Assert.AreEqual("latest answer", snapshot.LastAnswer, "Published snapshots must not mutate later.");
+        Assert.AreEqual(string.Empty, tracker.GetSnapshot()["model"].LastAnswer);
+    }
+
+    [TestMethod]
+    public void LiveSnapshot_FailedRequestShowsErrorAndNextArrivalClearsIt()
+    {
+        var tracker = new ActiveRequestTracker();
+        tracker.BeginRequest("model", "request").Complete(false, "upstream unavailable");
+        Assert.AreEqual("upstream unavailable", tracker.GetSnapshot()["model"].LastError);
+        tracker.BeginRequest("model", "retry");
+        Assert.AreEqual(string.Empty, tracker.GetSnapshot()["model"].LastError);
+    }
+
+    [TestMethod]
     public void TrackedRequest_MovesToActualBackendWithoutEndingVirtualRequest()
     {
         var tracker = new ActiveRequestTracker();

@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+using Aiursoft.AiurObserver;
 using Aiursoft.Scanner.Abstractions;
 
 namespace Aiursoft.OllamaGateway.Services;
@@ -14,6 +15,9 @@ public class ActiveModelRequestInfo
     public string LastFullQuestion = string.Empty;
     public string BackendModelName = string.Empty;
     public string ApiKeyName = string.Empty;
+    public Guid LastRequestId;
+    public string LastAnswer = string.Empty;
+    public string LastError = string.Empty;
     public DateTime LastStartedAt = DateTime.UtcNow;
     public DateTime? LastCompletedAt;
 }
@@ -46,6 +50,7 @@ public sealed class ActiveRequestRegistration
     private (int ProviderId, string ModelName)? _backend;
     private bool _completed;
 
+    internal Guid RequestId { get; } = Guid.NewGuid();
     internal string ModelName { get; }
     internal string Question { get; }
     internal string ShortQuestion { get; }
@@ -76,7 +81,7 @@ public sealed class ActiveRequestRegistration
             if (_backend == next)
                 return;
 
-            _tracker.SwitchPhysicalBackend(ModelName, _backend, next);
+            _tracker.SwitchPhysicalBackend(ModelName, RequestId, _backend, next);
             _backend = next;
         }
     }
@@ -88,7 +93,7 @@ public sealed class ActiveRequestRegistration
             if (_completed || _backend == null)
                 return;
 
-            _tracker.SwitchPhysicalBackend(ModelName, _backend, null);
+            _tracker.SwitchPhysicalBackend(ModelName, RequestId, _backend, null);
             _backend = null;
         }
     }
@@ -114,6 +119,8 @@ public sealed class ActiveRequestRegistration
 /// </summary>
 public class ActiveRequestTracker : ISingletonDependency
 {
+    public AsyncObservable<bool> Changes { get; } = new();
+
     private readonly ConcurrentDictionary<string, ActiveModelRequestInfo> _state = new();
     private readonly ConcurrentDictionary<(int providerId, string modelName), int> _physicalState = new();
 
@@ -138,8 +145,13 @@ public class ActiveRequestTracker : ISingletonDependency
             info.LastFullQuestion = question;
             info.ApiKeyName = apiKeyName;
             info.LastStartedAt = registration.StartedAt;
+            info.LastRequestId = registration.RequestId;
+            info.LastAnswer = string.Empty;
+            info.LastError = string.Empty;
+            info.BackendModelName = string.Empty;
         }
 
+        NotifyChanged();
         return registration;
     }
 
@@ -157,9 +169,12 @@ public class ActiveRequestTracker : ISingletonDependency
             info.BackendModelName = backendModelName;
             info.ApiKeyName = apiKeyName;
             info.LastStartedAt = DateTime.UtcNow;
+            info.LastAnswer = string.Empty;
+            info.LastError = string.Empty;
         }
 
         _physicalState.AddOrUpdate((providerId, backendModelName), 1, (_, count) => count + 1);
+        NotifyChanged();
     }
 
     /// <summary>
@@ -174,6 +189,8 @@ public class ActiveRequestTracker : ISingletonDependency
                 info.ActiveCount = Math.Max(0, info.ActiveCount - 1);
                 if (info.ActiveCount == 0)
                     info.LastCompletedAt = DateTime.UtcNow;
+                info.LastAnswer = answer;
+                info.LastError = errorMessage;
             }
         }
 
@@ -205,10 +222,12 @@ public class ActiveRequestTracker : ISingletonDependency
             _recentBuffer[_recentIndex] = entry;
             if (_recentCount < 50) _recentCount++;
         }
+        NotifyChanged();
     }
 
     internal void SwitchPhysicalBackend(
         string virtualModelName,
+        Guid requestId,
         (int ProviderId, string ModelName)? previous,
         (int ProviderId, string ModelName)? next)
     {
@@ -231,10 +250,12 @@ public class ActiveRequestTracker : ISingletonDependency
             {
                 lock (info)
                 {
-                    info.BackendModelName = next.Value.ModelName;
+                    if (info.LastRequestId == requestId)
+                        info.BackendModelName = next.Value.ModelName;
                 }
             }
         }
+        NotifyChanged();
     }
 
     internal void CompleteRequest(
@@ -259,6 +280,11 @@ public class ActiveRequestTracker : ISingletonDependency
                 info.ActiveCount = Math.Max(0, info.ActiveCount - 1);
                 if (info.ActiveCount == 0)
                     info.LastCompletedAt = DateTime.UtcNow;
+                if (info.LastRequestId == registration.RequestId)
+                {
+                    info.LastAnswer = answer;
+                    info.LastError = errorMessage;
+                }
             }
         }
 
@@ -283,6 +309,36 @@ public class ActiveRequestTracker : ISingletonDependency
             _recentBuffer[_recentIndex] = entry;
             if (_recentCount < 50) _recentCount++;
         }
+        NotifyChanged();
+    }
+
+    private void NotifyChanged()
+    {
+        // Subscribers only signal their bounded mailbox; network I/O runs independently.
+        _ = Changes.BroadcastAsync(true);
+    }
+
+    public IReadOnlyDictionary<string, ActiveModelRequestInfo> GetSnapshot()
+    {
+        return _state.ToDictionary(pair => pair.Key, pair =>
+        {
+            var info = pair.Value;
+            lock (info)
+            {
+                return new ActiveModelRequestInfo
+                {
+                    ActiveCount = info.ActiveCount,
+                    LastQuestion = info.LastQuestion,
+                    LastFullQuestion = info.LastFullQuestion,
+                    BackendModelName = info.BackendModelName,
+                    ApiKeyName = info.ApiKeyName,
+                    LastStartedAt = info.LastStartedAt,
+                    LastCompletedAt = info.LastCompletedAt,
+                    LastAnswer = info.ActiveCount > 0 ? string.Empty : info.LastAnswer,
+                    LastError = info.ActiveCount > 0 ? string.Empty : info.LastError
+                };
+            }
+        });
     }
 
     public IReadOnlyDictionary<string, ActiveModelRequestInfo> GetAll() => _state;
