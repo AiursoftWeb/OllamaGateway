@@ -13,7 +13,8 @@ public interface IMonitoringIncidentClient
     Task<MitigateIncidentResponse> MitigateAsync(Guid id, MitigateIncidentRequest request);
 }
 
-public sealed class MonitoringIncidentClient(AiurProtocolClient http, BackendMonitoringSettings settings) : IMonitoringIncidentClient
+public sealed class MonitoringIncidentClient(AiurProtocolClient http, BackendMonitoringSettings settings,
+    ILogger<AlertCenterApiClient> logger) : IMonitoringIncidentClient
 {
     private Task<AlertCenterApiClient>? _client;
     private async Task<AlertCenterApiClient> CreateClientAsync()
@@ -21,7 +22,7 @@ public sealed class MonitoringIncidentClient(AiurProtocolClient http, BackendMon
         var config = await settings.LoadAsync();
         config.Validate();
         return new AlertCenterApiClient(http, Options.Create(new AlertCenterApiOptions { Endpoint = config.Endpoint.TrimEnd('/') }),
-            new SnapshotKeyProvider(config.ApiKey));
+            new SnapshotKeyProvider(config.ApiKey), logger);
     }
     private Task<AlertCenterApiClient> GetClientAsync() => _client ??= CreateClientAsync();
     public async Task<QueryIncidentsResponse> QueryAsync(QueryIncidentsRequest request) => await (await GetClientAsync()).QueryIncidentsAsync(request);
