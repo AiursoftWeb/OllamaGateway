@@ -1,4 +1,8 @@
 using System.Net;
+using System.Data.Common;
+using Aiursoft.ClickhouseSdk.Abstractions;
+using Aiursoft.OllamaGateway.Extensions;
+using ClickHouse.Client.ADO;
 using Aiursoft.DbTools;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
@@ -45,6 +49,60 @@ public class ClickhouseLoggingTests : TestBase
         {
             var settings = scope.ServiceProvider.GetRequiredService<GlobalSettingsService>();
             await settings.UpdateSettingAsync(Configuration.SettingsMap.AllowAnonymousApiCall, "True");
+        }
+    }
+
+    [TestMethod]
+    public async Task InitializationRetainsRequestHistoryFor120DaysOnNewAndExistingTables()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("CLICKHOUSE_CONNECTION");
+        if (string.IsNullOrEmpty(connectionString))
+            Assert.Inconclusive("Set CLICKHOUSE_CONNECTION to run the real ClickHouse retention test.");
+
+        var database = $"gateway_retention_{Guid.NewGuid():N}";
+        var builder = new DbConnectionStringBuilder { ConnectionString = connectionString };
+        builder["Database"] = database;
+        using var host = Host.CreateDefaultBuilder().ConfigureServices(services =>
+        {
+            services.Configure<ClickhouseOptions>(options =>
+            {
+                options.Enabled = true;
+                options.ConnectionString = builder.ConnectionString;
+                options.TableName = "ModelRequests";
+            });
+        }).Build();
+        await using var connection = new ClickHouseConnection(connectionString);
+        await connection.OpenAsync();
+        await using var command = connection.CreateCommand();
+        try
+        {
+            await host.InitClickhouseAsync();
+            command.CommandText = $"SHOW CREATE TABLE `{database}`.ModelRequests";
+            StringAssert.Contains((await command.ExecuteScalarAsync())!.ToString()!, "TTL RequestTime + toIntervalDay(120)");
+
+            // Older installations created request tables without any TTL.
+            command.CommandText = $"ALTER TABLE `{database}`.ModelRequests REMOVE TTL";
+            await command.ExecuteNonQueryAsync();
+            command.CommandText = $"""
+                INSERT INTO `{database}`.ModelRequests (RequestTime, Model)
+                VALUES (now() - INTERVAL 90 DAY, 'retained'), (now() - INTERVAL 121 DAY, 'expired')
+                """;
+            await command.ExecuteNonQueryAsync();
+            await host.InitClickhouseAsync();
+            await host.InitClickhouseAsync();
+            command.CommandText = $"SHOW CREATE TABLE `{database}`.ModelRequests";
+            StringAssert.Contains((await command.ExecuteScalarAsync())!.ToString()!, "TTL RequestTime + toIntervalDay(120)");
+            command.CommandText = $"ALTER TABLE `{database}`.ModelRequests MATERIALIZE TTL SETTINGS mutations_sync = 2";
+            await command.ExecuteNonQueryAsync();
+            command.CommandText = $"SELECT Model FROM `{database}`.ModelRequests";
+            Assert.AreEqual("retained", await command.ExecuteScalarAsync());
+            command.CommandText = $"SELECT count() FROM `{database}`.ModelRequests";
+            Assert.AreEqual(1UL, Convert.ToUInt64(await command.ExecuteScalarAsync()));
+        }
+        finally
+        {
+            command.CommandText = $"DROP DATABASE IF EXISTS `{database}` SYNC";
+            await command.ExecuteNonQueryAsync();
         }
     }
 
