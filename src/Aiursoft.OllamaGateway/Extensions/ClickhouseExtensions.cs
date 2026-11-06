@@ -18,7 +18,7 @@ public static class ClickhouseExtensions
             return;
         }
 
-        await host.Services.InitClickhouseTableAsync<RequestLog>(options.CurrentValue.TableName, "RequestTime");
+        await host.Services.InitClickhouseTableAsync<RequestLog>(options.CurrentValue.TableName, "RequestTime", ttlColumn: "RequestTime");
         await host.Services.InitLoggingTableAsync();
     }
 }
