@@ -1,25 +1,25 @@
+@using System.Text.Json
 @using Aiursoft.OllamaGateway.Views.Shared.Components.LiveInference
-@using Aiursoft.WebTools
 @model LiveInferenceViewModel
 
-<div class="card flex-fill w-100">
-    <div class="card-header d-flex align-items-center">
+<div class="card flex-fill w-100" id="live-inference"
+     data-socket-url="@Url.Action("LiveInferenceSocket", "Dashboard")"
+     data-initial-state="@JsonSerializer.Serialize(Model, JsonSerializerOptions.Web)"
+     data-busy="@Localizer["Busy"]" data-idle="@Localizer["Idle"]" data-active="@Localizer["Active"]"
+     data-running="@Localizer["Running for"]" data-last="@Localizer["Last at"]"
+     data-anonymous="@Localizer["(anonymous)"]" data-no-content="@Localizer["(no content)"]"
+     data-question-title="@Localizer["Full Request Message"]" data-answer-title="@Localizer["Answer or error"]"
+     data-connecting="@Localizer["Connecting…"]" data-reconnecting="@Localizer["Reconnecting…"]">
+    <div class="card-header d-flex align-items-center gap-2">
         <h5 class="card-title mb-0 flex-grow-1">
-            <i class="align-middle me-1" data-lucide="zap"></i>
-            @Localizer["Live Inference"]
+            <i class="align-middle me-1" data-lucide="zap"></i> @Localizer["Live Inference"]
         </h5>
-        @if (Model.ActiveCount > 0)
-        {
-            <span class="badge bg-danger">@Model.ActiveCount @Localizer["Active"]</span>
-        }
-        else
-        {
-            <span class="badge bg-secondary">@Localizer["Idle"]</span>
-        }
+        <span class="text-muted small" data-connection-status role="status"></span>
+        <span class="badge" data-active-count></span>
     </div>
-    <div class="card-body p-0">
+    <div class="card-body p-0 table-responsive">
         <table class="table table-hover mb-0">
-            <thead>
+            <thead class="text-nowrap">
                 <tr>
                     <th>@Localizer["Status"]</th>
                     <th>@Localizer["Virtual Model"]</th>
@@ -27,158 +27,39 @@
                     <th class="text-center">@Localizer["Concurrent Requests"]</th>
                     <th>@Localizer["API Key"]</th>
                     <th>@Localizer["Last Question (first 30 chars)"]</th>
-                    <th class="text-center" style="width:40px;"></th>
+                    <th>@Localizer["Answer or error"]</th>
                     <th class="text-end">@Localizer["Time"]</th>
                 </tr>
             </thead>
-            <tbody>
-                @if (Model.Items.Count > 0)
-                {
-                    foreach (var req in Model.Items)
-                    {
-                        if (req.IsActive)
-                        {
-                            var elapsed = DateTime.UtcNow - req.LastStartedAt;
-                            var elapsedStr = elapsed.TotalSeconds < 60
-                                ? $"{(int)elapsed.TotalSeconds}s"
-                                : $"{(int)elapsed.TotalMinutes}m {elapsed.Seconds}s";
-                            <tr>
-                                <td>
-                                    <span class="badge bg-danger">@Localizer["Busy"]</span>
-                                </td>
-                                <td>
-                                    <strong>@req.ModelName</strong>
-                                </td>
-                                <td class="text-muted small font-monospace">
-                                    @if (!string.IsNullOrWhiteSpace(req.BackendModelName))
-                                    {
-                                        <i data-lucide="server" class="me-1" style="width:12px;height:12px;"></i>@req.BackendModelName
-                                    }
-                                </td>
-                                <td class="text-center">
-                                    <span class="badge bg-warning text-dark">@req.ConcurrentCount</span>
-                                </td>
-                                <td class="text-muted small">
-                                    @if (!string.IsNullOrWhiteSpace(req.ApiKeyName))
-                                    {
-                                        <i data-lucide="key" class="me-1" style="width:12px;height:12px;"></i>@req.ApiKeyName
-                                    }
-                                    else
-                                    {
-                                        <em>@Localizer["(anonymous)"]</em>
-                                    }
-                                </td>
-                                <td class="font-monospace text-muted small">
-                                    @if (!string.IsNullOrWhiteSpace(req.LastQuestion))
-                                    {
-                                        @req.LastQuestion
-                                        @if (req.LastQuestion.Length >= 30)
-                                        {
-                                            <text>…</text>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <em>@Localizer["(no content)"]</em>
-                                    }
-                                </td>
-                                <td class="text-center">
-                                    @if (!string.IsNullOrWhiteSpace(req.FullQuestion) && req.FullQuestion.Length > 30)
-                                    {
-                                        <button type="button" class="btn btn-sm btn-outline-secondary btn-view-live-message"
-                                                data-full-message="@req.FullQuestion"
-                                                title="@Localizer["View full message"]">
-                                            <i data-lucide="maximize-2" style="width:14px;height:14px;"></i>
-                                        </button>
-                                    }
-                                </td>
-                                <td class="text-end text-muted small">@Localizer["Running for"] @elapsedStr</td>
-                            </tr>
-                        }
-                        else
-                        {
-                            <tr class="text-muted">
-                                <td>
-                                    <span class="badge bg-secondary">@Localizer["Idle"]</span>
-                                </td>
-                                <td>@req.ModelName</td>
-                                <td class="small font-monospace">
-                                    @if (!string.IsNullOrWhiteSpace(req.BackendModelName))
-                                    {
-                                        <i data-lucide="server" class="me-1" style="width:12px;height:12px;"></i>@req.BackendModelName
-                                    }
-                                </td>
-                                <td class="text-center">
-                                    <span class="badge bg-secondary">0</span>
-                                </td>
-                                <td class="text-muted small">
-                                    @if (!string.IsNullOrWhiteSpace(req.ApiKeyName))
-                                    {
-                                        <i data-lucide="key" class="me-1" style="width:12px;height:12px;"></i>@req.ApiKeyName
-                                    }
-                                    else
-                                    {
-                                        <em>@Localizer["(anonymous)"]</em>
-                                    }
-                                </td>
-                                <td class="font-monospace small">
-                                    @if (!string.IsNullOrWhiteSpace(req.LastQuestion))
-                                    {
-                                        @req.LastQuestion
-                                        @if (req.LastQuestion.Length >= 30)
-                                        {
-                                            <text>…</text>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <em>@Localizer["(no content)"]</em>
-                                    }
-                                </td>
-                                <td class="text-center">
-                                    @if (!string.IsNullOrWhiteSpace(req.FullQuestion) && req.FullQuestion.Length > 30)
-                                    {
-                                        <button type="button" class="btn btn-sm btn-outline-secondary btn-view-live-message"
-                                                data-full-message="@req.FullQuestion"
-                                                title="@Localizer["View full message"]">
-                                            <i data-lucide="maximize-2" style="width:14px;height:14px;"></i>
-                                        </button>
-                                    }
-                                </td>
-                                <td class="text-end small">
-                                    @if (req.LastCompletedAt.HasValue)
-                                    {
-                                        @Localizer["Last at"] <label data-utc-time="@req.LastCompletedAt.Value.ToHtmlDateTime()" class="mb-0"></label>
-                                    }
-                                </td>
-                            </tr>
-                        }
-                    }
-                }
-                else
-                {
-                    <tr>
-                        <td colspan="8" class="text-center text-muted py-3">
-                            <i data-lucide="moon" class="me-1" style="width:16px;height:16px;"></i>
-                            @Localizer["No active inference requests — all models are idle"]
-                        </td>
-                    </tr>
-                }
+            <tbody data-live-rows></tbody>
+            <tbody data-live-empty hidden>
+                <tr><td colspan="8" class="text-center text-muted py-3">@Localizer["No active inference requests — all models are idle"]</td></tr>
             </tbody>
         </table>
     </div>
+    <template data-live-row>
+        <tr>
+            <td><span class="badge" data-field="status"></span></td>
+            <td data-field="model"></td>
+            <td class="text-muted small font-monospace" data-field="backend"></td>
+            <td class="text-center"><span class="badge" data-field="count"></span></td>
+            <td class="text-muted small" data-field="key"></td>
+            <td class="font-monospace text-muted small"><button type="button" class="btn btn-link btn-sm text-start text-break p-0" data-field="question"></button></td>
+            <td class="font-monospace small"><button type="button" class="btn btn-link btn-sm text-start text-break p-0" data-field="answer"></button></td>
+            <td class="text-end text-muted small" data-field="time"></td>
+        </tr>
+    </template>
 </div>
 
-<!-- Full Message Modal for Live Inference -->
 <div class="modal fade" id="liveInferenceFullMessageModal" tabindex="-1" aria-labelledby="liveInferenceFullMessageModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="liveInferenceFullMessageModalLabel">@Localizer["Full Request Message"]</h5>
+                <h5 class="modal-title" id="liveInferenceFullMessageModalLabel"></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="@Localizer["Close"]"></button>
             </div>
             <div class="modal-body">
-                <pre class="bg-body-tertiary p-3 rounded mb-0" id="liveInferenceFullMessageContent" style="white-space: pre-wrap; word-break: break-word;"></pre>
+                <pre class="bg-body-tertiary p-3 rounded mb-0 text-wrap text-break" id="liveInferenceFullMessageContent"></pre>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Localizer["Close"]</button>
@@ -186,19 +67,4 @@
         </div>
     </div>
 </div>
-
-@if (Model.Items.Count > 0)
-{
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            document.querySelectorAll('.btn-view-live-message').forEach(function(btn) {
-                btn.addEventListener('click', function() {
-                    var fullMessage = this.getAttribute('data-full-message');
-                    document.getElementById('liveInferenceFullMessageContent').textContent = fullMessage;
-                    var modal = new bootstrap.Modal(document.getElementById('liveInferenceFullMessageModal'));
-                    modal.show();
-                });
-            });
-        });
-    </script>
-}
+<script src="~/js/live-inference.js" asp-append-version="true" defer></script>

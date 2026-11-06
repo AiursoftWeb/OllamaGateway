@@ -168,6 +168,7 @@ public class Startup : IWebStartup
         app.UseStaticFiles();
         app.UseRequestLogging();
         app.UseRouting();
+        app.UseWebSockets();
         app.UseAuthentication();
         app.UseAuthorization();
         app.MapDefaultControllerRoute();
