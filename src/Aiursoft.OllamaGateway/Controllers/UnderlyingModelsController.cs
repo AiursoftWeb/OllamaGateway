@@ -43,7 +43,6 @@ public class UnderlyingModelsController(
                         {
                             Provider = provider,
                             RawModel = new OllamaService.OllamaModel { Name = modelName, Model = modelName },
-                            IsRunning = true,
                             TotalCalls = memoryUsageTracker.GetUnderlyingModelStats(provider.Id, modelName),
                             UsedByVirtualModels = virtualModels
                                 .Where(v => v.VirtualModelBackends.Any(b => b.ProviderId == provider.Id && b.UnderlyingModelName == modelName))
@@ -65,7 +64,7 @@ public class UnderlyingModelsController(
                     {
                         Provider = provider,
                         RawModel = raw,
-                        IsRunning = runningModels?.Any(r => r.Name == raw.Name) ?? false,
+                        IsRunning = runningModels?.Any(r => r.Name == raw.Name),
                         TotalCalls = memoryUsageTracker.GetUnderlyingModelStats(provider.Id, raw.Name),
                         UsedByVirtualModels = virtualModels
                             .Where(v => v.VirtualModelBackends.Any(b => b.ProviderId == provider.Id && b.UnderlyingModelName == raw.Name))
