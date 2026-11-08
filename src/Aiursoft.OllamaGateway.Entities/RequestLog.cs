@@ -27,4 +27,9 @@ public class RequestLog
     public int? BackendId { get; set; }
     public int? ProviderId { get; set; }
     public string UnderlyingModelName { get; set; } = string.Empty;
+
+    // A consumer is reported by the caller within this authenticated key's namespace.
+    // It must never replace UserId or be used to grant permissions.
+    public int ApiKeyId { get; set; }
+    public string ReportedConsumerId { get; set; } = string.Empty;
 }

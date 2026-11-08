@@ -53,6 +53,86 @@ public class ClickhouseLoggingTests : TestBase
     }
 
     [TestMethod]
+    [DataRow("/api/chat", false)]
+    [DataRow("/v1/chat/completions", false)]
+    [DataRow("/api/embed", true)]
+    [DataRow("/v1/embeddings", true)]
+    public async Task SharedKeyKeepsConsumersSeparateWithoutChangingOwner(string path, bool embedding)
+    {
+        string ownerId;
+        int keyId;
+        var keyValue = Guid.NewGuid().ToString("N");
+        var modelName = $"consumer-{Guid.NewGuid():N}";
+        using (var scope = Server!.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+            ownerId = db.Users.First().Id;
+            var key = new ApiKey
+            {
+                Name = "Consumer audit service",
+                Key = keyValue,
+                UserId = ownerId,
+                ExpirationTime = DateTime.UtcNow.AddDays(1)
+            };
+            db.ApiKeys.Add(key);
+            var model = new VirtualModel
+            {
+                Name = modelName,
+                Type = embedding ? ModelType.Embedding : ModelType.Chat
+            };
+            model.VirtualModelBackends.Add(new VirtualModelBackend
+            {
+                Provider = new OllamaProvider { Name = "Consumer provider", BaseUrl = "http://localhost:11434" },
+                UnderlyingModelName = "llama3.2",
+                Enabled = true,
+                IsHealthy = true
+            });
+            db.VirtualModels.Add(model);
+            await db.SaveChangesAsync();
+            keyId = key.Id;
+        }
+        MockUpstreamState.Handler = (_, _) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+        {
+            Content = new StringContent(embedding
+                ? "{\"model\":\"llama3.2\",\"embeddings\":[[0.1,0.2]]}"
+                : "{\"done\":true,\"model\":\"llama3.2\",\"message\":{\"content\":\"hi\"}}")
+        });
+
+        var buffer = Server!.Services.GetRequiredService<RequestLogBuffer>();
+        foreach (var consumer in new[] { "consumer-a", "consumer-b", "", new string('x', 129), "bad,id", "bad id" })
+        {
+            using var request = new HttpRequestMessage(HttpMethod.Post, path);
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", keyValue);
+            request.Headers.TryAddWithoutValidation("X-Aiursoft-Consumer-Id", consumer);
+            request.Content = new StringContent(
+                $$"""{"model":"{{modelName}}","stream":false,"messages":[],"input":"test"}""",
+                System.Text.Encoding.UTF8, "application/json");
+            using var response = await Http.SendAsync(request);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            var logs = new List<RequestLog>();
+            buffer.Drain(logs);
+            Assert.HasCount(1, logs);
+            Assert.AreEqual(ownerId, logs[0].UserId);
+            Assert.AreEqual(keyId, logs[0].ApiKeyId);
+            Assert.AreEqual(consumer.StartsWith("consumer-") ? consumer : string.Empty, logs[0].ReportedConsumerId);
+        }
+
+        // Anonymous requests may still be allowed, but cannot claim a key's consumer namespace.
+        using var anonymous = new HttpRequestMessage(HttpMethod.Post, path);
+        anonymous.Headers.Add("X-Aiursoft-Consumer-Id", "consumer-a");
+        anonymous.Content = new StringContent(
+            $$"""{"model":"{{modelName}}","stream":false,"messages":[],"input":"test"}""",
+            System.Text.Encoding.UTF8, "application/json");
+        using var anonymousResponse = await Http.SendAsync(anonymous);
+        Assert.AreEqual(HttpStatusCode.OK, anonymousResponse.StatusCode);
+        var anonymousLogs = new List<RequestLog>();
+        buffer.Drain(anonymousLogs);
+        Assert.HasCount(1, anonymousLogs);
+        Assert.AreEqual(0, anonymousLogs[0].ApiKeyId);
+        Assert.AreEqual(string.Empty, anonymousLogs[0].ReportedConsumerId);
+    }
+
+    [TestMethod]
     public async Task InitializationRetainsRequestHistoryFor120DaysOnNewAndExistingTables()
     {
         var connectionString = Environment.GetEnvironmentVariable("CLICKHOUSE_CONNECTION");
@@ -80,6 +160,10 @@ public class ClickhouseLoggingTests : TestBase
             command.CommandText = $"SHOW CREATE TABLE `{database}`.ModelRequests";
             StringAssert.Contains((await command.ExecuteScalarAsync())!.ToString()!, "TTL RequestTime + toIntervalDay(120)");
 
+            // Simulate the deployed schema before consumer attribution existed.
+            command.CommandText = $"ALTER TABLE `{database}`.ModelRequests DROP COLUMN ApiKeyId, DROP COLUMN ReportedConsumerId";
+            await command.ExecuteNonQueryAsync();
+
             // Older installations created request tables without any TTL.
             command.CommandText = $"ALTER TABLE `{database}`.ModelRequests REMOVE TTL";
             await command.ExecuteNonQueryAsync();
@@ -98,6 +182,20 @@ public class ClickhouseLoggingTests : TestBase
             Assert.AreEqual("retained", await command.ExecuteScalarAsync());
             command.CommandText = $"SELECT count() FROM `{database}`.ModelRequests";
             Assert.AreEqual(1UL, Convert.ToUInt64(await command.ExecuteScalarAsync()));
+
+            await using var context = new ClickhouseDbContext(
+                host.Services.GetRequiredService<Microsoft.Extensions.Options.IOptionsMonitor<ClickhouseOptions>>());
+            context.RequestLogs.Add(new RequestLog
+            {
+                RequestTime = DateTime.UtcNow,
+                Model = "consumer-model",
+                UserId = "service-owner",
+                ApiKeyId = 17,
+                ReportedConsumerId = "consumer-a"
+            });
+            await context.SaveChangesAsync();
+            command.CommandText = $"SELECT concat(UserId, ':', toString(ApiKeyId), ':', ReportedConsumerId) FROM `{database}`.ModelRequests WHERE Model = 'consumer-model'";
+            Assert.AreEqual("service-owner:17:consumer-a", await command.ExecuteScalarAsync());
         }
         finally
         {

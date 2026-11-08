@@ -55,6 +55,19 @@ public class RequestLoggingMiddleware(RequestDelegate next, ILogger<RequestLoggi
         }
         finally
         {
+            if (context.User.Identity?.IsAuthenticated == true &&
+                int.TryParse(context.User.FindFirst("ApiKeyId")?.Value, out var apiKeyId) && apiKeyId > 0)
+            {
+                logContext.Log.ApiKeyId = apiKeyId;
+                var values = request.Headers["X-Aiursoft-Consumer-Id"];
+                var consumerId = values.Count == 1 ? values[0] : null;
+                if (consumerId is { Length: > 0 and <= 128 } &&
+                    consumerId.All(c => char.IsAsciiLetterOrDigit(c) || c is '-' or '_' or '.' or ':'))
+                {
+                    logContext.Log.ReportedConsumerId = consumerId;
+                }
+            }
+
             if (logContext.Log.StatusCode == 0 || logContext.Log.StatusCode == 200) // update if not overridden
             {
                 logContext.Log.StatusCode = context.Response.StatusCode;
