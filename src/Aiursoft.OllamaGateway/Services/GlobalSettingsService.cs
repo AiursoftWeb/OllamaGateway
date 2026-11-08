@@ -2,6 +2,7 @@ using Aiursoft.Scanner.Abstractions;
 using Aiursoft.OllamaGateway.Configuration;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Models;
+using Aiursoft.OllamaGateway.Services.FileStorage;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.AspNetCore.DataProtection;
@@ -12,6 +13,7 @@ namespace Aiursoft.OllamaGateway.Services;
 public class GlobalSettingsService(
     TemplateDbContext dbContext,
     IConfiguration configuration,
+    StorageService storageService,
     IMemoryCache cache,
     IDataProtectionProvider dataProtectionProvider,
     ILogger<GlobalSettingsService> logger) : IScopedDependency
@@ -105,6 +107,28 @@ public class GlobalSettingsService(
                 {
                     throw new InvalidOperationException($"Value '{value}' is not a valid choice for setting {key}.");
                 }
+                break;
+            case SettingType.File:
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new InvalidOperationException($"File path cannot be empty for setting {key}.");
+                }
+                // Validate that the file exists and path is secure using StorageService
+                try
+                {
+                    var physicalPath = storageService.GetFilePhysicalPath(value, isVault: false);
+                    if (!File.Exists(physicalPath))
+                    {
+                        throw new InvalidOperationException($"File not found for setting {key}.");
+                    }
+                }
+                catch (ArgumentException)
+                {
+                    throw new InvalidOperationException($"Invalid file path for setting {key}.");
+                }
+                break;
+            case SettingType.Text:
+            default:
                 break;
         }
 
