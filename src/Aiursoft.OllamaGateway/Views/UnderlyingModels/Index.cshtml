@@ -1,5 +1,6 @@
 @model Aiursoft.OllamaGateway.Models.UnderlyingModelsViewModels.IndexViewModel
 @using Aiursoft.WebTools
+@using Aiursoft.OllamaGateway.Entities
 
 <div class="container-fluid p-0">
     <div class="row mb-3">
@@ -10,7 +11,18 @@
 
     <div class="card">
         <div class="card-header">
-            <h5 class="card-title mb-0">@Localizer["All physical models available across all providers"]</h5>
+            <p class="text-muted mb-2">@Localizer["Models listed by each provider. Listing does not verify that a model can answer requests."]</p>
+            <details class="small">
+                <summary>@Localizer["About model status"]</summary>
+                <dl class="mt-2 mb-0">
+                    <dt>@Localizer["Listed"]</dt>
+                    <dd>@Localizer["Reported by an OpenAI-compatible provider. Loading status, size and modification time are not provided."]</dd>
+                    <dt>@Localizer["Running"] / @Localizer["Idle"]</dt>
+                    <dd>@Localizer["Ollama reports the model as loaded or not loaded in memory."]</dd>
+                    <dt>@Localizer["Unknown"]</dt>
+                    <dd class="mb-0">@Localizer["The model is listed, but its loading status could not be retrieved."]</dd>
+                </dl>
+            </details>
         </div>
         <div class="table-responsive">
             <table class="table table-hover mb-0">
@@ -18,7 +30,6 @@
                     <tr>
                     <th>@Localizer["Name"]</th>
                     <th>@Localizer["Provider"]</th>
-                    <th>@Localizer["Status"]</th>
                     <th>@Localizer["Size"]</th>
                     <th>@Localizer["Usage"]</th>
                     <th>@Localizer["Total Calls"]</th>
@@ -30,7 +41,7 @@
                     @if (Model.Models.Count == 0)
                     {
                     <tr>
-                        <td colspan="8" class="text-center text-muted py-4">
+                        <td colspan="7" class="text-center text-muted py-4">
                             @Localizer["No physical models found. Check your providers connection."]
                         </td>
                     </tr>
@@ -42,8 +53,28 @@
                         <tr>
                             <td>
                                 <strong>@m.RawModel.Name</strong>
-                                <br />
-                                <small class="text-muted" style="font-size: 0.7rem;">@m.RawModel.Digest.Substring(0, Math.Min(12, m.RawModel.Digest.Length))...</small>
+                                <div class="mt-1">
+                                    @if (m.Provider.ProviderType == ProviderType.OpenAI)
+                                    {
+                                        <span class="badge bg-body-secondary text-body border">@Localizer["Listed"]</span>
+                                    }
+                                    else if (m.IsRunning == true)
+                                    {
+                                        <span class="badge bg-success">@Localizer["Running"]</span>
+                                    }
+                                    else if (m.IsRunning == false)
+                                    {
+                                        <span class="badge bg-body-secondary text-body border">@Localizer["Idle"]</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning text-dark">@Localizer["Unknown"]</span>
+                                    }
+                                </div>
+                                @if (!string.IsNullOrEmpty(m.RawModel.Digest))
+                                {
+                                    <small class="text-muted">@m.RawModel.Digest.Substring(0, Math.Min(12, m.RawModel.Digest.Length))...</small>
+                                }
                             </td>
                             <td>
                                 <span class="badge bg-secondary">@m.Provider.Name</span>
@@ -51,19 +82,15 @@
                                 <small class="text-muted">@m.Provider.BaseUrl</small>
                             </td>
                             <td>
-                                @if (m.IsRunning)
+                                @if (m.Provider.ProviderType == ProviderType.OpenAI)
                                 {
-                                    <span class="badge bg-success">
-                                        <i class="align-middle me-1" data-lucide="play" style="width: 14px; height: 14px;"></i>
-                                        @Localizer["Running"]
-                                    </span>
+                                    <span class="text-muted">@Localizer["Not reported"]</span>
                                 }
                                 else
                                 {
-                                    <span class="badge bg-light text-dark">@Localizer["Idle"]</span>
+                                    <span>@(Math.Round(m.RawModel.Size / 1024.0 / 1024.0 / 1024.0, 2)) GB</span>
                                 }
                             </td>
-                            <td>@(Math.Round(m.RawModel.Size / 1024.0 / 1024.0 / 1024.0, 2)) GB</td>
                             <td>
                                 @if (m.UsedByVirtualModels.Any())
                                 {
@@ -78,7 +105,16 @@
                                 }
                             </td>
                             <td>@m.TotalCalls</td>
-                            <td><label data-utc-time="@m.RawModel.ModifiedAt.ToHtmlDateTime()" class="mb-0"></label></td>
+                            <td>
+                                @if (m.Provider.ProviderType == ProviderType.OpenAI)
+                                {
+                                    <span class="text-muted">@Localizer["Not reported"]</span>
+                                }
+                                else
+                                {
+                                    <span data-utc-time="@m.RawModel.ModifiedAt.ToHtmlDateTime()"></span>
+                                }
+                            </td>
                             <td>
                                 <a asp-controller="ChatPlayground" asp-action="PhysicalChat" asp-route-providerId="@m.Provider.Id" asp-route-modelName="@m.RawModel.Name" class="btn btn-sm btn-outline-primary">
                                     <i class="align-middle" data-lucide="message-square"></i> @Localizer["Chat"]
