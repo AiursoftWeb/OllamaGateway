@@ -186,17 +186,13 @@ public class StorageService(
         string subfolder,
         bool isVault = false,
         int maxSizeInMb = FileUploadPolicy.DefaultMaxSizeInMb,
-        string? allowedExtensions = null,
-        bool generateUniqueFileName = false)
+        string? allowedExtensions = null)
     {
         var policy = FileUploadPolicy.Create(
             maxSizeInMb,
             allowedExtensions,
             configuration?.GetValue<bool>("Storage:UploadPolicy:RequireAuthenticatedUser") ?? false,
-            configuration?.GetValue<bool>("Storage:UploadPolicy:ReplaceSpacesWithHyphens") ?? false) with
-        {
-            GenerateUniqueFileName = generateUniqueFileName
-        };
+            configuration?.GetValue<bool>("Storage:UploadPolicy:ReplaceSpacesWithHyphens") ?? false);
         var token = Uri.EscapeDataString(GetToken(subfolder, FilePermission.Upload, isVault, policy));
         var route = isVault ? "upload-private" : "upload";
         return $"/{route}/{RelativePathToUriPath(subfolder)}?token={token}";
