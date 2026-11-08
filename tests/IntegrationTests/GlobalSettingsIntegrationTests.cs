@@ -1,5 +1,6 @@
 using Aiursoft.OllamaGateway.Configuration;
 using Aiursoft.OllamaGateway.Services;
+using Aiursoft.OllamaGateway.Services.FileStorage;
 
 namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
 
@@ -22,7 +23,7 @@ public class GlobalSettingsIntegrationTests : TestBase
     [TestMethod]
     public async Task ExistingLogoFileCanBeSaved()
     {
-        var storage = GetService<Aiursoft.OllamaGateway.Services.FileStorage.StorageService>();
+        var storage = GetService<StorageService>();
         using var image = new MemoryStream([1, 2, 3]);
         var path = await storage.SaveFromStream($"project-logo/{Guid.NewGuid():N}.png", image);
         var settings = GetService<GlobalSettingsService>();
