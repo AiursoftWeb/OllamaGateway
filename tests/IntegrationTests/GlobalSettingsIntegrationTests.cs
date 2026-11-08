@@ -7,6 +7,30 @@ namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
 public class GlobalSettingsIntegrationTests : TestBase
 {
     [TestMethod]
+    [DataRow("")]
+    [DataRow("project-logo/missing-logo.png")]
+    [DataRow("../outside.png")]
+    public async Task InvalidLogoFilesAreRejectedWithoutChangingTheSetting(string path)
+    {
+        var settings = GetService<GlobalSettingsService>();
+        var previous = await settings.GetSettingValueAsync(SettingsMap.ProjectLogo);
+        await Assert.ThrowsExactlyAsync<InvalidOperationException>(() =>
+            settings.UpdateSettingAsync(SettingsMap.ProjectLogo, path));
+        Assert.AreEqual(previous, await settings.GetSettingValueAsync(SettingsMap.ProjectLogo));
+    }
+
+    [TestMethod]
+    public async Task ExistingLogoFileCanBeSaved()
+    {
+        var storage = GetService<Aiursoft.OllamaGateway.Services.FileStorage.StorageService>();
+        using var image = new MemoryStream([1, 2, 3]);
+        var path = await storage.SaveFromStream($"project-logo/{Guid.NewGuid():N}.png", image);
+        var settings = GetService<GlobalSettingsService>();
+        await settings.UpdateSettingAsync(SettingsMap.ProjectLogo, path);
+        Assert.AreEqual(path, await settings.GetSettingValueAsync(SettingsMap.ProjectLogo));
+    }
+
+    [TestMethod]
     public async Task TestSettingWorkflow()
     {
         var settingsService = GetService<GlobalSettingsService>();
