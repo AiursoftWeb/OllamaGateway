@@ -18,7 +18,10 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Actions" xml:space="preserve">
+      <data name="About model status" xml:space="preserve">
+    <value>Про стан моделі</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
     <value>Дії</value>
   </data>
   <data name="All physical models available across all providers" xml:space="preserve">
@@ -30,6 +33,12 @@
   <data name="Idle" xml:space="preserve">
     <value>Неактивний</value>
   </data>
+  <data name="Listed" xml:space="preserve">
+    <value>Викладено</value>
+  </data>
+  <data name="Models listed by each provider. Listing does not verify that a model can answer requests." xml:space="preserve">
+    <value>Моделі, перелічені кождим постачальником. Перелік не гарантує, що модель здатна відповідати на запити.</value>
+  </data>
   <data name="Modified" xml:space="preserve">
     <value>Остання зміна</value>
   </data>
@@ -39,14 +48,23 @@
   <data name="No physical models found. Check your providers connection." xml:space="preserve">
     <value>Фізичні моделі не знайдено. Перевірте з&apos;єднання з вашими провайдерами.</value>
   </data>
+  <data name="Not reported" xml:space="preserve">
+    <value>Не надано</value>
+  </data>
   <data name="Not used" xml:space="preserve">
     <value>Не використовується</value>
+  </data>
+  <data name="Ollama reports the model as loaded or not loaded in memory." xml:space="preserve">
+    <value>Ollama повідомляє, що модель завантажена у пам&apos;ять або не завантажена.</value>
   </data>
   <data name="Physical Models" xml:space="preserve">
     <value>Фізичні моделі</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>Провайдер</value>
+  </data>
+  <data name="Reported by an OpenAI-compatible provider. Loading status, size and modification time are not provided." xml:space="preserve">
+    <value>Запущено провайдером, сумісним з OpenAI. Статус завантаження, розмір і час модифікації не надаються.</value>
   </data>
   <data name="Running" xml:space="preserve">
     <value>Запущено</value>
@@ -57,8 +75,14 @@
   <data name="Status" xml:space="preserve">
     <value>Статус</value>
   </data>
+  <data name="The model is listed, but its loading status could not be retrieved." xml:space="preserve">
+    <value>Модель перелічена, але її стан завантаження не вдалося отримати.</value>
+  </data>
   <data name="Total Calls" xml:space="preserve">
     <value>Всього викликів</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Невідомо</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>Використання</value>

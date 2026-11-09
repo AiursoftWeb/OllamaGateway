@@ -18,7 +18,10 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Actions" xml:space="preserve">
+      <data name="About model status" xml:space="preserve">
+    <value>मॉडल स्थिति के बारे में</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
     <value>क्रियाएँ</value>
   </data>
   <data name="All physical models available across all providers" xml:space="preserve">
@@ -30,6 +33,12 @@
   <data name="Idle" xml:space="preserve">
     <value>निरुद्ध</value>
   </data>
+  <data name="Listed" xml:space="preserve">
+    <value>सूचीबद्ध</value>
+  </data>
+  <data name="Models listed by each provider. Listing does not verify that a model can answer requests." xml:space="preserve">
+    <value>प्रत्येक प्रदाता द्वारा सूचीबद्ध किए गए मॉडल। सूचीकरण यह सत्यापित नहीं करता कि कोई मॉडल अनुरोधों का उत्तर दे सकता है।</value>
+  </data>
   <data name="Modified" xml:space="preserve">
     <value>संशोधित</value>
   </data>
@@ -39,14 +48,23 @@
   <data name="No physical models found. Check your providers connection." xml:space="preserve">
     <value>कोई भौतिक मॉडल नहीं मिले। अपने प्रोव्हाइडर्स कनेक्शन की जांच करें।</value>
   </data>
+  <data name="Not reported" xml:space="preserve">
+    <value>अभियुक्त नहीं</value>
+  </data>
   <data name="Not used" xml:space="preserve">
     <value>अप्रयुक्त</value>
+  </data>
+  <data name="Ollama reports the model as loaded or not loaded in memory." xml:space="preserve">
+    <value>Ollama मॉडल को मेमोरी में लोड किया हुआ या नहीं लोड किया हुआ होने के रूप में रिपोर्ट करता है।</value>
   </data>
   <data name="Physical Models" xml:space="preserve">
     <value>भौतिक मॉडल</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>प्रदाता</value>
+  </data>
+  <data name="Reported by an OpenAI-compatible provider. Loading status, size and modification time are not provided." xml:space="preserve">
+    <value>OpenAI-संगत प्रदाता द्वारा रिपोर्ट किया गया। लोडिंग स्थिति, आकार और संशोधन समय उपलब्ध नहीं है।</value>
   </data>
   <data name="Running" xml:space="preserve">
     <value>चल रहा है</value>
@@ -57,8 +75,14 @@
   <data name="Status" xml:space="preserve">
     <value>स्थिति</value>
   </data>
+  <data name="The model is listed, but its loading status could not be retrieved." xml:space="preserve">
+    <value>मॉडल सूचीबद्ध है, लेकिन इसकी लोडिंग स्थिति प्राप्त नहीं की जा सकी।</value>
+  </data>
   <data name="Total Calls" xml:space="preserve">
     <value>कुल कॉल</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>अज्ञात</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>उपयोग</value>

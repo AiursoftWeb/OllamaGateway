@@ -18,7 +18,10 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Actions" xml:space="preserve">
+      <data name="About model status" xml:space="preserve">
+    <value>模型狀態說明</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
     <value>操作</value>
   </data>
   <data name="All physical models available across all providers" xml:space="preserve">
@@ -30,6 +33,12 @@
   <data name="Idle" xml:space="preserve">
     <value>閒置</value>
   </data>
+  <data name="Listed" xml:space="preserve">
+    <value>已列出</value>
+  </data>
+  <data name="Models listed by each provider. Listing does not verify that a model can answer requests." xml:space="preserve">
+    <value>各提供者所列出之模型。此清單並未驗證該模型是否能回應請求。</value>
+  </data>
   <data name="Modified" xml:space="preserve">
     <value>修改時間</value>
   </data>
@@ -39,14 +48,23 @@
   <data name="No physical models found. Check your providers connection." xml:space="preserve">
     <value>未找到實體模型。請檢查您的提供者連線。</value>
   </data>
+  <data name="Not reported" xml:space="preserve">
+    <value>未報告</value>
+  </data>
   <data name="Not used" xml:space="preserve">
     <value>未使用</value>
+  </data>
+  <data name="Ollama reports the model as loaded or not loaded in memory." xml:space="preserve">
+    <value>Ollama 報告模型已載入或未載入記憶體。</value>
   </data>
   <data name="Physical Models" xml:space="preserve">
     <value>實體模型</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>提供者</value>
+  </data>
+  <data name="Reported by an OpenAI-compatible provider. Loading status, size and modification time are not provided." xml:space="preserve">
+    <value>由 OpenAI 相容的提供者報告。未提供載入狀態、大小及修改時間。</value>
   </data>
   <data name="Running" xml:space="preserve">
     <value>執行中</value>
@@ -57,8 +75,14 @@
   <data name="Status" xml:space="preserve">
     <value>狀態</value>
   </data>
+  <data name="The model is listed, but its loading status could not be retrieved." xml:space="preserve">
+    <value>該模型已列出，但無法取得其載入狀態。</value>
+  </data>
   <data name="Total Calls" xml:space="preserve">
     <value>總呼叫次數</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>未知</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>使用量</value>

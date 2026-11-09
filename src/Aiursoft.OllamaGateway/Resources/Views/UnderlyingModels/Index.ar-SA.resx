@@ -18,7 +18,10 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Actions" xml:space="preserve">
+      <data name="About model status" xml:space="preserve">
+    <value>حول حالة النموذج</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
     <value>الإجراءات</value>
   </data>
   <data name="All physical models available across all providers" xml:space="preserve">
@@ -30,6 +33,12 @@
   <data name="Idle" xml:space="preserve">
     <value>خامل</value>
   </data>
+  <data name="Listed" xml:space="preserve">
+    <value>مسجّل</value>
+  </data>
+  <data name="Models listed by each provider. Listing does not verify that a model can answer requests." xml:space="preserve">
+    <value>النماذج المدرجة من قبل كل مزود. لا يضمن إدراج النموذج قدرته على الإجابة عن الطلبات.</value>
+  </data>
   <data name="Modified" xml:space="preserve">
     <value>مُحدَّث</value>
   </data>
@@ -39,14 +48,23 @@
   <data name="No physical models found. Check your providers connection." xml:space="preserve">
     <value>لم يتم العثور على نماذج مادية. تحقق من اتصال مقدمي الخدمة.</value>
   </data>
+  <data name="Not reported" xml:space="preserve">
+    <value>غير مُبلَّغ</value>
+  </data>
   <data name="Not used" xml:space="preserve">
     <value>غير مستخدم</value>
+  </data>
+  <data name="Ollama reports the model as loaded or not loaded in memory." xml:space="preserve">
+    <value>تُبلغ Ollama بأن النموذج محمّل أو غير محمّل في الذاكرة.</value>
   </data>
   <data name="Physical Models" xml:space="preserve">
     <value>النماذج المادية</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>المزود</value>
+  </data>
+  <data name="Reported by an OpenAI-compatible provider. Loading status, size and modification time are not provided." xml:space="preserve">
+    <value>يُبلّغ عنه مزوّد متوافق مع OpenAI. لا يتم توفير حالة التحميل أو الحجم أو وقت التعديل.</value>
   </data>
   <data name="Running" xml:space="preserve">
     <value>جارية</value>
@@ -57,8 +75,14 @@
   <data name="Status" xml:space="preserve">
     <value>الحالة</value>
   </data>
+  <data name="The model is listed, but its loading status could not be retrieved." xml:space="preserve">
+    <value>النموذج مدرج، لكن لم يمكن استرجاع حالة تحميله.</value>
+  </data>
   <data name="Total Calls" xml:space="preserve">
     <value>إجمالي المكالمات</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>غير معروف</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>الاستخدام</value>

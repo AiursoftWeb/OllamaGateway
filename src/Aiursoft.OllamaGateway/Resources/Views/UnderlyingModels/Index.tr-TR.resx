@@ -18,7 +18,10 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Actions" xml:space="preserve">
+      <data name="About model status" xml:space="preserve">
+    <value>Model durumu hakkında</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
     <value>İşlemler</value>
   </data>
   <data name="All physical models available across all providers" xml:space="preserve">
@@ -30,6 +33,12 @@
   <data name="Idle" xml:space="preserve">
     <value>Beklemede</value>
   </data>
+  <data name="Listed" xml:space="preserve">
+    <value>Listelenen</value>
+  </data>
+  <data name="Models listed by each provider. Listing does not verify that a model can answer requests." xml:space="preserve">
+    <value>Her sağlayıcı tarafından listelenen modeller. Listelenme, bir modelin isteklere yanıt verebileceğini doğrulamaz.</value>
+  </data>
   <data name="Modified" xml:space="preserve">
     <value>Son Değiştirme</value>
   </data>
@@ -39,14 +48,23 @@
   <data name="No physical models found. Check your providers connection." xml:space="preserve">
     <value>Fiziksel model bulunamadı. Sağlayıcı bağlantınızı kontrol edin.</value>
   </data>
+  <data name="Not reported" xml:space="preserve">
+    <value>Bildirilmedi</value>
+  </data>
   <data name="Not used" xml:space="preserve">
     <value>Kullanılmıyor</value>
+  </data>
+  <data name="Ollama reports the model as loaded or not loaded in memory." xml:space="preserve">
+    <value>Ollama, modelin bellekte yüklendiğini veya yüklenmediğini raporlar.</value>
   </data>
   <data name="Physical Models" xml:space="preserve">
     <value>Fiziksel Modeller</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>Sağlayıcı</value>
+  </data>
+  <data name="Reported by an OpenAI-compatible provider. Loading status, size and modification time are not provided." xml:space="preserve">
+    <value>OpenAI uyumlu bir sağlayıcı tarafından bildirilir. Yükleme durumu, boyut ve değişiklik zamanı sağlanmaz.</value>
   </data>
   <data name="Running" xml:space="preserve">
     <value>Çalışıyor</value>
@@ -57,8 +75,14 @@
   <data name="Status" xml:space="preserve">
     <value>Durum</value>
   </data>
+  <data name="The model is listed, but its loading status could not be retrieved." xml:space="preserve">
+    <value>Model listelenmiş, ancak yükleme durumu alınamadı.</value>
+  </data>
   <data name="Total Calls" xml:space="preserve">
     <value>Toplam Çağrı</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Bilinmiyor</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>Kullanım</value>
