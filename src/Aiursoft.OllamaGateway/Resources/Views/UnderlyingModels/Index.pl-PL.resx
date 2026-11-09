@@ -18,7 +18,10 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Actions" xml:space="preserve">
+      <data name="About model status" xml:space="preserve">
+    <value>O statusie modelu</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
     <value>Akcje</value>
   </data>
   <data name="All physical models available across all providers" xml:space="preserve">
@@ -30,6 +33,12 @@
   <data name="Idle" xml:space="preserve">
     <value>Czekający</value>
   </data>
+  <data name="Listed" xml:space="preserve">
+    <value>Wpisany</value>
+  </data>
+  <data name="Models listed by each provider. Listing does not verify that a model can answer requests." xml:space="preserve">
+    <value>Modele wymienione przez każdego dostawcę. Wymienienie nie weryfikuje, czy model może odpowiadać na żądania.</value>
+  </data>
   <data name="Modified" xml:space="preserve">
     <value>Zmodyfikowano</value>
   </data>
@@ -39,14 +48,23 @@
   <data name="No physical models found. Check your providers connection." xml:space="preserve">
     <value>Nie znaleziono modeli fizycznych. Sprawdź połączenie z dostawcami.</value>
   </data>
+  <data name="Not reported" xml:space="preserve">
+    <value>Niezgłoszone</value>
+  </data>
   <data name="Not used" xml:space="preserve">
     <value>Nie używane</value>
+  </data>
+  <data name="Ollama reports the model as loaded or not loaded in memory." xml:space="preserve">
+    <value>Ollama zgłasza model jako załadowany lub niezładowany w pamięci.</value>
   </data>
   <data name="Physical Models" xml:space="preserve">
     <value>Modele fizyczne</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>Dostawca</value>
+  </data>
+  <data name="Reported by an OpenAI-compatible provider. Loading status, size and modification time are not provided." xml:space="preserve">
+    <value>Zgłoszone przez dostawcę zgodnego z OpenAI. Status ładowania, rozmiar i czas modyfikacji nie są dostarczane.</value>
   </data>
   <data name="Running" xml:space="preserve">
     <value>Działa</value>
@@ -57,8 +75,14 @@
   <data name="Status" xml:space="preserve">
     <value>Status</value>
   </data>
+  <data name="The model is listed, but its loading status could not be retrieved." xml:space="preserve">
+    <value>Model jest na liście, ale nie udało się pobrać jego statusu ładowania.</value>
+  </data>
   <data name="Total Calls" xml:space="preserve">
     <value>Liczba połączeń</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Nieznany</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>Użycie</value>

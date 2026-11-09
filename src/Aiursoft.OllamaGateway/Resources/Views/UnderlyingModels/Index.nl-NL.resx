@@ -18,7 +18,10 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Actions" xml:space="preserve">
+      <data name="About model status" xml:space="preserve">
+    <value>Over modelstatus</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
     <value>Acties</value>
   </data>
   <data name="All physical models available across all providers" xml:space="preserve">
@@ -30,6 +33,12 @@
   <data name="Idle" xml:space="preserve">
     <value>Inactief</value>
   </data>
+  <data name="Listed" xml:space="preserve">
+    <value>Opgelijst</value>
+  </data>
+  <data name="Models listed by each provider. Listing does not verify that a model can answer requests." xml:space="preserve">
+    <value>Modellen per aanbieder. De lijst garandeert niet dat een model verzoeken kan beantwoorden.</value>
+  </data>
   <data name="Modified" xml:space="preserve">
     <value>Gewijzigd</value>
   </data>
@@ -39,14 +48,23 @@
   <data name="No physical models found. Check your providers connection." xml:space="preserve">
     <value>Geen fysieke modellen gevonden. Controleer de verbinding van uw providers.</value>
   </data>
+  <data name="Not reported" xml:space="preserve">
+    <value>Niet gemeld</value>
+  </data>
   <data name="Not used" xml:space="preserve">
     <value>Niet gebruikt</value>
+  </data>
+  <data name="Ollama reports the model as loaded or not loaded in memory." xml:space="preserve">
+    <value>Ollama meldt dat het model wel of niet in het geheugen is geladen.</value>
   </data>
   <data name="Physical Models" xml:space="preserve">
     <value>Fysieke modellen</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>Aanbieder</value>
+  </data>
+  <data name="Reported by an OpenAI-compatible provider. Loading status, size and modification time are not provided." xml:space="preserve">
+    <value>Gemeld door een OpenAI-compatibele provider. Laadstatus, grootte en wijzigingstijd worden niet verstrekt.</value>
   </data>
   <data name="Running" xml:space="preserve">
     <value>In bedrijf</value>
@@ -57,8 +75,14 @@
   <data name="Status" xml:space="preserve">
     <value>Status</value>
   </data>
+  <data name="The model is listed, but its loading status could not be retrieved." xml:space="preserve">
+    <value>Het model staat op de lijst, maar de laadstatus kon niet worden opgehaald.</value>
+  </data>
   <data name="Total Calls" xml:space="preserve">
     <value>Totaal aantal oproepen</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Onbekend</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>Gebruik</value>

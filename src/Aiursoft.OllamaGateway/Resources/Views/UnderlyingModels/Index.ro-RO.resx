@@ -18,7 +18,10 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Actions" xml:space="preserve">
+      <data name="About model status" xml:space="preserve">
+    <value>Despre starea modelului</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
     <value>Acțiuni</value>
   </data>
   <data name="All physical models available across all providers" xml:space="preserve">
@@ -30,6 +33,12 @@
   <data name="Idle" xml:space="preserve">
     <value>Inactiv</value>
   </data>
+  <data name="Listed" xml:space="preserve">
+    <value>Listat</value>
+  </data>
+  <data name="Models listed by each provider. Listing does not verify that a model can answer requests." xml:space="preserve">
+    <value>Modele enumerate de fiecare furnizor. Enumerarea nu verifică dacă un model poate răspunde la cereri.</value>
+  </data>
   <data name="Modified" xml:space="preserve">
     <value>Modificat</value>
   </data>
@@ -39,14 +48,23 @@
   <data name="No physical models found. Check your providers connection." xml:space="preserve">
     <value>Nu s-au găsit modele fizice. Verificați conexiunea furnizorului dumneavoastră.</value>
   </data>
+  <data name="Not reported" xml:space="preserve">
+    <value>Neraportat</value>
+  </data>
   <data name="Not used" xml:space="preserve">
     <value>Nu este utilizat</value>
+  </data>
+  <data name="Ollama reports the model as loaded or not loaded in memory." xml:space="preserve">
+    <value>Ollama raportează modelul ca fiind încărcat sau neîncărcat în memorie.</value>
   </data>
   <data name="Physical Models" xml:space="preserve">
     <value>Modele fizice</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>Furnizor</value>
+  </data>
+  <data name="Reported by an OpenAI-compatible provider. Loading status, size and modification time are not provided." xml:space="preserve">
+    <value>Raportat de un furnizor compatibil cu OpenAI. Starea de încărcare, dimensiunea și data modificării nu sunt furnizate.</value>
   </data>
   <data name="Running" xml:space="preserve">
     <value>În funcțiune</value>
@@ -57,8 +75,14 @@
   <data name="Status" xml:space="preserve">
     <value>Status</value>
   </data>
+  <data name="The model is listed, but its loading status could not be retrieved." xml:space="preserve">
+    <value>Modelul este listat, dar starea sa de încărcare nu a putut fi obținută.</value>
+  </data>
   <data name="Total Calls" xml:space="preserve">
     <value>Total Calls</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Necunoscut</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>Utilizare</value>

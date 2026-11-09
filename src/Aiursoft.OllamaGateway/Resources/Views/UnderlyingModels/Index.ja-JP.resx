@@ -18,7 +18,10 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Actions" xml:space="preserve">
+      <data name="About model status" xml:space="preserve">
+    <value>モデルのステータスについて</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
     <value>操作</value>
   </data>
   <data name="All physical models available across all providers" xml:space="preserve">
@@ -30,6 +33,12 @@
   <data name="Idle" xml:space="preserve">
     <value>アイドル</value>
   </data>
+  <data name="Listed" xml:space="preserve">
+    <value>リスト済み</value>
+  </data>
+  <data name="Models listed by each provider. Listing does not verify that a model can answer requests." xml:space="preserve">
+    <value>各プロバイダーがリストしているモデル。リストには、モデルがリクエストに回答できることを保証するものではありません。</value>
+  </data>
   <data name="Modified" xml:space="preserve">
     <value>更新日</value>
   </data>
@@ -39,14 +48,23 @@
   <data name="No physical models found. Check your providers connection." xml:space="preserve">
     <value>物理モデルが見つかりませんでした。プロバイダーの接続を確認してください。</value>
   </data>
+  <data name="Not reported" xml:space="preserve">
+    <value>未報告</value>
+  </data>
   <data name="Not used" xml:space="preserve">
     <value>未使用</value>
+  </data>
+  <data name="Ollama reports the model as loaded or not loaded in memory." xml:space="preserve">
+    <value>Ollamaは、モデルがメモリにロードされているか、ロードされていないかを報告します。</value>
   </data>
   <data name="Physical Models" xml:space="preserve">
     <value>物理モデル</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>プロバイダー</value>
+  </data>
+  <data name="Reported by an OpenAI-compatible provider. Loading status, size and modification time are not provided." xml:space="preserve">
+    <value>OpenAI互換プロバイダーによって報告されました。読み込み状態、サイズ、変更時刻は提供されていません。</value>
   </data>
   <data name="Running" xml:space="preserve">
     <value>実行中</value>
@@ -57,8 +75,14 @@
   <data name="Status" xml:space="preserve">
     <value>ステータス</value>
   </data>
+  <data name="The model is listed, but its loading status could not be retrieved." xml:space="preserve">
+    <value>モデルはリストに表示されていますが、その読み込みステータスを取得できませんでした。</value>
+  </data>
   <data name="Total Calls" xml:space="preserve">
     <value>総呼び出し数</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>不明</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>使用量</value>

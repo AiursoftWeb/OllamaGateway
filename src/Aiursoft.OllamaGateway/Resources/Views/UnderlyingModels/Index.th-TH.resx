@@ -18,7 +18,10 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Actions" xml:space="preserve">
+      <data name="About model status" xml:space="preserve">
+    <value>เกี่ยวกับสถานะโมเดล</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
     <value>การดำเนินการ</value>
   </data>
   <data name="All physical models available across all providers" xml:space="preserve">
@@ -30,6 +33,12 @@
   <data name="Idle" xml:space="preserve">
     <value>Idle</value>
   </data>
+  <data name="Listed" xml:space="preserve">
+    <value>ถูกระบุ</value>
+  </data>
+  <data name="Models listed by each provider. Listing does not verify that a model can answer requests." xml:space="preserve">
+    <value>โมเดลที่ผู้ให้บริการแต่ละรายระบุไว้ การระบุรายการไม่ได้ยืนยันว่าโมเดลสามารถตอบคำขอได้</value>
+  </data>
   <data name="Modified" xml:space="preserve">
     <value>แก้ไข</value>
   </data>
@@ -39,14 +48,23 @@
   <data name="No physical models found. Check your providers connection." xml:space="preserve">
     <value>ไม่พบแบบจำลองทางกายภาพ ตรวจสอบการเชื่อมต่อของผู้ให้บริการของคุณ</value>
   </data>
+  <data name="Not reported" xml:space="preserve">
+    <value>ไม่ได้รายงาน</value>
+  </data>
   <data name="Not used" xml:space="preserve">
     <value>ไม่ใช้งาน</value>
+  </data>
+  <data name="Ollama reports the model as loaded or not loaded in memory." xml:space="preserve">
+    <value>Ollama รายงานสถานะของโมเดลว่าถูกโหลดเข้าหน่วยความจำแล้วหรือไม่</value>
   </data>
   <data name="Physical Models" xml:space="preserve">
     <value>แบบจำลองทางกายภาพ</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>ผู้ให้บริการ</value>
+  </data>
+  <data name="Reported by an OpenAI-compatible provider. Loading status, size and modification time are not provided." xml:space="preserve">
+    <value>รายงานโดยผู้ให้บริการที่เข้ากันได้กับ OpenAI ไม่มีการให้ข้อมูลสถานะการโหลด ขนาด และเวลาแก้ไข</value>
   </data>
   <data name="Running" xml:space="preserve">
     <value>กำลังทำงาน</value>
@@ -57,8 +75,14 @@
   <data name="Status" xml:space="preserve">
     <value>สถานะ</value>
   </data>
+  <data name="The model is listed, but its loading status could not be retrieved." xml:space="preserve">
+    <value>โมเดลถูกรายการไว้ แต่ไม่สามารถดึงสถานะการโหลดได้</value>
+  </data>
   <data name="Total Calls" xml:space="preserve">
     <value>จำนวนการโทรทั้งหมด</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>ไม่ทราบ</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>การใช้งาน</value>

@@ -18,7 +18,10 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Actions" xml:space="preserve">
+      <data name="About model status" xml:space="preserve">
+    <value>Σχετικά με την κατάσταση του μοντέλου</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
     <value>Δράσεις</value>
   </data>
   <data name="All physical models available across all providers" xml:space="preserve">
@@ -30,6 +33,12 @@
   <data name="Idle" xml:space="preserve">
     <value>Ανενεργό</value>
   </data>
+  <data name="Listed" xml:space="preserve">
+    <value>Καταγεγραμμένο</value>
+  </data>
+  <data name="Models listed by each provider. Listing does not verify that a model can answer requests." xml:space="preserve">
+    <value>Μοντέλα που καταγράφονται από κάθε πάροχο. Η καταγραφή δεν επιβεβαιώνει ότι ένα μοντέλο μπορεί να απαντήσει σε αιτήματα.</value>
+  </data>
   <data name="Modified" xml:space="preserve">
     <value>Τροποποίηση</value>
   </data>
@@ -39,14 +48,23 @@
   <data name="No physical models found. Check your providers connection." xml:space="preserve">
     <value>Δεν βρέθηκαν φυσικά μοντέλα. Ελέγξτε τη σύνδεση των παρόχων σας.</value>
   </data>
+  <data name="Not reported" xml:space="preserve">
+    <value>Δεν αναφέρεται</value>
+  </data>
   <data name="Not used" xml:space="preserve">
     <value>Δεν χρησιμοποιείται</value>
+  </data>
+  <data name="Ollama reports the model as loaded or not loaded in memory." xml:space="preserve">
+    <value>Το Ollama αναφέρει το μοντέλο ως φορτωμένο ή μη φορτωμένο στη μνήμη.</value>
   </data>
   <data name="Physical Models" xml:space="preserve">
     <value>Φυσικά Μοντέλα</value>
   </data>
   <data name="Provider" xml:space="preserve">
     <value>Πάροχος</value>
+  </data>
+  <data name="Reported by an OpenAI-compatible provider. Loading status, size and modification time are not provided." xml:space="preserve">
+    <value>Αναφέρεται από πάροχο συμβατό με το OpenAI. Η κατάσταση φόρτωσης, το μέγεθος και η ώρα τροποποίησης δεν παρέχονται.</value>
   </data>
   <data name="Running" xml:space="preserve">
     <value>Εκτέλεση</value>
@@ -57,8 +75,14 @@
   <data name="Status" xml:space="preserve">
     <value>Κατάσταση</value>
   </data>
+  <data name="The model is listed, but its loading status could not be retrieved." xml:space="preserve">
+    <value>Το μοντέλο αναφέρεται στη λίστα, αλλά το status φόρτωσης δεν μπόρεσε να ανακτηθεί.</value>
+  </data>
   <data name="Total Calls" xml:space="preserve">
     <value>Συνολικές Κλήσεις</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Άγνωστο</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>Χρήση</value>
