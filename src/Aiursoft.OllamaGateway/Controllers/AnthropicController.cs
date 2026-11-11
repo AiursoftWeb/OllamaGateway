@@ -132,11 +132,27 @@ public class AnthropicController : ControllerBase
                     HttpContext);
             }
         }
+        catch (OperationCanceledException) when (HttpContext.RequestAborted.IsCancellationRequested)
+        {
+            _logger.LogDebug("Anthropic request canceled by the client");
+            _logContext.Log.Success = false;
+            _logContext.Log.Answer = "Client canceled the request.";
+        }
         catch (Exception e)
         {
             _logger.LogError(e, "Error processing Anthropic request");
             _logContext.Log.Success = false;
+            _logContext.Log.Answer = e.Message;
+            if (HttpContext.RequestAborted.IsCancellationRequested || Response.HasStarted)
+            {
+                // 已开始的响应不能改写状态码，也不能追加普通 JSON 破坏流协议。
+                HttpContext.Abort();
+                return;
+            }
+
             Response.StatusCode = 500;
+            _logContext.Log.StatusCode = 500;
+            Response.ContentType = "application/json";
             var errObj = new JsonObject
             {
                 ["type"] = "error",
