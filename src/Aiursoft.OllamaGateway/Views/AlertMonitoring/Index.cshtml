@@ -1,3 +1,4 @@
+@using System.Globalization
 @using Aiursoft.OllamaGateway.Authorization
 @model Aiursoft.OllamaGateway.Models.Monitoring.MonitoringViewModel
 
@@ -81,5 +82,5 @@
 </div>
 <div class="card"><div class="card-header"><h5 class="card-title">@Localizer["Observed physical models"]</h5></div><div class="table-responsive"><table class="table mb-0">
     <thead><tr><th>@Localizer["Provider"]</th><th>@Localizer["Model"]</th><th>@Localizer["Health"]</th><th>@Localizer["Last health check (UTC)"]</th><th>@Localizer["Failures in ten minutes"]</th><th>@Localizer["Unavailable since (UTC)"]</th><th>@Localizer["Matching severity"]</th></tr></thead>
-    <tbody>@foreach (var state in Model.Backends) { <tr><td>@state.ProviderName</td><td class="text-break">@state.Key.Model</td><td>@if (state.Healthy == true) { @Localizer["Available"] } else if (state.Healthy == false) { @Localizer["Unavailable"] } else { @Localizer["Unknown"] }</td><td>@state.LastHealth?.ToString("u")</td><td>@state.FailuresInTenMinutes</td><td>@state.OfflineSince?.ToString("u")</td><td>@(state.MatchingRule?.Severity ?? "—")</td></tr> }</tbody>
+    <tbody>@foreach (var state in Model.Backends) { <tr><td>@state.ProviderName</td><td class="text-break">@state.Key.Model</td><td>@if (state.Healthy == true) { @Localizer["Available"] } else if (state.Healthy == false) { @Localizer["Unavailable"] } else { @Localizer["Unknown"] }</td><td>@state.LastHealth?.ToString("u", CultureInfo.InvariantCulture)</td><td>@state.FailuresInTenMinutes</td><td>@state.OfflineSince?.ToString("u", CultureInfo.InvariantCulture)</td><td>@(state.MatchingRule?.Severity ?? "—")</td></tr> }</tbody>
 </table></div></div>

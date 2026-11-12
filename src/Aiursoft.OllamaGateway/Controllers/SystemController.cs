@@ -73,7 +73,7 @@ public class SystemController(
             var tableCounts = await Task.WhenAll(countTasks);
             return tableCounts
                 .OfType<TableCountEntry>()
-                .OrderBy(table => table.Name)
+                .OrderBy(table => table.Name, StringComparer.Ordinal)
                 .ToList();
         }
         finally
