@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Net;
 using Aiursoft.OllamaGateway.Configuration;
 using Aiursoft.OllamaGateway.Entities;
@@ -119,7 +120,7 @@ public class ApiKeyExpirationTests : TestBase
             { "Name", "Manually Expired" },
             { "ExpirationTime", includeOffset
                 ? new DateTimeOffset(expiredTime).ToOffset(TimeSpan.FromHours(8)).ToString("O")
-                : expiredTime.ToString("yyyy-MM-ddTHH:mm") }
+                : expiredTime.ToString("yyyy-MM-ddTHH:mm", CultureInfo.InvariantCulture) }
         });
         AssertRedirect(editResponse, controller, exact: false);
 

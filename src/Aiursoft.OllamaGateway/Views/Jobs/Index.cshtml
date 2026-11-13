@@ -1,3 +1,4 @@
+@using System.Globalization
 @model Aiursoft.OllamaGateway.Models.BackgroundJobs.JobsIndexViewModel
 @using Aiursoft.WebTools
 @using Aiursoft.OllamaGateway.Models.BackgroundJobs
@@ -165,7 +166,7 @@ else
                                                     <div class="progress mt-2" style="height: 8px;">
                                                         <div class="progress-bar bg-primary progress-bar-striped"
                                                              role="progressbar" data-job-id="@job.JobId"
-                                                             data-started-at="@job.StartedAt?.ToString("o")" style="width: 0%; transition: none;">
+                                                             data-started-at="@job.StartedAt?.ToString("o", CultureInfo.InvariantCulture)" style="width: 0%; transition: none;">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -178,7 +179,7 @@ else
                                                 {
                                                     var duration = job.CompletedAt.Value - job.StartedAt.Value;
                                                     <span class="badge bg-success">@Localizer["Success"]</span>
-                                                    <small class="text-muted ms-2">(@Localizer["{0}s", duration.TotalSeconds.ToString("F1")])</small>
+                                                    <small class="text-muted ms-2">(@Localizer["{0}s", duration.TotalSeconds.ToString("F1", CultureInfo.CurrentCulture)])</small>
                                                 }
                                                 else
                                                 {

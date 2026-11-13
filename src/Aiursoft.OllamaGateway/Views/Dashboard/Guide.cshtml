@@ -1,3 +1,4 @@
+@using System.Globalization
 @using Aiursoft.OllamaGateway.Entities
 @using Aiursoft.OllamaGateway.Gateway
 @using Aiursoft.OllamaGateway.Services
@@ -253,7 +254,7 @@
                                     <div><span>@Localizer["Strategy"]</span><strong>@strategyLabel</strong></div>
                                     <div><span>@Localizer["Max attempts"]</span><strong>@vm.MaxRetries</strong></div>
                                     <div><span>@Localizer["Header timeout"]</span><strong>@vm.RequestTimeoutSeconds s</strong></div>
-                                    <div><span>@Localizer["Temperature"]</span><strong>@(vm.Temperature?.ToString() ?? "—")</strong></div>
+                                    <div><span>@Localizer["Temperature"]</span><strong>@(vm.Temperature?.ToString(CultureInfo.CurrentCulture) ?? "—")</strong></div>
                                     <div><span>@Localizer["NumCtx"]</span><strong>@(vm.NumCtx?.ToString() ?? "—")</strong></div>
                                 </div>
                                 <div class="table-responsive guide-table-wrap">
