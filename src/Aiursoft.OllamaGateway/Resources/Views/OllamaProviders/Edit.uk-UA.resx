@@ -33,14 +33,14 @@
   <data name="(Responses)" xml:space="preserve">
     <value>(Відповіді)</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = без обмежень.</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= зберігати назавжди.</value>
   </data>
   <data name="= unload immediately." xml:space="preserve">
     <value>= вивантажити одразу.</value>
-  </data>
-  <data name="0 = unlimited." xml:space="preserve">
-    <value>0 = без обмежень.</value>
   </data>
   <data name="About concurrent requests" xml:space="preserve">
     <value>Про паралельні запити</value>
@@ -92,9 +92,6 @@
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>НЕ використовуйте сирі секунди, наприклад &apos;300&apos;. Натомість вказуйте &apos;5m&apos;. Невірні формати будуть ігноруватися Ollama без повідомлень.</value>
-  </data>
-  <data name="e.g. Local Server" xml:space="preserve">
-    <value>наприклад, локальний сервер</value>
   </data>
   <data name="Edit Ollama Provider" xml:space="preserve">
     <value>Змінити постачальника Ollama</value>
@@ -209,6 +206,9 @@
   </data>
   <data name="Warmup timeout" xml:space="preserve">
     <value>Тайм-аут розігріву</value>
+  </data>
+  <data name="e.g. Local Server" xml:space="preserve">
+    <value>наприклад, локальний сервер</value>
   </data>
 
 </root>

@@ -33,14 +33,14 @@
   <data name="(Responses)" xml:space="preserve">
     <value>(Respuestas)</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = ilimitado.</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= mantener indefinidamente.</value>
   </data>
   <data name="= unload immediately." xml:space="preserve">
     <value>= descarga inmediata.</value>
-  </data>
-  <data name="0 = unlimited." xml:space="preserve">
-    <value>0 = ilimitado.</value>
   </data>
   <data name="About concurrent requests" xml:space="preserve">
     <value>Acerca de las solicitudes simultáneas</value>
@@ -77,12 +77,6 @@
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>NO uses segundos sin formato como &apos;300&apos;. Escribe &apos;5m&apos; en su lugar. Los formatos no válidos son ignorados silenciosamente por Ollama.</value>
-  </data>
-  <data name="e.g. My Local Ollama" xml:space="preserve">
-    <value>p. ej. Mi Ollama local</value>
-  </data>
-  <data name="e.g. sk-..." xml:space="preserve">
-    <value>p. ej. sk-...</value>
   </data>
   <data name="Health Check Timeout (s)" xml:space="preserve">
     <value>Tiempo de espera de comprobación de estado (s)</value>
@@ -173,6 +167,12 @@
   </data>
   <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
     <value>Esperar en la cola de concurrencia NO consume el tiempo de espera de solicitud del modelo virtual. Una solicitud esperará indefinidamente por un hueco; solo una desconexión del cliente (cierre del navegador, tiempo de espera del SDK) detiene la espera. El modelo virtual no renuncia a un backend solo porque esté ocupado.</value>
+  </data>
+  <data name="e.g. My Local Ollama" xml:space="preserve">
+    <value>p. ej. Mi Ollama local</value>
+  </data>
+  <data name="e.g. sk-..." xml:space="preserve">
+    <value>p. ej. sk-...</value>
   </data>
 
 </root>

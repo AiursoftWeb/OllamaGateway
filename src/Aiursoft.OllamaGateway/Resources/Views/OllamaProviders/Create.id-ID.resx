@@ -33,14 +33,14 @@
   <data name="(Responses)" xml:space="preserve">
     <value>(Respons)</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = tanpa batas.</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= simpan selamanya.</value>
   </data>
   <data name="= unload immediately." xml:space="preserve">
     <value>= buang segera.</value>
-  </data>
-  <data name="0 = unlimited." xml:space="preserve">
-    <value>0 = tanpa batas.</value>
   </data>
   <data name="About concurrent requests" xml:space="preserve">
     <value>Tentang permintaan bersamaan</value>
@@ -77,12 +77,6 @@
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>JANGAN gunakan detik mentah seperti &apos;300&apos;. Tulis &apos;5m&apos; sebagai gantinya. Format yang tidak valid akan diabaikan secara diam-diam oleh Ollama.</value>
-  </data>
-  <data name="e.g. My Local Ollama" xml:space="preserve">
-    <value>mis. Ollama Lokal Saya</value>
-  </data>
-  <data name="e.g. sk-..." xml:space="preserve">
-    <value>mis. sk-...</value>
   </data>
   <data name="Health Check Timeout (s)" xml:space="preserve">
     <value>Batas Waktu Pemeriksaan Kesehatan (dtk)</value>
@@ -173,6 +167,12 @@
   </data>
   <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
     <value>Menunggu di antrian konkurensi TIDAK mengonsumsi batas waktu permintaan (Request Timeout) model virtual. Permintaan akan menunggu selamanya hingga tersedia slot — hanya putuskan koneksi klien (penutupan browser, batas waktu SDK) yang menghentikan penantian tersebut. Model virtual tidak menyerah pada backend hanya karena sedang sibuk.</value>
+  </data>
+  <data name="e.g. My Local Ollama" xml:space="preserve">
+    <value>mis. Ollama Lokal Saya</value>
+  </data>
+  <data name="e.g. sk-..." xml:space="preserve">
+    <value>mis. sk-...</value>
   </data>
 
 </root>

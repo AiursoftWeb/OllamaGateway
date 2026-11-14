@@ -39,12 +39,6 @@
   <data name="Disabled" xml:space="preserve">
     <value>Uitgeschakeld</value>
   </data>
-  <data name="e.g. MyLlama3" xml:space="preserve">
-    <value>bijv. MyLlama3</value>
-  </data>
-  <data name="e.g. MyLlama3:latest" xml:space="preserve">
-    <value>bijv. MyLlama3:latest</value>
-  </data>
   <data name="Enabled" xml:space="preserve">
     <value>Ingeschakeld</value>
   </data>
@@ -122,6 +116,12 @@
   </data>
   <data name="When checked, the &apos;raw: true&apos; parameter is sent to the upstream Ollama API. This tells Ollama to NOT apply any chat templates to your prompt. Use this for pure text completion. If unchecked, Ollama will automatically wrap your prompt in the model&apos;s default chat template, treating it as a conversational question." xml:space="preserve">
     <value>Wanneer dit is aangevinkt, wordt de parameter &apos;raw: true&apos; naar de upstream Ollama API verzonden. Dit vertelt Ollama om GEEN chat-sjablonen toe te passen op uw prompt. Gebruik dit voor pure tekstcompletie. Als dit niet is aangevinkt, zal Ollama uw prompt automatisch omhullen in het standaard chat-sjabloon van het model, waarbij het wordt behandeld als een conversationele vraag.</value>
+  </data>
+  <data name="e.g. MyLlama3" xml:space="preserve">
+    <value>bijv. MyLlama3</value>
+  </data>
+  <data name="e.g. MyLlama3:latest" xml:space="preserve">
+    <value>bijv. MyLlama3:latest</value>
   </data>
 
 </root>

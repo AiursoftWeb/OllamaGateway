@@ -18,74 +18,11 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="&apos;DB override&apos; means a hard assignment (=), not a null-coalescing assignment (??=). When the virtual model has a value configured in the database, the client-supplied value is always discarded." xml:space="preserve">
-    <value>&apos;DB override&apos; का अर्थ है कठिन असाइनमेंट (=), न कि नल-कोएलेसिंग असाइनमेंट (??=)। जब वर्चुअल मॉडल में डेटाबेस में एक मान कॉन्फ़िगर होता है, तो क्लाइंट द्वारा प्रदान किया गया मान हमेशा छोड़ दिया जाता है।</value>
-  </data>
-  <data name="&quot;Fire-and-forget&quot; support for long-running tasks (like emails or AI), featuring a GUI for queue management, parallel processing, and cancellation." xml:space="preserve">
+      <data name="&quot;Fire-and-forget&quot; support for long-running tasks (like emails or AI), featuring a GUI for queue management, parallel processing, and cancellation." xml:space="preserve">
     <value>लंबे समय तक चलने वाले कार्यों (जैसे ईमेल या AI) के लिए &quot;Fire-and-forget&quot; समर्थन, जिसमें कतार प्रबंधन, समानांतर प्रसंस्करण और रद्द करने के लिए GUI शामिल है।</value>
   </data>
-  <data name="→ Native Ollama" xml:space="preserve">
-    <value>→ स्थानीय ओलामा</value>
-  </data>
-  <data name="→ OpenAI-compatible provider" xml:space="preserve">
-    <value>→ ओपनएआई-सुसंगत प्रदाता</value>
-  </data>
-  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama JSON/NDJSON becomes Anthropic message JSON or &lt;code&gt;message_start/content_block_*/message_delta/message_stop&lt;/code&gt; SSE." xml:space="preserve">
-    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → मानक IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;। Ollama JSON/NDJSON Anthropic संदेश JSON या &lt;code&gt;message_start/content_block_*/message_delta/message_stop&lt;/code&gt; SSE बन जाता है।</value>
-  </data>
-  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat JSON/SSE is decoded and reconstructed as Anthropic Messages output." xml:space="preserve">
-    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → कैनोनिकल IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;। चैट JSON/SSE को डिकोड किया जाता है और इसे Anthropic Messages आउटपुट के रूप में पुनर्निर्मित किया जाता है।</value>
-  </data>
-  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses Items/events are decoded and rebuilt as Anthropic content blocks and SSE." xml:space="preserve">
-    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → कैनोनिकल IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;। Responses आइटम/इवेंट्स को डिकोड किया जाता है और Anthropic कंटेंट ब्लॉक्स और SSE के रूप में पुनर्निर्मित किया जाता है।</value>
-  </data>
-  <data name="&lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt; has no Responses mapping. Chat-only controls prefer a Chat backend and are omitted on fallback. Responses annotations, citations, and noncanonical output Items cannot be reconstructed in a Chat Completion response." xml:space="preserve">
-    <value>&lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt; का कोई Responses मैपिंग नहीं है। केवल चैट-आधारित नियंत्रण चैट बैकएंड को प्राथमिकता देते हैं और फॉलबैक पर छोड़ दिए जाते हैं। Responses एनोटेशन, उद्धरण, और गैर-मानक आउटपुट आइटम को चैट कॉम्प्लेशन प्रतिक्रिया में पुनर्निर्मित नहीं किया जा सकता है।</value>
-  </data>
-  <data name="&lt;code&gt;images[]&lt;/code&gt; → OpenAI &lt;code&gt;image_url&lt;/code&gt; data parts; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;think&lt;/code&gt; → &lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt;; Ollama tool calls and responses are rebuilt as OpenAI tools and back again." xml:space="preserve">
-    <value>&lt;code&gt;images[]&lt;/code&gt; → OpenAI &lt;code&gt;image_url&lt;/code&gt; डेटा भाग; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;think&lt;/code&gt; → &lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt;; Ollama टूल कॉल और प्रतिक्रियाएं OpenAI टूल के रूप में फिर से बनाई जाती हैं और फिर वापस आती हैं।</value>
-  </data>
-  <data name="&lt;code&gt;instructions&lt;/code&gt; → system message; &lt;code&gt;input_text&lt;/code&gt;/&lt;code&gt;input_image&lt;/code&gt; → Ollama content/images; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt;; response events are synthesized with stable output indexes." xml:space="preserve">
-    <value>&lt;code&gt;instructions&lt;/code&gt; → प्रणाली संदेश; &lt;code&gt;input_text&lt;/code&gt;/&lt;code&gt;input_image&lt;/code&gt; → Ollama सामग्री/चित्र; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt;; प्रतिक्रिया घटनाएँ स्थिर आउटपुट सूचकांकों के साथ संश्लेषित की जाती हैं।</value>
-  </data>
-  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. The response reverses through &lt;code&gt;OpenAiChatProviderResponseDecoder&lt;/code&gt; and &lt;code&gt;OllamaChatClientResponseWriter&lt;/code&gt;." xml:space="preserve">
-    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;। प्रतिक्रिया &lt;code&gt;OpenAiChatProviderResponseDecoder&lt;/code&gt; और &lt;code&gt;OllamaChatClientResponseWriter&lt;/code&gt; के माध्यम से उल्टी दिशा में जाती है।</value>
-  </data>
-  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → canonical messages/items → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Typed Responses Items/events are decoded and rebuilt as Ollama JSON/NDJSON." xml:space="preserve">
-    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → कैनोनिकल संदेश/आइटम → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;। टाइप्ड Responses आइटम/इवेंट्स को डिकोड किया जाता है और उन्हें Ollama JSON/NDJSON के रूप में पुनर्निर्मित किया जाता है।</value>
-  </data>
-  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; performs capability inspection; &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt; clones the original JSON; &lt;code&gt;OllamaChatWireResponseWriter&lt;/code&gt; keeps NDJSON records in the Ollama dialect." xml:space="preserve">
-    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; क्षमता जाँच करता है; &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt; मूल JSON का क्लोन बनाता है; &lt;code&gt;OllamaChatWireResponseWriter&lt;/code&gt; NDJSON रिकॉर्ड्स को Ollama भौषिका में बनाए रखता है।</value>
-  </data>
-  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama response records are decoded into canonical events and emitted as Chat Completion JSON/SSE." xml:space="preserve">
-    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;। Ollama प्रतिक्रिया रिकॉर्ड्स कोड की गई नियमित घटनाओं में डिकोड की जाती हैं और Chat Completion JSON/SSE के रूप में उत्सर्जित की जाती हैं।</value>
-  </data>
-  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses output Items/events return through the Responses decoder and Chat client writer." xml:space="preserve">
-    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → मानक IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;। Responses आउटपुट आइटम/इवेंट्स Responses डिकोडर और Chat क्लाइंट राइटर के माध्यम से लौटते हैं।</value>
-  </data>
-  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; inspects capabilities; the provider adapter clones the source JSON; &lt;code&gt;OpenAiChatWireResponseWriter&lt;/code&gt; forwards Chat JSON/SSE while observing text, reasoning, tools, and usage." xml:space="preserve">
-    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; क्षमताओं की जाँच करता है; प्रोवाइडर एडैप्टर स्रोत JSON का क्लोन करता है; &lt;code&gt;OpenAiChatWireResponseWriter&lt;/code&gt; टेक्स्ट, तर्क, टूल्स और उपयोग को निरीक्षण करते हुए Chat JSON/SSE को आगे भेजता है।</value>
-  </data>
-  <data name="&lt;code&gt;OpenAiEmbeddingClientAdapter&lt;/code&gt; + &lt;code&gt;OpenAiEmbeddingProviderAdapter&lt;/code&gt;. No VM sampling/context override is injected into an OpenAI embedding request." xml:space="preserve">
-    <value>&lt;code&gt;OpenAiEmbeddingClientAdapter&lt;/code&gt; + &lt;code&gt;OpenAiEmbeddingProviderAdapter&lt;/code&gt;। ओपनएआई एम्बेडिंग अनुरोध में कोई वर्चुअल मॉडल सैंपलिंग/संदर्भ अधिरोधन (override) इंजेक्ट नहीं किया जाता है।</value>
-  </data>
-  <data name="&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama output becomes typed Responses Items and typed SSE events." xml:space="preserve">
-    <value>&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → मानक IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;। Ollama आउटपुट टाइप्ड Responses Items और टाइप्ड SSE events बन जाता है।</value>
-  </data>
-  <data name="&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat completions/chunks are decoded and emitted as Responses JSON/typed SSE." xml:space="preserve">
-    <value>&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → कैनोनिकल IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;। चैट पूर्णताएं/चंक्स डिकोड की जाती हैं और Responses JSON/टाइप्ड SSE के रूप में उत्सर्जित की जाती हैं।</value>
-  </data>
-  <data name="&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;background&lt;/code&gt;, and &lt;code&gt;store&lt;/code&gt; retain their native Responses semantics. This is not byte-transparent because JSON may be reserialized." xml:space="preserve">
-    <value>&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;background&lt;/code&gt;, और &lt;code&gt;store&lt;/code&gt; अपने मूल Responses अर्थों को बनाए रखते हैं। यह बाइट-पारदर्शी (byte-transparent) नहीं है क्योंकि JSON पुनः सीरियलाइज़ (reserialized) हो सकता है।</value>
-  </data>
-  <data name="&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;store:true&lt;/code&gt;, &lt;code&gt;background:true&lt;/code&gt;, native tools, and unknown Items require a Responses backend. Stateless representable requests fall back to translation." xml:space="preserve">
-    <value>&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;store:true&lt;/code&gt;, &lt;code&gt;background:true&lt;/code&gt;, नेटिव टूल्स, और अज्ञात आइटम के लिए एक Responses बैकएंड आवश्यक है। स्टेटलेस, प्रतिनिधित्व योग्य अनुरोधों के लिए अनुवाद पर वापसी (fallback) की जाती है।</value>
-  </data>
-  <data name="&lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt; are hard-overridden when configured." xml:space="preserve">
-    <value>&lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, और &lt;code&gt;think&lt;/code&gt; को विन्यस्त किए जाने पर कठोर रूप से अधिलेखित (hard-overridden) कर दिया जाता है।</value>
-  </data>
-  <data name="&lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;keep_alive&lt;/code&gt; have no OpenAI Chat mapping. Unknown Ollama controls prefer a native backend but are omitted when this translation path is the only eligible route." xml:space="preserve">
-    <value>&lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, और &lt;code&gt;keep_alive&lt;/code&gt; का OpenAI Chat में कोई मैपिंग नहीं है। अज्ञात Ollama नियंत्रण एक नेटिव बैकएंड को प्राथमिकता देते हैं, लेकिन यदि यह अनुवाद रास्ता ही एकमात्र योग्य मार्ग है, तो उन्हें छोड़ दिया जाता है।</value>
+  <data name="&apos;DB override&apos; means a hard assignment (=), not a null-coalescing assignment (??=). When the virtual model has a value configured in the database, the client-supplied value is always discarded." xml:space="preserve">
+    <value>&apos;DB override&apos; का अर्थ है कठिन असाइनमेंट (=), न कि नल-कोएलेसिंग असाइनमेंट (??=)। जब वर्चुअल मॉडल में डेटाबेस में एक मान कॉन्फ़िगर होता है, तो क्लाइंट द्वारा प्रदान किया गया मान हमेशा छोड़ दिया जाता है।</value>
   </data>
   <data name="2 client dialects × 2 Provider types" xml:space="preserve">
     <value>2 क्लाइंट डायलैक्ट × 2 प्रदाता प्रकार</value>
@@ -101,6 +38,63 @@
   </data>
   <data name="4 client dialects × 3 backend protocols" xml:space="preserve">
     <value>4 क्लाइंट डायलैक्ट × 3 बैकएंड प्रोटोकॉल</value>
+  </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama JSON/NDJSON becomes Anthropic message JSON or &lt;code&gt;message_start/content_block_*/message_delta/message_stop&lt;/code&gt; SSE." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → मानक IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;। Ollama JSON/NDJSON Anthropic संदेश JSON या &lt;code&gt;message_start/content_block_*/message_delta/message_stop&lt;/code&gt; SSE बन जाता है।</value>
+  </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat JSON/SSE is decoded and reconstructed as Anthropic Messages output." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → कैनोनिकल IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;। चैट JSON/SSE को डिकोड किया जाता है और इसे Anthropic Messages आउटपुट के रूप में पुनर्निर्मित किया जाता है।</value>
+  </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses Items/events are decoded and rebuilt as Anthropic content blocks and SSE." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → कैनोनिकल IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;। Responses आइटम/इवेंट्स को डिकोड किया जाता है और Anthropic कंटेंट ब्लॉक्स और SSE के रूप में पुनर्निर्मित किया जाता है।</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; performs capability inspection; &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt; clones the original JSON; &lt;code&gt;OllamaChatWireResponseWriter&lt;/code&gt; keeps NDJSON records in the Ollama dialect." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; क्षमता जाँच करता है; &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt; मूल JSON का क्लोन बनाता है; &lt;code&gt;OllamaChatWireResponseWriter&lt;/code&gt; NDJSON रिकॉर्ड्स को Ollama भौषिका में बनाए रखता है।</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. The response reverses through &lt;code&gt;OpenAiChatProviderResponseDecoder&lt;/code&gt; and &lt;code&gt;OllamaChatClientResponseWriter&lt;/code&gt;." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;। प्रतिक्रिया &lt;code&gt;OpenAiChatProviderResponseDecoder&lt;/code&gt; और &lt;code&gt;OllamaChatClientResponseWriter&lt;/code&gt; के माध्यम से उल्टी दिशा में जाती है।</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → canonical messages/items → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Typed Responses Items/events are decoded and rebuilt as Ollama JSON/NDJSON." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → कैनोनिकल संदेश/आइटम → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;। टाइप्ड Responses आइटम/इवेंट्स को डिकोड किया जाता है और उन्हें Ollama JSON/NDJSON के रूप में पुनर्निर्मित किया जाता है।</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; inspects capabilities; the provider adapter clones the source JSON; &lt;code&gt;OpenAiChatWireResponseWriter&lt;/code&gt; forwards Chat JSON/SSE while observing text, reasoning, tools, and usage." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; क्षमताओं की जाँच करता है; प्रोवाइडर एडैप्टर स्रोत JSON का क्लोन करता है; &lt;code&gt;OpenAiChatWireResponseWriter&lt;/code&gt; टेक्स्ट, तर्क, टूल्स और उपयोग को निरीक्षण करते हुए Chat JSON/SSE को आगे भेजता है।</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama response records are decoded into canonical events and emitted as Chat Completion JSON/SSE." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;। Ollama प्रतिक्रिया रिकॉर्ड्स कोड की गई नियमित घटनाओं में डिकोड की जाती हैं और Chat Completion JSON/SSE के रूप में उत्सर्जित की जाती हैं।</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses output Items/events return through the Responses decoder and Chat client writer." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → मानक IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;। Responses आउटपुट आइटम/इवेंट्स Responses डिकोडर और Chat क्लाइंट राइटर के माध्यम से लौटते हैं।</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiEmbeddingClientAdapter&lt;/code&gt; + &lt;code&gt;OpenAiEmbeddingProviderAdapter&lt;/code&gt;. No VM sampling/context override is injected into an OpenAI embedding request." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiEmbeddingClientAdapter&lt;/code&gt; + &lt;code&gt;OpenAiEmbeddingProviderAdapter&lt;/code&gt;। ओपनएआई एम्बेडिंग अनुरोध में कोई वर्चुअल मॉडल सैंपलिंग/संदर्भ अधिरोधन (override) इंजेक्ट नहीं किया जाता है।</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama output becomes typed Responses Items and typed SSE events." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → मानक IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;। Ollama आउटपुट टाइप्ड Responses Items और टाइप्ड SSE events बन जाता है।</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat completions/chunks are decoded and emitted as Responses JSON/typed SSE." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → कैनोनिकल IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;। चैट पूर्णताएं/चंक्स डिकोड की जाती हैं और Responses JSON/टाइप्ड SSE के रूप में उत्सर्जित की जाती हैं।</value>
+  </data>
+  <data name="&lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt; has no Responses mapping. Chat-only controls prefer a Chat backend and are omitted on fallback. Responses annotations, citations, and noncanonical output Items cannot be reconstructed in a Chat Completion response." xml:space="preserve">
+    <value>&lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt; का कोई Responses मैपिंग नहीं है। केवल चैट-आधारित नियंत्रण चैट बैकएंड को प्राथमिकता देते हैं और फॉलबैक पर छोड़ दिए जाते हैं। Responses एनोटेशन, उद्धरण, और गैर-मानक आउटपुट आइटम को चैट कॉम्प्लेशन प्रतिक्रिया में पुनर्निर्मित नहीं किया जा सकता है।</value>
+  </data>
+  <data name="&lt;code&gt;images[]&lt;/code&gt; → OpenAI &lt;code&gt;image_url&lt;/code&gt; data parts; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;think&lt;/code&gt; → &lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt;; Ollama tool calls and responses are rebuilt as OpenAI tools and back again." xml:space="preserve">
+    <value>&lt;code&gt;images[]&lt;/code&gt; → OpenAI &lt;code&gt;image_url&lt;/code&gt; डेटा भाग; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;think&lt;/code&gt; → &lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt;; Ollama टूल कॉल और प्रतिक्रियाएं OpenAI टूल के रूप में फिर से बनाई जाती हैं और फिर वापस आती हैं।</value>
+  </data>
+  <data name="&lt;code&gt;instructions&lt;/code&gt; → system message; &lt;code&gt;input_text&lt;/code&gt;/&lt;code&gt;input_image&lt;/code&gt; → Ollama content/images; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt;; response events are synthesized with stable output indexes." xml:space="preserve">
+    <value>&lt;code&gt;instructions&lt;/code&gt; → प्रणाली संदेश; &lt;code&gt;input_text&lt;/code&gt;/&lt;code&gt;input_image&lt;/code&gt; → Ollama सामग्री/चित्र; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt;; प्रतिक्रिया घटनाएँ स्थिर आउटपुट सूचकांकों के साथ संश्लेषित की जाती हैं।</value>
+  </data>
+  <data name="&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;background&lt;/code&gt;, and &lt;code&gt;store&lt;/code&gt; retain their native Responses semantics. This is not byte-transparent because JSON may be reserialized." xml:space="preserve">
+    <value>&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;background&lt;/code&gt;, और &lt;code&gt;store&lt;/code&gt; अपने मूल Responses अर्थों को बनाए रखते हैं। यह बाइट-पारदर्शी (byte-transparent) नहीं है क्योंकि JSON पुनः सीरियलाइज़ (reserialized) हो सकता है।</value>
+  </data>
+  <data name="&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;store:true&lt;/code&gt;, &lt;code&gt;background:true&lt;/code&gt;, native tools, and unknown Items require a Responses backend. Stateless representable requests fall back to translation." xml:space="preserve">
+    <value>&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;store:true&lt;/code&gt;, &lt;code&gt;background:true&lt;/code&gt;, नेटिव टूल्स, और अज्ञात आइटम के लिए एक Responses बैकएंड आवश्यक है। स्टेटलेस, प्रतिनिधित्व योग्य अनुरोधों के लिए अनुवाद पर वापसी (fallback) की जाती है।</value>
+  </data>
+  <data name="&lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt; are hard-overridden when configured." xml:space="preserve">
+    <value>&lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, और &lt;code&gt;think&lt;/code&gt; को विन्यस्त किए जाने पर कठोर रूप से अधिलेखित (hard-overridden) कर दिया जाता है।</value>
+  </data>
+  <data name="&lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;keep_alive&lt;/code&gt; have no OpenAI Chat mapping. Unknown Ollama controls prefer a native backend but are omitted when this translation path is the only eligible route." xml:space="preserve">
+    <value>&lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, और &lt;code&gt;keep_alive&lt;/code&gt; का OpenAI Chat में कोई मैपिंग नहीं है। अज्ञात Ollama नियंत्रण एक नेटिव बैकएंड को प्राथमिकता देते हैं, लेकिन यदि यह अनुवाद रास्ता ही एकमात्र योग्य मार्ग है, तो उन्हें छोड़ दिया जाता है।</value>
   </data>
   <data name="A built-in Role-Based Access Control (RBAC) system for fine-grained permission management." xml:space="preserve">
     <value>अनुमति प्रबंधन के लिए एक अंतर्निहित रोल-आधारित एक्सेस कंट्रोल (RBAC) प्रणाली।</value>
@@ -123,6 +117,21 @@
   <data name="A modern, feature-rich, and highly extensible foundation for your next web application." xml:space="preserve">
     <value>आपके अगले वेब एप्लिकेशन के लिए एक आधुनिक, सुविधा-संपन्न, और अत्यधिक विस्तार योग्य आधारशिला।</value>
   </data>
+  <data name="AI Driven Translation" xml:space="preserve">
+    <value>AI संचालित अनुवाद</value>
+  </data>
+  <data name="AI Readable" xml:space="preserve">
+    <value>AI पठनीय</value>
+  </data>
+  <data name="AI-Powered Translations" xml:space="preserve">
+    <value>AI-संचालित अनुवाद</value>
+  </data>
+  <data name="API Authentication (Bearer)" xml:space="preserve">
+    <value>API प्रमाणन (Bearer)</value>
+  </data>
+  <data name="API Rate Limiting" xml:space="preserve">
+    <value>API रेट लिमिटिंग</value>
+  </data>
   <data name="Achieve more with Aiursoft Template" xml:space="preserve">
     <value>Aiursoft टेम्पलेट के साथ और अधिक हासिल करें</value>
   </data>
@@ -138,15 +147,6 @@
   <data name="Agent &amp; Ecosystem Ready" xml:space="preserve">
     <value>एजेंट और इकोसिस्टम तैयार</value>
   </data>
-  <data name="AI Driven Translation" xml:space="preserve">
-    <value>AI संचालित अनुवाद</value>
-  </data>
-  <data name="AI Readable" xml:space="preserve">
-    <value>AI पठनीय</value>
-  </data>
-  <data name="AI-Powered Translations" xml:space="preserve">
-    <value>AI-संचालित अनुवाद</value>
-  </data>
   <data name="Aiursoft Template" xml:space="preserve">
     <value>Aiursoft Template</value>
   </data>
@@ -156,17 +156,17 @@
   <data name="Alias -&gt; Real" xml:space="preserve">
     <value>उपनाम -&gt; वास्तविक</value>
   </data>
-  <data name="All dependencies are automatically registered and always available via constructor injection." xml:space="preserve">
-    <value>सभी निर्भरताएँ स्वचालित रूप से पंजीकृत होती हैं और कंस्ट्रक्टर इंजेक्शन के माध्यम से हमेशा उपलब्ध रहती हैं।</value>
-  </data>
   <data name="All Ollama VM controls apply and override translated values: sampling, context, repeat penalty, token limit, and thinking. Ollama-only DB controls may be injected." xml:space="preserve">
     <value>सभी Ollama VM नियंत्रण लागू होते हैं और अनुवादित मानों को ओवरराइड करते हैं: सैंपलिंग, संदर्भ, पुनरावृत्ति दंड, टोकन सीमा, और विचार। Ollama-अकेले DB नियंत्रण इंजेक्ट किए जा सकते हैं।</value>
+  </data>
+  <data name="All Ollama VM controls apply. &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;RepeatPenalty&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; can be injected from DB even though Anthropic request fields do not directly express them." xml:space="preserve">
+    <value>सभी Ollama VM नियंत्रण लागू होते हैं। &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;RepeatPenalty&lt;/code&gt;, और &lt;code&gt;Thinking&lt;/code&gt; को डेटाबेस से इंजेक्ट किया जा सकता है, भले ही Anthropic अनुरोध फ़ील्ड उन्हें सीधे व्यक्त नहीं करते हैं।</value>
   </data>
   <data name="All Ollama VM controls apply: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt;. Ollama-only values may therefore be injected even though the client dialect cannot express them." xml:space="preserve">
     <value>सभी Ollama VM नियंत्रण लागू होते हैं: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, और &lt;code&gt;think&lt;/code&gt;। इसलिए, Ollama-अनुकूल मानों को इंजेक्ट किया जा सकता है, भले ही क्लाइंट डायलैक्ट उन्हें व्यक्त नहीं कर सके।</value>
   </data>
-  <data name="All Ollama VM controls apply. &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;RepeatPenalty&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; can be injected from DB even though Anthropic request fields do not directly express them." xml:space="preserve">
-    <value>सभी Ollama VM नियंत्रण लागू होते हैं। &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;RepeatPenalty&lt;/code&gt;, और &lt;code&gt;Thinking&lt;/code&gt; को डेटाबेस से इंजेक्ट किया जा सकता है, भले ही Anthropic अनुरोध फ़ील्ड उन्हें सीधे व्यक्त नहीं करते हैं।</value>
+  <data name="All dependencies are automatically registered and always available via constructor injection." xml:space="preserve">
+    <value>सभी निर्भरताएँ स्वचालित रूप से पंजीकृत होती हैं और कंस्ट्रक्टर इंजेक्शन के माध्यम से हमेशा उपलब्ध रहती हैं।</value>
   </data>
   <data name="Anduin" xml:space="preserve">
     <value>Anduin</value>
@@ -174,17 +174,14 @@
   <data name="Anduin Xue" xml:space="preserve">
     <value>Anduin Xue</value>
   </data>
-  <data name="Anthropic → Ollama" xml:space="preserve">
-    <value>एन्थ्रोपिक → ओलामा</value>
-  </data>
-  <data name="Anthropic → OpenAI" xml:space="preserve">
-    <value>Anthropic → OpenAI</value>
-  </data>
   <data name="Anthropic API Translation" xml:space="preserve">
     <value>एंट्रोपिक एपीआई अनुवाद</value>
   </data>
   <data name="Anthropic Client" xml:space="preserve">
     <value>Anthropic क्लाइंट</value>
+  </data>
+  <data name="Anthropic Messages client routes" xml:space="preserve">
+    <value>Anthropic Messages क्लाइंट राउट्स</value>
   </data>
   <data name="Anthropic image content blocks are not yet translated to Ollama format." xml:space="preserve">
     <value>एंथ्रोपिक छवि सामग्री ब्लॉक अभी तक Ollama प्रारूप में अनुवादित नहीं हुए हैं।</value>
@@ -198,17 +195,14 @@
   <data name="Anthropic input thinking blocks and signatures are not encoded into Responses input. Unknown content blocks cannot use this route; unknown top-level controls are omitted on fallback. Native Responses-only output Items, annotations, and citations cannot be represented in Anthropic output." xml:space="preserve">
     <value>Anthropic इनपुट थिंकिंग ब्लॉक और साइनेचर Responses इनपुट में एन्कोड नहीं किए जाते हैं। अज्ञात कंटेंट ब्लॉक इस राउट का उपयोग नहीं कर सकते; अज्ञात टॉप-लेवल कंट्रोल फॉलबैक पर छोड़ दिए जाते हैं। मूल Responses-अनली आउटपुट आइटम, एनोटेशन, और उद्धरण Anthropic आउटपुट में प्रस्तुत नहीं किए जा सकते हैं।</value>
   </data>
-  <data name="Anthropic Messages client routes" xml:space="preserve">
-    <value>Anthropic Messages क्लाइंट राउट्स</value>
-  </data>
   <data name="Anthropic system content → system message; image blocks → OpenAI &lt;code&gt;image_url&lt;/code&gt;; &lt;code&gt;input_schema&lt;/code&gt; → function &lt;code&gt;parameters&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt; → Chat tool calls/messages; &lt;code&gt;max_tokens&lt;/code&gt; remains the Chat token limit." xml:space="preserve">
     <value>Anthropic सिस्टम सामग्री → सिस्टम संदेश; इमेज ब्लॉक → OpenAI &lt;code&gt;image_url&lt;/code&gt;; &lt;code&gt;input_schema&lt;/code&gt; → फ़ंक्शन &lt;code&gt;parameters&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt; → चैट टूल कॉल्स/संदेश; &lt;code&gt;max_tokens&lt;/code&gt; चैट टोकन सीमा के रूप में बना रहता है।</value>
   </data>
-  <data name="API Authentication (Bearer)" xml:space="preserve">
-    <value>API प्रमाणन (Bearer)</value>
+  <data name="Anthropic → Ollama" xml:space="preserve">
+    <value>एन्थ्रोपिक → ओलामा</value>
   </data>
-  <data name="API Rate Limiting" xml:space="preserve">
-    <value>API रेट लिमिटिंग</value>
+  <data name="Anthropic → OpenAI" xml:space="preserve">
+    <value>Anthropic → OpenAI</value>
   </data>
   <data name="Artificial Intelligence Translation" xml:space="preserve">
     <value>कृत्रिम बुद्धिमत्ता अनुवाद</value>
@@ -216,14 +210,14 @@
   <data name="Authentik &amp; Okta" xml:space="preserve">
     <value>Authentik &amp; Okta</value>
   </data>
-  <data name="Auto compression and privacy" xml:space="preserve">
-    <value>स्वचालित संपीड़न और गोपनीयता</value>
-  </data>
   <data name="Auto Deployment" xml:space="preserve">
     <value>स्वचालित डेप्लॉयमेंट</value>
   </data>
   <data name="Auto Sync" xml:space="preserve">
     <value>स्वतः सिंक</value>
+  </data>
+  <data name="Auto compression and privacy" xml:space="preserve">
+    <value>स्वचालित संपीड़न और गोपनीयता</value>
   </data>
   <data name="Automatic AI translation into 28 languages." xml:space="preserve">
     <value>28 भाषाओं में स्वचालित AI अनुवाद।</value>
@@ -300,9 +294,6 @@
   <data name="Built-in" xml:space="preserve">
     <value>निर्मित-अंदर</value>
   </data>
-  <data name="Built-in administration panel" xml:space="preserve">
-    <value>निर्मित प्रशासनिक पैनल</value>
-  </data>
   <data name="Built-in Auth" xml:space="preserve">
     <value>एम्बेडेड प्रमाणीकरण</value>
   </data>
@@ -311,6 +302,9 @@
   </data>
   <data name="Built-in User Management" xml:space="preserve">
     <value>अंतर्निहित उपयोगकर्ता प्रबंधन</value>
+  </data>
+  <data name="Built-in administration panel" xml:space="preserve">
+    <value>निर्मित प्रशासनिक पैनल</value>
   </data>
   <data name="Chat" xml:space="preserve">
     <value>चैट</value>
@@ -369,11 +363,11 @@
   <data name="Coverage Report" xml:space="preserve">
     <value>कवरेज रिपोर्ट</value>
   </data>
-  <data name="Create multiple aliases for your models with custom system prompts and parameter overrides." xml:space="preserve">
-    <value>मॉडलों के लिए कस्टम सिस्टम प्रॉम्प्ट्स और पैरामीटर ओवरराइड के साथ कई एलाइज बनाएं।</value>
-  </data>
   <data name="Create multiple API keys for different users and applications, each with its own fine-grained permissions." xml:space="preserve">
     <value>विभिन्न उपयोगकर्ताओं और अनुप्रयोगों के लिए कई API कुंजियाँ बनाएं, जिनमें से प्रत्येक की अपनी सूक्ष्म अनुमति होती है।</value>
+  </data>
+  <data name="Create multiple aliases for your models with custom system prompts and parameter overrides." xml:space="preserve">
+    <value>मॉडलों के लिए कस्टम सिस्टम प्रॉम्प्ट्स और पैरामीटर ओवरराइड के साथ कई एलाइज बनाएं।</value>
   </data>
   <data name="Create virtual chat models with persistent system prompts." xml:space="preserve">
     <value>स्थिर सिस्टम प्रॉम्प्ट्स के साथ काल्पनिक चैट मॉडल बनाएं।</value>
@@ -396,24 +390,6 @@
   <data name="Custom development required" xml:space="preserve">
     <value>कस्टम विकास आवश्यक है</value>
   </data>
-  <data name="Dashboard for background tasks" xml:space="preserve">
-    <value>पृष्ठभूमि कार्यों के लिए डैशबोर्ड</value>
-  </data>
-  <data name="Dashboard Website" xml:space="preserve">
-    <value>डैशबोर्ड वेबसाइट</value>
-  </data>
-  <data name="Database override" xml:space="preserve">
-    <value>डेटाबेस ओवरराइड</value>
-  </data>
-  <data name="Database values are hard assignments" xml:space="preserve">
-    <value>डेटाबेस मान कठोर नियुक्तियाँ हैं</value>
-  </data>
-  <data name="Day 1 Compliance &amp; Security." xml:space="preserve">
-    <value>दिन 1 सुरक्षा एवं सुसंगतता।</value>
-  </data>
-  <data name="Day 1 Ready" xml:space="preserve">
-    <value>दिन 1 तैयार</value>
-  </data>
   <data name="DB injects the value but it is dropped before the OpenAI request is sent" xml:space="preserve">
     <value>डेटाबेस मान इंजेक्ट करता है, लेकिन ओपनएआई अनुरोध भेजने से पहले उसे हटा दिया जाता है</value>
   </data>
@@ -428,6 +404,24 @@
   </data>
   <data name="DB overrides via chat_template_kwargs. When DB is unset, client can pass chat_template_kwargs freely." xml:space="preserve">
     <value>DB चैट_टेम्पलेट_क्वार्ग्स के माध्यम से ओवरराइड करता है। जब DB अनसेट होता है, तो क्लाइंट स्वतंत्र रूप से chat_template_kwargs पास कर सकता है।</value>
+  </data>
+  <data name="Dashboard Website" xml:space="preserve">
+    <value>डैशबोर्ड वेबसाइट</value>
+  </data>
+  <data name="Dashboard for background tasks" xml:space="preserve">
+    <value>पृष्ठभूमि कार्यों के लिए डैशबोर्ड</value>
+  </data>
+  <data name="Database override" xml:space="preserve">
+    <value>डेटाबेस ओवरराइड</value>
+  </data>
+  <data name="Database values are hard assignments" xml:space="preserve">
+    <value>डेटाबेस मान कठोर नियुक्तियाँ हैं</value>
+  </data>
+  <data name="Day 1 Compliance &amp; Security." xml:space="preserve">
+    <value>दिन 1 सुरक्षा एवं सुसंगतता।</value>
+  </data>
+  <data name="Day 1 Ready" xml:space="preserve">
+    <value>दिन 1 तैयार</value>
   </data>
   <data name="Dedicated management for embedding models for RAG applications." xml:space="preserve">
     <value>RAG एप्लिकेशन के लिए एम्बेडिंग मॉडल के लिए समर्पित प्रबंधन।</value>
@@ -462,14 +456,14 @@
   <data name="Dev &amp; Prod" xml:space="preserve">
     <value>डेव एंड प्रॉड</value>
   </data>
+  <data name="DevOps Native" xml:space="preserve">
+    <value>डेवोप्स नेटिव</value>
+  </data>
   <data name="Develop exclusively in UTC while the system automatically converts and displays dates in the user&apos;s local time zone." xml:space="preserve">
     <value>UTC में विकास केवल करें, जबकि सिस्टम स्वचालित रूप से तारीखों को उपयोगकर्ता के स्थानीय समय क्षेत्र में परिवर्तित और प्रदर्शित करता है।</value>
   </data>
   <data name="Developer Experience" xml:space="preserve">
     <value>विकासकर्मी अनुभव</value>
-  </data>
-  <data name="DevOps Native" xml:space="preserve">
-    <value>डेवोप्स नेटिव</value>
   </data>
   <data name="Direction" xml:space="preserve">
     <value>दिशा</value>
@@ -510,11 +504,11 @@
   <data name="Embedding" xml:space="preserve">
     <value>एम्बेडिंग</value>
   </data>
-  <data name="Embedding adapters select by ProviderType, not chat BackendProtocol" xml:space="preserve">
-    <value>इम्बेडिंग एडैप्टर ProviderType द्वारा चयन करते हैं, चैट BackendProtocol द्वारा नहीं</value>
-  </data>
   <data name="Embedding Models" xml:space="preserve">
     <value>एम्बेडिंग मॉडल</value>
+  </data>
+  <data name="Embedding adapters select by ProviderType, not chat BackendProtocol" xml:space="preserve">
+    <value>इम्बेडिंग एडैप्टर ProviderType द्वारा चयन करते हैं, चैट BackendProtocol द्वारा नहीं</value>
   </data>
   <data name="Embedding route" xml:space="preserve">
     <value>एम्बेडिंग मार्ग</value>
@@ -546,9 +540,6 @@
   <data name="FAQ" xml:space="preserve">
     <value>अक्सर पूछे जाने वाले प्रश्न</value>
   </data>
-  <data name="faster" xml:space="preserve">
-    <value>तेज़</value>
-  </data>
   <data name="Feature Comparison" xml:space="preserve">
     <value>सुविधाओं की तुलना</value>
   </data>
@@ -570,9 +561,6 @@
   <data name="Flexible API" xml:space="preserve">
     <value>लचीला API</value>
   </data>
-  <data name="for any inquiries or to report issues." xml:space="preserve">
-    <value>किसी भी जानकारी के लिए या समस्याओं की रिपोर्ट करने के लिए।</value>
-  </data>
   <data name="Founder &amp; Architect at Aiursoft" xml:space="preserve">
     <value>संस्थापक और वास्तुकार, Aiursoft में</value>
   </data>
@@ -582,11 +570,11 @@
   <data name="Free" xml:space="preserve">
     <value>मुफ़्त</value>
   </data>
-  <data name="Free for Commercial Use" xml:space="preserve">
-    <value>वाणिज्यिक उपयोग के लिए मुफ्त</value>
-  </data>
   <data name="Free Software" xml:space="preserve">
     <value>मुक्त सॉफ्टवेयर</value>
+  </data>
+  <data name="Free for Commercial Use" xml:space="preserve">
+    <value>वाणिज्यिक उपयोग के लिए मुफ्त</value>
   </data>
   <data name="Frequently asked questions" xml:space="preserve">
     <value>अक्सर पूछे जाने वाले प्रश्न</value>
@@ -618,11 +606,11 @@
   <data name="Gateway-owned operation" xml:space="preserve">
     <value>गेटवे-संभालित ऑपरेशन</value>
   </data>
-  <data name="Generic configuration" xml:space="preserve">
-    <value>सामान्य कॉन्फ़िगरेशन</value>
-  </data>
   <data name="Generic Dockerfile only" xml:space="preserve">
     <value>केवल सामान्य Dockerfile</value>
+  </data>
+  <data name="Generic configuration" xml:space="preserve">
+    <value>सामान्य कॉन्फ़िगरेशन</value>
   </data>
   <data name="GitLab CI" xml:space="preserve">
     <value>GitLab CI</value>
@@ -699,11 +687,11 @@
   <data name="Included" xml:space="preserve">
     <value>शामिल</value>
   </data>
-  <data name="Includes extensive documentation and practical examples to get you started quickly." xml:space="preserve">
-    <value>विस्तृत दस्तावेज़ीकरण और व्यावहारिक उदाहरण शामिल हैं ताकि आप जल्दी शुरुआत कर सकें।</value>
-  </data>
   <data name="Includes Tutorials" xml:space="preserve">
     <value>ट्यूटोरियल्स शामिल हैं</value>
+  </data>
+  <data name="Includes extensive documentation and practical examples to get you started quickly." xml:space="preserve">
+    <value>विस्तृत दस्तावेज़ीकरण और व्यावहारिक उदाहरण शामिल हैं ताकि आप जल्दी शुरुआत कर सकें।</value>
   </data>
   <data name="Input Items → Chat &lt;code&gt;messages&lt;/code&gt;; instructions → system message; Responses function tool/choice shapes → Chat wrappers; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;reasoning_effort&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;response_format&lt;/code&gt;." xml:space="preserve">
     <value>इनपुट आइटम → चैट &lt;code&gt;messages&lt;/code&gt;; निर्देश → सिस्टम संदेश; रिएंस्स फ़ंक्शन टूल/चॉइस आकार → चैट व्रैपर्स; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;reasoning_effort&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;response_format&lt;/code&gt;.</value>
@@ -729,9 +717,6 @@
   <data name="Interoperability" xml:space="preserve">
     <value>अंतरक्रियाशीलता</value>
   </data>
-  <data name="is Free Software" xml:space="preserve">
-    <value>मुक्त सॉफ्टवेयर है</value>
-  </data>
   <data name="Is it free to use Aiursoft Template?" xml:space="preserve">
     <value>क्या Aiursoft Template का उपयोग करना मुफ़्त है?</value>
   </data>
@@ -756,6 +741,15 @@
   <data name="Load Balancing, Tiered Fallback &amp; Mixed Providers" xml:space="preserve">
     <value>लोड बैलेंसिंग, स्तरित फॉलबैक और मिक्स्ड प्रोवाइडर्स</value>
   </data>
+  <data name="MCP" xml:space="preserve">
+    <value>MCP</value>
+  </data>
+  <data name="MIT Licence" xml:space="preserve">
+    <value>एमआईटी लाइसेंस</value>
+  </data>
+  <data name="MIT License" xml:space="preserve">
+    <value>MIT लाइसेंस</value>
+  </data>
   <data name="Maintain High Code Quality" xml:space="preserve">
     <value>उच्च कोड गुणवत्ता बनाए रखें</value>
   </data>
@@ -768,32 +762,14 @@
   <data name="Markdown To HTML" xml:space="preserve">
     <value>मार्कडाउन से एचटीएमएल</value>
   </data>
-  <data name="MCP" xml:space="preserve">
-    <value>MCP</value>
-  </data>
   <data name="Message roles/text, function definitions, function calls/results, streaming intent, temperature, top-p, token limit, images, structured format, and token usage survive when representable." xml:space="preserve">
     <value>संदेश भूमिकाएँ/पाठ, फ़ंक्शन परिभाषाएँ, फ़ंक्शन कॉल/परिणाम, स्ट्रीमिंग इरादा, तापमान, top-p, टोकन सीमा, छवियाँ, संरचित प्रारूप, और टोकन उपयोग प्रतिनिधित्व योग्य होने पर बरकरार रहते हैं।</value>
-  </data>
-  <data name="MIT Licence" xml:space="preserve">
-    <value>एमआईटी लाइसेंस</value>
-  </data>
-  <data name="MIT License" xml:space="preserve">
-    <value>MIT लाइसेंस</value>
   </data>
   <data name="Mix Any Client with Any Backend" xml:space="preserve">
     <value>किसी भी क्लाइंट को किसी भी बैकएंड के साथ मिलाएं</value>
   </data>
-  <data name="Model discovery" xml:space="preserve">
-    <value>मॉडल खोज</value>
-  </data>
-  <data name="Model discovery endpoints" xml:space="preserve">
-    <value>मॉडल खोज एंडपॉइंट</value>
-  </data>
   <data name="Model Hosting &amp; Inference" xml:space="preserve">
     <value>मॉडल होस्टिंग और इनफरेंस</value>
-  </data>
-  <data name="Model identity is masked in both directions; &lt;code&gt;stream&lt;/code&gt; is normalized; streaming requests merge &lt;code&gt;stream_options.include_usage=true&lt;/code&gt;; null message content is normalized to an empty string." xml:space="preserve">
-    <value>दोनों दिशाओं में मॉडल पहचान (model identity) छिपाई जाती है; &lt;code&gt;stream&lt;/code&gt; को सामान्यीकृत (normalized) किया जाता है; स्ट्रीमिंग अनुरोधों में &lt;code&gt;stream_options.include_usage=true&lt;/code&gt; मर्ज किया जाता है; शून्य (null) संदेश सामग्री को खाली स्ट्रिंग (empty string) में सामान्यीकृत किया जाता है।</value>
   </data>
   <data name="Model Keep-alive" xml:space="preserve">
     <value>मॉडल कीप-एलाइव</value>
@@ -801,14 +777,23 @@
   <data name="Model Keep-alive (Ping)" xml:space="preserve">
     <value>मॉडल कीप-अलाइव (पिंग)</value>
   </data>
+  <data name="Model discovery" xml:space="preserve">
+    <value>मॉडल खोज</value>
+  </data>
+  <data name="Model discovery endpoints" xml:space="preserve">
+    <value>मॉडल खोज एंडपॉइंट</value>
+  </data>
+  <data name="Model identity is masked in both directions; &lt;code&gt;stream&lt;/code&gt; is normalized; streaming requests merge &lt;code&gt;stream_options.include_usage=true&lt;/code&gt;; null message content is normalized to an empty string." xml:space="preserve">
+    <value>दोनों दिशाओं में मॉडल पहचान (model identity) छिपाई जाती है; &lt;code&gt;stream&lt;/code&gt; को सामान्यीकृत (normalized) किया जाता है; स्ट्रीमिंग अनुरोधों में &lt;code&gt;stream_options.include_usage=true&lt;/code&gt; मर्ज किया जाता है; शून्य (null) संदेश सामग्री को खाली स्ट्रिंग (empty string) में सामान्यीकृत किया जाता है।</value>
+  </data>
   <data name="Models are validated on both client and server sides based on data annotations." xml:space="preserve">
     <value>मॉडल्स को डेटा एनोटेशन्स के आधार पर क्लाइंट और सर्वर दोनों तरफ मान्यता दी जाती है।</value>
   </data>
-  <data name="Multi-backend Support" xml:space="preserve">
-    <value>एकाधिक-बैकएंड समर्थन</value>
-  </data>
   <data name="Multi-Provider Virtual Models" xml:space="preserve">
     <value>बहु-प्रदाता आभासी मॉडल</value>
+  </data>
+  <data name="Multi-backend Support" xml:space="preserve">
+    <value>एकाधिक-बैकएंड समर्थन</value>
   </data>
   <data name="Multi-timezone Handling" xml:space="preserve">
     <value>बहु-समय क्षेत्र संभाल</value>
@@ -864,12 +849,6 @@
   <data name="Needs Celery + Flower" xml:space="preserve">
     <value>सेलरी + फ्लॉवर की आवश्यकता है</value>
   </data>
-  <data name="Needs complex authentication logic" xml:space="preserve">
-    <value>जटिल प्रमाणीकरण तर्क की आवश्यकता है</value>
-  </data>
-  <data name="Needs config/plugins" xml:space="preserve">
-    <value>कॉन्फ़िग/प्लगइन्स की आवश्यकता है</value>
-  </data>
   <data name="Needs ESLint/Prettier setup" xml:space="preserve">
     <value>ESLint/Prettier सेटअप की आवश्यकता है</value>
   </data>
@@ -878,9 +857,6 @@
   </data>
   <data name="Needs Laravel Sail" xml:space="preserve">
     <value>लारवेल सेल की आवश्यकता है</value>
-  </data>
-  <data name="Needs manual configuration" xml:space="preserve">
-    <value>मैनुअल कॉन्फ़िगरेशन की आवश्यकता है</value>
   </data>
   <data name="Needs Medialibrary" xml:space="preserve">
     <value>मीडिया लाइब्रेरी की आवश्यकता है</value>
@@ -894,11 +870,20 @@
   <data name="Needs Spring Security config" xml:space="preserve">
     <value>Spring Security कॉन्फ़िगरेशन की आवश्यकता है</value>
   </data>
-  <data name="Needs third-party plugins" xml:space="preserve">
-    <value>तीसरे पक्ष के प्लग-इन की आवश्यकता है</value>
-  </data>
   <data name="Needs TypeORM or similar" xml:space="preserve">
     <value>टाइपओआरएम या समान की आवश्यकता है</value>
+  </data>
+  <data name="Needs complex authentication logic" xml:space="preserve">
+    <value>जटिल प्रमाणीकरण तर्क की आवश्यकता है</value>
+  </data>
+  <data name="Needs config/plugins" xml:space="preserve">
+    <value>कॉन्फ़िग/प्लगइन्स की आवश्यकता है</value>
+  </data>
+  <data name="Needs manual configuration" xml:space="preserve">
+    <value>मैनुअल कॉन्फ़िगरेशन की आवश्यकता है</value>
+  </data>
+  <data name="Needs third-party plugins" xml:space="preserve">
+    <value>तीसरे पक्ष के प्लग-इन की आवश्यकता है</value>
   </data>
   <data name="No Chat Completions or Responses translation. A non-Ollama backend returns &lt;code&gt;501&lt;/code&gt;." xml:space="preserve">
     <value>कोई Chat Completions या Responses अनुवाद नहीं। एक non-Ollama बैकएंड &lt;code&gt;501&lt;/code&gt; लौटाता है।</value>
@@ -921,17 +906,14 @@
   <data name="Not supported" xml:space="preserve">
     <value>समर्थन नहीं है</value>
   </data>
-  <data name="Offline Capable" xml:space="preserve">
-    <value>ऑफलाइन कैपेबल</value>
-  </data>
   <data name="OIDC &amp; SSO" xml:space="preserve">
     <value>OIDC &amp; SSO</value>
   </data>
-  <data name="Ollama → Ollama" xml:space="preserve">
-    <value>Ollama → Ollama</value>
+  <data name="ORM &amp; Migrations" xml:space="preserve">
+    <value>ORM और माइग्रेशन</value>
   </data>
-  <data name="Ollama → OpenAI" xml:space="preserve">
-    <value>Ollama → OpenAI</value>
+  <data name="Offline Capable" xml:space="preserve">
+    <value>ऑफलाइन कैपेबल</value>
   </data>
   <data name="Ollama &lt;code&gt;input&lt;/code&gt; or legacy &lt;code&gt;prompt&lt;/code&gt; becomes OpenAI &lt;code&gt;input&lt;/code&gt;; OpenAI &lt;code&gt;data[].embedding&lt;/code&gt; is reconstructed as Ollama &lt;code&gt;embeddings[]&lt;/code&gt;." xml:space="preserve">
     <value>Ollama &lt;code&gt;input&lt;/code&gt; या पुराना &lt;code&gt;prompt&lt;/code&gt; OpenAI &lt;code&gt;input&lt;/code&gt; बन जाता है; OpenAI &lt;code&gt;data[].embedding&lt;/code&gt; को Ollama &lt;code&gt;embeddings[]&lt;/code&gt; के रूप में पुनर्निर्मित किया जाता है।</value>
@@ -948,20 +930,11 @@
   <data name="Ollama Client" xml:space="preserve">
     <value>ओलामा क्लाइंट</value>
   </data>
-  <data name="Ollama embedding input" xml:space="preserve">
-    <value>ओलामा एम्बेडिंग इनपुट</value>
-  </data>
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>ओलामा गेटवे: एंटरप्राइज़-ग्रेड एपीआई प्रमाणीकरण, अनुरोध ऑडिटिंग और आभासी मॉडल प्रबंधन के साथ अपने स्थानीय ओलामा को शक्तिशाली बनाएं—आपका सुरक्षित, निजी एआई गेटवे।</value>
   </data>
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>ओलामा गेटवे: अपने स्थानीय ओलामा को एंटरप्राइज़-ग्रेड एपीआई प्रमाणीकरण, अनुरोध ऑडिटिंग, दर सीमांकन और आभासी मॉडल प्रबंधन के साथ सुपरचार्ज करें—आपका सुरक्षित, निजी एआई गेटवे।</value>
-  </data>
-  <data name="Ollama generate JSON/NDJSON is forwarded in the same dialect; model identity, answer text, finish data, and usage are observed and the virtual model name is restored." xml:space="preserve">
-    <value>Ollama generate JSON/NDJSON उसी भेद (dialect) में अग्रेषित किया जाता है; मॉडल पहचान, उत्तर पाठ, समापन डेटा और उपयोग का अवलोकन किया जाता है और वर्चुअल मॉडल का नाम पुनर्स्थापित किया जाता है।</value>
-  </data>
-  <data name="Ollama images array is converted to OpenAI multimodal content parts (text + image_url with data URI)." xml:space="preserve">
-    <value>Ollama छवियाँ सरणी को OpenAI मल्टीमॉडल सामग्री भागों (text + image_url with data URI) में रूपांतरित किया जाता है।</value>
   </data>
   <data name="Ollama JSON/NDJSON stays in the native dialect; model identity, answer, finish data, and usage are observed and rewritten." xml:space="preserve">
     <value>Ollama JSON/NDJSON मूल भाषा में ही रहता है; मॉडल पहचान, उत्तर, समाप्ति डेटा और उपयोग को देखा और पुनः लिखा जाता है।</value>
@@ -969,8 +942,23 @@
   <data name="Ollama Native only" xml:space="preserve">
     <value>केवल Ollama नेटिव</value>
   </data>
+  <data name="Ollama embedding input" xml:space="preserve">
+    <value>ओलामा एम्बेडिंग इनपुट</value>
+  </data>
+  <data name="Ollama generate JSON/NDJSON is forwarded in the same dialect; model identity, answer text, finish data, and usage are observed and the virtual model name is restored." xml:space="preserve">
+    <value>Ollama generate JSON/NDJSON उसी भेद (dialect) में अग्रेषित किया जाता है; मॉडल पहचान, उत्तर पाठ, समापन डेटा और उपयोग का अवलोकन किया जाता है और वर्चुअल मॉडल का नाम पुनर्स्थापित किया जाता है।</value>
+  </data>
+  <data name="Ollama images array is converted to OpenAI multimodal content parts (text + image_url with data URI)." xml:space="preserve">
+    <value>Ollama छवियाँ सरणी को OpenAI मल्टीमॉडल सामग्री भागों (text + image_url with data URI) में रूपांतरित किया जाता है।</value>
+  </data>
   <data name="Ollama only" xml:space="preserve">
     <value>केवल Ollama</value>
+  </data>
+  <data name="Ollama → Ollama" xml:space="preserve">
+    <value>Ollama → Ollama</value>
+  </data>
+  <data name="Ollama → OpenAI" xml:space="preserve">
+    <value>Ollama → OpenAI</value>
   </data>
   <data name="Ollama-only embedding fields such as &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;truncate&lt;/code&gt;, &lt;code&gt;dimensions&lt;/code&gt; variants, and &lt;code&gt;keep_alive&lt;/code&gt; are not copied into the OpenAI request unless represented by the shared input." xml:space="preserve">
     <value>&lt;code&gt;options&lt;/code&gt;, &lt;code&gt;truncate&lt;/code&gt;, &lt;code&gt;dimensions&lt;/code&gt; विभिन्न रूप, और &lt;code&gt;keep_alive&lt;/code&gt; जैसे केवल Ollama के एम्बेडिंग फ़ील्ड, साझा इनपुट द्वारा निरूपित न होने तक, OpenAI अनुरोध में कॉपी नहीं किए जाते हैं।</value>
@@ -987,6 +975,9 @@
   <data name="OllamaGateway" xml:space="preserve">
     <value>OllamaGateway</value>
   </data>
+  <data name="OllamaGateway High Availability Routing" xml:space="preserve">
+    <value>ओलामागेटवे उच्च उपलब्धता रूटिंग</value>
+  </data>
   <data name="OllamaGateway goes beyond simple proxying. It intelligently distributes requests across multiple underlying models, automatically falls back when a provider is unavailable, and lets you combine models from different providers into a single virtual model." xml:space="preserve">
     <value>OllamaGateway साधारण प्रॉक्सी से आगे जाता है। यह कई मॉडलों के बीच अनुरोधों को समझदारी से वितरित करता है, जब कोई प्रदाता अनुपलब्ध हो तो स्वचालित रूप से फॉलबैक करता है, और आपको विभिन्न प्रदाताओं के मॉडलों को एकल आभासी मॉडल में संयोजित करने की अनुमति देता है।</value>
   </data>
@@ -995,9 +986,6 @@
   </data>
   <data name="OllamaGateway has been officially tested and is fully compatible with popular ecosystem tools including Open-WebUI, Opencode, and Roocode. Its robust API translation makes it the ideal choice for deploying autonomous AI agents." xml:space="preserve">
     <value>ओलामागेटवे को आधिकारिक रूप से परीक्षण किया गया है और यह ओपन-वेबयू, ओपencode, और रूकोड जैसे लोकप्रिय पारिस्थितिकी तंत्र उपकरणों के साथ पूर्ण रूप से संगत है। इसकी मजबूत एपीआई अनुवाद इसे स्वायत्त एआई एजेंटों को तैनात करने के लिए आदर्श विकल्प बनाता है।</value>
-  </data>
-  <data name="OllamaGateway High Availability Routing" xml:space="preserve">
-    <value>ओलामागेटवे उच्च उपलब्धता रूटिंग</value>
   </data>
   <data name="OllamaGateway in Docker" xml:space="preserve">
     <value>डॉकर में OllamaGateway</value>
@@ -1029,12 +1017,6 @@
   <data name="Open Source" xml:space="preserve">
     <value>ओपन सोर्स</value>
   </data>
-  <data name="OpenAI → Ollama" xml:space="preserve">
-    <value>OpenAI → Ollama</value>
-  </data>
-  <data name="OpenAI → OpenAI" xml:space="preserve">
-    <value>OpenAI → OpenAI</value>
-  </data>
   <data name="OpenAI &lt;code&gt;input&lt;/code&gt; is sent as Ollama &lt;code&gt;input&lt;/code&gt;; &lt;code&gt;embeddings[]&lt;/code&gt; and &lt;code&gt;prompt_eval_count&lt;/code&gt; are reconstructed as OpenAI &lt;code&gt;data[]&lt;/code&gt; and &lt;code&gt;usage&lt;/code&gt;." xml:space="preserve">
     <value>OpenAI &lt;code&gt;input&lt;/code&gt; को Ollama &lt;code&gt;input&lt;/code&gt; के रूप में भेजा जाता है; &lt;code&gt;embeddings[]&lt;/code&gt; और &lt;code&gt;prompt_eval_count&lt;/code&gt; को OpenAI &lt;code&gt;data[]&lt;/code&gt; और &lt;code&gt;usage&lt;/code&gt; के रूप में पुनर्निर्मित किया जाता है।</value>
   </data>
@@ -1050,6 +1032,9 @@
   <data name="OpenAI Client" xml:space="preserve">
     <value>OpenAI Client</value>
   </data>
+  <data name="OpenAI Responses client routes" xml:space="preserve">
+    <value>OpenAI Responses क्लाइंट रूट्स</value>
+  </data>
   <data name="OpenAI content parts → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → boolean &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;." xml:space="preserve">
     <value>OpenAI कंटेंट पार्ट्स → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → बूलियन &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;.</value>
   </data>
@@ -1062,20 +1047,23 @@
   <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
     <value>OpenAI मल्टीमॉडल सामग्री सरणी निकाली जाती है: image_url डेटा Ollama इमेज सरणी में जाता है, टेक्स्ट सामग्री बन जाता है।</value>
   </data>
-  <data name="OpenAI Responses client routes" xml:space="preserve">
-    <value>OpenAI Responses क्लाइंट रूट्स</value>
-  </data>
   <data name="OpenAI target fields &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_tokens&lt;/code&gt; use VM values when set. VM &lt;code&gt;Thinking&lt;/code&gt; overrides the translated client value." xml:space="preserve">
     <value>OpenAI लक्ष्य फ़ील्ड &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, और &lt;code&gt;max_tokens&lt;/code&gt; सेट किए जाने पर VM मानों का उपयोग करते हैं। VM &lt;code&gt;Thinking&lt;/code&gt; अनुवादित क्लाइंट मान को ओवरराइड करता है।</value>
+  </data>
+  <data name="OpenAI → Ollama" xml:space="preserve">
+    <value>OpenAI → Ollama</value>
+  </data>
+  <data name="OpenAI → OpenAI" xml:space="preserve">
+    <value>OpenAI → OpenAI</value>
   </data>
   <data name="OpenAI-type Provider" xml:space="preserve">
     <value>OpenAI-प्रकार प्रदाता</value>
   </data>
-  <data name="Opencode and Qwen Code working with OllamaGateway" xml:space="preserve">
-    <value>OllamaGateway के साथ Opencode और Qwen Code का काम करना</value>
-  </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>ओपनआईडी कनेक्ट एकीकरण</value>
+  </data>
+  <data name="Opencode and Qwen Code working with OllamaGateway" xml:space="preserve">
+    <value>OllamaGateway के साथ Opencode और Qwen Code का काम करना</value>
   </data>
   <data name="Optimized Docker &amp; K8s config" xml:space="preserve">
     <value>कृषित Docker &amp; K8s कॉन्फ़िगरेशन</value>
@@ -1085,9 +1073,6 @@
   </data>
   <data name="Optimized for Qwen Code automated development" xml:space="preserve">
     <value>Qwen Code स्वचालित विकास के लिए अनुकूलित</value>
-  </data>
-  <data name="ORM &amp; Migrations" xml:space="preserve">
-    <value>ORM और माइग्रेशन</value>
   </data>
   <data name="Out-of-the-box" xml:space="preserve">
     <value>बिना किसी सेटअप के तैयार</value>
@@ -1125,11 +1110,11 @@
   <data name="Policy and implementation" xml:space="preserve">
     <value>नीति और कार्यान्वयन</value>
   </data>
-  <data name="Pre-configured and tested" xml:space="preserve">
-    <value>पूर्व-कॉन्फ़िगर और परीक्षण किया गया</value>
-  </data>
   <data name="Pre-configured CI/CD pipelines specifically for GitLab." xml:space="preserve">
     <value>गिटलैब के लिए विशेष रूप से पूर्व-संरचित CI/CD पाइपलाइन</value>
+  </data>
+  <data name="Pre-configured and tested" xml:space="preserve">
+    <value>पूर्व-कॉन्फ़िगर और परीक्षण किया गया</value>
   </data>
   <data name="Pre-configured pipelines for dev/prod" xml:space="preserve">
     <value>dev/prod के लिए पूर्व-विन्यस्त पाइपलाइन्स</value>
@@ -1181,9 +1166,6 @@
   </data>
   <data name="Requester&apos;s API" xml:space="preserve">
     <value>अनुरोधकर्ता का API</value>
-  </data>
-  <data name="requires a Responses-capable provider" xml:space="preserve">
-    <value>Responses सक्षम प्रदाता आवश्यक है</value>
   </data>
   <data name="Requires Laravel Socialite config" xml:space="preserve">
     <value>लारवेल सोशलिट कॉन्फ़िग की आवश्यकता है</value>
@@ -1245,12 +1227,6 @@
   <data name="Smart Configuration Overrides" xml:space="preserve">
     <value>स्मार्ट कॉन्फ़िगरेशन ओवरराइड्स</value>
   </data>
-  <data name="Smart dark mode that adapts to the user&apos;s system settings." xml:space="preserve">
-    <value>स्मार्ट डार्क मोड जो उपयोगकर्ता के सिस्टम सेटिंग्स के अनुसार अनुकूलित होता है।</value>
-  </data>
-  <data name="Smart dark mode that automatically adapts to the user&apos;s system settings." xml:space="preserve">
-    <value>स्मार्ट डार्क मोड जो स्वचालित रूप से उपयोगकर्ता की सिस्टम सेटिंग्स के अनुकूल हो जाता है।</value>
-  </data>
   <data name="Smart Load Balancing" xml:space="preserve">
     <value>स्मार्ट लोड बैलेंसिंग</value>
   </data>
@@ -1260,26 +1236,29 @@
   <data name="Smart Proxy" xml:space="preserve">
     <value>स्मार्ट प्रॉक्सी</value>
   </data>
-  <data name="Standard implementation. Switch providers without compilation." xml:space="preserve">
-    <value>मानक कार्यान्वयन। संकलन के बिना प्रदाताओं को स्विच करें।</value>
+  <data name="Smart dark mode that adapts to the user&apos;s system settings." xml:space="preserve">
+    <value>स्मार्ट डार्क मोड जो उपयोगकर्ता के सिस्टम सेटिंग्स के अनुसार अनुकूलित होता है।</value>
+  </data>
+  <data name="Smart dark mode that automatically adapts to the user&apos;s system settings." xml:space="preserve">
+    <value>स्मार्ट डार्क मोड जो स्वचालित रूप से उपयोगकर्ता की सिस्टम सेटिंग्स के अनुकूल हो जाता है।</value>
   </data>
   <data name="Standard OpenID" xml:space="preserve">
     <value>मानक OpenID</value>
   </data>
-  <data name="Start a new project" xml:space="preserve">
-    <value>एक नया प्रोजेक्ट शुरू करें</value>
+  <data name="Standard implementation. Switch providers without compilation." xml:space="preserve">
+    <value>मानक कार्यान्वयन। संकलन के बिना प्रदाताओं को स्विच करें।</value>
   </data>
   <data name="Start Shipping Value." xml:space="preserve">
     <value>मूल्य शिपिंग शुरू करें।</value>
+  </data>
+  <data name="Start a new project" xml:space="preserve">
+    <value>एक नया प्रोजेक्ट शुरू करें</value>
   </data>
   <data name="Start with a single &apos;docker run&apos; command." xml:space="preserve">
     <value>एकल &apos;docker run&apos; कमांड के साथ शुरुआत करें।</value>
   </data>
   <data name="Starts without any configuration" xml:space="preserve">
     <value>बिना किसी कॉन्फ़िगरेशन के शुरू होता है</value>
-  </data>
-  <data name="state-aware" xml:space="preserve">
-    <value>अवस्था-सचेत</value>
   </data>
   <data name="State/background requests require a Responses backend. Native Responses tools and unknown Items also require Responses. Metadata and unknown top-level controls prefer Responses and are omitted on fallback. Responses-only annotations/citations cannot be recreated from Chat output." xml:space="preserve">
     <value>State/background अनुरोधों के लिए Responses बैकएंड आवश्यक है। नेटिव Responses टूल्स और अज्ञात Items के लिए भी Responses आवश्यक है। Metadata और अज्ञात top-level नियंत्रण Responses को प्राथमिकता देते हैं और fallback पर हटा दिए जाते हैं। केवल Responses के annotations/citations Chat आउटपुट से पुनः नहीं बनाए जा सकते।</value>
@@ -1296,14 +1275,14 @@
   <data name="Strict Lint Rules" xml:space="preserve">
     <value>कठोर लिंट नियम</value>
   </data>
+  <data name="Strict Unit Testing" xml:space="preserve">
+    <value>कठोर यूनिट परीक्षण</value>
+  </data>
   <data name="Strict linting rules and zero warnings by default." xml:space="preserve">
     <value>डिफ़ॉल्ट रूप से सख्त लिंटिंग नियम और शून्य चेतावनियाँ</value>
   </data>
   <data name="Strict linting rules with 0 warnings in the default project." xml:space="preserve">
     <value>डिफ़ॉल्ट प्रोजेक्ट में 0 चेतावनियाँ के साथ सख्त लिंटिंग नियम।</value>
-  </data>
-  <data name="Strict Unit Testing" xml:space="preserve">
-    <value>कठोर यूनिट परीक्षण</value>
   </data>
   <data name="Strongly Consistent Linting" xml:space="preserve">
     <value>तीव्र और सुसंगत लिंटिंग</value>
@@ -1317,14 +1296,11 @@
   <data name="Supercharge Your Native" xml:space="preserve">
     <value>अपने स्थानीय को सुपरचार्ज करें</value>
   </data>
-  <data name="Supports both environment variables and database-backed settings, with automatic priority given to environment variables for seamless overrides." xml:space="preserve">
-    <value>पर्यावरण चर और डेटाबेस-आधारित सेटिंग्स दोनों का समर्थन करता है, जिसमें पर्यावरण चरों को बिना किसी दिक्कत के अपडेट करने के लिए स्वचालित प्राथमिकता दी जाती है।</value>
-  </data>
   <data name="Supports JetBrains Rider for easy code style fixes." xml:space="preserve">
     <value>जेटब्रेन्स राइडर का समर्थन करता है आसान कोड स्टाइल फिक्स के लिए।</value>
   </data>
-  <data name="System → &lt;code&gt;instructions&lt;/code&gt;; messages/images → Responses input Items; Anthropic tools → Responses function tools; named tool choice → Responses &lt;code&gt;name&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; Responses reasoning/text/function output → Anthropic blocks." xml:space="preserve">
-    <value>सिस्टम → &lt;code&gt;instructions&lt;/code&gt;; संदेश/छवियाँ → Responses इनपुट आइटम; Anthropic टूल्स → Responses फ़ंक्शन टूल्स; नामित टूल चॉइस → Responses &lt;code&gt;name&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; Responses तर्क/पाठ/फ़ंक्शन आउटपुट → Anthropic ब्लॉक्स।</value>
+  <data name="Supports both environment variables and database-backed settings, with automatic priority given to environment variables for seamless overrides." xml:space="preserve">
+    <value>पर्यावरण चर और डेटाबेस-आधारित सेटिंग्स दोनों का समर्थन करता है, जिसमें पर्यावरण चरों को बिना किसी दिक्कत के अपडेट करने के लिए स्वचालित प्राथमिकता दी जाती है।</value>
   </data>
   <data name="System instructions, text, base64/URL images, function tools/calls/results, tool choice, temperature, top-p, max tokens, response reasoning text, stream, finish state, and usage." xml:space="preserve">
     <value>सिस्टम निर्देश, पाठ, base64/URL छवियाँ, फ़ंक्शन टूल्स/कॉल्स/रिजल्ट्स, टूल चॉइस, तापमान, top-p, अधिकतम टोकन्स, रिस्पॉन्स तर्क पाठ, स्ट्रीम, समाप्ति स्थिति, और उपयोग।</value>
@@ -1334,6 +1310,9 @@
   </data>
   <data name="System text, message text, base64 images, tool definitions, &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt;, tool choice modes, temperature, top-p, max tokens, visible reasoning text, stream, finish reason, and usage." xml:space="preserve">
     <value>सिस्टम टेक्स्ट, संदेश टेक्स्ट, base64 इमेजेस, टूल परिभाषाएँ, &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt;, टूल चॉइस मोड्स, तापमान, top-p, अधिकतम टोकन्स, दृश्य तर्कण टेक्स्ट, स्ट्रीम, समापन कारण, और उपयोग।</value>
+  </data>
+  <data name="System → &lt;code&gt;instructions&lt;/code&gt;; messages/images → Responses input Items; Anthropic tools → Responses function tools; named tool choice → Responses &lt;code&gt;name&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; Responses reasoning/text/function output → Anthropic blocks." xml:space="preserve">
+    <value>सिस्टम → &lt;code&gt;instructions&lt;/code&gt;; संदेश/छवियाँ → Responses इनपुट आइटम; Anthropic टूल्स → Responses फ़ंक्शन टूल्स; नामित टूल चॉइस → Responses &lt;code&gt;name&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; Responses तर्क/पाठ/फ़ंक्शन आउटपुट → Anthropic ब्लॉक्स।</value>
   </data>
   <data name="System/developer messages → &lt;code&gt;instructions&lt;/code&gt;; messages → &lt;code&gt;input&lt;/code&gt; Items; function schemas are flattened; named &lt;code&gt;tool_choice.function.name&lt;/code&gt; → Responses &lt;code&gt;tool_choice.name&lt;/code&gt;; &lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;." xml:space="preserve">
     <value>सिस्टम/डेवलपर संदेश → &lt;code&gt;instructions&lt;/code&gt;; संदेश → &lt;code&gt;input&lt;/code&gt; आइटम; फ़ंक्शन स्कीमा सपाट कर दिए जाते हैं; नामित &lt;code&gt;tool_choice.function.name&lt;/code&gt; → Responses &lt;code&gt;tool_choice.name&lt;/code&gt;; &lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;.</value>
@@ -1350,6 +1329,9 @@
   <data name="Technical Lead" xml:space="preserve">
     <value>तकनीकी लीड</value>
   </data>
+  <data name="The Philosophy" xml:space="preserve">
+    <value>द फिलॉसफी</value>
+  </data>
   <data name="The definitive, battle-tested .NET enterprise foundation. From Auth to AI, we&apos;ve solved the hard parts so you don&apos;t have to." xml:space="preserve">
     <value>निर्णायक, युद्ध-परीक्षित .NET उद्यम स्थापना। प्राथमिकता से एआई तक, हमने कठिन हिस्सों को हल कर दिया है ताकि आपको इसकी आवश्यकता न हो।</value>
   </data>
@@ -1362,14 +1344,11 @@
   <data name="The navigation bar automatically adjusts based on user roles and permissions." xml:space="preserve">
     <value>नेविगेशन बार स्वचालित रूप से उपयोगकर्ता की भूमिकाओं और अनुमतियों के आधार पर समायोजित होता है।</value>
   </data>
-  <data name="The original request and successful response JSON are cloned; unknown fields are preserved; model identity is rewritten." xml:space="preserve">
-    <value>मूल अनुरोध और सफल प्रतिक्रिया JSON क्लोन किए जाते हैं; अज्ञात फ़ील्ड सुरक्षित रहते हैं; मॉडल पहचान पुनः-लेखित की जाती है।</value>
-  </data>
   <data name="The original request and successful response JSON are cloned; unknown OpenAI embedding fields are preserved; only model identity is rewritten." xml:space="preserve">
     <value>मूल अनुरोध और सफल प्रतिक्रिया JSON को क्लोन किया जाता है; अज्ञात OpenAI एम्बेडिंग फ़ील्डों को सुरक्षित रखा जाता है; केवल मॉडल पहचान को पुनः लेखित किया जाता है।</value>
   </data>
-  <data name="The Philosophy" xml:space="preserve">
-    <value>द फिलॉसफी</value>
+  <data name="The original request and successful response JSON are cloned; unknown fields are preserved; model identity is rewritten." xml:space="preserve">
+    <value>मूल अनुरोध और सफल प्रतिक्रिया JSON क्लोन किए जाते हैं; अज्ञात फ़ील्ड सुरक्षित रहते हैं; मॉडल पहचान पुनः-लेखित की जाती है।</value>
   </data>
   <data name="The provider-level &lt;code&gt;keep_alive&lt;/code&gt; replaces the client value on this route." xml:space="preserve">
     <value>इस राउट पर प्रोवाइडर-स्तरीय &lt;code&gt;keep_alive&lt;/code&gt; क्लाइंट मान को बदल देता है।</value>
@@ -1458,6 +1437,36 @@
   <data name="Use it as a foundation for your SaaS, a backend for your mobile app, a corporate website, or a personal blog. The possibilities are endless." xml:space="preserve">
     <value>इसे अपने SaaS की नींव के रूप में, अपने मोबाइल ऐप के लिए बैकएंड के रूप में, एक कॉर्पोरेट वेबसाइट के रूप में, या एक व्यक्तिगत ब्लॉग के रूप में उपयोग करें। संभावनाएं अनंत हैं।</value>
   </data>
+  <data name="VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are injected into Ollama &lt;code&gt;options&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, और &lt;code&gt;RepeatPenalty&lt;/code&gt; को Ollama &lt;code&gt;options&lt;/code&gt; में इंजेक्ट किया जाता है।</value>
+  </data>
+  <data name="VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; hard-override Ollama &lt;code&gt;options&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, और &lt;code&gt;RepeatPenalty&lt;/code&gt; Ollama &lt;code&gt;options&lt;/code&gt; को कठोर रूप से ओवरराइड करते हैं।</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override Chat target controls; Chat-only VM thinking is injected through &lt;code&gt;chat_template_kwargs&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, और &lt;code&gt;Thinking&lt;/code&gt; Chat लक्ष्य नियंत्रणों को ओवरराइड करते हैं; केवल Chat के लिए VM थिंकिंग &lt;code&gt;chat_template_kwargs&lt;/code&gt; के माध्यम से इंजेक्ट की जाती है।</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override Chat target fields. Ollama-only DB sampling/context controls do not apply to Chat." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, और &lt;code&gt;Thinking&lt;/code&gt; Chat लक्षित फ़ील्ड को ओवरराइड करते हैं। केवल Ollama के लिए DB सैंपलिंग/संदर्भ नियंत्रण Chat पर लागू नहीं होते हैं।</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override their target fields. Existing nested &lt;code&gt;chat_template_kwargs&lt;/code&gt; members are preserved around &lt;code&gt;enable_thinking&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt; और &lt;code&gt;Thinking&lt;/code&gt; अपने लक्ष्य फ़ील्ड को ओवरराइड करते हैं। मौजूदा नेस्टेड &lt;code&gt;chat_template_kwargs&lt;/code&gt; सदस्य &lt;code&gt;enable_thinking&lt;/code&gt; के आसपास सुरक्षित रखे जाते हैं।</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other VM sampling fields are not applicable." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; और &lt;code&gt;NumPredict&lt;/code&gt; &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; और &lt;code&gt;max_output_tokens&lt;/code&gt; को ओवरराइड करते हैं। अन्य VM सैंपलिंग फ़ील्ड लागू नहीं हैं।</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other nested Responses fields remain untouched." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, और &lt;code&gt;NumPredict&lt;/code&gt; &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, और &lt;code&gt;max_output_tokens&lt;/code&gt; को ओवरराइड करते हैं। अन्य नेस्टेड Responses फ़ील्ड अपरिवर्तित रहती हैं।</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, और &lt;code&gt;NumPredict&lt;/code&gt; Responses फ़ील्ड को ओवरराइड करते हैं। VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, और &lt;code&gt;RepeatPenalty&lt;/code&gt; के लिए कोई Responses लक्ष्य फ़ील्ड नहीं है।</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, और &lt;code&gt;NumPredict&lt;/code&gt; Responses लक्ष्य फ़ील्ड्स को ओवरराइड करते हैं। VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, और &lt;code&gt;RepeatPenalty&lt;/code&gt; Responses नियंत्रण नहीं हैं।</value>
+  </data>
+  <data name="VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
+    <value>VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict, और RepeatPenalty अनुरोध को ओवरराइड करते हैं; अनुपस्थित &lt;code&gt;keep_alive&lt;/code&gt; Provider मान का उपयोग करता है।</value>
+  </data>
   <data name="Validation" xml:space="preserve">
     <value>सत्यापन</value>
   </data>
@@ -1478,36 +1487,6 @@
   </data>
   <data name="Virtual-model names and gateway-owned metadata are rendered directly in the requested client shape." xml:space="preserve">
     <value>वर्चुअल-मॉडल नाम और गेटवे-मालिक मेटाडेटा सीधे अनुरोधित क्लाइंट रूप में रेंडर किए जाते हैं।</value>
-  </data>
-  <data name="VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are injected into Ollama &lt;code&gt;options&lt;/code&gt;." xml:space="preserve">
-    <value>VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, और &lt;code&gt;RepeatPenalty&lt;/code&gt; को Ollama &lt;code&gt;options&lt;/code&gt; में इंजेक्ट किया जाता है।</value>
-  </data>
-  <data name="VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; hard-override Ollama &lt;code&gt;options&lt;/code&gt;." xml:space="preserve">
-    <value>VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, और &lt;code&gt;RepeatPenalty&lt;/code&gt; Ollama &lt;code&gt;options&lt;/code&gt; को कठोर रूप से ओवरराइड करते हैं।</value>
-  </data>
-  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override Chat target controls; Chat-only VM thinking is injected through &lt;code&gt;chat_template_kwargs&lt;/code&gt;." xml:space="preserve">
-    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, और &lt;code&gt;Thinking&lt;/code&gt; Chat लक्ष्य नियंत्रणों को ओवरराइड करते हैं; केवल Chat के लिए VM थिंकिंग &lt;code&gt;chat_template_kwargs&lt;/code&gt; के माध्यम से इंजेक्ट की जाती है।</value>
-  </data>
-  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override Chat target fields. Ollama-only DB sampling/context controls do not apply to Chat." xml:space="preserve">
-    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, और &lt;code&gt;Thinking&lt;/code&gt; Chat लक्षित फ़ील्ड को ओवरराइड करते हैं। केवल Ollama के लिए DB सैंपलिंग/संदर्भ नियंत्रण Chat पर लागू नहीं होते हैं।</value>
-  </data>
-  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override their target fields. Existing nested &lt;code&gt;chat_template_kwargs&lt;/code&gt; members are preserved around &lt;code&gt;enable_thinking&lt;/code&gt;." xml:space="preserve">
-    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt; और &lt;code&gt;Thinking&lt;/code&gt; अपने लक्ष्य फ़ील्ड को ओवरराइड करते हैं। मौजूदा नेस्टेड &lt;code&gt;chat_template_kwargs&lt;/code&gt; सदस्य &lt;code&gt;enable_thinking&lt;/code&gt; के आसपास सुरक्षित रखे जाते हैं।</value>
-  </data>
-  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other nested Responses fields remain untouched." xml:space="preserve">
-    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, और &lt;code&gt;NumPredict&lt;/code&gt; &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, और &lt;code&gt;max_output_tokens&lt;/code&gt; को ओवरराइड करते हैं। अन्य नेस्टेड Responses फ़ील्ड अपरिवर्तित रहती हैं।</value>
-  </data>
-  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other VM sampling fields are not applicable." xml:space="preserve">
-    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; और &lt;code&gt;NumPredict&lt;/code&gt; &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; और &lt;code&gt;max_output_tokens&lt;/code&gt; को ओवरराइड करते हैं। अन्य VM सैंपलिंग फ़ील्ड लागू नहीं हैं।</value>
-  </data>
-  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
-    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, और &lt;code&gt;NumPredict&lt;/code&gt; Responses फ़ील्ड को ओवरराइड करते हैं। VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, और &lt;code&gt;RepeatPenalty&lt;/code&gt; के लिए कोई Responses लक्ष्य फ़ील्ड नहीं है।</value>
-  </data>
-  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
-    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, और &lt;code&gt;NumPredict&lt;/code&gt; Responses लक्ष्य फ़ील्ड्स को ओवरराइड करते हैं। VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, और &lt;code&gt;RepeatPenalty&lt;/code&gt; Responses नियंत्रण नहीं हैं।</value>
-  </data>
-  <data name="VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
-    <value>VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict, और RepeatPenalty अनुरोध को ओवरराइड करते हैं; अनुपस्थित &lt;code&gt;keep_alive&lt;/code&gt; Provider मान का उपयोग करता है।</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>स्वागत है</value>
@@ -1556,6 +1535,27 @@
   </data>
   <data name="Zero Tolerance Lint" xml:space="preserve">
     <value>शून्य सहनशीलता लींट</value>
+  </data>
+  <data name="faster" xml:space="preserve">
+    <value>तेज़</value>
+  </data>
+  <data name="for any inquiries or to report issues." xml:space="preserve">
+    <value>किसी भी जानकारी के लिए या समस्याओं की रिपोर्ट करने के लिए।</value>
+  </data>
+  <data name="is Free Software" xml:space="preserve">
+    <value>मुक्त सॉफ्टवेयर है</value>
+  </data>
+  <data name="requires a Responses-capable provider" xml:space="preserve">
+    <value>Responses सक्षम प्रदाता आवश्यक है</value>
+  </data>
+  <data name="state-aware" xml:space="preserve">
+    <value>अवस्था-सचेत</value>
+  </data>
+  <data name="→ Native Ollama" xml:space="preserve">
+    <value>→ स्थानीय ओलामा</value>
+  </data>
+  <data name="→ OpenAI-compatible provider" xml:space="preserve">
+    <value>→ ओपनएआई-सुसंगत प्रदाता</value>
   </data>
 
 </root>

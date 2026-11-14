@@ -33,14 +33,14 @@
   <data name="(Responses)" xml:space="preserve">
     <value>(การตอบกลับ)</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = ไม่จำกัด</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= คงไว้ตลอดไป</value>
   </data>
   <data name="= unload immediately." xml:space="preserve">
     <value>= ถอดออกทันที</value>
-  </data>
-  <data name="0 = unlimited." xml:space="preserve">
-    <value>0 = ไม่จำกัด</value>
   </data>
   <data name="About concurrent requests" xml:space="preserve">
     <value>เกี่ยวกับคำขอที่ทำงานพร้อมกัน</value>
@@ -77,12 +77,6 @@
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>ห้ามใช้ค่าวินาทีดิบ เช่น &apos;300&apos; ให้เขียนเป็น &apos;5m&apos; แทน รูปแบบที่ไม่ถูกต้องจะถูก Ollama ข้ามไปโดยไม่มีคำเตือน</value>
-  </data>
-  <data name="e.g. My Local Ollama" xml:space="preserve">
-    <value>เช่น My Local Ollama</value>
-  </data>
-  <data name="e.g. sk-..." xml:space="preserve">
-    <value>เช่น sk-...</value>
   </data>
   <data name="Health Check Timeout (s)" xml:space="preserve">
     <value>กำหนดเวลาหมดอายุการตรวจสอบสถานะ (วินาที)</value>
@@ -173,6 +167,12 @@
   </data>
   <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
     <value>การรอในคิวการทำงานพร้อมกันจะไม่ใช้เวลารอหมดอายุ (Request Timeout) ของโมเดลเสมือน คำขอจะรอสัญญาณเปิดช่องอย่างไม่จำกัดเวลา — จะมีเพียงการตัดการเชื่อมต่อของไคลเอนต์ (เช่น ปิดเบราว์เซอร์ หรือ SDK หมดเวลา) เท่านั้นที่จะหยุดการรอ โมเดลเสมือนจะไม่ละทิ้งแบ็กเอนด์เพียงเพราะมันกำลังทำงานอยู่</value>
+  </data>
+  <data name="e.g. My Local Ollama" xml:space="preserve">
+    <value>เช่น My Local Ollama</value>
+  </data>
+  <data name="e.g. sk-..." xml:space="preserve">
+    <value>เช่น sk-...</value>
   </data>
 
 </root>

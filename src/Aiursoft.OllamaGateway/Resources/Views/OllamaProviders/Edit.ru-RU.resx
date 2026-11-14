@@ -33,14 +33,14 @@
   <data name="(Responses)" xml:space="preserve">
     <value>(Ответы)</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = без ограничений.</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= сохранять постоянно.</value>
   </data>
   <data name="= unload immediately." xml:space="preserve">
     <value>= выгрузить немедленно.</value>
-  </data>
-  <data name="0 = unlimited." xml:space="preserve">
-    <value>0 = без ограничений.</value>
   </data>
   <data name="About concurrent requests" xml:space="preserve">
     <value>О параллельных запросах</value>
@@ -92,9 +92,6 @@
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>НЕ используйте необработанные секунды, например &apos;300&apos;. Вместо этого пишите &apos;5m&apos;. Неверные форматы будут тихо игнорироваться Ollama.</value>
-  </data>
-  <data name="e.g. Local Server" xml:space="preserve">
-    <value>напр. Локальный сервер</value>
   </data>
   <data name="Edit Ollama Provider" xml:space="preserve">
     <value>Изменить провайдера Ollama</value>
@@ -209,6 +206,9 @@
   </data>
   <data name="Warmup timeout" xml:space="preserve">
     <value>Тайм-аут прогрева</value>
+  </data>
+  <data name="e.g. Local Server" xml:space="preserve">
+    <value>напр. Локальный сервер</value>
   </data>
 
 </root>

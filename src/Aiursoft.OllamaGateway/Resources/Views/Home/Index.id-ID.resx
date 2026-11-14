@@ -18,74 +18,11 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="&apos;DB override&apos; means a hard assignment (=), not a null-coalescing assignment (??=). When the virtual model has a value configured in the database, the client-supplied value is always discarded." xml:space="preserve">
-    <value>&apos;DB override&apos; berarti penugasan keras (=), bukan penugasan null-coalescing (??=). Ketika model virtual memiliki nilai yang dikonfigurasi di basis data, nilai yang disediakan klien selalu diabaikan.</value>
-  </data>
-  <data name="&quot;Fire-and-forget&quot; support for long-running tasks (like emails or AI), featuring a GUI for queue management, parallel processing, and cancellation." xml:space="preserve">
+      <data name="&quot;Fire-and-forget&quot; support for long-running tasks (like emails or AI), featuring a GUI for queue management, parallel processing, and cancellation." xml:space="preserve">
     <value>Dukungan &quot;Fire-and-forget&quot; untuk tugas berjalan panjang (seperti email atau AI), dilengkapi antarmuka GUI untuk manajemen antrian, pemrosesan paralel, dan pembatalan.</value>
   </data>
-  <data name="→ Native Ollama" xml:space="preserve">
-    <value>→ Ollama Asli</value>
-  </data>
-  <data name="→ OpenAI-compatible provider" xml:space="preserve">
-    <value>→ Penyedia yang kompatibel dengan OpenAI</value>
-  </data>
-  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama JSON/NDJSON becomes Anthropic message JSON or &lt;code&gt;message_start/content_block_*/message_delta/message_stop&lt;/code&gt; SSE." xml:space="preserve">
-    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → IL kanonik → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. JSON/NDJSON Ollama menjadi JSON pesan Anthropic atau SSE &lt;code&gt;message_start/content_block_*/message_delta/message_stop&lt;/code&gt;.</value>
-  </data>
-  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat JSON/SSE is decoded and reconstructed as Anthropic Messages output." xml:space="preserve">
-    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → IL kanonik → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat JSON/SSE diurai dan dibangun ulang sebagai keluaran Anthropic Messages.</value>
-  </data>
-  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses Items/events are decoded and rebuilt as Anthropic content blocks and SSE." xml:space="preserve">
-    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → IL kanonik → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Item/peristiwa Responses didekodekan dan dibangun ulang sebagai blok konten Anthropic dan SSE.</value>
-  </data>
-  <data name="&lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt; has no Responses mapping. Chat-only controls prefer a Chat backend and are omitted on fallback. Responses annotations, citations, and noncanonical output Items cannot be reconstructed in a Chat Completion response." xml:space="preserve">
-    <value>&lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt; tidak memiliki pemetaan Responses. Kontrol yang hanya untuk Chat lebih memilih backend Chat dan dihilangkan saat fallback. Anotasi Responses, kutipan, dan Item output nonkanonik tidak dapat direkonstruksi dalam respons Chat Completion.</value>
-  </data>
-  <data name="&lt;code&gt;images[]&lt;/code&gt; → OpenAI &lt;code&gt;image_url&lt;/code&gt; data parts; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;think&lt;/code&gt; → &lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt;; Ollama tool calls and responses are rebuilt as OpenAI tools and back again." xml:space="preserve">
-    <value>&lt;code&gt;images[]&lt;/code&gt; → bagian data &lt;code&gt;image_url&lt;/code&gt; OpenAI; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;think&lt;/code&gt; → &lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt;; panggilan dan respons tool Ollama dibangun ulang sebagai tool OpenAI dan kembali lagi.</value>
-  </data>
-  <data name="&lt;code&gt;instructions&lt;/code&gt; → system message; &lt;code&gt;input_text&lt;/code&gt;/&lt;code&gt;input_image&lt;/code&gt; → Ollama content/images; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt;; response events are synthesized with stable output indexes." xml:space="preserve">
-    <value>&lt;code&gt;instructions&lt;/code&gt; → pesan sistem; &lt;code&gt;input_text&lt;/code&gt;/&lt;code&gt;input_image&lt;/code&gt; → konten/gambar Ollama; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt;; peristiwa respons disintesis dengan indeks keluaran yang stabil.</value>
-  </data>
-  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. The response reverses through &lt;code&gt;OpenAiChatProviderResponseDecoder&lt;/code&gt; and &lt;code&gt;OllamaChatClientResponseWriter&lt;/code&gt;." xml:space="preserve">
-    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Respons baliknya melewati &lt;code&gt;OpenAiChatProviderResponseDecoder&lt;/code&gt; dan &lt;code&gt;OllamaChatClientResponseWriter&lt;/code&gt;.</value>
-  </data>
-  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → canonical messages/items → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Typed Responses Items/events are decoded and rebuilt as Ollama JSON/NDJSON." xml:space="preserve">
-    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → pesan/kanonikal item → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Item/peristiwa Responses bertipe dikodekan ulang dan dibangun kembali sebagai JSON/NDJSON Ollama.</value>
-  </data>
-  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; performs capability inspection; &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt; clones the original JSON; &lt;code&gt;OllamaChatWireResponseWriter&lt;/code&gt; keeps NDJSON records in the Ollama dialect." xml:space="preserve">
-    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; melakukan inspeksi kapabilitas; &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt; mengkloning JSON asli; &lt;code&gt;OllamaChatWireResponseWriter&lt;/code&gt; mempertahankan rekaman NDJSON dalam dialek Ollama.</value>
-  </data>
-  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama response records are decoded into canonical events and emitted as Chat Completion JSON/SSE." xml:space="preserve">
-    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Catatan respons Ollama didekodekan menjadi peristiwa kanonik dan dikeluarkan sebagai Chat Completion JSON/SSE.</value>
-  </data>
-  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses output Items/events return through the Responses decoder and Chat client writer." xml:space="preserve">
-    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → IL kanonik → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Item/peristiwa output Responses dikembalikan melalui decoder Responses dan penulis klien Chat.</value>
-  </data>
-  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; inspects capabilities; the provider adapter clones the source JSON; &lt;code&gt;OpenAiChatWireResponseWriter&lt;/code&gt; forwards Chat JSON/SSE while observing text, reasoning, tools, and usage." xml:space="preserve">
-    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; memeriksa kemampuan; adapter penyedia menyalin JSON sumber; &lt;code&gt;OpenAiChatWireResponseWriter&lt;/code&gt; meneruskan Chat JSON/SSE sambil mengamati teks, penalaran, alat, dan penggunaan.</value>
-  </data>
-  <data name="&lt;code&gt;OpenAiEmbeddingClientAdapter&lt;/code&gt; + &lt;code&gt;OpenAiEmbeddingProviderAdapter&lt;/code&gt;. No VM sampling/context override is injected into an OpenAI embedding request." xml:space="preserve">
-    <value>&lt;code&gt;OpenAiEmbeddingClientAdapter&lt;/code&gt; + &lt;code&gt;OpenAiEmbeddingProviderAdapter&lt;/code&gt;. Tidak ada override sampling/konteks VM yang disuntikkan ke permintaan embedding OpenAI.</value>
-  </data>
-  <data name="&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama output becomes typed Responses Items and typed SSE events." xml:space="preserve">
-    <value>&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → IL kanonik → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Output Ollama menjadi Items Responses bertipe dan event SSE bertipe.</value>
-  </data>
-  <data name="&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat completions/chunks are decoded and emitted as Responses JSON/typed SSE." xml:space="preserve">
-    <value>&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → IL kanonik → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Kelengkapan/fragmen Chat didekodekan dan dikeluarkan sebagai JSON Responses/SSE bertipe.</value>
-  </data>
-  <data name="&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;background&lt;/code&gt;, and &lt;code&gt;store&lt;/code&gt; retain their native Responses semantics. This is not byte-transparent because JSON may be reserialized." xml:space="preserve">
-    <value>&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;background&lt;/code&gt;, dan &lt;code&gt;store&lt;/code&gt; mempertahankan semantik Responses aslinya. Ini bukan transparan byte karena JSON mungkin diserialisasi ulang.</value>
-  </data>
-  <data name="&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;store:true&lt;/code&gt;, &lt;code&gt;background:true&lt;/code&gt;, native tools, and unknown Items require a Responses backend. Stateless representable requests fall back to translation." xml:space="preserve">
-    <value>&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;store:true&lt;/code&gt;, &lt;code&gt;background:true&lt;/code&gt;, alat bawaan, dan Item yang tidak dikenal memerlukan backend Responses. Permintaan yang dapat direpresentasikan secara stateless akan kembali ke terjemahan.</value>
-  </data>
-  <data name="&lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt; are hard-overridden when configured." xml:space="preserve">
-    <value>&lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, dan &lt;code&gt;think&lt;/code&gt; akan ditimpa secara paksa (hard-overridden) jika telah dikonfigurasi.</value>
-  </data>
-  <data name="&lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;keep_alive&lt;/code&gt; have no OpenAI Chat mapping. Unknown Ollama controls prefer a native backend but are omitted when this translation path is the only eligible route." xml:space="preserve">
-    <value>&lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, dan &lt;code&gt;keep_alive&lt;/code&gt; tidak memiliki pemetaan OpenAI Chat. Kontrol Ollama yang tidak dikenal lebih memilih backend native, tetapi diabaikan jika jalur terjemahan ini adalah satu-satunya rute yang memenuhi syarat.</value>
+  <data name="&apos;DB override&apos; means a hard assignment (=), not a null-coalescing assignment (??=). When the virtual model has a value configured in the database, the client-supplied value is always discarded." xml:space="preserve">
+    <value>&apos;DB override&apos; berarti penugasan keras (=), bukan penugasan null-coalescing (??=). Ketika model virtual memiliki nilai yang dikonfigurasi di basis data, nilai yang disediakan klien selalu diabaikan.</value>
   </data>
   <data name="2 client dialects × 2 Provider types" xml:space="preserve">
     <value>2 dialek klien × 2 jenis Provider</value>
@@ -101,6 +38,63 @@
   </data>
   <data name="4 client dialects × 3 backend protocols" xml:space="preserve">
     <value>4 dialek klien × 3 protokol backend</value>
+  </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama JSON/NDJSON becomes Anthropic message JSON or &lt;code&gt;message_start/content_block_*/message_delta/message_stop&lt;/code&gt; SSE." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → IL kanonik → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. JSON/NDJSON Ollama menjadi JSON pesan Anthropic atau SSE &lt;code&gt;message_start/content_block_*/message_delta/message_stop&lt;/code&gt;.</value>
+  </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat JSON/SSE is decoded and reconstructed as Anthropic Messages output." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → IL kanonik → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat JSON/SSE diurai dan dibangun ulang sebagai keluaran Anthropic Messages.</value>
+  </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses Items/events are decoded and rebuilt as Anthropic content blocks and SSE." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → IL kanonik → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Item/peristiwa Responses didekodekan dan dibangun ulang sebagai blok konten Anthropic dan SSE.</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; performs capability inspection; &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt; clones the original JSON; &lt;code&gt;OllamaChatWireResponseWriter&lt;/code&gt; keeps NDJSON records in the Ollama dialect." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; melakukan inspeksi kapabilitas; &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt; mengkloning JSON asli; &lt;code&gt;OllamaChatWireResponseWriter&lt;/code&gt; mempertahankan rekaman NDJSON dalam dialek Ollama.</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. The response reverses through &lt;code&gt;OpenAiChatProviderResponseDecoder&lt;/code&gt; and &lt;code&gt;OllamaChatClientResponseWriter&lt;/code&gt;." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Respons baliknya melewati &lt;code&gt;OpenAiChatProviderResponseDecoder&lt;/code&gt; dan &lt;code&gt;OllamaChatClientResponseWriter&lt;/code&gt;.</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → canonical messages/items → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Typed Responses Items/events are decoded and rebuilt as Ollama JSON/NDJSON." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → pesan/kanonikal item → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Item/peristiwa Responses bertipe dikodekan ulang dan dibangun kembali sebagai JSON/NDJSON Ollama.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; inspects capabilities; the provider adapter clones the source JSON; &lt;code&gt;OpenAiChatWireResponseWriter&lt;/code&gt; forwards Chat JSON/SSE while observing text, reasoning, tools, and usage." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; memeriksa kemampuan; adapter penyedia menyalin JSON sumber; &lt;code&gt;OpenAiChatWireResponseWriter&lt;/code&gt; meneruskan Chat JSON/SSE sambil mengamati teks, penalaran, alat, dan penggunaan.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama response records are decoded into canonical events and emitted as Chat Completion JSON/SSE." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Catatan respons Ollama didekodekan menjadi peristiwa kanonik dan dikeluarkan sebagai Chat Completion JSON/SSE.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses output Items/events return through the Responses decoder and Chat client writer." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → IL kanonik → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Item/peristiwa output Responses dikembalikan melalui decoder Responses dan penulis klien Chat.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiEmbeddingClientAdapter&lt;/code&gt; + &lt;code&gt;OpenAiEmbeddingProviderAdapter&lt;/code&gt;. No VM sampling/context override is injected into an OpenAI embedding request." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiEmbeddingClientAdapter&lt;/code&gt; + &lt;code&gt;OpenAiEmbeddingProviderAdapter&lt;/code&gt;. Tidak ada override sampling/konteks VM yang disuntikkan ke permintaan embedding OpenAI.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama output becomes typed Responses Items and typed SSE events." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → IL kanonik → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Output Ollama menjadi Items Responses bertipe dan event SSE bertipe.</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat completions/chunks are decoded and emitted as Responses JSON/typed SSE." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → IL kanonik → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Kelengkapan/fragmen Chat didekodekan dan dikeluarkan sebagai JSON Responses/SSE bertipe.</value>
+  </data>
+  <data name="&lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt; has no Responses mapping. Chat-only controls prefer a Chat backend and are omitted on fallback. Responses annotations, citations, and noncanonical output Items cannot be reconstructed in a Chat Completion response." xml:space="preserve">
+    <value>&lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt; tidak memiliki pemetaan Responses. Kontrol yang hanya untuk Chat lebih memilih backend Chat dan dihilangkan saat fallback. Anotasi Responses, kutipan, dan Item output nonkanonik tidak dapat direkonstruksi dalam respons Chat Completion.</value>
+  </data>
+  <data name="&lt;code&gt;images[]&lt;/code&gt; → OpenAI &lt;code&gt;image_url&lt;/code&gt; data parts; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;think&lt;/code&gt; → &lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt;; Ollama tool calls and responses are rebuilt as OpenAI tools and back again." xml:space="preserve">
+    <value>&lt;code&gt;images[]&lt;/code&gt; → bagian data &lt;code&gt;image_url&lt;/code&gt; OpenAI; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;think&lt;/code&gt; → &lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt;; panggilan dan respons tool Ollama dibangun ulang sebagai tool OpenAI dan kembali lagi.</value>
+  </data>
+  <data name="&lt;code&gt;instructions&lt;/code&gt; → system message; &lt;code&gt;input_text&lt;/code&gt;/&lt;code&gt;input_image&lt;/code&gt; → Ollama content/images; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt;; response events are synthesized with stable output indexes." xml:space="preserve">
+    <value>&lt;code&gt;instructions&lt;/code&gt; → pesan sistem; &lt;code&gt;input_text&lt;/code&gt;/&lt;code&gt;input_image&lt;/code&gt; → konten/gambar Ollama; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt;; peristiwa respons disintesis dengan indeks keluaran yang stabil.</value>
+  </data>
+  <data name="&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;background&lt;/code&gt;, and &lt;code&gt;store&lt;/code&gt; retain their native Responses semantics. This is not byte-transparent because JSON may be reserialized." xml:space="preserve">
+    <value>&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;background&lt;/code&gt;, dan &lt;code&gt;store&lt;/code&gt; mempertahankan semantik Responses aslinya. Ini bukan transparan byte karena JSON mungkin diserialisasi ulang.</value>
+  </data>
+  <data name="&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;store:true&lt;/code&gt;, &lt;code&gt;background:true&lt;/code&gt;, native tools, and unknown Items require a Responses backend. Stateless representable requests fall back to translation." xml:space="preserve">
+    <value>&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;store:true&lt;/code&gt;, &lt;code&gt;background:true&lt;/code&gt;, alat bawaan, dan Item yang tidak dikenal memerlukan backend Responses. Permintaan yang dapat direpresentasikan secara stateless akan kembali ke terjemahan.</value>
+  </data>
+  <data name="&lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt; are hard-overridden when configured." xml:space="preserve">
+    <value>&lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, dan &lt;code&gt;think&lt;/code&gt; akan ditimpa secara paksa (hard-overridden) jika telah dikonfigurasi.</value>
+  </data>
+  <data name="&lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;keep_alive&lt;/code&gt; have no OpenAI Chat mapping. Unknown Ollama controls prefer a native backend but are omitted when this translation path is the only eligible route." xml:space="preserve">
+    <value>&lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, dan &lt;code&gt;keep_alive&lt;/code&gt; tidak memiliki pemetaan OpenAI Chat. Kontrol Ollama yang tidak dikenal lebih memilih backend native, tetapi diabaikan jika jalur terjemahan ini adalah satu-satunya rute yang memenuhi syarat.</value>
   </data>
   <data name="A built-in Role-Based Access Control (RBAC) system for fine-grained permission management." xml:space="preserve">
     <value>Sistem Role-Based Access Control (RBAC) bawaan untuk manajemen izin yang terperinci.</value>
@@ -123,6 +117,21 @@
   <data name="A modern, feature-rich, and highly extensible foundation for your next web application." xml:space="preserve">
     <value>Sebuah fondasi yang modern, kaya fitur, dan sangat dapat diperluas untuk aplikasi web Anda berikutnya.</value>
   </data>
+  <data name="AI Driven Translation" xml:space="preserve">
+    <value>Terjemahan Berbasis AI</value>
+  </data>
+  <data name="AI Readable" xml:space="preserve">
+    <value>Dapat Dibaca oleh AI</value>
+  </data>
+  <data name="AI-Powered Translations" xml:space="preserve">
+    <value>Terjemahan Berbasis AI</value>
+  </data>
+  <data name="API Authentication (Bearer)" xml:space="preserve">
+    <value>Autentikasi API (Bearer)</value>
+  </data>
+  <data name="API Rate Limiting" xml:space="preserve">
+    <value>API Rate Limiting</value>
+  </data>
   <data name="Achieve more with Aiursoft Template" xml:space="preserve">
     <value>Raih lebih banyak dengan Aiursoft Template</value>
   </data>
@@ -138,15 +147,6 @@
   <data name="Agent &amp; Ecosystem Ready" xml:space="preserve">
     <value>Siap untuk Agen &amp; Ekosistem</value>
   </data>
-  <data name="AI Driven Translation" xml:space="preserve">
-    <value>Terjemahan Berbasis AI</value>
-  </data>
-  <data name="AI Readable" xml:space="preserve">
-    <value>Dapat Dibaca oleh AI</value>
-  </data>
-  <data name="AI-Powered Translations" xml:space="preserve">
-    <value>Terjemahan Berbasis AI</value>
-  </data>
   <data name="Aiursoft Template" xml:space="preserve">
     <value>Aiursoft Template</value>
   </data>
@@ -156,17 +156,17 @@
   <data name="Alias -&gt; Real" xml:space="preserve">
     <value>Alias -&gt; Real</value>
   </data>
-  <data name="All dependencies are automatically registered and always available via constructor injection." xml:space="preserve">
-    <value>Semua dependensi terdaftar secara otomatis dan selalu tersedia melalui constructor injection.</value>
-  </data>
   <data name="All Ollama VM controls apply and override translated values: sampling, context, repeat penalty, token limit, and thinking. Ollama-only DB controls may be injected." xml:space="preserve">
     <value>Semua kontrol VM Ollama diterapkan dan menimpa nilai yang diterjemahkan: sampling, konteks, penalti pengulangan, batas token, dan berpikir. Kontrol DB khusus Ollama dapat disuntikkan.</value>
+  </data>
+  <data name="All Ollama VM controls apply. &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;RepeatPenalty&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; can be injected from DB even though Anthropic request fields do not directly express them." xml:space="preserve">
+    <value>Semua kontrol VM Ollama berlaku. &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;RepeatPenalty&lt;/code&gt;, dan &lt;code&gt;Thinking&lt;/code&gt; dapat disuntikkan dari DB meskipun field permintaan Anthropic tidak menyatakannya secara langsung.</value>
   </data>
   <data name="All Ollama VM controls apply: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt;. Ollama-only values may therefore be injected even though the client dialect cannot express them." xml:space="preserve">
     <value>Semua kontrol VM Ollama berlaku: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, dan &lt;code&gt;think&lt;/code&gt;. Nilai khusus Ollama dapat disuntikkan meskipun dialek klien tidak dapat mengekspresikannya.</value>
   </data>
-  <data name="All Ollama VM controls apply. &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;RepeatPenalty&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; can be injected from DB even though Anthropic request fields do not directly express them." xml:space="preserve">
-    <value>Semua kontrol VM Ollama berlaku. &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;RepeatPenalty&lt;/code&gt;, dan &lt;code&gt;Thinking&lt;/code&gt; dapat disuntikkan dari DB meskipun field permintaan Anthropic tidak menyatakannya secara langsung.</value>
+  <data name="All dependencies are automatically registered and always available via constructor injection." xml:space="preserve">
+    <value>Semua dependensi terdaftar secara otomatis dan selalu tersedia melalui constructor injection.</value>
   </data>
   <data name="Anduin" xml:space="preserve">
     <value>Anduin</value>
@@ -174,17 +174,14 @@
   <data name="Anduin Xue" xml:space="preserve">
     <value>Anduin Xue</value>
   </data>
-  <data name="Anthropic → Ollama" xml:space="preserve">
-    <value>Anthropic → Ollama</value>
-  </data>
-  <data name="Anthropic → OpenAI" xml:space="preserve">
-    <value>Anthropic → OpenAI</value>
-  </data>
   <data name="Anthropic API Translation" xml:space="preserve">
     <value>Terjemahan API Anthropic</value>
   </data>
   <data name="Anthropic Client" xml:space="preserve">
     <value>Klien Anthropic</value>
+  </data>
+  <data name="Anthropic Messages client routes" xml:space="preserve">
+    <value>Rute klien Anthropic Messages</value>
   </data>
   <data name="Anthropic image content blocks are not yet translated to Ollama format." xml:space="preserve">
     <value>Blok konten gambar Anthropic belum diterjemahkan ke format Ollama.</value>
@@ -198,17 +195,14 @@
   <data name="Anthropic input thinking blocks and signatures are not encoded into Responses input. Unknown content blocks cannot use this route; unknown top-level controls are omitted on fallback. Native Responses-only output Items, annotations, and citations cannot be represented in Anthropic output." xml:space="preserve">
     <value>Blok pemikiran (thinking) dan tanda tangan (signatures) input Anthropic tidak dikodekan ke dalam input Responses. Blok konten yang tidak dikenal tidak dapat menggunakan rute ini; kontrol tingkat atas yang tidak dikenal dihilangkan pada fallback. Item output, anotasi, dan kutipan khusus Responses native tidak dapat direpresentasikan dalam output Anthropic.</value>
   </data>
-  <data name="Anthropic Messages client routes" xml:space="preserve">
-    <value>Rute klien Anthropic Messages</value>
-  </data>
   <data name="Anthropic system content → system message; image blocks → OpenAI &lt;code&gt;image_url&lt;/code&gt;; &lt;code&gt;input_schema&lt;/code&gt; → function &lt;code&gt;parameters&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt; → Chat tool calls/messages; &lt;code&gt;max_tokens&lt;/code&gt; remains the Chat token limit." xml:space="preserve">
     <value>Konten sistem Anthropic → pesan sistem; blok gambar → &lt;code&gt;image_url&lt;/code&gt; OpenAI; &lt;code&gt;input_schema&lt;/code&gt; → &lt;code&gt;parameters&lt;/code&gt; fungsi; &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt; → panggilan/pesan tool Chat; &lt;code&gt;max_tokens&lt;/code&gt; tetap menjadi batas token Chat.</value>
   </data>
-  <data name="API Authentication (Bearer)" xml:space="preserve">
-    <value>Autentikasi API (Bearer)</value>
+  <data name="Anthropic → Ollama" xml:space="preserve">
+    <value>Anthropic → Ollama</value>
   </data>
-  <data name="API Rate Limiting" xml:space="preserve">
-    <value>API Rate Limiting</value>
+  <data name="Anthropic → OpenAI" xml:space="preserve">
+    <value>Anthropic → OpenAI</value>
   </data>
   <data name="Artificial Intelligence Translation" xml:space="preserve">
     <value>Terjemahan Kecerdasan Buatan</value>
@@ -216,14 +210,14 @@
   <data name="Authentik &amp; Okta" xml:space="preserve">
     <value>Authentik &amp; Okta</value>
   </data>
-  <data name="Auto compression and privacy" xml:space="preserve">
-    <value>Kompresi otomatis dan privasi</value>
-  </data>
   <data name="Auto Deployment" xml:space="preserve">
     <value>Penyebaran Otomatis</value>
   </data>
   <data name="Auto Sync" xml:space="preserve">
     <value>Sinkronisasi Otomatis</value>
+  </data>
+  <data name="Auto compression and privacy" xml:space="preserve">
+    <value>Kompresi otomatis dan privasi</value>
   </data>
   <data name="Automatic AI translation into 28 languages." xml:space="preserve">
     <value>Terjemahan AI otomatis ke dalam 28 bahasa.</value>
@@ -300,9 +294,6 @@
   <data name="Built-in" xml:space="preserve">
     <value>Bawaan</value>
   </data>
-  <data name="Built-in administration panel" xml:space="preserve">
-    <value>Panel administrasi bawaan</value>
-  </data>
   <data name="Built-in Auth" xml:space="preserve">
     <value>Otentikasi Bawaan</value>
   </data>
@@ -311,6 +302,9 @@
   </data>
   <data name="Built-in User Management" xml:space="preserve">
     <value>Manajemen Pengguna Bawaan</value>
+  </data>
+  <data name="Built-in administration panel" xml:space="preserve">
+    <value>Panel administrasi bawaan</value>
   </data>
   <data name="Chat" xml:space="preserve">
     <value>Chat</value>
@@ -369,11 +363,11 @@
   <data name="Coverage Report" xml:space="preserve">
     <value>Laporan Cakupan</value>
   </data>
-  <data name="Create multiple aliases for your models with custom system prompts and parameter overrides." xml:space="preserve">
-    <value>Buat beberapa alias untuk model Anda dengan prompt sistem kustom dan penimpaan parameter.</value>
-  </data>
   <data name="Create multiple API keys for different users and applications, each with its own fine-grained permissions." xml:space="preserve">
     <value>Buat beberapa kunci API untuk pengguna dan aplikasi yang berbeda, masing-masing dengan izin yang sangat rinci.</value>
+  </data>
+  <data name="Create multiple aliases for your models with custom system prompts and parameter overrides." xml:space="preserve">
+    <value>Buat beberapa alias untuk model Anda dengan prompt sistem kustom dan penimpaan parameter.</value>
   </data>
   <data name="Create virtual chat models with persistent system prompts." xml:space="preserve">
     <value>Buat model obrolan virtual dengan prompt sistem yang persisten.</value>
@@ -396,24 +390,6 @@
   <data name="Custom development required" xml:space="preserve">
     <value>Pengembangan khusus diperlukan</value>
   </data>
-  <data name="Dashboard for background tasks" xml:space="preserve">
-    <value>Dasbor untuk tugas latar belakang</value>
-  </data>
-  <data name="Dashboard Website" xml:space="preserve">
-    <value>Situs Web Dashboard</value>
-  </data>
-  <data name="Database override" xml:space="preserve">
-    <value>Penghapusan database</value>
-  </data>
-  <data name="Database values are hard assignments" xml:space="preserve">
-    <value>Nilai database adalah penugasan tetap</value>
-  </data>
-  <data name="Day 1 Compliance &amp; Security." xml:space="preserve">
-    <value>Kepatuhan &amp; Keamanan Hari Pertama.</value>
-  </data>
-  <data name="Day 1 Ready" xml:space="preserve">
-    <value>Siap Hari Pertama</value>
-  </data>
   <data name="DB injects the value but it is dropped before the OpenAI request is sent" xml:space="preserve">
     <value>DB menyuntikkan nilai tetapi nilai tersebut dibuang sebelum permintaan OpenAI dikirim</value>
   </data>
@@ -428,6 +404,24 @@
   </data>
   <data name="DB overrides via chat_template_kwargs. When DB is unset, client can pass chat_template_kwargs freely." xml:space="preserve">
     <value>DB melakukan override melalui chat_template_kwargs. Saat DB tidak diatur, klien dapat memberikan chat_template_kwargs secara bebas.</value>
+  </data>
+  <data name="Dashboard Website" xml:space="preserve">
+    <value>Situs Web Dashboard</value>
+  </data>
+  <data name="Dashboard for background tasks" xml:space="preserve">
+    <value>Dasbor untuk tugas latar belakang</value>
+  </data>
+  <data name="Database override" xml:space="preserve">
+    <value>Penghapusan database</value>
+  </data>
+  <data name="Database values are hard assignments" xml:space="preserve">
+    <value>Nilai database adalah penugasan tetap</value>
+  </data>
+  <data name="Day 1 Compliance &amp; Security." xml:space="preserve">
+    <value>Kepatuhan &amp; Keamanan Hari Pertama.</value>
+  </data>
+  <data name="Day 1 Ready" xml:space="preserve">
+    <value>Siap Hari Pertama</value>
   </data>
   <data name="Dedicated management for embedding models for RAG applications." xml:space="preserve">
     <value>Pengelolaan khusus untuk model embedding untuk aplikasi RAG.</value>
@@ -462,14 +456,14 @@
   <data name="Dev &amp; Prod" xml:space="preserve">
     <value>Dev &amp; Prod</value>
   </data>
+  <data name="DevOps Native" xml:space="preserve">
+    <value>Native DevOps</value>
+  </data>
   <data name="Develop exclusively in UTC while the system automatically converts and displays dates in the user&apos;s local time zone." xml:space="preserve">
     <value>Kembangkan secara eksklusif dalam UTC sementara sistem secara otomatis mengonversi dan menampilkan tanggal dalam zona waktu lokal pengguna.</value>
   </data>
   <data name="Developer Experience" xml:space="preserve">
     <value>Pengalaman Pengembang</value>
-  </data>
-  <data name="DevOps Native" xml:space="preserve">
-    <value>Native DevOps</value>
   </data>
   <data name="Direction" xml:space="preserve">
     <value>Arah</value>
@@ -510,11 +504,11 @@
   <data name="Embedding" xml:space="preserve">
     <value>Embedding</value>
   </data>
-  <data name="Embedding adapters select by ProviderType, not chat BackendProtocol" xml:space="preserve">
-    <value>Adaptif embedding memilih berdasarkan ProviderType, bukan BackendProtocol chat</value>
-  </data>
   <data name="Embedding Models" xml:space="preserve">
     <value>Model Embedding</value>
+  </data>
+  <data name="Embedding adapters select by ProviderType, not chat BackendProtocol" xml:space="preserve">
+    <value>Adaptif embedding memilih berdasarkan ProviderType, bukan BackendProtocol chat</value>
   </data>
   <data name="Embedding route" xml:space="preserve">
     <value>Rute embedding</value>
@@ -546,9 +540,6 @@
   <data name="FAQ" xml:space="preserve">
     <value>FAQ</value>
   </data>
-  <data name="faster" xml:space="preserve">
-    <value>lebih cepat</value>
-  </data>
   <data name="Feature Comparison" xml:space="preserve">
     <value>Perbandingan Fitur</value>
   </data>
@@ -570,9 +561,6 @@
   <data name="Flexible API" xml:space="preserve">
     <value>API Fleksibel</value>
   </data>
-  <data name="for any inquiries or to report issues." xml:space="preserve">
-    <value>untuk pertanyaan apa pun atau untuk melaporkan masalah.</value>
-  </data>
   <data name="Founder &amp; Architect at Aiursoft" xml:space="preserve">
     <value>Pendiri &amp; Arsitek di Aiursoft</value>
   </data>
@@ -582,11 +570,11 @@
   <data name="Free" xml:space="preserve">
     <value>Gratis</value>
   </data>
-  <data name="Free for Commercial Use" xml:space="preserve">
-    <value>Gratis untuk Penggunaan Komersial</value>
-  </data>
   <data name="Free Software" xml:space="preserve">
     <value>Perangkat Lunak Bebas</value>
+  </data>
+  <data name="Free for Commercial Use" xml:space="preserve">
+    <value>Gratis untuk Penggunaan Komersial</value>
   </data>
   <data name="Frequently asked questions" xml:space="preserve">
     <value>Pertanyaan yang Sering Diajukan</value>
@@ -618,11 +606,11 @@
   <data name="Gateway-owned operation" xml:space="preserve">
     <value>Operasi yang dimiliki gateway</value>
   </data>
-  <data name="Generic configuration" xml:space="preserve">
-    <value>Konfigurasi umum</value>
-  </data>
   <data name="Generic Dockerfile only" xml:space="preserve">
     <value>Hanya Dockerfile Generik</value>
+  </data>
+  <data name="Generic configuration" xml:space="preserve">
+    <value>Konfigurasi umum</value>
   </data>
   <data name="GitLab CI" xml:space="preserve">
     <value>GitLab CI</value>
@@ -699,11 +687,11 @@
   <data name="Included" xml:space="preserve">
     <value>Termasuk</value>
   </data>
-  <data name="Includes extensive documentation and practical examples to get you started quickly." xml:space="preserve">
-    <value>Termasuk dokumentasi yang luas dan contoh praktis untuk memulai dengan cepat.</value>
-  </data>
   <data name="Includes Tutorials" xml:space="preserve">
     <value>Termasuk Tutorial</value>
+  </data>
+  <data name="Includes extensive documentation and practical examples to get you started quickly." xml:space="preserve">
+    <value>Termasuk dokumentasi yang luas dan contoh praktis untuk memulai dengan cepat.</value>
   </data>
   <data name="Input Items → Chat &lt;code&gt;messages&lt;/code&gt;; instructions → system message; Responses function tool/choice shapes → Chat wrappers; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;reasoning_effort&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;response_format&lt;/code&gt;." xml:space="preserve">
     <value>Item input → pesan &lt;code&gt;messages&lt;/code&gt; Chat; instruksi → pesan sistem; bentuk tool/choice fungsi Responses → pembungkus Chat; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;reasoning_effort&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;response_format&lt;/code&gt;.</value>
@@ -729,9 +717,6 @@
   <data name="Interoperability" xml:space="preserve">
     <value>Interoperabilitas</value>
   </data>
-  <data name="is Free Software" xml:space="preserve">
-    <value>adalah Perangkat Lunak Bebas</value>
-  </data>
   <data name="Is it free to use Aiursoft Template?" xml:space="preserve">
     <value>Apakah Aiursoft Template gratis digunakan?</value>
   </data>
@@ -756,6 +741,15 @@
   <data name="Load Balancing, Tiered Fallback &amp; Mixed Providers" xml:space="preserve">
     <value>Penyeimbangan Beban, Fallback Bertingkat &amp; Penyedia Campuran</value>
   </data>
+  <data name="MCP" xml:space="preserve">
+    <value>MCP</value>
+  </data>
+  <data name="MIT Licence" xml:space="preserve">
+    <value>Lisensi MIT</value>
+  </data>
+  <data name="MIT License" xml:space="preserve">
+    <value>MIT License</value>
+  </data>
   <data name="Maintain High Code Quality" xml:space="preserve">
     <value>Jaga Kualitas Kode yang Tinggi</value>
   </data>
@@ -768,32 +762,14 @@
   <data name="Markdown To HTML" xml:space="preserve">
     <value>Markdown ke HTML</value>
   </data>
-  <data name="MCP" xml:space="preserve">
-    <value>MCP</value>
-  </data>
   <data name="Message roles/text, function definitions, function calls/results, streaming intent, temperature, top-p, token limit, images, structured format, and token usage survive when representable." xml:space="preserve">
     <value>Peran pesan/teks, definisi fungsi, pemanggilan/hasil fungsi, niat streaming, suhu, top-p, batas token, gambar, format terstruktur, dan penggunaan token tetap dipertahankan jika dapat direpresentasikan.</value>
-  </data>
-  <data name="MIT Licence" xml:space="preserve">
-    <value>Lisensi MIT</value>
-  </data>
-  <data name="MIT License" xml:space="preserve">
-    <value>MIT License</value>
   </data>
   <data name="Mix Any Client with Any Backend" xml:space="preserve">
     <value>Gabungkan Klien Apa Saja dengan Backend Apa Saja</value>
   </data>
-  <data name="Model discovery" xml:space="preserve">
-    <value>Penemuan model</value>
-  </data>
-  <data name="Model discovery endpoints" xml:space="preserve">
-    <value>Endpoint penemuan model</value>
-  </data>
   <data name="Model Hosting &amp; Inference" xml:space="preserve">
     <value>Penyimpanan &amp; Inference Model</value>
-  </data>
-  <data name="Model identity is masked in both directions; &lt;code&gt;stream&lt;/code&gt; is normalized; streaming requests merge &lt;code&gt;stream_options.include_usage=true&lt;/code&gt;; null message content is normalized to an empty string." xml:space="preserve">
-    <value>Identitas model disamarkan di kedua arah; &lt;code&gt;stream&lt;/code&gt; dinormalisasi; permintaan streaming menggabungkan &lt;code&gt;stream_options.include_usage=true&lt;/code&gt;; konten pesan null dinormalisasi menjadi string kosong.</value>
   </data>
   <data name="Model Keep-alive" xml:space="preserve">
     <value>Penyimpanan Model Tetap Aktif</value>
@@ -801,14 +777,23 @@
   <data name="Model Keep-alive (Ping)" xml:space="preserve">
     <value>Model Keep-alive (Ping)</value>
   </data>
+  <data name="Model discovery" xml:space="preserve">
+    <value>Penemuan model</value>
+  </data>
+  <data name="Model discovery endpoints" xml:space="preserve">
+    <value>Endpoint penemuan model</value>
+  </data>
+  <data name="Model identity is masked in both directions; &lt;code&gt;stream&lt;/code&gt; is normalized; streaming requests merge &lt;code&gt;stream_options.include_usage=true&lt;/code&gt;; null message content is normalized to an empty string." xml:space="preserve">
+    <value>Identitas model disamarkan di kedua arah; &lt;code&gt;stream&lt;/code&gt; dinormalisasi; permintaan streaming menggabungkan &lt;code&gt;stream_options.include_usage=true&lt;/code&gt;; konten pesan null dinormalisasi menjadi string kosong.</value>
+  </data>
   <data name="Models are validated on both client and server sides based on data annotations." xml:space="preserve">
     <value>Model divalidasi di sisi klien dan server berdasarkan anotasi data.</value>
   </data>
-  <data name="Multi-backend Support" xml:space="preserve">
-    <value>Dukungan Multi-backend</value>
-  </data>
   <data name="Multi-Provider Virtual Models" xml:space="preserve">
     <value>Model Virtual Multi-Penyedia</value>
+  </data>
+  <data name="Multi-backend Support" xml:space="preserve">
+    <value>Dukungan Multi-backend</value>
   </data>
   <data name="Multi-timezone Handling" xml:space="preserve">
     <value>Penanganan Multi-Zona Waktu</value>
@@ -864,12 +849,6 @@
   <data name="Needs Celery + Flower" xml:space="preserve">
     <value>Membutuhkan Celery + Flower</value>
   </data>
-  <data name="Needs complex authentication logic" xml:space="preserve">
-    <value>Membutuhkan logika autentikasi yang kompleks</value>
-  </data>
-  <data name="Needs config/plugins" xml:space="preserve">
-    <value>Membutuhkan konfigurasi/plugin</value>
-  </data>
   <data name="Needs ESLint/Prettier setup" xml:space="preserve">
     <value>Membutuhkan pengaturan ESLint/Prettier</value>
   </data>
@@ -878,9 +857,6 @@
   </data>
   <data name="Needs Laravel Sail" xml:space="preserve">
     <value>Memerlukan Laravel Sail</value>
-  </data>
-  <data name="Needs manual configuration" xml:space="preserve">
-    <value>Memerlukan konfigurasi manual</value>
   </data>
   <data name="Needs Medialibrary" xml:space="preserve">
     <value>Membutuhkan Medialibrary</value>
@@ -894,11 +870,20 @@
   <data name="Needs Spring Security config" xml:space="preserve">
     <value>Membutuhkan konfigurasi Spring Security</value>
   </data>
-  <data name="Needs third-party plugins" xml:space="preserve">
-    <value>Membutuhkan plugin pihak ketiga</value>
-  </data>
   <data name="Needs TypeORM or similar" xml:space="preserve">
     <value>Memerlukan TypeORM atau sejenisnya</value>
+  </data>
+  <data name="Needs complex authentication logic" xml:space="preserve">
+    <value>Membutuhkan logika autentikasi yang kompleks</value>
+  </data>
+  <data name="Needs config/plugins" xml:space="preserve">
+    <value>Membutuhkan konfigurasi/plugin</value>
+  </data>
+  <data name="Needs manual configuration" xml:space="preserve">
+    <value>Memerlukan konfigurasi manual</value>
+  </data>
+  <data name="Needs third-party plugins" xml:space="preserve">
+    <value>Membutuhkan plugin pihak ketiga</value>
   </data>
   <data name="No Chat Completions or Responses translation. A non-Ollama backend returns &lt;code&gt;501&lt;/code&gt;." xml:space="preserve">
     <value>Tidak ada terjemahan Chat Completions atau Responses. Backend non-Ollama mengembalikan &lt;code&gt;501&lt;/code&gt;.</value>
@@ -921,17 +906,14 @@
   <data name="Not supported" xml:space="preserve">
     <value>Tidak didukung</value>
   </data>
-  <data name="Offline Capable" xml:space="preserve">
-    <value>Dapat Berjalan Secara Offline</value>
-  </data>
   <data name="OIDC &amp; SSO" xml:space="preserve">
     <value>OIDC &amp; SSO</value>
   </data>
-  <data name="Ollama → Ollama" xml:space="preserve">
-    <value>Ollama → Ollama</value>
+  <data name="ORM &amp; Migrations" xml:space="preserve">
+    <value>ORM &amp; Migrasi</value>
   </data>
-  <data name="Ollama → OpenAI" xml:space="preserve">
-    <value>Ollama → OpenAI</value>
+  <data name="Offline Capable" xml:space="preserve">
+    <value>Dapat Berjalan Secara Offline</value>
   </data>
   <data name="Ollama &lt;code&gt;input&lt;/code&gt; or legacy &lt;code&gt;prompt&lt;/code&gt; becomes OpenAI &lt;code&gt;input&lt;/code&gt;; OpenAI &lt;code&gt;data[].embedding&lt;/code&gt; is reconstructed as Ollama &lt;code&gt;embeddings[]&lt;/code&gt;." xml:space="preserve">
     <value>Ollama &lt;code&gt;input&lt;/code&gt; atau &lt;code&gt;prompt&lt;/code&gt; lama menjadi OpenAI &lt;code&gt;input&lt;/code&gt;; OpenAI &lt;code&gt;data[].embedding&lt;/code&gt; direkonstruksi sebagai Ollama &lt;code&gt;embeddings[]&lt;/code&gt;.</value>
@@ -948,20 +930,11 @@
   <data name="Ollama Client" xml:space="preserve">
     <value>Klien Ollama</value>
   </data>
-  <data name="Ollama embedding input" xml:space="preserve">
-    <value>Input embedding Ollama</value>
-  </data>
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: Tingkatkan Ollama asli Anda dengan autentikasi API tingkat perusahaan, audit permintaan, dan manajemen model virtual—gerbang AI aman dan pribadi Anda.</value>
   </data>
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway: Tingkatkan Ollama asli Anda dengan autentikasi API tingkat perusahaan, audit permintaan, pembatasan laju, dan manajemen model virtual—gerbang AI aman dan pribadi Anda.</value>
-  </data>
-  <data name="Ollama generate JSON/NDJSON is forwarded in the same dialect; model identity, answer text, finish data, and usage are observed and the virtual model name is restored." xml:space="preserve">
-    <value>Ollama generate JSON/NDJSON diteruskan dalam dialek yang sama; identitas model, teks jawaban, data penyelesaian, dan penggunaan diamati, lalu nama model virtual dipulihkan.</value>
-  </data>
-  <data name="Ollama images array is converted to OpenAI multimodal content parts (text + image_url with data URI)." xml:space="preserve">
-    <value>Array gambar Ollama diubah menjadi bagian konten multimodal OpenAI (teks + image_url dengan data URI).</value>
   </data>
   <data name="Ollama JSON/NDJSON stays in the native dialect; model identity, answer, finish data, and usage are observed and rewritten." xml:space="preserve">
     <value>Ollama JSON/NDJSON tetap dalam dialek asli; identitas model, jawaban, data selesai, dan penggunaan diamati dan ditulis ulang.</value>
@@ -969,8 +942,23 @@
   <data name="Ollama Native only" xml:space="preserve">
     <value>Hanya Ollama Native</value>
   </data>
+  <data name="Ollama embedding input" xml:space="preserve">
+    <value>Input embedding Ollama</value>
+  </data>
+  <data name="Ollama generate JSON/NDJSON is forwarded in the same dialect; model identity, answer text, finish data, and usage are observed and the virtual model name is restored." xml:space="preserve">
+    <value>Ollama generate JSON/NDJSON diteruskan dalam dialek yang sama; identitas model, teks jawaban, data penyelesaian, dan penggunaan diamati, lalu nama model virtual dipulihkan.</value>
+  </data>
+  <data name="Ollama images array is converted to OpenAI multimodal content parts (text + image_url with data URI)." xml:space="preserve">
+    <value>Array gambar Ollama diubah menjadi bagian konten multimodal OpenAI (teks + image_url dengan data URI).</value>
+  </data>
   <data name="Ollama only" xml:space="preserve">
     <value>Ollama saja</value>
+  </data>
+  <data name="Ollama → Ollama" xml:space="preserve">
+    <value>Ollama → Ollama</value>
+  </data>
+  <data name="Ollama → OpenAI" xml:space="preserve">
+    <value>Ollama → OpenAI</value>
   </data>
   <data name="Ollama-only embedding fields such as &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;truncate&lt;/code&gt;, &lt;code&gt;dimensions&lt;/code&gt; variants, and &lt;code&gt;keep_alive&lt;/code&gt; are not copied into the OpenAI request unless represented by the shared input." xml:space="preserve">
     <value>Bidang embedding khusus Ollama seperti &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;truncate&lt;/code&gt;, varian &lt;code&gt;dimensions&lt;/code&gt;, dan &lt;code&gt;keep_alive&lt;/code&gt; tidak disalin ke permintaan OpenAI kecuali diwakili oleh input bersama.</value>
@@ -987,6 +975,9 @@
   <data name="OllamaGateway" xml:space="preserve">
     <value>OllamaGateway</value>
   </data>
+  <data name="OllamaGateway High Availability Routing" xml:space="preserve">
+    <value>OllamaGateway Rute Ketersediaan Tinggi</value>
+  </data>
   <data name="OllamaGateway goes beyond simple proxying. It intelligently distributes requests across multiple underlying models, automatically falls back when a provider is unavailable, and lets you combine models from different providers into a single virtual model." xml:space="preserve">
     <value>OllamaGateway melampaui fungsi proxy sederhana. OllamaGateway secara cerdas mendistribusikan permintaan ke berbagai model dasar, secara otomatis melakukan fallback ketika penyedia tidak tersedia, dan memungkinkan Anda menggabungkan model dari berbagai penyedia menjadi satu model virtual.</value>
   </data>
@@ -995,9 +986,6 @@
   </data>
   <data name="OllamaGateway has been officially tested and is fully compatible with popular ecosystem tools including Open-WebUI, Opencode, and Roocode. Its robust API translation makes it the ideal choice for deploying autonomous AI agents." xml:space="preserve">
     <value>OllamaGateway telah resmi diuji dan sepenuhnya kompatibel dengan alat ekosistem populer termasuk Open-WebUI, Opencode, dan Roocode. Terjemahan API yang kuat menjadikannya pilihan ideal untuk menerapkan agen AI otonom.</value>
-  </data>
-  <data name="OllamaGateway High Availability Routing" xml:space="preserve">
-    <value>OllamaGateway Rute Ketersediaan Tinggi</value>
   </data>
   <data name="OllamaGateway in Docker" xml:space="preserve">
     <value>OllamaGateway di Docker</value>
@@ -1029,12 +1017,6 @@
   <data name="Open Source" xml:space="preserve">
     <value>Sumber Terbuka</value>
   </data>
-  <data name="OpenAI → Ollama" xml:space="preserve">
-    <value>OpenAI → Ollama</value>
-  </data>
-  <data name="OpenAI → OpenAI" xml:space="preserve">
-    <value>OpenAI → OpenAI</value>
-  </data>
   <data name="OpenAI &lt;code&gt;input&lt;/code&gt; is sent as Ollama &lt;code&gt;input&lt;/code&gt;; &lt;code&gt;embeddings[]&lt;/code&gt; and &lt;code&gt;prompt_eval_count&lt;/code&gt; are reconstructed as OpenAI &lt;code&gt;data[]&lt;/code&gt; and &lt;code&gt;usage&lt;/code&gt;." xml:space="preserve">
     <value>&lt;code&gt;input&lt;/code&gt; OpenAI dikirim sebagai &lt;code&gt;input&lt;/code&gt; Ollama; &lt;code&gt;embeddings[]&lt;/code&gt; dan &lt;code&gt;prompt_eval_count&lt;/code&gt; direkonstruksi sebagai &lt;code&gt;data[]&lt;/code&gt; dan &lt;code&gt;usage&lt;/code&gt; OpenAI.</value>
   </data>
@@ -1050,6 +1032,9 @@
   <data name="OpenAI Client" xml:space="preserve">
     <value>Klien OpenAI</value>
   </data>
+  <data name="OpenAI Responses client routes" xml:space="preserve">
+    <value>Rute klien OpenAI Responses</value>
+  </data>
   <data name="OpenAI content parts → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → boolean &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;." xml:space="preserve">
     <value>Bagian konten OpenAI → &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt; Ollama; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → boolean &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt; Ollama.</value>
   </data>
@@ -1062,20 +1047,23 @@
   <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
     <value>Array konten multimodal OpenAI diekstrak: data image_url masuk ke array gambar Ollama, teks menjadi konten.</value>
   </data>
-  <data name="OpenAI Responses client routes" xml:space="preserve">
-    <value>Rute klien OpenAI Responses</value>
-  </data>
   <data name="OpenAI target fields &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_tokens&lt;/code&gt; use VM values when set. VM &lt;code&gt;Thinking&lt;/code&gt; overrides the translated client value." xml:space="preserve">
     <value>Bidang target OpenAI &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, dan &lt;code&gt;max_tokens&lt;/code&gt; menggunakan nilai VM saat diatur. VM &lt;code&gt;Thinking&lt;/code&gt; menimpa nilai klien yang diterjemahkan.</value>
+  </data>
+  <data name="OpenAI → Ollama" xml:space="preserve">
+    <value>OpenAI → Ollama</value>
+  </data>
+  <data name="OpenAI → OpenAI" xml:space="preserve">
+    <value>OpenAI → OpenAI</value>
   </data>
   <data name="OpenAI-type Provider" xml:space="preserve">
     <value>Penyedia tipe OpenAI</value>
   </data>
-  <data name="Opencode and Qwen Code working with OllamaGateway" xml:space="preserve">
-    <value>Opencode dan Qwen Code bekerja dengan OllamaGateway</value>
-  </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>Integrasi OpenID Connect</value>
+  </data>
+  <data name="Opencode and Qwen Code working with OllamaGateway" xml:space="preserve">
+    <value>Opencode dan Qwen Code bekerja dengan OllamaGateway</value>
   </data>
   <data name="Optimized Docker &amp; K8s config" xml:space="preserve">
     <value>Konfigurasi Docker &amp; K8s yang Dioptimalkan</value>
@@ -1085,9 +1073,6 @@
   </data>
   <data name="Optimized for Qwen Code automated development" xml:space="preserve">
     <value>dioptimalkan untuk pengembangan otomatis Qwen Code</value>
-  </data>
-  <data name="ORM &amp; Migrations" xml:space="preserve">
-    <value>ORM &amp; Migrasi</value>
   </data>
   <data name="Out-of-the-box" xml:space="preserve">
     <value>Siap Pakai</value>
@@ -1125,11 +1110,11 @@
   <data name="Policy and implementation" xml:space="preserve">
     <value>Kebijakan dan implementasi</value>
   </data>
-  <data name="Pre-configured and tested" xml:space="preserve">
-    <value>Prakonfigurasi dan teruji</value>
-  </data>
   <data name="Pre-configured CI/CD pipelines specifically for GitLab." xml:space="preserve">
     <value>Pipeline CI/CD yang sudah dikonfigurasi sebelumnya secara khusus untuk GitLab.</value>
+  </data>
+  <data name="Pre-configured and tested" xml:space="preserve">
+    <value>Prakonfigurasi dan teruji</value>
   </data>
   <data name="Pre-configured pipelines for dev/prod" xml:space="preserve">
     <value>Pipa yang dikonfigurasi sebelumnya untuk dev/prod</value>
@@ -1181,9 +1166,6 @@
   </data>
   <data name="Requester&apos;s API" xml:space="preserve">
     <value>API Peminta</value>
-  </data>
-  <data name="requires a Responses-capable provider" xml:space="preserve">
-    <value>memerlukan penyedia yang mendukung Responses</value>
   </data>
   <data name="Requires Laravel Socialite config" xml:space="preserve">
     <value>Memerlukan konfigurasi Laravel Socialite</value>
@@ -1245,12 +1227,6 @@
   <data name="Smart Configuration Overrides" xml:space="preserve">
     <value>Opsi Pengaturan Cerdas</value>
   </data>
-  <data name="Smart dark mode that adapts to the user&apos;s system settings." xml:space="preserve">
-    <value>Mode gelap cerdas yang menyesuaikan dengan pengaturan sistem pengguna.</value>
-  </data>
-  <data name="Smart dark mode that automatically adapts to the user&apos;s system settings." xml:space="preserve">
-    <value>Mode gelap cerdas yang secara otomatis menyesuaikan dengan pengaturan sistem pengguna.</value>
-  </data>
   <data name="Smart Load Balancing" xml:space="preserve">
     <value>Penyeimbangan Beban Cerdas</value>
   </data>
@@ -1260,26 +1236,29 @@
   <data name="Smart Proxy" xml:space="preserve">
     <value>Proksi Cerdas</value>
   </data>
-  <data name="Standard implementation. Switch providers without compilation." xml:space="preserve">
-    <value>Implementasi standar. Ganti penyedia tanpa kompilasi.</value>
+  <data name="Smart dark mode that adapts to the user&apos;s system settings." xml:space="preserve">
+    <value>Mode gelap cerdas yang menyesuaikan dengan pengaturan sistem pengguna.</value>
+  </data>
+  <data name="Smart dark mode that automatically adapts to the user&apos;s system settings." xml:space="preserve">
+    <value>Mode gelap cerdas yang secara otomatis menyesuaikan dengan pengaturan sistem pengguna.</value>
   </data>
   <data name="Standard OpenID" xml:space="preserve">
     <value>OpenID Standar</value>
   </data>
-  <data name="Start a new project" xml:space="preserve">
-    <value>Mulai proyek baru</value>
+  <data name="Standard implementation. Switch providers without compilation." xml:space="preserve">
+    <value>Implementasi standar. Ganti penyedia tanpa kompilasi.</value>
   </data>
   <data name="Start Shipping Value." xml:space="preserve">
     <value>Mulai Kirim Nilai</value>
+  </data>
+  <data name="Start a new project" xml:space="preserve">
+    <value>Mulai proyek baru</value>
   </data>
   <data name="Start with a single &apos;docker run&apos; command." xml:space="preserve">
     <value>Mulai dengan satu perintah &apos;docker run&apos; saja.</value>
   </data>
   <data name="Starts without any configuration" xml:space="preserve">
     <value>Dimulai tanpa konfigurasi apa pun</value>
-  </data>
-  <data name="state-aware" xml:space="preserve">
-    <value>sadar-keadaan</value>
   </data>
   <data name="State/background requests require a Responses backend. Native Responses tools and unknown Items also require Responses. Metadata and unknown top-level controls prefer Responses and are omitted on fallback. Responses-only annotations/citations cannot be recreated from Chat output." xml:space="preserve">
     <value>Permintaan State/background memerlukan backend Responses. Alat Responses native dan Items yang tidak diketahui juga memerlukan Responses. Metadata dan kontrol tingkat atas yang tidak diketahui lebih memilih Responses dan dihilangkan pada fallback. Anotasi/kutipan khusus Responses tidak dapat dibuat ulang dari output Chat.</value>
@@ -1296,14 +1275,14 @@
   <data name="Strict Lint Rules" xml:space="preserve">
     <value>Aturan Lint yang Ketat</value>
   </data>
+  <data name="Strict Unit Testing" xml:space="preserve">
+    <value>Pengujian Unit Ketat</value>
+  </data>
   <data name="Strict linting rules and zero warnings by default." xml:space="preserve">
     <value>Aturan linting yang ketat dan nol peringatan secara default.</value>
   </data>
   <data name="Strict linting rules with 0 warnings in the default project." xml:space="preserve">
     <value>Aturan linting yang ketat dengan 0 peringatan dalam proyek default.</value>
-  </data>
-  <data name="Strict Unit Testing" xml:space="preserve">
-    <value>Pengujian Unit Ketat</value>
   </data>
   <data name="Strongly Consistent Linting" xml:space="preserve">
     <value>Pemeriksaan Kode yang Konsisten Secara Kuat</value>
@@ -1317,14 +1296,11 @@
   <data name="Supercharge Your Native" xml:space="preserve">
     <value>Tingkatkan Native Anda</value>
   </data>
-  <data name="Supports both environment variables and database-backed settings, with automatic priority given to environment variables for seamless overrides." xml:space="preserve">
-    <value>Mendukung kedua variabel lingkungan dan pengaturan berbasis database, dengan prioritas otomatis diberikan kepada variabel lingkungan untuk pembaruan yang mulus.</value>
-  </data>
   <data name="Supports JetBrains Rider for easy code style fixes." xml:space="preserve">
     <value>Mendukung JetBrains Rider untuk perbaikan gaya kode yang mudah.</value>
   </data>
-  <data name="System → &lt;code&gt;instructions&lt;/code&gt;; messages/images → Responses input Items; Anthropic tools → Responses function tools; named tool choice → Responses &lt;code&gt;name&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; Responses reasoning/text/function output → Anthropic blocks." xml:space="preserve">
-    <value>Sistem → &lt;code&gt;instructions&lt;/code&gt;; pesan/gambar → Item input Responses; alat Anthropic → alat fungsi Responses; pemilihan alat bernama → &lt;code&gt;name&lt;/code&gt; Responses; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; keluaran penalaran/teks/fungsi Responses → blok Anthropic.</value>
+  <data name="Supports both environment variables and database-backed settings, with automatic priority given to environment variables for seamless overrides." xml:space="preserve">
+    <value>Mendukung kedua variabel lingkungan dan pengaturan berbasis database, dengan prioritas otomatis diberikan kepada variabel lingkungan untuk pembaruan yang mulus.</value>
   </data>
   <data name="System instructions, text, base64/URL images, function tools/calls/results, tool choice, temperature, top-p, max tokens, response reasoning text, stream, finish state, and usage." xml:space="preserve">
     <value>Instruksi sistem, teks, gambar base64/URL, alat/panggilan/hasil fungsi, pilihan alat, suhu, top-p, token maksimum, teks penalaran respons, stream, status selesai, dan penggunaan.</value>
@@ -1334,6 +1310,9 @@
   </data>
   <data name="System text, message text, base64 images, tool definitions, &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt;, tool choice modes, temperature, top-p, max tokens, visible reasoning text, stream, finish reason, and usage." xml:space="preserve">
     <value>Teks sistem, teks pesan, gambar base64, definisi alat, &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt;, mode pemilihan alat, suhu, top-p, token maksimum, teks penalaran yang terlihat, stream, alasan selesai, dan penggunaan.</value>
+  </data>
+  <data name="System → &lt;code&gt;instructions&lt;/code&gt;; messages/images → Responses input Items; Anthropic tools → Responses function tools; named tool choice → Responses &lt;code&gt;name&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; Responses reasoning/text/function output → Anthropic blocks." xml:space="preserve">
+    <value>Sistem → &lt;code&gt;instructions&lt;/code&gt;; pesan/gambar → Item input Responses; alat Anthropic → alat fungsi Responses; pemilihan alat bernama → &lt;code&gt;name&lt;/code&gt; Responses; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; keluaran penalaran/teks/fungsi Responses → blok Anthropic.</value>
   </data>
   <data name="System/developer messages → &lt;code&gt;instructions&lt;/code&gt;; messages → &lt;code&gt;input&lt;/code&gt; Items; function schemas are flattened; named &lt;code&gt;tool_choice.function.name&lt;/code&gt; → Responses &lt;code&gt;tool_choice.name&lt;/code&gt;; &lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;." xml:space="preserve">
     <value>Pesan sistem/developer → &lt;code&gt;instructions&lt;/code&gt;; pesan → Item &lt;code&gt;input&lt;/code&gt; Responses; skema fungsi diratakan; nama &lt;code&gt;tool_choice.function.name&lt;/code&gt; → &lt;code&gt;tool_choice.name&lt;/code&gt; Responses; &lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;.</value>
@@ -1350,6 +1329,9 @@
   <data name="Technical Lead" xml:space="preserve">
     <value>Pemimpin Teknis</value>
   </data>
+  <data name="The Philosophy" xml:space="preserve">
+    <value>Filsafat</value>
+  </data>
   <data name="The definitive, battle-tested .NET enterprise foundation. From Auth to AI, we&apos;ve solved the hard parts so you don&apos;t have to." xml:space="preserve">
     <value>Dasar perusahaan .NET yang pasti dan telah teruji dalam pertempuran. Dari Otentikasi hingga Kecerdasan Buatan, kami telah menyelesaikan bagian-bagian sulit sehingga Anda tidak perlu melakukannya.</value>
   </data>
@@ -1362,14 +1344,11 @@
   <data name="The navigation bar automatically adjusts based on user roles and permissions." xml:space="preserve">
     <value>Bilah navigasi secara otomatis menyesuaikan berdasarkan peran dan izin pengguna.</value>
   </data>
-  <data name="The original request and successful response JSON are cloned; unknown fields are preserved; model identity is rewritten." xml:space="preserve">
-    <value>JSON permintaan asli dan respons yang berhasil diklonasi; bidang yang tidak dikenal dipertahankan; identitas model ditulis ulang.</value>
-  </data>
   <data name="The original request and successful response JSON are cloned; unknown OpenAI embedding fields are preserved; only model identity is rewritten." xml:space="preserve">
     <value>JSON permintaan asli dan respons yang berhasil diklonasi; field embedding OpenAI yang tidak dikenal dipertahankan; hanya identitas model yang ditulis ulang.</value>
   </data>
-  <data name="The Philosophy" xml:space="preserve">
-    <value>Filsafat</value>
+  <data name="The original request and successful response JSON are cloned; unknown fields are preserved; model identity is rewritten." xml:space="preserve">
+    <value>JSON permintaan asli dan respons yang berhasil diklonasi; bidang yang tidak dikenal dipertahankan; identitas model ditulis ulang.</value>
   </data>
   <data name="The provider-level &lt;code&gt;keep_alive&lt;/code&gt; replaces the client value on this route." xml:space="preserve">
     <value>&lt;code&gt;keep_alive&lt;/code&gt; tingkat penyedia menggantikan nilai klien pada rute ini.</value>
@@ -1458,6 +1437,36 @@
   <data name="Use it as a foundation for your SaaS, a backend for your mobile app, a corporate website, or a personal blog. The possibilities are endless." xml:space="preserve">
     <value>Gunakan sebagai fondasi untuk SaaS Anda, backend untuk aplikasi seluler Anda, situs web perusahaan, atau blog pribadi. Kemungkinannya tidak terbatas.</value>
   </data>
+  <data name="VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are injected into Ollama &lt;code&gt;options&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, dan &lt;code&gt;RepeatPenalty&lt;/code&gt; disuntikkan ke dalam &lt;code&gt;options&lt;/code&gt; Ollama.</value>
+  </data>
+  <data name="VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; hard-override Ollama &lt;code&gt;options&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, dan &lt;code&gt;RepeatPenalty&lt;/code&gt; menimpa secara paksa &lt;code&gt;options&lt;/code&gt; Ollama.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override Chat target controls; Chat-only VM thinking is injected through &lt;code&gt;chat_template_kwargs&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, dan &lt;code&gt;Thinking&lt;/code&gt; menimpa kontrol target Chat; pemikiran VM yang hanya untuk Chat disuntikkan melalui &lt;code&gt;chat_template_kwargs&lt;/code&gt;.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override Chat target fields. Ollama-only DB sampling/context controls do not apply to Chat." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, dan &lt;code&gt;Thinking&lt;/code&gt; menimpa bidang target Chat. Kontrol sampling/konteks DB khusus Ollama tidak berlaku untuk Chat.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override their target fields. Existing nested &lt;code&gt;chat_template_kwargs&lt;/code&gt; members are preserved around &lt;code&gt;enable_thinking&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, dan &lt;code&gt;Thinking&lt;/code&gt; menggantikan field target mereka. Anggota &lt;code&gt;chat_template_kwargs&lt;/code&gt; bersarang yang sudah ada dipertahankan di sekitar &lt;code&gt;enable_thinking&lt;/code&gt;.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other VM sampling fields are not applicable." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, dan &lt;code&gt;NumPredict&lt;/code&gt; menimpa &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, dan &lt;code&gt;max_output_tokens&lt;/code&gt;. Bidang pengambilan sampel VM lainnya tidak berlaku.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other nested Responses fields remain untouched." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, dan &lt;code&gt;NumPredict&lt;/code&gt; menimpa &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, dan &lt;code&gt;max_output_tokens&lt;/code&gt;. Field Responses bersarang lainnya tetap tidak diubah.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, dan &lt;code&gt;NumPredict&lt;/code&gt; menggantikan field Responses. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, dan &lt;code&gt;RepeatPenalty&lt;/code&gt; tidak memiliki field target Responses.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, dan &lt;code&gt;NumPredict&lt;/code&gt; menimpa field target Responses. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, dan &lt;code&gt;RepeatPenalty&lt;/code&gt; bukan kontrol Responses.</value>
+  </data>
+  <data name="VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
+    <value>VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict, dan RepeatPenalty menimpa permintaan; jika &lt;code&gt;keep_alive&lt;/code&gt; tidak ada, nilai Provider digunakan.</value>
+  </data>
   <data name="Validation" xml:space="preserve">
     <value>Validasi</value>
   </data>
@@ -1478,36 +1487,6 @@
   </data>
   <data name="Virtual-model names and gateway-owned metadata are rendered directly in the requested client shape." xml:space="preserve">
     <value>Nama model virtual dan metadata yang dimiliki gateway dirender langsung dalam bentuk klien yang diminta.</value>
-  </data>
-  <data name="VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are injected into Ollama &lt;code&gt;options&lt;/code&gt;." xml:space="preserve">
-    <value>VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, dan &lt;code&gt;RepeatPenalty&lt;/code&gt; disuntikkan ke dalam &lt;code&gt;options&lt;/code&gt; Ollama.</value>
-  </data>
-  <data name="VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; hard-override Ollama &lt;code&gt;options&lt;/code&gt;." xml:space="preserve">
-    <value>VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, dan &lt;code&gt;RepeatPenalty&lt;/code&gt; menimpa secara paksa &lt;code&gt;options&lt;/code&gt; Ollama.</value>
-  </data>
-  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override Chat target controls; Chat-only VM thinking is injected through &lt;code&gt;chat_template_kwargs&lt;/code&gt;." xml:space="preserve">
-    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, dan &lt;code&gt;Thinking&lt;/code&gt; menimpa kontrol target Chat; pemikiran VM yang hanya untuk Chat disuntikkan melalui &lt;code&gt;chat_template_kwargs&lt;/code&gt;.</value>
-  </data>
-  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override Chat target fields. Ollama-only DB sampling/context controls do not apply to Chat." xml:space="preserve">
-    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, dan &lt;code&gt;Thinking&lt;/code&gt; menimpa bidang target Chat. Kontrol sampling/konteks DB khusus Ollama tidak berlaku untuk Chat.</value>
-  </data>
-  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override their target fields. Existing nested &lt;code&gt;chat_template_kwargs&lt;/code&gt; members are preserved around &lt;code&gt;enable_thinking&lt;/code&gt;." xml:space="preserve">
-    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, dan &lt;code&gt;Thinking&lt;/code&gt; menggantikan field target mereka. Anggota &lt;code&gt;chat_template_kwargs&lt;/code&gt; bersarang yang sudah ada dipertahankan di sekitar &lt;code&gt;enable_thinking&lt;/code&gt;.</value>
-  </data>
-  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other nested Responses fields remain untouched." xml:space="preserve">
-    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, dan &lt;code&gt;NumPredict&lt;/code&gt; menimpa &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, dan &lt;code&gt;max_output_tokens&lt;/code&gt;. Field Responses bersarang lainnya tetap tidak diubah.</value>
-  </data>
-  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other VM sampling fields are not applicable." xml:space="preserve">
-    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, dan &lt;code&gt;NumPredict&lt;/code&gt; menimpa &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, dan &lt;code&gt;max_output_tokens&lt;/code&gt;. Bidang pengambilan sampel VM lainnya tidak berlaku.</value>
-  </data>
-  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
-    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, dan &lt;code&gt;NumPredict&lt;/code&gt; menggantikan field Responses. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, dan &lt;code&gt;RepeatPenalty&lt;/code&gt; tidak memiliki field target Responses.</value>
-  </data>
-  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
-    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, dan &lt;code&gt;NumPredict&lt;/code&gt; menimpa field target Responses. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, dan &lt;code&gt;RepeatPenalty&lt;/code&gt; bukan kontrol Responses.</value>
-  </data>
-  <data name="VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
-    <value>VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict, dan RepeatPenalty menimpa permintaan; jika &lt;code&gt;keep_alive&lt;/code&gt; tidak ada, nilai Provider digunakan.</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>Selamat datang</value>
@@ -1556,6 +1535,27 @@
   </data>
   <data name="Zero Tolerance Lint" xml:space="preserve">
     <value>Lint Tanpa Toleransi</value>
+  </data>
+  <data name="faster" xml:space="preserve">
+    <value>lebih cepat</value>
+  </data>
+  <data name="for any inquiries or to report issues." xml:space="preserve">
+    <value>untuk pertanyaan apa pun atau untuk melaporkan masalah.</value>
+  </data>
+  <data name="is Free Software" xml:space="preserve">
+    <value>adalah Perangkat Lunak Bebas</value>
+  </data>
+  <data name="requires a Responses-capable provider" xml:space="preserve">
+    <value>memerlukan penyedia yang mendukung Responses</value>
+  </data>
+  <data name="state-aware" xml:space="preserve">
+    <value>sadar-keadaan</value>
+  </data>
+  <data name="→ Native Ollama" xml:space="preserve">
+    <value>→ Ollama Asli</value>
+  </data>
+  <data name="→ OpenAI-compatible provider" xml:space="preserve">
+    <value>→ Penyedia yang kompatibel dengan OpenAI</value>
   </data>
 
 </root>

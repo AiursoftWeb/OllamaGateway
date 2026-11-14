@@ -33,14 +33,14 @@
   <data name="(Responses)" xml:space="preserve">
     <value>(Vastaukset)</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = rajaton.</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= pidä ikuisesti.</value>
   </data>
   <data name="= unload immediately." xml:space="preserve">
     <value>= purkaa välittömästi.</value>
-  </data>
-  <data name="0 = unlimited." xml:space="preserve">
-    <value>0 = rajaton.</value>
   </data>
   <data name="About concurrent requests" xml:space="preserve">
     <value>Tietoa samanaikaisista pyynnöistä</value>
@@ -92,9 +92,6 @@
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>ÄLÄ käytä pelkkiä sekunteja kuten &apos;300&apos;. Kirjoita sen sijaan &apos;5m&apos;. Virheelliset muodot jätetään Ollaman toimesta huomiotta.</value>
-  </data>
-  <data name="e.g. Local Server" xml:space="preserve">
-    <value>esim. Paikallinen palvelin</value>
   </data>
   <data name="Edit Ollama Provider" xml:space="preserve">
     <value>Muokkaa Ollama-toimittajaa</value>
@@ -209,6 +206,9 @@
   </data>
   <data name="Warmup timeout" xml:space="preserve">
     <value>Lämmitysaikakatkaisu</value>
+  </data>
+  <data name="e.g. Local Server" xml:space="preserve">
+    <value>esim. Paikallinen palvelin</value>
   </data>
 
 </root>

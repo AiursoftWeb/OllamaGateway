@@ -33,14 +33,14 @@
   <data name="(Responses)" xml:space="preserve">
     <value>(Responses)</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = без ограничений.</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= держать в памяти навсегда.</value>
   </data>
   <data name="= unload immediately." xml:space="preserve">
     <value>= выгрузить немедленно.</value>
-  </data>
-  <data name="0 = unlimited." xml:space="preserve">
-    <value>0 = без ограничений.</value>
   </data>
   <data name="About concurrent requests" xml:space="preserve">
     <value>О параллельных запросах</value>
@@ -77,12 +77,6 @@
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>НЕ используйте секунды без указания единиц, например &apos;300&apos;. Вместо этого пишите &apos;5m&apos;. Неверные форматы Ollama игнорирует без предупреждения.</value>
-  </data>
-  <data name="e.g. My Local Ollama" xml:space="preserve">
-    <value>напр. Мой локальный Ollama</value>
-  </data>
-  <data name="e.g. sk-..." xml:space="preserve">
-    <value>напр. sk-...</value>
   </data>
   <data name="Health Check Timeout (s)" xml:space="preserve">
     <value>Тайм-аут проверки состояния (с)</value>
@@ -173,6 +167,12 @@
   </data>
   <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
     <value>Ожидание в очереди параллельных запросов НЕ расходует таймаут запроса виртуальной модели. Запрос будет ждать слот неограниченно долго — ожидание прекращается только при отключении клиента (закрытие браузера, таймаут SDK). Виртуальная модель не отказывается от бэкенда просто потому, что он занят.</value>
+  </data>
+  <data name="e.g. My Local Ollama" xml:space="preserve">
+    <value>напр. Мой локальный Ollama</value>
+  </data>
+  <data name="e.g. sk-..." xml:space="preserve">
+    <value>напр. sk-...</value>
   </data>
 
 </root>

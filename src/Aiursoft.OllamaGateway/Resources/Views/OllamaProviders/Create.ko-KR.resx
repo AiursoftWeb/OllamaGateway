@@ -33,14 +33,14 @@
   <data name="(Responses)" xml:space="preserve">
     <value>(응답)</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = 무제한.</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= 영구 유지.</value>
   </data>
   <data name="= unload immediately." xml:space="preserve">
     <value>= 즉시 언로드</value>
-  </data>
-  <data name="0 = unlimited." xml:space="preserve">
-    <value>0 = 무제한.</value>
   </data>
   <data name="About concurrent requests" xml:space="preserve">
     <value>동시 요청 정보</value>
@@ -77,12 +77,6 @@
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>&apos;300&apos;과 같은 순수 초수(raw seconds)를 사용하지 마십시오. 대신 &apos;5m&apos;을 작성하십시오. 유효하지 않은 형식은 Ollama에서 조용히 무시됩니다.</value>
-  </data>
-  <data name="e.g. My Local Ollama" xml:space="preserve">
-    <value>예: 내 로컬 Ollama</value>
-  </data>
-  <data name="e.g. sk-..." xml:space="preserve">
-    <value>예: sk-...</value>
   </data>
   <data name="Health Check Timeout (s)" xml:space="preserve">
     <value>건강 상태 확인 시간 초과(초)</value>
@@ -173,6 +167,12 @@
   </data>
   <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
     <value>동시성 대기열에서 대기하는 것은 가상 모델의 요청 시간 초과(Request Timeout)를 소모하지 않습니다. 요청은 슬롯이 생길 때까지 무한정 대기하며, 클라이언트 연결 해제(브라우저 닫기, SDK 시간 초과)만이 이 대기를 중단합니다. 가상 모델은 백엔드가 바쁘다고 해서 포기하지 않습니다.</value>
+  </data>
+  <data name="e.g. My Local Ollama" xml:space="preserve">
+    <value>예: 내 로컬 Ollama</value>
+  </data>
+  <data name="e.g. sk-..." xml:space="preserve">
+    <value>예: sk-...</value>
   </data>
 
 </root>

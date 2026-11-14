@@ -33,14 +33,14 @@
   <data name="(Responses)" xml:space="preserve">
     <value>（レスポンス）</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = 無制限</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= 永久に保持。</value>
   </data>
   <data name="= unload immediately." xml:space="preserve">
     <value>= 直ちにアンロード。</value>
-  </data>
-  <data name="0 = unlimited." xml:space="preserve">
-    <value>0 = 無制限</value>
   </data>
   <data name="About concurrent requests" xml:space="preserve">
     <value>同時リクエストについて</value>
@@ -77,12 +77,6 @@
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>「300」のように生の秒数は使用しないでください。「5m」と記述してください。無効な形式はOllamaによって静かに無視されます。</value>
-  </data>
-  <data name="e.g. My Local Ollama" xml:space="preserve">
-    <value>例：My Local Ollama</value>
-  </data>
-  <data name="e.g. sk-..." xml:space="preserve">
-    <value>例: sk-...</value>
   </data>
   <data name="Health Check Timeout (s)" xml:space="preserve">
     <value>ヘルスチェックタイムアウト（秒）</value>
@@ -173,6 +167,12 @@
   </data>
   <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
     <value>並行キューで待機している間は、仮想モデルのリクエストタイムアウトは消費されません。リクエストはスロットが空くまで無期限に待機します——待機を終了するのはクライアントの切断（ブラウザの閉鎖、SDK タイムアウト）のみです。バックエンドが混雑しているからといって、仮想モデルが処理を諦めることはありません。</value>
+  </data>
+  <data name="e.g. My Local Ollama" xml:space="preserve">
+    <value>例：My Local Ollama</value>
+  </data>
+  <data name="e.g. sk-..." xml:space="preserve">
+    <value>例: sk-...</value>
   </data>
 
 </root>

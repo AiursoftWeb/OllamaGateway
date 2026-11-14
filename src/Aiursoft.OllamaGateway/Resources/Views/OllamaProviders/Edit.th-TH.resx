@@ -33,14 +33,14 @@
   <data name="(Responses)" xml:space="preserve">
     <value>(การตอบกลับ)</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = ไม่จำกัด</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= เก็บไว้ตลอดไป</value>
   </data>
   <data name="= unload immediately." xml:space="preserve">
     <value>= ปลดออกทันที</value>
-  </data>
-  <data name="0 = unlimited." xml:space="preserve">
-    <value>0 = ไม่จำกัด</value>
   </data>
   <data name="About concurrent requests" xml:space="preserve">
     <value>เกี่ยวกับคำขอที่ดำเนินการพร้อมกัน</value>
@@ -92,9 +92,6 @@
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>ห้ามใช้ค่าวินาทีดิบเช่น &apos;300&apos; ให้เขียนเป็น &apos;5m&apos; แทน รูปแบบที่ไม่ถูกต้องจะถูก Ollama ละเว้นโดยไม่มีคำเตือน</value>
-  </data>
-  <data name="e.g. Local Server" xml:space="preserve">
-    <value>เช่น ใช้งานเซิร์ฟเวอร์ในท้องถิ่น</value>
   </data>
   <data name="Edit Ollama Provider" xml:space="preserve">
     <value>แก้ไขผู้ให้บริการ Ollama</value>
@@ -209,6 +206,9 @@
   </data>
   <data name="Warmup timeout" xml:space="preserve">
     <value>ระยะเวลาอุ่นเครื่องหมดเวลา</value>
+  </data>
+  <data name="e.g. Local Server" xml:space="preserve">
+    <value>เช่น ใช้งานเซิร์ฟเวอร์ในท้องถิ่น</value>
   </data>
 
 </root>

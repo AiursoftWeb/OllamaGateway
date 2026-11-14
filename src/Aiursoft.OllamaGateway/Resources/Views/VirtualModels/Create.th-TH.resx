@@ -39,12 +39,6 @@
   <data name="Disabled" xml:space="preserve">
     <value>ปิดใช้งาน</value>
   </data>
-  <data name="e.g. MyLlama3" xml:space="preserve">
-    <value>เช่น MyLlama3</value>
-  </data>
-  <data name="e.g. MyLlama3:latest" xml:space="preserve">
-    <value>เช่น MyLlama3:latest</value>
-  </data>
   <data name="Enabled" xml:space="preserve">
     <value>เปิดใช้งาน</value>
   </data>
@@ -122,6 +116,12 @@
   </data>
   <data name="When checked, the &apos;raw: true&apos; parameter is sent to the upstream Ollama API. This tells Ollama to NOT apply any chat templates to your prompt. Use this for pure text completion. If unchecked, Ollama will automatically wrap your prompt in the model&apos;s default chat template, treating it as a conversational question." xml:space="preserve">
     <value>เมื่อเลือกแล้ว พารามิเตอร์ &apos;raw: true&apos; จะถูกส่งไปยัง API Ollama ด้านบน สิ่งนี้บอกให้ Ollama ไม่ใช้รูปแบบการสนทนา (chat templates) ใดๆ กับคำสั่งของคุณ ใช้สำหรับการทำงานแบบเติมข้อความล้วน หากไม่เลือก Ollama จะทำการห่อหุ้มคำสั่งของคุณด้วยรูปแบบการสนทนาเริ่มต้นของโมเดลโดยอัตโนมัติ โดยถือว่าคำสั่งนั้นเป็นคำถามในการสนทนา</value>
+  </data>
+  <data name="e.g. MyLlama3" xml:space="preserve">
+    <value>เช่น MyLlama3</value>
+  </data>
+  <data name="e.g. MyLlama3:latest" xml:space="preserve">
+    <value>เช่น MyLlama3:latest</value>
   </data>
 
 </root>

@@ -33,14 +33,14 @@
   <data name="(Responses)" xml:space="preserve">
     <value>（レスポンス）</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = 無制限。</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= 永久に保持。</value>
   </data>
   <data name="= unload immediately." xml:space="preserve">
     <value>= 直ちにアンロード。</value>
-  </data>
-  <data name="0 = unlimited." xml:space="preserve">
-    <value>0 = 無制限。</value>
   </data>
   <data name="About concurrent requests" xml:space="preserve">
     <value>同時リクエストについて</value>
@@ -92,9 +92,6 @@
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>「300」のような生の秒数は使用しないでください。「5m」と記載してください。無効な形式はOllamaによって無視されます。</value>
-  </data>
-  <data name="e.g. Local Server" xml:space="preserve">
-    <value>例：ローカルサーバー</value>
   </data>
   <data name="Edit Ollama Provider" xml:space="preserve">
     <value>Ollama プロバイダーの編集</value>
@@ -209,6 +206,9 @@
   </data>
   <data name="Warmup timeout" xml:space="preserve">
     <value>ウォームアップタイムアウト</value>
+  </data>
+  <data name="e.g. Local Server" xml:space="preserve">
+    <value>例：ローカルサーバー</value>
   </data>
 
 </root>

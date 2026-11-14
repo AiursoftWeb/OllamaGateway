@@ -39,11 +39,11 @@
   <data name="Allow Anonymous API Call" xml:space="preserve">
     <value>允許匿名 API 呼叫</value>
   </data>
-  <data name="Allow anyone to call the API without a Bearer token or authentication." xml:space="preserve">
-    <value>允許任何人無需 Bearer 令牌或身份驗證即可呼叫 API。</value>
-  </data>
   <data name="Allow User Adjust Nickname" xml:space="preserve">
     <value>允許用戶更改暱稱</value>
+  </data>
+  <data name="Allow anyone to call the API without a Bearer token or authentication." xml:space="preserve">
+    <value>允許任何人無需 Bearer 令牌或身份驗證即可呼叫 API。</value>
   </data>
   <data name="Allow users to adjust their nickname in the profile management page." xml:space="preserve">
     <value>允許用戶在個人資料管理頁面調整其暱稱。</value>
@@ -105,6 +105,12 @@
   <data name="Synchronize backend monitoring incidents with AlertCenter." xml:space="preserve">
     <value>將後端監控事件與 AlertCenter 同步。</value>
   </data>
+  <data name="The HTTP(S) base URL of AlertCenter." xml:space="preserve">
+    <value>AlertCenter 的 HTTP(S) 基本網址。</value>
+  </data>
+  <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
+    <value>適用於中國內地用戶的ICP許可證編號。留空則隱藏。</value>
+  </data>
   <data name="The brand name displayed in the footer." xml:space="preserve">
     <value>顯示於頁尾的品牌名稱</value>
   </data>
@@ -113,12 +119,6 @@
   </data>
   <data name="The default virtual model to use for embedding requests when no model is specified." xml:space="preserve">
     <value>當未指定模型時，用於嵌入請求的預設虛擬模型。</value>
-  </data>
-  <data name="The HTTP(S) base URL of AlertCenter." xml:space="preserve">
-    <value>AlertCenter 的 HTTP(S) 基本網址。</value>
-  </data>
-  <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
-    <value>適用於中國內地用戶的ICP許可證編號。留空則隱藏。</value>
   </data>
   <data name="The interval in minutes to ping the loaded models to keep them in memory." xml:space="preserve">
     <value>以分鐘為單位向已載入的模型發送 ping 請求，以將其保留在記憶體中的間隔時間。</value>
