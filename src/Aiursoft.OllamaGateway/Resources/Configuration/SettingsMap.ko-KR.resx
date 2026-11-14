@@ -39,11 +39,11 @@
   <data name="Allow Anonymous API Call" xml:space="preserve">
     <value>익명 API 호출 허용</value>
   </data>
-  <data name="Allow anyone to call the API without a Bearer token or authentication." xml:space="preserve">
-    <value>Bearer 토큰이나 인증 없이 누구나 API 를 호출할 수 있도록 허용합니다.</value>
-  </data>
   <data name="Allow User Adjust Nickname" xml:space="preserve">
     <value>사용자 닉네임 조정 허용</value>
+  </data>
+  <data name="Allow anyone to call the API without a Bearer token or authentication." xml:space="preserve">
+    <value>Bearer 토큰이나 인증 없이 누구나 API 를 호출할 수 있도록 허용합니다.</value>
   </data>
   <data name="Allow users to adjust their nickname in the profile management page." xml:space="preserve">
     <value>프로필 관리 페이지에서 사용자가 닉네임을 수정할 수 있도록 허용합니다.</value>
@@ -105,6 +105,12 @@
   <data name="Synchronize backend monitoring incidents with AlertCenter." xml:space="preserve">
     <value>백엔드 모니터링 인시던트를 AlertCenter와 동기화합니다.</value>
   </data>
+  <data name="The HTTP(S) base URL of AlertCenter." xml:space="preserve">
+    <value>AlertCenter의 HTTP(S) 기본 URL입니다.</value>
+  </data>
+  <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
+    <value>중국 대륙 사용자를 위한 ICP 라이선스 번호. 비워두면 숨깁니다.</value>
+  </data>
   <data name="The brand name displayed in the footer." xml:space="preserve">
     <value>푸터에 표시되는 브랜드 이름</value>
   </data>
@@ -113,12 +119,6 @@
   </data>
   <data name="The default virtual model to use for embedding requests when no model is specified." xml:space="preserve">
     <value>모델이 지정되지 않은 경우 임베딩 요청에 사용할 기본 가상 모델입니다.</value>
-  </data>
-  <data name="The HTTP(S) base URL of AlertCenter." xml:space="preserve">
-    <value>AlertCenter의 HTTP(S) 기본 URL입니다.</value>
-  </data>
-  <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
-    <value>중국 대륙 사용자를 위한 ICP 라이선스 번호. 비워두면 숨깁니다.</value>
   </data>
   <data name="The interval in minutes to ping the loaded models to keep them in memory." xml:space="preserve">
     <value>로드된 모델을 메모리에 유지하기 위해 핑을 보내는 분 단위 간격입니다.</value>

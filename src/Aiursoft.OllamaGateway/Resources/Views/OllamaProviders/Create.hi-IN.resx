@@ -33,14 +33,14 @@
   <data name="(Responses)" xml:space="preserve">
     <value>(उत्तर)</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = असीमित।</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= हमेशा के लिए रखें।</value>
   </data>
   <data name="= unload immediately." xml:space="preserve">
     <value>= तुरंत अनलोड करें।</value>
-  </data>
-  <data name="0 = unlimited." xml:space="preserve">
-    <value>0 = असीमित।</value>
   </data>
   <data name="About concurrent requests" xml:space="preserve">
     <value>समवर्ती अनुरोधों के बारे में</value>
@@ -77,12 +77,6 @@
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>&apos;300&apos; जैसे कच्चे सेकंड का उपयोग न करें। इसके बजाय &apos;5m&apos; लिखें। अमान्य प्रारूपों को Ollama द्वारा चुपचाप नजरअंदाज कर दिया जाता है।</value>
-  </data>
-  <data name="e.g. My Local Ollama" xml:space="preserve">
-    <value>उदाहरण के लिए: मेरा स्थानीय ओलामा</value>
-  </data>
-  <data name="e.g. sk-..." xml:space="preserve">
-    <value>उदा. sk-...</value>
   </data>
   <data name="Health Check Timeout (s)" xml:space="preserve">
     <value>हेल्थ चेक टाइमआउट (सेकंड)</value>
@@ -173,6 +167,12 @@
   </data>
   <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
     <value>समकालिकता कतार (concurrency queue) में प्रतीक्षा करने से वर्चुअल मॉडल का अनुरोध समाप्ति समय (Request Timeout) खर्च नहीं होता है। एक अनुरोध एक स्लॉट के लिए अनिश्चित काल तक प्रतीक्षा करेगा — केवल क्लाइंट डिस्कनेक्शन (ब्राउज़र बंद करना, SDK टाइमआउट) ही इस प्रतीक्षा को रोकता है। वर्चुअल मॉडल केवल इसलिए बैकएंड पर ध्यान देने से नहीं हटाता है क्योंकि वह व्यस्त है।</value>
+  </data>
+  <data name="e.g. My Local Ollama" xml:space="preserve">
+    <value>उदाहरण के लिए: मेरा स्थानीय ओलामा</value>
+  </data>
+  <data name="e.g. sk-..." xml:space="preserve">
+    <value>उदा. sk-...</value>
   </data>
 
 </root>

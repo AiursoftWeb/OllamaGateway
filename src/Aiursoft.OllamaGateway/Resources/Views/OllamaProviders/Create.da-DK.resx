@@ -33,14 +33,14 @@
   <data name="(Responses)" xml:space="preserve">
     <value>(Svar)</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = ubegrænset.</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= behold altid.</value>
   </data>
   <data name="= unload immediately." xml:space="preserve">
     <value>= fjern straks.</value>
-  </data>
-  <data name="0 = unlimited." xml:space="preserve">
-    <value>0 = ubegrænset.</value>
   </data>
   <data name="About concurrent requests" xml:space="preserve">
     <value>Om samtidige forespørgsler</value>
@@ -77,12 +77,6 @@
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>Brug IKKE rå sekunder som &apos;300&apos;. Skriv &apos;5m&apos; i stedet. Ugyldige formater ignoreres stille af Ollama.</value>
-  </data>
-  <data name="e.g. My Local Ollama" xml:space="preserve">
-    <value>f.eks. Min lokale Ollama</value>
-  </data>
-  <data name="e.g. sk-..." xml:space="preserve">
-    <value>f.eks. sk-...</value>
   </data>
   <data name="Health Check Timeout (s)" xml:space="preserve">
     <value>Timeout for sundhedstjek (s)</value>
@@ -173,6 +167,12 @@
   </data>
   <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
     <value>At vente i konkurrencekøen bruger IKKE den virtuelle models anmodningstidsfrist. En anmodning vil vente uendeligt på en plads — kun en klientafbrudt forbindelse (lukket browser, SDK-tidsfrist) stopper ventetiden. Den virtuelle model giver ikke op på et backend, bare fordi det er optaget.</value>
+  </data>
+  <data name="e.g. My Local Ollama" xml:space="preserve">
+    <value>f.eks. Min lokale Ollama</value>
+  </data>
+  <data name="e.g. sk-..." xml:space="preserve">
+    <value>f.eks. sk-...</value>
   </data>
 
 </root>

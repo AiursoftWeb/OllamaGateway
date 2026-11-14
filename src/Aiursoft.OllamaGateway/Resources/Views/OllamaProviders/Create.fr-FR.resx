@@ -33,14 +33,14 @@
   <data name="(Responses)" xml:space="preserve">
     <value>(Réponses)</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = illimité.</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= garder indéfiniment.</value>
   </data>
   <data name="= unload immediately." xml:space="preserve">
     <value>= déchargement immédiat.</value>
-  </data>
-  <data name="0 = unlimited." xml:space="preserve">
-    <value>0 = illimité.</value>
   </data>
   <data name="About concurrent requests" xml:space="preserve">
     <value>À propos des requêtes simultanées</value>
@@ -77,12 +77,6 @@
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>N&apos;utilisez PAS de secondes brutes comme &apos;300&apos;. Écrivez &apos;5m&apos; à la place. Les formats non valides sont ignorés silencieusement par Ollama.</value>
-  </data>
-  <data name="e.g. My Local Ollama" xml:space="preserve">
-    <value>p. ex. Mon Ollama local</value>
-  </data>
-  <data name="e.g. sk-..." xml:space="preserve">
-    <value>par ex. sk-...</value>
   </data>
   <data name="Health Check Timeout (s)" xml:space="preserve">
     <value>Délai d&apos;expiration de la vérification de santé (s)</value>
@@ -173,6 +167,12 @@
   </data>
   <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
     <value>L&apos;attente dans la file d&apos;attente de concurrence ne consomme PAS le délai d&apos;expiration de demande du modèle virtuel. Une demande attendra indéfiniment un emplacement — seule une déconnexion du client (fermeture du navigateur, expiration du délai SDK) arrête l&apos;attente. Le modèle virtuel n&apos;abandonne pas un backend simplement parce qu&apos;il est occupé.</value>
+  </data>
+  <data name="e.g. My Local Ollama" xml:space="preserve">
+    <value>p. ex. Mon Ollama local</value>
+  </data>
+  <data name="e.g. sk-..." xml:space="preserve">
+    <value>par ex. sk-...</value>
   </data>
 
 </root>

@@ -48,35 +48,26 @@
   <data name="7. Observability Pipeline — Dual Logging &amp; Usage Tracking" xml:space="preserve">
     <value>7. Δίαυλος Παρατηρησιμότητας — Διπλή Καταγραφή &amp; Παρακολούθηση Χρήσης</value>
   </data>
-  <data name="active" xml:space="preserve">
-    <value>active</value>
-  </data>
-  <data name="After response headers:" xml:space="preserve">
-    <value>Μετά τα κεφαλαιώδη πεδία απόκρισης:</value>
-  </data>
-  <data name="after slot acquired" xml:space="preserve">
-    <value>μετά την απόκτηση θέσης</value>
-  </data>
-  <data name="Any OpenAI-compatible or Ollama-native client sends a request." xml:space="preserve">
-    <value>Οποιοσδήποτε συμβατός με το OpenAI ή αυτόχθων πελάτης Ollama στέλνει ένα αίτημα.</value>
+  <data name="API Key Verification" xml:space="preserve">
+    <value>Επαλήθευση Κλειδιού API</value>
   </data>
   <data name="API key · virtual model · underlying model" xml:space="preserve">
     <value>Κλειδί API · εικονικό μοντέλο · υποκείμενο μοντέλο</value>
   </data>
-  <data name="API Key Verification" xml:space="preserve">
-    <value>Επαλήθευση Κλειδιού API</value>
-  </data>
   <data name="API keys" xml:space="preserve">
     <value>Κλειδιά API</value>
   </data>
-  <data name="Architecture Guide" xml:space="preserve">
-    <value>Οδηγός Αρχιτεκτονικής</value>
-  </data>
-  <data name="attempts and" xml:space="preserve">
-    <value>προσπαθειών και</value>
-  </data>
   <data name="AUDIT EVENTS" xml:space="preserve">
     <value>ΓΕΓΟΝΟΤΑ ΕΛΕΓΧΟΥ</value>
+  </data>
+  <data name="After response headers:" xml:space="preserve">
+    <value>Μετά τα κεφαλαιώδη πεδία απόκρισης:</value>
+  </data>
+  <data name="Any OpenAI-compatible or Ollama-native client sends a request." xml:space="preserve">
+    <value>Οποιοσδήποτε συμβατός με το OpenAI ή αυτόχθων πελάτης Ollama στέλνει ένα αίτημα.</value>
+  </data>
+  <data name="Architecture Guide" xml:space="preserve">
+    <value>Οδηγός Αρχιτεκτονικής</value>
   </data>
   <data name="Auth + Rate Limit" xml:space="preserve">
     <value>Επαλήθευση + Περιορισμός ρυθμού</value>
@@ -120,17 +111,20 @@
   <data name="Bounded Channel&lt;RequestLog&gt;: 10,000 entries" xml:space="preserve">
     <value>Περιορισμένο κανάλι Channel&lt;RequestLog&gt;: 10.000 εγγραφές</value>
   </data>
-  <data name="bounded to" xml:space="preserve">
-    <value>περιορισμένο σε</value>
-  </data>
   <data name="Buffer" xml:space="preserve">
     <value>Buffer</value>
   </data>
   <data name="Bulk update" xml:space="preserve">
     <value>Μαζική ενημέρωση</value>
   </data>
-  <data name="but no virtual model with that name and type &apos;Chat&apos; exists in the database." xml:space="preserve">
-    <value>αλλά δεν υπάρχει εικονικό μοντέλο με αυτό το όνομα και τύπο &apos;Chat&apos; στη βάση δεδομένων.</value>
+  <data name="CONFIGURATION REQUIRED" xml:space="preserve">
+    <value>ΑΠΑΙΤΕΙΤΑΙ ΡΥΘΜΙΣΗ</value>
+  </data>
+  <data name="CROSS DIALECT" xml:space="preserve">
+    <value>Διασταυρωμένος διαλέκτος</value>
+  </data>
+  <data name="CURRENT INSTANCE · LIVE" xml:space="preserve">
+    <value>ΤΡΕΧΟΥΣΑ ΠΑΡΑΔΕΙΓΜΑ · ΕΝΕΡΓΟ</value>
   </data>
   <data name="Change default" xml:space="preserve">
     <value>Αλλαγή προεπιλογής</value>
@@ -150,9 +144,6 @@
   <data name="Configuration" xml:space="preserve">
     <value>Διαμόρφωση</value>
   </data>
-  <data name="CONFIGURATION REQUIRED" xml:space="preserve">
-    <value>ΑΠΑΙΤΕΙΤΑΙ ΡΥΘΜΙΣΗ</value>
-  </data>
   <data name="Control Plane" xml:space="preserve">
     <value>Επίπεδο Ελέγχου</value>
   </data>
@@ -164,15 +155,6 @@
   </data>
   <data name="Create chat model" xml:space="preserve">
     <value>Δημιουργία μοντέλου συνομιλίας</value>
-  </data>
-  <data name="create it here → New Virtual Model" xml:space="preserve">
-    <value>δημιουργήστε το εδώ → Νέο Εικονικό Μοντέλο</value>
-  </data>
-  <data name="CROSS DIALECT" xml:space="preserve">
-    <value>Διασταυρωμένος διαλέκτος</value>
-  </data>
-  <data name="CURRENT INSTANCE · LIVE" xml:space="preserve">
-    <value>ΤΡΕΧΟΥΣΑ ΠΑΡΑΔΕΙΓΜΑ · ΕΝΕΡΓΟ</value>
   </data>
   <data name="Current Value" xml:space="preserve">
     <value>Τρέχουσα Τιμή</value>
@@ -195,11 +177,11 @@
   <data name="Deep clone" xml:space="preserve">
     <value>Βαθιό κλώνο</value>
   </data>
-  <data name="Default chat model is unavailable" xml:space="preserve">
-    <value>Το προεπιλεγμένο μοντέλο συνομιλίας δεν είναι διαθέσιμο</value>
-  </data>
   <data name="Default Chat Model Not Found!" xml:space="preserve">
     <value>Δεν βρέθηκε το προεπιλεγμένο μοντέλο συνομιλίας!</value>
+  </data>
+  <data name="Default chat model is unavailable" xml:space="preserve">
+    <value>Το προεπιλεγμένο μοντέλο συνομιλίας δεν είναι διαθέσιμο</value>
   </data>
   <data name="Default virtual model" xml:space="preserve">
     <value>Επιλέγουμε εικονικό μοντέλο</value>
@@ -207,17 +189,14 @@
   <data name="Dialect contract" xml:space="preserve">
     <value>Σύμβατα διαλέκτου</value>
   </data>
-  <data name="does not match a Chat virtual model in the database. Requests without an explicit model cannot be resolved." xml:space="preserve">
-    <value>δεν αντιστοιχεί σε εικονικό μοντέλο Chat στη βάση δεδομένων. Οι αιτήσεις χωρίς ένα ρητά καθορισμένο μοντέλο δεν μπορούν να επιλυθούν.</value>
-  </data>
-  <data name="drains buffer, batch-inserts into ClickHouse" xml:space="preserve">
-    <value>αδειάζει το buffer, κάνει batch-inserts στο ClickHouse</value>
-  </data>
   <data name="DropWrite when full; enqueue never blocks the request" xml:space="preserve">
     <value>DropWrite όταν γεμάτο; η ουρά δεν εμποδίζει ποτέ το αίτημα</value>
   </data>
   <data name="Dual observability pipeline" xml:space="preserve">
     <value>Διπλός σωλήνας παρατηρήσιμης συμπεριφοράς</value>
+  </data>
+  <data name="EXECUTION BOUNDARIES" xml:space="preserve">
+    <value>ΠΕΡΙΟΡΙΣΜΟΙ ΕΚΤΕΛΕΣΗΣ</value>
   </data>
   <data name="Each API key has its own rate-limit window. Two modes:" xml:space="preserve">
     <value>Κάθε κλειδί API έχει το δικό του παράθυρο ορίου ρυθμού. Δύο λειτουργίες:</value>
@@ -231,20 +210,17 @@
   <data name="Embeddings" xml:space="preserve">
     <value>Embeddings</value>
   </data>
-  <data name="entries, DropWrite when full" xml:space="preserve">
-    <value>εγγραφές, απορρίπτεται η εγγραφή όταν είναι γεμάτο</value>
-  </data>
-  <data name="every" xml:space="preserve">
-    <value>κάθε</value>
-  </data>
   <data name="Every request is logged asynchronously without blocking the hot path:" xml:space="preserve">
     <value>Κάθε αίτημα καταγράφεται ασύγχρονα χωρίς να μπλοκάρει την κρίσιμη διαδρομή εκτέλεσης:</value>
   </data>
   <data name="Example" xml:space="preserve">
     <value>Παράδειγμα</value>
   </data>
-  <data name="EXECUTION BOUNDARIES" xml:space="preserve">
-    <value>ΠΕΡΙΟΡΙΣΜΟΙ ΕΚΤΕΛΕΣΗΣ</value>
+  <data name="FIXED ARCHITECTURE CONTRACT" xml:space="preserve">
+    <value>ΣΥΜΒΑΣ ΣΤΑΘΕΡΗΣ ΑΡΧΙΤΕΚΤΟΝΙΚΗΣ</value>
+  </data>
+  <data name="Fallback Timeline" xml:space="preserve">
+    <value>Χρονική Διάρκεια Εναλλακτικής Επιλογής</value>
   </data>
   <data name="Fallback budget for the current default model" xml:space="preserve">
     <value>Προϋπολογισμός εναλλακτικής διαδρομής για το τρέχον προεπιλεγμένο μοντέλο</value>
@@ -252,17 +228,11 @@
   <data name="Fallback per-model loading timeout. Native Ollama only; the background job runs every 5 minutes." xml:space="preserve">
     <value>Εναλλακτικός χρόνος λήξης φόρτωσης ανά μοντέλο. Μόνο για本机 Ollama; η εργασία σε παρασκήνιο εκτελείται κάθε 5 λεπτά.</value>
   </data>
-  <data name="Fallback Timeline" xml:space="preserve">
-    <value>Χρονική Διάρκεια Εναλλακτικής Επιλογής</value>
-  </data>
   <data name="Fast in-memory counters avoid DB writes on every request:" xml:space="preserve">
     <value>Οι γρήγοροι μετρητές στο μνήμη αποφεύγουν εγγραφές στη ΒΔ σε κάθε αίτημα:</value>
   </data>
   <data name="Fix it here → Global Settings" xml:space="preserve">
     <value>Διορθώστε το εδώ → Παγκόσμιες Ρυθμίσεις</value>
-  </data>
-  <data name="FIXED ARCHITECTURE CONTRACT" xml:space="preserve">
-    <value>ΣΥΜΒΑΣ ΣΤΑΘΕΡΗΣ ΑΡΧΙΤΕΚΤΟΝΙΚΗΣ</value>
   </data>
   <data name="Flush every 2 minutes in batches" xml:space="preserve">
     <value>Εκκαθάριση κάθε 2 λεπτά σε παρτίδες</value>
@@ -273,14 +243,17 @@
   <data name="Four independent timeout planes" xml:space="preserve">
     <value>Τέσσερα ανεξάρτητα επίπεδα χρονικού ορίου</value>
   </data>
+  <data name="GPU processes tokens. Once loaded, subsequent requests skip loading → straight to inference." xml:space="preserve">
+    <value>Η κάρτα γραφικών επεξεργάζεται tokens. Μόλις φορτωθεί, οι επακόλουθες αιτήσεις παρακάμπτουν τη φόρτωση → πηγαίνουν απευθείας στην συμπερασματολογία.</value>
+  </data>
   <data name="Gateway overrides" xml:space="preserve">
     <value>Επικαλύψεις πύλης</value>
   </data>
   <data name="Gateway-owned responses expose virtual models and avoid recursive upstream discovery." xml:space="preserve">
     <value>Οι απαντήσεις που διαχειρίζεται το πύλη (gateway) εκθέτουν εικονικά μοντέλα και αποφεύγουν την αναδρομική ανακάλυψη upstream.</value>
   </data>
-  <data name="GPU processes tokens. Once loaded, subsequent requests skip loading → straight to inference." xml:space="preserve">
-    <value>Η κάρτα γραφικών επεξεργάζεται tokens. Μόλις φορτωθεί, οι επακόλουθες αιτήσεις παρακάμπτουν τη φόρτωση → πηγαίνουν απευθείας στην συμπερασματολογία.</value>
+  <data name="HTTP request to backend (DNS, TCP handshake, TLS)" xml:space="preserve">
+    <value>Αίτημα HTTP στο backend (DNS, TCP handshake, TLS)</value>
   </data>
   <data name="Hang" xml:space="preserve">
     <value>Αναμονή</value>
@@ -296,9 +269,6 @@
   </data>
   <data name="Health Check" xml:space="preserve">
     <value>Έλεγχος Κατάστασης</value>
-  </data>
-  <data name="health timeout" xml:space="preserve">
-    <value>χρόνος λήξης υγείας</value>
   </data>
   <data name="Hot-path increment" xml:space="preserve">
     <value>Αύξηση στο hot path</value>
@@ -321,17 +291,14 @@
   <data name="How long the warmup job waits for each model to load. Per-model configurable." xml:space="preserve">
     <value>Πόσο χρόνο περιμένει η εργασία προθέρμανσης για να φορτώσει κάθε μοντέλο. Ρυθμιζόμενο ανά μοντέλο.</value>
   </data>
-  <data name="HTTP request to backend (DNS, TCP handshake, TLS)" xml:space="preserve">
-    <value>Αίτημα HTTP στο backend (DNS, TCP handshake, TLS)</value>
-  </data>
   <data name="Immediately return HTTP 429." xml:space="preserve">
     <value>Επιστροφή άμεσα HTTP 429.</value>
   </data>
-  <data name="In-memory to relational DB" xml:space="preserve">
-    <value>Μέσα στη μνήμη προς σχεσιακή ΒΔ</value>
-  </data>
   <data name="In-Memory Usage Tracking" xml:space="preserve">
     <value>Παρακολούθηση Χρήσης στη Μνήμη</value>
+  </data>
+  <data name="In-memory to relational DB" xml:space="preserve">
+    <value>Μέσα στη μνήμη προς σχεσιακή ΒΔ</value>
   </data>
   <data name="Inbound dialects" xml:space="preserve">
     <value>Εισερχόμενοι διαλεκτοί</value>
@@ -344,9 +311,6 @@
   </data>
   <data name="KeepAlive" xml:space="preserve">
     <value>Διατήρηση Ζωντανής Συνδέσης</value>
-  </data>
-  <data name="keys in the system." xml:space="preserve">
-    <value>κλειδιά στο σύστημα.</value>
   </data>
   <data name="Layer" xml:space="preserve">
     <value>Στρώση</value>
@@ -363,11 +327,11 @@
   <data name="Max" xml:space="preserve">
     <value>Μέγιστο</value>
   </data>
-  <data name="Max attempts" xml:space="preserve">
-    <value>Μέγ. προσπάθειες</value>
-  </data>
   <data name="Max Retries" xml:space="preserve">
     <value>Μέγιστες Επαναλήψεις</value>
+  </data>
+  <data name="Max attempts" xml:space="preserve">
+    <value>Μέγ. προσπάθειες</value>
   </data>
   <data name="Middleware" xml:space="preserve">
     <value>Ενδιάμεσος Λογισμικό</value>
@@ -375,26 +339,26 @@
   <data name="Model" xml:space="preserve">
     <value>Μοντέλο</value>
   </data>
+  <data name="Model Loading" xml:space="preserve">
+    <value>Φόρτωση μοντέλου</value>
+  </data>
   <data name="Model and capabilities" xml:space="preserve">
     <value>Μοντέλο και ικανότητες</value>
   </data>
   <data name="Model discovery" xml:space="preserve">
     <value>Ανακάλυψη μοντέλων</value>
   </data>
-  <data name="Model Loading" xml:space="preserve">
-    <value>Φόρτωση μοντέλου</value>
-  </data>
   <data name="Model loading time (cold start on GPU)" xml:space="preserve">
     <value>Χρόνος φόρτωσης μοντέλου (κρύα εκκίνηση σε GPU)</value>
+  </data>
+  <data name="NON-BLOCKING HOT PATH" xml:space="preserve">
+    <value>ΜΗ ΑΠΟΔΕΣΜΕΥΤΙΚΟ ΣΥΝΟΡΟ</value>
   </data>
   <data name="Native Ollama only. A non-Ollama selected backend returns HTTP 501." xml:space="preserve">
     <value>Μόνο για nativa Ollama. Ένας επιλεγμένος backend που δεν είναι Ollama επιστρέφει HTTP 501.</value>
   </data>
   <data name="Native Responses" xml:space="preserve">
     <value>Απόκρισεις Natively</value>
-  </data>
-  <data name="needs another 30 s to finish → completely fine ✅" xml:space="preserve">
-    <value>χρειάζεται άλλα 30 δευτερόλεπτα για να ολοκληρωθεί → απολύτως εντάξει ✅</value>
   </data>
   <data name="No backends configured for this virtual model." xml:space="preserve">
     <value>Δεν έχουν οριστεί backends για αυτό το εικονικό μοντέλο.</value>
@@ -410,12 +374,6 @@
   </data>
   <data name="No providers configured yet." xml:space="preserve">
     <value>Δεν έχουν οριστεί ακόμη πάροχοι.</value>
-  </data>
-  <data name="NON-BLOCKING HOT PATH" xml:space="preserve">
-    <value>ΜΗ ΑΠΟΔΕΣΜΕΥΤΙΚΟ ΣΥΝΟΡΟ</value>
-  </data>
-  <data name="not found. Create it to see real configuration here." xml:space="preserve">
-    <value>δεν βρέθηκε. Δημιουργήστε το για να δείτε την πραγματική ρύθμιση εδώ.</value>
   </data>
   <data name="NumCtx" xml:space="preserve">
     <value>Μέγεθος Πλαισίου</value>
@@ -444,9 +402,6 @@
   <data name="OpenAI Responses state is preserved only on native Responses routes" xml:space="preserve">
     <value>Η κατάσταση των OpenAI Responses διατηρείται μόνο στις αυτόχθονες διαδρομές Responses</value>
   </data>
-  <data name="or" xml:space="preserve">
-    <value>ή</value>
-  </data>
   <data name="Original JSON" xml:space="preserve">
     <value>Πρωτότυπο JSON</value>
   </data>
@@ -462,35 +417,23 @@
   <data name="Preserve protocol-specific payload" xml:space="preserve">
     <value>Διατήρηση φορτίου συγκεκριμένου πρωτοκόλλου</value>
   </data>
-  <data name="previous_response_id, conversation, store:true, and background:true pass through unchanged to Responses-capable providers; translated routes return an explicit 400 unsupported_feature." xml:space="preserve">
-    <value>previous_response_id, conversation, store:true και background:true περνούν αμετάβλητα σε παρόχους ικανούς για Responses; οι μεταφρασμένες διαδρομές επιστρέφουν ένα ρητό 400 unsupported_feature.</value>
-  </data>
   <data name="Pri" xml:space="preserve">
     <value>Προτεραιότητα</value>
   </data>
   <data name="Priority" xml:space="preserve">
     <value>Προτεραιότητα</value>
   </data>
-  <data name="processing" xml:space="preserve">
-    <value>επεξεργασία</value>
-  </data>
   <data name="Provider" xml:space="preserve">
     <value>Πάροχος</value>
-  </data>
-  <data name="Provider → Health Check Timeout (s)" xml:space="preserve">
-    <value>Πάροχος → Χρονικό Όριο Ελέγχου Κατάστασης (s)</value>
-  </data>
-  <data name="Provider → Warmup Model → Timeout (s)" xml:space="preserve">
-    <value>Πάροχος → Μοντέλο Προθέρμανσης → Χρονικό Όριο (δευτ)</value>
-  </data>
-  <data name="Provider concurrency — live process state" xml:space="preserve">
-    <value>Παράλληλη εκτέλεση παρόχων — κατάσταση διαδικασίας σε πραγματικό χρόνο</value>
   </data>
   <data name="Provider concurrency queue wait" xml:space="preserve">
     <value>Αναμονή στην ουρά ταυτόχρονης εκτέλεσης παρόχου</value>
   </data>
   <data name="Provider concurrency slot queuing" xml:space="preserve">
     <value>Αναμονή σε ουρά θέσης ταυτόχρονης χρήσης παρόχου</value>
+  </data>
+  <data name="Provider concurrency — live process state" xml:space="preserve">
+    <value>Παράλληλη εκτέλεση παρόχων — κατάσταση διαδικασίας σε πραγματικό χρόνο</value>
   </data>
   <data name="Provider health probes" xml:space="preserve">
     <value>Δοκιμές υγείας προμηθευτή</value>
@@ -504,11 +447,14 @@
   <data name="Provider types" xml:space="preserve">
     <value>Τύποι προμηθευτών</value>
   </data>
+  <data name="Provider → Health Check Timeout (s)" xml:space="preserve">
+    <value>Πάροχος → Χρονικό Όριο Ελέγχου Κατάστασης (s)</value>
+  </data>
+  <data name="Provider → Warmup Model → Timeout (s)" xml:space="preserve">
+    <value>Πάροχος → Μοντέλο Προθέρμανσης → Χρονικό Όριο (δευτ)</value>
+  </data>
   <data name="Queue until a slot opens — does NOT consume the virtual model timeout." xml:space="preserve">
     <value>Αναμονή στην ουρά μέχρι να ελευθερωθεί θέση — ΔΕΝ καταναλώνει το χρονικό όριο του εικονικού μοντέλου.</value>
-  </data>
-  <data name="queue wait" xml:space="preserve">
-    <value>αναστολή ουράς</value>
   </data>
   <data name="Queue wait is outside the VM timeout" xml:space="preserve">
     <value>Η αναμονή στην ουρά βρίσκεται εκτός του χρονικού ορίου του VM</value>
@@ -564,9 +510,6 @@
   <data name="Return HTTP 429 immediately." xml:space="preserve">
     <value>Επέστρεψε HTTP 429 αμέσως.</value>
   </data>
-  <data name="runs every" xml:space="preserve">
-    <value>εκτελείται κάθε</value>
-  </data>
   <data name="Runtime" xml:space="preserve">
     <value>Χρονική στιγμή</value>
   </data>
@@ -606,9 +549,6 @@
   <data name="Swap" xml:space="preserve">
     <value>Εναλλαγή</value>
   </data>
-  <data name="swaps buffers and bulk-updates DB (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)" xml:space="preserve">
-    <value>ανταλλάσσει τους buffers και ενημερώνει μαζικά τη ΒΔ (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)</value>
-  </data>
   <data name="Target adapter" xml:space="preserve">
     <value>Στόχος προσαρμογέα</value>
   </data>
@@ -630,23 +570,11 @@
   <data name="The warmup background job pings configured models every 5 min to prevent unloading." xml:space="preserve">
     <value>Η εργασία παρασκηνίου προθέρμανσης ελέγχει τα διαμορφωμένα μοντέλα κάθε 5 λεπτά για να αποτρέψει την εκφόρτωσή τους.</value>
   </data>
-  <data name="timeout:" xml:space="preserve">
-    <value>χρόνου:</value>
-  </data>
-  <data name="timeout. Backend starts streaming at" xml:space="preserve">
-    <value>χρόνος αναμονής. Το Backend ξεκινά τη ροή στο</value>
-  </data>
   <data name="Timeouts &amp; Queues" xml:space="preserve">
     <value>Χρονικές καθυστερήσεις &amp; Ουρές</value>
   </data>
   <data name="Total wall-clock time has no fixed upper bound because rate-limit and concurrency queues are outside this budget." xml:space="preserve">
     <value>Ο συνολικός πραγματικός χρόνος δεν έχει σταθερό ανώτερο όριο, καθώς οι ουρές περιορισμού ρυθμού και ταυτόχρονης εκτέλεσης βρίσκονται εκτός αυτού του προϋπολογισμού.</value>
-  </data>
-  <data name="tracks API key usage, virtual model usage, underlying model usage — feeds the Dashboard charts in real-time" xml:space="preserve">
-    <value>κολάει τη χρήση του API key, τη χρήση εικονικών μοντέλων και τη χρήση των υποκείμενων μοντέλων — τροφοδοτεί τα διαγράμματα του Dashboard σε πραγματικό χρόνο</value>
-  </data>
-  <data name="tracks live in-flight requests — powers the &quot;Live Inference&quot; table and Monitor page" xml:space="preserve">
-    <value>καταγράφει τις ενεργές αιτήσεις σε πραγματικό χρόνο — τροφοδοτεί τον πίνακα «Live Inference» και τη σελίδα παρακολούθησης Monitor</value>
   </data>
   <data name="Transparent wire path" xml:space="preserve">
     <value>Διαφανής διαδρομή συζήτησης</value>
@@ -654,8 +582,8 @@
   <data name="Tries backends from lowest priority to highest. If backend #1 fails or times out, falls back to #2, then #3." xml:space="preserve">
     <value>Δοκιμάζει τα backends από τη χαμηλότερη προς την υψηλότερη προτεραιότητα. Αν το backend #1 αποτύχει ή λήξει ο χρόνος, γίνεται εναλλαγή στο #2 και στη συνέχεια στο #3.</value>
   </data>
-  <data name="unbounded" xml:space="preserve">
-    <value>απεριόριστο</value>
+  <data name="USAGE COUNTERS" xml:space="preserve">
+    <value>ΜΕΤΡΗΤΕΣ ΧΡΗΣΗΣ</value>
   </data>
   <data name="Unknown representable fields survive. The gateway changes owned fields such as physical model identity and configured VM parameters; translated Responses requests use store:false." xml:space="preserve">
     <value>Άγνωστα αναπαριστώμενα πεδία διατηρούνται. Το gateway τροποποιεί πεδία που διαχειρίζεται, όπως η φυσική ταυτότητα του μοντέλου και οι διαμορφωμένοι παράμετροι VM· οι μεταφρασμένες αιτήσεις Responses χρησιμοποιούν store:false.</value>
@@ -663,26 +591,20 @@
   <data name="Unlimited" xml:space="preserve">
     <value>Απεριόριστο</value>
   </data>
-  <data name="USAGE COUNTERS" xml:space="preserve">
-    <value>ΜΕΤΡΗΤΕΣ ΧΡΗΣΗΣ</value>
-  </data>
   <data name="User, model, provider, token, latency, status, and conversation fields" xml:space="preserve">
     <value>Πεδία χρήστη, μοντέλου, παρόχου, δακτυλιδίου, καθυστέρησης, κατάστασης και συνομιλίας</value>
   </data>
   <data name="Uses its own two-dialect adapter pipeline. It does not pass through the chat Request/Event IR." xml:space="preserve">
     <value>Χρησιμοποιεί τη δική του γραμμή επεξεργασίας προσαρμογέα δύο διαλέκτων. Δεν περνά από το IR αίτησης/συμβάντος συνομιλίας.</value>
   </data>
-  <data name="Virtual model" xml:space="preserve">
-    <value>Εικονικό μοντέλο</value>
-  </data>
   <data name="Virtual Model → Request Timeout (s)" xml:space="preserve">
     <value>Εικονικό Μοντέλο → Χρόνος Λήξης Αίτησης (δλ)</value>
   </data>
+  <data name="Virtual model" xml:space="preserve">
+    <value>Εικονικό μοντέλο</value>
+  </data>
   <data name="Wait for the per-key rate window. Waiting does not consume VM timeout." xml:space="preserve">
     <value>Αναμονή για το παράθυρο ρυθμού ανά κλειδί. Η αναμονή δεν καταναλώνει το χρονικό όριο VM.</value>
-  </data>
-  <data name="waiting" xml:space="preserve">
-    <value>αναμονή</value>
   </data>
   <data name="Waiting for backend HTTP response headers" xml:space="preserve">
     <value>Αναμονή κεφαλαίων HTTP απόσπασης από το backend</value>
@@ -716,6 +638,84 @@
   </data>
   <data name="Without specifying a model, the gateway uses" xml:space="preserve">
     <value>Χωρίς καθορισμό μοντέλου, η πύλη χρησιμοποιεί</value>
+  </data>
+  <data name="active" xml:space="preserve">
+    <value>active</value>
+  </data>
+  <data name="after slot acquired" xml:space="preserve">
+    <value>μετά την απόκτηση θέσης</value>
+  </data>
+  <data name="attempts and" xml:space="preserve">
+    <value>προσπαθειών και</value>
+  </data>
+  <data name="bounded to" xml:space="preserve">
+    <value>περιορισμένο σε</value>
+  </data>
+  <data name="but no virtual model with that name and type &apos;Chat&apos; exists in the database." xml:space="preserve">
+    <value>αλλά δεν υπάρχει εικονικό μοντέλο με αυτό το όνομα και τύπο &apos;Chat&apos; στη βάση δεδομένων.</value>
+  </data>
+  <data name="create it here → New Virtual Model" xml:space="preserve">
+    <value>δημιουργήστε το εδώ → Νέο Εικονικό Μοντέλο</value>
+  </data>
+  <data name="does not match a Chat virtual model in the database. Requests without an explicit model cannot be resolved." xml:space="preserve">
+    <value>δεν αντιστοιχεί σε εικονικό μοντέλο Chat στη βάση δεδομένων. Οι αιτήσεις χωρίς ένα ρητά καθορισμένο μοντέλο δεν μπορούν να επιλυθούν.</value>
+  </data>
+  <data name="drains buffer, batch-inserts into ClickHouse" xml:space="preserve">
+    <value>αδειάζει το buffer, κάνει batch-inserts στο ClickHouse</value>
+  </data>
+  <data name="entries, DropWrite when full" xml:space="preserve">
+    <value>εγγραφές, απορρίπτεται η εγγραφή όταν είναι γεμάτο</value>
+  </data>
+  <data name="every" xml:space="preserve">
+    <value>κάθε</value>
+  </data>
+  <data name="health timeout" xml:space="preserve">
+    <value>χρόνος λήξης υγείας</value>
+  </data>
+  <data name="keys in the system." xml:space="preserve">
+    <value>κλειδιά στο σύστημα.</value>
+  </data>
+  <data name="needs another 30 s to finish → completely fine ✅" xml:space="preserve">
+    <value>χρειάζεται άλλα 30 δευτερόλεπτα για να ολοκληρωθεί → απολύτως εντάξει ✅</value>
+  </data>
+  <data name="not found. Create it to see real configuration here." xml:space="preserve">
+    <value>δεν βρέθηκε. Δημιουργήστε το για να δείτε την πραγματική ρύθμιση εδώ.</value>
+  </data>
+  <data name="or" xml:space="preserve">
+    <value>ή</value>
+  </data>
+  <data name="previous_response_id, conversation, store:true, and background:true pass through unchanged to Responses-capable providers; translated routes return an explicit 400 unsupported_feature." xml:space="preserve">
+    <value>previous_response_id, conversation, store:true και background:true περνούν αμετάβλητα σε παρόχους ικανούς για Responses; οι μεταφρασμένες διαδρομές επιστρέφουν ένα ρητό 400 unsupported_feature.</value>
+  </data>
+  <data name="processing" xml:space="preserve">
+    <value>επεξεργασία</value>
+  </data>
+  <data name="queue wait" xml:space="preserve">
+    <value>αναστολή ουράς</value>
+  </data>
+  <data name="runs every" xml:space="preserve">
+    <value>εκτελείται κάθε</value>
+  </data>
+  <data name="swaps buffers and bulk-updates DB (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)" xml:space="preserve">
+    <value>ανταλλάσσει τους buffers και ενημερώνει μαζικά τη ΒΔ (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)</value>
+  </data>
+  <data name="timeout. Backend starts streaming at" xml:space="preserve">
+    <value>χρόνος αναμονής. Το Backend ξεκινά τη ροή στο</value>
+  </data>
+  <data name="timeout:" xml:space="preserve">
+    <value>χρόνου:</value>
+  </data>
+  <data name="tracks API key usage, virtual model usage, underlying model usage — feeds the Dashboard charts in real-time" xml:space="preserve">
+    <value>κολάει τη χρήση του API key, τη χρήση εικονικών μοντέλων και τη χρήση των υποκείμενων μοντέλων — τροφοδοτεί τα διαγράμματα του Dashboard σε πραγματικό χρόνο</value>
+  </data>
+  <data name="tracks live in-flight requests — powers the &quot;Live Inference&quot; table and Monitor page" xml:space="preserve">
+    <value>καταγράφει τις ενεργές αιτήσεις σε πραγματικό χρόνο — τροφοδοτεί τον πίνακα «Live Inference» και τη σελίδα παρακολούθησης Monitor</value>
+  </data>
+  <data name="unbounded" xml:space="preserve">
+    <value>απεριόριστο</value>
+  </data>
+  <data name="waiting" xml:space="preserve">
+    <value>αναμονή</value>
   </data>
 
 </root>

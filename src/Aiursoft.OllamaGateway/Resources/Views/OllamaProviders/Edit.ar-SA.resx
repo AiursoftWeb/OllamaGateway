@@ -33,14 +33,14 @@
   <data name="(Responses)" xml:space="preserve">
     <value>(الاستجابات)</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = غير محدود.</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= الإبقاء دائمًا.</value>
   </data>
   <data name="= unload immediately." xml:space="preserve">
     <value>= إرجاع فوري.</value>
-  </data>
-  <data name="0 = unlimited." xml:space="preserve">
-    <value>0 = غير محدود.</value>
   </data>
   <data name="About concurrent requests" xml:space="preserve">
     <value>حول الطلبات المتزامنة</value>
@@ -92,9 +92,6 @@
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>لا تستخدم الثواني الخام مثل &apos;300&apos;. اكتب &apos;5m&apos; بدلاً من ذلك. يتم تجاهل التنسيقات غير الصالحة بصمت بواسطة Ollama.</value>
-  </data>
-  <data name="e.g. Local Server" xml:space="preserve">
-    <value>مثال: خادم محلي</value>
   </data>
   <data name="Edit Ollama Provider" xml:space="preserve">
     <value>تعديل مورد أولاما</value>
@@ -209,6 +206,9 @@
   </data>
   <data name="Warmup timeout" xml:space="preserve">
     <value>مهلة الإحماء</value>
+  </data>
+  <data name="e.g. Local Server" xml:space="preserve">
+    <value>مثال: خادم محلي</value>
   </data>
 
 </root>

@@ -33,14 +33,14 @@
   <data name="(Responses)" xml:space="preserve">
     <value>(Svar)</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = obegränsat.</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= behåll för alltid.</value>
   </data>
   <data name="= unload immediately." xml:space="preserve">
     <value>= ladda omedelbart.</value>
-  </data>
-  <data name="0 = unlimited." xml:space="preserve">
-    <value>0 = obegränsat.</value>
   </data>
   <data name="About concurrent requests" xml:space="preserve">
     <value>Om samtidiga förfrågningar</value>
@@ -92,9 +92,6 @@
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>Använd INTE rå sekunder som &apos;300&apos;. Skriv &apos;5m&apos; istället. Ogiltiga format ignoreras tyst av Ollama.</value>
-  </data>
-  <data name="e.g. Local Server" xml:space="preserve">
-    <value>t.ex. Lokal server</value>
   </data>
   <data name="Edit Ollama Provider" xml:space="preserve">
     <value>Redigera Ollama-leverantör</value>
@@ -209,6 +206,9 @@
   </data>
   <data name="Warmup timeout" xml:space="preserve">
     <value>Uppvärmningstid</value>
+  </data>
+  <data name="e.g. Local Server" xml:space="preserve">
+    <value>t.ex. Lokal server</value>
   </data>
 
 </root>

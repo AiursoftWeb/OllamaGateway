@@ -33,14 +33,14 @@
   <data name="(Responses)" xml:space="preserve">
     <value>(Responses)</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = sınırsız.</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= sonsuza kadar sakla.</value>
   </data>
   <data name="= unload immediately." xml:space="preserve">
     <value>= hemen boşalt.</value>
-  </data>
-  <data name="0 = unlimited." xml:space="preserve">
-    <value>0 = sınırsız.</value>
   </data>
   <data name="About concurrent requests" xml:space="preserve">
     <value>Eş zamanlı istekler hakkında</value>
@@ -92,9 +92,6 @@
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>&apos;300&apos; gibi ham saniye değerlerini KULLANMAYIN. Bunun yerine &apos;5m&apos; yazın. Geçersiz formatlar Ollama tarafından sessizce görmezden gelinir.</value>
-  </data>
-  <data name="e.g. Local Server" xml:space="preserve">
-    <value>ör. Yerel Sunucu</value>
   </data>
   <data name="Edit Ollama Provider" xml:space="preserve">
     <value>Ollama Sağlayıcısını Düzenle</value>
@@ -209,6 +206,9 @@
   </data>
   <data name="Warmup timeout" xml:space="preserve">
     <value>Isınma zaman aşımı</value>
+  </data>
+  <data name="e.g. Local Server" xml:space="preserve">
+    <value>ör. Yerel Sunucu</value>
   </data>
 
 </root>

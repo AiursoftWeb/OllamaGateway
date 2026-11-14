@@ -33,14 +33,14 @@
   <data name="(Responses)" xml:space="preserve">
     <value>（回應）</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = 不限。</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= 永久保留。</value>
   </data>
   <data name="= unload immediately." xml:space="preserve">
     <value>= 立即卸載。</value>
-  </data>
-  <data name="0 = unlimited." xml:space="preserve">
-    <value>0 = 不限。</value>
   </data>
   <data name="About concurrent requests" xml:space="preserve">
     <value>關於並行請求</value>
@@ -92,9 +92,6 @@
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>切勿使用原始秒數（如 &apos;300&apos;），請改用 &apos;5m&apos;。Ollama 會靜默忽略無效格式。</value>
-  </data>
-  <data name="e.g. Local Server" xml:space="preserve">
-    <value>例如：本地伺服器</value>
   </data>
   <data name="Edit Ollama Provider" xml:space="preserve">
     <value>編輯 Ollama 提供程序</value>
@@ -209,6 +206,9 @@
   </data>
   <data name="Warmup timeout" xml:space="preserve">
     <value>預熱逾時</value>
+  </data>
+  <data name="e.g. Local Server" xml:space="preserve">
+    <value>例如：本地伺服器</value>
   </data>
 
 </root>

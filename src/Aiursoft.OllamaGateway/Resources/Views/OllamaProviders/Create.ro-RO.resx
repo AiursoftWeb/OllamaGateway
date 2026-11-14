@@ -33,14 +33,14 @@
   <data name="(Responses)" xml:space="preserve">
     <value>(Răspunsuri)</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = nelimitat.</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= păstrează permanent.</value>
   </data>
   <data name="= unload immediately." xml:space="preserve">
     <value>= descarcă imediat.</value>
-  </data>
-  <data name="0 = unlimited." xml:space="preserve">
-    <value>0 = nelimitat.</value>
   </data>
   <data name="About concurrent requests" xml:space="preserve">
     <value>Despre solicitările concurente</value>
@@ -77,12 +77,6 @@
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>Nu folosiți secunde brute precum &apos;300&apos;. Scrieți &apos;5m&apos; în schimb. Formatele nevalide sunt ignorate tacit de Ollama.</value>
-  </data>
-  <data name="e.g. My Local Ollama" xml:space="preserve">
-    <value>de ex. Ollama locală</value>
-  </data>
-  <data name="e.g. sk-..." xml:space="preserve">
-    <value>ex. sk-...</value>
   </data>
   <data name="Health Check Timeout (s)" xml:space="preserve">
     <value>Timpul de așteptare pentru verificarea stării (s)</value>
@@ -173,6 +167,12 @@
   </data>
   <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
     <value>Așteptarea în coada de concurență NU consumă Timeout-ul de solicitare al modelului virtual. O solicitare va aștepta nelimitat pentru un slot — doar deconectarea clientului (închiderea browserului, timeout SDK) oprește așteptarea. Modelul virtual nu renunță la un backend doar pentru că este ocupat.</value>
+  </data>
+  <data name="e.g. My Local Ollama" xml:space="preserve">
+    <value>de ex. Ollama locală</value>
+  </data>
+  <data name="e.g. sk-..." xml:space="preserve">
+    <value>ex. sk-...</value>
   </data>
 
 </root>

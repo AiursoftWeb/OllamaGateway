@@ -33,14 +33,14 @@
   <data name="(Responses)" xml:space="preserve">
     <value>(Responses)</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = απεριόριστο.</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= διατήρηση για πάντα.</value>
   </data>
   <data name="= unload immediately." xml:space="preserve">
     <value>= αφαίρεση άμεσα.</value>
-  </data>
-  <data name="0 = unlimited." xml:space="preserve">
-    <value>0 = απεριόριστο.</value>
   </data>
   <data name="About concurrent requests" xml:space="preserve">
     <value>Σχετικά με τα ταυτόχρονα αιτήματα</value>
@@ -92,9 +92,6 @@
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>ΜΗ χρησιμοποιείτε ακέραιες δευτερόλεπτα όπως &apos;300&apos;. Γράψτε &apos;5m&apos; αντί γι&apos; αυτό. Τα μη έγκυρα μορφοποιημένα δεδομένα αγνοούνται σιωπηρά από το Ollama.</value>
-  </data>
-  <data name="e.g. Local Server" xml:space="preserve">
-    <value>π.χ. Τοπικός Διακομιστής</value>
   </data>
   <data name="Edit Ollama Provider" xml:space="preserve">
     <value>Επεξεργασία παρόχου Ollama</value>
@@ -209,6 +206,9 @@
   </data>
   <data name="Warmup timeout" xml:space="preserve">
     <value>Χρονικό όριο προθέρμανσης</value>
+  </data>
+  <data name="e.g. Local Server" xml:space="preserve">
+    <value>π.χ. Τοπικός Διακομιστής</value>
   </data>
 
 </root>

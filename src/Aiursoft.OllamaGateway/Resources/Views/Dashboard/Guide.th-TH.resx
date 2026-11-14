@@ -48,35 +48,26 @@
   <data name="7. Observability Pipeline — Dual Logging &amp; Usage Tracking" xml:space="preserve">
     <value>7. สายงานการตรวจสอบได้ — การบันทึกข้อมูลคู่และการติดตามการใช้งาน</value>
   </data>
-  <data name="active" xml:space="preserve">
-    <value>ใช้งานอยู่</value>
-  </data>
-  <data name="After response headers:" xml:space="preserve">
-    <value>หลังส่วนหัวของคำตอบ:</value>
-  </data>
-  <data name="after slot acquired" xml:space="preserve">
-    <value>หลังจากได้รับสล็อตแล้ว</value>
-  </data>
-  <data name="Any OpenAI-compatible or Ollama-native client sends a request." xml:space="preserve">
-    <value>ไคลเอนต์ที่เข้ากันได้กับ OpenAI หรือไคลเอนต์แบบเนทีฟของ Ollama ส่งคำขอ</value>
+  <data name="API Key Verification" xml:space="preserve">
+    <value>การตรวจสอบคีย์ API</value>
   </data>
   <data name="API key · virtual model · underlying model" xml:space="preserve">
     <value>คีย์ API · โมเดลเสมือน · โมเดลพื้นฐาน</value>
   </data>
-  <data name="API Key Verification" xml:space="preserve">
-    <value>การตรวจสอบคีย์ API</value>
-  </data>
   <data name="API keys" xml:space="preserve">
     <value>คีย์ API</value>
   </data>
-  <data name="Architecture Guide" xml:space="preserve">
-    <value>คู่มือสถาปัตยกรรมระบบ</value>
-  </data>
-  <data name="attempts and" xml:space="preserve">
-    <value>ครั้งและ</value>
-  </data>
   <data name="AUDIT EVENTS" xml:space="preserve">
     <value>เหตุการณ์การตรวจสอบ</value>
+  </data>
+  <data name="After response headers:" xml:space="preserve">
+    <value>หลังส่วนหัวของคำตอบ:</value>
+  </data>
+  <data name="Any OpenAI-compatible or Ollama-native client sends a request." xml:space="preserve">
+    <value>ไคลเอนต์ที่เข้ากันได้กับ OpenAI หรือไคลเอนต์แบบเนทีฟของ Ollama ส่งคำขอ</value>
+  </data>
+  <data name="Architecture Guide" xml:space="preserve">
+    <value>คู่มือสถาปัตยกรรมระบบ</value>
   </data>
   <data name="Auth + Rate Limit" xml:space="preserve">
     <value>การตรวจสอบสิทธิ์ + จำกัดอัตรา</value>
@@ -120,17 +111,20 @@
   <data name="Bounded Channel&lt;RequestLog&gt;: 10,000 entries" xml:space="preserve">
     <value>ช่องแบบจำกัดขนาด Channel&lt;RequestLog&gt;: 10,000 รายการ</value>
   </data>
-  <data name="bounded to" xml:space="preserve">
-    <value>กำหนดขีดจำกัดไว้ที่</value>
-  </data>
   <data name="Buffer" xml:space="preserve">
     <value>บัฟเฟอร์</value>
   </data>
   <data name="Bulk update" xml:space="preserve">
     <value>อัปเดตแบบกลุ่ม</value>
   </data>
-  <data name="but no virtual model with that name and type &apos;Chat&apos; exists in the database." xml:space="preserve">
-    <value>แต่ไม่พบโมเดลเสมือนที่มีชื่อนั้นและประเภท &apos;Chat&apos; ในฐานข้อมูล</value>
+  <data name="CONFIGURATION REQUIRED" xml:space="preserve">
+    <value>ต้องกำหนดค่าก่อนใช้งาน</value>
+  </data>
+  <data name="CROSS DIALECT" xml:space="preserve">
+    <value>ข้ามสำเนียง</value>
+  </data>
+  <data name="CURRENT INSTANCE · LIVE" xml:space="preserve">
+    <value>อินสแตนซ์ปัจจุบัน · ใช้งานจริง</value>
   </data>
   <data name="Change default" xml:space="preserve">
     <value>เปลี่ยนค่าเริ่มต้น</value>
@@ -150,9 +144,6 @@
   <data name="Configuration" xml:space="preserve">
     <value>การตั้งค่า</value>
   </data>
-  <data name="CONFIGURATION REQUIRED" xml:space="preserve">
-    <value>ต้องกำหนดค่าก่อนใช้งาน</value>
-  </data>
   <data name="Control Plane" xml:space="preserve">
     <value>ระนาบควบคุม</value>
   </data>
@@ -164,15 +155,6 @@
   </data>
   <data name="Create chat model" xml:space="preserve">
     <value>สร้างโมเดลแชท</value>
-  </data>
-  <data name="create it here → New Virtual Model" xml:space="preserve">
-    <value>สร้างที่นี่ → โมเดลเสมือนใหม่</value>
-  </data>
-  <data name="CROSS DIALECT" xml:space="preserve">
-    <value>ข้ามสำเนียง</value>
-  </data>
-  <data name="CURRENT INSTANCE · LIVE" xml:space="preserve">
-    <value>อินสแตนซ์ปัจจุบัน · ใช้งานจริง</value>
   </data>
   <data name="Current Value" xml:space="preserve">
     <value>ค่าปัจจุบัน</value>
@@ -195,11 +177,11 @@
   <data name="Deep clone" xml:space="preserve">
     <value>โคลนแบบลึก</value>
   </data>
-  <data name="Default chat model is unavailable" xml:space="preserve">
-    <value>โมเดลแชทเริ่มต้นใช้งานไม่ได้</value>
-  </data>
   <data name="Default Chat Model Not Found!" xml:space="preserve">
     <value>ไม่พบโมเดลแชทเริ่มต้น!</value>
+  </data>
+  <data name="Default chat model is unavailable" xml:space="preserve">
+    <value>โมเดลแชทเริ่มต้นใช้งานไม่ได้</value>
   </data>
   <data name="Default virtual model" xml:space="preserve">
     <value>โมเดลเสมือนเริ่มต้น</value>
@@ -207,17 +189,14 @@
   <data name="Dialect contract" xml:space="preserve">
     <value>สัญญาภาษาถิ่น</value>
   </data>
-  <data name="does not match a Chat virtual model in the database. Requests without an explicit model cannot be resolved." xml:space="preserve">
-    <value>ไม่ตรงกับโมเดลเสมือน Chat ในฐานข้อมูล คำขอที่ไม่ระบุโมเดลอย่างชัดเจนไม่สามารถประมวลผลได้</value>
-  </data>
-  <data name="drains buffer, batch-inserts into ClickHouse" xml:space="preserve">
-    <value>ระบายข้อมูลในบัฟเฟอร์ และบันทึกแบบชุดลงสู่ ClickHouse</value>
-  </data>
   <data name="DropWrite when full; enqueue never blocks the request" xml:space="preserve">
     <value>DropWrite เมื่อเต็ม; การ enqueue จะไม่บล็อกคำขอ</value>
   </data>
   <data name="Dual observability pipeline" xml:space="preserve">
     <value>ท่อส่งการสังเกตการณ์คู่</value>
+  </data>
+  <data name="EXECUTION BOUNDARIES" xml:space="preserve">
+    <value>ขอบเขตการดำเนินการ</value>
   </data>
   <data name="Each API key has its own rate-limit window. Two modes:" xml:space="preserve">
     <value>คีย์ API แต่ละคีย์มีหน้าต่างจำกัดอัตราการใช้งานเป็นของตัวเอง มี 2 โหมด:</value>
@@ -231,20 +210,17 @@
   <data name="Embeddings" xml:space="preserve">
     <value>ค่าฝังตัว</value>
   </data>
-  <data name="entries, DropWrite when full" xml:space="preserve">
-    <value>รายการ, ใช้ DropWrite เมื่อเต็ม</value>
-  </data>
-  <data name="every" xml:space="preserve">
-    <value>ทุก</value>
-  </data>
   <data name="Every request is logged asynchronously without blocking the hot path:" xml:space="preserve">
     <value>ทุกคำขอจะถูกบันทึกแบบอะซิงโครนัส โดยไม่บล็อกเส้นทางหลัก:</value>
   </data>
   <data name="Example" xml:space="preserve">
     <value>ตัวอย่าง</value>
   </data>
-  <data name="EXECUTION BOUNDARIES" xml:space="preserve">
-    <value>ขอบเขตการดำเนินการ</value>
+  <data name="FIXED ARCHITECTURE CONTRACT" xml:space="preserve">
+    <value>สัญญาสถาปัตยกรรมแบบคงที่</value>
+  </data>
+  <data name="Fallback Timeline" xml:space="preserve">
+    <value>ลำดับเวลาการเปลี่ยนไปใช้สำรอง</value>
   </data>
   <data name="Fallback budget for the current default model" xml:space="preserve">
     <value>งบประมาณสำรองสำหรับโมเดลเริ่มต้นปัจจุบัน</value>
@@ -252,17 +228,11 @@
   <data name="Fallback per-model loading timeout. Native Ollama only; the background job runs every 5 minutes." xml:space="preserve">
     <value>เวลาหมดสำหรับการโหลดโมเดลแบบเป็นทางเลือกเฉพาะโมเดล ใช้ได้กับ Ollama แบบเนทีฟเท่านั้น; งานพื้นหลังจะทำงานทุก 5 นาที</value>
   </data>
-  <data name="Fallback Timeline" xml:space="preserve">
-    <value>ลำดับเวลาการเปลี่ยนไปใช้สำรอง</value>
-  </data>
   <data name="Fast in-memory counters avoid DB writes on every request:" xml:space="preserve">
     <value>ตัวนับในหน่วยความจำความเร็วสูงช่วยหลีกเลี่ยงการเขียนข้อมูลไปยังฐานข้อมูลในทุกคำขอ:</value>
   </data>
   <data name="Fix it here → Global Settings" xml:space="preserve">
     <value>แก้ไขที่นี่ → การตั้งค่าทั่วไป</value>
-  </data>
-  <data name="FIXED ARCHITECTURE CONTRACT" xml:space="preserve">
-    <value>สัญญาสถาปัตยกรรมแบบคงที่</value>
   </data>
   <data name="Flush every 2 minutes in batches" xml:space="preserve">
     <value>ล้างข้อมูลเป็นชุดทุก 2 นาที</value>
@@ -273,14 +243,17 @@
   <data name="Four independent timeout planes" xml:space="preserve">
     <value>ระนาบการหมดเวลา 4 แบบที่เป็นอิสระต่อกัน</value>
   </data>
+  <data name="GPU processes tokens. Once loaded, subsequent requests skip loading → straight to inference." xml:space="preserve">
+    <value>GPU ประมวลผลโทเค็น เมื่อโหลดเสร็จแล้ว คำขอถัดไปจะข้ามขั้นตอนการโหลด → ไปยังขั้นการทำอนุมานทันที</value>
+  </data>
   <data name="Gateway overrides" xml:space="preserve">
     <value>การแทนค่าที่เกตเวย์</value>
   </data>
   <data name="Gateway-owned responses expose virtual models and avoid recursive upstream discovery." xml:space="preserve">
     <value>การตอบกลับที่เกตเวย์เป็นผู้จัดการจะเปิดเผยโมเดลเสมือนและหลีกเลี่ยงการค้นหาอัปสตรีมแบบซ้ำซ้อน</value>
   </data>
-  <data name="GPU processes tokens. Once loaded, subsequent requests skip loading → straight to inference." xml:space="preserve">
-    <value>GPU ประมวลผลโทเค็น เมื่อโหลดเสร็จแล้ว คำขอถัดไปจะข้ามขั้นตอนการโหลด → ไปยังขั้นการทำอนุมานทันที</value>
+  <data name="HTTP request to backend (DNS, TCP handshake, TLS)" xml:space="preserve">
+    <value>คำขอ HTTP ไปยังแบ็กเอนด์ (DNS, การจับมือ TCP, TLS)</value>
   </data>
   <data name="Hang" xml:space="preserve">
     <value>พักค้างรอ</value>
@@ -296,9 +269,6 @@
   </data>
   <data name="Health Check" xml:space="preserve">
     <value>การตรวจสอบสถานะระบบ</value>
-  </data>
-  <data name="health timeout" xml:space="preserve">
-    <value>เวลาหมดการตรวจสอบสถานะสุขภาพ</value>
   </data>
   <data name="Hot-path increment" xml:space="preserve">
     <value>การเพิ่มค่าในเส้นทางหลัก</value>
@@ -321,17 +291,14 @@
   <data name="How long the warmup job waits for each model to load. Per-model configurable." xml:space="preserve">
     <value>ระยะเวลาที่งานวอร์มอัพรอให้แต่ละโมเดลโหลดเสร็จสิ้น สามารถกำหนดค่าแยกตามโมเดลได้</value>
   </data>
-  <data name="HTTP request to backend (DNS, TCP handshake, TLS)" xml:space="preserve">
-    <value>คำขอ HTTP ไปยังแบ็กเอนด์ (DNS, การจับมือ TCP, TLS)</value>
-  </data>
   <data name="Immediately return HTTP 429." xml:space="preserve">
     <value>ส่งคืน HTTP 429 ทันที</value>
   </data>
-  <data name="In-memory to relational DB" xml:space="preserve">
-    <value>จากหน่วยความจำไปยังฐานข้อมูลเชิงสัมพันธ์</value>
-  </data>
   <data name="In-Memory Usage Tracking" xml:space="preserve">
     <value>การติดตามการใช้งานในหน่วยความจำ</value>
+  </data>
+  <data name="In-memory to relational DB" xml:space="preserve">
+    <value>จากหน่วยความจำไปยังฐานข้อมูลเชิงสัมพันธ์</value>
   </data>
   <data name="Inbound dialects" xml:space="preserve">
     <value>รูปแบบการรับข้อมูลเข้า</value>
@@ -344,9 +311,6 @@
   </data>
   <data name="KeepAlive" xml:space="preserve">
     <value>การคงสถานะไว้</value>
-  </data>
-  <data name="keys in the system." xml:space="preserve">
-    <value>คีย์ในระบบ</value>
   </data>
   <data name="Layer" xml:space="preserve">
     <value>ชั้น</value>
@@ -363,11 +327,11 @@
   <data name="Max" xml:space="preserve">
     <value>สูงสุด</value>
   </data>
-  <data name="Max attempts" xml:space="preserve">
-    <value>จำนวนการพยายามสูงสุด</value>
-  </data>
   <data name="Max Retries" xml:space="preserve">
     <value>จำนวนการลองใหม่สูงสุด</value>
+  </data>
+  <data name="Max attempts" xml:space="preserve">
+    <value>จำนวนการพยายามสูงสุด</value>
   </data>
   <data name="Middleware" xml:space="preserve">
     <value>โปรแกรมกลาง</value>
@@ -375,26 +339,26 @@
   <data name="Model" xml:space="preserve">
     <value>โมเดล</value>
   </data>
+  <data name="Model Loading" xml:space="preserve">
+    <value>กำลังโหลดโมเดล</value>
+  </data>
   <data name="Model and capabilities" xml:space="preserve">
     <value>โมเดลและฟีเจอร์</value>
   </data>
   <data name="Model discovery" xml:space="preserve">
     <value>การค้นพบโมเดล</value>
   </data>
-  <data name="Model Loading" xml:space="preserve">
-    <value>กำลังโหลดโมเดล</value>
-  </data>
   <data name="Model loading time (cold start on GPU)" xml:space="preserve">
     <value>เวลาโหลดโมเดล (การเริ่มต้นแบบเย็นบน GPU)</value>
+  </data>
+  <data name="NON-BLOCKING HOT PATH" xml:space="preserve">
+    <value>เส้นทางหลักที่ไม่มีการบล็อก</value>
   </data>
   <data name="Native Ollama only. A non-Ollama selected backend returns HTTP 501." xml:space="preserve">
     <value>รองรับเฉพาะ Ollama แบบเนทีฟเท่านั้น หากเลือกแบ็กเอนด์ที่ไม่ใช่ Ollama จะส่งคืน HTTP 501</value>
   </data>
   <data name="Native Responses" xml:space="preserve">
     <value>การตอบกลับแบบเนทีฟ</value>
-  </data>
-  <data name="needs another 30 s to finish → completely fine ✅" xml:space="preserve">
-    <value>ใช้เวลาอีก 30 วินาทีจึงจะเสร็จสิ้น → ผ่าน ✅</value>
   </data>
   <data name="No backends configured for this virtual model." xml:space="preserve">
     <value>ไม่มีการกำหนดค่าแบ็กเอนด์สำหรับโมเดลเสมือนนี้</value>
@@ -410,12 +374,6 @@
   </data>
   <data name="No providers configured yet." xml:space="preserve">
     <value>ยังไม่ได้กำหนดค่าผู้ให้บริการใดๆ ไว้</value>
-  </data>
-  <data name="NON-BLOCKING HOT PATH" xml:space="preserve">
-    <value>เส้นทางหลักที่ไม่มีการบล็อก</value>
-  </data>
-  <data name="not found. Create it to see real configuration here." xml:space="preserve">
-    <value>ไม่พบ โปรดสร้างเพื่อดูการตั้งค่าจริงที่นี่</value>
   </data>
   <data name="NumCtx" xml:space="preserve">
     <value>ขนาดบริบท</value>
@@ -444,9 +402,6 @@
   <data name="OpenAI Responses state is preserved only on native Responses routes" xml:space="preserve">
     <value>สถานะของ OpenAI Responses จะถูกเก็บรักษาไว้เฉพาะบนเส้นทาง Responses แบบเนทีฟเท่านั้น</value>
   </data>
-  <data name="or" xml:space="preserve">
-    <value>หรือ</value>
-  </data>
   <data name="Original JSON" xml:space="preserve">
     <value>JSON เดิม</value>
   </data>
@@ -462,35 +417,23 @@
   <data name="Preserve protocol-specific payload" xml:space="preserve">
     <value>คงโครงสร้างข้อมูลเฉพาะโปรโตคอลไว้</value>
   </data>
-  <data name="previous_response_id, conversation, store:true, and background:true pass through unchanged to Responses-capable providers; translated routes return an explicit 400 unsupported_feature." xml:space="preserve">
-    <value>previous_response_id, conversation, store:true และ background:true จะถูกส่งต่อโดยไม่มีการเปลี่ยนแปลงไปยังผู้ให้บริการที่รองรับ Responses; เส้นทางที่ถูกแปลงจะส่งคืนรหัส 400 unsupported_feature อย่างชัดเจน</value>
-  </data>
   <data name="Pri" xml:space="preserve">
     <value>ลำดับความสำคัญ</value>
   </data>
   <data name="Priority" xml:space="preserve">
     <value>ลำดับความสำคัญ</value>
   </data>
-  <data name="processing" xml:space="preserve">
-    <value>กำลังประมวลผล</value>
-  </data>
   <data name="Provider" xml:space="preserve">
     <value>ผู้ให้บริการ</value>
-  </data>
-  <data name="Provider → Health Check Timeout (s)" xml:space="preserve">
-    <value>ผู้ให้บริการ → ระยะเวลาหมดเวลาการตรวจสอบสถานะ (วินาที)</value>
-  </data>
-  <data name="Provider → Warmup Model → Timeout (s)" xml:space="preserve">
-    <value>ผู้ให้บริการ → แบบจำลองวอร์มอัพ → หมดเวลา (วินาที)</value>
-  </data>
-  <data name="Provider concurrency — live process state" xml:space="preserve">
-    <value>ความพร้อมกันของผู้ให้บริการ — สถานะกระบวนการแบบเรียลไทม์</value>
   </data>
   <data name="Provider concurrency queue wait" xml:space="preserve">
     <value>การรอในคิวความพร้อมใช้งานของผู้ให้บริการ</value>
   </data>
   <data name="Provider concurrency slot queuing" xml:space="preserve">
     <value>คิวรอช่องว่างคอนเคอร์เรนซีของผู้ให้บริการ</value>
+  </data>
+  <data name="Provider concurrency — live process state" xml:space="preserve">
+    <value>ความพร้อมกันของผู้ให้บริการ — สถานะกระบวนการแบบเรียลไทม์</value>
   </data>
   <data name="Provider health probes" xml:space="preserve">
     <value>การตรวจสอบสถานะผู้ให้บริการ</value>
@@ -504,11 +447,14 @@
   <data name="Provider types" xml:space="preserve">
     <value>ประเภทผู้ให้บริการ</value>
   </data>
+  <data name="Provider → Health Check Timeout (s)" xml:space="preserve">
+    <value>ผู้ให้บริการ → ระยะเวลาหมดเวลาการตรวจสอบสถานะ (วินาที)</value>
+  </data>
+  <data name="Provider → Warmup Model → Timeout (s)" xml:space="preserve">
+    <value>ผู้ให้บริการ → แบบจำลองวอร์มอัพ → หมดเวลา (วินาที)</value>
+  </data>
   <data name="Queue until a slot opens — does NOT consume the virtual model timeout." xml:space="preserve">
     <value>รอในคิวจนกว่าจะมีช่องว่าง — ไม่ใช้หมดเวลาของโมเดลเสมือน</value>
-  </data>
-  <data name="queue wait" xml:space="preserve">
-    <value>รอในคิว</value>
   </data>
   <data name="Queue wait is outside the VM timeout" xml:space="preserve">
     <value>เวลารอในคิวอยู่นอกเหนือจากเวลาหมดของ VM</value>
@@ -564,9 +510,6 @@
   <data name="Return HTTP 429 immediately." xml:space="preserve">
     <value>ส่ง HTTP 429 ทันที</value>
   </data>
-  <data name="runs every" xml:space="preserve">
-    <value>ทำงานทุก ๆ</value>
-  </data>
   <data name="Runtime" xml:space="preserve">
     <value>ขณะทำงาน</value>
   </data>
@@ -606,9 +549,6 @@
   <data name="Swap" xml:space="preserve">
     <value>สลับ</value>
   </data>
-  <data name="swaps buffers and bulk-updates DB (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)" xml:space="preserve">
-    <value>สลับบัฟเฟอร์และอัปเดตฐานข้อมูลแบบกลุ่ม (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)</value>
-  </data>
   <data name="Target adapter" xml:space="preserve">
     <value>ตัวปรับแต่งเป้าหมาย</value>
   </data>
@@ -630,23 +570,11 @@
   <data name="The warmup background job pings configured models every 5 min to prevent unloading." xml:space="preserve">
     <value>กระบวนการทำงานพื้นหลังแบบวอร์มอัพจะปิงโมเดลที่กำหนดค่าไว้ทุก ๆ 5 นาทีเพื่อป้องกันการถูกปลดออกจากหน่วยความจำ</value>
   </data>
-  <data name="timeout:" xml:space="preserve">
-    <value>หมดเวลา:</value>
-  </data>
-  <data name="timeout. Backend starts streaming at" xml:space="preserve">
-    <value>หมดเวลา ระบบหลังบ้านเริ่มสตรีมที่</value>
-  </data>
   <data name="Timeouts &amp; Queues" xml:space="preserve">
     <value>เวลาหมดและคิว</value>
   </data>
   <data name="Total wall-clock time has no fixed upper bound because rate-limit and concurrency queues are outside this budget." xml:space="preserve">
     <value>เวลาจริงทั้งหมดไม่มีขอบเขตบนที่แน่นอน เนื่องจากคิวจำกัดอัตราและคิวการทำงานพร้อมกันอยู่นอกเหนืองบประมาณนี้</value>
-  </data>
-  <data name="tracks API key usage, virtual model usage, underlying model usage — feeds the Dashboard charts in real-time" xml:space="preserve">
-    <value>ติดตามการใช้งานคีย์ API การใช้งานโมเดลเสมือน และการใช้งานโมเดลพื้นฐาน — ส่งข้อมูลไปยังแผนภูมิในแดชบอร์ดแบบเรียลไทม์</value>
-  </data>
-  <data name="tracks live in-flight requests — powers the &quot;Live Inference&quot; table and Monitor page" xml:space="preserve">
-    <value>ติดตามคำขอที่กำลังดำเนินการแบบเรียลไทม์ — รองรับตาราง &quot;Live Inference&quot; และหน้า Monitor</value>
   </data>
   <data name="Transparent wire path" xml:space="preserve">
     <value>เส้นทางสัญญาณแบบโปร่งใส</value>
@@ -654,8 +582,8 @@
   <data name="Tries backends from lowest priority to highest. If backend #1 fails or times out, falls back to #2, then #3." xml:space="preserve">
     <value>พยายามใช้แบ็กเอนด์จากลำดับความสำคัญต่ำสุดไปสูงสุด หากแบ็กเอนด์ #1 ล้มเหลวหรือหมดเวลา จะเปลี่ยนไปใช้ #2 แล้วตามด้วย #3</value>
   </data>
-  <data name="unbounded" xml:space="preserve">
-    <value>ไม่จำกัด</value>
+  <data name="USAGE COUNTERS" xml:space="preserve">
+    <value>ตัวนับการใช้งาน</value>
   </data>
   <data name="Unknown representable fields survive. The gateway changes owned fields such as physical model identity and configured VM parameters; translated Responses requests use store:false." xml:space="preserve">
     <value>ฟิลด์ที่สามารถแสดงได้ที่ไม่รู้จักจะถูกเก็บรักษาไว้ เกตเวย์จะปรับเปลี่ยนฟิลด์ที่เป็นของระบบ เช่น ตัวตนของโมเดลทางกายภาพและพารามิเตอร์ VM ที่กำหนดค่าไว้; คำขอ Responses ที่ผ่านการแปลจะใช้ store:false</value>
@@ -663,26 +591,20 @@
   <data name="Unlimited" xml:space="preserve">
     <value>ไม่จำกัด</value>
   </data>
-  <data name="USAGE COUNTERS" xml:space="preserve">
-    <value>ตัวนับการใช้งาน</value>
-  </data>
   <data name="User, model, provider, token, latency, status, and conversation fields" xml:space="preserve">
     <value>ฟิลด์ผู้ใช้ โมเดล ผู้ให้บริการ โทเค็น ระยะเวลาแฝง สถานะ และบทสนทนา</value>
   </data>
   <data name="Uses its own two-dialect adapter pipeline. It does not pass through the chat Request/Event IR." xml:space="preserve">
     <value>ใช้ระบบปรับเทียบสองรูปแบบของตัวเอง ไม่ส่งผ่าน Request/Event IR ของแชท</value>
   </data>
-  <data name="Virtual model" xml:space="preserve">
-    <value>โมเดลเสมือนจริง</value>
-  </data>
   <data name="Virtual Model → Request Timeout (s)" xml:space="preserve">
     <value>Virtual Model → ระยะเวลาหมดเวลาคำขอ (วินาที)</value>
   </data>
+  <data name="Virtual model" xml:space="preserve">
+    <value>โมเดลเสมือนจริง</value>
+  </data>
   <data name="Wait for the per-key rate window. Waiting does not consume VM timeout." xml:space="preserve">
     <value>รอจนกว่าจะถึงหน้าต่างอัตราจำกัดต่อคีย์ การรอจะไม่ทำให้หมดเวลาของ VM</value>
-  </data>
-  <data name="waiting" xml:space="preserve">
-    <value>รออยู่</value>
   </data>
   <data name="Waiting for backend HTTP response headers" xml:space="preserve">
     <value>กำลังรอส่วนหัวของคำตอบ HTTP จากเซิร์ฟเวอร์หลังบ้าน</value>
@@ -716,6 +638,84 @@
   </data>
   <data name="Without specifying a model, the gateway uses" xml:space="preserve">
     <value>หากไม่ได้ระบุโมเดล เกตเวย์จะใช้</value>
+  </data>
+  <data name="active" xml:space="preserve">
+    <value>ใช้งานอยู่</value>
+  </data>
+  <data name="after slot acquired" xml:space="preserve">
+    <value>หลังจากได้รับสล็อตแล้ว</value>
+  </data>
+  <data name="attempts and" xml:space="preserve">
+    <value>ครั้งและ</value>
+  </data>
+  <data name="bounded to" xml:space="preserve">
+    <value>กำหนดขีดจำกัดไว้ที่</value>
+  </data>
+  <data name="but no virtual model with that name and type &apos;Chat&apos; exists in the database." xml:space="preserve">
+    <value>แต่ไม่พบโมเดลเสมือนที่มีชื่อนั้นและประเภท &apos;Chat&apos; ในฐานข้อมูล</value>
+  </data>
+  <data name="create it here → New Virtual Model" xml:space="preserve">
+    <value>สร้างที่นี่ → โมเดลเสมือนใหม่</value>
+  </data>
+  <data name="does not match a Chat virtual model in the database. Requests without an explicit model cannot be resolved." xml:space="preserve">
+    <value>ไม่ตรงกับโมเดลเสมือน Chat ในฐานข้อมูล คำขอที่ไม่ระบุโมเดลอย่างชัดเจนไม่สามารถประมวลผลได้</value>
+  </data>
+  <data name="drains buffer, batch-inserts into ClickHouse" xml:space="preserve">
+    <value>ระบายข้อมูลในบัฟเฟอร์ และบันทึกแบบชุดลงสู่ ClickHouse</value>
+  </data>
+  <data name="entries, DropWrite when full" xml:space="preserve">
+    <value>รายการ, ใช้ DropWrite เมื่อเต็ม</value>
+  </data>
+  <data name="every" xml:space="preserve">
+    <value>ทุก</value>
+  </data>
+  <data name="health timeout" xml:space="preserve">
+    <value>เวลาหมดการตรวจสอบสถานะสุขภาพ</value>
+  </data>
+  <data name="keys in the system." xml:space="preserve">
+    <value>คีย์ในระบบ</value>
+  </data>
+  <data name="needs another 30 s to finish → completely fine ✅" xml:space="preserve">
+    <value>ใช้เวลาอีก 30 วินาทีจึงจะเสร็จสิ้น → ผ่าน ✅</value>
+  </data>
+  <data name="not found. Create it to see real configuration here." xml:space="preserve">
+    <value>ไม่พบ โปรดสร้างเพื่อดูการตั้งค่าจริงที่นี่</value>
+  </data>
+  <data name="or" xml:space="preserve">
+    <value>หรือ</value>
+  </data>
+  <data name="previous_response_id, conversation, store:true, and background:true pass through unchanged to Responses-capable providers; translated routes return an explicit 400 unsupported_feature." xml:space="preserve">
+    <value>previous_response_id, conversation, store:true และ background:true จะถูกส่งต่อโดยไม่มีการเปลี่ยนแปลงไปยังผู้ให้บริการที่รองรับ Responses; เส้นทางที่ถูกแปลงจะส่งคืนรหัส 400 unsupported_feature อย่างชัดเจน</value>
+  </data>
+  <data name="processing" xml:space="preserve">
+    <value>กำลังประมวลผล</value>
+  </data>
+  <data name="queue wait" xml:space="preserve">
+    <value>รอในคิว</value>
+  </data>
+  <data name="runs every" xml:space="preserve">
+    <value>ทำงานทุก ๆ</value>
+  </data>
+  <data name="swaps buffers and bulk-updates DB (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)" xml:space="preserve">
+    <value>สลับบัฟเฟอร์และอัปเดตฐานข้อมูลแบบกลุ่ม (ApiKeys.UsageCount, VirtualModels.UsageCount, UnderlyingModelUsages)</value>
+  </data>
+  <data name="timeout. Backend starts streaming at" xml:space="preserve">
+    <value>หมดเวลา ระบบหลังบ้านเริ่มสตรีมที่</value>
+  </data>
+  <data name="timeout:" xml:space="preserve">
+    <value>หมดเวลา:</value>
+  </data>
+  <data name="tracks API key usage, virtual model usage, underlying model usage — feeds the Dashboard charts in real-time" xml:space="preserve">
+    <value>ติดตามการใช้งานคีย์ API การใช้งานโมเดลเสมือน และการใช้งานโมเดลพื้นฐาน — ส่งข้อมูลไปยังแผนภูมิในแดชบอร์ดแบบเรียลไทม์</value>
+  </data>
+  <data name="tracks live in-flight requests — powers the &quot;Live Inference&quot; table and Monitor page" xml:space="preserve">
+    <value>ติดตามคำขอที่กำลังดำเนินการแบบเรียลไทม์ — รองรับตาราง &quot;Live Inference&quot; และหน้า Monitor</value>
+  </data>
+  <data name="unbounded" xml:space="preserve">
+    <value>ไม่จำกัด</value>
+  </data>
+  <data name="waiting" xml:space="preserve">
+    <value>รออยู่</value>
   </data>
 
 </root>

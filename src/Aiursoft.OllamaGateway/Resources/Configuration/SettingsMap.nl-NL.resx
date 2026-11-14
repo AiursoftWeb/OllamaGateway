@@ -39,11 +39,11 @@
   <data name="Allow Anonymous API Call" xml:space="preserve">
     <value>Sta anonieme API-oproepen toe</value>
   </data>
-  <data name="Allow anyone to call the API without a Bearer token or authentication." xml:space="preserve">
-    <value>Stel iedereen in staat de API aan te roepen zonder een Bearer-token of authenticatie.</value>
-  </data>
   <data name="Allow User Adjust Nickname" xml:space="preserve">
     <value>Gebruiker toestaan om bijnaam aan te passen</value>
+  </data>
+  <data name="Allow anyone to call the API without a Bearer token or authentication." xml:space="preserve">
+    <value>Stel iedereen in staat de API aan te roepen zonder een Bearer-token of authenticatie.</value>
   </data>
   <data name="Allow users to adjust their nickname in the profile management page." xml:space="preserve">
     <value>Gebruikers toestaan om hun bijnaam aan te passen op de pagina voor profielbeheer.</value>
@@ -105,6 +105,12 @@
   <data name="Synchronize backend monitoring incidents with AlertCenter." xml:space="preserve">
     <value>Synchroniseer incidenten uit de backendmonitoring met AlertCenter.</value>
   </data>
+  <data name="The HTTP(S) base URL of AlertCenter." xml:space="preserve">
+    <value>De HTTP(S)-basis-URL van AlertCenter.</value>
+  </data>
+  <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
+    <value>Het ICP-licentienummer voor gebruikers uit het Chinese vasteland. Leeg laten om te verbergen.</value>
+  </data>
   <data name="The brand name displayed in the footer." xml:space="preserve">
     <value>De merknaam die wordt weergegeven in de voettekst.</value>
   </data>
@@ -113,12 +119,6 @@
   </data>
   <data name="The default virtual model to use for embedding requests when no model is specified." xml:space="preserve">
     <value>Het standaard virtuele model dat moet worden gebruikt voor embedding-verzoeken als er geen model is opgegeven.</value>
-  </data>
-  <data name="The HTTP(S) base URL of AlertCenter." xml:space="preserve">
-    <value>De HTTP(S)-basis-URL van AlertCenter.</value>
-  </data>
-  <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
-    <value>Het ICP-licentienummer voor gebruikers uit het Chinese vasteland. Leeg laten om te verbergen.</value>
   </data>
   <data name="The interval in minutes to ping the loaded models to keep them in memory." xml:space="preserve">
     <value>Het interval in minuten om de geladen modellen te pingen om ze in het geheugen te houden.</value>

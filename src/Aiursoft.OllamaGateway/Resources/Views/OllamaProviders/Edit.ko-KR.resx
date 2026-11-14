@@ -33,14 +33,14 @@
   <data name="(Responses)" xml:space="preserve">
     <value>(응답)</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = 무제한.</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= 영구 유지</value>
   </data>
   <data name="= unload immediately." xml:space="preserve">
     <value>= 즉시 언로드합니다.</value>
-  </data>
-  <data name="0 = unlimited." xml:space="preserve">
-    <value>0 = 무제한.</value>
   </data>
   <data name="About concurrent requests" xml:space="preserve">
     <value>동시 요청 정보</value>
@@ -92,9 +92,6 @@
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>&apos;300&apos;과 같은 초 단위의 원시 값을 사용하지 마십시오. 대신 &apos;5m&apos;을 입력하세요. 유효하지 않은 형식은 Ollama에서 자동으로 무시됩니다.</value>
-  </data>
-  <data name="e.g. Local Server" xml:space="preserve">
-    <value>예: 로컬 서버</value>
   </data>
   <data name="Edit Ollama Provider" xml:space="preserve">
     <value>Ollama 제공자 편집</value>
@@ -209,6 +206,9 @@
   </data>
   <data name="Warmup timeout" xml:space="preserve">
     <value>예열 시간 초과</value>
+  </data>
+  <data name="e.g. Local Server" xml:space="preserve">
+    <value>예: 로컬 서버</value>
   </data>
 
 </root>

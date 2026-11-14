@@ -33,14 +33,14 @@
   <data name="(Responses)" xml:space="preserve">
     <value>(Réponses)</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = illimité.</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= garder indéfiniment.</value>
   </data>
   <data name="= unload immediately." xml:space="preserve">
     <value>= déchargement immédiat.</value>
-  </data>
-  <data name="0 = unlimited." xml:space="preserve">
-    <value>0 = illimité.</value>
   </data>
   <data name="About concurrent requests" xml:space="preserve">
     <value>À propos des requêtes simultanées</value>
@@ -92,9 +92,6 @@
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>N&apos;utilisez PAS de secondes brutes comme &apos;300&apos;. Écrivez &apos;5m&apos; à la place. Les formats non valides sont ignorés silencieusement par Ollama.</value>
-  </data>
-  <data name="e.g. Local Server" xml:space="preserve">
-    <value>p. ex. Local Server</value>
   </data>
   <data name="Edit Ollama Provider" xml:space="preserve">
     <value>Modifier le fournisseur Ollama</value>
@@ -209,6 +206,9 @@
   </data>
   <data name="Warmup timeout" xml:space="preserve">
     <value>Délai d&apos;attente du réchauffement</value>
+  </data>
+  <data name="e.g. Local Server" xml:space="preserve">
+    <value>p. ex. Local Server</value>
   </data>
 
 </root>

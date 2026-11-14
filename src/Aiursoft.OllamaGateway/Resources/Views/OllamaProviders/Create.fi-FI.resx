@@ -33,14 +33,14 @@
   <data name="(Responses)" xml:space="preserve">
     <value>(Vastaukset)</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = rajoittamaton.</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= pidä ikuisesti.</value>
   </data>
   <data name="= unload immediately." xml:space="preserve">
     <value>= purkaa välittömästi.</value>
-  </data>
-  <data name="0 = unlimited." xml:space="preserve">
-    <value>0 = rajoittamaton.</value>
   </data>
   <data name="About concurrent requests" xml:space="preserve">
     <value>Tietoja samanaikaisista pyynnöistä</value>
@@ -77,12 +77,6 @@
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>Älä käytä paljaita sekunteja kuten &apos;300&apos;. Kirjoita sen sijaan &apos;5m&apos;. Ollama ohittaa virheelliset muodot hiljaa.</value>
-  </data>
-  <data name="e.g. My Local Ollama" xml:space="preserve">
-    <value>esim. Oma paikallinen Ollama</value>
-  </data>
-  <data name="e.g. sk-..." xml:space="preserve">
-    <value>esim. sk-...</value>
   </data>
   <data name="Health Check Timeout (s)" xml:space="preserve">
     <value>Terveystarkistuksen aikakatkaisu (s)</value>
@@ -173,6 +167,12 @@
   </data>
   <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
     <value>Odottaminen rinnakkaisuusjonossa EI kuluta virtuaalimallin pyyntöaikaumoa. Pyyntö odottaa rajattomasti vapautuvaa aikapistettä — vasta asiakkaan yhteyden katkeaminen (selaimen sulkeminen, SDK:n aikaumovirhe) keskeyttää odotuksen. Virtuaalimalli ei luovu tausta-palvelimesta vain sen ollessa kiireinen.</value>
+  </data>
+  <data name="e.g. My Local Ollama" xml:space="preserve">
+    <value>esim. Oma paikallinen Ollama</value>
+  </data>
+  <data name="e.g. sk-..." xml:space="preserve">
+    <value>esim. sk-...</value>
   </data>
 
 </root>

@@ -33,14 +33,14 @@
   <data name="(Responses)" xml:space="preserve">
     <value>(P phản hồi)</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = không giới hạn.</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= giữ mãi mãi.</value>
   </data>
   <data name="= unload immediately." xml:space="preserve">
     <value>= giải phóng ngay lập tức.</value>
-  </data>
-  <data name="0 = unlimited." xml:space="preserve">
-    <value>0 = không giới hạn.</value>
   </data>
   <data name="About concurrent requests" xml:space="preserve">
     <value>Về các yêu cầu đồng thời</value>
@@ -92,9 +92,6 @@
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>KHÔNG sử dụng giây thô như &apos;300&apos;. Hãy viết &apos;5m&apos; thay thế. Ollama sẽ tự động bỏ qua các định dạng không hợp lệ.</value>
-  </data>
-  <data name="e.g. Local Server" xml:space="preserve">
-    <value>ví dụ: máy chủ cục bộ</value>
   </data>
   <data name="Edit Ollama Provider" xml:space="preserve">
     <value>Chỉnh sửa Nhà cung cấp Ollama</value>
@@ -209,6 +206,9 @@
   </data>
   <data name="Warmup timeout" xml:space="preserve">
     <value>Thời gian chờ khởi động</value>
+  </data>
+  <data name="e.g. Local Server" xml:space="preserve">
+    <value>ví dụ: máy chủ cục bộ</value>
   </data>
 
 </root>

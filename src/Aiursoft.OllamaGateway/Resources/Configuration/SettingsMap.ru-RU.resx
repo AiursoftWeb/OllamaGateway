@@ -39,11 +39,11 @@
   <data name="Allow Anonymous API Call" xml:space="preserve">
     <value>Разрешить анонимные вызовы API</value>
   </data>
-  <data name="Allow anyone to call the API without a Bearer token or authentication." xml:space="preserve">
-    <value>Разрешить любому пользователю вызывать API без токена Bearer или аутентификации.</value>
-  </data>
   <data name="Allow User Adjust Nickname" xml:space="preserve">
     <value>Разрешить пользователю изменять никнейм</value>
+  </data>
+  <data name="Allow anyone to call the API without a Bearer token or authentication." xml:space="preserve">
+    <value>Разрешить любому пользователю вызывать API без токена Bearer или аутентификации.</value>
   </data>
   <data name="Allow users to adjust their nickname in the profile management page." xml:space="preserve">
     <value>Позволить пользователям изменять свой ник в странице управления профилем.</value>
@@ -105,6 +105,12 @@
   <data name="Synchronize backend monitoring incidents with AlertCenter." xml:space="preserve">
     <value>Синхронизировать инциденты мониторинга серверной части с AlertCenter.</value>
   </data>
+  <data name="The HTTP(S) base URL of AlertCenter." xml:space="preserve">
+    <value>Базовый URL AlertCenter по HTTP(S).</value>
+  </data>
+  <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
+    <value>Номер лицензии ICP для пользователей из материкового Китая. Оставьте пустым, чтобы скрыть.</value>
+  </data>
   <data name="The brand name displayed in the footer." xml:space="preserve">
     <value>Название бренда, отображаемое в подвале.</value>
   </data>
@@ -113,12 +119,6 @@
   </data>
   <data name="The default virtual model to use for embedding requests when no model is specified." xml:space="preserve">
     <value>Модель по умолчанию для запросов встраивания, используемая при отсутствии указанной модели.</value>
-  </data>
-  <data name="The HTTP(S) base URL of AlertCenter." xml:space="preserve">
-    <value>Базовый URL AlertCenter по HTTP(S).</value>
-  </data>
-  <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
-    <value>Номер лицензии ICP для пользователей из материкового Китая. Оставьте пустым, чтобы скрыть.</value>
   </data>
   <data name="The interval in minutes to ping the loaded models to keep them in memory." xml:space="preserve">
     <value>Интервал в минутах для отправки запросов загруженным моделям, чтобы они оставались в памяти.</value>

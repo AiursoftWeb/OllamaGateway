@@ -33,14 +33,14 @@
   <data name="(Responses)" xml:space="preserve">
     <value>(Odpowiedzi)</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = bez limitu.</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= zachowaj na zawsze.</value>
   </data>
   <data name="= unload immediately." xml:space="preserve">
     <value>= natychmiastowe odładowanie.</value>
-  </data>
-  <data name="0 = unlimited." xml:space="preserve">
-    <value>0 = bez limitu.</value>
   </data>
   <data name="About concurrent requests" xml:space="preserve">
     <value>O jednoczesnych żądaniach</value>
@@ -92,9 +92,6 @@
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>Nie używaj surowych sekund, takich jak &apos;300&apos;. Zamiast tego wpisz &apos;5m&apos;. Nieprawidłowe formaty są cicho ignorowane przez Ollamę.</value>
-  </data>
-  <data name="e.g. Local Server" xml:space="preserve">
-    <value>np. serwer lokalny</value>
   </data>
   <data name="Edit Ollama Provider" xml:space="preserve">
     <value>Edytuj dostawcę Ollama</value>
@@ -209,6 +206,9 @@
   </data>
   <data name="Warmup timeout" xml:space="preserve">
     <value>Limit czasu rozgrzewki</value>
+  </data>
+  <data name="e.g. Local Server" xml:space="preserve">
+    <value>np. serwer lokalny</value>
   </data>
 
 </root>

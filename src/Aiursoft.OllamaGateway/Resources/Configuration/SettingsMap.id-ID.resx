@@ -39,11 +39,11 @@
   <data name="Allow Anonymous API Call" xml:space="preserve">
     <value>Izinkan Panggilan API Anonim</value>
   </data>
-  <data name="Allow anyone to call the API without a Bearer token or authentication." xml:space="preserve">
-    <value>Izinkan siapa saja untuk memanggil API tanpa token Bearer atau autentikasi.</value>
-  </data>
   <data name="Allow User Adjust Nickname" xml:space="preserve">
     <value>Izinkan Pengguna Mengatur Nama Panggilan</value>
+  </data>
+  <data name="Allow anyone to call the API without a Bearer token or authentication." xml:space="preserve">
+    <value>Izinkan siapa saja untuk memanggil API tanpa token Bearer atau autentikasi.</value>
   </data>
   <data name="Allow users to adjust their nickname in the profile management page." xml:space="preserve">
     <value>Izinkan pengguna menyesuaikan nama panggilan mereka di halaman pengelolaan profil.</value>
@@ -105,6 +105,12 @@
   <data name="Synchronize backend monitoring incidents with AlertCenter." xml:space="preserve">
     <value>Sinkronkan insiden pemantauan backend dengan AlertCenter.</value>
   </data>
+  <data name="The HTTP(S) base URL of AlertCenter." xml:space="preserve">
+    <value>URL dasar HTTP(S) dari AlertCenter.</value>
+  </data>
+  <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
+    <value>Nomor izin ICP untuk pengguna daratan Tiongkok. Biarkan kosong untuk menyembunyikan.</value>
+  </data>
   <data name="The brand name displayed in the footer." xml:space="preserve">
     <value>Nama merek yang ditampilkan di bagian footer.</value>
   </data>
@@ -113,12 +119,6 @@
   </data>
   <data name="The default virtual model to use for embedding requests when no model is specified." xml:space="preserve">
     <value>Model virtual default yang digunakan untuk permintaan embedding ketika tidak ada model yang ditentukan.</value>
-  </data>
-  <data name="The HTTP(S) base URL of AlertCenter." xml:space="preserve">
-    <value>URL dasar HTTP(S) dari AlertCenter.</value>
-  </data>
-  <data name="The ICP license number for China mainland users. Leave empty to hide." xml:space="preserve">
-    <value>Nomor izin ICP untuk pengguna daratan Tiongkok. Biarkan kosong untuk menyembunyikan.</value>
   </data>
   <data name="The interval in minutes to ping the loaded models to keep them in memory." xml:space="preserve">
     <value>Interval dalam menit untuk melakukan ping pada model yang dimuat agar tetap berada di memori.</value>

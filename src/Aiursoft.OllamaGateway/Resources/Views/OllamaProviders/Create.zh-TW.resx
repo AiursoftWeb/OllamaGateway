@@ -33,14 +33,14 @@
   <data name="(Responses)" xml:space="preserve">
     <value>（回應）</value>
   </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = 無限制。</value>
+  </data>
   <data name="= keep forever." xml:space="preserve">
     <value>= 永久保留。</value>
   </data>
   <data name="= unload immediately." xml:space="preserve">
     <value>= 立即卸載。</value>
-  </data>
-  <data name="0 = unlimited." xml:space="preserve">
-    <value>0 = 無限制。</value>
   </data>
   <data name="About concurrent requests" xml:space="preserve">
     <value>關於並行請求</value>
@@ -77,12 +77,6 @@
   </data>
   <data name="Do NOT use raw seconds like &apos;300&apos;. Write &apos;5m&apos; instead. Invalid formats are silently ignored by Ollama." xml:space="preserve">
     <value>請勿直接使用原始秒數（例如 &apos;300&apos;）。請改為輸入 &apos;5m&apos;。Ollama 會無視無效的格式。</value>
-  </data>
-  <data name="e.g. My Local Ollama" xml:space="preserve">
-    <value>例如：My Local Ollama</value>
-  </data>
-  <data name="e.g. sk-..." xml:space="preserve">
-    <value>例如：sk-...</value>
   </data>
   <data name="Health Check Timeout (s)" xml:space="preserve">
     <value>健康檢查逾時（秒）</value>
@@ -173,6 +167,12 @@
   </data>
   <data name="Waiting in the concurrency queue does NOT consume the virtual model&apos;s Request Timeout. A request will wait indefinitely for a slot — only a client disconnection (browser close, SDK timeout) stops the wait. The virtual model does not give up on a backend just because it is busy." xml:space="preserve">
     <value>在併發佇列中等待並不會消耗虛擬模型的請求逾時時間。請求將無限期地等待空位，只有客戶端斷開連線（關閉瀏覽器、SDK 逾時）才會停止等待。虛擬模型不會僅因為後端忙碌就放棄請求。</value>
+  </data>
+  <data name="e.g. My Local Ollama" xml:space="preserve">
+    <value>例如：My Local Ollama</value>
+  </data>
+  <data name="e.g. sk-..." xml:space="preserve">
+    <value>例如：sk-...</value>
   </data>
 
 </root>
