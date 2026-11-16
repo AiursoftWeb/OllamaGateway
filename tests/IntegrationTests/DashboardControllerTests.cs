@@ -199,7 +199,8 @@ public class DashboardControllerTests : TestBase
         for (var i = 0; i < models.Length; i++)
         {
             var backendId = models[i].VirtualModelBackends.Single().Id;
-            var label = Regex.Match(html, $"backend-route-{backendId}'>(.*?)</span>", RegexOptions.Singleline).Value;
+            var label = Regex.Match(html, $"backend-route-{backendId}'>(.*?)</span></span>", RegexOptions.Singleline).Value;
+            Assert.Contains("Thinking: follow request</span><br/><span class='backend-route-thinking'>", label);
             Assert.Contains(policies[i], label);
             var detail = Regex.Match(html, $"data-backend-id=\"{backendId}\">(.*?)</span>", RegexOptions.Singleline).Value;
             Assert.Contains("OpenAiChatCompletions / OpenAiResponses", detail);
