@@ -48,9 +48,6 @@
   <data name="Supported depths and whether thinking can be disabled depend on the model and provider. Unsupported extensions may be rejected or ignored. Check the provider&apos;s documentation; the gateway does not infer capabilities from its name." xml:space="preserve">
     <value>支持的推理深度以及思考功能能否被禁用取决于模型和提供商。不支持的扩展可能会被拒绝或忽略。请查看提供商的文档；网关不会根据名称推断其能力。</value>
   </data>
-  <data name="The switch and depth are independent. With vLLM, an explicit enable_thinking value takes precedence over automatic activation by depth. Avoid conflicting settings such as Force off with a high depth, or Force on with none. A depth alone does not force thinking on against an explicit client switch." xml:space="preserve">
-    <value>开关与深度相互独立。在 vLLM 中，显式设置的 enable_thinking 值优先于根据深度自动启用。请避免冲突的设置，例如在深度为高时强制关闭，或在无深度时强制开启。仅设置深度不会在客户端已显式设置开关时强制开启思考。</value>
-  </data>
   <data name="The switch controls enable_thinking independently of depth. Qwen3.8 supports low, medium and xhigh, with xhigh as its default. To keep thinking enabled, select Force on and a supported depth such as xhigh." xml:space="preserve">
     <value>该开关独立于深度控制 enable_thinking。Qwen3.8 支持 low、medium 和 xhigh，默认值为 xhigh。若要保持思考功能启用，请选择强制开启以及受支持的深度，例如 xhigh。</value>
   </data>
@@ -73,4 +70,7 @@
     <value>通过 OpenAI 兼容代理访问时，请遵循该代理的约定。这些控件不会生成 Claude 原生的 thinking/budget 字段或 Gemini 思考配置。</value>
   </data>
 
+  <data name="The switch and depth are independent. With vLLM, an explicit enable_thinking value takes precedence over automatic activation by depth. Avoid conflicting settings such as Force off with a high depth, or Force on with depth {0}. A depth alone does not force thinking on against an explicit client switch." xml:space="preserve">
+    <value>开关和深度彼此独立。使用 vLLM 时，显式设置的 enable_thinking 值优先于根据深度自动启用。请避免使用相互冲突的设置，例如关闭强制思考但设置较高的深度，或开启强制思考但深度为 {0}。仅设置深度不会在客户端显式关闭开关时强制启用思考。</value>
+  </data>
 </root>

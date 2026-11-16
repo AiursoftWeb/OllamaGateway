@@ -24,7 +24,7 @@
                         </tbody>
                     </table>
                 </div>
-                <p>@Localizer["The switch and depth are independent. With vLLM, an explicit enable_thinking value takes precedence over automatic activation by depth. Avoid conflicting settings such as Force off with a high depth, or Force on with none. A depth alone does not force thinking on against an explicit client switch."]</p>
+                <p>@string.Format(@Localizer["The switch and depth are independent. With vLLM, an explicit enable_thinking value takes precedence over automatic activation by depth. Avoid conflicting settings such as Force off with a high depth, or Force on with depth {0}. A depth alone does not force thinking on against an explicit client switch."].Value, "none")</p>
                 <p class="small text-muted">@Localizer["Valid values vary by model. These are examples, not a promise that every provider accepts the same controls."]</p>
                 <a href="https://docs.vllm.ai/en/stable/features/reasoning_outputs/" target="_blank" rel="noopener noreferrer">vLLM</a>
                 · <a href="https://huggingface.co/Qwen/Qwen3.8-27B" target="_blank" rel="noopener noreferrer">Qwen3.8</a>
