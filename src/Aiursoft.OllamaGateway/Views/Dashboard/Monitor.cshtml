@@ -131,6 +131,7 @@
             var nodeId = PhysNodeId(backend.ProviderId, backend.UnderlyingModelName);
             var actionText = (backend.Enabled && backend.IsHealthy) ? Localizer["Dispatch Traffic"].Value : Localizer["Block Node"].Value;
             string thinking;
+            string? depth = null;
             string details;
             if (vm.Type == ModelType.Embedding)
             {
@@ -163,10 +164,10 @@
                     var switchText = backend.OpenAiThinkOverride.HasValue
                         ? string.Format(@Localizer["Thinking: force {0}"].Value, backend.OpenAiThinkOverride.Value.ToString().ToLowerInvariant())
                         : @Localizer["Thinking: follow request"].Value;
-                    var depthText = string.IsNullOrWhiteSpace(effort)
+                    depth = string.IsNullOrWhiteSpace(effort)
                         ? @Localizer["Depth: follow request"].Value
                         : string.Format(@Localizer["Depth: force {0}"].Value, effort);
-                    thinking = $"{switchText} · {depthText}";
+                    thinking = switchText;
                 }
                 var protocolNames = protocols.Count == 0
                     ? @Localizer["No supported protocol"].Value
@@ -185,12 +186,16 @@
                     : string.IsNullOrWhiteSpace(effort) && !backend.OpenAiThinkOverride.HasValue
                         ? @Localizer["No backend override. The client setting is forwarded or translated; when absent, the upstream default applies."].Value
                         : @Localizer["Overrides the client setting on each attempt, including same-dialect direct forwarding and cross-dialect translation."].Value;
-                details = string.Join("\n", thinking,
+                var policyDetails = depth == null ? thinking : $"{thinking}\n{depth}";
+                details = string.Join("\n", policyDetails,
                     string.Format(@Localizer["Protocols: {0}"].Value, protocolNames),
                     string.Format(@Localizer["Outgoing fields: {0}"].Value, fields), explanation);
             }
             routeDetails[backend.Id] = details;
-            var label = $"<span class='backend-route backend-route-{backend.Id}'>{MermaidText(actionText)}<br/><span class='backend-route-thinking'>{MermaidText(thinking)}</span></span>";
+            var policyLabel = $"<span class='backend-route-thinking'>{MermaidText(thinking)}</span>";
+            if (depth != null)
+                policyLabel += $"<br/><span class='backend-route-thinking'>{MermaidText(depth)}</span>";
+            var label = $"<span class='backend-route backend-route-{backend.Id}'>{MermaidText(actionText)}<br/>{policyLabel}</span>";
             sb.AppendLine($"    Algo_{vm.Id} -. \"{label}\" .-> {nodeId}");
         }
     }
