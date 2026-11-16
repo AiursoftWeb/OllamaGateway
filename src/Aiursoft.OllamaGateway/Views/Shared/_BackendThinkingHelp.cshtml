@@ -1,0 +1,35 @@
+<div class="modal fade" id="backend-thinking-help" tabindex="-1" aria-labelledby="backend-thinking-help-title" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="backend-thinking-help-title">@Localizer["Thinking settings help"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="@Localizer["Close"]"></button>
+            </div>
+            <div class="modal-body">
+                <h6>@Localizer["What is forwarded or overridden?"]</h6>
+                <p>@Localizer["Do not override leaves that setting to the client, or to the upstream default when absent. Same-dialect requests retain their original fields; cross-dialect requests use the gateway's protocol translation."]</p>
+                <p>@Localizer["A configured override wins over the client on every backend attempt, including same-dialect direct forwarding. Fallback attempts use the newly selected backend's own settings."]</p>
+                <h6>@Localizer["Thinking switch"]</h6>
+                <p>@Localizer["For Ollama-native backends, Force on or Force off sends boolean think. For OpenAI Chat or Responses backends, it writes chat_template_kwargs.enable_thinking. Other template arguments are preserved. This is a vLLM-style extension, not a universal OpenAI switch; leave it unconfigured for providers that do not support it."]</p>
+                <h6>@Localizer["Reasoning depth"]</h6>
+                <p>@Localizer["A non-empty value is sent verbatim as reasoning_effort for Chat Completions or reasoning.effort for Responses. An existing chat_template_kwargs.reasoning_effort is also overridden so it cannot take priority over your depth setting. No depth names are translated into booleans."]</p>
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead><tr><th>@Localizer["Backend examples"]</th><th>@Localizer["How to configure"]</th></tr></thead>
+                        <tbody>
+                            <tr><td>OpenAI / Codex</td><td>@Localizer["Usually leave the switch unconfigured and set only a depth supported by the underlying model, such as high or medium. Do not assume enable_thinking is supported."]</td></tr>
+                            <tr><td>vLLM / Qwen3.8</td><td>@Localizer["The switch controls enable_thinking independently of depth. Qwen3.8 supports low, medium and xhigh, with xhigh as its default. To keep thinking enabled, select Force on and a supported depth such as xhigh."]</td></tr>
+                            <tr><td>DeepSeek / Grok / @Localizer["Other compatible providers"]</td><td>@Localizer["Supported depths and whether thinking can be disabled depend on the model and provider. Unsupported extensions may be rejected or ignored. Check the provider's documentation; the gateway does not infer capabilities from its name."]</td></tr>
+                            <tr><td>Claude / Gemini</td><td>@Localizer["When accessed through an OpenAI-compatible proxy, follow that proxy's contract. These controls do not generate native Claude thinking/budget fields or Gemini thinking configuration."]</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>@Localizer["The switch and depth are independent. With vLLM, an explicit enable_thinking value takes precedence over automatic activation by depth. Avoid conflicting settings such as Force off with a high depth, or Force on with none. A depth alone does not force thinking on against an explicit client switch."]</p>
+                <p class="small text-muted">@Localizer["Valid values vary by model. These are examples, not a promise that every provider accepts the same controls."]</p>
+                <a href="https://docs.vllm.ai/en/stable/features/reasoning_outputs/" target="_blank" rel="noopener noreferrer">vLLM</a>
+                · <a href="https://huggingface.co/Qwen/Qwen3.8-27B" target="_blank" rel="noopener noreferrer">Qwen3.8</a>
+                · <a href="https://developers.openai.com/api/docs/guides/reasoning" target="_blank" rel="noopener noreferrer">OpenAI</a>
+            </div>
+        </div>
+    </div>
+</div>

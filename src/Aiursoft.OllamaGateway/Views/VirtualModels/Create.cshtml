@@ -93,14 +93,21 @@
                         </div>
 
                         <div class="mb-3">
-                            <label asp-for="OllamaThinkOverride" class="form-label">@Localizer["Thinking Override"]</label>
+                            <label asp-for="OllamaThinkOverride" class="form-label">@Localizer["Thinking Override"]</label><button type="button" class="btn btn-link btn-sm p-0 ms-1" data-bs-toggle="modal" data-bs-target="#backend-thinking-help" aria-label="@Localizer["Thinking settings help"]"><i data-lucide="help-circle" style="width:14px;height:14px;"></i></button>
                             <select asp-for="OllamaThinkOverride" class="form-select backend-thinking-override" hidden="@(Model.Protocol != BackendProtocol.OllamaNative)" disabled="@(Model.Protocol != BackendProtocol.OllamaNative)">
                                 <option value="">@Localizer["Do not override"]</option>
                                 <option value="true">@Localizer["Force on"]</option>
                                 <option value="false">@Localizer["Force off"]</option>
                             </select>
+<select asp-for="OpenAiThinkOverride" class="form-select backend-openai-thinking-override" aria-label="@Localizer["Thinking Override"]" hidden="@(Model.Protocol == BackendProtocol.OllamaNative)" disabled="@(Model.Protocol == BackendProtocol.OllamaNative)">
+                                <option value="">@Localizer["Do not override"]</option>
+                                <option value="true">@Localizer["Force on"]</option>
+                                <option value="false">@Localizer["Force off"]</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 backend-effort-settings" hidden="@(Model.Protocol == BackendProtocol.OllamaNative)">
+                            <label asp-for="ReasoningEffortOverride" class="form-label">@Localizer["Reasoning Effort Override"]</label><button type="button" class="btn btn-link btn-sm p-0 ms-1" data-bs-toggle="modal" data-bs-target="#backend-thinking-help" aria-label="@Localizer["Thinking settings help"]"><i data-lucide="help-circle" style="width:14px;height:14px;"></i></button>
                             <input asp-for="ReasoningEffortOverride" class="form-control backend-reasoning-override" aria-label="@Localizer["Reasoning Effort Override"]" placeholder="@Localizer["Do not override"]" hidden="@(Model.Protocol == BackendProtocol.OllamaNative)" disabled="@(Model.Protocol == BackendProtocol.OllamaNative)" />
-                            <div class="form-text">@Localizer["Ollama uses an on/off override. For OpenAI Chat or Responses, enter a reasoning effort supported by the model, such as medium, high, or xhigh. Leave empty to keep the client setting, or the upstream default when absent. Overrides also apply to same-dialect direct forwarding and cross-dialect translation."]</div>
                             <span asp-validation-for="OllamaThinkOverride" class="text-danger"></span>
                             <span asp-validation-for="ReasoningEffortOverride" class="text-danger"></span>
                         </div>
@@ -160,3 +167,5 @@
     <script src="~/js/backend-thinking.js" asp-append-version="true"></script>
     <script src="~/js/virtual-model-create.js" asp-append-version="true"></script>
 }
+
+@await Html.PartialAsync("_BackendThinkingHelp")

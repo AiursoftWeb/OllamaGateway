@@ -158,6 +158,16 @@
                     : string.IsNullOrWhiteSpace(effort)
                         ? @Localizer["Thinking: follow request"].Value
                         : string.Format(@Localizer["Thinking: force {0}"].Value, effort);
+                if (!native && protocols.Count > 0)
+                {
+                    var switchText = backend.OpenAiThinkOverride.HasValue
+                        ? string.Format(@Localizer["Thinking: force {0}"].Value, backend.OpenAiThinkOverride.Value.ToString().ToLowerInvariant())
+                        : @Localizer["Thinking: follow request"].Value;
+                    var depthText = string.IsNullOrWhiteSpace(effort)
+                        ? @Localizer["Depth: follow request"].Value
+                        : string.Format(@Localizer["Depth: force {0}"].Value, effort);
+                    thinking = $"{switchText} · {depthText}";
+                }
                 var protocolNames = protocols.Count == 0
                     ? @Localizer["No supported protocol"].Value
                     : string.Join(" / ", protocols);
@@ -168,9 +178,11 @@
                     BackendProtocol.OpenAiResponses => "reasoning.effort",
                     _ => ""
                 }));
+                if (!native && protocols.Count > 0)
+                    fields = "chat_template_kwargs.enable_thinking / " + fields;
                 var explanation = protocols.Count == 0
                     ? @Localizer["No request can be dispatched until a supported backend protocol is configured."].Value
-                    : string.IsNullOrWhiteSpace(effort)
+                    : string.IsNullOrWhiteSpace(effort) && !backend.OpenAiThinkOverride.HasValue
                         ? @Localizer["No backend override. The client setting is forwarded or translated; when absent, the upstream default applies."].Value
                         : @Localizer["Overrides the client setting on each attempt, including same-dialect direct forwarding and cross-dialect translation."].Value;
                 details = string.Join("\n", thinking,

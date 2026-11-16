@@ -221,6 +221,7 @@ public class VirtualModelsController(
                     ProviderId = model.ProviderId,
                     Protocol = model.Protocol,
                     OllamaThinkOverride = model.Protocol == BackendProtocol.OllamaNative ? model.OllamaThinkOverride : null,
+                    OpenAiThinkOverride = model.Protocol == BackendProtocol.OllamaNative ? null : model.OpenAiThinkOverride,
                     ReasoningEffortOverride = model.Protocol == BackendProtocol.OllamaNative ? null : NormalizeEffort(model.ReasoningEffortOverride),
                     Enabled = true,
                     IsHealthy = true,
@@ -354,7 +355,7 @@ public class VirtualModelsController(
         int priority = 1,
         int weight = 1,
         bool? ollamaThinkOverride = null,
-        string? reasoningEffortOverride = null)
+        string? reasoningEffortOverride = null, bool? openAiThinkOverride = null)
     {
         var virtualModel = await dbContext.VirtualModels.FindAsync(id);
         if (virtualModel == null) return NotFound();
@@ -390,6 +391,7 @@ public class VirtualModelsController(
             UnderlyingModelName = underlyingModel,
             Protocol = protocol.Value,
             OllamaThinkOverride = protocol == BackendProtocol.OllamaNative ? ollamaThinkOverride : null,
+            OpenAiThinkOverride = protocol == BackendProtocol.OllamaNative ? null : openAiThinkOverride,
             ReasoningEffortOverride = protocol == BackendProtocol.OllamaNative ? null : NormalizeEffort(reasoningEffortOverride),
             Priority = priority,
             Weight = weight,
@@ -403,7 +405,7 @@ public class VirtualModelsController(
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> UpdateBackend(int id, BackendProtocol? protocol, int priority, int weight, bool? ollamaThinkOverride = null, string? reasoningEffortOverride = null)
+    public async Task<IActionResult> UpdateBackend(int id, BackendProtocol? protocol, int priority, int weight, bool? ollamaThinkOverride = null, string? reasoningEffortOverride = null, bool? openAiThinkOverride = null)
     {
         var backend = await dbContext.VirtualModelBackends.Include(item => item.Provider).FirstOrDefaultAsync(item => item.Id == id);
         if (backend == null) return NotFound();
@@ -418,6 +420,9 @@ public class VirtualModelsController(
         backend.OllamaThinkOverride = BackendProtocolResolver.Resolve(backend) == BackendProtocol.OllamaNative
             ? ollamaThinkOverride
             : null;
+        backend.OpenAiThinkOverride = BackendProtocolResolver.Resolve(backend) == BackendProtocol.OllamaNative
+            ? null
+            : openAiThinkOverride;
         backend.ReasoningEffortOverride = BackendProtocolResolver.Resolve(backend) == BackendProtocol.OllamaNative
             ? null
             : NormalizeEffort(reasoningEffortOverride);

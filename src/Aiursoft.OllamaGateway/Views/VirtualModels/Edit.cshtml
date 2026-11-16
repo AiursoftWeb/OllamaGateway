@@ -110,7 +110,8 @@
                                 <th>@Localizer["Provider"]</th>
                                 <th>@Localizer["Underlying"]</th>
                                 <th>@Localizer["Preferred Protocol"]</th>
-                                <th>@Localizer["Thinking Override"]</th>
+                                <th>@Localizer["Thinking Override"]<button type="button" class="btn btn-link btn-sm p-0 ms-1" data-bs-toggle="modal" data-bs-target="#backend-thinking-help" aria-label="@Localizer["Thinking settings help"]"><i data-lucide="help-circle" style="width:14px;height:14px;"></i></button></th>
+                                <th>@Localizer["Reasoning Effort Override"]<button type="button" class="btn btn-link btn-sm p-0 ms-1" data-bs-toggle="modal" data-bs-target="#backend-thinking-help" aria-label="@Localizer["Thinking settings help"]"><i data-lucide="help-circle" style="width:14px;height:14px;"></i></button></th>
                                 <th>@Localizer["Priority"]</th>
                                 <th>@Localizer["Weight"]</th>
                                 <th>@Localizer["Status"]</th>
@@ -123,7 +124,7 @@
                             }
                             @if (backends == null || !backends.Any())
                             {
-                                <tr><td colspan="8" class="text-center text-muted py-3">@Localizer["No backends added."]</td></tr>
+                                <tr><td colspan="9" class="text-center text-muted py-3">@Localizer["No backends added."]</td></tr>
                             }
                             else
                             {
@@ -157,6 +158,14 @@
                                                 <option value="true" selected="@(b.OllamaThinkOverride == true)">@Localizer["Force on"]</option>
                                                 <option value="false" selected="@(b.OllamaThinkOverride == false)">@Localizer["Force off"]</option>
                                             </select>
+                                            <select name="openAiThinkOverride" form="@updateFormId" class="form-select form-select-sm backend-openai-thinking-override" style="min-width: 150px;" aria-label="@Localizer["Thinking Override"]" hidden="@isOllama" disabled="@isOllama">
+                                                <option value="" selected="@(!b.OpenAiThinkOverride.HasValue)">@Localizer["Do not override"]</option>
+                                                <option value="true" selected="@(b.OpenAiThinkOverride == true)">@Localizer["Force on"]</option>
+                                                <option value="false" selected="@(b.OpenAiThinkOverride == false)">@Localizer["Force off"]</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <span class="backend-effort-unavailable text-muted small" hidden="@(!isOllama)">@Localizer["Not applicable"]</span>
                                             <input name="reasoningEffortOverride" form="@updateFormId" value="@b.ReasoningEffortOverride" class="form-control form-control-sm backend-reasoning-override" style="min-width: 150px;" maxlength="100" aria-label="@Localizer["Reasoning Effort Override"]" placeholder="@Localizer["Do not override"]" hidden="@isOllama" disabled="@isOllama" />
                                         </td>
                                         <td><input type="number" name="priority" form="@updateFormId" value="@b.Priority" class="form-control form-control-sm" style="width: 70px;" aria-label="@Localizer["Priority"]" /></td>
@@ -231,12 +240,20 @@
                             <input type="number" name="weight" class="form-control form-control-sm" placeholder="@Localizer["Weight"]" value="1" />
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label small mb-1" for="add-backend-thinking">@Localizer["Thinking Override"]</label>
+                            <label class="form-label small mb-1" for="add-backend-thinking">@Localizer["Thinking Override"]</label><button type="button" class="btn btn-link btn-sm p-0 ms-1" data-bs-toggle="modal" data-bs-target="#backend-thinking-help" aria-label="@Localizer["Thinking settings help"]"><i data-lucide="help-circle" style="width:14px;height:14px;"></i></button>
                             <select name="ollamaThinkOverride" id="add-backend-thinking" class="form-select form-select-sm backend-thinking-override" hidden="@(Model.Protocol != BackendProtocol.OllamaNative)" disabled="@(Model.Protocol != BackendProtocol.OllamaNative)">
                                 <option value="">@Localizer["Do not override"]</option>
                                 <option value="true">@Localizer["Force on"]</option>
                                 <option value="false">@Localizer["Force off"]</option>
                             </select>
+                            <select name="openAiThinkOverride" class="form-select form-select-sm backend-openai-thinking-override" aria-label="@Localizer["Thinking Override"]" hidden="@(Model.Protocol == BackendProtocol.OllamaNative)" disabled="@(Model.Protocol == BackendProtocol.OllamaNative)">
+                                <option value="">@Localizer["Do not override"]</option>
+                                <option value="true">@Localizer["Force on"]</option>
+                                <option value="false">@Localizer["Force off"]</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 backend-effort-settings" hidden="@(Model.Protocol == BackendProtocol.OllamaNative)">
+                            <label class="form-label small mb-1">@Localizer["Reasoning Effort Override"]</label><button type="button" class="btn btn-link btn-sm p-0 ms-1" data-bs-toggle="modal" data-bs-target="#backend-thinking-help" aria-label="@Localizer["Thinking settings help"]"><i data-lucide="help-circle" style="width:14px;height:14px;"></i></button>
                             <input name="reasoningEffortOverride" class="form-control form-control-sm backend-reasoning-override" maxlength="100" aria-label="@Localizer["Reasoning Effort Override"]" placeholder="@Localizer["Do not override"]" hidden="@(Model.Protocol == BackendProtocol.OllamaNative)" disabled="@(Model.Protocol == BackendProtocol.OllamaNative)" />
                         </div>
                         <div class="col-12 text-end d-flex align-items-end">
@@ -244,7 +261,6 @@
                         </div>
                     </form>
                     <div class="mt-3 p-2 bg-light rounded border">
-                        <p class="small text-muted mb-2">@Localizer["Ollama uses an on/off override. For OpenAI Chat or Responses, enter a reasoning effort supported by the model, such as medium, high, or xhigh. Leave empty to keep the client setting, or the upstream default when absent. Overrides also apply to same-dialect direct forwarding and cross-dialect translation."]</p>
                         <h6 class="small fw-bold mb-1">@Localizer["Configuration Guide:"]</h6>
                         <ul class="small text-muted mb-0 ps-3">
                             <li><strong>@Localizer["Priority"]</strong>: @Localizer["Used in 'Priority Fallback' strategy. Lower numbers (e.g. 0, 1) have higher priority. The system will always try the healthy backend with the lowest priority number first."]</li>
@@ -268,3 +284,5 @@
     <script src="~/js/backend-thinking.js" asp-append-version="true"></script>
     <script src="~/js/virtual-model-edit.js" asp-append-version="true"></script>
 }
+
+@await Html.PartialAsync("_BackendThinkingHelp")

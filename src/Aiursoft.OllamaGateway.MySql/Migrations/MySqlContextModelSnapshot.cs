@@ -347,6 +347,9 @@ namespace Aiursoft.OllamaGateway.MySql.Migrations
                     b.Property<bool?>("OllamaThinkOverride")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<bool?>("OpenAiThinkOverride")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<int>("Priority")
                         .HasColumnType("int");
 

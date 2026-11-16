@@ -332,6 +332,9 @@ namespace Aiursoft.OllamaGateway.Sqlite.Migrations
                     b.Property<bool?>("OllamaThinkOverride")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool?>("OpenAiThinkOverride")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("Priority")
                         .HasColumnType("INTEGER");
 

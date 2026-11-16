@@ -11,6 +11,51 @@ public class VirtualModelsControllerTests : TestBase
     [DataRow("")]
     [DataRow("true")]
     [DataRow("false")]
+    public async Task OpenAiThinking_CreateAddUpdateAndProtocolSwitch(string setting)
+    {
+        await LoginAsAdmin();
+        var name = $"openai-thinking-{Guid.NewGuid():N}:latest";
+        var db = GetService<TemplateDbContext>();
+        var provider = new OllamaProvider { Name = name, BaseUrl = "http://localhost:1", ProviderType = ProviderType.OpenAI };
+        db.OllamaProviders.Add(provider);
+        await db.SaveChangesAsync();
+        var created = await PostForm("/VirtualModels/Create", new Dictionary<string, string>
+        {
+            ["Name"] = name, ["ProviderId"] = provider.Id.ToString(), ["UnderlyingModel"] = "first",
+            ["Protocol"] = "1", ["OpenAiThinkOverride"] = setting, ["ReasoningEffortOverride"] = "xhigh"
+        });
+        Assert.AreEqual(HttpStatusCode.Found, created.StatusCode);
+        var model = await db.VirtualModels.Include(v => v.VirtualModelBackends).SingleAsync(v => v.Name == name);
+        var backend = model.VirtualModelBackends.Single();
+        bool? expected = setting == "" ? null : bool.Parse(setting);
+        Assert.AreEqual(expected, backend.OpenAiThinkOverride);
+        Assert.AreEqual("xhigh", backend.ReasoningEffortOverride);
+        var added = await PostForm($"/VirtualModels/AddBackend/{model.Id}", new Dictionary<string, string>
+        {
+            ["providerId"] = provider.Id.ToString(), ["underlyingModel"] = "second", ["protocol"] = "2",
+            ["openAiThinkOverride"] = setting, ["reasoningEffortOverride"] = "medium"
+        }, $"/VirtualModels/Edit/{model.Id}");
+        Assert.AreEqual(HttpStatusCode.Found, added.StatusCode);
+        var second = await db.VirtualModelBackends.AsNoTracking().SingleAsync(b => b.VirtualModelId == model.Id && b.UnderlyingModelName == "second");
+        Assert.AreEqual(expected, second.OpenAiThinkOverride);
+        foreach (var protocol in new[] { "2", "0" })
+        {
+            var updated = await PostForm($"/VirtualModels/UpdateBackend/{backend.Id}", new Dictionary<string, string>
+            {
+                ["protocol"] = protocol, ["priority"] = "1", ["weight"] = "1",
+                ["openAiThinkOverride"] = setting, ["reasoningEffortOverride"] = "high"
+            }, $"/VirtualModels/Edit/{model.Id}");
+            Assert.AreEqual(HttpStatusCode.Found, updated.StatusCode);
+            var saved = await db.VirtualModelBackends.AsNoTracking().SingleAsync(b => b.Id == backend.Id);
+            Assert.AreEqual(protocol == "0" ? null : expected, saved.OpenAiThinkOverride);
+            Assert.AreEqual(protocol == "0" ? null : "high", saved.ReasoningEffortOverride);
+        }
+    }
+
+    [TestMethod]
+    [DataRow("")]
+    [DataRow("true")]
+    [DataRow("false")]
     public async Task BackendThinking_CreateAddUpdateAndProtocolSwitch(string setting)
     {
         await LoginAsAdmin();
