@@ -1,4 +1,6 @@
-# Ollama Gateway
+# Aiursoft OllamaGateway
+
+<a name="ollama-gateway"></a>
 
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/aiursoftweb/ollamaGateway/blob/master/LICENSE)
 [![Pipeline stat](https://badge-proxy.aiursoft.com/aiursoft/ollamaGateway/badges/master/pipeline.svg)](https://gitlab.aiursoft.com/aiursoft/ollamaGateway/-/pipelines)
@@ -14,19 +16,41 @@ Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authent
 
 Default user name is `admin@default.com` and default password is `Admin@123456!`.
 
+## Overview
+
+### What is OllamaGateway?
+
+<a name="why-ollamagateway"></a>
+
+Native Ollama is great for personal use, but it lacks the enterprise features required for team collaboration and production deployment. OllamaGateway fills those gaps without changing your workflow.
+
+| Feature | Native Ollama | OllamaGateway |
+|---|:---:|:---:|
+| Model Hosting & Inference | ✅ | ✅ |
+| Multimodal | ✅ | ✅ |
+| MCP | ✅ | ✅ |
+| Function Call | ✅ | ✅ |
+| Streaming | ✅ | ✅ |
+| OpenAI API Translation | ⚠️ Partial[^1] | ✅ |
+| Anthropic API Translation | ✅ | ✅ |
+| API Authentication (Bearer Token) | ❌ | ✅ |
+| Multiple API Keys Management | ❌ | ✅ |
+| Request & Response Auditing | ❌ | ✅ |
+| API Rate Limiting | ❌ | ✅ |
+| Virtual Model Overrides | ❌ | ✅ |
+| Multi-backend Support | ❌ | ✅ |
+| Load Balancing | ❌ | ✅ |
+| Tiered Fallback | ❌ | ✅ |
+| Default Model Support | ❌ | ✅ |
+| Model Keep-alive (Ping) | ❌ | ✅ |
+| Admin Management GUI | ❌ | ✅ |
+| Chat/Embedding Segregation | ❌ | ✅ |
+
+[^1]: Native Ollama partially supports OpenAI API. It lacks advanced system prompt mapping, parameter overriding, and role translation.
+
 ## Try
 
 Try a running OllamaGateway [here](https://ollama.aiursoft.com).
-
-## Agent & Ecosystem Ready
-
-OllamaGateway has been officially tested and is fully compatible with popular ecosystem tools including **Claude Code**, **Open-WebUI**, **Opencode**, and **Roocode**. Its robust API translation makes it the ideal choice for deploying autonomous AI agents.
-
-### Recommended Models for Agents
-
-For the best experience with AI agents, we recommend the following models:
-- `qwen3.6:27b-q8_0`
-- `qwen3.6:35b-a3b-q4_K_M`
 
 ## Install with Docker
 
@@ -77,7 +101,19 @@ The docker image has the following context:
 | Data path   | /data                           |
 | Config path | /data/appsettings.json          |
 
-## Grafana Monitoring Dashboard
+## Usage
+
+### Agent & Ecosystem Ready
+
+OllamaGateway has been officially tested and is fully compatible with popular ecosystem tools including **Claude Code**, **Open-WebUI**, **Opencode**, and **Roocode**. Its robust API translation makes it the ideal choice for deploying autonomous AI agents.
+
+#### Recommended Models for Agents
+
+For the best experience with AI agents, we recommend the following models:
+- `qwen3.6:27b-q8_0`
+- `qwen3.6:35b-a3b-q4_K_M`
+
+### Grafana Monitoring Dashboard
 
 OllamaGateway logs every request to a ClickHouse database. A pre-built Grafana dashboard template is provided at [`docs/grafana-config.json`](./docs/grafana-config.json) to visualize traffic, latency, and usage in real time.
 
@@ -86,7 +122,7 @@ OllamaGateway logs every request to a ClickHouse database. A pre-built Grafana d
 3. When prompted, select your ClickHouse data source for the **grafana-clickhouse-datasource** input.
 4. Click **Import**.
 
-## Protocol translation
+### Protocol translation
 
 Ollama Gateway exposes four client-facing dialects:
 
@@ -101,7 +137,7 @@ When the client and physical backend use the same dialect, the gateway takes a t
 
 Responses supports text, image, custom-function, structured-output, reasoning, and streaming translation. Native Responses tools and stateful controls (`previous_response_id`, Conversations, stored responses, and background mode) are forwarded only to Responses-capable backends. If no native Responses route is available, those features return an explicit `unsupported_feature` error instead of being silently ignored.
 
-## Legacy parameter behavior by provider and API format
+### Legacy parameter behavior by provider and API format
 
 The table below documents the pre-Responses Chat Completions, Ollama, and Anthropic parameter mappings:
 
@@ -122,33 +158,90 @@ The table below documents the pre-Responses Chat Completions, Ollama, and Anthro
 
 | Images / Multimodal | ✅ Multimodal content array passes through as-is<br>➡️ Direct passthrough to OpenAI backend | ✅ Ollama images converted<br>➡️ `images[]` → `content[text+image_url]` | ✅ OpenAI content array extracted<br>➡️ `content[image_url]` → `images[]` | ✅ Images array passes through<br>➡️ Direct passthrough to Ollama | ❌ Not yet translated<br>🚫 Anthropic image blocks dropped | ❌ Not yet translated<br>🚫 Anthropic image blocks dropped |
 
-## Why OllamaGateway?
+## Configuration
 
-Native Ollama is great for personal use, but it lacks the enterprise features required for team collaboration and production deployment. OllamaGateway fills those gaps without changing your workflow.
+The application defaults are defined in [`src/Aiursoft.OllamaGateway/appsettings.json`](src/Aiursoft.OllamaGateway/appsettings.json). The Docker image initializes `/data/appsettings.json` on its first start and keeps it for later starts; persist `/data`. Override nested values with double-underscore environment variables, such as `Logging__LogLevel__Default`.
 
-| Feature | Native Ollama | OllamaGateway |
-|---|:---:|:---:|
-| Model Hosting & Inference | ✅ | ✅ |
-| Multimodal | ✅ | ✅ |
-| MCP | ✅ | ✅ |
-| Function Call | ✅ | ✅ |
-| Streaming | ✅ | ✅ |
-| OpenAI API Translation | ⚠️ Partial[^1] | ✅ |
-| Anthropic API Translation | ✅ | ✅ |
-| API Authentication (Bearer Token) | ❌ | ✅ |
-| Multiple API Keys Management | ❌ | ✅ |
-| Request & Response Auditing | ❌ | ✅ |
-| API Rate Limiting | ❌ | ✅ |
-| Virtual Model Overrides | ❌ | ✅ |
-| Multi-backend Support | ❌ | ✅ |
-| Load Balancing | ❌ | ✅ |
-| Tiered Fallback | ❌ | ✅ |
-| Default Model Support | ❌ | ✅ |
-| Model Keep-alive (Ping) | ❌ | ✅ |
-| Admin Management GUI | ❌ | ✅ |
-| Chat/Embedding Segregation | ❌ | ✅ |
+```jsonc
+{
+  "ConnectionStrings": {
+    "AllowCache": "True",
 
-[^1]: Native Ollama partially supports OpenAI API. It lacks advanced system prompt mapping, parameter overriding, and role translation.
+    "DbType": "Sqlite",
+    "DefaultConnection": "DataSource=app.db;Cache=Shared"
+
+    // sudo docker run -d --name db -e MYSQL_RANDOM_ROOT_PASSWORD=true -e MYSQL_DATABASE=ollamagateway -e MYSQL_USER=ollamagateway -e MYSQL_PASSWORD=ollamagateway_password -p 3306:3306 hub.aiursoft.com/mysql
+    //"DbType": "MySql",
+    //"DefaultConnection": "Server=localhost;Database=ollamagateway;Uid=ollamagateway;Pwd=ollamagateway_password;"
+  },
+  "Storage": {
+    "Path": "/tmp/data",
+    "PublicOrigin": "",
+    "RequireDedicatedInlineOrigin": false,
+    "AllowArbitraryInlineOnDedicatedOrigin": false,
+    "SafeInlineMediaExtensions": ["svg"],
+    "SafeInlineSvgSubfolders": ["project-logo"],
+    "UploadPolicy": {
+      "RequireAuthenticatedUser": false,
+      "ReplaceSpacesWithHyphens": false
+    }
+  },
+  "AppSettings": {
+    "AuthProvider": "Local", // OIDC or Local
+    "DefaultRole": "",
+    "PersistsSignIn": false,
+    "OIDC": {
+      // https://auth.aiursoft.com/application/o/ollamagateway
+      "Authority": "https://auth.aiursoft.com/application/o/ollamagateway",
+      "ClientId": "",
+      "ClientSecret": "",
+      "RolePropertyName": "groups",
+      "UsernamePropertyName": "preferred_username",
+      "UserDisplayNamePropertyName": "name",
+      "EmailPropertyName": "email",
+      "UserIdentityPropertyName": "sub"
+    },
+    "Local": {
+      "AllowRegister": true,
+      "AllowWeakPassword": true
+    }
+  },
+  "GlobalSettings": {
+    // You can initialize or override global settings here.
+    // "Allow_User_Adjust_Nickname": "True",
+    // "BrandName": "Aiursoft",
+    // "BrandHomeUrl": "https://www.aiursoft.com/",
+    // "Icp": "",
+    // "ProjectName": "Ollama Gateway"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    },
+    "Clickhouse": {
+      "Enabled": false,
+      "ConnectionString": "Host=localhost;Protocol=http;Port=8123;User=default;Password=;Database=AspNetCoreLogs",
+      "TableName": "OllamaGatewayLogs"
+    }
+  },
+  "Clickhouse": {
+    "Enabled": false,
+    "ConnectionString": "Host=localhost;Protocol=http;Port=8123;User=default;Password=;Database=OllamaGatewayAudit",
+    "TableName": "RequestLogs"
+  },
+  "AllowedHosts": "*"
+}
+```
+
+### Shared settings
+
+- `ConnectionStrings` selects the database provider and connection. Prepare the external database before choosing MySQL; keep the SQLite file persistent when using SQLite.
+- `Storage` configures local application files. Keep the storage directory persistent and use the documented hostname and upload policies for shared downloads.
+- `AppSettings` controls authentication and account synchronization. Choose local accounts or configure the OIDC authority, client and `/signin-oidc` callback; use environment variables for credentials.
+- Uncommented `GlobalSettings` entries override the database-backed administration settings. Leave entries commented to use the stored values or application defaults.
+- `Logging:LogLevel` controls application and framework verbosity. Configure the optional ClickHouse exporter only when its server and credentials are ready.
+- `AllowedHosts` is the ASP.NET Core Host-header allowlist, not a CORS setting.
 
 ## How to contribute
 
@@ -157,3 +250,7 @@ There are many ways to contribute to the project: logging bugs, submitting pull 
 Even if you with push rights on the repository, you should create a personal fork and create feature branches there when you need them. This keeps the main repository clean and your workflow cruft out of sight.
 
 We're also interested in your feedback on the future of this project. You can submit a suggestion or feature request through the issue tracker. To make this process more effective, we're asking that these include more information to help define them more clearly.
+
+## License
+
+Licensed under the [MIT License](LICENSE).
