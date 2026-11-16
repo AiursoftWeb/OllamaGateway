@@ -590,19 +590,23 @@ public class DialectProxyTests : TestBase
     [DataRow("/api/generate")]
     public async Task OllamaRetry_UsesEachBackendsThinkingOverride(string endpoint)
     {
+        var modelName = $"retry-thinking-{Guid.NewGuid():N}:latest";
         using (var scope = Server!.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
-            var vm = await db.VirtualModels.FirstAsync(m => m.Name == VirtualModelName);
-            var primary = await db.VirtualModelBackends.FirstAsync(b => b.VirtualModelId == vm.Id);
-            primary.Priority = 0;
-            primary.OllamaThinkOverride = true;
-            db.VirtualModelBackends.Add(new VirtualModelBackend
+            var provider = await db.OllamaProviders.FirstAsync(p => p.Name == "TestProvider");
+            var vm = new VirtualModel { Name = modelName, Type = ModelType.Chat, MaxRetries = 2 };
+            vm.VirtualModelBackends.Add(new VirtualModelBackend
             {
-                VirtualModelId = vm.Id, ProviderId = primary.ProviderId,
-                UnderlyingModelName = "thinking-fallback", Protocol = BackendProtocol.OllamaNative,
+                ProviderId = provider.Id, UnderlyingModelName = "thinking-primary", Protocol = BackendProtocol.OllamaNative,
+                Enabled = true, IsHealthy = true, Priority = 0, Weight = 1, OllamaThinkOverride = true
+            });
+            vm.VirtualModelBackends.Add(new VirtualModelBackend
+            {
+                ProviderId = provider.Id, UnderlyingModelName = "thinking-fallback", Protocol = BackendProtocol.OllamaNative,
                 Enabled = true, IsHealthy = true, Priority = 1, Weight = 1
             });
+            db.VirtualModels.Add(vm);
             await db.SaveChangesAsync();
         }
         var attempts = new List<bool>();
@@ -617,7 +621,7 @@ public class DialectProxyTests : TestBase
                     Content = new StringContent("""{"model":"thinking-fallback","message":{"role":"assistant","content":"ok"},"response":"ok","done":true}""", Encoding.UTF8, "application/json")
                 });
         };
-        var payload = $$"""{"model":"{{VirtualModelName}}","messages":[{"role":"user","content":"hi"}],"prompt":"hi","stream":false,"think":false}""";
+        var payload = $$"""{"model":"{{modelName}}","messages":[{"role":"user","content":"hi"}],"prompt":"hi","stream":false,"think":false}""";
         var response = await Http.SendAsync(AuthedPost(endpoint, payload));
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         CollectionAssert.AreEqual(new[] { true, false }, attempts.ToArray());
@@ -632,19 +636,25 @@ public class DialectProxyTests : TestBase
     [DataRow(false, "\"high\"", "false")]
     public async Task OllamaGenerate_UsesBackendThinkingOverride(bool? forced, string clientThink, string? expected)
     {
+        var modelName = $"generate-thinking-{Guid.NewGuid():N}:latest";
         using (var scope = Server!.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
-            var vm = await db.VirtualModels.FirstAsync(m => m.Name == VirtualModelName);
-            var backend = await db.VirtualModelBackends.FirstAsync(b => b.VirtualModelId == vm.Id);
-            backend.OllamaThinkOverride = forced;
+            var provider = await db.OllamaProviders.FirstAsync(p => p.Name == "TestProvider");
+            var vm = new VirtualModel { Name = modelName, Type = ModelType.Chat };
+            vm.VirtualModelBackends.Add(new VirtualModelBackend
+            {
+                ProviderId = provider.Id, UnderlyingModelName = PhysicalModelName,
+                Enabled = true, IsHealthy = true, OllamaThinkOverride = forced
+            });
+            db.VirtualModels.Add(vm);
             await db.SaveChangesAsync();
         }
         MockUpstreamState.Handler = (_, _) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
         {
             Content = new StringContent("""{"model":"physical","response":"ok","done":true}""", Encoding.UTF8, "application/json")
         });
-        var payload = $$"""{"model":"{{VirtualModelName}}","prompt":"test","stream":false,"think":{{clientThink}}}""";
+        var payload = $$"""{"model":"{{modelName}}","prompt":"test","stream":false,"think":{{clientThink}}}""";
         var response = await Http.SendAsync(AuthedPost("/api/generate", payload));
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         var body = JsonNode.Parse(MockUpstreamState.LastRequestBody!);

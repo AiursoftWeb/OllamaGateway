@@ -63,9 +63,6 @@
   <data name="Disabled" xml:space="preserve">
     <value>已禁用</value>
   </data>
-  <data name="Do not override" xml:space="preserve">
-    <value>不覆盖</value>
-  </data>
   <data name="Down" xml:space="preserve">
     <value>宕机</value>
   </data>
@@ -74,15 +71,6 @@
   </data>
   <data name="Enabled" xml:space="preserve">
     <value>已启用</value>
-  </data>
-  <data name="Follow request" xml:space="preserve">
-    <value>跟随请求</value>
-  </data>
-  <data name="Force off" xml:space="preserve">
-    <value>强制关闭</value>
-  </data>
-  <data name="Force on" xml:space="preserve">
-    <value>强制开启</value>
   </data>
   <data name="Healthy" xml:space="preserve">
     <value>健康</value>
@@ -159,12 +147,6 @@
   <data name="Thinking Mode" xml:space="preserve">
     <value>思考模式</value>
   </data>
-  <data name="Thinking Override" xml:space="preserve">
-    <value>思考模式覆盖</value>
-  </data>
-  <data name="Thinking overrides apply only to Ollama-native requests. Do not override keeps the client setting, or the upstream default when absent. OpenAI Chat and Responses follow the request." xml:space="preserve">
-    <value>思考覆盖仅适用于 Ollama 原生请求。“不覆盖”会保留客户端设置；如果客户端未设置，则使用上游默认值。OpenAI Chat 和 Responses 会遵循请求中的设置。</value>
-  </data>
   <data name="Toggle this backend?" xml:space="preserve">
     <value>是否切换此后端？</value>
   </data>
@@ -208,4 +190,22 @@
     <value>选中时，将向上游 Ollama API 发送&quot;raw: true&quot;参数。这会指示 Ollama 不对您的提示词应用任何聊天模板。请仅用于纯文本补全。如果未选中，Ollama 将自动使用模型的默认聊天模板包裹您的提示词，并将其视为对话问题。</value>
   </data>
 
+  <data name="Do not override" xml:space="preserve">
+    <value>不覆盖</value>
+  </data>
+  <data name="Follow request" xml:space="preserve">
+    <value>跟随请求</value>
+  </data>
+  <data name="Force off" xml:space="preserve">
+    <value>强制关闭</value>
+  </data>
+  <data name="Force on" xml:space="preserve">
+    <value>强制开启</value>
+  </data>
+  <data name="Thinking Override" xml:space="preserve">
+    <value>思考模式覆盖</value>
+  </data>
+  <data name="Thinking overrides apply only to Ollama-native requests. Do not override keeps the client setting, or the upstream default when absent. OpenAI Chat and Responses follow the request." xml:space="preserve">
+    <value>思考覆盖仅适用于 Ollama 原生请求。“不覆盖”会保留客户端设置；如果客户端未设置，则使用上游默认值。OpenAI Chat 和 Responses 会遵循请求中的设置。</value>
+  </data>
 </root>

@@ -18,74 +18,11 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="&apos;DB override&apos; means a hard assignment (=), not a null-coalescing assignment (??=). When the virtual model has a value configured in the database, the client-supplied value is always discarded." xml:space="preserve">
-    <value>“DB override”表示硬赋值（=），而非空值合并赋值（??=）。当虚拟模型在数据库中已配置了值时，客户端提供的值将被始终丢弃。</value>
-  </data>
-  <data name="&quot;Fire-and-forget&quot; support for long-running tasks (like emails or AI), featuring a GUI for queue management, parallel processing, and cancellation." xml:space="preserve">
+      <data name="&quot;Fire-and-forget&quot; support for long-running tasks (like emails or AI), featuring a GUI for queue management, parallel processing, and cancellation." xml:space="preserve">
     <value>支持“即发即弃”的长运行任务（如邮件发送或 AI 推理），内置队列管理、并行处理及任务取消的可视化面板。</value>
   </data>
-  <data name="→ Native Ollama" xml:space="preserve">
-    <value>→ 原生 Ollama</value>
-  </data>
-  <data name="→ OpenAI-compatible provider" xml:space="preserve">
-    <value>→ 兼容 OpenAI 的提供商</value>
-  </data>
-  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama JSON/NDJSON becomes Anthropic message JSON or &lt;code&gt;message_start/content_block_*/message_delta/message_stop&lt;/code&gt; SSE." xml:space="preserve">
-    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → 标准中间层 (IL) → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;。Ollama JSON/NDJSON 转换为 Anthropic 消息 JSON 或 &lt;code&gt;message_start/content_block_*/message_delta/message_stop&lt;/code&gt; SSE。</value>
-  </data>
-  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat JSON/SSE is decoded and reconstructed as Anthropic Messages output." xml:space="preserve">
-    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → 规范中间语言 → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;。Chat JSON/SSE 被解码并重构为 Anthropic Messages 输出。</value>
-  </data>
-  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses Items/events are decoded and rebuilt as Anthropic content blocks and SSE." xml:space="preserve">
-    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → 规范中间层（canonical IL）→ &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;。Responses Items/事件将被解码并重建为 Anthropic 内容块和 SSE。</value>
-  </data>
-  <data name="&lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt; has no Responses mapping. Chat-only controls prefer a Chat backend and are omitted on fallback. Responses annotations, citations, and noncanonical output Items cannot be reconstructed in a Chat Completion response." xml:space="preserve">
-    <value>&lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt; 没有对应的 Responses 映射。仅限 Chat 的控制参数优先使用 Chat 后端，在降级时会被省略。Responses 的注释、引用和非标准输出项无法在 Chat Completion 响应中重建。</value>
-  </data>
-  <data name="&lt;code&gt;images[]&lt;/code&gt; → OpenAI &lt;code&gt;image_url&lt;/code&gt; data parts; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;think&lt;/code&gt; → &lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt;; Ollama tool calls and responses are rebuilt as OpenAI tools and back again." xml:space="preserve">
-    <value>&lt;code&gt;images[]&lt;/code&gt; → OpenAI &lt;code&gt;image_url&lt;/code&gt; 数据部分；&lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;；&lt;code&gt;think&lt;/code&gt; → &lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt;；Ollama 工具调用和响应被重构为 OpenAI 工具，然后再还原回来。</value>
-  </data>
-  <data name="&lt;code&gt;instructions&lt;/code&gt; → system message; &lt;code&gt;input_text&lt;/code&gt;/&lt;code&gt;input_image&lt;/code&gt; → Ollama content/images; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt;; response events are synthesized with stable output indexes." xml:space="preserve">
-    <value>&lt;code&gt;instructions&lt;/code&gt; → 系统消息；&lt;code&gt;input_text&lt;/code&gt;/&lt;code&gt;input_image&lt;/code&gt; → Ollama 内容/图像；&lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;；&lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;think&lt;/code&gt;；&lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt;；响应事件使用稳定的输出索引进行合成。</value>
-  </data>
-  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. The response reverses through &lt;code&gt;OpenAiChatProviderResponseDecoder&lt;/code&gt; and &lt;code&gt;OllamaChatClientResponseWriter&lt;/code&gt;." xml:space="preserve">
-    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;。响应通过 &lt;code&gt;OpenAiChatProviderResponseDecoder&lt;/code&gt; 和 &lt;code&gt;OllamaChatClientResponseWriter&lt;/code&gt; 逆向处理。</value>
-  </data>
-  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → canonical messages/items → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Typed Responses Items/events are decoded and rebuilt as Ollama JSON/NDJSON." xml:space="preserve">
-    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → 规范化消息/项目 → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;。类型化的 Responses 项目/事件被解码并重建为 Ollama JSON/NDJSON。</value>
-  </data>
-  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; performs capability inspection; &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt; clones the original JSON; &lt;code&gt;OllamaChatWireResponseWriter&lt;/code&gt; keeps NDJSON records in the Ollama dialect." xml:space="preserve">
-    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; 执行能力检查；&lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt; 克隆原始 JSON；&lt;code&gt;OllamaChatWireResponseWriter&lt;/code&gt; 保留 Ollama 方言的 NDJSON 记录。</value>
-  </data>
-  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama response records are decoded into canonical events and emitted as Chat Completion JSON/SSE." xml:space="preserve">
-    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;。Ollama 响应记录被解码为标准事件，并以 Chat Completion JSON/SSE 形式发出。</value>
-  </data>
-  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses output Items/events return through the Responses decoder and Chat client writer." xml:space="preserve">
-    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → 标准 IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;。Responses 输出项/事件通过 Responses 解码器和 Chat 客户端写入器返回。</value>
-  </data>
-  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; inspects capabilities; the provider adapter clones the source JSON; &lt;code&gt;OpenAiChatWireResponseWriter&lt;/code&gt; forwards Chat JSON/SSE while observing text, reasoning, tools, and usage." xml:space="preserve">
-    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; 检查能力；提供者适配器克隆源 JSON；&lt;code&gt;OpenAiChatWireResponseWriter&lt;/code&gt; 转发 Chat JSON/SSE，同时监控文本、推理、工具和使用情况。</value>
-  </data>
-  <data name="&lt;code&gt;OpenAiEmbeddingClientAdapter&lt;/code&gt; + &lt;code&gt;OpenAiEmbeddingProviderAdapter&lt;/code&gt;. No VM sampling/context override is injected into an OpenAI embedding request." xml:space="preserve">
-    <value>&lt;code&gt;OpenAiEmbeddingClientAdapter&lt;/code&gt; + &lt;code&gt;OpenAiEmbeddingProviderAdapter&lt;/code&gt;。不会向 OpenAI 嵌入请求注入虚拟机采样/上下文覆盖。</value>
-  </data>
-  <data name="&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama output becomes typed Responses Items and typed SSE events." xml:space="preserve">
-    <value>&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → 规范中间语言 → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;。Ollama 输出将转换为类型化的 Responses Items 和类型化的 SSE 事件。</value>
-  </data>
-  <data name="&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat completions/chunks are decoded and emitted as Responses JSON/typed SSE." xml:space="preserve">
-    <value>&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → 规范 IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;。对话补全/分块会被解码并以 Responses JSON/类型化 SSE 的形式发出。</value>
-  </data>
-  <data name="&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;background&lt;/code&gt;, and &lt;code&gt;store&lt;/code&gt; retain their native Responses semantics. This is not byte-transparent because JSON may be reserialized." xml:space="preserve">
-    <value>&lt;code&gt;previous_response_id&lt;/code&gt;、&lt;code&gt;conversation&lt;/code&gt;、&lt;code&gt;background&lt;/code&gt; 和 &lt;code&gt;store&lt;/code&gt; 保留其原生的 Responses 语义。由于 JSON 可能会被重新序列化，因此这并非字节级透明。</value>
-  </data>
-  <data name="&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;store:true&lt;/code&gt;, &lt;code&gt;background:true&lt;/code&gt;, native tools, and unknown Items require a Responses backend. Stateless representable requests fall back to translation." xml:space="preserve">
-    <value>&lt;code&gt;previous_response_id&lt;/code&gt;、&lt;code&gt;conversation&lt;/code&gt;、&lt;code&gt;store:true&lt;/code&gt;、&lt;code&gt;background:true&lt;/code&gt;、原生工具以及未知 Items 需要 Responses 后端支持。可表示的无状态请求将回退至翻译模式。</value>
-  </data>
-  <data name="&lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt; are hard-overridden when configured." xml:space="preserve">
-    <value>&lt;code&gt;temperature&lt;/code&gt;、&lt;code&gt;top_p&lt;/code&gt;、&lt;code&gt;top_k&lt;/code&gt;、&lt;code&gt;num_predict&lt;/code&gt;、&lt;code&gt;num_ctx&lt;/code&gt;、&lt;code&gt;repeat_penalty&lt;/code&gt; 和 &lt;code&gt;think&lt;/code&gt; 在配置时会强制覆盖。</value>
-  </data>
-  <data name="&lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;keep_alive&lt;/code&gt; have no OpenAI Chat mapping. Unknown Ollama controls prefer a native backend but are omitted when this translation path is the only eligible route." xml:space="preserve">
-    <value>&lt;code&gt;top_k&lt;/code&gt;、&lt;code&gt;num_ctx&lt;/code&gt;、&lt;code&gt;repeat_penalty&lt;/code&gt; 和 &lt;code&gt;keep_alive&lt;/code&gt; 没有对应的 OpenAI Chat 映射。未知的 Ollama 控制参数优先使用原生后端，但当此转换路径是唯一可用路由时将被省略。</value>
+  <data name="&apos;DB override&apos; means a hard assignment (=), not a null-coalescing assignment (??=). When the virtual model has a value configured in the database, the client-supplied value is always discarded." xml:space="preserve">
+    <value>“DB override”表示硬赋值（=），而非空值合并赋值（??=）。当虚拟模型在数据库中已配置了值时，客户端提供的值将被始终丢弃。</value>
   </data>
   <data name="2 client dialects × 2 Provider types" xml:space="preserve">
     <value>2 种客户端方言 × 2 种提供商类型</value>
@@ -101,6 +38,63 @@
   </data>
   <data name="4 client dialects × 3 backend protocols" xml:space="preserve">
     <value>4 种客户端方言 × 3 种后端协议</value>
+  </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama JSON/NDJSON becomes Anthropic message JSON or &lt;code&gt;message_start/content_block_*/message_delta/message_stop&lt;/code&gt; SSE." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → 标准中间层 (IL) → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;。Ollama JSON/NDJSON 转换为 Anthropic 消息 JSON 或 &lt;code&gt;message_start/content_block_*/message_delta/message_stop&lt;/code&gt; SSE。</value>
+  </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat JSON/SSE is decoded and reconstructed as Anthropic Messages output." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → 规范中间语言 → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;。Chat JSON/SSE 被解码并重构为 Anthropic Messages 输出。</value>
+  </data>
+  <data name="&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses Items/events are decoded and rebuilt as Anthropic content blocks and SSE." xml:space="preserve">
+    <value>&lt;code&gt;AnthropicChatRequestDecoder&lt;/code&gt; → 规范中间层（canonical IL）→ &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;。Responses Items/事件将被解码并重建为 Anthropic 内容块和 SSE。</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; performs capability inspection; &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt; clones the original JSON; &lt;code&gt;OllamaChatWireResponseWriter&lt;/code&gt; keeps NDJSON records in the Ollama dialect." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; 执行能力检查；&lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt; 克隆原始 JSON；&lt;code&gt;OllamaChatWireResponseWriter&lt;/code&gt; 保留 Ollama 方言的 NDJSON 记录。</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. The response reverses through &lt;code&gt;OpenAiChatProviderResponseDecoder&lt;/code&gt; and &lt;code&gt;OllamaChatClientResponseWriter&lt;/code&gt;." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;。响应通过 &lt;code&gt;OpenAiChatProviderResponseDecoder&lt;/code&gt; 和 &lt;code&gt;OllamaChatClientResponseWriter&lt;/code&gt; 逆向处理。</value>
+  </data>
+  <data name="&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → canonical messages/items → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Typed Responses Items/events are decoded and rebuilt as Ollama JSON/NDJSON." xml:space="preserve">
+    <value>&lt;code&gt;OllamaChatRequestDecoder&lt;/code&gt; → 规范化消息/项目 → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;。类型化的 Responses 项目/事件被解码并重建为 Ollama JSON/NDJSON。</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; inspects capabilities; the provider adapter clones the source JSON; &lt;code&gt;OpenAiChatWireResponseWriter&lt;/code&gt; forwards Chat JSON/SSE while observing text, reasoning, tools, and usage." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; 检查能力；提供者适配器克隆源 JSON；&lt;code&gt;OpenAiChatWireResponseWriter&lt;/code&gt; 转发 Chat JSON/SSE，同时监控文本、推理、工具和使用情况。</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama response records are decoded into canonical events and emitted as Chat Completion JSON/SSE." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → &lt;code&gt;GatewayChatRequest&lt;/code&gt; → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;。Ollama 响应记录被解码为标准事件，并以 Chat Completion JSON/SSE 形式发出。</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;. Responses output Items/events return through the Responses decoder and Chat client writer." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiChatRequestDecoder&lt;/code&gt; → 标准 IL → &lt;code&gt;OpenAiResponsesProviderRequestAdapter&lt;/code&gt;。Responses 输出项/事件通过 Responses 解码器和 Chat 客户端写入器返回。</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiEmbeddingClientAdapter&lt;/code&gt; + &lt;code&gt;OpenAiEmbeddingProviderAdapter&lt;/code&gt;. No VM sampling/context override is injected into an OpenAI embedding request." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiEmbeddingClientAdapter&lt;/code&gt; + &lt;code&gt;OpenAiEmbeddingProviderAdapter&lt;/code&gt;。不会向 OpenAI 嵌入请求注入虚拟机采样/上下文覆盖。</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;. Ollama output becomes typed Responses Items and typed SSE events." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → 规范中间语言 → &lt;code&gt;OllamaChatProviderRequestAdapter&lt;/code&gt;。Ollama 输出将转换为类型化的 Responses Items 和类型化的 SSE 事件。</value>
+  </data>
+  <data name="&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → canonical IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;. Chat completions/chunks are decoded and emitted as Responses JSON/typed SSE." xml:space="preserve">
+    <value>&lt;code&gt;OpenAiResponsesRequestDecoder&lt;/code&gt; → 规范 IL → &lt;code&gt;OpenAiChatProviderRequestAdapter&lt;/code&gt;。对话补全/分块会被解码并以 Responses JSON/类型化 SSE 的形式发出。</value>
+  </data>
+  <data name="&lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt; has no Responses mapping. Chat-only controls prefer a Chat backend and are omitted on fallback. Responses annotations, citations, and noncanonical output Items cannot be reconstructed in a Chat Completion response." xml:space="preserve">
+    <value>&lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt; 没有对应的 Responses 映射。仅限 Chat 的控制参数优先使用 Chat 后端，在降级时会被省略。Responses 的注释、引用和非标准输出项无法在 Chat Completion 响应中重建。</value>
+  </data>
+  <data name="&lt;code&gt;images[]&lt;/code&gt; → OpenAI &lt;code&gt;image_url&lt;/code&gt; data parts; &lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;think&lt;/code&gt; → &lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt;; Ollama tool calls and responses are rebuilt as OpenAI tools and back again." xml:space="preserve">
+    <value>&lt;code&gt;images[]&lt;/code&gt; → OpenAI &lt;code&gt;image_url&lt;/code&gt; 数据部分；&lt;code&gt;num_predict&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;；&lt;code&gt;think&lt;/code&gt; → &lt;code&gt;chat_template_kwargs.enable_thinking&lt;/code&gt;；Ollama 工具调用和响应被重构为 OpenAI 工具，然后再还原回来。</value>
+  </data>
+  <data name="&lt;code&gt;instructions&lt;/code&gt; → system message; &lt;code&gt;input_text&lt;/code&gt;/&lt;code&gt;input_image&lt;/code&gt; → Ollama content/images; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt;; response events are synthesized with stable output indexes." xml:space="preserve">
+    <value>&lt;code&gt;instructions&lt;/code&gt; → 系统消息；&lt;code&gt;input_text&lt;/code&gt;/&lt;code&gt;input_image&lt;/code&gt; → Ollama 内容/图像；&lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;；&lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;think&lt;/code&gt;；&lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt;；响应事件使用稳定的输出索引进行合成。</value>
+  </data>
+  <data name="&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;background&lt;/code&gt;, and &lt;code&gt;store&lt;/code&gt; retain their native Responses semantics. This is not byte-transparent because JSON may be reserialized." xml:space="preserve">
+    <value>&lt;code&gt;previous_response_id&lt;/code&gt;、&lt;code&gt;conversation&lt;/code&gt;、&lt;code&gt;background&lt;/code&gt; 和 &lt;code&gt;store&lt;/code&gt; 保留其原生的 Responses 语义。由于 JSON 可能会被重新序列化，因此这并非字节级透明。</value>
+  </data>
+  <data name="&lt;code&gt;previous_response_id&lt;/code&gt;, &lt;code&gt;conversation&lt;/code&gt;, &lt;code&gt;store:true&lt;/code&gt;, &lt;code&gt;background:true&lt;/code&gt;, native tools, and unknown Items require a Responses backend. Stateless representable requests fall back to translation." xml:space="preserve">
+    <value>&lt;code&gt;previous_response_id&lt;/code&gt;、&lt;code&gt;conversation&lt;/code&gt;、&lt;code&gt;store:true&lt;/code&gt;、&lt;code&gt;background:true&lt;/code&gt;、原生工具以及未知 Items 需要 Responses 后端支持。可表示的无状态请求将回退至翻译模式。</value>
+  </data>
+  <data name="&lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt; are hard-overridden when configured." xml:space="preserve">
+    <value>&lt;code&gt;temperature&lt;/code&gt;、&lt;code&gt;top_p&lt;/code&gt;、&lt;code&gt;top_k&lt;/code&gt;、&lt;code&gt;num_predict&lt;/code&gt;、&lt;code&gt;num_ctx&lt;/code&gt;、&lt;code&gt;repeat_penalty&lt;/code&gt; 和 &lt;code&gt;think&lt;/code&gt; 在配置时会强制覆盖。</value>
+  </data>
+  <data name="&lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;keep_alive&lt;/code&gt; have no OpenAI Chat mapping. Unknown Ollama controls prefer a native backend but are omitted when this translation path is the only eligible route." xml:space="preserve">
+    <value>&lt;code&gt;top_k&lt;/code&gt;、&lt;code&gt;num_ctx&lt;/code&gt;、&lt;code&gt;repeat_penalty&lt;/code&gt; 和 &lt;code&gt;keep_alive&lt;/code&gt; 没有对应的 OpenAI Chat 映射。未知的 Ollama 控制参数优先使用原生后端，但当此转换路径是唯一可用路由时将被省略。</value>
   </data>
   <data name="A built-in Role-Based Access Control (RBAC) system for fine-grained permission management." xml:space="preserve">
     <value>内置基于角色的访问控制（RBAC）系统，用于细粒度权限管理。</value>
@@ -123,6 +117,21 @@
   <data name="A modern, feature-rich, and highly extensible foundation for your next web application." xml:space="preserve">
     <value>一个现代化、功能丰富且高度可扩展的基础框架，为您的下一个Web应用程序提供强大支持。</value>
   </data>
+  <data name="AI Driven Translation" xml:space="preserve">
+    <value>AI 驱动的翻译</value>
+  </data>
+  <data name="AI Readable" xml:space="preserve">
+    <value>AI 可读</value>
+  </data>
+  <data name="AI-Powered Translations" xml:space="preserve">
+    <value>AI 驱动翻译</value>
+  </data>
+  <data name="API Authentication (Bearer)" xml:space="preserve">
+    <value>API 身份验证 (Bearer)</value>
+  </data>
+  <data name="API Rate Limiting" xml:space="preserve">
+    <value>API 限流</value>
+  </data>
   <data name="Achieve more with Aiursoft Template" xml:space="preserve">
     <value>借助 Aiursoft Template 成就更多可能</value>
   </data>
@@ -138,15 +147,6 @@
   <data name="Agent &amp; Ecosystem Ready" xml:space="preserve">
     <value>Agent 生态准备就绪</value>
   </data>
-  <data name="AI Driven Translation" xml:space="preserve">
-    <value>AI 驱动的翻译</value>
-  </data>
-  <data name="AI Readable" xml:space="preserve">
-    <value>AI 可读</value>
-  </data>
-  <data name="AI-Powered Translations" xml:space="preserve">
-    <value>AI 驱动翻译</value>
-  </data>
   <data name="Aiursoft Template" xml:space="preserve">
     <value>Aiursoft Template</value>
   </data>
@@ -156,20 +156,17 @@
   <data name="Alias -&gt; Real" xml:space="preserve">
     <value>别名 -&gt; 真实模型</value>
   </data>
-  <data name="All dependencies are automatically registered and always available via constructor injection." xml:space="preserve">
-    <value>所有依赖项均自动注册，并始终可通过构造函数注入方式使用。</value>
-  </data>
   <data name="All Ollama VM controls apply and override translated values: sampling, context, repeat penalty, token limit, and thinking. Ollama-only DB controls may be injected." xml:space="preserve">
     <value>所有 Ollama VM 控制项均适用，并覆盖转换后的值：采样、上下文、重复惩罚、令牌限制和思考。可能会注入仅适用于 Ollama 的数据库控制项。</value>
-  </data>
-  <data name="All Ollama VM controls apply: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt;. Ollama-only values may therefore be injected even though the client dialect cannot express them." xml:space="preserve">
-    <value>所有 Ollama VM 控制参数均适用：&lt;code&gt;temperature&lt;/code&gt;、&lt;code&gt;top_p&lt;/code&gt;、&lt;code&gt;top_k&lt;/code&gt;、&lt;code&gt;num_predict&lt;/code&gt;、&lt;code&gt;num_ctx&lt;/code&gt;、&lt;code&gt;repeat_penalty&lt;/code&gt; 和 &lt;code&gt;think&lt;/code&gt;。因此，即使客户端方言无法表达这些值，Ollama 专有的值也可能被注入。</value>
   </data>
   <data name="All Ollama VM controls apply. &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;RepeatPenalty&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; can be injected from DB even though Anthropic request fields do not directly express them." xml:space="preserve">
     <value>所有 Ollama VM 控制参数均适用。&lt;code&gt;TopK&lt;/code&gt;、&lt;code&gt;NumCtx&lt;/code&gt;、&lt;code&gt;RepeatPenalty&lt;/code&gt; 和 &lt;code&gt;Thinking&lt;/code&gt; 可从数据库注入，尽管 Anthropic 请求字段并未直接表达这些参数。</value>
   </data>
-  <data name="All Ollama VM sampling controls apply. The selected backend can force &lt;code&gt;think&lt;/code&gt; on or off; otherwise the translated client setting applies." xml:space="preserve">
-    <value>所有 Ollama 虚拟机（VM）采样控制项均适用。所选后端可以强制开启或关闭 &lt;code&gt;think&lt;/code&gt;；否则将采用翻译后的客户端设置。</value>
+  <data name="All Ollama VM controls apply: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt;. Ollama-only values may therefore be injected even though the client dialect cannot express them." xml:space="preserve">
+    <value>所有 Ollama VM 控制参数均适用：&lt;code&gt;temperature&lt;/code&gt;、&lt;code&gt;top_p&lt;/code&gt;、&lt;code&gt;top_k&lt;/code&gt;、&lt;code&gt;num_predict&lt;/code&gt;、&lt;code&gt;num_ctx&lt;/code&gt;、&lt;code&gt;repeat_penalty&lt;/code&gt; 和 &lt;code&gt;think&lt;/code&gt;。因此，即使客户端方言无法表达这些值，Ollama 专有的值也可能被注入。</value>
+  </data>
+  <data name="All dependencies are automatically registered and always available via constructor injection." xml:space="preserve">
+    <value>所有依赖项均自动注册，并始终可通过构造函数注入方式使用。</value>
   </data>
   <data name="Anduin" xml:space="preserve">
     <value>Anduin</value>
@@ -177,17 +174,14 @@
   <data name="Anduin Xue" xml:space="preserve">
     <value>Anduin Xue</value>
   </data>
-  <data name="Anthropic → Ollama" xml:space="preserve">
-    <value>Anthropic → Ollama</value>
-  </data>
-  <data name="Anthropic → OpenAI" xml:space="preserve">
-    <value>Anthropic → OpenAI</value>
-  </data>
   <data name="Anthropic API Translation" xml:space="preserve">
     <value>Anthropic API 翻译</value>
   </data>
   <data name="Anthropic Client" xml:space="preserve">
     <value>Anthropic 客户端</value>
+  </data>
+  <data name="Anthropic Messages client routes" xml:space="preserve">
+    <value>Anthropic Messages 客户端路由</value>
   </data>
   <data name="Anthropic image content blocks are not yet translated to Ollama format." xml:space="preserve">
     <value>Anthropic图像内容块尚未转换为Ollama格式。</value>
@@ -201,17 +195,14 @@
   <data name="Anthropic input thinking blocks and signatures are not encoded into Responses input. Unknown content blocks cannot use this route; unknown top-level controls are omitted on fallback. Native Responses-only output Items, annotations, and citations cannot be represented in Anthropic output." xml:space="preserve">
     <value>Anthropic 输入的思维块和签名不会编码到 Responses 输入中。未知内容块无法使用此路由；在回退时会省略未知的顶层控制项。原生的仅适用于 Responses 的输出 Items、注释和引用无法在 Anthropic 输出中表示。</value>
   </data>
-  <data name="Anthropic Messages client routes" xml:space="preserve">
-    <value>Anthropic Messages 客户端路由</value>
-  </data>
   <data name="Anthropic system content → system message; image blocks → OpenAI &lt;code&gt;image_url&lt;/code&gt;; &lt;code&gt;input_schema&lt;/code&gt; → function &lt;code&gt;parameters&lt;/code&gt;; &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt; → Chat tool calls/messages; &lt;code&gt;max_tokens&lt;/code&gt; remains the Chat token limit." xml:space="preserve">
     <value>Anthropic 系统内容 → system message；image blocks → OpenAI &lt;code&gt;image_url&lt;/code&gt;；&lt;code&gt;input_schema&lt;/code&gt; → function &lt;code&gt;parameters&lt;/code&gt;；&lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt; → Chat tool calls/messages；&lt;code&gt;max_tokens&lt;/code&gt; 保持为 Chat token limit。</value>
   </data>
-  <data name="API Authentication (Bearer)" xml:space="preserve">
-    <value>API 身份验证 (Bearer)</value>
+  <data name="Anthropic → Ollama" xml:space="preserve">
+    <value>Anthropic → Ollama</value>
   </data>
-  <data name="API Rate Limiting" xml:space="preserve">
-    <value>API 限流</value>
+  <data name="Anthropic → OpenAI" xml:space="preserve">
+    <value>Anthropic → OpenAI</value>
   </data>
   <data name="Artificial Intelligence Translation" xml:space="preserve">
     <value>人工智能翻译</value>
@@ -219,14 +210,14 @@
   <data name="Authentik &amp; Okta" xml:space="preserve">
     <value>Authentik &amp; Okta</value>
   </data>
-  <data name="Auto compression and privacy" xml:space="preserve">
-    <value>自动压缩与隐私保护</value>
-  </data>
   <data name="Auto Deployment" xml:space="preserve">
     <value>自动部署</value>
   </data>
   <data name="Auto Sync" xml:space="preserve">
     <value>自动同步</value>
+  </data>
+  <data name="Auto compression and privacy" xml:space="preserve">
+    <value>自动压缩与隐私保护</value>
   </data>
   <data name="Automatic AI translation into 28 languages." xml:space="preserve">
     <value>自动 AI 翻译至 28 种语言。</value>
@@ -303,9 +294,6 @@
   <data name="Built-in" xml:space="preserve">
     <value>内置</value>
   </data>
-  <data name="Built-in administration panel" xml:space="preserve">
-    <value>内置管理面板</value>
-  </data>
   <data name="Built-in Auth" xml:space="preserve">
     <value>内置认证</value>
   </data>
@@ -314,6 +302,9 @@
   </data>
   <data name="Built-in User Management" xml:space="preserve">
     <value>内置用户管理</value>
+  </data>
+  <data name="Built-in administration panel" xml:space="preserve">
+    <value>内置管理面板</value>
   </data>
   <data name="Chat" xml:space="preserve">
     <value>聊天</value>
@@ -375,11 +366,11 @@
   <data name="Coverage Report" xml:space="preserve">
     <value>覆盖率报告</value>
   </data>
-  <data name="Create multiple aliases for your models with custom system prompts and parameter overrides." xml:space="preserve">
-    <value>为您的模型创建多个别名，支持自定义系统提示词和参数覆盖。</value>
-  </data>
   <data name="Create multiple API keys for different users and applications, each with its own fine-grained permissions." xml:space="preserve">
     <value>为不同的用户和应用程序创建多个 API 密钥，每个密钥均拥有独立的细粒度权限。</value>
+  </data>
+  <data name="Create multiple aliases for your models with custom system prompts and parameter overrides." xml:space="preserve">
+    <value>为您的模型创建多个别名，支持自定义系统提示词和参数覆盖。</value>
   </data>
   <data name="Create virtual chat models with persistent system prompts." xml:space="preserve">
     <value>创建带有持久系统提示的虚拟聊天模型。</value>
@@ -402,24 +393,6 @@
   <data name="Custom development required" xml:space="preserve">
     <value>需要定制开发</value>
   </data>
-  <data name="Dashboard for background tasks" xml:space="preserve">
-    <value>后台任务仪表盘</value>
-  </data>
-  <data name="Dashboard Website" xml:space="preserve">
-    <value>仪表板网站</value>
-  </data>
-  <data name="Database override" xml:space="preserve">
-    <value>数据库覆盖</value>
-  </data>
-  <data name="Database values are hard assignments" xml:space="preserve">
-    <value>数据库值为强制赋值</value>
-  </data>
-  <data name="Day 1 Compliance &amp; Security." xml:space="preserve">
-    <value>起步即合规，安全无死角。</value>
-  </data>
-  <data name="Day 1 Ready" xml:space="preserve">
-    <value>第一天就准备就绪</value>
-  </data>
   <data name="DB injects the value but it is dropped before the OpenAI request is sent" xml:space="preserve">
     <value>数据库注入该值，但在发送 OpenAI 请求前会被丢弃</value>
   </data>
@@ -434,6 +407,24 @@
   </data>
   <data name="DB overrides via chat_template_kwargs. When DB is unset, client can pass chat_template_kwargs freely." xml:space="preserve">
     <value>DB 通过 chat_template_kwargs 进行覆盖。当 DB 未设置时，客户端可以自由传递 chat_template_kwargs。</value>
+  </data>
+  <data name="Dashboard Website" xml:space="preserve">
+    <value>仪表板网站</value>
+  </data>
+  <data name="Dashboard for background tasks" xml:space="preserve">
+    <value>后台任务仪表盘</value>
+  </data>
+  <data name="Database override" xml:space="preserve">
+    <value>数据库覆盖</value>
+  </data>
+  <data name="Database values are hard assignments" xml:space="preserve">
+    <value>数据库值为强制赋值</value>
+  </data>
+  <data name="Day 1 Compliance &amp; Security." xml:space="preserve">
+    <value>起步即合规，安全无死角。</value>
+  </data>
+  <data name="Day 1 Ready" xml:space="preserve">
+    <value>第一天就准备就绪</value>
   </data>
   <data name="Dedicated management for embedding models for RAG applications." xml:space="preserve">
     <value>专为 RAG 应用打造的嵌入模型管理功能。</value>
@@ -468,14 +459,14 @@
   <data name="Dev &amp; Prod" xml:space="preserve">
     <value>开发与生产</value>
   </data>
+  <data name="DevOps Native" xml:space="preserve">
+    <value>DevOps 原生</value>
+  </data>
   <data name="Develop exclusively in UTC while the system automatically converts and displays dates in the user&apos;s local time zone." xml:space="preserve">
     <value>在 UTC 中进行开发，而系统会自动将日期转换并显示为用户的本地时区。</value>
   </data>
   <data name="Developer Experience" xml:space="preserve">
     <value>开发者体验</value>
-  </data>
-  <data name="DevOps Native" xml:space="preserve">
-    <value>DevOps 原生</value>
   </data>
   <data name="Direction" xml:space="preserve">
     <value>方向</value>
@@ -516,11 +507,11 @@
   <data name="Embedding" xml:space="preserve">
     <value>嵌入</value>
   </data>
-  <data name="Embedding adapters select by ProviderType, not chat BackendProtocol" xml:space="preserve">
-    <value>嵌入适配器根据 ProviderType 选择，而非聊天 BackendProtocol</value>
-  </data>
   <data name="Embedding Models" xml:space="preserve">
     <value>嵌入模型</value>
+  </data>
+  <data name="Embedding adapters select by ProviderType, not chat BackendProtocol" xml:space="preserve">
+    <value>嵌入适配器根据 ProviderType 选择，而非聊天 BackendProtocol</value>
   </data>
   <data name="Embedding route" xml:space="preserve">
     <value>嵌入路由</value>
@@ -549,14 +540,8 @@
   <data name="Entity Framework Core included" xml:space="preserve">
     <value>包含 Entity Framework Core</value>
   </data>
-  <data name="explicit unsupported_feature error" xml:space="preserve">
-    <value>明确的 unsupported_feature 错误</value>
-  </data>
   <data name="FAQ" xml:space="preserve">
     <value>常见问题解答</value>
-  </data>
-  <data name="faster" xml:space="preserve">
-    <value>更快</value>
   </data>
   <data name="Feature Comparison" xml:space="preserve">
     <value>功能对比</value>
@@ -579,9 +564,6 @@
   <data name="Flexible API" xml:space="preserve">
     <value>灵活的 API</value>
   </data>
-  <data name="for any inquiries or to report issues." xml:space="preserve">
-    <value>如有任何疑问或报告问题。</value>
-  </data>
   <data name="Founder &amp; Architect at Aiursoft" xml:space="preserve">
     <value>创始人兼架构师 | Aiursoft</value>
   </data>
@@ -591,11 +573,11 @@
   <data name="Free" xml:space="preserve">
     <value>免费</value>
   </data>
-  <data name="Free for Commercial Use" xml:space="preserve">
-    <value>商业用途免费</value>
-  </data>
   <data name="Free Software" xml:space="preserve">
     <value>自由软件</value>
+  </data>
+  <data name="Free for Commercial Use" xml:space="preserve">
+    <value>商业用途免费</value>
   </data>
   <data name="Frequently asked questions" xml:space="preserve">
     <value>常见问题</value>
@@ -627,11 +609,11 @@
   <data name="Gateway-owned operation" xml:space="preserve">
     <value>网关自有操作</value>
   </data>
-  <data name="Generic configuration" xml:space="preserve">
-    <value>通用配置</value>
-  </data>
   <data name="Generic Dockerfile only" xml:space="preserve">
     <value>仅提供通用 Dockerfile</value>
+  </data>
+  <data name="Generic configuration" xml:space="preserve">
+    <value>通用配置</value>
   </data>
   <data name="GitLab CI" xml:space="preserve">
     <value>GitLab CI</value>
@@ -708,11 +690,11 @@
   <data name="Included" xml:space="preserve">
     <value>包含</value>
   </data>
-  <data name="Includes extensive documentation and practical examples to get you started quickly." xml:space="preserve">
-    <value>包含详尽的文档和实用示例，助您快速上手。</value>
-  </data>
   <data name="Includes Tutorials" xml:space="preserve">
     <value>包含教程</value>
+  </data>
+  <data name="Includes extensive documentation and practical examples to get you started quickly." xml:space="preserve">
+    <value>包含详尽的文档和实用示例，助您快速上手。</value>
   </data>
   <data name="Input Items → Chat &lt;code&gt;messages&lt;/code&gt;; instructions → system message; Responses function tool/choice shapes → Chat wrappers; &lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;; &lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;reasoning_effort&lt;/code&gt;; &lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;response_format&lt;/code&gt;." xml:space="preserve">
     <value>输入项 → Chat &lt;code&gt;messages&lt;/code&gt;；指令 → 系统消息；Responses 函数工具/选择结构 → Chat 包装器；&lt;code&gt;max_output_tokens&lt;/code&gt; → &lt;code&gt;max_tokens&lt;/code&gt;；&lt;code&gt;reasoning.effort&lt;/code&gt; → &lt;code&gt;reasoning_effort&lt;/code&gt;；&lt;code&gt;text.format&lt;/code&gt; → &lt;code&gt;response_format&lt;/code&gt;。</value>
@@ -738,9 +720,6 @@
   <data name="Interoperability" xml:space="preserve">
     <value>互操作性</value>
   </data>
-  <data name="is Free Software" xml:space="preserve">
-    <value>是自由软件</value>
-  </data>
   <data name="Is it free to use Aiursoft Template?" xml:space="preserve">
     <value>使用 Aiursoft Template 是否免费？</value>
   </data>
@@ -765,6 +744,15 @@
   <data name="Load Balancing, Tiered Fallback &amp; Mixed Providers" xml:space="preserve">
     <value>负载均衡、分级故障转移与混合提供商</value>
   </data>
+  <data name="MCP" xml:space="preserve">
+    <value>MCP</value>
+  </data>
+  <data name="MIT Licence" xml:space="preserve">
+    <value>MIT 许可证</value>
+  </data>
+  <data name="MIT License" xml:space="preserve">
+    <value>MIT 许可证</value>
+  </data>
   <data name="Maintain High Code Quality" xml:space="preserve">
     <value>保持高代码质量</value>
   </data>
@@ -777,32 +765,14 @@
   <data name="Markdown To HTML" xml:space="preserve">
     <value>Markdown 转 HTML</value>
   </data>
-  <data name="MCP" xml:space="preserve">
-    <value>MCP</value>
-  </data>
   <data name="Message roles/text, function definitions, function calls/results, streaming intent, temperature, top-p, token limit, images, structured format, and token usage survive when representable." xml:space="preserve">
     <value>消息角色/文本、函数定义、函数调用/结果、流式传输意图、温度（temperature）、top-p、令牌限制、图像、结构化格式以及令牌使用情况在可表示时均会保留。</value>
-  </data>
-  <data name="MIT Licence" xml:space="preserve">
-    <value>MIT 许可证</value>
-  </data>
-  <data name="MIT License" xml:space="preserve">
-    <value>MIT 许可证</value>
   </data>
   <data name="Mix Any Client with Any Backend" xml:space="preserve">
     <value>混合任意客户端与任意后端</value>
   </data>
-  <data name="Model discovery" xml:space="preserve">
-    <value>模型发现</value>
-  </data>
-  <data name="Model discovery endpoints" xml:space="preserve">
-    <value>模型发现端点</value>
-  </data>
   <data name="Model Hosting &amp; Inference" xml:space="preserve">
     <value>模型托管与推理</value>
-  </data>
-  <data name="Model identity is masked in both directions; &lt;code&gt;stream&lt;/code&gt; is normalized; streaming requests merge &lt;code&gt;stream_options.include_usage=true&lt;/code&gt;; null message content is normalized to an empty string." xml:space="preserve">
-    <value>模型身份在双向传输中均被隐藏；&lt;code&gt;stream&lt;/code&gt; 经过规范化处理；流式请求会合并 &lt;code&gt;stream_options.include_usage=true&lt;/code&gt;；空消息内容会被规范化为空字符串。</value>
   </data>
   <data name="Model Keep-alive" xml:space="preserve">
     <value>模型保活</value>
@@ -810,14 +780,23 @@
   <data name="Model Keep-alive (Ping)" xml:space="preserve">
     <value>模型保活（Ping）</value>
   </data>
+  <data name="Model discovery" xml:space="preserve">
+    <value>模型发现</value>
+  </data>
+  <data name="Model discovery endpoints" xml:space="preserve">
+    <value>模型发现端点</value>
+  </data>
+  <data name="Model identity is masked in both directions; &lt;code&gt;stream&lt;/code&gt; is normalized; streaming requests merge &lt;code&gt;stream_options.include_usage=true&lt;/code&gt;; null message content is normalized to an empty string." xml:space="preserve">
+    <value>模型身份在双向传输中均被隐藏；&lt;code&gt;stream&lt;/code&gt; 经过规范化处理；流式请求会合并 &lt;code&gt;stream_options.include_usage=true&lt;/code&gt;；空消息内容会被规范化为空字符串。</value>
+  </data>
   <data name="Models are validated on both client and server sides based on data annotations." xml:space="preserve">
     <value>基于数据注解 (Data Annotations)，自动实现客户端与服务端的双重逻辑验证。</value>
   </data>
-  <data name="Multi-backend Support" xml:space="preserve">
-    <value>多后端支持</value>
-  </data>
   <data name="Multi-Provider Virtual Models" xml:space="preserve">
     <value>多提供商虚拟模型</value>
+  </data>
+  <data name="Multi-backend Support" xml:space="preserve">
+    <value>多后端支持</value>
   </data>
   <data name="Multi-timezone Handling" xml:space="preserve">
     <value>多时区处理</value>
@@ -873,12 +852,6 @@
   <data name="Needs Celery + Flower" xml:space="preserve">
     <value>需要 Celery + Flower</value>
   </data>
-  <data name="Needs complex authentication logic" xml:space="preserve">
-    <value>需要复杂的认证逻辑</value>
-  </data>
-  <data name="Needs config/plugins" xml:space="preserve">
-    <value>需要配置/插件</value>
-  </data>
   <data name="Needs ESLint/Prettier setup" xml:space="preserve">
     <value>需要配置 ESLint/Prettier</value>
   </data>
@@ -887,9 +860,6 @@
   </data>
   <data name="Needs Laravel Sail" xml:space="preserve">
     <value>需要 Laravel Sail</value>
-  </data>
-  <data name="Needs manual configuration" xml:space="preserve">
-    <value>需要手动配置</value>
   </data>
   <data name="Needs Medialibrary" xml:space="preserve">
     <value>需要 Medialibrary</value>
@@ -903,11 +873,20 @@
   <data name="Needs Spring Security config" xml:space="preserve">
     <value>需要配置 Spring Security</value>
   </data>
-  <data name="Needs third-party plugins" xml:space="preserve">
-    <value>需要第三方插件</value>
-  </data>
   <data name="Needs TypeORM or similar" xml:space="preserve">
     <value>需要 TypeORM 或类似库</value>
+  </data>
+  <data name="Needs complex authentication logic" xml:space="preserve">
+    <value>需要复杂的认证逻辑</value>
+  </data>
+  <data name="Needs config/plugins" xml:space="preserve">
+    <value>需要配置/插件</value>
+  </data>
+  <data name="Needs manual configuration" xml:space="preserve">
+    <value>需要手动配置</value>
+  </data>
+  <data name="Needs third-party plugins" xml:space="preserve">
+    <value>需要第三方插件</value>
   </data>
   <data name="No Chat Completions or Responses translation. A non-Ollama backend returns &lt;code&gt;501&lt;/code&gt;." xml:space="preserve">
     <value>无 Chat Completions 或 Responses 翻译。非 Ollama 后端将返回 &lt;code&gt;501&lt;/code&gt;。</value>
@@ -930,17 +909,14 @@
   <data name="Not supported" xml:space="preserve">
     <value>不支持</value>
   </data>
-  <data name="Offline Capable" xml:space="preserve">
-    <value>离线可用</value>
-  </data>
   <data name="OIDC &amp; SSO" xml:space="preserve">
     <value>OIDC &amp; SSO</value>
   </data>
-  <data name="Ollama → Ollama" xml:space="preserve">
-    <value>Ollama → Ollama</value>
+  <data name="ORM &amp; Migrations" xml:space="preserve">
+    <value>ORM 与迁移</value>
   </data>
-  <data name="Ollama → OpenAI" xml:space="preserve">
-    <value>Ollama → OpenAI</value>
+  <data name="Offline Capable" xml:space="preserve">
+    <value>离线可用</value>
   </data>
   <data name="Ollama &lt;code&gt;input&lt;/code&gt; or legacy &lt;code&gt;prompt&lt;/code&gt; becomes OpenAI &lt;code&gt;input&lt;/code&gt;; OpenAI &lt;code&gt;data[].embedding&lt;/code&gt; is reconstructed as Ollama &lt;code&gt;embeddings[]&lt;/code&gt;." xml:space="preserve">
     <value>Ollama &lt;code&gt;input&lt;/code&gt; 或旧版 &lt;code&gt;prompt&lt;/code&gt; 将转换为 OpenAI &lt;code&gt;input&lt;/code&gt;；OpenAI &lt;code&gt;data[].embedding&lt;/code&gt; 将重构为 Ollama &lt;code&gt;embeddings[]&lt;/code&gt;。</value>
@@ -957,20 +933,11 @@
   <data name="Ollama Client" xml:space="preserve">
     <value>Ollama 客户端</value>
   </data>
-  <data name="Ollama embedding input" xml:space="preserve">
-    <value>Ollama 嵌入输入</value>
-  </data>
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway：通过企业级 API 身份验证、请求审计和虚拟模型管理，为您的原生 Ollama 赋能——您安全、私有的 AI 网关。</value>
   </data>
   <data name="Ollama Gateway: Supercharge your native Ollama with enterprise-grade API authentication, request auditing, rate limiting, and virtual model management—your secure, private AI gateway." xml:space="preserve">
     <value>Ollama Gateway：通过企业级 API 身份验证、请求审计、速率限制和虚拟模型管理，为您的原生 Ollama 赋能——您的安全私有 AI 网关。</value>
-  </data>
-  <data name="Ollama generate JSON/NDJSON is forwarded in the same dialect; model identity, answer text, finish data, and usage are observed and the virtual model name is restored." xml:space="preserve">
-    <value>Ollama 生成的 JSON/NDJSON 将以相同格式转发；模型身份、回答文本、结束数据和使用情况将被观测，并恢复虚拟模型名称。</value>
-  </data>
-  <data name="Ollama images array is converted to OpenAI multimodal content parts (text + image_url with data URI)." xml:space="preserve">
-    <value>Ollama 图像数组被转换为 OpenAI 多模态内容部分（文本 + 包含数据 URI 的 image_url）。</value>
   </data>
   <data name="Ollama JSON/NDJSON stays in the native dialect; model identity, answer, finish data, and usage are observed and rewritten." xml:space="preserve">
     <value>Ollama JSON/NDJSON 保持原生格式；模型身份、回答、结束数据和用量将被观察并重写。</value>
@@ -978,8 +945,23 @@
   <data name="Ollama Native only" xml:space="preserve">
     <value>仅限 Ollama 原生</value>
   </data>
+  <data name="Ollama embedding input" xml:space="preserve">
+    <value>Ollama 嵌入输入</value>
+  </data>
+  <data name="Ollama generate JSON/NDJSON is forwarded in the same dialect; model identity, answer text, finish data, and usage are observed and the virtual model name is restored." xml:space="preserve">
+    <value>Ollama 生成的 JSON/NDJSON 将以相同格式转发；模型身份、回答文本、结束数据和使用情况将被观测，并恢复虚拟模型名称。</value>
+  </data>
+  <data name="Ollama images array is converted to OpenAI multimodal content parts (text + image_url with data URI)." xml:space="preserve">
+    <value>Ollama 图像数组被转换为 OpenAI 多模态内容部分（文本 + 包含数据 URI 的 image_url）。</value>
+  </data>
   <data name="Ollama only" xml:space="preserve">
     <value>仅限 Ollama</value>
+  </data>
+  <data name="Ollama → Ollama" xml:space="preserve">
+    <value>Ollama → Ollama</value>
+  </data>
+  <data name="Ollama → OpenAI" xml:space="preserve">
+    <value>Ollama → OpenAI</value>
   </data>
   <data name="Ollama-only embedding fields such as &lt;code&gt;options&lt;/code&gt;, &lt;code&gt;truncate&lt;/code&gt;, &lt;code&gt;dimensions&lt;/code&gt; variants, and &lt;code&gt;keep_alive&lt;/code&gt; are not copied into the OpenAI request unless represented by the shared input." xml:space="preserve">
     <value>除非由共享输入表示，否则仅适用于 Ollama 的嵌入字段（如 &lt;code&gt;options&lt;/code&gt;、&lt;code&gt;truncate&lt;/code&gt;、&lt;code&gt;dimensions&lt;/code&gt; 变体以及 &lt;code&gt;keep_alive&lt;/code&gt;）不会被复制到 OpenAI 请求中。</value>
@@ -996,6 +978,9 @@
   <data name="OllamaGateway" xml:space="preserve">
     <value>OllamaGateway</value>
   </data>
+  <data name="OllamaGateway High Availability Routing" xml:space="preserve">
+    <value>OllamaGateway 高可用路由</value>
+  </data>
   <data name="OllamaGateway goes beyond simple proxying. It intelligently distributes requests across multiple underlying models, automatically falls back when a provider is unavailable, and lets you combine models from different providers into a single virtual model." xml:space="preserve">
     <value>OllamaGateway 超越了简单的代理功能。它能智能地在多个底层模型之间分配请求，在提供程序不可用时自动回退，并允许您将来自不同提供程序的模型组合成单个虚拟模型。</value>
   </data>
@@ -1004,9 +989,6 @@
   </data>
   <data name="OllamaGateway has been officially tested and is fully compatible with popular ecosystem tools including Open-WebUI, Opencode, and Roocode. Its robust API translation makes it the ideal choice for deploying autonomous AI agents." xml:space="preserve">
     <value>OllamaGateway 经过官方测试，完全兼容 Open-webui、Opencode 和 Roocode 等主流生态工具。其强大的 API 翻译功能使其成为部署自主 AI Agent 的理想选择。</value>
-  </data>
-  <data name="OllamaGateway High Availability Routing" xml:space="preserve">
-    <value>OllamaGateway 高可用路由</value>
   </data>
   <data name="OllamaGateway in Docker" xml:space="preserve">
     <value>Docker 中的 OllamaGateway</value>
@@ -1041,12 +1023,6 @@
   <data name="Open Source" xml:space="preserve">
     <value>开源</value>
   </data>
-  <data name="OpenAI → Ollama" xml:space="preserve">
-    <value>OpenAI → Ollama</value>
-  </data>
-  <data name="OpenAI → OpenAI" xml:space="preserve">
-    <value>OpenAI → OpenAI</value>
-  </data>
   <data name="OpenAI &lt;code&gt;input&lt;/code&gt; is sent as Ollama &lt;code&gt;input&lt;/code&gt;; &lt;code&gt;embeddings[]&lt;/code&gt; and &lt;code&gt;prompt_eval_count&lt;/code&gt; are reconstructed as OpenAI &lt;code&gt;data[]&lt;/code&gt; and &lt;code&gt;usage&lt;/code&gt;." xml:space="preserve">
     <value>OpenAI &lt;code&gt;input&lt;/code&gt; 将作为 Ollama &lt;code&gt;input&lt;/code&gt; 发送；&lt;code&gt;embeddings[]&lt;/code&gt; 和 &lt;code&gt;prompt_eval_count&lt;/code&gt; 将被重构为 OpenAI &lt;code&gt;data[]&lt;/code&gt; 和 &lt;code&gt;usage&lt;/code&gt;。</value>
   </data>
@@ -1062,11 +1038,11 @@
   <data name="OpenAI Client" xml:space="preserve">
     <value>OpenAI 客户端</value>
   </data>
+  <data name="OpenAI Responses client routes" xml:space="preserve">
+    <value>OpenAI Responses 客户端路由</value>
+  </data>
   <data name="OpenAI content parts → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → boolean &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;." xml:space="preserve">
     <value>OpenAI 内容部分 → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;；&lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;；&lt;code&gt;reasoning_effort&lt;/code&gt; → 布尔值 &lt;code&gt;think&lt;/code&gt;；&lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;。</value>
-  </data>
-  <data name="OpenAI content parts → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → named &lt;code&gt;think&lt;/code&gt; level (&lt;code&gt;none&lt;/code&gt; → &lt;code&gt;false&lt;/code&gt;); &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;." xml:space="preserve">
-    <value>OpenAI 内容部分 → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;；&lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;；&lt;code&gt;reasoning_effort&lt;/code&gt; → 指定的 &lt;code&gt;think&lt;/code&gt; 级别（&lt;code&gt;none&lt;/code&gt; → &lt;code&gt;false&lt;/code&gt;）；&lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;。</value>
   </data>
   <data name="OpenAI embedding extensions outside the shared input are not copied into the cross-dialect request or reconstructed response." xml:space="preserve">
     <value>共享输入之外的 OpenAI 嵌入扩展不会复制到跨方言请求或重构的响应中。</value>
@@ -1077,23 +1053,23 @@
   <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
     <value>OpenAI 多模态内容数组被提取：image_url 数据进入 Ollama images 数组，文本成为内容。</value>
   </data>
-  <data name="OpenAI Responses client routes" xml:space="preserve">
-    <value>OpenAI Responses 客户端路由</value>
-  </data>
-  <data name="OpenAI target fields &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_tokens&lt;/code&gt; use VM values when set. The selected Ollama backend can override &lt;code&gt;think&lt;/code&gt;; otherwise the client setting is kept." xml:space="preserve">
-    <value>OpenAI 目标字段 &lt;code&gt;temperature&lt;/code&gt;、&lt;code&gt;top_p&lt;/code&gt; 和 &lt;code&gt;max_tokens&lt;/code&gt; 在设置后会使用 VM 值。所选的 Ollama 后端可以覆盖 &lt;code&gt;think&lt;/code&gt;；否则保留客户端设置。</value>
-  </data>
   <data name="OpenAI target fields &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_tokens&lt;/code&gt; use VM values when set. VM &lt;code&gt;Thinking&lt;/code&gt; overrides the translated client value." xml:space="preserve">
     <value>当设置时，OpenAI 目标字段 &lt;code&gt;temperature&lt;/code&gt;、&lt;code&gt;top_p&lt;/code&gt; 和 &lt;code&gt;max_tokens&lt;/code&gt; 将使用 VM 值。VM &lt;code&gt;Thinking&lt;/code&gt; 会覆盖转换后的客户端值。</value>
+  </data>
+  <data name="OpenAI → Ollama" xml:space="preserve">
+    <value>OpenAI → Ollama</value>
+  </data>
+  <data name="OpenAI → OpenAI" xml:space="preserve">
+    <value>OpenAI → OpenAI</value>
   </data>
   <data name="OpenAI-type Provider" xml:space="preserve">
     <value>OpenAI 类型提供商</value>
   </data>
-  <data name="Opencode and Qwen Code working with OllamaGateway" xml:space="preserve">
-    <value>Opencode 和 Qwen Code 与 OllamaGateway 协同工作</value>
-  </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>OpenID Connect 集成</value>
+  </data>
+  <data name="Opencode and Qwen Code working with OllamaGateway" xml:space="preserve">
+    <value>Opencode 和 Qwen Code 与 OllamaGateway 协同工作</value>
   </data>
   <data name="Optimized Docker &amp; K8s config" xml:space="preserve">
     <value>优化的 Docker &amp; K8s 配置</value>
@@ -1103,9 +1079,6 @@
   </data>
   <data name="Optimized for Qwen Code automated development" xml:space="preserve">
     <value>针对 Qwen Code 自动化开发进行了优化</value>
-  </data>
-  <data name="ORM &amp; Migrations" xml:space="preserve">
-    <value>ORM 与迁移</value>
   </data>
   <data name="Out-of-the-box" xml:space="preserve">
     <value>开箱即用</value>
@@ -1143,11 +1116,11 @@
   <data name="Policy and implementation" xml:space="preserve">
     <value>策略与实现</value>
   </data>
-  <data name="Pre-configured and tested" xml:space="preserve">
-    <value>预配置且已测试</value>
-  </data>
   <data name="Pre-configured CI/CD pipelines specifically for GitLab." xml:space="preserve">
     <value>为 GitLab 专门预配置的 CI/CD 流水线</value>
+  </data>
+  <data name="Pre-configured and tested" xml:space="preserve">
+    <value>预配置且已测试</value>
   </data>
   <data name="Pre-configured pipelines for dev/prod" xml:space="preserve">
     <value>预配置的 Dev/Prod 流水线</value>
@@ -1199,9 +1172,6 @@
   </data>
   <data name="Requester&apos;s API" xml:space="preserve">
     <value>请求方 API</value>
-  </data>
-  <data name="requires a Responses-capable provider" xml:space="preserve">
-    <value>需要支持 Responses 的提供商</value>
   </data>
   <data name="Requires Laravel Socialite config" xml:space="preserve">
     <value>需要配置 Laravel Socialite</value>
@@ -1263,12 +1233,6 @@
   <data name="Smart Configuration Overrides" xml:space="preserve">
     <value>智能配置优先级</value>
   </data>
-  <data name="Smart dark mode that adapts to the user&apos;s system settings." xml:space="preserve">
-    <value>智能暗黑模式可自动适配用户的系统设置。</value>
-  </data>
-  <data name="Smart dark mode that automatically adapts to the user&apos;s system settings." xml:space="preserve">
-    <value>智能深色模式，可自动适应用户的系统设置。</value>
-  </data>
   <data name="Smart Load Balancing" xml:space="preserve">
     <value>智能负载均衡</value>
   </data>
@@ -1278,26 +1242,29 @@
   <data name="Smart Proxy" xml:space="preserve">
     <value>智能代理</value>
   </data>
-  <data name="Standard implementation. Switch providers without compilation." xml:space="preserve">
-    <value>标准实现。无需重新编译即可切换提供者。</value>
+  <data name="Smart dark mode that adapts to the user&apos;s system settings." xml:space="preserve">
+    <value>智能暗黑模式可自动适配用户的系统设置。</value>
+  </data>
+  <data name="Smart dark mode that automatically adapts to the user&apos;s system settings." xml:space="preserve">
+    <value>智能深色模式，可自动适应用户的系统设置。</value>
   </data>
   <data name="Standard OpenID" xml:space="preserve">
     <value>标准 OpenID</value>
   </data>
-  <data name="Start a new project" xml:space="preserve">
-    <value>开始新项目</value>
+  <data name="Standard implementation. Switch providers without compilation." xml:space="preserve">
+    <value>标准实现。无需重新编译即可切换提供者。</value>
   </data>
   <data name="Start Shipping Value." xml:space="preserve">
     <value>专注于核心价值交付。</value>
+  </data>
+  <data name="Start a new project" xml:space="preserve">
+    <value>开始新项目</value>
   </data>
   <data name="Start with a single &apos;docker run&apos; command." xml:space="preserve">
     <value>从一个单一的 &apos;docker run&apos; 命令开始。</value>
   </data>
   <data name="Starts without any configuration" xml:space="preserve">
     <value>无需任何配置即可启动</value>
-  </data>
-  <data name="state-aware" xml:space="preserve">
-    <value>感知状态</value>
   </data>
   <data name="State/background requests require a Responses backend. Native Responses tools and unknown Items also require Responses. Metadata and unknown top-level controls prefer Responses and are omitted on fallback. Responses-only annotations/citations cannot be recreated from Chat output." xml:space="preserve">
     <value>状态/后台请求需要 Responses 后端。Responses 原生工具和未知 Items 也需要 Responses。元数据和未知的顶层控件优先使用 Responses，在降级处理时会被省略。仅适用于 Responses 的注释/引用无法从 Chat 输出中重建。</value>
@@ -1317,14 +1284,14 @@
   <data name="Strict Lint Rules" xml:space="preserve">
     <value>严格代码检查规则</value>
   </data>
+  <data name="Strict Unit Testing" xml:space="preserve">
+    <value>严格单元测试</value>
+  </data>
   <data name="Strict linting rules and zero warnings by default." xml:space="preserve">
     <value>实施严格的 Lint 规则，默认项目必须达到 0 警告 (Zero Warnings) 标准。</value>
   </data>
   <data name="Strict linting rules with 0 warnings in the default project." xml:space="preserve">
     <value>严格的代码检查规则，默认项目中无警告。</value>
-  </data>
-  <data name="Strict Unit Testing" xml:space="preserve">
-    <value>严格单元测试</value>
   </data>
   <data name="Strongly Consistent Linting" xml:space="preserve">
     <value>零容忍代码检查</value>
@@ -1338,14 +1305,11 @@
   <data name="Supercharge Your Native" xml:space="preserve">
     <value>赋能您的原生体验</value>
   </data>
-  <data name="Supports both environment variables and database-backed settings, with automatic priority given to environment variables for seamless overrides." xml:space="preserve">
-    <value>支持环境变量与数据库配置双重驱动，环境变量自动拥有更高优先级，实现无缝覆盖。</value>
-  </data>
   <data name="Supports JetBrains Rider for easy code style fixes." xml:space="preserve">
     <value>支持 JetBrains Rider，轻松修复代码样式。</value>
   </data>
-  <data name="System → &lt;code&gt;instructions&lt;/code&gt;; messages/images → Responses input Items; Anthropic tools → Responses function tools; named tool choice → Responses &lt;code&gt;name&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; Responses reasoning/text/function output → Anthropic blocks." xml:space="preserve">
-    <value>System → &lt;code&gt;instructions&lt;/code&gt;；messages/images → Responses 输入 Items；Anthropic 工具 → Responses 函数工具；命名工具选择 → Responses &lt;code&gt;name&lt;/code&gt;；&lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;；Responses 推理/文本/函数输出 → Anthropic blocks。</value>
+  <data name="Supports both environment variables and database-backed settings, with automatic priority given to environment variables for seamless overrides." xml:space="preserve">
+    <value>支持环境变量与数据库配置双重驱动，环境变量自动拥有更高优先级，实现无缝覆盖。</value>
   </data>
   <data name="System instructions, text, base64/URL images, function tools/calls/results, tool choice, temperature, top-p, max tokens, response reasoning text, stream, finish state, and usage." xml:space="preserve">
     <value>系统指令、文本、base64/URL 图片、函数工具/调用/结果、工具选择、温度（temperature）、top-p、最大令牌数（max tokens）、响应推理文本、流式输出、结束状态以及使用情况。</value>
@@ -1355,6 +1319,9 @@
   </data>
   <data name="System text, message text, base64 images, tool definitions, &lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt;, tool choice modes, temperature, top-p, max tokens, visible reasoning text, stream, finish reason, and usage." xml:space="preserve">
     <value>系统文本、消息文本、base64 图片、工具定义、&lt;code&gt;tool_use&lt;/code&gt;/&lt;code&gt;tool_result&lt;/code&gt;、工具选择模式、温度、top-p、最大 token 数、可见推理文本、流式输出、完成原因及使用情况。</value>
+  </data>
+  <data name="System → &lt;code&gt;instructions&lt;/code&gt;; messages/images → Responses input Items; Anthropic tools → Responses function tools; named tool choice → Responses &lt;code&gt;name&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; Responses reasoning/text/function output → Anthropic blocks." xml:space="preserve">
+    <value>System → &lt;code&gt;instructions&lt;/code&gt;；messages/images → Responses 输入 Items；Anthropic 工具 → Responses 函数工具；命名工具选择 → Responses &lt;code&gt;name&lt;/code&gt;；&lt;code&gt;max_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;；Responses 推理/文本/函数输出 → Anthropic blocks。</value>
   </data>
   <data name="System/developer messages → &lt;code&gt;instructions&lt;/code&gt;; messages → &lt;code&gt;input&lt;/code&gt; Items; function schemas are flattened; named &lt;code&gt;tool_choice.function.name&lt;/code&gt; → Responses &lt;code&gt;tool_choice.name&lt;/code&gt;; &lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;." xml:space="preserve">
     <value>系统/开发者消息 → &lt;code&gt;instructions&lt;/code&gt;；消息 → &lt;code&gt;input&lt;/code&gt; 项；函数架构被展平；具名 &lt;code&gt;tool_choice.function.name&lt;/code&gt; → Responses &lt;code&gt;tool_choice.name&lt;/code&gt;；&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;max_output_tokens&lt;/code&gt;；&lt;code&gt;response_format&lt;/code&gt; → &lt;code&gt;text.format&lt;/code&gt;。</value>
@@ -1371,6 +1338,9 @@
   <data name="Technical Lead" xml:space="preserve">
     <value>技术负责人</value>
   </data>
+  <data name="The Philosophy" xml:space="preserve">
+    <value>哲学</value>
+  </data>
   <data name="The definitive, battle-tested .NET enterprise foundation. From Auth to AI, we&apos;ve solved the hard parts so you don&apos;t have to." xml:space="preserve">
     <value>权威的、经过实战检验的 .NET 企业级开发基座。从身份认证到 AI 集成，我们已为您扫清基础设施障碍，助您开箱即用。</value>
   </data>
@@ -1383,23 +1353,17 @@
   <data name="The navigation bar automatically adjusts based on user roles and permissions." xml:space="preserve">
     <value>导航栏会根据用户角色和权限自动调整显示内容。</value>
   </data>
-  <data name="The original request and successful response JSON are cloned; unknown fields are preserved; model identity is rewritten." xml:space="preserve">
-    <value>原始请求和成功响应的 JSON 会被克隆；未知字段将予以保留；模型身份将被重写。</value>
-  </data>
   <data name="The original request and successful response JSON are cloned; unknown OpenAI embedding fields are preserved; only model identity is rewritten." xml:space="preserve">
     <value>原始请求和成功响应的 JSON 会被克隆；未知的 OpenAI 嵌入字段将予以保留；仅模型标识会被重写。</value>
   </data>
-  <data name="The Philosophy" xml:space="preserve">
-    <value>哲学</value>
+  <data name="The original request and successful response JSON are cloned; unknown fields are preserved; model identity is rewritten." xml:space="preserve">
+    <value>原始请求和成功响应的 JSON 会被克隆；未知字段将予以保留；模型身份将被重写。</value>
   </data>
   <data name="The provider-level &lt;code&gt;keep_alive&lt;/code&gt; replaces the client value on this route." xml:space="preserve">
     <value>提供者级别的 &lt;code&gt;keep_alive&lt;/code&gt; 将替换此路由上的客户端值。</value>
   </data>
   <data name="The request adapter deep-clones the original Responses JSON. &lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt; preserves unknown output Items and SSE event names/data/comments/id/retry without passing the payload through canonical IL." xml:space="preserve">
     <value>请求适配器会对原始 Responses JSON 进行深拷贝。&lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt; 会保留未知的输出 Items 以及 SSE 事件名称/数据/注释/id/retry，而无需将负载通过标准 IL 传递。</value>
-  </data>
-  <data name="The selected backend can override thinking. VM NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
-    <value>所选后端可以覆盖思考设置。VM NumCtx、Temperature、TopP、TopK、NumPredict 和 RepeatPenalty 会覆盖请求中的对应值；如果未提供 &lt;code&gt;keep_alive&lt;/code&gt;，则使用 Provider 的值。</value>
   </data>
   <data name="The template is built for easy deployment. It includes full Docker support, so you can containerize your app and run it anywhere. You can also deploy it directly to IIS, Azure App Service, or any server that supports ASP.NET Core." xml:space="preserve">
     <value>该模板专为简化部署而设计，内置完整的Docker支持，您可以将应用容器化后随处运行。也可直接部署到IIS、Azure应用服务或任何支持ASP.NET Core的服务器。</value>
@@ -1485,6 +1449,36 @@
   <data name="Use it as a foundation for your SaaS, a backend for your mobile app, a corporate website, or a personal blog. The possibilities are endless." xml:space="preserve">
     <value>无论是作为SaaS应用的基础、移动应用的后端、企业官网还是个人博客，它都能胜任。无限可能，任您探索。</value>
   </data>
+  <data name="VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are injected into Ollama &lt;code&gt;options&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;NumCtx&lt;/code&gt;、&lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、&lt;code&gt;TopK&lt;/code&gt; 和 &lt;code&gt;RepeatPenalty&lt;/code&gt; 将注入到 Ollama &lt;code&gt;options&lt;/code&gt; 中。</value>
+  </data>
+  <data name="VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; hard-override Ollama &lt;code&gt;options&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;NumCtx&lt;/code&gt;、&lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、&lt;code&gt;TopK&lt;/code&gt; 和 &lt;code&gt;RepeatPenalty&lt;/code&gt; 将强制覆盖 Ollama &lt;code&gt;options&lt;/code&gt;。</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override Chat target controls; Chat-only VM thinking is injected through &lt;code&gt;chat_template_kwargs&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、&lt;code&gt;NumPredict&lt;/code&gt; 和 &lt;code&gt;Thinking&lt;/code&gt; 会覆盖 Chat 目标控件；仅适用于 Chat 的 VM thinking 会通过 &lt;code&gt;chat_template_kwargs&lt;/code&gt; 注入。</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override Chat target fields. Ollama-only DB sampling/context controls do not apply to Chat." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、&lt;code&gt;NumPredict&lt;/code&gt; 和 &lt;code&gt;Thinking&lt;/code&gt; 将覆盖 Chat 目标字段。仅限 Ollama 的数据库采样/上下文控制不适用于 Chat。</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override their target fields. Existing nested &lt;code&gt;chat_template_kwargs&lt;/code&gt; members are preserved around &lt;code&gt;enable_thinking&lt;/code&gt;." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、&lt;code&gt;NumPredict&lt;/code&gt; 和 &lt;code&gt;Thinking&lt;/code&gt; 将覆盖其目标字段。现有的嵌套 &lt;code&gt;chat_template_kwargs&lt;/code&gt; 成员将在 &lt;code&gt;enable_thinking&lt;/code&gt; 周围保留。</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other VM sampling fields are not applicable." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt; 和 &lt;code&gt;NumPredict&lt;/code&gt; 会覆盖 &lt;code&gt;temperature&lt;/code&gt;、&lt;code&gt;top_p&lt;/code&gt; 和 &lt;code&gt;max_output_tokens&lt;/code&gt;。其他 VM 采样字段不适用。</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other nested Responses fields remain untouched." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt; 和 &lt;code&gt;NumPredict&lt;/code&gt; 将覆盖 &lt;code&gt;temperature&lt;/code&gt;、&lt;code&gt;top_p&lt;/code&gt; 和 &lt;code&gt;max_output_tokens&lt;/code&gt;。其他嵌套的 Responses 字段保持不变。</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt; 和 &lt;code&gt;NumPredict&lt;/code&gt; 将覆盖 Responses 字段。VM &lt;code&gt;Thinking&lt;/code&gt;、&lt;code&gt;TopK&lt;/code&gt;、&lt;code&gt;NumCtx&lt;/code&gt; 和 &lt;code&gt;RepeatPenalty&lt;/code&gt; 没有对应的 Responses 目标字段。</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt; 和 &lt;code&gt;NumPredict&lt;/code&gt; 会覆盖 Responses 目标字段。VM &lt;code&gt;Thinking&lt;/code&gt;、&lt;code&gt;TopK&lt;/code&gt;、&lt;code&gt;NumCtx&lt;/code&gt; 和 &lt;code&gt;RepeatPenalty&lt;/code&gt; 不是 Responses 控制项。</value>
+  </data>
+  <data name="VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
+    <value>VM Thinking、NumCtx、Temperature、TopP、TopK、NumPredict 和 RepeatPenalty 会覆盖请求；若缺失 &lt;code&gt;keep_alive&lt;/code&gt;，则使用 Provider 的值。</value>
+  </data>
   <data name="Validation" xml:space="preserve">
     <value>验证</value>
   </data>
@@ -1505,51 +1499,6 @@
   </data>
   <data name="Virtual-model names and gateway-owned metadata are rendered directly in the requested client shape." xml:space="preserve">
     <value>虚拟模型名称和网关自有元数据将直接以请求的客户端格式呈现。</value>
-  </data>
-  <data name="VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are injected into Ollama &lt;code&gt;options&lt;/code&gt;." xml:space="preserve">
-    <value>VM &lt;code&gt;NumCtx&lt;/code&gt;、&lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、&lt;code&gt;TopK&lt;/code&gt; 和 &lt;code&gt;RepeatPenalty&lt;/code&gt; 将注入到 Ollama &lt;code&gt;options&lt;/code&gt; 中。</value>
-  </data>
-  <data name="VM &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; hard-override Ollama &lt;code&gt;options&lt;/code&gt;." xml:space="preserve">
-    <value>VM &lt;code&gt;NumCtx&lt;/code&gt;、&lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、&lt;code&gt;TopK&lt;/code&gt; 和 &lt;code&gt;RepeatPenalty&lt;/code&gt; 将强制覆盖 Ollama &lt;code&gt;options&lt;/code&gt;。</value>
-  </data>
-  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override Chat target controls; Chat-only VM thinking is injected through &lt;code&gt;chat_template_kwargs&lt;/code&gt;." xml:space="preserve">
-    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、&lt;code&gt;NumPredict&lt;/code&gt; 和 &lt;code&gt;Thinking&lt;/code&gt; 会覆盖 Chat 目标控件；仅适用于 Chat 的 VM thinking 会通过 &lt;code&gt;chat_template_kwargs&lt;/code&gt; 注入。</value>
-  </data>
-  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override Chat target fields. Ollama-only DB sampling/context controls do not apply to Chat." xml:space="preserve">
-    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、&lt;code&gt;NumPredict&lt;/code&gt; 和 &lt;code&gt;Thinking&lt;/code&gt; 将覆盖 Chat 目标字段。仅限 Ollama 的数据库采样/上下文控制不适用于 Chat。</value>
-  </data>
-  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;, and &lt;code&gt;Thinking&lt;/code&gt; override their target fields. Existing nested &lt;code&gt;chat_template_kwargs&lt;/code&gt; members are preserved around &lt;code&gt;enable_thinking&lt;/code&gt;." xml:space="preserve">
-    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、&lt;code&gt;NumPredict&lt;/code&gt; 和 &lt;code&gt;Thinking&lt;/code&gt; 将覆盖其目标字段。现有的嵌套 &lt;code&gt;chat_template_kwargs&lt;/code&gt; 成员将在 &lt;code&gt;enable_thinking&lt;/code&gt; 周围保留。</value>
-  </data>
-  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other nested Responses fields remain untouched." xml:space="preserve">
-    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt; 和 &lt;code&gt;NumPredict&lt;/code&gt; 将覆盖 &lt;code&gt;temperature&lt;/code&gt;、&lt;code&gt;top_p&lt;/code&gt; 和 &lt;code&gt;max_output_tokens&lt;/code&gt;。其他嵌套的 Responses 字段保持不变。</value>
-  </data>
-  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other VM sampling fields are not applicable." xml:space="preserve">
-    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt; 和 &lt;code&gt;NumPredict&lt;/code&gt; 会覆盖 &lt;code&gt;temperature&lt;/code&gt;、&lt;code&gt;top_p&lt;/code&gt; 和 &lt;code&gt;max_output_tokens&lt;/code&gt;。其他 VM 采样字段不适用。</value>
-  </data>
-  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Chat target controls. Client reasoning effort is translated without a configured override." xml:space="preserve">
-    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt; 和 &lt;code&gt;NumPredict&lt;/code&gt; 会覆盖 Chat 目标控制项。客户端的推理强度会被转换，且不会应用已配置的覆盖值。</value>
-  </data>
-  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Chat target fields. Thinking follows the translated client setting. Ollama-only DB sampling/context controls do not apply to Chat." xml:space="preserve">
-    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt; 和 &lt;code&gt;NumPredict&lt;/code&gt; 会覆盖 Chat 目标字段。思考设置遵循翻译后的客户端设置。仅适用于 Ollama 的数据库采样/上下文控制不适用于 Chat。</value>
-  </data>
-  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. Reasoning follows the client request. VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
-    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt; 和 &lt;code&gt;NumPredict&lt;/code&gt; 会覆盖 Responses 字段。推理设置遵循客户端请求。VM &lt;code&gt;TopK&lt;/code&gt;、&lt;code&gt;NumCtx&lt;/code&gt; 和 &lt;code&gt;RepeatPenalty&lt;/code&gt; 在 Responses 中没有对应字段。</value>
-  </data>
-  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
-    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt; 和 &lt;code&gt;NumPredict&lt;/code&gt; 将覆盖 Responses 字段。VM &lt;code&gt;Thinking&lt;/code&gt;、&lt;code&gt;TopK&lt;/code&gt;、&lt;code&gt;NumCtx&lt;/code&gt; 和 &lt;code&gt;RepeatPenalty&lt;/code&gt; 没有对应的 Responses 目标字段。</value>
-  </data>
-  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. Reasoning follows the client request. VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
-    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt; 和 &lt;code&gt;NumPredict&lt;/code&gt; 会覆盖 Responses 的目标字段。推理设置遵循客户端请求。VM 的 &lt;code&gt;TopK&lt;/code&gt;、&lt;code&gt;NumCtx&lt;/code&gt; 和 &lt;code&gt;RepeatPenalty&lt;/code&gt; 不是 Responses 控制项。</value>
-  </data>
-  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
-    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt; 和 &lt;code&gt;NumPredict&lt;/code&gt; 会覆盖 Responses 目标字段。VM &lt;code&gt;Thinking&lt;/code&gt;、&lt;code&gt;TopK&lt;/code&gt;、&lt;code&gt;NumCtx&lt;/code&gt; 和 &lt;code&gt;RepeatPenalty&lt;/code&gt; 不是 Responses 控制项。</value>
-  </data>
-  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override their target fields. Client reasoning controls and nested &lt;code&gt;chat_template_kwargs&lt;/code&gt; members are preserved." xml:space="preserve">
-    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt; 和 &lt;code&gt;NumPredict&lt;/code&gt; 会覆盖对应的目标字段。客户端推理控制项和嵌套的 &lt;code&gt;chat_template_kwargs&lt;/code&gt; 成员会予以保留。</value>
-  </data>
-  <data name="VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
-    <value>VM Thinking、NumCtx、Temperature、TopP、TopK、NumPredict 和 RepeatPenalty 会覆盖请求；若缺失 &lt;code&gt;keep_alive&lt;/code&gt;，则使用 Provider 的值。</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>欢迎</value>
@@ -1599,5 +1548,56 @@
   <data name="Zero Tolerance Lint" xml:space="preserve">
     <value>零容忍代码检查</value>
   </data>
+  <data name="explicit unsupported_feature error" xml:space="preserve">
+    <value>明确的 unsupported_feature 错误</value>
+  </data>
+  <data name="faster" xml:space="preserve">
+    <value>更快</value>
+  </data>
+  <data name="for any inquiries or to report issues." xml:space="preserve">
+    <value>如有任何疑问或报告问题。</value>
+  </data>
+  <data name="is Free Software" xml:space="preserve">
+    <value>是自由软件</value>
+  </data>
+  <data name="requires a Responses-capable provider" xml:space="preserve">
+    <value>需要支持 Responses 的提供商</value>
+  </data>
+  <data name="state-aware" xml:space="preserve">
+    <value>感知状态</value>
+  </data>
+  <data name="→ Native Ollama" xml:space="preserve">
+    <value>→ 原生 Ollama</value>
+  </data>
+  <data name="→ OpenAI-compatible provider" xml:space="preserve">
+    <value>→ 兼容 OpenAI 的提供商</value>
+  </data>
 
+  <data name="All Ollama VM sampling controls apply. The selected backend can force &lt;code&gt;think&lt;/code&gt; on or off; otherwise the translated client setting applies." xml:space="preserve">
+    <value>所有 Ollama 虚拟机（VM）采样控制项均适用。所选后端可以强制开启或关闭 &lt;code&gt;think&lt;/code&gt;；否则将采用翻译后的客户端设置。</value>
+  </data>
+  <data name="OpenAI content parts → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → named &lt;code&gt;think&lt;/code&gt; level (&lt;code&gt;none&lt;/code&gt; → &lt;code&gt;false&lt;/code&gt;); &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;." xml:space="preserve">
+    <value>OpenAI 内容部分 → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;；&lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;；&lt;code&gt;reasoning_effort&lt;/code&gt; → 指定的 &lt;code&gt;think&lt;/code&gt; 级别（&lt;code&gt;none&lt;/code&gt; → &lt;code&gt;false&lt;/code&gt;）；&lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;。</value>
+  </data>
+  <data name="OpenAI target fields &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_tokens&lt;/code&gt; use VM values when set. The selected Ollama backend can override &lt;code&gt;think&lt;/code&gt;; otherwise the client setting is kept." xml:space="preserve">
+    <value>OpenAI 目标字段 &lt;code&gt;temperature&lt;/code&gt;、&lt;code&gt;top_p&lt;/code&gt; 和 &lt;code&gt;max_tokens&lt;/code&gt; 在设置后会使用 VM 值。所选的 Ollama 后端可以覆盖 &lt;code&gt;think&lt;/code&gt;；否则保留客户端设置。</value>
+  </data>
+  <data name="The selected backend can override thinking. VM NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
+    <value>所选后端可以覆盖思考设置。VM NumCtx、Temperature、TopP、TopK、NumPredict 和 RepeatPenalty 会覆盖请求中的对应值；如果未提供 &lt;code&gt;keep_alive&lt;/code&gt;，则使用 Provider 的值。</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Chat target controls. Client reasoning effort is translated without a configured override." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt; 和 &lt;code&gt;NumPredict&lt;/code&gt; 会覆盖 Chat 目标控制项。客户端的推理强度会被转换，且不会应用已配置的覆盖值。</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Chat target fields. Thinking follows the translated client setting. Ollama-only DB sampling/context controls do not apply to Chat." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt; 和 &lt;code&gt;NumPredict&lt;/code&gt; 会覆盖 Chat 目标字段。思考设置遵循翻译后的客户端设置。仅适用于 Ollama 的数据库采样/上下文控制不适用于 Chat。</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. Reasoning follows the client request. VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt; 和 &lt;code&gt;NumPredict&lt;/code&gt; 会覆盖 Responses 字段。推理设置遵循客户端请求。VM &lt;code&gt;TopK&lt;/code&gt;、&lt;code&gt;NumCtx&lt;/code&gt; 和 &lt;code&gt;RepeatPenalty&lt;/code&gt; 在 Responses 中没有对应字段。</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. Reasoning follows the client request. VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt; 和 &lt;code&gt;NumPredict&lt;/code&gt; 会覆盖 Responses 的目标字段。推理设置遵循客户端请求。VM 的 &lt;code&gt;TopK&lt;/code&gt;、&lt;code&gt;NumCtx&lt;/code&gt; 和 &lt;code&gt;RepeatPenalty&lt;/code&gt; 不是 Responses 控制项。</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override their target fields. Client reasoning controls and nested &lt;code&gt;chat_template_kwargs&lt;/code&gt; members are preserved." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt; 和 &lt;code&gt;NumPredict&lt;/code&gt; 会覆盖对应的目标字段。客户端推理控制项和嵌套的 &lt;code&gt;chat_template_kwargs&lt;/code&gt; 成员会予以保留。</value>
+  </data>
 </root>
