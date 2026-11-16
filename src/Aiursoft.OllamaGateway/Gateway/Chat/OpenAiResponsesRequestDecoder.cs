@@ -68,6 +68,7 @@ public sealed class OpenAiResponsesRequestDecoder : IChatRequestDecoder
                 Temperature: ChatRequestDecoding.DoubleValue(root["temperature"]),
                 TopP: ChatRequestDecoding.DoubleValue(root["top_p"]),
                 MaxTokens: ChatRequestDecoding.IntValue(root["max_output_tokens"]),
+                Thinking: ChatRequestDecoding.BoolValue(root["chat_template_kwargs"]?["enable_thinking"]),
                 ReasoningEffort: ChatRequestDecoding.StringValue(root["reasoning"]?["effort"], null!),
                 StructuredOutputJson: structuredOutput?.ToJsonString()),
             tools,

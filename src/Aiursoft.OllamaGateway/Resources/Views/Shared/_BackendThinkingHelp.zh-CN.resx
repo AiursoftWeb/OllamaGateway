@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="A configured override wins over the client on every backend attempt, including same-dialect direct forwarding. Fallback attempts use the newly selected backend&apos;s own settings." xml:space="preserve">
+    <value>已配置的覆盖项在每次后端尝试中均优先于客户端，包括同方言直接转发。回退尝试会使用新选定后端自身的设置。</value>
+  </data>
+  <data name="A non-empty value is sent verbatim as reasoning_effort for Chat Completions or reasoning.effort for Responses. An existing chat_template_kwargs.reasoning_effort is also overridden so it cannot take priority over your depth setting. No depth names are translated into booleans." xml:space="preserve">
+    <value>非空值会按原样作为 Chat Completions 的 reasoning_effort 或 Responses 的 reasoning.effort 发送。已有的 chat_template_kwargs.reasoning_effort 也会被覆盖，因此不会优先于你的深度设置。深度名称不会被转换为布尔值。</value>
+  </data>
+  <data name="Backend examples" xml:space="preserve">
+    <value>后端示例</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="Do not override leaves that setting to the client, or to the upstream default when absent. Same-dialect requests retain their original fields; cross-dialect requests use the gateway&apos;s protocol translation." xml:space="preserve">
+    <value>不覆盖：将该设置留给客户端，或在缺失时回退到上游默认值。同方言请求保留其原始字段；跨方言请求使用网关的协议转换。</value>
+  </data>
+  <data name="For Ollama-native backends, Force on or Force off sends boolean think. For OpenAI Chat or Responses backends, it writes chat_template_kwargs.enable_thinking. Other template arguments are preserved. This is a vLLM-style extension, not a universal OpenAI switch; leave it unconfigured for providers that do not support it." xml:space="preserve">
+    <value>对于 Ollama 原生后端，强制开启或强制关闭会发送布尔值 think。对于 OpenAI Chat 或 Responses 后端，它会写入 chat_template_kwargs.enable_thinking。其他模板参数会被保留。这是一个 vLLM 风格的扩展，并非通用的 OpenAI 开关；对于不支持它的提供商，请保持未配置。</value>
+  </data>
+  <data name="How to configure" xml:space="preserve">
+    <value>如何配置</value>
+  </data>
+  <data name="Other compatible providers" xml:space="preserve">
+    <value>其他兼容提供商</value>
+  </data>
+  <data name="Reasoning depth" xml:space="preserve">
+    <value>推理深度</value>
+  </data>
+  <data name="Supported depths and whether thinking can be disabled depend on the model and provider. Unsupported extensions may be rejected or ignored. Check the provider&apos;s documentation; the gateway does not infer capabilities from its name." xml:space="preserve">
+    <value>支持的推理深度以及思考功能能否被禁用取决于模型和提供商。不支持的扩展可能会被拒绝或忽略。请查看提供商的文档；网关不会根据名称推断其能力。</value>
+  </data>
+  <data name="The switch controls enable_thinking independently of depth. Qwen3.8 supports low, medium and xhigh, with xhigh as its default. To keep thinking enabled, select Force on and a supported depth such as xhigh." xml:space="preserve">
+    <value>该开关独立于深度控制 enable_thinking。Qwen3.8 支持 low、medium 和 xhigh，默认值为 xhigh。若要保持思考功能启用，请选择强制开启以及受支持的深度，例如 xhigh。</value>
+  </data>
+  <data name="Thinking settings help" xml:space="preserve">
+    <value>思考设置帮助</value>
+  </data>
+  <data name="Thinking switch" xml:space="preserve">
+    <value>思考开关</value>
+  </data>
+  <data name="Usually leave the switch unconfigured and set only a depth supported by the underlying model, such as high or medium. Do not assume enable_thinking is supported." xml:space="preserve">
+    <value>通常保持思考开关未配置，仅设置底层模型支持的深度，例如 high 或 medium。请勿假设 enable_thinking 受支持。</value>
+  </data>
+  <data name="Valid values vary by model. These are examples, not a promise that every provider accepts the same controls." xml:space="preserve">
+    <value>有效值因模型而异。这些仅为示例，并不保证所有提供商都接受相同的控制项。</value>
+  </data>
+  <data name="What is forwarded or overridden?" xml:space="preserve">
+    <value>哪些内容会被转发或覆盖？</value>
+  </data>
+  <data name="When accessed through an OpenAI-compatible proxy, follow that proxy&apos;s contract. These controls do not generate native Claude thinking/budget fields or Gemini thinking configuration." xml:space="preserve">
+    <value>通过 OpenAI 兼容代理访问时，请遵循该代理的约定。这些控件不会生成 Claude 原生的 thinking/budget 字段或 Gemini 思考配置。</value>
+  </data>
+
+  <data name="The switch and depth are independent. With vLLM, an explicit enable_thinking value takes precedence over automatic activation by depth. Avoid conflicting settings such as Force off with a high depth, or Force on with depth {0}. A depth alone does not force thinking on against an explicit client switch." xml:space="preserve">
+    <value>开关和深度彼此独立。使用 vLLM 时，显式设置的 enable_thinking 值优先于根据深度自动启用。请避免使用相互冲突的设置，例如关闭强制思考但设置较高的深度，或开启强制思考但深度为 {0}。仅设置深度不会在客户端显式关闭开关时强制启用思考。</value>
+  </data>
+</root>

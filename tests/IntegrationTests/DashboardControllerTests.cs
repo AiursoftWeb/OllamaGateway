@@ -195,7 +195,7 @@ public class DashboardControllerTests : TestBase
         var response = await Http.GetAsync("/Dashboard/Monitor");
         response.EnsureSuccessStatusCode();
         var html = System.Net.WebUtility.HtmlDecode(await response.Content.ReadAsStringAsync());
-        var policies = new[] { "Thinking: force high", "Thinking: force medium", "Thinking: follow request" };
+        var policies = new[] { "Depth: force high", "Depth: force medium", "Depth: follow request" };
         for (var i = 0; i < models.Length; i++)
         {
             var backendId = models[i].VirtualModelBackends.Single().Id;

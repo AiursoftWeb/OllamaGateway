@@ -35,6 +35,17 @@ public sealed class OpenAiResponsesProviderRequestAdapter : IChatProviderRequest
             body["reasoning"] = reasoning;
         }
 
+        if (backend.OpenAiThinkOverride.HasValue)
+        {
+            var templateArguments = body["chat_template_kwargs"] as JsonObject ?? new JsonObject();
+            templateArguments["enable_thinking"] = backend.OpenAiThinkOverride.Value;
+            body["chat_template_kwargs"] = templateArguments;
+        }
+        // Explicit template effort otherwise takes precedence over the standard API field in vLLM.
+        if (!string.IsNullOrWhiteSpace(backend.ReasoningEffortOverride)
+            && body["chat_template_kwargs"] is JsonObject arguments && arguments.ContainsKey("reasoning_effort"))
+            arguments["reasoning_effort"] = backend.ReasoningEffortOverride;
+
         return new HttpRequestMessage(
             HttpMethod.Post,
             $"{backend.Provider!.BaseUrl.TrimEnd('/')}/v1/responses")
@@ -167,6 +178,8 @@ public sealed class OpenAiResponsesProviderRequestAdapter : IChatProviderRequest
         if (virtualModel.Temperature.HasValue) body["temperature"] = virtualModel.Temperature.Value;
         if (virtualModel.TopP.HasValue) body["top_p"] = virtualModel.TopP.Value;
         if (virtualModel.NumPredict.HasValue) body["max_output_tokens"] = virtualModel.NumPredict.Value;
+        if (options.Thinking.HasValue)
+            body["chat_template_kwargs"] = new JsonObject { ["enable_thinking"] = options.Thinking.Value };
         if (!string.IsNullOrWhiteSpace(options.ReasoningEffort))
             body["reasoning"] = new JsonObject { ["effort"] = options.ReasoningEffort };
         if (!string.IsNullOrWhiteSpace(options.StructuredOutputJson))

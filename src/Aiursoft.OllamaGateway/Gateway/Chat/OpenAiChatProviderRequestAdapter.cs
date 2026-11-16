@@ -35,6 +35,17 @@ public sealed class OpenAiChatProviderRequestAdapter : IChatProviderRequestAdapt
             ApplyOptions(body, decoded.Request.Options, virtualModel);
         if (!string.IsNullOrWhiteSpace(backend.ReasoningEffortOverride))
             body["reasoning_effort"] = backend.ReasoningEffortOverride;
+        if (backend.OpenAiThinkOverride.HasValue)
+        {
+            var templateArguments = body["chat_template_kwargs"] as JsonObject ?? new JsonObject();
+            templateArguments["enable_thinking"] = backend.OpenAiThinkOverride.Value;
+            body["chat_template_kwargs"] = templateArguments;
+        }
+        // Explicit template effort otherwise takes precedence over the standard API field in vLLM.
+        if (!string.IsNullOrWhiteSpace(backend.ReasoningEffortOverride)
+            && body["chat_template_kwargs"] is JsonObject arguments && arguments.ContainsKey("reasoning_effort"))
+            arguments["reasoning_effort"] = backend.ReasoningEffortOverride;
+
         NormalizeMessages(body);
 
         return new HttpRequestMessage(

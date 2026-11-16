@@ -22,6 +22,56 @@ public class ChatRequestCompilerTests
     [DataRow(ProtocolDialect.OllamaNative, BackendProtocol.OpenAiResponses)]
     [DataRow(ProtocolDialect.AnthropicMessages, BackendProtocol.OpenAiChatCompletions)]
     [DataRow(ProtocolDialect.AnthropicMessages, BackendProtocol.OpenAiResponses)]
+    public async Task OpenAiBackend_ThinkingSwitchAndEffortAreIndependentPerAttempt(ProtocolDialect source, BackendProtocol target)
+    {
+        var raw = source switch
+        {
+            ProtocolDialect.OpenAiResponses => """{"model":"virtual","input":"hi","reasoning":{"effort":"low"},"chat_template_kwargs":{"enable_thinking":false,"reasoning_effort":"low","vendor_flag":42}}""",
+            ProtocolDialect.OllamaNative => """{"model":"virtual","messages":[{"role":"user","content":"hi"}],"think":false}""",
+            ProtocolDialect.AnthropicMessages => """{"model":"virtual","messages":[{"role":"user","content":"hi"}],"thinking":{"type":"disabled"}}""",
+            _ => """{"model":"virtual","messages":[{"role":"user","content":"hi"}],"reasoning_effort":"low","chat_template_kwargs":{"enable_thinking":false,"reasoning_effort":"low","vendor_flag":42}}"""
+        };
+        var decoded = _compiler.Decode(source, raw);
+        var original = decoded.OriginalBody.ToJsonString();
+        var backend = Backend(ProviderType.OpenAI, "physical");
+        backend.Protocol = target;
+        // Return to inherit after forcing on/off to verify fallback isolation.
+        foreach (var forced in new bool?[] { true, false, null })
+        foreach (var effort in new[] { "xhigh", null })
+        {
+            backend.OpenAiThinkOverride = forced;
+            backend.ReasoningEffortOverride = effort;
+            using var request = _compiler.CreateProviderRequest(decoded, Model(), backend);
+            var body = JsonNode.Parse(await request.Content!.ReadAsStringAsync())!;
+            Assert.AreEqual(forced ?? false, body["chat_template_kwargs"]?["enable_thinking"]?.GetValue<bool>());
+            var actualEffort = target == BackendProtocol.OpenAiResponses ? body["reasoning"]?["effort"] : body["reasoning_effort"];
+            Assert.AreEqual(effort ?? (source is ProtocolDialect.OpenAiChatCompletions or ProtocolDialect.OpenAiResponses ? "low" : null), actualEffort?.ToString());
+            var sameDialect = (source == ProtocolDialect.OpenAiResponses && target == BackendProtocol.OpenAiResponses)
+                || (source == ProtocolDialect.OpenAiChatCompletions && target == BackendProtocol.OpenAiChatCompletions);
+            if (sameDialect)
+            {
+                Assert.AreEqual(42, body["chat_template_kwargs"]?["vendor_flag"]?.GetValue<int>());
+                Assert.AreEqual(effort ?? "low", body["chat_template_kwargs"]?["reasoning_effort"]?.ToString());
+            }
+            Assert.AreEqual(original, decoded.OriginalBody.ToJsonString());
+        }
+
+        // Plain OpenAI requests must not acquire a vLLM extension by default.
+        backend.OpenAiThinkOverride = null;
+        using var plain = _compiler.CreateProviderRequest(_compiler.Decode(ProtocolDialect.OpenAiChatCompletions,
+            """{"model":"virtual","messages":[{"role":"user","content":"hi"}]}"""), Model(), backend);
+        Assert.IsNull(JsonNode.Parse(await plain.Content!.ReadAsStringAsync())?["chat_template_kwargs"]);
+    }
+
+    [TestMethod]
+    [DataRow(ProtocolDialect.OpenAiChatCompletions, BackendProtocol.OpenAiChatCompletions)]
+    [DataRow(ProtocolDialect.OpenAiResponses, BackendProtocol.OpenAiResponses)]
+    [DataRow(ProtocolDialect.OpenAiChatCompletions, BackendProtocol.OpenAiResponses)]
+    [DataRow(ProtocolDialect.OpenAiResponses, BackendProtocol.OpenAiChatCompletions)]
+    [DataRow(ProtocolDialect.OllamaNative, BackendProtocol.OpenAiChatCompletions)]
+    [DataRow(ProtocolDialect.OllamaNative, BackendProtocol.OpenAiResponses)]
+    [DataRow(ProtocolDialect.AnthropicMessages, BackendProtocol.OpenAiChatCompletions)]
+    [DataRow(ProtocolDialect.AnthropicMessages, BackendProtocol.OpenAiResponses)]
     public async Task OpenAiBackend_OverridesEffortInDirectAndTranslatedRequests(ProtocolDialect source, BackendProtocol target)
     {
         var raw = source switch

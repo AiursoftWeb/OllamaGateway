@@ -55,6 +55,7 @@ public class MigrationTests
             bool? expected = !native || backend.VirtualModelId == 3 ? null : backend.VirtualModelId == 1;
             Assert.AreEqual(expected, backend.OllamaThinkOverride, backend.UnderlyingModelName);
             Assert.IsNull(backend.ReasoningEffortOverride);
+            Assert.IsNull(backend.OpenAiThinkOverride);
         }
         Assert.HasCount(3, await context.VirtualModels.ToListAsync());
     }

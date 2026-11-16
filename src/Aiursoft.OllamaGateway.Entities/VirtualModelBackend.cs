@@ -34,6 +34,8 @@ public class VirtualModelBackend
 
     public bool? OllamaThinkOverride { get; set; }
 
+    public bool? OpenAiThinkOverride { get; set; }
+
     [MaxLength(100)]
     public string? ReasoningEffortOverride { get; set; }
 

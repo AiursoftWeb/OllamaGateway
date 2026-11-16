@@ -588,7 +588,7 @@ public class DialectProxyTests : TestBase
     [TestMethod]
     [DataRow(BackendProtocol.OpenAiChatCompletions)]
     [DataRow(BackendProtocol.OpenAiResponses)]
-    public async Task OpenAiRetry_UsesEachBackendsEffortOverride(BackendProtocol protocol)
+    public async Task OpenAiRetry_UsesEachBackendsEffortAndThinkingOverrides(BackendProtocol protocol)
     {
         var modelName = $"retry-effort-{Guid.NewGuid():N}:latest";
         using (var scope = Server!.Services.CreateScope())
@@ -600,7 +600,7 @@ public class DialectProxyTests : TestBase
             vm.VirtualModelBackends.Add(new VirtualModelBackend
             {
                 Provider = provider, UnderlyingModelName = "effort-primary", Protocol = protocol,
-                Enabled = true, IsHealthy = true, Priority = 0, Weight = 1, ReasoningEffortOverride = "high"
+                Enabled = true, IsHealthy = true, Priority = 0, Weight = 1, ReasoningEffortOverride = "high", OpenAiThinkOverride = true
             });
             vm.VirtualModelBackends.Add(new VirtualModelBackend
             {
@@ -611,10 +611,13 @@ public class DialectProxyTests : TestBase
             await db.SaveChangesAsync();
         }
         var attempts = new List<string>();
+        var switches = new List<bool>();
         MockUpstreamState.Handler = (_, _) =>
         {
             var body = JsonNode.Parse(MockUpstreamState.LastRequestBody!);
             attempts.Add((protocol == BackendProtocol.OpenAiResponses ? body!["reasoning"]!["effort"] : body!["reasoning_effort"])!.ToString());
+            switches.Add(body["chat_template_kwargs"]!["enable_thinking"]!.GetValue<bool>());
+            Assert.AreEqual("kept", body["chat_template_kwargs"]!["vendor"]!.ToString());
             return Task.FromResult(body["model"]?.ToString() != "effort-fallback"
                 ? new HttpResponseMessage(HttpStatusCode.ServiceUnavailable)
                 : new HttpResponseMessage(HttpStatusCode.OK)
@@ -625,11 +628,12 @@ public class DialectProxyTests : TestBase
                 });
         };
         var payload = protocol == BackendProtocol.OpenAiResponses
-            ? $$$"""{"model":"{{{modelName}}}","input":"hi","stream":false,"reasoning":{"effort":"low"}}"""
-            : $$"""{"model":"{{modelName}}","messages":[{"role":"user","content":"hi"}],"stream":false,"reasoning_effort":"low"}""";
+            ? $$$"""{"model":"{{{modelName}}}","input":"hi","stream":false,"reasoning":{"effort":"low"},"chat_template_kwargs":{"enable_thinking":false,"vendor":"kept"}}"""
+            : $$$"""{"model":"{{{modelName}}}","messages":[{"role":"user","content":"hi"}],"stream":false,"reasoning_effort":"low","chat_template_kwargs":{"enable_thinking":false,"vendor":"kept"}}""";
         var response = await Http.SendAsync(AuthedPost(protocol == BackendProtocol.OpenAiResponses ? "/v1/responses" : "/v1/chat/completions", payload));
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         CollectionAssert.AreEqual(new[] { "high", "low" }, attempts.ToArray());
+        CollectionAssert.AreEqual(new[] { true, false }, switches.ToArray());
     }
 
     [TestMethod]
