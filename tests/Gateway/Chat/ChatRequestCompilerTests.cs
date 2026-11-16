@@ -14,6 +14,63 @@ public class ChatRequestCompilerTests
         [new OpenAiChatProviderRequestAdapter(), new OllamaChatProviderRequestAdapter(), new OpenAiResponsesProviderRequestAdapter()]);
 
     [TestMethod]
+    [DataRow(ProtocolDialect.OpenAiChatCompletions, BackendProtocol.OpenAiChatCompletions)]
+    [DataRow(ProtocolDialect.OpenAiResponses, BackendProtocol.OpenAiResponses)]
+    [DataRow(ProtocolDialect.OpenAiChatCompletions, BackendProtocol.OpenAiResponses)]
+    [DataRow(ProtocolDialect.OpenAiResponses, BackendProtocol.OpenAiChatCompletions)]
+    [DataRow(ProtocolDialect.OllamaNative, BackendProtocol.OpenAiChatCompletions)]
+    [DataRow(ProtocolDialect.OllamaNative, BackendProtocol.OpenAiResponses)]
+    [DataRow(ProtocolDialect.AnthropicMessages, BackendProtocol.OpenAiChatCompletions)]
+    [DataRow(ProtocolDialect.AnthropicMessages, BackendProtocol.OpenAiResponses)]
+    public async Task OpenAiBackend_OverridesEffortInDirectAndTranslatedRequests(ProtocolDialect source, BackendProtocol target)
+    {
+        var raw = source switch
+        {
+            ProtocolDialect.OpenAiResponses => """{"model":"virtual","input":"hi","reasoning":{"effort":"low","summary":"auto","vendor_flag":true},"vendor_extension":42}""",
+            ProtocolDialect.OllamaNative => """{"model":"virtual","messages":[{"role":"user","content":"hi"}],"think":"low"}""",
+            _ => """{"model":"virtual","messages":[{"role":"user","content":"hi"}],"reasoning_effort":"low","vendor_extension":42,"chat_template_kwargs":{"enable_thinking":false,"vendor_flag":true}}"""
+        };
+        var decoded = _compiler.Decode(source, raw);
+        var original = decoded.OriginalBody.ToJsonString();
+        var backend = Backend(ProviderType.OpenAI, "physical");
+        backend.Protocol = target;
+        foreach (var effort in new[] { "medium", "future-model-level", null })
+        {
+            backend.ReasoningEffortOverride = effort;
+            using var request = _compiler.CreateProviderRequest(decoded, Model(), backend);
+            var body = JsonNode.Parse(await request.Content!.ReadAsStringAsync());
+            var actual = target == BackendProtocol.OpenAiResponses ? body?["reasoning"]?["effort"] : body?["reasoning_effort"];
+            Assert.AreEqual(effort ?? (source == ProtocolDialect.AnthropicMessages ? null : "low"), actual?.ToString());
+            if ((source == ProtocolDialect.OpenAiResponses && target == BackendProtocol.OpenAiResponses)
+                || (source == ProtocolDialect.OpenAiChatCompletions && target == BackendProtocol.OpenAiChatCompletions))
+            {
+                Assert.AreEqual(42, body?["vendor_extension"]?.GetValue<int>());
+                if (source == ProtocolDialect.OpenAiResponses)
+                {
+                    Assert.AreEqual("auto", body?["reasoning"]?["summary"]?.ToString());
+                    Assert.AreEqual(true, body?["reasoning"]?["vendor_flag"]?.GetValue<bool>());
+                }
+                else Assert.AreEqual(false, body?["chat_template_kwargs"]?["enable_thinking"]?.GetValue<bool>());
+            }
+            Assert.AreEqual(original, decoded.OriginalBody.ToJsonString(), "Fallback attempts must start from the original client request.");
+        }
+    }
+
+    [TestMethod]
+    [DataRow("null")]
+    [DataRow("\"none\"")]
+    [DataRow("\"false\"")]
+    public async Task NativeOllama_NoOverride_PreservesRawThink(string value)
+    {
+        var decoded = _compiler.Decode(ProtocolDialect.OllamaNative,
+            "{\"model\":\"virtual\",\"messages\":[{\"role\":\"user\",\"content\":\"hi\"}],\"think\":" + value + "}");
+        using var request = _compiler.CreateProviderRequest(decoded, Model(), Backend(ProviderType.Ollama, "physical"));
+        var body = JsonNode.Parse(await request.Content!.ReadAsStringAsync())!;
+        Assert.IsTrue(body.AsObject().ContainsKey("think"));
+        Assert.IsTrue(JsonNode.DeepEquals(decoded.OriginalBody["think"], body["think"]));
+    }
+
+    [TestMethod]
     [DataRow(null, "medium", "medium")]
     [DataRow(null, "future-level", "future-level")]
     [DataRow(true, "medium", "true")]

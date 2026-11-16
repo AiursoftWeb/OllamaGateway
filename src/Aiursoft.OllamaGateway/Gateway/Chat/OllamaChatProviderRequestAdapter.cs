@@ -78,12 +78,15 @@ public sealed class OllamaChatProviderRequestAdapter : IChatProviderRequestAdapt
 
         if (backend.OllamaThinkOverride.HasValue)
             body["think"] = backend.OllamaThinkOverride.Value;
-        else if (options.Thinking.HasValue)
-            body["think"] = options.Thinking.Value;
-        else if (!string.IsNullOrWhiteSpace(options.ReasoningEffort))
-            body["think"] = string.Equals(options.ReasoningEffort, "none", StringComparison.OrdinalIgnoreCase)
-                ? JsonValue.Create(false)
-                : JsonValue.Create(options.ReasoningEffort);
+        else if (!body.ContainsKey("think"))
+        {
+            if (options.Thinking.HasValue)
+                body["think"] = options.Thinking.Value;
+            else if (!string.IsNullOrWhiteSpace(options.ReasoningEffort))
+                body["think"] = string.Equals(options.ReasoningEffort, "none", StringComparison.OrdinalIgnoreCase)
+                    ? JsonValue.Create(false)
+                    : JsonValue.Create(options.ReasoningEffort);
+        }
 
         if (!string.IsNullOrWhiteSpace(options.StructuredOutputJson))
         {

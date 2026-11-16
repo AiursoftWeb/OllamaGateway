@@ -486,7 +486,7 @@
                         <td>@Localizer["Unknown request fields, message/content extensions, <code>response_format</code>, <code>reasoning_effort</code>, vendor fields, unknown response fields, null values, and unrecognized SSE lines remain in the Chat dialect."]</td>
                         <td>@Localizer["Model identity is masked in both directions; <code>stream</code> is normalized; streaming requests merge <code>stream_options.include_usage=true</code>; null message content is normalized to an empty string."]</td>
                         <td>@Localizer["No known Chat field is intentionally dropped on this route. Unknown/Chat-only fields prefer a Chat Completions backend, with semantic translation as fallback when no matching backend is available. Valid JSON may be reserialized."]</td>
-                        <td>@Localizer["VM <code>Temperature</code>, <code>TopP</code>, and <code>NumPredict</code> override their target fields. Client reasoning controls and nested <code>chat_template_kwargs</code> members are preserved."]</td>
+                        <td>@Localizer["VM <code>Temperature</code>, <code>TopP</code>, and <code>NumPredict</code> override their target fields. The selected backend overrides <code>reasoning_effort</code> when configured, including direct forwarding. Other client reasoning controls and nested <code>chat_template_kwargs</code> members are preserved."]</td>
                     </tr>
                     <tr data-direction="openai-chat-to-openai-responses" data-mode="translated">
                         <th><code>/v1/chat/completions</code><br>OpenAI Chat → Responses<br><span class="badge bg-info text-dark mt-2">@Localizer["Translated"]</span></th>
@@ -494,7 +494,7 @@
                         <td>@Localizer["Roles/text, images, function tools/calls/results, temperature, top-p, maximum output tokens, reasoning effort/output, structured output, streaming, finish reason, and usage."]</td>
                         <td>@Localizer["System/developer messages → <code>instructions</code>; messages → <code>input</code> Items; function schemas are flattened; named <code>tool_choice.function.name</code> → Responses <code>tool_choice.name</code>; <code>max_completion_tokens</code> → <code>max_output_tokens</code>; <code>response_format</code> → <code>text.format</code>."]</td>
                         <td>@Localizer["<code>chat_template_kwargs.enable_thinking</code> has no Responses mapping. Chat-only controls prefer a Chat backend and are omitted on fallback. Responses annotations, citations, and noncanonical output Items cannot be reconstructed in a Chat Completion response."]</td>
-                        <td>@Localizer["VM <code>Temperature</code>, <code>TopP</code>, and <code>NumPredict</code> override Responses target fields. Reasoning follows the client request. VM <code>TopK</code>, <code>NumCtx</code>, and <code>RepeatPenalty</code> are not Responses controls."]</td>
+                        <td>@Localizer["VM <code>Temperature</code>, <code>TopP</code>, and <code>NumPredict</code> override Responses target fields. The selected backend overrides reasoning effort when configured; otherwise the client setting is kept. VM <code>TopK</code>, <code>NumCtx</code>, and <code>RepeatPenalty</code> are not Responses controls."]</td>
                     </tr>
                     <tr class="compatibility-group compatibility-group-responses">
                         <th colspan="6"><i class="fas fa-stream me-2"></i>@Localizer["OpenAI Responses client routes"] <span class="fw-normal opacity-75 ms-2"><code>/v1/responses</code> → @Localizer["3 backend protocols · native state passthrough"]</span></th>
@@ -513,7 +513,7 @@
                         <td>@Localizer["Instructions, text/images, function tools/calls/results, temperature, top-p, token limit, reasoning effort/output, structured output, stream, finish state, and usage."]</td>
                         <td>@Localizer["Input Items → Chat <code>messages</code>; instructions → system message; Responses function tool/choice shapes → Chat wrappers; <code>max_output_tokens</code> → <code>max_tokens</code>; <code>reasoning.effort</code> → <code>reasoning_effort</code>; <code>text.format</code> → <code>response_format</code>."]</td>
                         <td>@Localizer["State/background requests require a Responses backend. Native Responses tools and unknown Items also require Responses. Metadata and unknown top-level controls prefer Responses and are omitted on fallback. Responses-only annotations/citations cannot be recreated from Chat output."]</td>
-                        <td>@Localizer["VM <code>Temperature</code>, <code>TopP</code>, and <code>NumPredict</code> override Chat target controls. Client reasoning effort is translated without a configured override."]</td>
+                        <td>@Localizer["VM <code>Temperature</code>, <code>TopP</code>, and <code>NumPredict</code> override Chat target controls. The selected backend overrides reasoning effort when configured; otherwise the translated client setting is kept."]</td>
                     </tr>
                     <tr data-direction="openai-responses-to-openai-responses" data-mode="transparent">
                         <th><code>/v1/responses</code><br>Responses → Responses<br><span class="badge bg-success mt-2">@Localizer["Transparent, state-aware"]</span></th>
@@ -521,7 +521,7 @@
                         <td>@Localizer["Unknown top-level and nested request fields, native tools, metadata, future Items, annotations, citations, unknown response fields, future SSE event types, and JSON/non-JSON event data are retained."]</td>
                         <td>@Localizer["Only model identity, stream intent, and configured VM options are gateway-owned. Upstream physical model names are replaced with the virtual model in response objects and events."]</td>
                         <td>@Localizer["<code>previous_response_id</code>, <code>conversation</code>, <code>background</code>, and <code>store</code> retain their native Responses semantics. This is not byte-transparent because JSON may be reserialized."]</td>
-                        <td>@Localizer["VM <code>Temperature</code>, <code>TopP</code>, and <code>NumPredict</code> override <code>temperature</code>, <code>top_p</code>, and <code>max_output_tokens</code>. Other nested Responses fields remain untouched."]</td>
+                        <td>@Localizer["VM <code>Temperature</code>, <code>TopP</code>, and <code>NumPredict</code> override <code>temperature</code>, <code>top_p</code>, and <code>max_output_tokens</code>. The selected backend overrides <code>reasoning.effort</code> when configured, including direct forwarding. Other nested Responses fields remain untouched."]</td>
                     </tr>
                     <tr class="compatibility-group compatibility-group-anthropic">
                         <th colspan="6"><i class="fas fa-cubes me-2"></i>@Localizer["Anthropic Messages client routes"] <span class="fw-normal opacity-75 ms-2"><code>/v1/messages</code> → @Localizer["3 backend protocols · no physical Anthropic adapter"]</span></th>
@@ -540,7 +540,7 @@
                         <td>@Localizer["System/messages, text, base64 and URL images, function tools/calls/results, tool choice, temperature, top-p, max tokens, reasoning text, stream, finish reason, and usage."]</td>
                         <td>@Localizer["Anthropic system content → system message; image blocks → OpenAI <code>image_url</code>; <code>input_schema</code> → function <code>parameters</code>; <code>tool_use</code>/<code>tool_result</code> → Chat tool calls/messages; <code>max_tokens</code> remains the Chat token limit."]</td>
                         <td>@Localizer["Thinking signatures are discarded. Unknown content blocks remain a hard rejection. Anthropic-only top-level controls prefer a future Anthropic backend but are omitted when Chat is the only eligible route."]</td>
-                        <td>@Localizer["VM <code>Temperature</code>, <code>TopP</code>, and <code>NumPredict</code> override Chat target fields. Thinking follows the translated client setting. Ollama-only DB sampling/context controls do not apply to Chat."]</td>
+                        <td>@Localizer["VM <code>Temperature</code>, <code>TopP</code>, and <code>NumPredict</code> override Chat target fields. The selected backend overrides reasoning effort when configured; otherwise the translated client setting is kept. Ollama-only DB sampling/context controls do not apply to Chat."]</td>
                     </tr>
                     <tr data-direction="anthropic-to-openai-responses" data-mode="translated">
                         <th><code>/v1/messages</code><br>Anthropic → Responses<br><span class="badge bg-info text-dark mt-2">@Localizer["Translated"]</span></th>
@@ -548,7 +548,7 @@
                         <td>@Localizer["System instructions, text, base64/URL images, function tools/calls/results, tool choice, temperature, top-p, max tokens, response reasoning text, stream, finish state, and usage."]</td>
                         <td>@Localizer["System → <code>instructions</code>; messages/images → Responses input Items; Anthropic tools → Responses function tools; named tool choice → Responses <code>name</code>; <code>max_tokens</code> → <code>max_output_tokens</code>; Responses reasoning/text/function output → Anthropic blocks."]</td>
                         <td>@Localizer["Anthropic input thinking blocks and signatures are not encoded into Responses input. Unknown content blocks cannot use this route; unknown top-level controls are omitted on fallback. Native Responses-only output Items, annotations, and citations cannot be represented in Anthropic output."]</td>
-                        <td>@Localizer["VM <code>Temperature</code>, <code>TopP</code>, and <code>NumPredict</code> override Responses fields. Reasoning follows the client request. VM <code>TopK</code>, <code>NumCtx</code>, and <code>RepeatPenalty</code> have no Responses target field."]</td>
+                        <td>@Localizer["VM <code>Temperature</code>, <code>TopP</code>, and <code>NumPredict</code> override Responses fields. The selected backend overrides reasoning effort when configured; otherwise the client setting is kept. VM <code>TopK</code>, <code>NumCtx</code>, and <code>RepeatPenalty</code> have no Responses target field."]</td>
                     </tr>
                 </tbody>
             </table>
@@ -562,10 +562,11 @@
                                 <div><small>@Localizer["Configuration precedence"]</small><h4>@Localizer["Database values are hard assignments"]</h4></div>
                             </div>
                             <p>@Localizer["A configured virtual-model value replaces the client-derived value after translation. An unset value leaves the translated value unchanged."]</p>
+                            <p>@Localizer["Backend thinking overrides apply to both same-dialect direct forwarding and cross-dialect translation. An empty override keeps the client setting, or the upstream default when absent."]</p>
                             <div class="compatibility-policy-targets">
                                 <div><strong>Ollama</strong><span>Temperature · TopP · TopK · NumPredict · NumCtx · RepeatPenalty · Backend Thinking Override</span></div>
-                                <div><strong>OpenAI Chat</strong><span>Temperature · TopP · NumPredict</span></div>
-                                <div><strong>Responses</strong><span>Temperature · TopP · NumPredict</span></div>
+                                <div><strong>OpenAI Chat</strong><span>Temperature · TopP · NumPredict · Backend Reasoning Effort Override</span></div>
+                                <div><strong>Responses</strong><span>Temperature · TopP · NumPredict · Backend Reasoning Effort Override</span></div>
                             </div>
                         </div>
                     </div>

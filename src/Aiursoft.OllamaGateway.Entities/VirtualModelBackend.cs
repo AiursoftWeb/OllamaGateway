@@ -34,6 +34,9 @@ public class VirtualModelBackend
 
     public bool? OllamaThinkOverride { get; set; }
 
+    [MaxLength(100)]
+    public string? ReasoningEffortOverride { get; set; }
+
     public int Priority { get; set; }
 
     public int Weight { get; set; }

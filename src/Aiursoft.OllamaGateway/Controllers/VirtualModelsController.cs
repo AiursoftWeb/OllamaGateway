@@ -221,6 +221,7 @@ public class VirtualModelsController(
                     ProviderId = model.ProviderId,
                     Protocol = model.Protocol,
                     OllamaThinkOverride = model.Protocol == BackendProtocol.OllamaNative ? model.OllamaThinkOverride : null,
+                    ReasoningEffortOverride = model.Protocol == BackendProtocol.OllamaNative ? null : NormalizeEffort(model.ReasoningEffortOverride),
                     Enabled = true,
                     IsHealthy = true,
                     Priority = 1,
@@ -352,7 +353,8 @@ public class VirtualModelsController(
         BackendProtocol? protocol,
         int priority = 1,
         int weight = 1,
-        bool? ollamaThinkOverride = null)
+        bool? ollamaThinkOverride = null,
+        string? reasoningEffortOverride = null)
     {
         var virtualModel = await dbContext.VirtualModels.FindAsync(id);
         if (virtualModel == null) return NotFound();
@@ -362,7 +364,7 @@ public class VirtualModelsController(
             : await dbContext.OllamaProviders.AsNoTracking().Include(item => item.VirtualModelBackends).FirstOrDefaultAsync(item => item.Id == providerId);
         protocol ??= provider == null ? null : DefaultProtocol(provider);
 
-        if (!ModelState.IsValid || string.IsNullOrEmpty(underlyingModel) || provider == null || !protocol.HasValue || !Enum.IsDefined(protocol.Value))
+        if (!ModelState.IsValid || reasoningEffortOverride?.Length > 100 || string.IsNullOrEmpty(underlyingModel) || provider == null || !protocol.HasValue || !Enum.IsDefined(protocol.Value))
         {
             if (string.IsNullOrEmpty(underlyingModel))
             {
@@ -376,6 +378,8 @@ public class VirtualModelsController(
             {
                 ModelState.AddModelError(nameof(protocol), "A valid backend protocol is required.");
             }
+            if (reasoningEffortOverride?.Length > 100)
+                ModelState.AddModelError(nameof(reasoningEffortOverride), "Reasoning effort must be at most 100 characters.");
             return await Edit(id, providerId);
         }
 
@@ -386,6 +390,7 @@ public class VirtualModelsController(
             UnderlyingModelName = underlyingModel,
             Protocol = protocol.Value,
             OllamaThinkOverride = protocol == BackendProtocol.OllamaNative ? ollamaThinkOverride : null,
+            ReasoningEffortOverride = protocol == BackendProtocol.OllamaNative ? null : NormalizeEffort(reasoningEffortOverride),
             Priority = priority,
             Weight = weight,
             Enabled = true,
@@ -398,12 +403,14 @@ public class VirtualModelsController(
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> UpdateBackend(int id, BackendProtocol? protocol, int priority, int weight, bool? ollamaThinkOverride = null)
+    public async Task<IActionResult> UpdateBackend(int id, BackendProtocol? protocol, int priority, int weight, bool? ollamaThinkOverride = null, string? reasoningEffortOverride = null)
     {
         var backend = await dbContext.VirtualModelBackends.Include(item => item.Provider).FirstOrDefaultAsync(item => item.Id == id);
         if (backend == null) return NotFound();
         if (!ModelState.IsValid) return BadRequest(ModelState);
         if (protocol.HasValue && !Enum.IsDefined(protocol.Value)) return BadRequest("A valid backend protocol is required.");
+
+        if (reasoningEffortOverride?.Length > 100) return BadRequest("Reasoning effort must be at most 100 characters.");
 
         backend.Priority = priority;
         backend.Weight = weight;
@@ -411,6 +418,9 @@ public class VirtualModelsController(
         backend.OllamaThinkOverride = BackendProtocolResolver.Resolve(backend) == BackendProtocol.OllamaNative
             ? ollamaThinkOverride
             : null;
+        backend.ReasoningEffortOverride = BackendProtocolResolver.Resolve(backend) == BackendProtocol.OllamaNative
+            ? null
+            : NormalizeEffort(reasoningEffortOverride);
         await dbContext.SaveChangesAsync();
         return RedirectToAction(nameof(Edit), new { id = backend.VirtualModelId });
     }
@@ -499,6 +509,8 @@ public class VirtualModelsController(
             ? await ollamaService.GetOpenAIAvailableModelsAsync(provider.BaseUrl, provider.BearerToken) ?? new List<string>()
             : await ollamaService.GetUnderlyingModelsAsync(provider.BaseUrl, provider.BearerToken) ?? new List<string>();
     }
+
+    private static string? NormalizeEffort(string? value) => string.IsNullOrWhiteSpace(value) ? null : value.Trim();
 
     private static BackendProtocol DefaultProtocol(OllamaProvider provider)
     {

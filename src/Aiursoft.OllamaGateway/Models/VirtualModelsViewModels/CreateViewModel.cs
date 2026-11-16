@@ -34,6 +34,9 @@ public class CreateViewModel : UiStackLayoutViewModel
 
     public bool? OllamaThinkOverride { get; set; }
 
+    [MaxLength(100)]
+    public string? ReasoningEffortOverride { get; set; }
+
     public int? NumCtx { get; set; }
 
     public float? Temperature { get; set; }

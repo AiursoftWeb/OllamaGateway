@@ -33,6 +33,8 @@ public sealed class OpenAiChatProviderRequestAdapter : IChatProviderRequestAdapt
             ApplyVirtualModelOptions(body, virtualModel);
         else
             ApplyOptions(body, decoded.Request.Options, virtualModel);
+        if (!string.IsNullOrWhiteSpace(backend.ReasoningEffortOverride))
+            body["reasoning_effort"] = backend.ReasoningEffortOverride;
         NormalizeMessages(body);
 
         return new HttpRequestMessage(

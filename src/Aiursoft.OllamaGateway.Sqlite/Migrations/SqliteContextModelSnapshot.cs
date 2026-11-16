@@ -341,6 +341,10 @@ namespace Aiursoft.OllamaGateway.Sqlite.Migrations
                     b.Property<int>("ProviderId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("ReasoningEffortOverride")
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("UnderlyingModelName")
                         .IsRequired()
                         .HasMaxLength(100)

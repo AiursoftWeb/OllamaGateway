@@ -22,7 +22,7 @@ public class MigrationTests
         var options = new DbContextOptionsBuilder<SqliteContext>().UseSqlite(connection).Options;
         await using var context = new SqliteContext(options);
         var migrator = context.GetService<IMigrator>();
-        var previous = context.Database.GetMigrations().SkipLast(1).Last();
+        var previous = context.Database.GetMigrations().Single(id => id.EndsWith("_AddProviderOpenAiProtocolCapabilities", StringComparison.Ordinal));
         await migrator.MigrateAsync(previous);
         await context.Database.ExecuteSqlRawAsync("""
             INSERT INTO OllamaProviders (Id, Name, BaseUrl, CreatedAt, KeepAlive, WarmupModelsJson, ProviderType, MaxParallelism, HealthCheckTimeoutSeconds)
@@ -54,6 +54,7 @@ public class MigrationTests
             var native = backend.UnderlyingModelName is "legacy-ollama" or "explicit-ollama" or "openai-via-ollama";
             bool? expected = !native || backend.VirtualModelId == 3 ? null : backend.VirtualModelId == 1;
             Assert.AreEqual(expected, backend.OllamaThinkOverride, backend.UnderlyingModelName);
+            Assert.IsNull(backend.ReasoningEffortOverride);
         }
         Assert.HasCount(3, await context.VirtualModels.ToListAsync());
     }

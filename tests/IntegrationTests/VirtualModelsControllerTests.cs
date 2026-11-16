@@ -72,6 +72,65 @@ public class VirtualModelsControllerTests : TestBase
     }
 
     [TestMethod]
+    [DataRow("1", "medium")]
+    [DataRow("2", "future-model-level")]
+    [DataRow("1", "")]
+    [DataRow("2", "  ")]
+    public async Task BackendEffort_CreateAddUpdateAndClear(string protocol, string setting)
+    {
+        await LoginAsAdmin();
+        var name = $"effort-{Guid.NewGuid():N}:latest";
+        int providerId;
+        using (var scope = Server!.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+            var provider = new OllamaProvider { Name = "Effort provider", BaseUrl = "https://example.test", ProviderType = ProviderType.OpenAI };
+            db.OllamaProviders.Add(provider);
+            await db.SaveChangesAsync();
+            providerId = provider.Id;
+        }
+        var created = await PostForm("/VirtualModels/Create", new Dictionary<string, string>
+        {
+            ["Name"] = name, ["ProviderId"] = providerId.ToString(), ["UnderlyingModel"] = "one",
+            ["Protocol"] = protocol, ["ReasoningEffortOverride"] = setting
+        });
+        Assert.AreEqual(HttpStatusCode.Found, created.StatusCode);
+        int modelId;
+        int backendId;
+        var expected = string.IsNullOrWhiteSpace(setting) ? null : setting;
+        using (var scope = Server!.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+            var model = await db.VirtualModels.Include(m => m.VirtualModelBackends).SingleAsync(m => m.Name == name);
+            modelId = model.Id;
+            backendId = model.VirtualModelBackends.Single().Id;
+            Assert.AreEqual(expected, model.VirtualModelBackends.Single().ReasoningEffortOverride);
+        }
+        var added = await PostForm($"/VirtualModels/AddBackend/{modelId}", new Dictionary<string, string>
+        {
+            ["providerId"] = providerId.ToString(), ["underlyingModel"] = "two", ["protocol"] = protocol,
+            ["reasoningEffortOverride"] = setting
+        }, tokenUrl: $"/VirtualModels/Edit/{modelId}");
+        Assert.AreEqual(HttpStatusCode.Found, added.StatusCode);
+        using (var scope = Server!.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+            Assert.AreEqual(expected, (await db.VirtualModelBackends.SingleAsync(b => b.VirtualModelId == modelId && b.UnderlyingModelName == "two")).ReasoningEffortOverride);
+        }
+        foreach (var target in new[] { "1", "2", "0" })
+        {
+            var updated = await PostForm($"/VirtualModels/UpdateBackend/{backendId}", new Dictionary<string, string>
+            {
+                ["protocol"] = target, ["priority"] = "1", ["weight"] = "1", ["reasoningEffortOverride"] = " xhigh "
+            }, tokenUrl: $"/VirtualModels/Edit/{modelId}");
+            Assert.AreEqual(HttpStatusCode.Found, updated.StatusCode);
+            using var scope = Server!.Services.CreateScope();
+            var backend = await scope.ServiceProvider.GetRequiredService<TemplateDbContext>().VirtualModelBackends.FindAsync(backendId);
+            Assert.AreEqual(target == "0" ? null : "xhigh", backend!.ReasoningEffortOverride);
+        }
+    }
+
+    [TestMethod]
     public async Task GetIndex_Authenticated_ReturnsSuccess()
     {
         await LoginAsAdmin();

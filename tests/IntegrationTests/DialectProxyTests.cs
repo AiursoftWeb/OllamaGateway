@@ -586,6 +586,53 @@ public class DialectProxyTests : TestBase
     }
 
     [TestMethod]
+    [DataRow(BackendProtocol.OpenAiChatCompletions)]
+    [DataRow(BackendProtocol.OpenAiResponses)]
+    public async Task OpenAiRetry_UsesEachBackendsEffortOverride(BackendProtocol protocol)
+    {
+        var modelName = $"retry-effort-{Guid.NewGuid():N}:latest";
+        using (var scope = Server!.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+            var provider = new OllamaProvider { Name = modelName, BaseUrl = "http://fake-openai", ProviderType = ProviderType.OpenAI };
+            db.OllamaProviders.Add(provider);
+            var vm = new VirtualModel { Name = modelName, Type = ModelType.Chat, MaxRetries = 2 };
+            vm.VirtualModelBackends.Add(new VirtualModelBackend
+            {
+                Provider = provider, UnderlyingModelName = "effort-primary", Protocol = protocol,
+                Enabled = true, IsHealthy = true, Priority = 0, Weight = 1, ReasoningEffortOverride = "high"
+            });
+            vm.VirtualModelBackends.Add(new VirtualModelBackend
+            {
+                Provider = provider, UnderlyingModelName = "effort-fallback", Protocol = protocol,
+                Enabled = true, IsHealthy = true, Priority = 1, Weight = 1
+            });
+            db.VirtualModels.Add(vm);
+            await db.SaveChangesAsync();
+        }
+        var attempts = new List<string>();
+        MockUpstreamState.Handler = (_, _) =>
+        {
+            var body = JsonNode.Parse(MockUpstreamState.LastRequestBody!);
+            attempts.Add((protocol == BackendProtocol.OpenAiResponses ? body!["reasoning"]!["effort"] : body!["reasoning_effort"])!.ToString());
+            return Task.FromResult(body["model"]?.ToString() != "effort-fallback"
+                ? new HttpResponseMessage(HttpStatusCode.ServiceUnavailable)
+                : new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(protocol == BackendProtocol.OpenAiResponses
+                        ? """{"id":"resp_test","object":"response","status":"completed","model":"effort-fallback","output":[{"id":"msg_test","type":"message","role":"assistant","content":[{"type":"output_text","text":"ok"}]}]}"""
+                        : """{"id":"chat_test","object":"chat.completion","model":"effort-fallback","choices":[{"index":0,"message":{"role":"assistant","content":"ok"},"finish_reason":"stop"}]}""", Encoding.UTF8, "application/json")
+                });
+        };
+        var payload = protocol == BackendProtocol.OpenAiResponses
+            ? $$$"""{"model":"{{{modelName}}}","input":"hi","stream":false,"reasoning":{"effort":"low"}}"""
+            : $$"""{"model":"{{modelName}}","messages":[{"role":"user","content":"hi"}],"stream":false,"reasoning_effort":"low"}""";
+        var response = await Http.SendAsync(AuthedPost(protocol == BackendProtocol.OpenAiResponses ? "/v1/responses" : "/v1/chat/completions", payload));
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        CollectionAssert.AreEqual(new[] { "high", "low" }, attempts.ToArray());
+    }
+
+    [TestMethod]
     [DataRow("/api/chat")]
     [DataRow("/api/generate")]
     public async Task OllamaRetry_UsesEachBackendsThinkingOverride(string endpoint)

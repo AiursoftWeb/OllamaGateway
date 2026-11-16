@@ -356,6 +356,10 @@ namespace Aiursoft.OllamaGateway.MySql.Migrations
                     b.Property<int>("ProviderId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ReasoningEffortOverride")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
                     b.Property<string>("UnderlyingModelName")
                         .IsRequired()
                         .HasMaxLength(100)

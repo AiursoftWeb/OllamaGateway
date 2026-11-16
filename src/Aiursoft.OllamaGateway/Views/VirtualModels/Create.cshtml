@@ -99,9 +99,10 @@
                                 <option value="true">@Localizer["Force on"]</option>
                                 <option value="false">@Localizer["Force off"]</option>
                             </select>
-                            <span class="backend-thinking-passthrough text-muted" hidden="@(Model.Protocol == BackendProtocol.OllamaNative)">@Localizer["Follow request"]</span>
-                            <div class="form-text">@Localizer["Thinking overrides apply only to this Ollama-native backend. Do not override keeps the client setting, or the upstream default when absent."]</div>
+                            <input asp-for="ReasoningEffortOverride" class="form-control backend-reasoning-override" aria-label="@Localizer["Reasoning Effort Override"]" placeholder="@Localizer["Do not override"]" hidden="@(Model.Protocol == BackendProtocol.OllamaNative)" disabled="@(Model.Protocol == BackendProtocol.OllamaNative)" />
+                            <div class="form-text">@Localizer["Ollama uses an on/off override. For OpenAI Chat or Responses, enter a reasoning effort supported by the model, such as medium, high, or xhigh. Leave empty to keep the client setting, or the upstream default when absent. Overrides also apply to same-dialect direct forwarding and cross-dialect translation."]</div>
                             <span asp-validation-for="OllamaThinkOverride" class="text-danger"></span>
+                            <span asp-validation-for="ReasoningEffortOverride" class="text-danger"></span>
                         </div>
 
                         <hr />
