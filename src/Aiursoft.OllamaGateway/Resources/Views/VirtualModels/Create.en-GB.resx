@@ -42,8 +42,20 @@
   <data name="Disabled" xml:space="preserve">
     <value>Disabled</value>
   </data>
+  <data name="Do not override" xml:space="preserve">
+    <value>Do not override</value>
+  </data>
   <data name="Enabled" xml:space="preserve">
     <value>Enabled</value>
+  </data>
+  <data name="Follow request" xml:space="preserve">
+    <value>Follow request</value>
+  </data>
+  <data name="Force off" xml:space="preserve">
+    <value>Force off</value>
+  </data>
+  <data name="Force on" xml:space="preserve">
+    <value>Force on</value>
   </data>
   <data name="Forces the upstream engine to allocate a specific window size." xml:space="preserve">
     <value>Forces the upstream engine to allocate a specific window size.</value>
@@ -66,6 +78,9 @@
   <data name="Ollama num_ctx Override" xml:space="preserve">
     <value>Ollama num_ctx Override</value>
   </data>
+  <data name="Ollama uses an on/off override. For OpenAI Chat or Responses, enter a reasoning effort supported by the model, such as medium, high, or xhigh. Leave empty to keep the client setting, or the upstream default when absent. Overrides also apply to same-dialect direct forwarding and cross-dialect translation." xml:space="preserve">
+    <value>Ollama uses an on/off override. For OpenAI Chat or Responses, enter a reasoning effort supported by the model, such as medium, high or xhigh. Leave empty to keep the client setting, or the upstream default if absent. Overrides also apply to same-dialect direct forwarding and cross-dialect translation.</value>
+  </data>
   <data name="OpenAI clients use their matching provider protocol when available. This protocol is the fallback for other client dialects." xml:space="preserve">
     <value>OpenAI clients use their matching provider protocol when available. This protocol is the fallback for other client dialects.</value>
   </data>
@@ -80,6 +95,9 @@
   </data>
   <data name="Provider" xml:space="preserve">
     <value>Provider</value>
+  </data>
+  <data name="Reasoning Effort Override" xml:space="preserve">
+    <value>Reasoning Effort Override</value>
   </data>
   <data name="Repeat Penalty" xml:space="preserve">
     <value>Repeat Penalty</value>
@@ -98,6 +116,15 @@
   </data>
   <data name="Thinking Mode" xml:space="preserve">
     <value>Thinking Mode</value>
+  </data>
+  <data name="Thinking Override" xml:space="preserve">
+    <value>Thinking Override</value>
+  </data>
+  <data name="Thinking overrides apply only to this Ollama-native backend. Do not override keeps the client setting, or the upstream default when absent." xml:space="preserve">
+    <value>Thinking overrides apply only to this Ollama-native backend. “Do not override” keeps the client setting, or the upstream default if none is set.</value>
+  </data>
+  <data name="Thinking settings help" xml:space="preserve">
+    <value>Help with thinking settings</value>
   </data>
   <data name="Top K" xml:space="preserve">
     <value>Top K</value>
@@ -130,31 +157,4 @@
     <value>e.g. MyLlama3:latest</value>
   </data>
 
-  <data name="Do not override" xml:space="preserve">
-    <value>Do not override</value>
-  </data>
-  <data name="Follow request" xml:space="preserve">
-    <value>Follow request</value>
-  </data>
-  <data name="Force off" xml:space="preserve">
-    <value>Force off</value>
-  </data>
-  <data name="Force on" xml:space="preserve">
-    <value>Force on</value>
-  </data>
-  <data name="Thinking Override" xml:space="preserve">
-    <value>Thinking Override</value>
-  </data>
-  <data name="Thinking overrides apply only to this Ollama-native backend. Do not override keeps the client setting, or the upstream default when absent." xml:space="preserve">
-    <value>Thinking overrides apply only to this Ollama-native backend. “Do not override” keeps the client setting, or the upstream default if none is set.</value>
-  </data>
-  <data name="Ollama uses an on/off override. For OpenAI Chat or Responses, enter a reasoning effort supported by the model, such as medium, high, or xhigh. Leave empty to keep the client setting, or the upstream default when absent. Overrides also apply to same-dialect direct forwarding and cross-dialect translation." xml:space="preserve">
-    <value>Ollama uses an on/off override. For OpenAI Chat or Responses, enter a reasoning effort supported by the model, such as medium, high or xhigh. Leave empty to keep the client setting, or the upstream default if absent. Overrides also apply to same-dialect direct forwarding and cross-dialect translation.</value>
-  </data>
-  <data name="Reasoning Effort Override" xml:space="preserve">
-    <value>Reasoning Effort Override</value>
-  </data>
-  <data name="Thinking settings help" xml:space="preserve">
-    <value>Help with thinking settings</value>
-  </data>
 </root>
