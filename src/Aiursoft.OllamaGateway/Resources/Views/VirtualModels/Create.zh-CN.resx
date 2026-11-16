@@ -130,4 +130,28 @@
     <value>例如：MyLlama3:latest</value>
   </data>
 
+  <data name="Do not override" xml:space="preserve">
+    <value>不覆盖</value>
+  </data>
+  <data name="Follow request" xml:space="preserve">
+    <value>跟随请求</value>
+  </data>
+  <data name="Force off" xml:space="preserve">
+    <value>强制关闭</value>
+  </data>
+  <data name="Force on" xml:space="preserve">
+    <value>强制开启</value>
+  </data>
+  <data name="Thinking Override" xml:space="preserve">
+    <value>思考模式覆盖</value>
+  </data>
+  <data name="Thinking overrides apply only to this Ollama-native backend. Do not override keeps the client setting, or the upstream default when absent." xml:space="preserve">
+    <value>思考选项覆盖仅适用于此 Ollama 原生后端。选择“不覆盖”将保留客户端设置；如果客户端未设置，则使用上游默认值。</value>
+  </data>
+  <data name="Ollama uses an on/off override. For OpenAI Chat or Responses, enter a reasoning effort supported by the model, such as medium, high, or xhigh. Leave empty to keep the client setting, or the upstream default when absent. Overrides also apply to same-dialect direct forwarding and cross-dialect translation." xml:space="preserve">
+    <value>Ollama 使用开/关式覆盖设置。对于 OpenAI Chat 或 Responses，请输入模型支持的推理力度，例如 medium、high 或 xhigh。留空则保留客户端设置；如果客户端未设置，则使用上游默认值。覆盖设置也适用于同方言直通转发和跨方言转换。</value>
+  </data>
+  <data name="Reasoning Effort Override" xml:space="preserve">
+    <value>推理强度覆盖</value>
+  </data>
 </root>

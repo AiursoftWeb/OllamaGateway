@@ -62,10 +62,6 @@
                         
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label asp-for="Thinking" class="form-label">@Localizer["Thinking Mode"]</label>
-                                <select asp-for="Thinking" class="form-select" asp-items="@(ViewData["ThinkingOptions"] as IEnumerable<SelectListItem>)"></select>
-                            </div>
-                            <div class="col-md-6 mb-3">
                                 <label asp-for="Temperature" class="form-label">@Localizer["Temperature"]</label>
                                 <input asp-for="Temperature" class="form-control" type="number" step="0.1" min="0" max="2" />
                             </div>
@@ -114,6 +110,7 @@
                                 <th>@Localizer["Provider"]</th>
                                 <th>@Localizer["Underlying"]</th>
                                 <th>@Localizer["Preferred Protocol"]</th>
+                                <th>@Localizer["Thinking Override"]</th>
                                 <th>@Localizer["Priority"]</th>
                                 <th>@Localizer["Weight"]</th>
                                 <th>@Localizer["Status"]</th>
@@ -126,63 +123,65 @@
                             }
                             @if (backends == null || !backends.Any())
                             {
-                                <tr><td colspan="7" class="text-center text-muted py-3">@Localizer["No backends added."]</td></tr>
+                                <tr><td colspan="8" class="text-center text-muted py-3">@Localizer["No backends added."]</td></tr>
                             }
                             else
                             {
                                 @foreach (var b in backends)
                                 {
-                                    <tr class="@(b.Enabled ? "" : "opacity-50")">
-                                        <form asp-action="UpdateBackend" asp-route-id="@b.Id" method="post">
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="form-check form-switch me-2">
-                                                        <input class="form-check-input backend-toggle-confirm" type="checkbox" checked="@(b.Enabled ? "checked" : null)"
-                                                               data-form-id="toggle-form-@b.Id">
-                                                    </div>
-                                                    @b.Provider?.Name
-                                                </div>
-                                            </td>
-                                            <td><code>@b.UnderlyingModelName</code></td>
-                                            <td>
-                                                <select name="protocol" class="form-select form-select-sm">
-                                                    @foreach (var protocol in Enum.GetValues<BackendProtocol>())
-                                                    {
-                                                        <option value="@((int)protocol)" selected="@(protocol == BackendProtocolResolver.Resolve(b) ? "selected" : null)">@protocol</option>
-                                                    }
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input type="number" name="priority" value="@b.Priority" class="form-control form-control-sm" style="width: 70px;" />
-                                            </td>
-                                            <td>
-                                                <input type="number" name="weight" value="@b.Weight" class="form-control form-control-sm" style="width: 70px;" />
-                                            </td>
-                                            <td>
-                                                @{
-                                                    var banTime = Model.BackendBanStatuses.GetValueOrDefault(b.Id);
-                                                }
-                                                @if (!b.Enabled) { <span class="badge bg-secondary">@Localizer["Disabled"]</span> }
-                                                else if (banTime.HasValue && banTime.Value > DateTime.UtcNow) { <span class="badge bg-danger me-1">@Localizer["Banned (Till"] <label data-utc-time="@banTime.Value.ToHtmlDateTime()" class="d-inline mb-0"></label>)</span> <form asp-action="UnbanBackend" asp-route-id="@b.Id" method="post" style="display:inline;"><button type="submit" class="btn btn-sm btn-outline-warning" title="@Localizer["Manual Unban"]"><i data-lucide="shield-off" style="width:14px;"></i></button></form> }
-                                                else if (b.IsReady) { <span class="badge bg-success">@Localizer["Ready"]</span> }
-                                                else if (b.IsHealthy) { <span class="badge bg-info">@Localizer["Healthy"]</span> }
-                                                else { <span class="badge bg-danger">@Localizer["Down"]</span> }
-                                            </td>
-                                            <td>
-                                                <div class="btn-group">
-                                                    <button type="submit" class="btn btn-sm btn-outline-primary" title="@Localizer["Save Changes"]">
-                                                        <i data-lucide="save" style="width:14px;"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </form>
-                                        <form id="toggle-form-@b.Id" asp-action="ToggleBackend" asp-route-id="@b.Id" method="post" style="display:none;"></form>
+                                    var backendProtocol = BackendProtocolResolver.Resolve(b);
+                                    var isOllama = backendProtocol == BackendProtocol.OllamaNative;
+                                    var updateFormId = $"update-backend-{b.Id}";
+                                    <tr class="backend-settings @(b.Enabled ? "" : "opacity-50")">
                                         <td>
-                                            <form asp-action="DeleteBackend" asp-route-id="@b.Id" method="post" class="delete-backend-form" style="display:inline;">
-                                                <button type="submit" class="btn btn-sm btn-outline-danger" title="@Localizer["Delete"]">
-                                                    <i data-lucide="trash-2" style="width:14px;"></i>
-                                                </button>
-                                            </form>
+                                            <div class="d-flex align-items-center">
+                                                <div class="form-check form-switch me-2">
+                                                    <input class="form-check-input backend-toggle-confirm" type="checkbox" checked="@(b.Enabled ? "checked" : null)" data-form-id="toggle-form-@b.Id">
+                                                </div>
+                                                @b.Provider?.Name
+                                            </div>
+                                            <form id="toggle-form-@b.Id" asp-action="ToggleBackend" asp-route-id="@b.Id" method="post" hidden></form>
+                                        </td>
+                                        <td><code>@b.UnderlyingModelName</code></td>
+                                        <td>
+                                            <select name="protocol" form="@updateFormId" class="form-select form-select-sm backend-protocol" style="min-width: 190px;" aria-label="@Localizer["Preferred Protocol"]">
+                                                @foreach (var protocol in Enum.GetValues<BackendProtocol>())
+                                                {
+                                                    <option value="@((int)protocol)" selected="@(protocol == backendProtocol ? "selected" : null)">@protocol</option>
+                                                }
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="ollamaThinkOverride" form="@updateFormId" class="form-select form-select-sm backend-thinking-override" style="min-width: 150px;" aria-label="@Localizer["Thinking Override"]" hidden="@(!isOllama)" disabled="@(!isOllama)">
+                                                <option value="" selected="@(!b.OllamaThinkOverride.HasValue)">@Localizer["Do not override"]</option>
+                                                <option value="true" selected="@(b.OllamaThinkOverride == true)">@Localizer["Force on"]</option>
+                                                <option value="false" selected="@(b.OllamaThinkOverride == false)">@Localizer["Force off"]</option>
+                                            </select>
+                                            <input name="reasoningEffortOverride" form="@updateFormId" value="@b.ReasoningEffortOverride" class="form-control form-control-sm backend-reasoning-override" style="min-width: 150px;" maxlength="100" aria-label="@Localizer["Reasoning Effort Override"]" placeholder="@Localizer["Do not override"]" hidden="@isOllama" disabled="@isOllama" />
+                                        </td>
+                                        <td><input type="number" name="priority" form="@updateFormId" value="@b.Priority" class="form-control form-control-sm" style="width: 70px;" aria-label="@Localizer["Priority"]" /></td>
+                                        <td><input type="number" name="weight" form="@updateFormId" value="@b.Weight" class="form-control form-control-sm" style="width: 70px;" aria-label="@Localizer["Weight"]" /></td>
+                                        <td>
+                                            @{ var banTime = Model.BackendBanStatuses.GetValueOrDefault(b.Id); }
+                                            @if (!b.Enabled) { <span class="badge bg-secondary">@Localizer["Disabled"]</span> }
+                                            else if (banTime.HasValue && banTime.Value > DateTime.UtcNow)
+                                            {
+                                                <span class="badge bg-danger me-1">@Localizer["Banned (Till"] <label data-utc-time="@banTime.Value.ToHtmlDateTime()" class="d-inline mb-0"></label>)</span>
+                                                <form asp-action="UnbanBackend" asp-route-id="@b.Id" method="post" class="d-inline"><button type="submit" class="btn btn-sm btn-outline-warning" title="@Localizer["Manual Unban"]"><i data-lucide="shield-off" style="width:14px;"></i></button></form>
+                                            }
+                                            else if (b.IsReady) { <span class="badge bg-success">@Localizer["Ready"]</span> }
+                                            else if (b.IsHealthy) { <span class="badge bg-info">@Localizer["Healthy"]</span> }
+                                            else { <span class="badge bg-danger">@Localizer["Down"]</span> }
+                                        </td>
+                                        <td>
+                                            <div class="d-flex gap-1">
+                                                <form id="@updateFormId" asp-action="UpdateBackend" asp-route-id="@b.Id" method="post">
+                                                    <button type="submit" class="btn btn-sm btn-outline-primary" title="@Localizer["Save Changes"]"><i data-lucide="save" style="width:14px;"></i></button>
+                                                </form>
+                                                <form asp-action="DeleteBackend" asp-route-id="@b.Id" method="post" class="delete-backend-form">
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="@Localizer["Delete"]"><i data-lucide="trash-2" style="width:14px;"></i></button>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
                                 }
@@ -193,7 +192,7 @@
                 <div class="card-footer">
                     <h6>@Localizer["Add New Backend"]</h6>
                     <div asp-validation-summary="All" class="text-danger small"></div>
-                    <form asp-action="AddBackend" asp-route-id="@ViewData["Id"]" method="post" class="row g-2">
+                    <form asp-action="AddBackend" asp-route-id="@ViewData["Id"]" method="post" class="row g-2 backend-settings">
                         <div class="col-md-4">
                             <label class="form-label small mb-1">@Localizer["Provider"]</label>
                             <select name="providerId" id="providerSelect" class="form-select form-select-sm" data-navigation-prefix="?id=@ViewData["Id"]&amp;providerId=" required>
@@ -206,7 +205,7 @@
                         </div>
                         <div class="col-md-4">
                             <label class="form-label small mb-1">@Localizer["Preferred Backend Protocol"]</label>
-                            <select name="protocol" class="form-select form-select-sm" required>
+                            <select name="protocol" class="form-select form-select-sm backend-protocol" required>
                                 @foreach (var protocol in Enum.GetValues<BackendProtocol>())
                                 {
                                     <option value="@((int)protocol)" selected="@(protocol == Model.Protocol ? "selected" : null)">@protocol</option>
@@ -231,11 +230,21 @@
                             <label class="form-label small mb-1">@Localizer["Weight"]</label>
                             <input type="number" name="weight" class="form-control form-control-sm" placeholder="@Localizer["Weight"]" value="1" />
                         </div>
-                        <div class="col-md-6 text-end d-flex align-items-end">
+                        <div class="col-md-6">
+                            <label class="form-label small mb-1" for="add-backend-thinking">@Localizer["Thinking Override"]</label>
+                            <select name="ollamaThinkOverride" id="add-backend-thinking" class="form-select form-select-sm backend-thinking-override" hidden="@(Model.Protocol != BackendProtocol.OllamaNative)" disabled="@(Model.Protocol != BackendProtocol.OllamaNative)">
+                                <option value="">@Localizer["Do not override"]</option>
+                                <option value="true">@Localizer["Force on"]</option>
+                                <option value="false">@Localizer["Force off"]</option>
+                            </select>
+                            <input name="reasoningEffortOverride" class="form-control form-control-sm backend-reasoning-override" maxlength="100" aria-label="@Localizer["Reasoning Effort Override"]" placeholder="@Localizer["Do not override"]" hidden="@(Model.Protocol == BackendProtocol.OllamaNative)" disabled="@(Model.Protocol == BackendProtocol.OllamaNative)" />
+                        </div>
+                        <div class="col-12 text-end d-flex align-items-end">
                             <button type="submit" class="btn btn-sm btn-success w-100">@Localizer["Add Backend"]</button>
                         </div>
                     </form>
                     <div class="mt-3 p-2 bg-light rounded border">
+                        <p class="small text-muted mb-2">@Localizer["Ollama uses an on/off override. For OpenAI Chat or Responses, enter a reasoning effort supported by the model, such as medium, high, or xhigh. Leave empty to keep the client setting, or the upstream default when absent. Overrides also apply to same-dialect direct forwarding and cross-dialect translation."]</p>
                         <h6 class="small fw-bold mb-1">@Localizer["Configuration Guide:"]</h6>
                         <ul class="small text-muted mb-0 ps-3">
                             <li><strong>@Localizer["Priority"]</strong>: @Localizer["Used in 'Priority Fallback' strategy. Lower numbers (e.g. 0, 1) have higher priority. The system will always try the healthy backend with the lowest priority number first."]</li>
@@ -256,28 +265,6 @@
 
 @* ReSharper disable once Razor.SectionNotResolved *@
 @section scripts {
-    <script>
-        const virtualModelEditLocData = document.getElementById('virtual-model-edit-loc-data');
-        const getLocalizedText = (key, fallback) => virtualModelEditLocData.querySelector(`span[data-key="${key}"]`)?.innerText || fallback;
-
-        document.querySelectorAll('.backend-toggle-confirm').forEach(function (checkbox) {
-            checkbox.addEventListener('click', function (event) {
-                if (confirm(getLocalizedText('toggle-confirm', 'Toggle this backend?'))) {
-                    document.getElementById(checkbox.dataset.formId).submit();
-                } else {
-                    event.preventDefault();
-                }
-            });
-        });
-        document.querySelectorAll('.delete-backend-form').forEach(function (form) {
-            form.addEventListener('submit', function (event) {
-                if (!confirm(getLocalizedText('delete-confirm', 'Are you sure?'))) {
-                    event.preventDefault();
-                }
-            });
-        });
-        document.getElementById('providerSelect').addEventListener('change', function () {
-            window.location.href = this.dataset.navigationPrefix + encodeURIComponent(this.value);
-        });
-    </script>
+    <script src="~/js/backend-thinking.js" asp-append-version="true"></script>
+    <script src="~/js/virtual-model-edit.js" asp-append-version="true"></script>
 }

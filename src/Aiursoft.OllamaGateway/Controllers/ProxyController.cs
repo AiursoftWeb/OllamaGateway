@@ -26,7 +26,8 @@ public class OllamaRequestModel
     public bool? Stream { get; set; }
     public string? KeepAlive { get; set; }
     public OllamaRequestOptions? Options { get; set; }
-    public bool? Think { get; set; }
+    // Ollama accepts either a boolean switch or a model-defined level string.
+    public object? Think { get; set; }
     public string? Suffix { get; set; }
     public string? System { get; set; }
     public string? Template { get; set; }
@@ -256,7 +257,7 @@ public class ProxyController(
             }
 
             input.Model = backend.UnderlyingModelName;
-            if (virtualModel.Thinking.HasValue) input.Think = virtualModel.Thinking.Value;
+            var clientThink = input.Think;
             if (backend.Provider.KeepsModelLoaded(backend.UnderlyingModelName))
                 input.KeepAlive = "-1s";
             else
@@ -277,6 +278,7 @@ public class ProxyController(
                 b =>
                 {
                     input.Model = b.UnderlyingModelName;
+                    input.Think = b.OllamaThinkOverride.HasValue ? b.OllamaThinkOverride.Value : clientThink;
                     return new HttpRequestMessage(HttpMethod.Post, $"{b.Provider!.BaseUrl.TrimEnd('/')}/api/generate")
                     {
                         Content = new StringContent(JsonSerializer.Serialize(input, OllamaJsonOptions), Encoding.UTF8, "application/json")

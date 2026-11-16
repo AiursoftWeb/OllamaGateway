@@ -18,7 +18,7 @@
                     <h5 class="card-title mb-0">@Localizer["Basic Settings"]</h5>
                 </div>
                 <div class="card-body">
-                    <form asp-action="Create" method="post">
+                    <form asp-action="Create" method="post" class="backend-settings">
                         <input type="hidden" asp-for="Type" />
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         
@@ -76,7 +76,7 @@
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label asp-for="Protocol" class="form-label">@Localizer["Preferred Backend Protocol"]</label>
-                                <select asp-for="Protocol" class="form-select" asp-items="Html.GetEnumSelectList<BackendProtocol>()" required></select>
+                                <select asp-for="Protocol" class="form-select backend-protocol" asp-items="Html.GetEnumSelectList<BackendProtocol>()" required></select>
                                 <div class="form-text small">@Localizer["OpenAI clients use their matching provider protocol when available. This protocol is the fallback for other client dialects."]</div>
                             </div>
                             <div class="col-md-4 mb-3">
@@ -92,14 +92,23 @@
                             </div>
                         </div>
 
+                        <div class="mb-3">
+                            <label asp-for="OllamaThinkOverride" class="form-label">@Localizer["Thinking Override"]</label>
+                            <select asp-for="OllamaThinkOverride" class="form-select backend-thinking-override" hidden="@(Model.Protocol != BackendProtocol.OllamaNative)" disabled="@(Model.Protocol != BackendProtocol.OllamaNative)">
+                                <option value="">@Localizer["Do not override"]</option>
+                                <option value="true">@Localizer["Force on"]</option>
+                                <option value="false">@Localizer["Force off"]</option>
+                            </select>
+                            <input asp-for="ReasoningEffortOverride" class="form-control backend-reasoning-override" aria-label="@Localizer["Reasoning Effort Override"]" placeholder="@Localizer["Do not override"]" hidden="@(Model.Protocol == BackendProtocol.OllamaNative)" disabled="@(Model.Protocol == BackendProtocol.OllamaNative)" />
+                            <div class="form-text">@Localizer["Ollama uses an on/off override. For OpenAI Chat or Responses, enter a reasoning effort supported by the model, such as medium, high, or xhigh. Leave empty to keep the client setting, or the upstream default when absent. Overrides also apply to same-dialect direct forwarding and cross-dialect translation."]</div>
+                            <span asp-validation-for="OllamaThinkOverride" class="text-danger"></span>
+                            <span asp-validation-for="ReasoningEffortOverride" class="text-danger"></span>
+                        </div>
+
                         <hr />
                         <h6 class="card-subtitle mb-2 text-muted">@Localizer["Optional Model Overrides"]</h6>
                         
                         <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label asp-for="Thinking" class="form-label">@Localizer["Thinking Mode"]</label>
-                                <select asp-for="Thinking" class="form-select" asp-items="@(ViewData["ThinkingOptions"] as IEnumerable<SelectListItem>)"></select>
-                            </div>
                             <div class="col-md-6 mb-3">
                                 <label asp-for="Temperature" class="form-label">@Localizer["Temperature"]</label>
                                 <input asp-for="Temperature" class="form-control" type="number" step="0.1" min="0" max="2" placeholder="0.7" />
@@ -148,9 +157,6 @@
 
 @* ReSharper disable once Razor.SectionNotResolved *@
 @section scripts {
-    <script>
-        document.getElementById('providerSelect').addEventListener('change', function () {
-            window.location.href = this.dataset.navigationPrefix + encodeURIComponent(this.value);
-        });
-    </script>
+    <script src="~/js/backend-thinking.js" asp-append-version="true"></script>
+    <script src="~/js/virtual-model-create.js" asp-append-version="true"></script>
 }

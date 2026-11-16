@@ -38,8 +38,6 @@ public class VirtualModel
     [Column("HealthCheckTimeout")]
     public int RequestTimeoutSeconds { get; set; } = 600;
 
-    public bool? Thinking { get; set; }
-
     public int? NumCtx { get; set; }
 
     public float? Temperature { get; set; }

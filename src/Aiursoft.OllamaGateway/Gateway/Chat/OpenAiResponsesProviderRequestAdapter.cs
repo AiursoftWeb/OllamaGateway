@@ -28,6 +28,13 @@ public sealed class OpenAiResponsesProviderRequestAdapter : IChatProviderRequest
         else
             ApplyOptions(body, decoded.Request.Options, virtualModel);
 
+        if (!string.IsNullOrWhiteSpace(backend.ReasoningEffortOverride))
+        {
+            var reasoning = body["reasoning"] as JsonObject ?? new JsonObject();
+            reasoning["effort"] = backend.ReasoningEffortOverride;
+            body["reasoning"] = reasoning;
+        }
+
         return new HttpRequestMessage(
             HttpMethod.Post,
             $"{backend.Provider!.BaseUrl.TrimEnd('/')}/v1/responses")

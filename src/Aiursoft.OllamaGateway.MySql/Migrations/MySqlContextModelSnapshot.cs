@@ -17,7 +17,7 @@ namespace Aiursoft.OllamaGateway.MySql.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.11")
+                .HasAnnotation("ProductVersion", "10.0.15")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
@@ -294,9 +294,6 @@ namespace Aiursoft.OllamaGateway.MySql.Migrations
                     b.Property<float?>("Temperature")
                         .HasColumnType("float");
 
-                    b.Property<bool?>("Thinking")
-                        .HasColumnType("tinyint(1)");
-
                     b.Property<int?>("TopK")
                         .HasColumnType("int");
 
@@ -347,6 +344,9 @@ namespace Aiursoft.OllamaGateway.MySql.Migrations
                     b.Property<DateTime>("LastCheckedAt")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<bool?>("OllamaThinkOverride")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<int>("Priority")
                         .HasColumnType("int");
 
@@ -355,6 +355,10 @@ namespace Aiursoft.OllamaGateway.MySql.Migrations
 
                     b.Property<int>("ProviderId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ReasoningEffortOverride")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("UnderlyingModelName")
                         .IsRequired()

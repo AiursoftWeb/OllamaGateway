@@ -33,6 +33,8 @@ public sealed class OpenAiChatProviderRequestAdapter : IChatProviderRequestAdapt
             ApplyVirtualModelOptions(body, virtualModel);
         else
             ApplyOptions(body, decoded.Request.Options, virtualModel);
+        if (!string.IsNullOrWhiteSpace(backend.ReasoningEffortOverride))
+            body["reasoning_effort"] = backend.ReasoningEffortOverride;
         NormalizeMessages(body);
 
         return new HttpRequestMessage(
@@ -92,7 +94,7 @@ public sealed class OpenAiChatProviderRequestAdapter : IChatProviderRequestAdapt
             catch (System.Text.Json.JsonException) { /* Ignore an invalid optional format. */ }
         }
 
-        var thinking = virtualModel.Thinking ?? options.Thinking;
+        var thinking = options.Thinking;
         if (thinking.HasValue)
             body["chat_template_kwargs"] = new JsonObject { ["enable_thinking"] = thinking.Value };
     }
@@ -117,10 +119,5 @@ public sealed class OpenAiChatProviderRequestAdapter : IChatProviderRequestAdapt
             if (body.ContainsKey("max_completion_tokens")) body["max_completion_tokens"] = virtualModel.NumPredict.Value;
             else body["max_tokens"] = virtualModel.NumPredict.Value;
         }
-        if (!virtualModel.Thinking.HasValue) return;
-
-        var templateArguments = body["chat_template_kwargs"] as JsonObject ?? new JsonObject();
-        templateArguments["enable_thinking"] = virtualModel.Thinking.Value;
-        body["chat_template_kwargs"] = templateArguments;
     }
 }
