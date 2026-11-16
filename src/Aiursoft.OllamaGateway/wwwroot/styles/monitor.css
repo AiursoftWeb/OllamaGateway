@@ -1,0 +1,25 @@
+#traffic-topology svg {
+    display: block;
+    min-width: 1100px;
+    margin: auto;
+}
+
+#traffic-topology .backend-route {
+    cursor: help;
+}
+
+#traffic-topology .backend-route-thinking {
+    font-size: 0.75em;
+    color: #59636e;
+}
+
+#traffic-topology .backend-route:focus-visible {
+    outline: 2px solid #3182ce;
+    outline-offset: 2px;
+}
+
+.topology-tooltip .tooltip-inner {
+    max-width: min(360px, calc(100vw - 24px));
+    text-align: left;
+    white-space: pre-line;
+}
