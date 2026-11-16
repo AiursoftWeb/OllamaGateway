@@ -2,6 +2,8 @@
 @using Aiursoft.OllamaGateway.Entities
 @using System.Text
 @using System.Text.RegularExpressions
+@using Aiursoft.OllamaGateway.Gateway
+@using System.Net
 
 @{
     // Build a deduplicated map of physical nodes keyed by (ProviderId, ModelName).
@@ -22,6 +24,9 @@
         var sanitized = Regex.Replace(modelName, @"[^a-zA-Z0-9]", "_");
         return $"Phys_P{providerId}_{sanitized}";
     }
+
+    var routeDetails = new Dictionary<int, string>();
+    string MermaidText(string value) => WebUtility.HtmlEncode(value).Replace("&quot;", "#quot;");
 
     var sb = new StringBuilder();
     sb.AppendLine("graph LR");
@@ -125,12 +130,73 @@
         {
             var nodeId = PhysNodeId(backend.ProviderId, backend.UnderlyingModelName);
             var actionText = (backend.Enabled && backend.IsHealthy) ? Localizer["Dispatch Traffic"].Value : Localizer["Block Node"].Value;
-            sb.AppendLine($"    Algo_{vm.Id} -. \"{actionText}\" .-> {nodeId}");
+            string thinking;
+            string details;
+            if (vm.Type == ModelType.Embedding)
+            {
+                thinking = @Localizer["Thinking: not applicable"].Value;
+                details = @Localizer["Embedding requests do not use thinking overrides."].Value;
+            }
+            else
+            {
+                IReadOnlyList<BackendProtocol> protocols;
+                try
+                {
+                    protocols = BackendProtocolResolver.GetSupportedProtocols(backend);
+                }
+                catch (InvalidOperationException)
+                {
+                    protocols = [];
+                }
+
+                var native = protocols.Contains(BackendProtocol.OllamaNative);
+                var effort = native
+                    ? backend.OllamaThinkOverride?.ToString().ToLowerInvariant()
+                    : backend.ReasoningEffortOverride;
+                thinking = protocols.Count == 0
+                    ? @Localizer["Thinking: unavailable"].Value
+                    : string.IsNullOrWhiteSpace(effort)
+                        ? @Localizer["Thinking: follow request"].Value
+                        : string.Format(@Localizer["Thinking: force {0}"].Value, effort);
+                var protocolNames = protocols.Count == 0
+                    ? @Localizer["No supported protocol"].Value
+                    : string.Join(" / ", protocols);
+                var fields = string.Join(" / ", protocols.Select(protocol => protocol switch
+                {
+                    BackendProtocol.OllamaNative => "think",
+                    BackendProtocol.OpenAiChatCompletions => "reasoning_effort",
+                    BackendProtocol.OpenAiResponses => "reasoning.effort",
+                    _ => ""
+                }));
+                var explanation = protocols.Count == 0
+                    ? @Localizer["No request can be dispatched until a supported backend protocol is configured."].Value
+                    : string.IsNullOrWhiteSpace(effort)
+                        ? @Localizer["No backend override. The client setting is forwarded or translated; when absent, the upstream default applies."].Value
+                        : @Localizer["Overrides the client setting on each attempt, including same-dialect direct forwarding and cross-dialect translation."].Value;
+                details = string.Join("\n", thinking,
+                    string.Format(@Localizer["Protocols: {0}"].Value, protocolNames),
+                    string.Format(@Localizer["Outgoing fields: {0}"].Value, fields), explanation);
+            }
+            routeDetails[backend.Id] = details;
+            var label = $"<span class='backend-route backend-route-{backend.Id}'>{MermaidText(actionText)}<br/><span class='backend-route-thinking'>{MermaidText(thinking)}</span></span>";
+            sb.AppendLine($"    Algo_{vm.Id} -. \"{label}\" .-> {nodeId}");
         }
     }
 
     var mermaidCode = sb.ToString();
 }
+
+@* ReSharper disable once Razor.SectionNotResolved *@
+@section styles {
+    <link rel="stylesheet" href="~/styles/monitor.css" asp-append-version="true" />
+}
+
+<div id="backend-route-details" hidden>
+    @foreach (var (backendId, details) in routeDetails)
+    {
+        <span data-backend-id="@backendId">@details</span>
+    }
+</div>
 
 <div class="container-fluid p-0">
     <div class="row mb-2 mb-xl-3">
@@ -148,7 +214,7 @@
         <div class="col-12 d-flex">
             <div class="card flex-fill w-100">
                 <div class="card-body">
-                    <pre class="mermaid" style="display: flex; justify-content: center; overflow: auto; min-height: 500px;">
+                    <pre id="traffic-topology" class="mermaid" style="overflow: auto; min-height: 500px;">
 @mermaidCode
                     </pre>
                 </div>
@@ -171,8 +237,5 @@
 
 @* ReSharper disable once Razor.SectionNotResolved *@
 @section scripts {
-    <script type="module">
-        import mermaid from '/node_modules/mermaid/dist/mermaid.esm.mjs';
-        mermaid.initialize({ layout: 'dagre', startOnLoad: true, theme: 'default' });
-    </script>
+    <script type="module" src="~/js/monitor.js" asp-append-version="true"></script>
 }

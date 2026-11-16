@@ -1,4 +1,6 @@
+using System.Net;
 using System.Net.WebSockets;
+using System.Text.RegularExpressions;
 using System.Text.Json;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Services;
@@ -159,6 +161,54 @@ public class DashboardControllerTests : TestBase
         var content = await response.Content.ReadAsStringAsync();
         Assert.IsTrue(content.Contains("Traffic Visualization"));
         Assert.IsTrue(content.Contains("mermaid"));
+    }
+
+    [TestMethod]
+    public async Task GetMonitor_SharedPhysicalModel_KeepsEachRoutesThinkingPolicy()
+    {
+        await LoginAsAdmin();
+        var db = GetService<TemplateDbContext>();
+        var provider = new OllamaProvider
+        {
+            Name = "topology-" + Guid.NewGuid(),
+            BaseUrl = "http://localhost:1",
+            ProviderType = ProviderType.OpenAI,
+            SupportsOpenAiChatCompletions = true,
+            SupportsOpenAiResponses = true
+        };
+        var models = new[] { "high", "medium", "follow" }.Select(policy => new VirtualModel
+        {
+            Name = $"topology-{policy}-{Guid.NewGuid()}",
+            Type = ModelType.Chat,
+            VirtualModelBackends = [new VirtualModelBackend
+            {
+                Provider = provider,
+                UnderlyingModelName = "shared-physical",
+                Protocol = BackendProtocol.OpenAiChatCompletions,
+                ReasoningEffortOverride = policy == "follow" ? null : policy,
+                Enabled = true,
+                IsHealthy = true
+            }]
+        }).ToArray();
+        db.VirtualModels.AddRange(models);
+        await db.SaveChangesAsync();
+
+        var response = await Http.GetAsync("/Dashboard/Monitor");
+        response.EnsureSuccessStatusCode();
+        var html = WebUtility.HtmlDecode(await response.Content.ReadAsStringAsync());
+        var policies = new[] { "Thinking: force high", "Thinking: force medium", "Thinking: follow request" };
+        for (var i = 0; i < models.Length; i++)
+        {
+            var backendId = models[i].VirtualModelBackends.Single().Id;
+            var label = Regex.Match(html, $"backend-route-{backendId}'>(.*?)</span>", RegexOptions.Singleline).Value;
+            Assert.Contains(policies[i], label);
+            var detail = Regex.Match(html, $"data-backend-id=\"{backendId}\">(.*?)</span>", RegexOptions.Singleline).Value;
+            Assert.Contains("OpenAiChatCompletions / OpenAiResponses", detail);
+            Assert.Contains("reasoning_effort / reasoning.effort", detail);
+            Assert.Contains(i == 2 ? "upstream default" : "same-dialect direct forwarding", detail);
+        }
+        Assert.AreEqual(1, Regex.Matches(html, $"Phys_P{provider.Id}_shared_physical\\[\\(").Count,
+            "A shared physical model must remain a single node while route policies stay distinct.");
     }
 
     [TestMethod]
