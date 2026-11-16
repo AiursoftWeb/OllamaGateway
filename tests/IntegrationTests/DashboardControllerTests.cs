@@ -1,4 +1,3 @@
-using System.Net;
 using System.Net.WebSockets;
 using System.Text.RegularExpressions;
 using System.Text.Json;
@@ -195,7 +194,7 @@ public class DashboardControllerTests : TestBase
 
         var response = await Http.GetAsync("/Dashboard/Monitor");
         response.EnsureSuccessStatusCode();
-        var html = WebUtility.HtmlDecode(await response.Content.ReadAsStringAsync());
+        var html = System.Net.WebUtility.HtmlDecode(await response.Content.ReadAsStringAsync());
         var policies = new[] { "Thinking: force high", "Thinking: force medium", "Thinking: follow request" };
         for (var i = 0; i < models.Length; i++)
         {
