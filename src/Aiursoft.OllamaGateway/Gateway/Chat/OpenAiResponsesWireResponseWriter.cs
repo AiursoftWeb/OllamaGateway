@@ -8,7 +8,8 @@ namespace Aiursoft.OllamaGateway.Gateway.Chat;
 
 /// <summary>
 /// Same-dialect fast path for Responses. It preserves unknown items and events,
-/// changing only gateway-owned identity fields while observing usage and text.
+/// changing gateway-owned identity fields and restoring an empty completion
+/// output from items that the upstream has already completed.
 /// </summary>
 public sealed class OpenAiResponsesWireResponseWriter(RequestLogContext logContext) : IChatWireResponseWriter
 {
@@ -43,6 +44,7 @@ public sealed class OpenAiResponsesWireResponseWriter(RequestLogContext logConte
         context.Response.ContentType = "text/event-stream";
         var answer = new StringBuilder();
         var reasoning = new StringBuilder();
+        var completedItems = new SortedDictionary<int, JsonNode>();
         await foreach (var frame in SseFrameReader.ReadAsync(stream, context.RequestAborted))
         {
             var data = frame.Data;
@@ -52,6 +54,15 @@ public sealed class OpenAiResponsesWireResponseWriter(RequestLogContext logConte
                 if (root != null)
                 {
                     SetVirtualModel(root, virtualModel.Name);
+                    if (ChatRequestDecoding.StringValue(root["type"]) == "response.output_item.done" &&
+                        root["output_index"] is JsonValue indexValue && indexValue.TryGetValue<int>(out var index) &&
+                        index >= 0 && root["item"] is JsonObject item)
+                        completedItems[index] = item.DeepClone();
+                    if (ChatRequestDecoding.StringValue(root["type"]) == "response.completed" &&
+                        root["response"] is JsonObject response &&
+                        ChatRequestDecoding.StringValue(response["status"]) == "completed" &&
+                        response["output"] is JsonArray { Count: 0 } && completedItems.Count > 0)
+                        response["output"] = new JsonArray(completedItems.Values.Select(value => value.DeepClone()).ToArray());
                     ObserveEvent(root, answer, reasoning);
                     data = root.ToJsonString();
                 }

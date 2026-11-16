@@ -178,6 +178,74 @@ public class OpenAIResponsesApiTests : TestBase
     }
 
     [TestMethod]
+    public async Task ResponsesToResponses_Streaming_RestoresCompletedItemsInOutputOrder()
+    {
+        await ReplaceWithResponsesBackendAsync();
+        var tool = JsonNode.Parse("""{"type":"function_call","id":"fc_1","call_id":"call_1","name":"view","arguments":"{\"path\":\"file.cs\"}","status":"completed","future_field":{"kept":true}}""")!;
+        var message = JsonNode.Parse("""{"type":"message","id":"msg_1","role":"assistant","phase":"commentary","content":[{"type":"output_text","text":"Inspecting"}]}""")!;
+        var reasoning = JsonNode.Parse("""{"type":"reasoning","id":"rs_1","encrypted_content":"opaque","summary":[]}""")!;
+        var unknown = JsonNode.Parse("""{"type":"future_call","id":"future_1","opaque":[1,2]}""")!;
+        var frames = new[] { (3, unknown), (1, message), (0, reasoning), (2, tool) }
+            .Select(pair => "data: " + new JsonObject
+            {
+                ["type"] = "response.output_item.done", ["output_index"] = pair.Item1, ["item"] = pair.Item2.DeepClone()
+            }.ToJsonString() + "\n\n");
+        var payload = string.Concat(frames) + """
+            data: {"type":"response.completed","response":{"status":"completed","model":"physical-responses","output":[],"usage":{"input_tokens":3,"output_tokens":2}}}
+
+
+            """;
+        MockUpstreamState.Handler = (_, _) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+        {
+            Content = new StringContent(payload, Encoding.UTF8, "text/event-stream")
+        });
+        var response = await Http.PostAsync("/v1/responses", Json("""{"model":"responses-test:latest","input":"fix","stream":true}"""));
+        var body = await response.Content.ReadAsStringAsync();
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        var completed = body.Split('\n').Where(line => line.StartsWith("data: ", StringComparison.Ordinal))
+            .Select(line => JsonNode.Parse(line[6..])!).Single(node => node["type"]?.ToString() == "response.completed");
+        var output = completed["response"]!["output"]!.AsArray();
+        Assert.AreEqual(4, output.Count);
+        Assert.IsTrue(JsonNode.DeepEquals(reasoning, output[0]));
+        Assert.IsTrue(JsonNode.DeepEquals(message, output[1]));
+        Assert.IsTrue(JsonNode.DeepEquals(tool, output[2]));
+        Assert.IsTrue(JsonNode.DeepEquals(unknown, output[3]));
+        Assert.AreEqual(VirtualModelName, completed["response"]!["model"]!.ToString());
+        Assert.AreEqual(2, completed["response"]!["usage"]!["output_tokens"]!.GetValue<int>());
+    }
+
+    [TestMethod]
+    [DataRow("response.completed", "completed", "[{\"type\":\"message\",\"id\":\"authoritative\"}]", true)]
+    [DataRow("response.completed", "completed", "[]", false)]
+    [DataRow("response.failed", "failed", "[]", true)]
+    [DataRow("response.incomplete", "incomplete", "[]", true)]
+    [DataRow("response.completed", "failed", "[]", true)]
+    [DataRow("response.completed", "cancelled", "[]", true)]
+    public async Task ResponsesToResponses_Streaming_KeepsAuthoritativeOrUnsuccessfulOutput(
+        string eventType, string status, string outputJson, bool hasCompletedItem)
+    {
+        await ReplaceWithResponsesBackendAsync();
+        var final = new JsonObject
+        {
+            ["type"] = eventType,
+            ["response"] = new JsonObject { ["status"] = status, ["output"] = JsonNode.Parse(outputJson) }
+        };
+        var prefix = hasCompletedItem
+            ? "data: {\"type\":\"response.output_item.done\",\"output_index\":0,\"item\":{\"type\":\"function_call\",\"name\":\"view\"}}\n\n"
+            : string.Empty;
+        MockUpstreamState.Handler = (_, _) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+        {
+            Content = new StringContent(prefix + "data: " + final.ToJsonString() + "\n\n", Encoding.UTF8, "text/event-stream")
+        });
+        var response = await Http.PostAsync("/v1/responses", Json("""{"model":"responses-test:latest","input":"fix","stream":true}"""));
+        var body = await response.Content.ReadAsStringAsync();
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        var actual = body.Split('\n').Where(line => line.StartsWith("data: ", StringComparison.Ordinal))
+            .Select(line => JsonNode.Parse(line[6..])!).Single(node => node["type"]?.ToString() == eventType);
+        Assert.IsTrue(JsonNode.DeepEquals(final, actual));
+    }
+
+    [TestMethod]
     public async Task ResponsesNativeTool_SelectsResponsesCapableBackend()
     {
         await AddResponsesBackendAsync(priority: 10);
