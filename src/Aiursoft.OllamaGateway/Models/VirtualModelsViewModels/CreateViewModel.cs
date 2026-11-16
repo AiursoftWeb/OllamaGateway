@@ -32,7 +32,7 @@ public class CreateViewModel : UiStackLayoutViewModel
 
     public int RequestTimeoutSeconds { get; set; } = 600;
 
-    public bool? Thinking { get; set; }
+    public bool? OllamaThinkOverride { get; set; }
 
     public int? NumCtx { get; set; }
 

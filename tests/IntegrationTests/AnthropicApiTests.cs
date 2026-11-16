@@ -283,7 +283,6 @@ public class AnthropicApiTests : TestBase
                 Name = modelName,
                 Type = ModelType.Chat,
                 MaxRetries = 1,
-                Thinking = true,
                 NumCtx = 8192
             };
             db.VirtualModels.Add(vm);
@@ -293,7 +292,8 @@ public class AnthropicApiTests : TestBase
             {
                 VirtualModelId = vm.Id,
                 ProviderId = provider.Id,
-                UnderlyingModelName = "llama3"
+                UnderlyingModelName = "llama3",
+                OllamaThinkOverride = true
             });
             await db.SaveChangesAsync();
             Assert.IsNotNull(userInDb);

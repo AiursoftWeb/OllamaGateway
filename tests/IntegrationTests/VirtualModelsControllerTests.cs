@@ -1,4 +1,5 @@
 using System.Net;
+using Microsoft.EntityFrameworkCore;
 using Aiursoft.OllamaGateway.Entities;
 
 namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
@@ -6,6 +7,70 @@ namespace Aiursoft.OllamaGateway.Tests.IntegrationTests;
 [TestClass]
 public class VirtualModelsControllerTests : TestBase
 {
+    [TestMethod]
+    [DataRow("")]
+    [DataRow("true")]
+    [DataRow("false")]
+    public async Task BackendThinking_CreateAddUpdateAndProtocolSwitch(string setting)
+    {
+        await LoginAsAdmin();
+        var modelName = $"thinking-{Guid.NewGuid():N}:latest";
+        int providerId;
+        using (var scope = Server!.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+            var provider = new OllamaProvider { Name = "Thinking provider", BaseUrl = "http://localhost:11434" };
+            db.OllamaProviders.Add(provider);
+            await db.SaveChangesAsync();
+            providerId = provider.Id;
+        }
+        var created = await PostForm("/VirtualModels/Create", new Dictionary<string, string>
+        {
+            ["Name"] = modelName, ["ProviderId"] = providerId.ToString(),
+            ["UnderlyingModel"] = "physical-one", ["Protocol"] = "0", ["OllamaThinkOverride"] = setting
+        });
+        Assert.AreEqual(HttpStatusCode.Found, created.StatusCode);
+        int modelId;
+        int backendId;
+        bool? expected = setting == "" ? null : bool.Parse(setting);
+        using (var scope = Server!.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+            var model = await db.VirtualModels.Include(m => m.VirtualModelBackends).SingleAsync(m => m.Name == modelName);
+            modelId = model.Id;
+            backendId = model.VirtualModelBackends.Single().Id;
+            Assert.AreEqual(expected, model.VirtualModelBackends.Single().OllamaThinkOverride);
+        }
+        var page = await Http.GetStringAsync($"/VirtualModels/Edit/{modelId}");
+        Assert.IsFalse(page.Contains("name=\"Thinking\""));
+        Assert.IsTrue(page.Contains("name=\"ollamaThinkOverride\""));
+        var added = await PostForm($"/VirtualModels/AddBackend/{modelId}", new Dictionary<string, string>
+        {
+            ["providerId"] = providerId.ToString(), ["underlyingModel"] = "physical-two",
+            ["protocol"] = "0", ["ollamaThinkOverride"] = setting
+        }, tokenUrl: $"/VirtualModels/Edit/{modelId}");
+        Assert.AreEqual(HttpStatusCode.Found, added.StatusCode);
+        using (var scope = Server!.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+            Assert.AreEqual(expected, (await db.VirtualModelBackends.SingleAsync(b => b.VirtualModelId == modelId && b.UnderlyingModelName == "physical-two")).OllamaThinkOverride);
+        }
+        foreach (var protocol in new[] { "0", "1" })
+        {
+            var updated = await PostForm($"/VirtualModels/UpdateBackend/{backendId}", new Dictionary<string, string>
+            {
+                ["protocol"] = protocol, ["priority"] = "2", ["weight"] = "3", ["ollamaThinkOverride"] = setting
+            }, tokenUrl: $"/VirtualModels/Edit/{modelId}");
+            Assert.AreEqual(HttpStatusCode.Found, updated.StatusCode);
+            using var scope = Server!.Services.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
+            var backend = await db.VirtualModelBackends.FindAsync(backendId);
+            Assert.AreEqual(protocol == "0" ? expected : null, backend!.OllamaThinkOverride);
+            Assert.AreEqual(2, backend.Priority);
+            Assert.AreEqual(3, backend.Weight);
+        }
+    }
+
     [TestMethod]
     public async Task GetIndex_Authenticated_ReturnsSuccess()
     {

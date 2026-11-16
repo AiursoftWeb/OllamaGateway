@@ -15,7 +15,7 @@ namespace Aiursoft.OllamaGateway.Sqlite.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "10.0.11");
+            modelBuilder.HasAnnotation("ProductVersion", "10.0.15");
 
             modelBuilder.Entity("Aiursoft.OllamaGateway.Entities.ApiKey", b =>
                 {
@@ -281,9 +281,6 @@ namespace Aiursoft.OllamaGateway.Sqlite.Migrations
                     b.Property<float?>("Temperature")
                         .HasColumnType("REAL");
 
-                    b.Property<bool?>("Thinking")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int?>("TopK")
                         .HasColumnType("INTEGER");
 
@@ -331,6 +328,9 @@ namespace Aiursoft.OllamaGateway.Sqlite.Migrations
 
                     b.Property<DateTime>("LastCheckedAt")
                         .HasColumnType("TEXT");
+
+                    b.Property<bool?>("OllamaThinkOverride")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Priority")
                         .HasColumnType("INTEGER");

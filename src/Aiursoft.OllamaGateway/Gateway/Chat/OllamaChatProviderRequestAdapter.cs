@@ -26,7 +26,7 @@ public sealed class OllamaChatProviderRequestAdapter : IChatProviderRequestAdapt
             body["keep_alive"] = "-1s";
         else if (decoded.SourceDialect == Dialect)
             body["keep_alive"] ??= decoded.Request.Options.KeepAlive ?? backend.Provider!.KeepAlive;
-        ApplyOptions(body, decoded.Request.Options, virtualModel);
+        ApplyOptions(body, decoded.Request.Options, virtualModel, backend);
 
         return new HttpRequestMessage(
             HttpMethod.Post,
@@ -49,7 +49,7 @@ public sealed class OllamaChatProviderRequestAdapter : IChatProviderRequestAdapt
         return body;
     }
 
-    private static void ApplyOptions(JsonObject body, GatewayChatOptions options, VirtualModel virtualModel)
+    private static void ApplyOptions(JsonObject body, GatewayChatOptions options, VirtualModel virtualModel, VirtualModelBackend backend)
     {
         JsonObject optionBody;
         try
@@ -76,10 +76,14 @@ public sealed class OllamaChatProviderRequestAdapter : IChatProviderRequestAdapt
         if (virtualModel.RepeatPenalty.HasValue) optionBody["repeat_penalty"] = virtualModel.RepeatPenalty.Value;
         if (optionBody.Count > 0) body["options"] = optionBody;
 
-        var thinking = virtualModel.Thinking ?? options.Thinking;
-        if (!thinking.HasValue && !string.IsNullOrWhiteSpace(options.ReasoningEffort))
-            thinking = !string.Equals(options.ReasoningEffort, "none", StringComparison.OrdinalIgnoreCase);
-        if (thinking.HasValue) body["think"] = thinking.Value;
+        if (backend.OllamaThinkOverride.HasValue)
+            body["think"] = backend.OllamaThinkOverride.Value;
+        else if (options.Thinking.HasValue)
+            body["think"] = options.Thinking.Value;
+        else if (!string.IsNullOrWhiteSpace(options.ReasoningEffort))
+            body["think"] = string.Equals(options.ReasoningEffort, "none", StringComparison.OrdinalIgnoreCase)
+                ? JsonValue.Create(false)
+                : JsonValue.Create(options.ReasoningEffort);
 
         if (!string.IsNullOrWhiteSpace(options.StructuredOutputJson))
         {

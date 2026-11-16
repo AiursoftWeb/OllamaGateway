@@ -14,6 +14,64 @@ public class ChatRequestCompilerTests
         [new OpenAiChatProviderRequestAdapter(), new OllamaChatProviderRequestAdapter(), new OpenAiResponsesProviderRequestAdapter()]);
 
     [TestMethod]
+    [DataRow(null, "medium", "medium")]
+    [DataRow(null, "future-level", "future-level")]
+    [DataRow(true, "medium", "true")]
+    [DataRow(false, "medium", "false")]
+    public async Task OllamaBackend_OverridesOnlyItsOwnThinking(bool? forced, string clientEffort, string expected)
+    {
+        var decoded = _compiler.Decode(ProtocolDialect.OllamaNative,
+            $$"""{"model":"virtual","messages":[{"role":"user","content":"hi"}],"think":"{{clientEffort}}"}""");
+        var backend = Backend(ProviderType.Ollama, "physical");
+        backend.OllamaThinkOverride = forced;
+        using var request = _compiler.CreateProviderRequest(decoded, Model(), backend);
+        var body = JsonNode.Parse(await request.Content!.ReadAsStringAsync());
+        Assert.AreEqual(expected, body?["think"]?.ToString().ToLowerInvariant());
+        Assert.AreEqual(clientEffort, decoded.OriginalBody["think"]?.ToString(), "An attempt must not mutate the client request.");
+
+        backend.OllamaThinkOverride = null;
+        using var fallback = _compiler.CreateProviderRequest(decoded, Model(), backend);
+        var fallbackBody = JsonNode.Parse(await fallback.Content!.ReadAsStringAsync());
+        Assert.AreEqual(clientEffort, fallbackBody?["think"]?.GetValue<string>());
+    }
+
+    [TestMethod]
+    [DataRow(ProtocolDialect.OpenAiChatCompletions, BackendProtocol.OpenAiChatCompletions)]
+    [DataRow(ProtocolDialect.OpenAiResponses, BackendProtocol.OpenAiResponses)]
+    [DataRow(ProtocolDialect.OpenAiChatCompletions, BackendProtocol.OpenAiResponses)]
+    [DataRow(ProtocolDialect.OpenAiResponses, BackendProtocol.OpenAiChatCompletions)]
+    public async Task OpenAiProtocols_PreserveClientEffortAndIgnoreOllamaOverride(ProtocolDialect client, BackendProtocol upstream)
+    {
+        var raw = client == ProtocolDialect.OpenAiChatCompletions
+            ? """{"model":"virtual","messages":[{"role":"user","content":"hi"}],"reasoning_effort":"xhigh"}"""
+            : """{"model":"virtual","input":"hi","reasoning":{"effort":"xhigh","summary":"auto"}}""";
+        var backend = Backend(ProviderType.OpenAI, "physical");
+        backend.Protocol = upstream;
+        backend.OllamaThinkOverride = false;
+        using var request = _compiler.CreateProviderRequest(_compiler.Decode(client, raw), Model(), backend);
+        var body = JsonNode.Parse(await request.Content!.ReadAsStringAsync());
+        Assert.AreEqual("xhigh", (upstream == BackendProtocol.OpenAiChatCompletions
+            ? body?["reasoning_effort"] : body?["reasoning"]?["effort"])?.ToString());
+        Assert.IsNull(body?["chat_template_kwargs"]);
+        Assert.IsNull(body?["think"]);
+        if (client == ProtocolDialect.OpenAiResponses && upstream == BackendProtocol.OpenAiResponses)
+            Assert.AreEqual("auto", body?["reasoning"]?["summary"]?.ToString());
+    }
+
+    [TestMethod]
+    [DataRow(ProtocolDialect.OpenAiChatCompletions)]
+    [DataRow(ProtocolDialect.OpenAiResponses)]
+    public async Task OpenAiToOllama_WithoutOverride_PreservesNamedEffort(ProtocolDialect dialect)
+    {
+        var raw = dialect == ProtocolDialect.OpenAiChatCompletions
+            ? """{"model":"virtual","messages":[{"role":"user","content":"hi"}],"reasoning_effort":"medium"}"""
+            : """{"model":"virtual","input":"hi","reasoning":{"effort":"medium"}}""";
+        using var request = _compiler.CreateProviderRequest(_compiler.Decode(dialect, raw), Model(), Backend(ProviderType.Ollama, "physical"));
+        var body = JsonNode.Parse(await request.Content!.ReadAsStringAsync());
+        Assert.AreEqual("medium", body?["think"]?.GetValue<string>());
+    }
+
+    [TestMethod]
     [DataRow("[]")]
     [DataRow("null")]
     [DataRow("invalid-json")]

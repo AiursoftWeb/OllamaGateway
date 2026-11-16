@@ -42,8 +42,26 @@
   <data name="Disabled" xml:space="preserve">
     <value>Disabled</value>
   </data>
+  <data name="Do not override" xml:space="preserve">
+    <value>Do not override</value>
+  </data>
+  <data name="e.g. MyLlama3" xml:space="preserve">
+    <value>e.g. MyLlama3</value>
+  </data>
+  <data name="e.g. MyLlama3:latest" xml:space="preserve">
+    <value>e.g. MyLlama3:latest</value>
+  </data>
   <data name="Enabled" xml:space="preserve">
     <value>Enabled</value>
+  </data>
+  <data name="Follow request" xml:space="preserve">
+    <value>Follow request</value>
+  </data>
+  <data name="Force off" xml:space="preserve">
+    <value>Force off</value>
+  </data>
+  <data name="Force on" xml:space="preserve">
+    <value>Force on</value>
   </data>
   <data name="Forces the upstream engine to allocate a specific window size." xml:space="preserve">
     <value>Forces the upstream engine to allocate a specific window size.</value>
@@ -99,6 +117,12 @@
   <data name="Thinking Mode" xml:space="preserve">
     <value>Thinking Mode</value>
   </data>
+  <data name="Thinking Override" xml:space="preserve">
+    <value>Thinking Override</value>
+  </data>
+  <data name="Thinking overrides apply only to this Ollama-native backend. Do not override keeps the client setting, or the upstream default when absent." xml:space="preserve">
+    <value>Thinking overrides apply only to this Ollama-native backend. “Do not override” keeps the client setting, or the upstream default if none is set.</value>
+  </data>
   <data name="Top K" xml:space="preserve">
     <value>Top K</value>
   </data>
@@ -122,12 +146,6 @@
   </data>
   <data name="When checked, the &apos;raw: true&apos; parameter is sent to the upstream Ollama API. This tells Ollama to NOT apply any chat templates to your prompt. Use this for pure text completion. If unchecked, Ollama will automatically wrap your prompt in the model&apos;s default chat template, treating it as a conversational question." xml:space="preserve">
     <value>When checked, the &apos;raw: true&apos; parameter is sent to the upstream Ollama API. This tells Ollama to NOT apply any chat templates to your prompt. Use this for pure text completion. If unchecked, Ollama will automatically wrap your prompt in the model&apos;s default chat template, treating it as a conversational question.</value>
-  </data>
-  <data name="e.g. MyLlama3" xml:space="preserve">
-    <value>e.g. MyLlama3</value>
-  </data>
-  <data name="e.g. MyLlama3:latest" xml:space="preserve">
-    <value>e.g. MyLlama3:latest</value>
   </data>
 
 </root>

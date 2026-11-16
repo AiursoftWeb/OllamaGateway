@@ -6,7 +6,6 @@ using Aiursoft.OllamaGateway.Services;
 using Aiursoft.UiStack.Navigation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.OllamaGateway.Controllers;
@@ -154,12 +153,6 @@ public class VirtualModelsController(
             AvailableUnderlyingModels = underlyingModels,
             AvailableProviders = providers
         };
-        ViewData["ThinkingOptions"] = new List<SelectListItem>
-        {
-            new() { Value = "", Text = "Default", Selected = true },
-            new() { Value = "true", Text = "Enabled" },
-            new() { Value = "false", Text = "Disabled" }
-        };
         return this.StackView(model, nameof(Create));
     }
 
@@ -191,12 +184,6 @@ public class VirtualModelsController(
             {
                 model.AvailableUnderlyingModels = await GetModelsForProviderAsync(provider);
             }
-            ViewData["ThinkingOptions"] = new List<SelectListItem>
-            {
-                new() { Value = "", Text = "Default", Selected = model.Thinking == null },
-                new() { Value = "true", Text = "Enabled", Selected = model.Thinking == true },
-                new() { Value = "false", Text = "Disabled", Selected = model.Thinking == false }
-            };
             return this.StackView(model, nameof(Create));
         }
 
@@ -210,12 +197,6 @@ public class VirtualModelsController(
             {
                 model.AvailableUnderlyingModels = await GetModelsForProviderAsync(provider);
             }
-            ViewData["ThinkingOptions"] = new List<SelectListItem>
-            {
-                new() { Value = "", Text = "Default", Selected = model.Thinking == null },
-                new() { Value = "true", Text = "Enabled", Selected = model.Thinking == true },
-                new() { Value = "false", Text = "Disabled", Selected = model.Thinking == false }
-            };
             return this.StackView(model, nameof(Create));
         }
         var virtualModel = new VirtualModel
@@ -225,7 +206,6 @@ public class VirtualModelsController(
             SelectionStrategy = model.SelectionStrategy,
             MaxRetries = model.MaxRetries,
             RequestTimeoutSeconds = model.RequestTimeoutSeconds,
-            Thinking = model.Thinking,
             NumCtx = model.NumCtx,
             Temperature = model.Temperature,
             TopP = model.TopP,
@@ -240,6 +220,7 @@ public class VirtualModelsController(
                     UnderlyingModelName = model.UnderlyingModel,
                     ProviderId = model.ProviderId,
                     Protocol = model.Protocol,
+                    OllamaThinkOverride = model.Protocol == BackendProtocol.OllamaNative ? model.OllamaThinkOverride : null,
                     Enabled = true,
                     IsHealthy = true,
                     Priority = 1,
@@ -287,7 +268,6 @@ public class VirtualModelsController(
             SelectionStrategy = virtualModel.SelectionStrategy,
             MaxRetries = virtualModel.MaxRetries,
             RequestTimeoutSeconds = virtualModel.RequestTimeoutSeconds,
-            Thinking = virtualModel.Thinking,
             NumCtx = virtualModel.NumCtx,
             Temperature = virtualModel.Temperature,
             TopP = virtualModel.TopP,
@@ -301,12 +281,6 @@ public class VirtualModelsController(
         };
         ViewData["Id"] = id;
         ViewData["Backends"] = virtualModel.VirtualModelBackends;
-        ViewData["ThinkingOptions"] = new List<SelectListItem>
-        {
-            new() { Value = "", Text = "Default", Selected = virtualModel.Thinking == null },
-            new() { Value = "true", Text = "Enabled", Selected = virtualModel.Thinking == true },
-            new() { Value = "false", Text = "Disabled", Selected = virtualModel.Thinking == false }
-        };
         return this.StackView(model, nameof(Edit));
     }
 
@@ -325,12 +299,6 @@ public class VirtualModelsController(
             ViewData["Id"] = id;
             var vm = await dbContext.VirtualModels.Include(m => m.VirtualModelBackends).FirstOrDefaultAsync(m => m.Id == id);
             ViewData["Backends"] = vm?.VirtualModelBackends;
-            ViewData["ThinkingOptions"] = new List<SelectListItem>
-            {
-                new() { Value = "", Text = "Default", Selected = model.Thinking == null },
-                new() { Value = "true", Text = "Enabled", Selected = model.Thinking == true },
-                new() { Value = "false", Text = "Disabled", Selected = model.Thinking == false }
-            };
             return this.StackView(model, nameof(Edit));
         }
 
@@ -346,12 +314,6 @@ public class VirtualModelsController(
             ViewData["Id"] = id;
             var vm = await dbContext.VirtualModels.Include(m => m.VirtualModelBackends).FirstOrDefaultAsync(m => m.Id == id);
             ViewData["Backends"] = vm?.VirtualModelBackends;
-            ViewData["ThinkingOptions"] = new List<SelectListItem>
-            {
-                new() { Value = "", Text = "Default", Selected = model.Thinking == null },
-                new() { Value = "true", Text = "Enabled", Selected = model.Thinking == true },
-                new() { Value = "false", Text = "Disabled", Selected = model.Thinking == false }
-            };
             return this.StackView(model, nameof(Edit));
         }
         var virtualModel = await dbContext.VirtualModels
@@ -368,7 +330,6 @@ public class VirtualModelsController(
         virtualModel.SelectionStrategy = model.SelectionStrategy;
         virtualModel.MaxRetries = model.MaxRetries;
         virtualModel.RequestTimeoutSeconds = model.RequestTimeoutSeconds;
-        virtualModel.Thinking = model.Thinking;
         virtualModel.NumCtx = model.NumCtx;
         virtualModel.Temperature = model.Temperature;
         virtualModel.TopP = model.TopP;
@@ -390,7 +351,8 @@ public class VirtualModelsController(
         string underlyingModel,
         BackendProtocol? protocol,
         int priority = 1,
-        int weight = 1)
+        int weight = 1,
+        bool? ollamaThinkOverride = null)
     {
         var virtualModel = await dbContext.VirtualModels.FindAsync(id);
         if (virtualModel == null) return NotFound();
@@ -400,7 +362,7 @@ public class VirtualModelsController(
             : await dbContext.OllamaProviders.AsNoTracking().Include(item => item.VirtualModelBackends).FirstOrDefaultAsync(item => item.Id == providerId);
         protocol ??= provider == null ? null : DefaultProtocol(provider);
 
-        if (string.IsNullOrEmpty(underlyingModel) || provider == null || !protocol.HasValue || !Enum.IsDefined(protocol.Value))
+        if (!ModelState.IsValid || string.IsNullOrEmpty(underlyingModel) || provider == null || !protocol.HasValue || !Enum.IsDefined(protocol.Value))
         {
             if (string.IsNullOrEmpty(underlyingModel))
             {
@@ -423,6 +385,7 @@ public class VirtualModelsController(
             ProviderId = providerId,
             UnderlyingModelName = underlyingModel,
             Protocol = protocol.Value,
+            OllamaThinkOverride = protocol == BackendProtocol.OllamaNative ? ollamaThinkOverride : null,
             Priority = priority,
             Weight = weight,
             Enabled = true,
@@ -435,15 +398,19 @@ public class VirtualModelsController(
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> UpdateBackend(int id, BackendProtocol? protocol, int priority, int weight)
+    public async Task<IActionResult> UpdateBackend(int id, BackendProtocol? protocol, int priority, int weight, bool? ollamaThinkOverride = null)
     {
-        var backend = await dbContext.VirtualModelBackends.FindAsync(id);
+        var backend = await dbContext.VirtualModelBackends.Include(item => item.Provider).FirstOrDefaultAsync(item => item.Id == id);
         if (backend == null) return NotFound();
+        if (!ModelState.IsValid) return BadRequest(ModelState);
         if (protocol.HasValue && !Enum.IsDefined(protocol.Value)) return BadRequest("A valid backend protocol is required.");
 
         backend.Priority = priority;
         backend.Weight = weight;
         if (protocol.HasValue) backend.Protocol = protocol.Value;
+        backend.OllamaThinkOverride = BackendProtocolResolver.Resolve(backend) == BackendProtocol.OllamaNative
+            ? ollamaThinkOverride
+            : null;
         await dbContext.SaveChangesAsync();
         return RedirectToAction(nameof(Edit), new { id = backend.VirtualModelId });
     }

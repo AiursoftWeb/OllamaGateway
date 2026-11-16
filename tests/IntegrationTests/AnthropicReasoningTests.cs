@@ -73,8 +73,7 @@ public class AnthropicReasoningTests : TestBase
         {
             Name = VirtualModelName,
             Type = ModelType.Chat,
-            MaxRetries = 1,
-            Thinking = true
+            MaxRetries = 1
         };
         db.VirtualModels.Add(vm);
         await db.SaveChangesAsync();

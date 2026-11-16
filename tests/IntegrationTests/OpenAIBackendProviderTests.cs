@@ -1177,182 +1177,45 @@ public class OpenAIBackendProviderTests : TestBase
         Assert.AreEqual("https://images.example.test/cat.png", content?[2]?["image_url"]?["url"]?.ToString());
     }
 
-    // ========================================================================
-    // C. Thinking injection: OpenAI provider paths
-    // ========================================================================
-
     [TestMethod]
-    public async Task OpenAIUpstreamToOpenAIBackend_VMThinkingTrue_InjectsChatTemplateKwargs()
+    [DataRow(true)]
+    [DataRow(false)]
+    [DataRow(null)]
+    public async Task OpenAIBackend_FollowsClientThinkingRegardlessOfOllamaOverride(bool? ollamaOverride)
     {
-        // Path ①: OpenAI client → OpenAI backend, VM.Thinking = true
-        var capturedRequestBody = string.Empty;
         using (var scope = Server!.Services.CreateScope())
         {
-            Assert.IsNotNull(scope);
             var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
-            var vm = await db.VirtualModels.FirstAsync(m => m.Name == ChatModelName);
-            vm.Thinking = true;
+            var backend = await db.VirtualModelBackends.FirstAsync(b => b.UnderlyingModelName == PhysicalModelName);
+            backend.OllamaThinkOverride = ollamaOverride;
             await db.SaveChangesAsync();
         }
-
-        MockUpstreamState.Handler = (_, _) =>
+        MockUpstreamState.Handler = (_, _) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
         {
-            capturedRequestBody = MockUpstreamState.LastRequestBody ?? string.Empty;
-            const string body =
-                """{"id":"t1","object":"chat.completion","choices":[{"message":{"role":"assistant","content":"ok"},"finish_reason":"stop"}],"usage":{"prompt_tokens":1,"completion_tokens":1,"total_tokens":2}}""";
-            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(body, Encoding.UTF8, "application/json")
-            });
-        };
+            Content = new StringContent("""{"id":"thinking","object":"chat.completion","choices":[{"message":{"role":"assistant","content":"ok"},"finish_reason":"stop"}]}""", Encoding.UTF8, "application/json")
+        });
+        var payload = $$"""{"model":"{{ChatModelName}}","messages":[{"role":"user","content":"Hi"}],"reasoning_effort":"xhigh","chat_template_kwargs":{"enable_thinking":false,"vendor":"kept"},"stream":false}""";
+        var response = await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody!);
+        Assert.AreEqual("xhigh", upstreamBody?["reasoning_effort"]?.ToString());
+        Assert.AreEqual(false, upstreamBody?["chat_template_kwargs"]?["enable_thinking"]?.GetValue<bool>());
+        Assert.AreEqual("kept", upstreamBody?["chat_template_kwargs"]?["vendor"]?.ToString());
+    }
 
+    [TestMethod]
+    public async Task OpenAIBackend_WithoutClientThinking_DoesNotInjectThinking()
+    {
+        MockUpstreamState.Handler = (_, _) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+        {
+            Content = new StringContent("""{"id":"thinking","object":"chat.completion","choices":[{"message":{"role":"assistant","content":"ok"},"finish_reason":"stop"}]}""", Encoding.UTF8, "application/json")
+        });
         var payload = $$"""{"model":"{{ChatModelName}}","messages":[{"role":"user","content":"Hi"}],"stream":false}""";
-        await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
-
-        var upstreamBody = JsonNode.Parse(capturedRequestBody);
-        Assert.IsNotNull(upstreamBody, "Upstream request body must be captured");
-        Assert.AreEqual(true, upstreamBody["chat_template_kwargs"]?["enable_thinking"]?.GetValue<bool>(),
-            "chat_template_kwargs.enable_thinking must be true when VM.Thinking = true");
-    }
-
-    [TestMethod]
-    public async Task OpenAIUpstreamToOpenAIBackend_VMThinkingFalse_InjectsChatTemplateKwargs()
-    {
-        // Path ①: OpenAI client → OpenAI backend, VM.Thinking = false
-        var capturedRequestBody = string.Empty;
-        using (var scope = Server!.Services.CreateScope())
-        {
-            Assert.IsNotNull(scope);
-            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
-            var vm = await db.VirtualModels.FirstAsync(m => m.Name == ChatModelName);
-            vm.Thinking = false;
-            await db.SaveChangesAsync();
-        }
-
-        MockUpstreamState.Handler = (_, _) =>
-        {
-            capturedRequestBody = MockUpstreamState.LastRequestBody ?? string.Empty;
-            const string body =
-                """{"id":"t2","object":"chat.completion","choices":[{"message":{"role":"assistant","content":"ok"},"finish_reason":"stop"}],"usage":{"prompt_tokens":1,"completion_tokens":1,"total_tokens":2}}""";
-            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(body, Encoding.UTF8, "application/json")
-            });
-        };
-
-        var payload = $$"""{"model":"{{ChatModelName}}","messages":[{"role":"user","content":"Hi"}],"stream":false}""";
-        await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
-
-        var upstreamBody = JsonNode.Parse(capturedRequestBody);
-        Assert.IsNotNull(upstreamBody);
-        Assert.AreEqual(false, upstreamBody["chat_template_kwargs"]?["enable_thinking"]?.GetValue<bool>(),
-            "chat_template_kwargs.enable_thinking must be false when VM.Thinking = false");
-    }
-
-    [TestMethod]
-    public async Task OpenAIUpstreamToOpenAIBackend_VMThinkingNull_PassesThroughClientValue()
-    {
-        // Path ①: OpenAI client → OpenAI backend, VM.Thinking = null → client value passes through
-        var capturedRequestBody = string.Empty;
-        using (var scope = Server!.Services.CreateScope())
-        {
-            Assert.IsNotNull(scope);
-            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
-            var vm = await db.VirtualModels.FirstAsync(m => m.Name == ChatModelName);
-            vm.Thinking = null;
-            await db.SaveChangesAsync();
-        }
-
-        MockUpstreamState.Handler = (_, _) =>
-        {
-            capturedRequestBody = MockUpstreamState.LastRequestBody ?? string.Empty;
-            const string body =
-                """{"id":"t3","object":"chat.completion","choices":[{"message":{"role":"assistant","content":"ok"},"finish_reason":"stop"}],"usage":{"prompt_tokens":1,"completion_tokens":1,"total_tokens":2}}""";
-            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(body, Encoding.UTF8, "application/json")
-            });
-        };
-
-        var payload = $$$"""{"model":"{{{ChatModelName}}}","messages":[{"role":"user","content":"Hi"}],"stream":false,"chat_template_kwargs":{"enable_thinking":true}}""";
-        await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
-
-        var upstreamBody = JsonNode.Parse(capturedRequestBody);
-        Assert.IsNotNull(upstreamBody);
-        Assert.AreEqual(true, upstreamBody["chat_template_kwargs"]?["enable_thinking"]?.GetValue<bool>(),
-            "When VM.Thinking is null, client-supplied chat_template_kwargs must pass through unchanged");
-    }
-
-    [TestMethod]
-    public async Task OpenAIUpstreamToOpenAIBackend_VMThinkingOverridesClientValue()
-    {
-        // Path ①: VM.Thinking = false must override client's enable_thinking = true
-        var capturedRequestBody = string.Empty;
-        using (var scope = Server!.Services.CreateScope())
-        {
-            Assert.IsNotNull(scope);
-            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
-            var vm = await db.VirtualModels.FirstAsync(m => m.Name == ChatModelName);
-            vm.Thinking = false;
-            await db.SaveChangesAsync();
-        }
-
-        MockUpstreamState.Handler = (_, _) =>
-        {
-            capturedRequestBody = MockUpstreamState.LastRequestBody ?? string.Empty;
-            const string body =
-                """{"id":"t4","object":"chat.completion","choices":[{"message":{"role":"assistant","content":"ok"},"finish_reason":"stop"}],"usage":{"prompt_tokens":1,"completion_tokens":1,"total_tokens":2}}""";
-            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(body, Encoding.UTF8, "application/json")
-            });
-        };
-
-        var payload = $$$"""{"model":"{{{ChatModelName}}}","messages":[{"role":"user","content":"Hi"}],"stream":false,"chat_template_kwargs":{"enable_thinking":true}}""";
-        await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
-
-        var upstreamBody = JsonNode.Parse(capturedRequestBody);
-        Assert.IsNotNull(upstreamBody);
-        Assert.AreEqual(false, upstreamBody["chat_template_kwargs"]?["enable_thinking"]?.GetValue<bool>(),
-            "VM.Thinking = false must override client-supplied enable_thinking = true");
-    }
-
-    [TestMethod]
-    public async Task OllamaUpstreamToOpenAIBackend_VMThinkingTrue_InjectsChatTemplateKwargs()
-    {
-        // Path ②: Ollama client → OpenAI backend, VM.Thinking = true
-        var capturedRequestBody = string.Empty;
-        using (var scope = Server!.Services.CreateScope())
-        {
-            Assert.IsNotNull(scope);
-            var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
-            var vm = await db.VirtualModels.FirstAsync(m => m.Name == ChatModelName);
-            vm.Thinking = true;
-            await db.SaveChangesAsync();
-        }
-
-        MockUpstreamState.Handler = (_, _) =>
-        {
-            capturedRequestBody = MockUpstreamState.LastRequestBody ?? string.Empty;
-            const string body =
-                """{"id":"t5","object":"chat.completion","choices":[{"message":{"role":"assistant","content":"ok"},"finish_reason":"stop"}],"usage":{"prompt_tokens":1,"completion_tokens":1,"total_tokens":2}}""";
-            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(body, Encoding.UTF8, "application/json")
-            });
-        };
-
-        var payload = $$"""{"model":"{{ChatModelName}}","messages":[{"role":"user","content":"Hi"}],"stream":false}""";
-        await Http.SendAsync(AuthedPost("/api/chat", payload));
-
-        Assert.IsTrue(
-            MockUpstreamState.LastRequest?.RequestUri?.PathAndQuery.Contains("/v1/chat/completions") ?? false,
-            "Upstream should call /v1/chat/completions for OpenAI backend");
-
-        var upstreamBody = JsonNode.Parse(capturedRequestBody);
-        Assert.IsNotNull(upstreamBody);
-        Assert.AreEqual(true, upstreamBody["chat_template_kwargs"]?["enable_thinking"]?.GetValue<bool>(),
-            "chat_template_kwargs.enable_thinking must be true when VM.Thinking = true (Ollama→OpenAI)");
+        var response = await Http.SendAsync(AuthedPost("/v1/chat/completions", payload));
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        var upstreamBody = JsonNode.Parse(MockUpstreamState.LastRequestBody!);
+        Assert.IsNull(upstreamBody?["chat_template_kwargs"]);
+        Assert.IsNull(upstreamBody?["reasoning_effort"]);
     }
 
     // ========================================================================

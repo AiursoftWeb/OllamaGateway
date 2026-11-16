@@ -81,6 +81,9 @@ public sealed class OllamaChatRequestDecoder : IChatRequestDecoder
                 ContextSize: ChatRequestDecoding.IntValue(options?["num_ctx"]),
                 RepeatPenalty: ChatRequestDecoding.DoubleValue(options?["repeat_penalty"]),
                 Thinking: ChatRequestDecoding.BoolValue(root["think"]),
+                ReasoningEffort: root["think"] is JsonValue thinkValue && thinkValue.TryGetValue<string>(out var effort)
+                    ? effort
+                    : null,
                 KeepAlive: ChatRequestDecoding.StringValue(root["keep_alive"], null!),
                 StructuredOutputJson: NormalizeFormat(root["format"])),
             tools,
