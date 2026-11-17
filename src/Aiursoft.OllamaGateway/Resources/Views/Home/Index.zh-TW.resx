@@ -165,6 +165,9 @@
   <data name="All Ollama VM controls apply: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt;. Ollama-only values may therefore be injected even though the client dialect cannot express them." xml:space="preserve">
     <value>所有 Ollama VM 控制項皆適用：&lt;code&gt;temperature&lt;/code&gt;、&lt;code&gt;top_p&lt;/code&gt;、&lt;code&gt;top_k&lt;/code&gt;、&lt;code&gt;num_predict&lt;/code&gt;、&lt;code&gt;num_ctx&lt;/code&gt;、&lt;code&gt;repeat_penalty&lt;/code&gt; 以及 &lt;code&gt;think&lt;/code&gt;。因此，即使用戶端方言無法表達這些值，也可能注入僅限 Ollama 的值。</value>
   </data>
+  <data name="All Ollama VM sampling controls apply. The selected backend can force &lt;code&gt;think&lt;/code&gt; on or off; otherwise the translated client setting applies." xml:space="preserve">
+    <value>所有 Ollama VM 抽樣控制皆適用。選定的後端可強制將 &lt;code&gt;think&lt;/code&gt; 設為開啟或關閉；否則套用已轉換的用戶端設定。</value>
+  </data>
   <data name="All dependencies are automatically registered and always available via constructor injection." xml:space="preserve">
     <value>所有依賴項都會自動註冊，並始終可透過建構函式注入使用。</value>
   </data>
@@ -260,6 +263,9 @@
   </data>
   <data name="Backend Provider type" xml:space="preserve">
     <value>後端提供者類型</value>
+  </data>
+  <data name="Backend thinking overrides apply to both same-dialect direct forwarding and cross-dialect translation. An empty override keeps the client setting, or the upstream default when absent." xml:space="preserve">
+    <value>後端思考覆寫同時適用於同方言直接轉發與跨方言翻譯。空的覆寫會保留客戶端設定；若客戶端設定不存在，則使用上游預設值。</value>
   </data>
   <data name="Background Job Processing" xml:space="preserve">
     <value>背景工作處理</value>
@@ -1044,6 +1050,9 @@
   <data name="OpenAI content parts → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → boolean &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;." xml:space="preserve">
     <value>OpenAI 內容部分 → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;；&lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;；&lt;code&gt;reasoning_effort&lt;/code&gt; → 布林值 &lt;code&gt;think&lt;/code&gt;；&lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;。</value>
   </data>
+  <data name="OpenAI content parts → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → named &lt;code&gt;think&lt;/code&gt; level (&lt;code&gt;none&lt;/code&gt; → &lt;code&gt;false&lt;/code&gt;); &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;." xml:space="preserve">
+    <value>OpenAI 內容片段 → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;；&lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;；&lt;code&gt;reasoning_effort&lt;/code&gt; → 具名 &lt;code&gt;think&lt;/code&gt; 層級（&lt;code&gt;none&lt;/code&gt; → &lt;code&gt;false&lt;/code&gt;）；&lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;。</value>
+  </data>
   <data name="OpenAI embedding extensions outside the shared input are not copied into the cross-dialect request or reconstructed response." xml:space="preserve">
     <value>共用輸入之外的 OpenAI 嵌入擴展欄位不會複製到跨語系請求或重建的回應中。</value>
   </data>
@@ -1052,6 +1061,9 @@
   </data>
   <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
     <value>OpenAI 多模態內容陣列被提取：image_url 資料傳入 Ollama images 陣列，文字成為 content。</value>
+  </data>
+  <data name="OpenAI target fields &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_tokens&lt;/code&gt; use VM values when set. The selected Ollama backend can override &lt;code&gt;think&lt;/code&gt;; otherwise the client setting is kept." xml:space="preserve">
+    <value>OpenAI 目標欄位 &lt;code&gt;temperature&lt;/code&gt;、&lt;code&gt;top_p&lt;/code&gt; 與 &lt;code&gt;max_tokens&lt;/code&gt; 若已設定，則使用 VM 值。選取的 Ollama 後端可覆寫 &lt;code&gt;think&lt;/code&gt;；否則保留客戶端設定。</value>
   </data>
   <data name="OpenAI target fields &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_tokens&lt;/code&gt; use VM values when set. VM &lt;code&gt;Thinking&lt;/code&gt; overrides the translated client value." xml:space="preserve">
     <value>當設定時，OpenAI 目標欄位 &lt;code&gt;temperature&lt;/code&gt;、&lt;code&gt;top_p&lt;/code&gt; 和 &lt;code&gt;max_tokens&lt;/code&gt; 會使用 VM 值。VM &lt;code&gt;Thinking&lt;/code&gt; 會覆寫已轉換的用戶端值。</value>
@@ -1365,6 +1377,9 @@
   <data name="The request adapter deep-clones the original Responses JSON. &lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt; preserves unknown output Items and SSE event names/data/comments/id/retry without passing the payload through canonical IL." xml:space="preserve">
     <value>請求適配器會對原始 Responses JSON 進行深層複製。&lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt; 會保留未知的輸出項目以及 SSE 事件的名稱、資料、註解、ID 和重試設定，而無需將酬載透過標準化中間語言（IL）處理。</value>
   </data>
+  <data name="The selected backend can override thinking. VM NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
+    <value>選取的後端可覆寫思考。虛擬模型 NumCtx、Temperature、TopP、TopK、NumPredict 和 RepeatPenalty 會覆寫請求；缺少 &lt;code&gt;keep_alive&lt;/code&gt; 時使用 Provider 值。</value>
+  </data>
   <data name="The template is built for easy deployment. It includes full Docker support, so you can containerize your app and run it anywhere. You can also deploy it directly to IIS, Azure App Service, or any server that supports ASP.NET Core." xml:space="preserve">
     <value>此模板專為簡化部署流程而設計。它提供完整的 Docker 支援，讓您能將應用程式容器化並隨處執行。您也可以直接部署到 IIS、Azure App Service 或任何支援 ASP.NET Core 的伺服器。</value>
   </data>
@@ -1470,11 +1485,29 @@
   <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other nested Responses fields remain untouched." xml:space="preserve">
     <value>VM 的 &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt; 和 &lt;code&gt;NumPredict&lt;/code&gt; 會覆寫 &lt;code&gt;temperature&lt;/code&gt;、&lt;code&gt;top_p&lt;/code&gt; 以及 &lt;code&gt;max_output_tokens&lt;/code&gt;。其他 Responses 的巢狀欄位則保持不變。</value>
   </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. The selected backend overrides &lt;code&gt;reasoning.effort&lt;/code&gt; when configured, including direct forwarding. Other nested Responses fields remain untouched." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt; 和 &lt;code&gt;NumPredict&lt;/code&gt; 會覆寫 &lt;code&gt;temperature&lt;/code&gt;、&lt;code&gt;top_p&lt;/code&gt; 和 &lt;code&gt;max_output_tokens&lt;/code&gt;。已選取的後端在已設定時會覆寫 &lt;code&gt;reasoning.effort&lt;/code&gt;，包括直接轉送。其他巢狀 Responses 欄位保持不變。</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Chat target controls. The selected backend overrides reasoning effort when configured; otherwise the translated client setting is kept." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt; 與 &lt;code&gt;NumPredict&lt;/code&gt; 會覆寫 Chat 目標控制項。若已選取的后端已設定推理強度，則會覆寫推理強度；否則保留已翻譯的用戶端設定。</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Chat target fields. The selected backend overrides reasoning effort when configured; otherwise the translated client setting is kept. Ollama-only DB sampling/context controls do not apply to Chat." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt; 和 &lt;code&gt;NumPredict&lt;/code&gt; 會覆寫 Chat 目標欄位。已選取的後端在已設定時會覆寫推理強度；否則保留已翻譯的用戶端設定。僅限 Ollama 的資料庫取樣/上下文控制不適用於 Chat。</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. The selected backend overrides reasoning effort when configured; otherwise the client setting is kept. VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt; 與 &lt;code&gt;NumPredict&lt;/code&gt; 會覆寫 Responses 欄位。選取的後端在已設定時會覆寫推理強度；否則會保留用戶端設定。VM &lt;code&gt;TopK&lt;/code&gt;、&lt;code&gt;NumCtx&lt;/code&gt; 與 &lt;code&gt;RepeatPenalty&lt;/code&gt; 沒有 Responses 目標欄位。</value>
+  </data>
   <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
     <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt; 和 &lt;code&gt;NumPredict&lt;/code&gt; 會覆寫 Responses 欄位。VM &lt;code&gt;Thinking&lt;/code&gt;、&lt;code&gt;TopK&lt;/code&gt;、&lt;code&gt;NumCtx&lt;/code&gt; 和 &lt;code&gt;RepeatPenalty&lt;/code&gt; 沒有對應的 Responses 目標欄位。</value>
   </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. The selected backend overrides reasoning effort when configured; otherwise the client setting is kept. VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt; 和 &lt;code&gt;NumPredict&lt;/code&gt; 會覆寫 Responses 目標欄位。若已設定，所選後端會覆寫推理努力；否則會保留用戶端設定。VM &lt;code&gt;TopK&lt;/code&gt;、&lt;code&gt;NumCtx&lt;/code&gt; 和 &lt;code&gt;RepeatPenalty&lt;/code&gt; 不是 Responses 控制項。</value>
+  </data>
   <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
     <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt; 和 &lt;code&gt;NumPredict&lt;/code&gt; 會覆寫 Responses 目標欄位。VM &lt;code&gt;Thinking&lt;/code&gt;、&lt;code&gt;TopK&lt;/code&gt;、&lt;code&gt;NumCtx&lt;/code&gt; 和 &lt;code&gt;RepeatPenalty&lt;/code&gt; 並非 Responses 控制參數。</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override their target fields. The selected backend overrides &lt;code&gt;reasoning_effort&lt;/code&gt; when configured, including direct forwarding. Other client reasoning controls and nested &lt;code&gt;chat_template_kwargs&lt;/code&gt; members are preserved." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt; 和 &lt;code&gt;NumPredict&lt;/code&gt; 會覆寫對應的目標欄位。已選取的後端在已設定時會覆寫 &lt;code&gt;reasoning_effort&lt;/code&gt;，包括直接轉發。其他用戶端推理控制項與巢狀 &lt;code&gt;chat_template_kwargs&lt;/code&gt; 成員將予以保留。</value>
   </data>
   <data name="VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
     <value>VM Thinking、NumCtx、Temperature、TopP、TopK、NumPredict 和 RepeatPenalty 會覆寫請求；若缺少 &lt;code&gt;keep_alive&lt;/code&gt;，則使用 Provider 的值。</value>
