@@ -78,6 +78,8 @@ public class LocalizationConventionsTests
         var scriptsRoot = Path.Combine(GetRepositoryRoot(), "src", "Aiursoft.OllamaGateway", "wwwroot");
         violations.AddRange(Directory
             .EnumerateFiles(scriptsRoot, "*.js", SearchOption.AllDirectories)
+            .Where(scriptPath => !Path.GetRelativePath(scriptsRoot, scriptPath)
+                .StartsWith("node_modules" + Path.DirectorySeparatorChar, StringComparison.Ordinal))
             .Where(scriptPath => directUserText.IsMatch(File.ReadAllText(scriptPath)))
             .Select(GetRelativePath));
 
