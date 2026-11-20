@@ -165,6 +165,9 @@
   <data name="All Ollama VM controls apply: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt;. Ollama-only values may therefore be injected even though the client dialect cannot express them." xml:space="preserve">
     <value>सभी Ollama VM नियंत्रण लागू होते हैं: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, और &lt;code&gt;think&lt;/code&gt;। इसलिए, Ollama-अनुकूल मानों को इंजेक्ट किया जा सकता है, भले ही क्लाइंट डायलैक्ट उन्हें व्यक्त नहीं कर सके।</value>
   </data>
+  <data name="All Ollama VM sampling controls apply. The selected backend can force &lt;code&gt;think&lt;/code&gt; on or off; otherwise the translated client setting applies." xml:space="preserve">
+    <value>सभी Ollama VM सैंपलिंग नियंत्रण लागू होते हैं। चयनित बैकएंड &lt;code&gt;think&lt;/code&gt; को चालू या बंद कर सकता है; अन्यथा अनुवादित क्लाइंट सेटिंग लागू होती है।</value>
+  </data>
   <data name="All dependencies are automatically registered and always available via constructor injection." xml:space="preserve">
     <value>सभी निर्भरताएँ स्वचालित रूप से पंजीकृत होती हैं और कंस्ट्रक्टर इंजेक्शन के माध्यम से हमेशा उपलब्ध रहती हैं।</value>
   </data>
@@ -260,6 +263,9 @@
   </data>
   <data name="Backend Provider type" xml:space="preserve">
     <value>बैकएंड प्रोवाइडर प्रकार</value>
+  </data>
+  <data name="Backend thinking overrides apply to both same-dialect direct forwarding and cross-dialect translation. An empty override keeps the client setting, or the upstream default when absent." xml:space="preserve">
+    <value>बैकएंड थिंकिंग ओवरराइड समान-भाषी प्रत्यक्ष फॉरवर्डिंग और क्रॉस-भाषी अनुवाद दोनों पर लागू होते हैं। एक खाली ओवरराइड क्लाइंट सेटिंग को बनाए रखता है, या जब उपस्थित न हो तो अपस्ट्रीम डिफ़ॉल्ट को।</value>
   </data>
   <data name="Background Job Processing" xml:space="preserve">
     <value>बैकग्राउंड जॉब प्रोसेसिंग</value>
@@ -1038,6 +1044,9 @@
   <data name="OpenAI content parts → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → boolean &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;." xml:space="preserve">
     <value>OpenAI कंटेंट पार्ट्स → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → बूलियन &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;.</value>
   </data>
+  <data name="OpenAI content parts → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → named &lt;code&gt;think&lt;/code&gt; level (&lt;code&gt;none&lt;/code&gt; → &lt;code&gt;false&lt;/code&gt;); &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;." xml:space="preserve">
+    <value>OpenAI कंटेंट पार्ट्स → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → नामित &lt;code&gt;think&lt;/code&gt; स्तर (&lt;code&gt;none&lt;/code&gt; → &lt;code&gt;false&lt;/code&gt;); &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;.</value>
+  </data>
   <data name="OpenAI embedding extensions outside the shared input are not copied into the cross-dialect request or reconstructed response." xml:space="preserve">
     <value>शेयर्ड इनपुट से बाहर के OpenAI एम्बेडिंग विस्तार क्रॉस-डायलैक्ट अनुरोध या पुनर्निर्मित प्रतिक्रिया में प्रतिनहीं किए जाते।</value>
   </data>
@@ -1046,6 +1055,9 @@
   </data>
   <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
     <value>OpenAI मल्टीमॉडल सामग्री सरणी निकाली जाती है: image_url डेटा Ollama इमेज सरणी में जाता है, टेक्स्ट सामग्री बन जाता है।</value>
+  </data>
+  <data name="OpenAI target fields &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_tokens&lt;/code&gt; use VM values when set. The selected Ollama backend can override &lt;code&gt;think&lt;/code&gt;; otherwise the client setting is kept." xml:space="preserve">
+    <value>OpenAI लक्ष्य फ़ील्ड &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, और &lt;code&gt;max_tokens&lt;/code&gt; सेट होने पर VM मानों का उपयोग करते हैं। चुना गया Ollama बैकएंड &lt;code&gt;think&lt;/code&gt; को ओवरराइड कर सकता है; अन्यथा क्लाइंट सेटिंग बरकरार रहती है।</value>
   </data>
   <data name="OpenAI target fields &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_tokens&lt;/code&gt; use VM values when set. VM &lt;code&gt;Thinking&lt;/code&gt; overrides the translated client value." xml:space="preserve">
     <value>OpenAI लक्ष्य फ़ील्ड &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, और &lt;code&gt;max_tokens&lt;/code&gt; सेट किए जाने पर VM मानों का उपयोग करते हैं। VM &lt;code&gt;Thinking&lt;/code&gt; अनुवादित क्लाइंट मान को ओवरराइड करता है।</value>
@@ -1356,6 +1368,9 @@
   <data name="The request adapter deep-clones the original Responses JSON. &lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt; preserves unknown output Items and SSE event names/data/comments/id/retry without passing the payload through canonical IL." xml:space="preserve">
     <value>रिक्वेस्ट एडाप्टर मूल Responses JSON का गहरा क्लोन बनाता है। &lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt; अज्ञात आउटपुट Items और SSE इवेंट नाम/डेटा/टिप्पणियाँ/id/retry को कैनोनिकल IL के माध्यम से पेलोड को पास किए बिना संरक्षित रखता है।</value>
   </data>
+  <data name="The selected backend can override thinking. VM NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
+    <value>चयनित बैकएंड सोच को ओवरराइड कर सकता है। VM NumCtx, Temperature, TopP, TopK, NumPredict, और RepeatPenalty अनुरोध को ओवरराइड करते हैं; अनुपस्थित &lt;code&gt;keep_alive&lt;/code&gt; Provider मान का उपयोग करता है।</value>
+  </data>
   <data name="The template is built for easy deployment. It includes full Docker support, so you can containerize your app and run it anywhere. You can also deploy it directly to IIS, Azure App Service, or any server that supports ASP.NET Core." xml:space="preserve">
     <value>यह टेम्पलेट आसान डेप्लॉयमेंट के लिए बनाया गया है। इसमें पूर्ण Docker सपोर्ट शामिल है, जिससे आप अपने ऐप को कंटेनराइज़ करके कहीं भी चला सकते हैं। आप इसे सीधे IIS, Azure App Service, या किसी भी सर्वर पर डेप्लॉय कर सकते हैं जो ASP.NET Core को सपोर्ट करता है।</value>
   </data>
@@ -1458,11 +1473,29 @@
   <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other nested Responses fields remain untouched." xml:space="preserve">
     <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, और &lt;code&gt;NumPredict&lt;/code&gt; &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, और &lt;code&gt;max_output_tokens&lt;/code&gt; को ओवरराइड करते हैं। अन्य नेस्टेड Responses फ़ील्ड अपरिवर्तित रहती हैं।</value>
   </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. The selected backend overrides &lt;code&gt;reasoning.effort&lt;/code&gt; when configured, including direct forwarding. Other nested Responses fields remain untouched." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; और &lt;code&gt;NumPredict&lt;/code&gt; &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; और &lt;code&gt;max_output_tokens&lt;/code&gt; को ओवरराइड करते हैं। चयनित बैकएंड &lt;code&gt;reasoning.effort&lt;/code&gt; को ओवरराइड करता है जब यह कॉन्फ़िगर किया गया हो, सीधे फॉरवार्डिंग सहित। अन्य नेस्टेड Responses फ़ील्ड अपरिवर्तित रहती हैं।</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Chat target controls. The selected backend overrides reasoning effort when configured; otherwise the translated client setting is kept." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, और &lt;code&gt;NumPredict&lt;/code&gt; Chat लक्ष्य नियंत्रणों को अधिलेखित करते हैं। जब विन्यस्त किया जाता है, तो चयनित बैकएंड तर्क प्रयास (reasoning effort) को अधिलेखित करता है; अन्यथा, अनुवादित क्लाइंट सेटिंग को बनाए रखा जाता है।</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Chat target fields. The selected backend overrides reasoning effort when configured; otherwise the translated client setting is kept. Ollama-only DB sampling/context controls do not apply to Chat." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, और &lt;code&gt;NumPredict&lt;/code&gt; Chat लक्ष्य फ़ील्ड को ओवरराइड करते हैं। जब कॉन्फ़िगर किया जाता है, तो चुना गया बैकएंड रीज़निंग एफर्ट को ओवरराइड करता है; अन्यथा अनुवादित क्लाइंट सेटिंग को बनाए रखा जाता है। केवल Ollama के लिए DB सैंपलिंग/संदर्भ नियंत्रण Chat पर लागू नहीं होते।</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. The selected backend overrides reasoning effort when configured; otherwise the client setting is kept. VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; और &lt;code&gt;NumPredict&lt;/code&gt; Responses फ़ील्ड्स को ओवरराइड करते हैं। जब कॉन्फ़िगर किया जाता है, तो चयनित बैकएंड रीज़निंग एफ़र्ट को ओवरराइड करता है; अन्यथा क्लाइंट सेटिंग को बनाए रखा जाता है। VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt; और &lt;code&gt;RepeatPenalty&lt;/code&gt; के लिए कोई Responses टार्गेट फ़ील्ड नहीं है।</value>
+  </data>
   <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
     <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, और &lt;code&gt;NumPredict&lt;/code&gt; Responses फ़ील्ड को ओवरराइड करते हैं। VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, और &lt;code&gt;RepeatPenalty&lt;/code&gt; के लिए कोई Responses लक्ष्य फ़ील्ड नहीं है।</value>
   </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. The selected backend overrides reasoning effort when configured; otherwise the client setting is kept. VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, और &lt;code&gt;NumPredict&lt;/code&gt; Responses के लक्ष्य फ़ील्ड्स को ओवरराइड करते हैं। चयनित बैकएंड, जब कॉन्फ़िगर किया जाता है, तर्क प्रयास (reasoning effort) को ओवरराइड करता है; अन्यथा क्लाइंट सेटिंग को बनाए रखा जाता है। VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, और &lt;code&gt;RepeatPenalty&lt;/code&gt; Responses नियंत्रण नहीं हैं।</value>
+  </data>
   <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
     <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, और &lt;code&gt;NumPredict&lt;/code&gt; Responses लक्ष्य फ़ील्ड्स को ओवरराइड करते हैं। VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, और &lt;code&gt;RepeatPenalty&lt;/code&gt; Responses नियंत्रण नहीं हैं।</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override their target fields. The selected backend overrides &lt;code&gt;reasoning_effort&lt;/code&gt; when configured, including direct forwarding. Other client reasoning controls and nested &lt;code&gt;chat_template_kwargs&lt;/code&gt; members are preserved." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, और &lt;code&gt;NumPredict&lt;/code&gt; अपने लक्ष्य फ़ील्ड्स को ओवरराइड करते हैं। चयनित बैकएंड, जब कॉन्फ़िगर्ड हो, &lt;code&gt;reasoning_effort&lt;/code&gt; को ओवरराइड करता है, जिसमें प्रत्यक्ष फ़ॉरवर्डिंग शामिल है। अन्य क्लाइंट रीज़निंग नियंत्रण और नेस्टेड &lt;code&gt;chat_template_kwargs&lt;/code&gt; सदस्य सुरक्षित रहते हैं।</value>
   </data>
   <data name="VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
     <value>VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict, और RepeatPenalty अनुरोध को ओवरराइड करते हैं; अनुपस्थित &lt;code&gt;keep_alive&lt;/code&gt; Provider मान का उपयोग करता है।</value>
