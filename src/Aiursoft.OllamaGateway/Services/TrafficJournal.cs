@@ -4,10 +4,13 @@ using Aiursoft.Scanner.Abstractions;
 
 namespace Aiursoft.OllamaGateway.Services;
 
-// Only topology identifiers and timings belong on this feed.
+// Text on the Monitor feed is limited to the two display previews.
 public sealed record TrafficEvent(Guid RequestId, int ModelId, int Attempt, int? BackendId, int? ProviderId,
     string Stage, long At = 0, long Sequence = 0)
 {
+    public string QuestionPreview { get; init; } = string.Empty;
+    public string AnswerPreview { get; init; } = string.Empty;
+
     public bool Finished => Stage is "completed" or "failed" or "cancelled";
 }
 

@@ -1,3 +1,4 @@
+using System.Globalization;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Models;
 
@@ -17,7 +18,27 @@ public sealed class GatewayRequestTracker(
 
     private TrafficEvent? _traffic;
     private bool _upstreamBodyFailed;
+    private bool _answerPrefixComplete;
     private CancellationToken _aborted;
+
+    private static string Preview(string text, out bool complete)
+    {
+        var end = 0;
+        for (var i = 0; i < 20 && end < text.Length; i++)
+            end += StringInfo.GetNextTextElementLength(text.AsSpan(end));
+        // One following text element confirms that a later chunk cannot extend the twentieth.
+        complete = end < text.Length;
+        return text[..end];
+    }
+
+    public void ObserveAnswer(string? content)
+    {
+        if (_traffic == null || _answerPrefixComplete || string.IsNullOrEmpty(content)) return;
+        var prefix = Preview(string.Concat(_traffic.AnswerPreview, content), out _answerPrefixComplete);
+        if (_traffic.AnswerPreview == prefix) return;
+        _traffic = _traffic with { AnswerPreview = prefix };
+        if (_traffic.Stage == "returning") trafficJournal.Record(_traffic);
+    }
 
     private void Move(string stage)
     {
@@ -42,7 +63,7 @@ public sealed class GatewayRequestTracker(
         VirtualModel virtualModel,
         string question,
         int conversationMessageCount,
-        HttpContext context)
+        HttpContext context, string? displayQuestion = null)
     {
         if (_activeRequest != null)
             throw new InvalidOperationException("Gateway request tracking has already started.");
@@ -63,7 +84,10 @@ public sealed class GatewayRequestTracker(
             question,
             logContext.Log.ApiKeyName);
         _aborted = context.RequestAborted;
-        _traffic = new TrafficEvent(_activeRequest.RequestId, virtualModel.Id, 0, null, null, "received");
+        _traffic = new TrafficEvent(_activeRequest.RequestId, virtualModel.Id, 0, null, null, "received")
+        {
+            QuestionPreview = Preview(displayQuestion ?? question, out _)
+        };
         trafficJournal.Record(_traffic);
         context.Response.OnStarting(() =>
         {

@@ -1,10 +1,39 @@
+using Aiursoft.OllamaGateway.Entities;
+using Aiursoft.OllamaGateway.Models;
 using Aiursoft.OllamaGateway.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace Aiursoft.OllamaGateway.Tests;
 
 [TestClass]
 public class TrafficJournalTests
 {
+    [TestMethod]
+    public async Task MonitorPreviewsKeepTwentyTextElementsAcrossAnswerChunks()
+    {
+        var journal = new TrafficJournal(TimeProvider.System);
+        var log = new RequestLogContext();
+        var tracker = new GatewayRequestTracker(log, new MemoryUsageTracker(new UsageCounter(), null!),
+            new ActiveRequestTracker(), journal);
+        var prefix = new string('问', 19);
+        var question = prefix + "👩🏽‍💻";
+        var answer = new string('答', 19);
+        tracker.Begin(new VirtualModel { Name = "demo" }, "audit input", 1, new DefaultHttpContext(), question + "suffix");
+        tracker.ObserveAnswer(answer + "e");
+        tracker.ObserveAnswer("\u0301tail");
+        tracker.ObserveAnswer("later");
+        log.Log.Success = true;
+        tracker.Complete();
+
+        using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+        await using var reader = journal.Read(null, timeout.Token).GetAsyncEnumerator();
+        Assert.IsTrue(await reader.MoveNextAsync());
+        var events = reader.Current.Data.Events;
+        Assert.AreEqual(question, events[0].QuestionPreview);
+        Assert.AreEqual(string.Empty, events[0].AnswerPreview);
+        Assert.AreEqual(answer + "e\u0301", events[^1].AnswerPreview);
+    }
+
     [TestMethod]
     public async Task ReconnectPreservesAttemptsAndRecoversLongRunningRequestsAfterEviction()
     {

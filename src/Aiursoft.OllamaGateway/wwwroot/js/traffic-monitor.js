@@ -29,7 +29,9 @@ export function startTrafficMonitor(svg) {
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
     const windowMs = 30000;
     // Brief handoffs stay legible even if several server events arrive in the same frame.
-    const dwell = { received: 240, selected: 140, attemptFailed: 220, returning: 280 };
+    const dwell = { received: 2400, selected: 1000, attemptFailed: 650 };
+    const returnMs = 3600;
+    const arrivalHold = 1000;
     const schedules = new Map();
     let baseline = new Map();
     let history = [];
@@ -72,9 +74,22 @@ export function startTrafficMonitor(svg) {
             frozen = null;
         }
         for (const e of batch.events) {
-            const previous = schedules.get(e.requestId);
-            e.drawAt = Math.min(e.at + 750, Math.max(e.at, (previous?.drawAt ?? e.at) + (dwell[previous?.stage] ?? 0)));
-            e.previousStage = previous?.stage ?? baseline.get(e.requestId)?.stage;
+            const previous = schedules.get(e.requestId) ?? baseline.get(e.requestId);
+            e.previousStage = previous?.stage;
+            // A text delta updates the label on the same moving marker.
+            e.previewUpdate = previous?.stage === e.stage && previous?.attempt === e.attempt;
+            if (e.previewUpdate) {
+                e.drawAt = previous.drawAt ?? previous.at;
+                e.stageAt = previous.stageAt ?? previous.at;
+            } else {
+                e.drawAt = Math.min(e.at + 4000, Math.max(e.at,
+                    (previous?.drawAt ?? e.at) + (dwell[previous?.stage] ?? 0)));
+                e.stageAt = e.at;
+            }
+            if (e.stage === 'completed') {
+                const start = previous?.stage === 'returning' ? previous.drawAt ?? previous.at : e.drawAt;
+                e.returnStart = start + Math.floor((e.drawAt - start) / returnMs) * returnMs;
+            }
             if (e.finished) schedules.delete(e.requestId);
             else schedules.set(e.requestId, e);
             history.push(e);
@@ -123,9 +138,42 @@ export function startTrafficMonitor(svg) {
         if (!edge) return null;
         return inLayer(edge.path, edge.path.getPointAtLength(edge.length * fraction));
     }
-    function along(edges, progress) {
-        const scaled = Math.min(0.999999, Math.max(0, progress)) * edges.length;
-        return onPath(edges[Math.floor(scaled)], scaled % 1);
+    // Include the short crossings through nodes and travel at a uniform speed along the route.
+    const journeys = new Map();
+    function along(ids, progress) {
+        const key = ids.join('/');
+        let journey = journeys.get(key);
+        if (!journey) {
+            const segments = [];
+            let previousEnd;
+            let length = 0;
+            for (const id of ids) {
+                const edge = paths.get(id);
+                if (!edge) return null;
+                const start = onPath(id, 0);
+                if (previousEnd) {
+                    const from = previousEnd;
+                    length += Math.hypot(start.x - from.x, start.y - from.y);
+                    segments.push({ end: length, from, to: start });
+                }
+                length += edge.length;
+                segments.push({ end: length, id });
+                previousEnd = onPath(id, 1);
+            }
+            journey = { segments, length };
+            journeys.set(key, journey);
+        }
+        const distance = Math.max(0, Math.min(1, progress)) * journey.length;
+        let start = 0;
+        for (const segment of journey.segments) {
+            if (distance <= segment.end) {
+                const fraction = (distance - start) / (segment.end - start || 1);
+                if (segment.id) return onPath(segment.id, fraction);
+                return { x: segment.from.x + (segment.to.x - segment.from.x) * fraction,
+                    y: segment.from.y + (segment.to.y - segment.from.y) * fraction };
+            }
+            start = segment.end;
+        }
     }
     function position(e, now) {
         const incoming = ['entry', 'route_' + e.modelId, 'policy_' + e.modelId];
@@ -140,11 +188,11 @@ export function startTrafficMonitor(svg) {
         }
         if (e.stage === 'completed' || e.stage === 'returning') {
             const edges = e.backendId ? [...incoming, dispatch] : incoming;
-            const progress = e.stage === 'completed' ? Math.min(1, age / 500) : (age % 1500) / 1500;
+            const progress = e.stage === 'completed' ? Math.min(1, (now - e.returnStart) / returnMs) : (age % returnMs) / returnMs;
             return along(edges, reduced.matches ? 0 : 1 - progress);
         }
         if (e.stage === 'received') return along(incoming, reduced.matches ? 1 : Math.min(1, age / dwell.received));
-        if (e.stage === 'selected') return onPath(dispatch, reduced.matches ? 0 : Math.min(0.8, age / dwell.selected));
+        if (e.stage === 'selected') return onPath(dispatch, reduced.matches ? 0 : Math.min(1, age / dwell.selected));
         return e.backendId ? onPath(dispatch, 1) : onPath(incoming[1], 1);
     }
 
@@ -152,21 +200,52 @@ export function startTrafficMonitor(svg) {
         let g = groups.get(key);
         if (!g) {
             g = document.createElementNS(ns, 'g');
-            g.append(document.createElementNS(ns, 'circle'), document.createElementNS(ns, 'text'));
-            g.querySelector('circle').setAttribute('r', '6');
+            const make = (tag, name) => {
+                const el = document.createElementNS(ns, tag);
+                el.classList.add(name);
+                return el;
+            };
+            const halo = make('circle', 'marker-halo');
+            halo.setAttribute('r', '17');
+            const dot = make('circle', 'marker-dot');
+            dot.setAttribute('r', '11');
+            const arrow = make('path', 'marker-direction');
+            arrow.setAttribute('d', 'M -5 0 H 5 M 1 -4 L 5 0 L 1 4');
+            const badge = make('g', 'marker-badge');
+            const plate = make('rect', 'marker-plate');
+            plate.setAttribute('rx', '6');
+            const caption = make('text', 'marker-caption');
+            badge.append(plate, caption);
+            g.append(halo, dot, arrow, badge);
             layer.append(g);
             groups.set(key, g);
         }
         g.dataset.stage = e.stage;
         g.classList.toggle('followed', selected);
         g.setAttribute('transform', 'translate(' + point.x + ' ' + point.y + ')');
-        // Place the queue count outside the pool so it cannot cover its header.
-        const text = g.lastChild;
         const queued = e.stage === 'queued';
-        text.setAttribute('text-anchor', queued ? 'end' : 'start');
-        text.setAttribute('x', queued ? '-10' : '10');
-        text.setAttribute('y', queued ? '4' : '-7');
-        text.textContent = e.stage === 'queued' ? labels.queued + ' · ' + count : count > 1 ? '×' + count : '';
+        const returning = e.stage === 'returning' || e.stage === 'completed';
+        const preview = returning ? e.answerPreview : e.questionPreview;
+        const countText = queued ? labels.queued + ' · ' + count : count > 1 ? '×' + count : '';
+        const label = [preview, countText].filter(Boolean).join('  ·  ');
+        const badge = g.lastChild;
+        const caption = badge.lastChild;
+        if (caption.textContent !== label || !badge.hasAttribute('data-width')) {
+            caption.textContent = label;
+            const width = Math.ceil(caption.getComputedTextLength()) + 20;
+            badge.dataset.width = width;
+            badge.firstChild.setAttribute('width', width);
+            badge.firstChild.setAttribute('height', '28');
+            caption.setAttribute('x', '10');
+            caption.setAttribute('y', '20');
+            badge.style.visibility = label ? 'visible' : 'hidden';
+        }
+        const width = Number(badge.dataset.width);
+        const box = svg.viewBox.baseVal;
+        const x = Math.max(box.x + 2, Math.min(box.x + box.width - width - 2,
+            point.x - (queued ? width + 20 : width / 2)));
+        const y = queued ? -14 : point.y - 47 < box.y ? 19 : -47;
+        badge.setAttribute('transform', 'translate(' + (x - point.x) + ' ' + y + ')');
     }
     function updateList(items, events, time) {
         const selected = picker.value;
@@ -181,13 +260,13 @@ export function startTrafficMonitor(svg) {
         picker.value = recent.has(selected) ? selected : '';
         detail.hidden = !picker.value;
         if (!detail.hidden) {
-            const trace = events.filter(e => e.requestId === selected && e.at <= time);
+            const trace = events.filter(e => e.requestId === selected && e.at <= time && !e.previewUpdate);
             const first = (frozen?.baseline ?? baseline).get(selected);
             if (first && first.at <= time) trace.unshift(first);
             detail.textContent = trace.map(e => new Date(e.at).toLocaleTimeString() + ' ' + labels[e.stage] +
                 (e.stage === 'selected' ? ' #' + e.attempt + ' · ' + (routes.get(e.backendId)?.textContent ?? e.backendId) : '')).join(' → ');
             const last = recent.get(selected);
-            if (!last.finished) detail.textContent += ' · ' + Math.floor(Math.max(0, time - last.at) / 1000) + ' s';
+            if (!last.finished) detail.textContent += ' · ' + Math.floor(Math.max(0, time - (last.stageAt ?? last.at)) / 1000) + ' s';
         }
     }
 
@@ -203,7 +282,9 @@ export function startTrafficMonitor(svg) {
         for (const e of source.history) {
             if (e.at > time) break;
             if (e.drawAt <= time || reduced.matches) {
-                if (e.finished && time - e.drawAt > 650) displayed.delete(e.requestId);
+                const expires = e.stage === 'completed' && !reduced.matches
+                    ? e.returnStart + returnMs + arrivalHold : e.drawAt + arrivalHold;
+                if (e.finished && time > expires) displayed.delete(e.requestId);
                 else displayed.set(e.requestId, e);
             }
             apply(state, e);
