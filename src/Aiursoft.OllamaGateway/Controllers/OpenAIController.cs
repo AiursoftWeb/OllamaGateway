@@ -163,7 +163,7 @@ public class OpenAIController : ControllerBase
     {
         var messages = clientJson["messages"]?.AsArray();
         var lastQuestion = messages?.LastOrDefault()?["content"]?.ToString() ?? string.Empty;
-        _requestTracker.Begin(virtualModel, lastQuestion, messages?.Count ?? 0, User);
+        _requestTracker.Begin(virtualModel, lastQuestion, messages?.Count ?? 0, HttpContext);
     }
 
 [HttpPost("/v1/embeddings")]
@@ -203,7 +203,7 @@ public class OpenAIController : ControllerBase
                 virtualModel,
                 clientJson["input"]?.ToString() ?? string.Empty,
                 1,
-                User);
+                HttpContext);
 
             await _embeddingGatewayService.ExecuteAsync(
                 ProtocolDialect.OpenAiChatCompletions,

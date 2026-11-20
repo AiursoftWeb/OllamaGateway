@@ -207,7 +207,7 @@ public class DashboardControllerTests : TestBase
             Assert.Contains("reasoning_effort / reasoning.effort", detail);
             Assert.Contains(i == 2 ? "upstream default" : "same-dialect direct forwarding", detail);
         }
-        Assert.AreEqual(1, Regex.Matches(html, $"Phys_P{provider.Id}_shared_physical\\[\\(").Count,
+        Assert.AreEqual(1, Regex.Matches(html, $"Phys_P{provider.Id}_B{models.Min(m => m.VirtualModelBackends.Single().Id)}\\[\\(").Count,
             "A shared physical model must remain a single node while route policies stay distinct.");
     }
 

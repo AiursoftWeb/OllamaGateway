@@ -24,3 +24,16 @@
     text-align: left;
     white-space: pre-line;
 }
+
+.traffic-markers { pointer-events: none; }
+.traffic-markers circle { fill: #087bb7; stroke: white; stroke-width: 2; }
+.traffic-markers [data-stage="queued"] circle { fill: #b36b00; }
+.traffic-markers [data-stage="returning"] circle,
+.traffic-markers [data-stage="completed"] circle { fill: #008568; }
+.traffic-markers [data-stage="cancelled"] circle,
+.traffic-markers [data-stage="failed"] circle,
+.traffic-markers [data-stage="attemptFailed"] circle { fill: #c14045; }
+.traffic-markers .followed circle { stroke: #10182a; stroke-width: 3; }
+.traffic-markers text { fill: #172235; stroke: #fff; stroke-width: 4px; paint-order: stroke; font: bold 13px sans-serif; }
+#traffic-topology .traffic-active { filter: drop-shadow(0 0 4px #0b9cba); }
+#traffic-request { max-width: 100%; }

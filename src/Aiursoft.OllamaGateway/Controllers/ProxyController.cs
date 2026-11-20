@@ -219,7 +219,7 @@ public class ProxyController(
             virtualModel,
             input.Messages?.LastOrDefault()?.Content ?? string.Empty,
             input.Messages?.Count ?? 0,
-            User);
+            HttpContext);
     }
 
     [HttpPost("generate")]
@@ -245,7 +245,7 @@ public class ProxyController(
             var backend = resolution.Backend!;
             if (backend.Provider == null) throw new InvalidOperationException("Resolved backend has no provider.");
 
-            requestTracker.Begin(virtualModel, input.Prompt ?? string.Empty, 1, User);
+            requestTracker.Begin(virtualModel, input.Prompt ?? string.Empty, 1, HttpContext);
 
             // /api/generate is an Ollama-native operation and cannot be translated
             // to either OpenAI endpoint family.
@@ -468,7 +468,7 @@ public class ProxyController(
                 virtualModel,
                 inputNode["input"]?.ToString() ?? inputNode["prompt"]?.ToString() ?? string.Empty,
                 1,
-                User);
+                HttpContext);
 
             await embeddingGatewayService.ExecuteAsync(
                 ProtocolDialect.OllamaNative,

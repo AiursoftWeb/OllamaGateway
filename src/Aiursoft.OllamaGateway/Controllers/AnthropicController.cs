@@ -83,7 +83,7 @@ public class AnthropicController : ControllerBase
                 virtualModel,
                 request.Messages.LastOrDefault()?.Content?.ToString() ?? string.Empty,
                 conversationMessageCount,
-                User);
+                HttpContext);
 
             var isStream = request.Stream;
             var result = await _backendInvoker.SendAsync(

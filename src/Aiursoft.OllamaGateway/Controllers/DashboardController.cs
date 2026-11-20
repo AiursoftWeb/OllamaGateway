@@ -24,6 +24,13 @@ public class DashboardController(
     IModelSelector modelSelector,
     GlobalSettingsService globalSettingsService) : Controller
 {
+    [HttpGet("Dashboard/traffic-events")]
+    public IResult TrafficEvents([FromServices] TrafficJournal journal)
+    {
+        Response.Headers["X-Accel-Buffering"] = "no";
+        return TypedResults.ServerSentEvents(journal.Read(Request.Headers["Last-Event-ID"], HttpContext.RequestAborted));
+    }
+
     [HttpGet("Dashboard/live-inference.ws")]
     [EnforceWebSocket]
     public async Task LiveInferenceSocket()
@@ -207,11 +214,6 @@ public class DashboardController(
         {
             VirtualModels = virtualModels,
             Providers = await dbContext.OllamaProviders.ToListAsync(),
-            BusyModels = activeRequestTracker.GetAll()
-                .Where(kv => kv.Value.ActiveCount > 0)
-                .Select(kv => kv.Key)
-                .ToHashSet(),
-            BusyPhysicalModels = activeRequestTracker.GetBusyPhysicalModels(),
             BackendBanStatuses = virtualModels
                 .SelectMany(m => m.VirtualModelBackends)
                 .ToDictionary(b => b.Id, b => modelSelector.GetBanUntil(b.Id))

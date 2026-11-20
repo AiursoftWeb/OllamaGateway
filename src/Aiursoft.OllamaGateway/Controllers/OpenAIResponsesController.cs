@@ -79,7 +79,7 @@ public sealed class OpenAIResponsesController(
                 .LastOrDefault(message => message.Role == "user")?
                 .Content.OfType<GatewayTextContent>()
                 .LastOrDefault()?.Text ?? string.Empty;
-            requestTracker.Begin(virtualModel, lastQuestion, decoded.Request.Messages.Count, User);
+            requestTracker.Begin(virtualModel, lastQuestion, decoded.Request.Messages.Count, HttpContext);
 
             var result = await backendInvoker.SendAsync(
                 virtualModel,

@@ -17,3 +17,6 @@ for (const detail of document.querySelectorAll('#backend-route-details [data-bac
         });
     }
 }
+
+const { startTrafficMonitor } = await import('./traffic-monitor.js');
+startTrafficMonitor(document.querySelector('#traffic-topology svg'));
