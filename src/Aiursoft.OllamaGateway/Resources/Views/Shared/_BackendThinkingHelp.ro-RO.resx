@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="A configured override wins over the client on every backend attempt, including same-dialect direct forwarding. Fallback attempts use the newly selected backend&apos;s own settings." xml:space="preserve">
+    <value>O suprascriere configurată are prioritate față de client la fiecare încercare de backend, inclusiv la forwardarea directă în același dialect. Încercările de rezervă utilizează propriile setări ale backendului nou selectat.</value>
+  </data>
+  <data name="A non-empty value is sent verbatim as reasoning_effort for Chat Completions or reasoning.effort for Responses. An existing chat_template_kwargs.reasoning_effort is also overridden so it cannot take priority over your depth setting. No depth names are translated into booleans." xml:space="preserve">
+    <value>O valoare necomplăută este trimisă literal ca reasoning_effort pentru Chat Completions sau reasoning.effort pentru Responses. O valoare existentă a chat_template_kwargs.reasoning_effort este, de asemenea, suprascrisă, astfel încât aceasta nu poate avea prioritate față de setarea dumneavoastră de adâncime. Numele de adâncime nu sunt traduse în valori booliene.</value>
+  </data>
+  <data name="Backend examples" xml:space="preserve">
+    <value>Exemple de backend</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Închide</value>
+  </data>
+  <data name="Do not override leaves that setting to the client, or to the upstream default when absent. Same-dialect requests retain their original fields; cross-dialect requests use the gateway&apos;s protocol translation." xml:space="preserve">
+    <value>Nu suprascrie frunzele care transmit acea setare clientului sau valoarea implicită din amonte când aceasta lipsește. Solicitările cu același dialect își păstrează câmpurile originale; solicitările cu dialecte diferite folosesc traducerea de protocol a poartei.</value>
+  </data>
+  <data name="For Ollama-native backends, Force on or Force off sends boolean think. For OpenAI Chat or Responses backends, it writes chat_template_kwargs.enable_thinking. Other template arguments are preserved. This is a vLLM-style extension, not a universal OpenAI switch; leave it unconfigured for providers that do not support it." xml:space="preserve">
+    <value>Pentru back-ends native Ollama, Forțat activat sau Forțat dezactivat trimite valoarea booleană think. Pentru back-ends OpenAI Chat sau Responses, scrie chat_template_kwargs.enable_thinking. Alte argumente de șablon sunt păstrate. Aceasta este o extensie în stil vLLM, nu un comutator universal OpenAI; lăsați-l neconfigurat pentru furnizorii care nu îl suportă.</value>
+  </data>
+  <data name="How to configure" xml:space="preserve">
+    <value>Cum să configurați</value>
+  </data>
+  <data name="Other compatible providers" xml:space="preserve">
+    <value>Alți furnizori compatibili</value>
+  </data>
+  <data name="Reasoning depth" xml:space="preserve">
+    <value>Adâncimea raționamentului</value>
+  </data>
+  <data name="Supported depths and whether thinking can be disabled depend on the model and provider. Unsupported extensions may be rejected or ignored. Check the provider&apos;s documentation; the gateway does not infer capabilities from its name." xml:space="preserve">
+    <value>Adâncimilele suportate și posibilitatea de a dezactiva gândirea depind de model și de furnizor. Extensiile nesuportate pot fi respinse sau ignorate. Verificați documentația furnizorului; poarta nu deduce capacitățile din numele acesteia.</value>
+  </data>
+  <data name="The switch and depth are independent. With vLLM, an explicit enable_thinking value takes precedence over automatic activation by depth. Avoid conflicting settings such as Force off with a high depth, or Force on with depth {0}. A depth alone does not force thinking on against an explicit client switch." xml:space="preserve">
+    <value>Comutatorul și adâncimea sunt independente. Cu vLLM, o valoare explicită pentru enable_thinking are prioritate față de activarea automată prin adâncime. Evitați setări contradictorii, cum ar fi Forțare oprit cu o adâncime mare sau Forțare pornit cu adâncimea {0}. O adâncime singură nu forțează gândirea pornită împotriva unui comutator explicit de client.</value>
+  </data>
+  <data name="The switch controls enable_thinking independently of depth. Qwen3.8 supports low, medium and xhigh, with xhigh as its default. To keep thinking enabled, select Force on and a supported depth such as xhigh." xml:space="preserve">
+    <value>Comutatorul controlează enable_thinking independent de adâncime. Qwen3.8 acceptă low, medium și xhigh, cu xhigh ca valoare implicită. Pentru a păstra gândirea activată, selectați Force on și o adâncime acceptată, cum ar fi xhigh.</value>
+  </data>
+  <data name="Thinking settings help" xml:space="preserve">
+    <value>Ajutor pentru setările de gândire</value>
+  </data>
+  <data name="Thinking switch" xml:space="preserve">
+    <value>Comutator de gândire</value>
+  </data>
+  <data name="Usually leave the switch unconfigured and set only a depth supported by the underlying model, such as high or medium. Do not assume enable_thinking is supported." xml:space="preserve">
+    <value>De obicei, lăsați comutatorul neconfigurat și configurați doar o adâncime acceptată de modelul de bază, cum ar fi high sau medium. Nu presupuneți că enable_thinking este acceptat.</value>
+  </data>
+  <data name="Valid values vary by model. These are examples, not a promise that every provider accepts the same controls." xml:space="preserve">
+    <value>Valorile valide variază în funcție de model. Acestea sunt exemple, nu o garanție că fiecare furnizor acceptă aceleași controale.</value>
+  </data>
+  <data name="What is forwarded or overridden?" xml:space="preserve">
+    <value>Ce este transferat sau suprascris?</value>
+  </data>
+  <data name="When accessed through an OpenAI-compatible proxy, follow that proxy&apos;s contract. These controls do not generate native Claude thinking/budget fields or Gemini thinking configuration." xml:space="preserve">
+    <value>Când sunt accesate printr-un proxy compatibil cu OpenAI, respectați contractul acelui proxy. Aceste controale nu generează câmpuri native de gândire/buget pentru Claude sau configurația de gândire pentru Gemini.</value>
+  </data>
+
+</root>

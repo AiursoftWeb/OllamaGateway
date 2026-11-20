@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="A configured override wins over the client on every backend attempt, including same-dialect direct forwarding. Fallback attempts use the newly selected backend&apos;s own settings." xml:space="preserve">
+    <value>구성된 오버라이드는 동일 다이얼렉트 직접 전달을 포함하여 모든 백엔드 시도에서 클라이언트보다 우선합니다. 폴백 시도는 새로 선택된 백엔드 자체의 설정을 사용합니다.</value>
+  </data>
+  <data name="A non-empty value is sent verbatim as reasoning_effort for Chat Completions or reasoning.effort for Responses. An existing chat_template_kwargs.reasoning_effort is also overridden so it cannot take priority over your depth setting. No depth names are translated into booleans." xml:space="preserve">
+    <value>비어 있지 않은 값은 Chat Completions의 reasoning_effort 또는 Responses의 reasoning.effort로 그대로 전송됩니다. 기존 chat_template_kwargs.reasoning_effort도 사용자의 깊이 설정보다 우선할 수 없도록 덮어쓰기됩니다. 깊이 이름은 불리언 값으로 변환되지 않습니다.</value>
+  </data>
+  <data name="Backend examples" xml:space="preserve">
+    <value>백엔드 예시</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>닫기</value>
+  </data>
+  <data name="Do not override leaves that setting to the client, or to the upstream default when absent. Same-dialect requests retain their original fields; cross-dialect requests use the gateway&apos;s protocol translation." xml:space="preserve">
+    <value>설정되지 않은 경우 해당 설정을 클라이언트 또는 업스트림 기본값으로 덮어쓰지 않습니다. 동일 다이얼렉트 요청은 원래 필드를 유지하며, 교차 다이얼렉트 요청은 게이트웨이의 프로토콜 변환을 사용합니다.</value>
+  </data>
+  <data name="For Ollama-native backends, Force on or Force off sends boolean think. For OpenAI Chat or Responses backends, it writes chat_template_kwargs.enable_thinking. Other template arguments are preserved. This is a vLLM-style extension, not a universal OpenAI switch; leave it unconfigured for providers that do not support it." xml:space="preserve">
+    <value>Ollama 네이티브 백엔드의 경우, Force on 또는 Force off는 boolean think를 전송합니다. OpenAI Chat 또는 Responses 백엔드의 경우, chat_template_kwargs.enable_thinking을 작성합니다. 다른 템플릿 인수는 보존됩니다. 이는 vLLM 스타일의 확장이며 범용적인 OpenAI 스위치가 아니므로, 이를 지원하지 않는 프로바이더의 경우 설정하지 않도록 하십시오.</value>
+  </data>
+  <data name="How to configure" xml:space="preserve">
+    <value>구성 방법</value>
+  </data>
+  <data name="Other compatible providers" xml:space="preserve">
+    <value>기타 호환 제공업체</value>
+  </data>
+  <data name="Reasoning depth" xml:space="preserve">
+    <value>추론 깊이</value>
+  </data>
+  <data name="Supported depths and whether thinking can be disabled depend on the model and provider. Unsupported extensions may be rejected or ignored. Check the provider&apos;s documentation; the gateway does not infer capabilities from its name." xml:space="preserve">
+    <value>지원되는 깊이 및 사고(thinking) 기능을 비활성화할 수 있는지는 모델 및 제공자에 따라 다릅니다. 지원되지 않는 확장 기능은 거부되거나 무시될 수 있습니다. 제공자의 문서를 확인하십시오. 게이트웨이는 이름만으로 기능을 추론하지 않습니다.</value>
+  </data>
+  <data name="The switch and depth are independent. With vLLM, an explicit enable_thinking value takes precedence over automatic activation by depth. Avoid conflicting settings such as Force off with a high depth, or Force on with depth {0}. A depth alone does not force thinking on against an explicit client switch." xml:space="preserve">
+    <value>스위치와 깊이는 독립적입니다. vLLM의 경우, 명시적인 enable_thinking 값이 깊이에 의한 자동 활성화보다 우선합니다. Force off와 높은 깊이, 또는 Force on과 깊이 {0}와 같은 충돌하는 설정을 피하세요. 깊이만으로는 명시적인 클라이언트 스위치를 무시하고 사고를 강제로 켤 수 없습니다.</value>
+  </data>
+  <data name="The switch controls enable_thinking independently of depth. Qwen3.8 supports low, medium and xhigh, with xhigh as its default. To keep thinking enabled, select Force on and a supported depth such as xhigh." xml:space="preserve">
+    <value>스위치는 깊이와 독립적으로 enable_thinking을 제어합니다. Qwen3.8은 low, medium, xhigh를 지원하며 기본값은 xhigh입니다. 사고 모드를 유지하려면 Force on과 xhigh와 같은 지원되는 깊이를 선택하세요.</value>
+  </data>
+  <data name="Thinking settings help" xml:space="preserve">
+    <value>생각 설정 도움말</value>
+  </data>
+  <data name="Thinking switch" xml:space="preserve">
+    <value>사고 전환</value>
+  </data>
+  <data name="Usually leave the switch unconfigured and set only a depth supported by the underlying model, such as high or medium. Do not assume enable_thinking is supported." xml:space="preserve">
+    <value>보통 스위치는 설정하지 않은 상태로 두고, 고(high)나 중(medium)과 같이 기본 모델이 지원하는 깊이만 설정하세요. enable_thinking이 지원된다고 가정하지 마세요.</value>
+  </data>
+  <data name="Valid values vary by model. These are examples, not a promise that every provider accepts the same controls." xml:space="preserve">
+    <value>유효한 값은 모델에 따라 다릅니다. 여기서는 예시만 제시하며, 모든 제공자가 동일한 제어를 지원하는 것을 보장하지 않습니다.</value>
+  </data>
+  <data name="What is forwarded or overridden?" xml:space="preserve">
+    <value>무엇이 전달되거나 오버라이드됩니까?</value>
+  </data>
+  <data name="When accessed through an OpenAI-compatible proxy, follow that proxy&apos;s contract. These controls do not generate native Claude thinking/budget fields or Gemini thinking configuration." xml:space="preserve">
+    <value>OpenAI 호환 프록시를 통해 액세스하는 경우 해당 프록시의 계약을 따르십시오. 이러한 컨트롤은 네이티브 Claude thinking/budget 필드나 Gemini thinking 구성을 생성하지 않습니다.</value>
+  </data>
+
+</root>

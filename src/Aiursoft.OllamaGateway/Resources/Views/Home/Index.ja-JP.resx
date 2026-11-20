@@ -165,6 +165,9 @@
   <data name="All Ollama VM controls apply: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt;. Ollama-only values may therefore be injected even though the client dialect cannot express them." xml:space="preserve">
     <value>すべてのOllama VM制御が適用されます：&lt;code&gt;temperature&lt;/code&gt;、&lt;code&gt;top_p&lt;/code&gt;、&lt;code&gt;top_k&lt;/code&gt;、&lt;code&gt;num_predict&lt;/code&gt;、&lt;code&gt;num_ctx&lt;/code&gt;、&lt;code&gt;repeat_penalty&lt;/code&gt;、および &lt;code&gt;think&lt;/code&gt;。したがって、クライアントの方言で表現できない場合でも、Ollama固有の値が注入されることがあります。</value>
   </data>
+  <data name="All Ollama VM sampling controls apply. The selected backend can force &lt;code&gt;think&lt;/code&gt; on or off; otherwise the translated client setting applies." xml:space="preserve">
+    <value>すべての Ollama VM サンプリング制御が適用されます。選択されたバックエンドは &lt;code&gt;think&lt;/code&gt; を強制的にオンまたはオフに設定できます。それ以外の場合は、変換されたクライアント設定が適用されます。</value>
+  </data>
   <data name="All dependencies are automatically registered and always available via constructor injection." xml:space="preserve">
     <value>すべての依存関係は自動的に登録され、コンストラクタインジェクションを通じて常に利用可能です。</value>
   </data>
@@ -260,6 +263,9 @@
   </data>
   <data name="Backend Provider type" xml:space="preserve">
     <value>バックエンド プロバイダー タイプ</value>
+  </data>
+  <data name="Backend thinking overrides apply to both same-dialect direct forwarding and cross-dialect translation. An empty override keeps the client setting, or the upstream default when absent." xml:space="preserve">
+    <value>バックエンドの思考オーバーライドは、同じ方言での直接転送と、異なる方言間の変換の両方に適用されます。オーバーライドが空の場合、クライアントの設定が保持されます。クライアントの設定が存在しない場合は、アップストリームのデフォルト値が使用されます。</value>
   </data>
   <data name="Background Job Processing" xml:space="preserve">
     <value>バックグラウンドジョブ処理</value>
@@ -1044,6 +1050,9 @@
   <data name="OpenAI content parts → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → boolean &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;." xml:space="preserve">
     <value>OpenAI コンテンツパーツ → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → ブール値 &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;.</value>
   </data>
+  <data name="OpenAI content parts → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → named &lt;code&gt;think&lt;/code&gt; level (&lt;code&gt;none&lt;/code&gt; → &lt;code&gt;false&lt;/code&gt;); &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;." xml:space="preserve">
+    <value>OpenAI のコンテンツパーツ → Ollama の &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → 名前付き &lt;code&gt;think&lt;/code&gt; レベル (&lt;code&gt;none&lt;/code&gt; → &lt;code&gt;false&lt;/code&gt;); &lt;code&gt;response_format&lt;/code&gt; → Ollama の &lt;code&gt;format&lt;/code&gt;.</value>
+  </data>
   <data name="OpenAI embedding extensions outside the shared input are not copied into the cross-dialect request or reconstructed response." xml:space="preserve">
     <value>共有入力外のOpenAI埋め込み拡張は、方言間リクエストや再構築されたレスポンスにはコピーされません。</value>
   </data>
@@ -1052,6 +1061,9 @@
   </data>
   <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
     <value>OpenAIマルチモーダルコンテンツ配列が抽出されます：image_urlデータはOllama images配列に移動し、テキストはcontentになります。</value>
+  </data>
+  <data name="OpenAI target fields &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_tokens&lt;/code&gt; use VM values when set. The selected Ollama backend can override &lt;code&gt;think&lt;/code&gt;; otherwise the client setting is kept." xml:space="preserve">
+    <value>OpenAIのターゲットフィールドである&lt;code&gt;temperature&lt;/code&gt;、&lt;code&gt;top_p&lt;/code&gt;、&lt;code&gt;max_tokens&lt;/code&gt;は、設定されている場合、VMの値を使用します。選択されたOllamaバックエンドは&lt;code&gt;think&lt;/code&gt;を上書きできますが、そうでない場合はクライアントの設定が保持されます。</value>
   </data>
   <data name="OpenAI target fields &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_tokens&lt;/code&gt; use VM values when set. VM &lt;code&gt;Thinking&lt;/code&gt; overrides the translated client value." xml:space="preserve">
     <value>OpenAI のターゲットフィールド &lt;code&gt;temperature&lt;/code&gt;、&lt;code&gt;top_p&lt;/code&gt;、および &lt;code&gt;max_tokens&lt;/code&gt; は設定時に VM 値を使用します。VM の &lt;code&gt;Thinking&lt;/code&gt; は変換されたクライアント値を上書きします。</value>
@@ -1365,6 +1377,9 @@
   <data name="The request adapter deep-clones the original Responses JSON. &lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt; preserves unknown output Items and SSE event names/data/comments/id/retry without passing the payload through canonical IL." xml:space="preserve">
     <value>リクエストアダプターは、元の Responses JSON をディープコピーします。&lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt; は、ペイロードを標準 IL 経由で処理することなく、不明な出力アイテムおよび SSE イベント名/データ/コメント/id/retry を保持します。</value>
   </data>
+  <data name="The selected backend can override thinking. VM NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
+    <value>選択されたバックエンドは思考を上書きできます。VMのNumCtx、Temperature、TopP、TopK、NumPredict、RepeatPenaltyはリクエストを上書きし、&lt;code&gt;keep_alive&lt;/code&gt;が欠落している場合はProviderの値が使用されます。</value>
+  </data>
   <data name="The template is built for easy deployment. It includes full Docker support, so you can containerize your app and run it anywhere. You can also deploy it directly to IIS, Azure App Service, or any server that supports ASP.NET Core." xml:space="preserve">
     <value>このテンプレートは簡単なデプロイを実現するために構築されています。完全なDockerサポートを含んでいるため、アプリをコンテナ化してどこでも実行できます。また、IIS、Azure App Service、またはASP.NET Coreをサポートする任意のサーバーに直接デプロイすることも可能です。</value>
   </data>
@@ -1470,11 +1485,29 @@
   <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other nested Responses fields remain untouched." xml:space="preserve">
     <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、および &lt;code&gt;NumPredict&lt;/code&gt; は &lt;code&gt;temperature&lt;/code&gt;、&lt;code&gt;top_p&lt;/code&gt;、および &lt;code&gt;max_output_tokens&lt;/code&gt; を上書きします。他の Responses のネストされたフィールドは変更されません。</value>
   </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. The selected backend overrides &lt;code&gt;reasoning.effort&lt;/code&gt; when configured, including direct forwarding. Other nested Responses fields remain untouched." xml:space="preserve">
+    <value>VMの&lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、および&lt;code&gt;NumPredict&lt;/code&gt;は、&lt;code&gt;temperature&lt;/code&gt;、&lt;code&gt;top_p&lt;/code&gt;、および&lt;code&gt;max_output_tokens&lt;/code&gt;を上書きします。選択されたバックエンドは、設定されている場合、直接転送を含む&lt;code&gt;reasoning.effort&lt;/code&gt;を上書きします。その他のネストされたResponsesフィールドは変更されません。</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Chat target controls. The selected backend overrides reasoning effort when configured; otherwise the translated client setting is kept." xml:space="preserve">
+    <value>VMの&lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、および&lt;code&gt;NumPredict&lt;/code&gt;は、Chatターゲットのコントロールを上書きします。選択されたバックエンドが設定されている場合は推論努力度を上書きし、それ以外の場合は翻訳されたクライアント設定が保持されます。</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Chat target fields. The selected backend overrides reasoning effort when configured; otherwise the translated client setting is kept. Ollama-only DB sampling/context controls do not apply to Chat." xml:space="preserve">
+    <value>VMの&lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、および&lt;code&gt;NumPredict&lt;/code&gt;は、Chatのターゲットフィールドをオーバーライドします。選択されたバックエンドが設定されている場合、推論の努力度をオーバーライドします。それ以外の場合は、変換されたクライアント設定が保持されます。Ollama専用のDBサンプリング/コンテキスト制御は、Chatには適用されません。</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. The selected backend overrides reasoning effort when configured; otherwise the client setting is kept. VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
+    <value>VMの&lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、および&lt;code&gt;NumPredict&lt;/code&gt;は、Responsesのフィールドを上書きします。設定されている場合、選択されたバックエンドが推論の努力度を上書きし、それ以外の場合はクライアントの設定が保持されます。VMの&lt;code&gt;TopK&lt;/code&gt;、&lt;code&gt;NumCtx&lt;/code&gt;、および&lt;code&gt;RepeatPenalty&lt;/code&gt;には、Responsesの対応フィールドがありません。</value>
+  </data>
   <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
     <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、および &lt;code&gt;NumPredict&lt;/code&gt; は Responses フィールドを上書きします。VM &lt;code&gt;Thinking&lt;/code&gt;、&lt;code&gt;TopK&lt;/code&gt;、&lt;code&gt;NumCtx&lt;/code&gt;、および &lt;code&gt;RepeatPenalty&lt;/code&gt; には Responses の対象フィールドがありません。</value>
   </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. The selected backend overrides reasoning effort when configured; otherwise the client setting is kept. VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
+    <value>VMの&lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、および&lt;code&gt;NumPredict&lt;/code&gt;は、Responsesのターゲットフィールドを上書きします。選択されたバックエンドが設定されている場合、推論努力（reasoning effort）を上書きします。設定されていない場合、クライアントの設定が保持されます。VMの&lt;code&gt;TopK&lt;/code&gt;、&lt;code&gt;NumCtx&lt;/code&gt;、および&lt;code&gt;RepeatPenalty&lt;/code&gt;は、Responsesの制御項目ではありません。</value>
+  </data>
   <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
     <value>VM &lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、および &lt;code&gt;NumPredict&lt;/code&gt; は Responses のターゲットフィールドを上書きします。VM &lt;code&gt;Thinking&lt;/code&gt;、&lt;code&gt;TopK&lt;/code&gt;、&lt;code&gt;NumCtx&lt;/code&gt;、および &lt;code&gt;RepeatPenalty&lt;/code&gt; は Responses コントロールではありません。</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override their target fields. The selected backend overrides &lt;code&gt;reasoning_effort&lt;/code&gt; when configured, including direct forwarding. Other client reasoning controls and nested &lt;code&gt;chat_template_kwargs&lt;/code&gt; members are preserved." xml:space="preserve">
+    <value>VMの&lt;code&gt;Temperature&lt;/code&gt;、&lt;code&gt;TopP&lt;/code&gt;、&lt;code&gt;NumPredict&lt;/code&gt;は、それぞれの対象フィールドをオーバーライドします。選択されたバックエンドは設定されている場合、&lt;code&gt;reasoning_effort&lt;/code&gt;をオーバーライドします（直接転送を含む）。その他のクライアントの推論制御およびネストされた&lt;code&gt;chat_template_kwargs&lt;/code&gt;メンバーは保持されます。</value>
   </data>
   <data name="VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
     <value>VM Thinking、NumCtx、Temperature、TopP、TopK、NumPredict、およびRepeatPenaltyはリクエストを上書きします。&lt;code&gt;keep_alive&lt;/code&gt;が指定されていない場合は、プロバイダーの値を使用します。</value>

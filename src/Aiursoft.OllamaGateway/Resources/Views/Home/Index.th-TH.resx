@@ -165,6 +165,9 @@
   <data name="All Ollama VM controls apply: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt;. Ollama-only values may therefore be injected even though the client dialect cannot express them." xml:space="preserve">
     <value>การควบคุม VM ของ Ollama ทั้งหมดมีผลบังคับใช้: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, และ &lt;code&gt;think&lt;/code&gt; ดังนั้น ค่าที่ใช้เฉพาะกับ Ollama อาจถูกใส่เข้าไปแม้ว่าไวยากรณ์ของไคลเอนต์จะไม่สามารถแสดงค่าเหล่านั้นได้</value>
   </data>
+  <data name="All Ollama VM sampling controls apply. The selected backend can force &lt;code&gt;think&lt;/code&gt; on or off; otherwise the translated client setting applies." xml:space="preserve">
+    <value>การควบคุมการสุ่มตัวอย่างของ Ollama VM ทั้งหมดมีผลใช้บังคับ Backend ที่เลือกสามารถบังคับเปิดหรือปิด &lt;code&gt;think&lt;/code&gt; ได้; มิฉะนั้น การตั้งค่าไคลเอนต์ที่ถูกแปลงแล้วจะนำมาใช้</value>
+  </data>
   <data name="All dependencies are automatically registered and always available via constructor injection." xml:space="preserve">
     <value>การอ้างอิงทั้งหมดจะถูกลงทะเบียนโดยอัตโนมัติและพร้อมใช้งานเสมอผ่าน Constructor Injection</value>
   </data>
@@ -260,6 +263,9 @@
   </data>
   <data name="Backend Provider type" xml:space="preserve">
     <value>ประเภทผู้ให้บริการแบ็กเอนด์</value>
+  </data>
+  <data name="Backend thinking overrides apply to both same-dialect direct forwarding and cross-dialect translation. An empty override keeps the client setting, or the upstream default when absent." xml:space="preserve">
+    <value>การกำหนดค่าซ้อน (override) การคิดของแบ็กเอนด์ใช้กับทั้งการส่งต่อโดยตรงในภาษาเดียวกันและการแปลข้ามภาษา การกำหนดค่าซ้อนที่ว่างเปล่าจะคงค่าการตั้งค่าของไคลเอนต์ไว้ หรือใช้ค่าเริ่มต้นของระบบต้นทางหากไม่มีค่าการตั้งค่า</value>
   </data>
   <data name="Background Job Processing" xml:space="preserve">
     <value>การประมวลผลงานหลังบ้าน</value>
@@ -1038,6 +1044,9 @@
   <data name="OpenAI content parts → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → boolean &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;." xml:space="preserve">
     <value>ส่วนประกอบเนื้อหา OpenAI → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → ค่าบูลีน &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;.</value>
   </data>
+  <data name="OpenAI content parts → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → named &lt;code&gt;think&lt;/code&gt; level (&lt;code&gt;none&lt;/code&gt; → &lt;code&gt;false&lt;/code&gt;); &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;." xml:space="preserve">
+    <value>ส่วนประกอบเนื้อหา OpenAI → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → ระดับ &lt;code&gt;think&lt;/code&gt; ที่กำหนดชื่อ (&lt;code&gt;none&lt;/code&gt; → &lt;code&gt;false&lt;/code&gt;); &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;.</value>
+  </data>
   <data name="OpenAI embedding extensions outside the shared input are not copied into the cross-dialect request or reconstructed response." xml:space="preserve">
     <value>ส่วนขยายของการฝังตัวของ OpenAI ที่อยู่นอกเขตข้อมูลอินพุตร่วมกันจะไม่ถูกคัดลอกไปยังคำขอข้ามรูปแบบหรือการตอบสนองที่สร้างใหม่</value>
   </data>
@@ -1046,6 +1055,9 @@
   </data>
   <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
     <value>สารบัญเนื้อหาหลายรูปแบบของ OpenAI ถูกแยกออก: ข้อมูล image_url ถูกส่งไปยังอาร์เรย์รูปภาพของ Ollama ส่วนข้อความจะกลายเป็นเนื้อหา</value>
+  </data>
+  <data name="OpenAI target fields &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_tokens&lt;/code&gt; use VM values when set. The selected Ollama backend can override &lt;code&gt;think&lt;/code&gt;; otherwise the client setting is kept." xml:space="preserve">
+    <value>ฟิลด์ปลายทางของ OpenAI ได้แก่ &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; และ &lt;code&gt;max_tokens&lt;/code&gt; จะใช้ค่า VM เมื่อมีการตั้งค่า ปลายทาง Ollama ที่เลือกสามารถแทนที่ &lt;code&gt;think&lt;/code&gt; ได้; มิฉะนั้น การตั้งค่าของไคลเอนต์จะถูกรักษาไว้</value>
   </data>
   <data name="OpenAI target fields &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_tokens&lt;/code&gt; use VM values when set. VM &lt;code&gt;Thinking&lt;/code&gt; overrides the translated client value." xml:space="preserve">
     <value>ฟิลด์เป้าหมายของ OpenAI &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; และ &lt;code&gt;max_tokens&lt;/code&gt; จะใช้ค่า VM เมื่อมีการตั้งค่า ค่า VM &lt;code&gt;Thinking&lt;/code&gt; จะทับซ้อนค่าไคลเอนต์ที่แปลงแล้ว</value>
@@ -1356,6 +1368,9 @@
   <data name="The request adapter deep-clones the original Responses JSON. &lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt; preserves unknown output Items and SSE event names/data/comments/id/retry without passing the payload through canonical IL." xml:space="preserve">
     <value>ตัวปรับแต่งคำขอได้ทำการโคลน JSON ของ Responses ต้นฉบับแบบลึก &lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt; จะรักษา Items เอาต์พุตที่ไม่รู้จัก และชื่อ/ข้อมูล/ความคิดเห็น/id/retry ของเหตุการณ์ SSE ไว้ โดยไม่ต้องส่งเพย์โหลดผ่าน IL มาตรฐาน</value>
   </data>
+  <data name="The selected backend can override thinking. VM NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
+    <value>Backend ที่เลือกไว้สามารถ override การคิด (thinking) ได้ ค่า VM NumCtx, Temperature, TopP, TopK, NumPredict และ RepeatPenalty จะ override คำขอ; หากไม่มี &lt;code&gt;keep_alive&lt;/code&gt; จะใช้ค่าจาก Provider</value>
+  </data>
   <data name="The template is built for easy deployment. It includes full Docker support, so you can containerize your app and run it anywhere. You can also deploy it directly to IIS, Azure App Service, or any server that supports ASP.NET Core." xml:space="preserve">
     <value>เทมเพลตนี้ถูกสร้างขึ้นเพื่อให้การปรับใช้เป็นเรื่องง่าย โดยมีระบบรองรับ Docker เต็มรูปแบบ ทำให้คุณสามารถสร้างคอนเทนเนอร์สำหรับแอปพลิเคชันและรันได้ทุกที่ นอกจากนี้คุณยังสามารถปรับใช้โดยตรงไปยัง IIS, Azure App Service หรือเซิร์ฟเวอร์ใดๆ ที่รองรับ ASP.NET Core ได้อีกด้วย</value>
   </data>
@@ -1458,11 +1473,29 @@
   <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other nested Responses fields remain untouched." xml:space="preserve">
     <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; และ &lt;code&gt;NumPredict&lt;/code&gt; จะแทนที่ค่า &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; และ &lt;code&gt;max_output_tokens&lt;/code&gt; ฟิลด์ Responses อื่นๆ ที่ซ้อนอยู่จะคงไว้โดยไม่มีการเปลี่ยนแปลง</value>
   </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. The selected backend overrides &lt;code&gt;reasoning.effort&lt;/code&gt; when configured, including direct forwarding. Other nested Responses fields remain untouched." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; และ &lt;code&gt;NumPredict&lt;/code&gt; จะเขียนทับ &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; และ &lt;code&gt;max_output_tokens&lt;/code&gt; Backend ที่เลือกจะเขียนทับ &lt;code&gt;reasoning.effort&lt;/code&gt; เมื่อมีการกำหนดค่า รวมถึงการส่งต่อโดยตรง ฟิลด์ Responses อื่น ๆ ที่อยู่ในระดับลูกจะยังคงไม่ถูกแก้ไข</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Chat target controls. The selected backend overrides reasoning effort when configured; otherwise the translated client setting is kept." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; และ &lt;code&gt;NumPredict&lt;/code&gt; จะทับค่าควบคุมเป้าหมายของ Chat ระบบแบ็กเอนด์ที่เลือกจะทับค่าความพยายามในการให้เหตุผล (reasoning effort) เมื่อมีการกำหนดค่าไว้ มิฉะนั้นจะใช้ค่าการตั้งค่าจากไคลเอนต์ที่ถูกแปลไว้</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Chat target fields. The selected backend overrides reasoning effort when configured; otherwise the translated client setting is kept. Ollama-only DB sampling/context controls do not apply to Chat." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; และ &lt;code&gt;NumPredict&lt;/code&gt; จะแทนที่ฟิลด์เป้าหมายของ Chat เบ็คเอนด์ที่เลือกจะแทนที่ระดับความพยายามในการให้เหตุผลเมื่อมีการกำหนดค่า; มิฉะนั้นจะคงค่าการตั้งค่าไคลเอนต์ที่ถูกแปลงไว้ การควบคุมการสุ่ม/บริบทของ DB เฉพาะ Ollama จะไม่ใช้กับ Chat</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. The selected backend overrides reasoning effort when configured; otherwise the client setting is kept. VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; และ &lt;code&gt;NumPredict&lt;/code&gt; จะแทนที่ฟิลด์ของ Responses แบ็กเอนด์ที่เลือกจะแทนที่ความพยายามในการให้เหตุผล (reasoning effort) เมื่อมีการตั้งค่า; หากไม่มีการตั้งค่า จะยังคงใช้การตั้งค่าของไคลเอนต์ VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt; และ &lt;code&gt;RepeatPenalty&lt;/code&gt; ไม่มีฟิลด์เป้าหมายใน Responses</value>
+  </data>
   <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
     <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; และ &lt;code&gt;NumPredict&lt;/code&gt; จะแทนที่ฟิลด์ของ Responses ส่วน VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt; และ &lt;code&gt;RepeatPenalty&lt;/code&gt; ไม่มีฟิลด์เป้าหมายใน Responses</value>
   </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. The selected backend overrides reasoning effort when configured; otherwise the client setting is kept. VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; และ &lt;code&gt;NumPredict&lt;/code&gt; จะแทนที่ฟิลด์เป้าหมายของ Responses ปลายทางที่เลือกจะแทนที่ความพยายามในการให้เหตุผลเมื่อมีการตั้งค่า; ในกรณีอื่น ๆ การตั้งค่าของไคลเอนต์จะถูกรักษาไว้ VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt; และ &lt;code&gt;RepeatPenalty&lt;/code&gt; ไม่ใช่การควบคุมของ Responses</value>
+  </data>
   <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
     <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; และ &lt;code&gt;NumPredict&lt;/code&gt; จะเขียนทับฟิลด์เป้าหมายของ Responses VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt; และ &lt;code&gt;RepeatPenalty&lt;/code&gt; ไม่ใช่ตัวควบคุมของ Responses</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override their target fields. The selected backend overrides &lt;code&gt;reasoning_effort&lt;/code&gt; when configured, including direct forwarding. Other client reasoning controls and nested &lt;code&gt;chat_template_kwargs&lt;/code&gt; members are preserved." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; และ &lt;code&gt;NumPredict&lt;/code&gt; จะแทนที่ฟิลด์เป้าหมาย Backend ที่เลือกจะแทนที่ &lt;code&gt;reasoning_effort&lt;/code&gt; เมื่อมีการกำหนดค่า รวมถึงการส่งต่อโดยตรง ควบคุมการให้เหตุผลอื่นๆ ของไคลเอนต์และสมาชิกภายใน &lt;code&gt;chat_template_kwargs&lt;/code&gt; จะถูกเก็บรักษาไว้</value>
   </data>
   <data name="VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
     <value>VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict และ RepeatPenalty จะกำหนดค่าทับคำขอ; หากไม่มี &lt;code&gt;keep_alive&lt;/code&gt; จะใช้ค่าจาก Provider</value>

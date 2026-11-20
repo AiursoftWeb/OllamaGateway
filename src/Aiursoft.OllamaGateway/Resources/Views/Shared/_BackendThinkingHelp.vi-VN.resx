@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="A configured override wins over the client on every backend attempt, including same-dialect direct forwarding. Fallback attempts use the newly selected backend&apos;s own settings." xml:space="preserve">
+    <value>Cấu hình ghi đè đã thiết lập sẽ ưu tiên hơn cấu hình của client trong mọi lần thử backend, bao gồm cả việc chuyển tiếp trực tiếp cùng phương ngữ. Các lần thử dự phòng sẽ sử dụng cấu hình riêng của backend mới được chọn.</value>
+  </data>
+  <data name="A non-empty value is sent verbatim as reasoning_effort for Chat Completions or reasoning.effort for Responses. An existing chat_template_kwargs.reasoning_effort is also overridden so it cannot take priority over your depth setting. No depth names are translated into booleans." xml:space="preserve">
+    <value>Giá trị không rỗng được gửi nguyên văn dưới dạng reasoning_effort cho Chat Completions hoặc reasoning.effort cho Responses. Giá trị chat_template_kwargs.reasoning_effort hiện có cũng sẽ bị ghi đè để nó không thể có ưu tiên cao hơn cài đặt độ sâu của bạn. Các tên độ sâu không được chuyển đổi thành giá trị boolean.</value>
+  </data>
+  <data name="Backend examples" xml:space="preserve">
+    <value>Ví dụ backend</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Đóng</value>
+  </data>
+  <data name="Do not override leaves that setting to the client, or to the upstream default when absent. Same-dialect requests retain their original fields; cross-dialect requests use the gateway&apos;s protocol translation." xml:space="preserve">
+    <value>Không ghi đè các lá để cài đặt đó lên client, hoặc lên mặc định của upstream khi không có. Các yêu cầu cùng phương ngữ giữ nguyên các trường gốc; các yêu cầu khác phương ngữ sử dụng dịch chuyển giao thức của gateway.</value>
+  </data>
+  <data name="For Ollama-native backends, Force on or Force off sends boolean think. For OpenAI Chat or Responses backends, it writes chat_template_kwargs.enable_thinking. Other template arguments are preserved. This is a vLLM-style extension, not a universal OpenAI switch; leave it unconfigured for providers that do not support it." xml:space="preserve">
+    <value>Đối với các backend bản địa của Ollama, Force on hoặc Force off sẽ gửi giá trị boolean think. Đối với các backend OpenAI Chat hoặc Responses, nó sẽ ghi chat_template_kwargs.enable_thinking. Các đối số template khác được giữ nguyên. Đây là một phần mở rộng theo phong cách vLLM, không phải là công tắc OpenAI phổ quát; hãy để nó ở chế độ chưa cấu hình cho các nhà cung cấp không hỗ trợ.</value>
+  </data>
+  <data name="How to configure" xml:space="preserve">
+    <value>Cách cấu hình</value>
+  </data>
+  <data name="Other compatible providers" xml:space="preserve">
+    <value>Các nhà cung cấp tương thích khác</value>
+  </data>
+  <data name="Reasoning depth" xml:space="preserve">
+    <value>Độ sâu suy luận</value>
+  </data>
+  <data name="Supported depths and whether thinking can be disabled depend on the model and provider. Unsupported extensions may be rejected or ignored. Check the provider&apos;s documentation; the gateway does not infer capabilities from its name." xml:space="preserve">
+    <value>Các mức độ suy luận được hỗ trợ và việc có thể tắt suy luận hay không phụ thuộc vào mô hình và nhà cung cấp. Các phần mở rộng không được hỗ trợ có thể bị từ chối hoặc bỏ qua. Hãy kiểm tra tài liệu của nhà cung cấp; cổng không suy luận các khả năng từ tên của nó.</value>
+  </data>
+  <data name="The switch and depth are independent. With vLLM, an explicit enable_thinking value takes precedence over automatic activation by depth. Avoid conflicting settings such as Force off with a high depth, or Force on with depth {0}. A depth alone does not force thinking on against an explicit client switch." xml:space="preserve">
+    <value>Công tắc và độ sâu là độc lập với nhau. Với vLLM, giá trị enable_thinking được chỉ định rõ ràng sẽ có ưu tiên cao hơn so với việc kích hoạt tự động theo độ sâu. Tránh các thiết lập xung đột như Bật ép buộc với độ sâu cao, hoặc Tắt ép buộc với độ sâu {0}. Chỉ riêng độ sâu không ép buộc bật tư duy khi có công tắc chỉ định rõ ràng từ phía client.</value>
+  </data>
+  <data name="The switch controls enable_thinking independently of depth. Qwen3.8 supports low, medium and xhigh, with xhigh as its default. To keep thinking enabled, select Force on and a supported depth such as xhigh." xml:space="preserve">
+    <value>Công tắc điều khiển enable_thinking độc lập với độ sâu. Qwen3.8 hỗ trợ low, medium và xhigh, với xhigh là mặc định. Để giữ tính năng suy nghĩ được bật, hãy chọn Force on và một độ sâu được hỗ trợ như xhigh.</value>
+  </data>
+  <data name="Thinking settings help" xml:space="preserve">
+    <value>Trợ giúp cài đặt suy nghĩ</value>
+  </data>
+  <data name="Thinking switch" xml:space="preserve">
+    <value>Công tắc suy nghĩ</value>
+  </data>
+  <data name="Usually leave the switch unconfigured and set only a depth supported by the underlying model, such as high or medium. Do not assume enable_thinking is supported." xml:space="preserve">
+    <value>Thông thường hãy để công tắc ở chế độ không cấu hình và chỉ đặt độ sâu được hỗ trợ bởi mô hình nền tảng, chẳng hạn như high hoặc medium. Không nên giả định rằng enable_thinking được hỗ trợ.</value>
+  </data>
+  <data name="Valid values vary by model. These are examples, not a promise that every provider accepts the same controls." xml:space="preserve">
+    <value>Các giá trị hợp lệ khác nhau tùy theo mô hình. Đây chỉ là ví dụ, không phải cam kết rằng mọi nhà cung cấp đều chấp nhận cùng các tùy chỉnh.</value>
+  </data>
+  <data name="What is forwarded or overridden?" xml:space="preserve">
+    <value>Điều gì được chuyển tiếp hoặc ghi đè?</value>
+  </data>
+  <data name="When accessed through an OpenAI-compatible proxy, follow that proxy&apos;s contract. These controls do not generate native Claude thinking/budget fields or Gemini thinking configuration." xml:space="preserve">
+    <value>Khi được truy cập thông qua một proxy tương thích với OpenAI, hãy tuân theo hợp đồng của proxy đó. Các điều khiển này không tạo ra các trường thinking/budget bản địa của Claude hoặc cấu hình thinking của Gemini.</value>
+  </data>
+
+</root>

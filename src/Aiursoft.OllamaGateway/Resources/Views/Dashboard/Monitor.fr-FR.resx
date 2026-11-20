@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="Depth: follow request" xml:space="preserve">
+    <value>Profondeur : suivre la requête</value>
+  </data>
+  <data name="Depth: force {0}" xml:space="preserve">
+    <value>Profondeur : forcer {0}</value>
+  </data>
+  <data name="Embedding requests do not use thinking overrides." xml:space="preserve">
+    <value>Les requêtes d&apos;intégration n&apos;utilisent pas les substitutions de réflexion.</value>
+  </data>
+  <data name="No backend override. The client setting is forwarded or translated; when absent, the upstream default applies." xml:space="preserve">
+    <value>Aucune substitution côté backend. Le paramètre client est transmis ou traduit ; s&apos;il est absent, la valeur par défaut amont s&apos;applique.</value>
+  </data>
+  <data name="No request can be dispatched until a supported backend protocol is configured." xml:space="preserve">
+    <value>Aucune requête ne peut être transmise tant qu&apos;un protocole back-end pris en charge n&apos;est pas configuré.</value>
+  </data>
+  <data name="No supported protocol" xml:space="preserve">
+    <value>Aucun protocole pris en charge</value>
+  </data>
+  <data name="Outgoing fields: {0}" xml:space="preserve">
+    <value>Champs sortants : {0}</value>
+  </data>
+  <data name="Overrides the client setting on each attempt, including same-dialect direct forwarding and cross-dialect translation." xml:space="preserve">
+    <value>Remplace le paramètre client à chaque tentative, y compris la transmission directe dans le même dialecte et la traduction entre dialectes.</value>
+  </data>
+  <data name="Protocols: {0}" xml:space="preserve">
+    <value>Protocoles : {0}</value>
+  </data>
+  <data name="Thinking: follow request" xml:space="preserve">
+    <value>Réflexion : suivre la demande</value>
+  </data>
+  <data name="Thinking: force {0}" xml:space="preserve">
+    <value>Réflexion : forcer {0}</value>
+  </data>
+  <data name="Thinking: not applicable" xml:space="preserve">
+    <value>Raisonnement : non applicable</value>
+  </data>
+  <data name="Thinking: unavailable" xml:space="preserve">
+    <value>Réflexion : indisponible</value>
+  </data>
+
+</root>
