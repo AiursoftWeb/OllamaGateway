@@ -35,5 +35,5 @@
 .traffic-markers [data-stage="attemptFailed"] circle { fill: #c14045; }
 .traffic-markers .followed circle { stroke: #10182a; stroke-width: 3; }
 .traffic-markers text { fill: #172235; stroke: #fff; stroke-width: 4px; paint-order: stroke; font: bold 13px sans-serif; }
-#traffic-topology .traffic-active { filter: drop-shadow(0 0 4px #0b9cba); }
+#traffic-topology :is(.traffic-active, .virtualSvcBusy, .physicalBusy) { filter: drop-shadow(0 0 4px #0b9cba); }
 #traffic-request { max-width: 100%; }

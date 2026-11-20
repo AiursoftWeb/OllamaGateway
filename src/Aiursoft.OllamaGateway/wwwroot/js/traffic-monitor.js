@@ -63,6 +63,8 @@ export function startTrafficMonitor(svg) {
     feed.onmessage = ({ data }) => {
         const batch = JSON.parse(data);
         if (batch.baseline) {
+            for (const node of svg.querySelectorAll('.virtualSvcBusy, .physicalBusy'))
+                node.classList.remove('virtualSvcBusy', 'physicalBusy');
             baseline = new Map(batch.baseline.map(e => [e.requestId, e]));
             history = [];
             schedules.clear();

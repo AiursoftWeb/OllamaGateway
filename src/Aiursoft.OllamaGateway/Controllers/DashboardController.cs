@@ -214,6 +214,11 @@ public class DashboardController(
         {
             VirtualModels = virtualModels,
             Providers = await dbContext.OllamaProviders.ToListAsync(),
+            BusyModels = activeRequestTracker.GetAll()
+                .Where(kv => kv.Value.ActiveCount > 0)
+                .Select(kv => kv.Key)
+                .ToHashSet(),
+            BusyPhysicalModels = activeRequestTracker.GetBusyPhysicalModels(),
             BackendBanStatuses = virtualModels
                 .SelectMany(m => m.VirtualModelBackends)
                 .ToDictionary(b => b.Id, b => modelSelector.GetBanUntil(b.Id))

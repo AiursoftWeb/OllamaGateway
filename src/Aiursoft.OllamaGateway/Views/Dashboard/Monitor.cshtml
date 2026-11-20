@@ -54,6 +54,8 @@
         var svcLabel = $"📦 {vm.Name}<br/>({modelType})";
         sb.AppendLine($"            Svc_{vm.Id}(\"{svcLabel}\"):::virtualSvc");
         sb.AppendLine($"            class Svc_{vm.Id} traffic-Svc_{vm.Id};");
+        if (Model.BusyModels.Contains(vm.Name))
+            sb.AppendLine($"            class Svc_{vm.Id} virtualSvcBusy;");
         var algoStr = vm.SelectionStrategy switch
         {
             SelectionStrategy.PriorityFallback => Localizer["Priority Fallback"].Value,
@@ -99,6 +101,8 @@
             var healthLabel = $"<span class='topology-health'>{MermaidText(statusText)}</span>";
             sb.AppendLine($"        {nodeId}[(\"{icon} {providerName}<br/>{backend.UnderlyingModelName}<br/>{healthLabel}\")]:::{statusClass}");
             sb.AppendLine($"        class {nodeId} traffic-{nodeId};");
+            if (!isBanned && Model.BusyPhysicalModels.Contains(kv.Key))
+                sb.AppendLine($"        class {nodeId} physicalBusy;");
         }
         sb.AppendLine("    end");
     }
