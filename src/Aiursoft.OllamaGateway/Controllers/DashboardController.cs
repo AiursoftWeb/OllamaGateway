@@ -31,6 +31,14 @@ public class DashboardController(
         return TypedResults.ServerSentEvents(journal.Read(Request.Headers["Last-Event-ID"], HttpContext.RequestAborted));
     }
 
+    [HttpGet("Dashboard/traffic-question")]
+    [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+    public IActionResult TrafficQuestion(Guid requestId, [FromServices] TrafficJournal journal)
+    {
+        var question = journal.GetQuestion(requestId);
+        return question == null ? NotFound() : Json(question);
+    }
+
     [HttpGet("Dashboard/live-inference.ws")]
     [EnforceWebSocket]
     public async Task LiveInferenceSocket()

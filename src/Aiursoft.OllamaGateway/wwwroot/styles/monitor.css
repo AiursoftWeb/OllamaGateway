@@ -26,6 +26,9 @@
 }
 
 .traffic-markers { pointer-events: none; --traffic-color: #1754c7; }
+.traffic-markers > g { pointer-events: visiblePainted; cursor: pointer; }
+.traffic-markers > g:focus-visible .marker-dot { stroke: currentColor; stroke-width: 4px; }
+#liveInferenceFullMessageContent { white-space: pre-wrap; overflow-wrap: anywhere; }
 .traffic-markers [data-stage="queued"] { --traffic-color: #9a4c00; }
 .traffic-markers :is([data-stage="returning"], [data-stage="completed"]) { --traffic-color: #00765b; }
 .traffic-markers :is([data-stage="cancelled"], [data-stage="failed"], [data-stage="attemptFailed"]) { --traffic-color: #ac3245; }

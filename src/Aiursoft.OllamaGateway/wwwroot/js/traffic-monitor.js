@@ -129,6 +129,60 @@ export function startTrafficMonitor(svg) {
     };
     picker.onchange = () => { dirty = true; controlsChanged = true; };
 
+    const questionButton = document.getElementById('traffic-question');
+    const modal = document.getElementById('liveInferenceFullMessageModal');
+    const messageLabels = document.getElementById('live-inference').dataset;
+    let questionLoad;
+    async function showQuestion(requestId) {
+        questionLoad?.abort();
+        const load = new AbortController();
+        questionLoad = load;
+        const content = document.getElementById('liveInferenceFullMessageContent');
+        document.getElementById('liveInferenceFullMessageModalLabel').textContent = messageLabels.questionTitle;
+        content.textContent = labels.loadingQuestion;
+        for (const route of svg.querySelectorAll('.backend-route[aria-describedby]'))
+            bootstrap.Tooltip.getInstance(route)?.hide();
+        bootstrap.Modal.getOrCreateInstance(modal).show();
+        const url = new URL(controls.dataset.questionUrl, location.href);
+        url.searchParams.set('requestId', requestId);
+        try {
+            const response = await fetch(url, { signal: load.signal });
+            const text = response.ok ? (await response.json() || messageLabels.noContent)
+                : response.status === 404 ? labels.questionUnavailable : labels.questionLoadFailed;
+            if (!load.signal.aborted) content.textContent = text;
+        } catch {
+            if (!load.signal.aborted) content.textContent = labels.questionLoadFailed;
+        }
+    }
+    modal.addEventListener('hide.bs.modal', () => questionLoad?.abort());
+    questionButton.onclick = () => showQuestion(picker.value);
+
+    // Capture the request on contact. A moving or grouped marker can change before release.
+    let pressed;
+    layer.addEventListener('pointerdown', event => {
+        const marker = event.target.closest('[data-request-id]');
+        if (!marker || !event.isPrimary || event.button !== 0) return;
+        pressed = { id: marker.dataset.requestId, x: event.clientX, y: event.clientY };
+        layer.setPointerCapture(event.pointerId);
+    });
+    layer.addEventListener('pointercancel', () => { pressed = null; });
+    layer.addEventListener('pointerup', event => {
+        if (!event.isPrimary || event.button !== 0) return;
+        const tap = pressed;
+        pressed = null;
+        if (tap && Math.hypot(event.clientX - tap.x, event.clientY - tap.y) <= 12) showQuestion(tap.id);
+    });
+    layer.addEventListener('click', event => {
+        const marker = event.target.closest('[data-request-id]');
+        if (marker && event.detail === 0) showQuestion(marker.dataset.requestId);
+    });
+    layer.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            if (!event.repeat) showQuestion(event.target.dataset.requestId);
+        }
+    });
+
     function inLayer(element, point) {
         const matrix = layer.getCTM().inverse().multiply(element.getCTM());
         return new DOMPoint(point.x, point.y).matrixTransform(matrix);
@@ -200,6 +254,9 @@ export function startTrafficMonitor(svg) {
         let g = groups.get(key);
         if (!g) {
             g = document.createElementNS(ns, 'g');
+            g.setAttribute('role', 'button');
+            g.setAttribute('tabindex', '0');
+            g.setAttribute('aria-haspopup', 'dialog');
             const make = (tag, name) => {
                 const el = document.createElementNS(ns, tag);
                 el.classList.add(name);
@@ -221,6 +278,8 @@ export function startTrafficMonitor(svg) {
             groups.set(key, g);
         }
         g.dataset.stage = e.stage;
+        g.dataset.requestId = e.requestId;
+        g.setAttribute('aria-label', questionButton.textContent + ' · ' + e.questionPreview);
         g.classList.toggle('followed', selected);
         g.setAttribute('transform', 'translate(' + point.x + ' ' + point.y + ')');
         const queued = e.stage === 'queued';
@@ -259,6 +318,7 @@ export function startTrafficMonitor(svg) {
         picker.replaceChildren(picker.options[0], fragment);
         picker.value = recent.has(selected) ? selected : '';
         detail.hidden = !picker.value;
+        questionButton.hidden = !picker.value;
         if (!detail.hidden) {
             const trace = events.filter(e => e.requestId === selected && e.at <= time && !e.previewUpdate);
             const first = (frozen?.baseline ?? baseline).get(selected);

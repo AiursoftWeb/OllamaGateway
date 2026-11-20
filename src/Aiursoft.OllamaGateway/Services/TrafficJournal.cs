@@ -24,10 +24,18 @@ public sealed class TrafficJournal(TimeProvider clock) : ISingletonDependency
     private readonly TrafficEvent?[] _events = new TrafficEvent[Capacity];
     // State immediately before the oldest retained event, including long-running requests.
     private readonly Dictionary<Guid, TrafficEvent> _baseline = new();
+    // Kept once per retained request and served only when a Monitor viewer opens it.
+    private readonly Dictionary<Guid, string> _questions = new();
     private TaskCompletionSource? _changed;
     private long _sequence;
 
-    public void Record(TrafficEvent item)
+    public string? GetQuestion(Guid requestId)
+    {
+        lock (_gate)
+            return _questions.GetValueOrDefault(requestId);
+    }
+
+    public void Record(TrafficEvent item, string? question = null)
     {
         lock (_gate)
         {
@@ -35,10 +43,15 @@ public sealed class TrafficJournal(TimeProvider clock) : ISingletonDependency
             if (_events[index] is { } oldest)
             {
                 if (oldest.Finished)
+                {
                     _baseline.Remove(oldest.RequestId);
+                    _questions.Remove(oldest.RequestId);
+                }
                 else
                     _baseline[oldest.RequestId] = oldest;
             }
+            if (question != null)
+                _questions[item.RequestId] = question;
             _events[index] = item with { Sequence = ++_sequence, At = clock.GetUtcNow().ToUnixTimeMilliseconds() };
             _changed?.TrySetResult();
             _changed = null;
