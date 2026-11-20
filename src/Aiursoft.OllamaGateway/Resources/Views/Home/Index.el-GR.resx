@@ -165,6 +165,9 @@
   <data name="All Ollama VM controls apply: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt;. Ollama-only values may therefore be injected even though the client dialect cannot express them." xml:space="preserve">
     <value>Εφαρμόζονται όλα τα ελέγχου VM του Ollama: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt; και &lt;code&gt;think&lt;/code&gt;. Επομένως, μπορούν να εγχυθούν τιμές που αφορούν αποκλειστικά το Ollama, ακόμα κι αν ο διαλέκτος του πελάτη δεν μπορεί να τις εκφράσει.</value>
   </data>
+  <data name="All Ollama VM sampling controls apply. The selected backend can force &lt;code&gt;think&lt;/code&gt; on or off; otherwise the translated client setting applies." xml:space="preserve">
+    <value>Ισχύουν όλοι οι έλεγχοι δειγματοληψίας του VM Ollama. Το επιλεγμένο backend μπορεί να επιβάλει το &lt;code&gt;think&lt;/code&gt; είτε ενεργό είτε ανενεργό; αλλιώς εφαρμόζεται η μεταφρασμένη ρύθμιση του πελάτη.</value>
+  </data>
   <data name="All dependencies are automatically registered and always available via constructor injection." xml:space="preserve">
     <value>Όλες οι εξαρτήσεις εγγράφονται αυτόματα και είναι πάντα διαθέσιμες μέσω της εισαγωγής από κατασκευαστή.</value>
   </data>
@@ -260,6 +263,9 @@
   </data>
   <data name="Backend Provider type" xml:space="preserve">
     <value>Τύπος παρόχου backend</value>
+  </data>
+  <data name="Backend thinking overrides apply to both same-dialect direct forwarding and cross-dialect translation. An empty override keeps the client setting, or the upstream default when absent." xml:space="preserve">
+    <value>Οι επιλογές εξασθένησης σκέψης του backend ισχύουν τόσο για την απευθείας προαγωγή στον ίδιο διάλεκτο όσο και για τη μετάφραση μεταξύ διαλέκτων. Μια κενή επιλογή εξασθένησης διατηρεί τη ρύθμιση του πελάτη ή την προεπιλογή του upstream όταν δεν υπάρχει.</value>
   </data>
   <data name="Background Job Processing" xml:space="preserve">
     <value>Επεξεργασία Υπόβαθρο Εργασίας</value>
@@ -1038,6 +1044,9 @@
   <data name="OpenAI content parts → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → boolean &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;." xml:space="preserve">
     <value>Μέρη περιεχομένου OpenAI → &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt; του Ollama; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → διακόσμητο &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt; του Ollama.</value>
   </data>
+  <data name="OpenAI content parts → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → named &lt;code&gt;think&lt;/code&gt; level (&lt;code&gt;none&lt;/code&gt; → &lt;code&gt;false&lt;/code&gt;); &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;." xml:space="preserve">
+    <value>Μέρη περιεχομένου OpenAI → &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt; του Ollama; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → ονομασμένο επίπεδο &lt;code&gt;think&lt;/code&gt; (&lt;code&gt;none&lt;/code&gt; → &lt;code&gt;false&lt;/code&gt;); &lt;code&gt;response_format&lt;/code&gt; → &lt;code&gt;format&lt;/code&gt; του Ollama.</value>
+  </data>
   <data name="OpenAI embedding extensions outside the shared input are not copied into the cross-dialect request or reconstructed response." xml:space="preserve">
     <value>Οι επεκτάσεις embedding του OpenAI εκτός του κοινού εισοδήματος δεν αντιγράφονται στο αίτημα δια-διαλέκτου ή στην ανακατασκευασμένη απάντηση.</value>
   </data>
@@ -1046,6 +1055,9 @@
   </data>
   <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
     <value>Το πολυτροπικό πίνακα περιεχομένου του OpenAI εξάγεται: τα δεδομένα image_url πηγαίνουν στον πίνακα εικόνων του Ollama, το κείμενο γίνεται περιεχόμενο.</value>
+  </data>
+  <data name="OpenAI target fields &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_tokens&lt;/code&gt; use VM values when set. The selected Ollama backend can override &lt;code&gt;think&lt;/code&gt;; otherwise the client setting is kept." xml:space="preserve">
+    <value>Τα πεδία προορισμού OpenAI &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; και &lt;code&gt;max_tokens&lt;/code&gt; χρησιμοποιούν τιμές VM όταν ορίζονται. Η επιλεγμένη υποδομή Ollama μπορεί να εναλλακτικά να ορίζει το &lt;code&gt;think&lt;/code&gt;; αλλιώς διατηρείται η ρύθμιση του πελάτη.</value>
   </data>
   <data name="OpenAI target fields &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_tokens&lt;/code&gt; use VM values when set. VM &lt;code&gt;Thinking&lt;/code&gt; overrides the translated client value." xml:space="preserve">
     <value>Τα πεδία στόχου OpenAI &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; και &lt;code&gt;max_tokens&lt;/code&gt; χρησιμοποιούν τις τιμές VM όταν έχουν οριστεί. Το VM &lt;code&gt;Thinking&lt;/code&gt; υπερισχύει της μεταφρασμένης τιμής του πελάτη.</value>
@@ -1356,6 +1368,9 @@
   <data name="The request adapter deep-clones the original Responses JSON. &lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt; preserves unknown output Items and SSE event names/data/comments/id/retry without passing the payload through canonical IL." xml:space="preserve">
     <value>Ο προσαρμογής αιτήματος δημιουργεί βαθύ αντίγραφο του αρχικού JSON Responses. Το &lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt; διατηρεί άγνωστα στοιχεία εξόδου και ονόματα δεδομένων/σχόλια/id/retry συμβάντων SSE χωρίς να διαβιβάσει το φορτίο μέσω του κανονικού IL.</value>
   </data>
+  <data name="The selected backend can override thinking. VM NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
+    <value>Το επιλεγμένο backend μπορεί να αντικαταστήσει τη σκέψη. Τα VM NumCtx, Temperature, TopP, TopK, NumPredict και RepeatPenalty υπερισχύουν του αιτήματος· η απουσία &lt;code&gt;keep_alive&lt;/code&gt; χρησιμοποιεί την τιμή του Provider.</value>
+  </data>
   <data name="The template is built for easy deployment. It includes full Docker support, so you can containerize your app and run it anywhere. You can also deploy it directly to IIS, Azure App Service, or any server that supports ASP.NET Core." xml:space="preserve">
     <value>Το πρότυπο είναι κατασκευασμένο για εύκολη ανάπτυξη. Περιλαμβάνει πλήρη υποστήριξη Docker, ώστε να μπορείτε να συσκευάσετε την εφαρμογή σας σε containers και να την εκτελέσετε οπουδήποτε. Μπορείτε επίσης να την αναπτύξετε απευθείας στο IIS, στο Azure App Service ή σε οποιονδήποτε διακομιστή που υποστηρίζει ASP.NET Core.</value>
   </data>
@@ -1458,11 +1473,29 @@
   <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other nested Responses fields remain untouched." xml:space="preserve">
     <value>Τα VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; και &lt;code&gt;NumPredict&lt;/code&gt; υπερισχύουν των &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; και &lt;code&gt;max_output_tokens&lt;/code&gt;. Τα άλλα ενσωματωμένα πεδία Responses παραμένουν αμετάβλητα.</value>
   </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. The selected backend overrides &lt;code&gt;reasoning.effort&lt;/code&gt; when configured, including direct forwarding. Other nested Responses fields remain untouched." xml:space="preserve">
+    <value>Τα VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; και &lt;code&gt;NumPredict&lt;/code&gt; υπερισχύουν των &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; και &lt;code&gt;max_output_tokens&lt;/code&gt;. Το επιλεγμένο backend υπερισχύει του &lt;code&gt;reasoning.effort&lt;/code&gt; όταν έχει ρυθμιστεί, συμπεριλαμβανομένης της άμεσης παραπομπής. Τα άλλα ενσωματωμένα πεδία των Responses παραμένουν αμετάβλητα.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Chat target controls. The selected backend overrides reasoning effort when configured; otherwise the translated client setting is kept." xml:space="preserve">
+    <value>Τα VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; και &lt;code&gt;NumPredict&lt;/code&gt; υπερισχύουν των ελεγκτικών πεδίων στοχεύσης Chat. Το επιλεγμένο backend υπερισχύει της προσπάθειας σκέψης (reasoning effort) όταν είναι ρυθμισμένο; αλλιώς διατηρείται η μεταφρασμένη ρύθμιση του client.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Chat target fields. The selected backend overrides reasoning effort when configured; otherwise the translated client setting is kept. Ollama-only DB sampling/context controls do not apply to Chat." xml:space="preserve">
+    <value>Τα &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; και &lt;code&gt;NumPredict&lt;/code&gt; της VM υπερισχύουν των πεδίων προορισμού Chat. Το επιλεγμένο backend υπερισχύει της προσπάθειας σκέψης όταν έχει ρυθμιστεί; αλλιώς διατηρείται το μεταφρασμένο ρύθμισμα του client. Τα ελεγκτικά δειγματοληψίας/περιβάλλοντος ΒΔ που αφορούν μόνο Ollama δεν ισχύουν για το Chat.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. The selected backend overrides reasoning effort when configured; otherwise the client setting is kept. VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
+    <value>Τα VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; και &lt;code&gt;NumPredict&lt;/code&gt; υπερέχουν των πεδίων Responses. Το επιλεγμένο backend υπερέχει του κόστου σκέψης όταν έχει ρυθμιστεί; αλλιώς διατηρείται η ρύθμιση του client. Τα VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt; και &lt;code&gt;RepeatPenalty&lt;/code&gt; δεν έχουν πεδίο στόχου Responses.</value>
+  </data>
   <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
     <value>Τα VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; και &lt;code&gt;NumPredict&lt;/code&gt; υπερισχύουν των πεδίων Responses. Τα VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt; και &lt;code&gt;RepeatPenalty&lt;/code&gt; δεν έχουν αντίστοιχο πεδίο στόχου στα Responses.</value>
   </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. The selected backend overrides reasoning effort when configured; otherwise the client setting is kept. VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
+    <value>Τα VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; και &lt;code&gt;NumPredict&lt;/code&gt; αντικαθιστούν τα πεδία στόχου του Responses. Το επιλεγμένο backend αντικαθιστά το reasoning effort όταν είναι διαμορφωμένο; διαφορετικά διατηρείται η ρύθμιση του client. Τα VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt; και &lt;code&gt;RepeatPenalty&lt;/code&gt; δεν είναι ελέγχου του Responses.</value>
+  </data>
   <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
     <value>Τα &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; και &lt;code&gt;NumPredict&lt;/code&gt; της VM υπερισχύουν των πεδίων-στόχου των Responses. Τα &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt; και &lt;code&gt;RepeatPenalty&lt;/code&gt; της VM δεν είναι ελεγκτικά στοιχεία των Responses.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override their target fields. The selected backend overrides &lt;code&gt;reasoning_effort&lt;/code&gt; when configured, including direct forwarding. Other client reasoning controls and nested &lt;code&gt;chat_template_kwargs&lt;/code&gt; members are preserved." xml:space="preserve">
+    <value>Τα VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; και &lt;code&gt;NumPredict&lt;/code&gt; υπερισχύουν των αντίστοιχων πεδίων προορισμού. Η επιλεγμένη πλατφόρμα υπερισχύει του &lt;code&gt;reasoning_effort&lt;/code&gt; όταν έχει ρυθμιστεί, συμπεριλαμβανομένης της άμεσης διαβίβασης. Οι υπόλοιποι έλεγχοι λογισμικού πελάτη και τα μέλη των ενσωματωμένων &lt;code&gt;chat_template_kwargs&lt;/code&gt; διατηρούνται.</value>
   </data>
   <data name="VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
     <value>Τα VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict και RepeatPenalty υπερέχουν της αιτήσης· η έλλειψη &lt;code&gt;keep_alive&lt;/code&gt; χρησιμοποιεί την τιμή του Provider.</value>

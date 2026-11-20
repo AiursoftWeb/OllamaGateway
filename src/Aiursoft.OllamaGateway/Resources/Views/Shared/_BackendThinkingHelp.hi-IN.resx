@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="A configured override wins over the client on every backend attempt, including same-dialect direct forwarding. Fallback attempts use the newly selected backend&apos;s own settings." xml:space="preserve">
+    <value>एक विन्यस्त अधिलेखन (override) प्रत्येक बैकएंड प्रयास में, समान-भाषा प्रत्यक्ष फॉरवर्डिंग सहित, क्लाइंट पर विजयी होता है। फॉलबैक प्रयास नई रूप से चुने गए बैकएंड की अपनी सेटिंग्स का उपयोग करते हैं।</value>
+  </data>
+  <data name="A non-empty value is sent verbatim as reasoning_effort for Chat Completions or reasoning.effort for Responses. An existing chat_template_kwargs.reasoning_effort is also overridden so it cannot take priority over your depth setting. No depth names are translated into booleans." xml:space="preserve">
+    <value>एक गैर-खाली मान Chat Completions के लिए reasoning_effort या Responses के लिए reasoning.effort के रूप में वैकल्पिक रूप से भेजा जाता है। एक मौजूदा chat_template_kwargs.reasoning_effort भी अधिलेखित (overridden) किया जाता है, ताकि यह आपके depth सेटिंग पर प्राथमिकता प्राप्त न कर सके। कोई भी depth नाम बुलेन (booleans) में परिवर्तित नहीं किया जाता है।</value>
+  </data>
+  <data name="Backend examples" xml:space="preserve">
+    <value>बैकएंड उदाहरण</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>बंद करें</value>
+  </data>
+  <data name="Do not override leaves that setting to the client, or to the upstream default when absent. Same-dialect requests retain their original fields; cross-dialect requests use the gateway&apos;s protocol translation." xml:space="preserve">
+    <value>जब अनुपस्थित हो, तो उस सेटिंग को क्लाइंट के लिए ओवरराइड न करें, न ही अपस्ट्रीम डिफ़ॉल्ट के रूप में। समान-व्याकरण (same-dialect) अनुरोध अपने मूल फ़ील्ड बनाए रखते हैं; क्रॉस-व्याकरण (cross-dialect) अनुरोध गेटवे के प्रोटोकॉल अनुवाद का उपयोग करते हैं।</value>
+  </data>
+  <data name="For Ollama-native backends, Force on or Force off sends boolean think. For OpenAI Chat or Responses backends, it writes chat_template_kwargs.enable_thinking. Other template arguments are preserved. This is a vLLM-style extension, not a universal OpenAI switch; leave it unconfigured for providers that do not support it." xml:space="preserve">
+    <value>Ollama-नेटिव बैकएंड्स के लिए, Force on या Force off बुलेन think भेजता है। OpenAI Chat या Responses बैकएंड्स के लिए, यह chat_template_kwargs.enable_thinking लिखता है। अन्य टेम्पलेट तर्क संरक्षित रहते हैं। यह एक vLLM-शैली का विस्तार है, एक सार्वभौमिक OpenAI स्विच नहीं; उन प्रदाताओं के लिए इसे अनायोजित छोड़ दें जो इसे समर्थित नहीं करते हैं।</value>
+  </data>
+  <data name="How to configure" xml:space="preserve">
+    <value>कॉन्फ़िगर करने का तरीका</value>
+  </data>
+  <data name="Other compatible providers" xml:space="preserve">
+    <value>अन्य संगत प्रदाता</value>
+  </data>
+  <data name="Reasoning depth" xml:space="preserve">
+    <value>तर्क गहराई</value>
+  </data>
+  <data name="Supported depths and whether thinking can be disabled depend on the model and provider. Unsupported extensions may be rejected or ignored. Check the provider&apos;s documentation; the gateway does not infer capabilities from its name." xml:space="preserve">
+    <value>समर्थित गहराई और सोच को अक्षम किया जा सकता है या नहीं, यह मॉडल और प्रदाता पर निर्भर करता है। असमर्थित विस्तारों को अस्वीकार या नज़रअंदाज किया जा सकता है। प्रदाता के दस्तावेज़ीकरण की जाँच करें; गेटवे अपने नाम से क्षमताओं का अनुमान नहीं लगाता है।</value>
+  </data>
+  <data name="The switch and depth are independent. With vLLM, an explicit enable_thinking value takes precedence over automatic activation by depth. Avoid conflicting settings such as Force off with a high depth, or Force on with depth {0}. A depth alone does not force thinking on against an explicit client switch." xml:space="preserve">
+    <value>स्विच और डेप्थ स्वतंत्र हैं। vLLM के साथ, एक स्पष्ट enable_thinking मान, डेप्थ द्वारा स्वचालित सक्रियण पर प्रथमिकता रखता है। ऐसे टकराव वाले सेटिंग्स से बचें जैसे कि उच्च डेप्थ के साथ Force off, या डेप्थ {0} के साथ Force on। केवल डेप्थ एक स्पष्ट क्लाइंट स्विच के विरुद्ध सोच (thinking) को अनिवार्य रूप से चालू नहीं करता है।</value>
+  </data>
+  <data name="The switch controls enable_thinking independently of depth. Qwen3.8 supports low, medium and xhigh, with xhigh as its default. To keep thinking enabled, select Force on and a supported depth such as xhigh." xml:space="preserve">
+    <value>स्विच enable_thinking को depth से स्वतंत्र रूप से नियंत्रित करता है। Qwen3.8 low, medium और xhigh का समर्थन करता है, जिसमें xhigh डिफ़ॉल्ट है। सोच को सक्षम रखने के लिए, Force on और एक समर्थित depth जैसे xhigh का चयन करें।</value>
+  </data>
+  <data name="Thinking settings help" xml:space="preserve">
+    <value>विचार सेटिंग्स सहायता</value>
+  </data>
+  <data name="Thinking switch" xml:space="preserve">
+    <value>चिंतन स्विच</value>
+  </data>
+  <data name="Usually leave the switch unconfigured and set only a depth supported by the underlying model, such as high or medium. Do not assume enable_thinking is supported." xml:space="preserve">
+    <value>आमतौर पर स्विच को अनायत (unconfigured) छोड़ दें और केवल उस गहराई (depth) को सेट करें जो मूल मॉडल द्वारा समर्थित हो, जैसे कि high या medium। यह मान न लें कि enable_thinking समर्थित है।</value>
+  </data>
+  <data name="Valid values vary by model. These are examples, not a promise that every provider accepts the same controls." xml:space="preserve">
+    <value>मान्य मान मॉडल के अनुसार भिन्न होते हैं। ये उदाहरण हैं, यह वादा नहीं कि हर प्रदाता समान नियंत्रणों को स्वीकार करेगा।</value>
+  </data>
+  <data name="What is forwarded or overridden?" xml:space="preserve">
+    <value>क्या फॉरवर्ड या ओवरराइड किया जाता है?</value>
+  </data>
+  <data name="When accessed through an OpenAI-compatible proxy, follow that proxy&apos;s contract. These controls do not generate native Claude thinking/budget fields or Gemini thinking configuration." xml:space="preserve">
+    <value>जब किसी OpenAI-संगत प्रॉक्सी के माध्यम से एक्सेस किया जाता है, तो उस प्रॉक्सी के अनुबंध का पालन करें। ये नियंत्रण नेटिव Claude thinking/budget फ़ील्ड या Gemini thinking configuration उत्पन्न नहीं करते।</value>
+  </data>
+
+</root>

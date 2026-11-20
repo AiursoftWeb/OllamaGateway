@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="A configured override wins over the client on every backend attempt, including same-dialect direct forwarding. Fallback attempts use the newly selected backend&apos;s own settings." xml:space="preserve">
+    <value>Μια ρυθμισμένη υπέρβαση επικρατεί έναντι του πελάτη σε κάθε απόπειρα backend, συμπεριλαμβανομένης της άμεσης προαγωγής με τον ίδιο διαλεκτικό τύπο. Οι απόπειρες εναλλακτικής χρήσης χρησιμοποιούν τις δικές τους ρυθμίσεις του νεοεπιλεγμένου backend.</value>
+  </data>
+  <data name="A non-empty value is sent verbatim as reasoning_effort for Chat Completions or reasoning.effort for Responses. An existing chat_template_kwargs.reasoning_effort is also overridden so it cannot take priority over your depth setting. No depth names are translated into booleans." xml:space="preserve">
+    <value>Μια μη κενή τιμή αποστέλλεται ως έχει ως reasoning_effort για Chat Completions ή reasoning.effort για Responses. Μια υπάρχουσα chat_template_kwargs.reasoning_effort αντικαθίσταται επίσης, ώστε να μην μπορεί να έχει προτεραιότητα έναντι της ρύθμισής σας βάθους. Τα ονόματα βάθους δεν μεταφράζονται σε λογικές τιμές.</value>
+  </data>
+  <data name="Backend examples" xml:space="preserve">
+    <value>Παραδείγματα backend</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Κλείσιμο</value>
+  </data>
+  <data name="Do not override leaves that setting to the client, or to the upstream default when absent. Same-dialect requests retain their original fields; cross-dialect requests use the gateway&apos;s protocol translation." xml:space="preserve">
+    <value>Μην ανακαλύπτετε τα φύλλα που αφήνουν αυτή τη ρύθμιση στον πελάτη ή στην προεπιλογή upstream όταν απουσιάζει. Τα αιτήματα με τον ίδιο διάλεκτο διατηρούν τα αρχικά τους πεδία· τα αιτήματα με διαφορετική διάλεκτο χρησιμοποιούν τη μετάφραση πρωτοκόλλου του gateway.</value>
+  </data>
+  <data name="For Ollama-native backends, Force on or Force off sends boolean think. For OpenAI Chat or Responses backends, it writes chat_template_kwargs.enable_thinking. Other template arguments are preserved. This is a vLLM-style extension, not a universal OpenAI switch; leave it unconfigured for providers that do not support it." xml:space="preserve">
+    <value>Για backends nativa Ollama, το Force on ή Force off στέλνει το boolean think. Για backends OpenAI Chat ή Responses, γράφει chat_template_kwargs.enable_thinking. Τα υπόλοιπα ορίσματα προτύπου διατηρούνται. Πρόκειται για μια επέκταση τύπου vLLM, όχι για έναν καθολικό διακόπτη OpenAI; αφήστε το μη ρυθμισμένο για παρόχους που δεν το υποστηρίζουν.</value>
+  </data>
+  <data name="How to configure" xml:space="preserve">
+    <value>Πώς να ρυθμίσετε</value>
+  </data>
+  <data name="Other compatible providers" xml:space="preserve">
+    <value>Άλλοι συμβατοί πάροχοι</value>
+  </data>
+  <data name="Reasoning depth" xml:space="preserve">
+    <value>Βάθος σκεψίματος</value>
+  </data>
+  <data name="Supported depths and whether thinking can be disabled depend on the model and provider. Unsupported extensions may be rejected or ignored. Check the provider&apos;s documentation; the gateway does not infer capabilities from its name." xml:space="preserve">
+    <value>Τα υποστηριζόμενα επίπεδα σκέψης και το αν η σκέψη μπορεί να απενεργοποιηθεί εξαρτώνται από το μοντέλο και τον πάροχο. Μη υποστηριζόμενες επεκτάσεις μπορεί να απορριφθούν ή να αγνοηθούν. Ελέγξτε την τεκμηρίωση του παρόχου· η πύλη δεν συμπεραίνει ικανότητες από το όνομά της.</value>
+  </data>
+  <data name="The switch and depth are independent. With vLLM, an explicit enable_thinking value takes precedence over automatic activation by depth. Avoid conflicting settings such as Force off with a high depth, or Force on with depth {0}. A depth alone does not force thinking on against an explicit client switch." xml:space="preserve">
+    <value>Ο διακόπτης και το βάθος είναι ανεξάρτητα. Με το vLLM, μια ρητή τιμή enable_thinking έχει προτεραιότητα έναντι της αυτόματης ενεργοποίησης βάσει βάθους. Αποφύγετε ρυθμίσεις που συγκρούονται, όπως το Force off με υψηλό βάθος ή το Force on με βάθος {0}. Μόνο ένα βάθος δεν επιβάλλει τη σκέψη σε περίπτωση ρητού διακόπτη από τον πελάτη.</value>
+  </data>
+  <data name="The switch controls enable_thinking independently of depth. Qwen3.8 supports low, medium and xhigh, with xhigh as its default. To keep thinking enabled, select Force on and a supported depth such as xhigh." xml:space="preserve">
+    <value>Ο διακόπτης ελέγχει το enable_thinking ανεξάρτητα από το βάθος. Το Qwen3.8 υποστηρίζει low, medium και xhigh, με το xhigh ως προεπιλογή. Για να παραμείνει ενεργοποιημένη η σκέψη, επιλέξτε Force on και ένα υποστηριζόμενο βάθος, όπως το xhigh.</value>
+  </data>
+  <data name="Thinking settings help" xml:space="preserve">
+    <value>Βοήθεια ρυθμίσεων σκέψης</value>
+  </data>
+  <data name="Thinking switch" xml:space="preserve">
+    <value>Διακόπτης σκέψης</value>
+  </data>
+  <data name="Usually leave the switch unconfigured and set only a depth supported by the underlying model, such as high or medium. Do not assume enable_thinking is supported." xml:space="preserve">
+    <value>Συνήθως αφήστε το διακόπτη μη ρυθμισμένο και ορίστε μόνο ένα βάθος που υποστηρίζεται από το υποκείμενο μοντέλο, όπως υψηλό ή μεσαίο. Μην υποθέτετε ότι το enable_thinking υποστηρίζεται.</value>
+  </data>
+  <data name="Valid values vary by model. These are examples, not a promise that every provider accepts the same controls." xml:space="preserve">
+    <value>Οι έγκυρες τιμές διαφέρουν ανά μοντέλο. Αυτά είναι παραδείγματα, όχι μια εγγύηση ότι κάθε πάροχος αποδέχεται τους ίδιους ελέγχους.</value>
+  </data>
+  <data name="What is forwarded or overridden?" xml:space="preserve">
+    <value>Τι διαβιβάζεται ή αντικαθίσταται;</value>
+  </data>
+  <data name="When accessed through an OpenAI-compatible proxy, follow that proxy&apos;s contract. These controls do not generate native Claude thinking/budget fields or Gemini thinking configuration." xml:space="preserve">
+    <value>Όταν προσβάλλονται μέσω ενός proxy συμβατού με το OpenAI, ακολουθήστε τη σύμβαση αυτού του proxy. Αυτοί οι έλεγχοι δεν δημιουργούν εγγενή πεδία σκέψης/προϋπολογισμού για το Claude ή ρύθμιση σκέψης για το Gemini.</value>
+  </data>
+
+</root>
