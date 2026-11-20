@@ -18,7 +18,28 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Depth: follow request" xml:space="preserve">
+      <data name="All requests" xml:space="preserve">
+    <value>Усі запити</value>
+  </data>
+  <data name="Attempt failed" xml:space="preserve">
+    <value>Спроба не вдалася</value>
+  </data>
+  <data name="Busy" xml:space="preserve">
+    <value>Зайнято</value>
+  </data>
+  <data name="Cancelled" xml:space="preserve">
+    <value>Скасовано</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Завершено</value>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>Підключення</value>
+  </data>
+  <data name="Could not load the question." xml:space="preserve">
+    <value>Не вдалося завантажити запитання.</value>
+  </data>
+  <data name="Depth: follow request" xml:space="preserve">
     <value>Глибина: відповідно до запиту</value>
   </data>
   <data name="Depth: force {0}" xml:space="preserve">
@@ -26,6 +47,21 @@
   </data>
   <data name="Embedding requests do not use thinking overrides." xml:space="preserve">
     <value>Запити вбудовування не використовують перевизначення роздумів.</value>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>Помилка</value>
+  </data>
+  <data name="Follow request" xml:space="preserve">
+    <value>Стежити за запитом</value>
+  </data>
+  <data name="Go live" xml:space="preserve">
+    <value>У безпосередньому ефірі</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>У мережі</value>
+  </data>
+  <data name="Loading question…" xml:space="preserve">
+    <value>Завантаження питання…</value>
   </data>
   <data name="No backend override. The client setting is forwarded or translated; when absent, the upstream default applies." xml:space="preserve">
     <value>Перевизначення на рівні бекенду відсутнє. Налаштування клієнта передається або перекладається; якщо його немає, застосовується значення за замовчуванням upstream.</value>
@@ -42,8 +78,32 @@
   <data name="Overrides the client setting on each attempt, including same-dialect direct forwarding and cross-dialect translation." xml:space="preserve">
     <value>Перевизначає налаштування клієнта при кожній спробі, включаючи пряме пересилання в межах одного діалекту та переклад між діалектами.</value>
   </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Пауза</value>
+  </data>
+  <data name="Paused" xml:space="preserve">
+    <value>Призупинено</value>
+  </data>
   <data name="Protocols: {0}" xml:space="preserve">
     <value>Протоколи: {0}</value>
+  </data>
+  <data name="Received" xml:space="preserve">
+    <value>Отримано</value>
+  </data>
+  <data name="Reconnecting" xml:space="preserve">
+    <value>Перепідключення</value>
+  </data>
+  <data name="Replay" xml:space="preserve">
+    <value>Повтор</value>
+  </data>
+  <data name="Replay 5 seconds" xml:space="preserve">
+    <value>Перемотати на 5 секунд</value>
+  </data>
+  <data name="Returning response" xml:space="preserve">
+    <value>Повернення відповіді</value>
+  </data>
+  <data name="Selected backend" xml:space="preserve">
+    <value>Вибраний бекенд</value>
   </data>
   <data name="Thinking: follow request" xml:space="preserve">
     <value>Міркування: за запитом</value>
@@ -56,6 +116,21 @@
   </data>
   <data name="Thinking: unavailable" xml:space="preserve">
     <value>Мислення: недоступно</value>
+  </data>
+  <data name="This question is no longer available." xml:space="preserve">
+    <value>Це питання більше недоступне.</value>
+  </data>
+  <data name="Upstream responded" xml:space="preserve">
+    <value>Upstream відповів</value>
+  </data>
+  <data name="View full question" xml:space="preserve">
+    <value>Переглянути повне запитання</value>
+  </data>
+  <data name="Waiting for a slot" xml:space="preserve">
+    <value>Очікування вільного слота</value>
+  </data>
+  <data name="Waiting for upstream" xml:space="preserve">
+    <value>Очікування на upstream</value>
   </data>
 
 </root>

@@ -18,7 +18,28 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Depth: follow request" xml:space="preserve">
+      <data name="All requests" xml:space="preserve">
+    <value>All requests</value>
+  </data>
+  <data name="Attempt failed" xml:space="preserve">
+    <value>Attempt failed</value>
+  </data>
+  <data name="Busy" xml:space="preserve">
+    <value>Busy</value>
+  </data>
+  <data name="Cancelled" xml:space="preserve">
+    <value>Cancelled</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>Connecting</value>
+  </data>
+  <data name="Could not load the question." xml:space="preserve">
+    <value>Could not load the question.</value>
+  </data>
+  <data name="Depth: follow request" xml:space="preserve">
     <value>Depth: follow the request</value>
   </data>
   <data name="Depth: force {0}" xml:space="preserve">
@@ -26,6 +47,21 @@
   </data>
   <data name="Embedding requests do not use thinking overrides." xml:space="preserve">
     <value>Embedding requests do not use thinking overrides.</value>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>Failed</value>
+  </data>
+  <data name="Follow request" xml:space="preserve">
+    <value>Follow request</value>
+  </data>
+  <data name="Go live" xml:space="preserve">
+    <value>Go live</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>Live</value>
+  </data>
+  <data name="Loading question…" xml:space="preserve">
+    <value>Loading question…</value>
   </data>
   <data name="No backend override. The client setting is forwarded or translated; when absent, the upstream default applies." xml:space="preserve">
     <value>No backend override. The client setting is forwarded or translated; when absent, the upstream default applies.</value>
@@ -42,54 +78,14 @@
   <data name="Overrides the client setting on each attempt, including same-dialect direct forwarding and cross-dialect translation." xml:space="preserve">
     <value>Overrides the client setting on each attempt, including same-dialect direct forwarding and cross-dialect translation.</value>
   </data>
-  <data name="Protocols: {0}" xml:space="preserve">
-    <value>Protocols: {0}</value>
-  </data>
-  <data name="Thinking: follow request" xml:space="preserve">
-    <value>Thinking: follow request</value>
-  </data>
-  <data name="Thinking: force {0}" xml:space="preserve">
-    <value>Thinking: force {0}</value>
-  </data>
-  <data name="Thinking: not applicable" xml:space="preserve">
-    <value>Thinking: not applicable</value>
-  </data>
-  <data name="Thinking: unavailable" xml:space="preserve">
-    <value>Thinking: unavailable</value>
-  </data>
-
-  <data name="All requests" xml:space="preserve">
-    <value>All requests</value>
-  </data>
-  <data name="Attempt failed" xml:space="preserve">
-    <value>Attempt failed</value>
-  </data>
-  <data name="Cancelled" xml:space="preserve">
-    <value>Cancelled</value>
-  </data>
-  <data name="Completed" xml:space="preserve">
-    <value>Completed</value>
-  </data>
-  <data name="Connecting" xml:space="preserve">
-    <value>Connecting</value>
-  </data>
-  <data name="Failed" xml:space="preserve">
-    <value>Failed</value>
-  </data>
-  <data name="Follow request" xml:space="preserve">
-    <value>Follow request</value>
-  </data>
-  <data name="Go live" xml:space="preserve">
-    <value>Go live</value>
-  </data>
-  <data name="Live" xml:space="preserve">
-    <value>Live</value>
-  </data>
   <data name="Pause" xml:space="preserve">
     <value>Pause</value>
   </data>
   <data name="Paused" xml:space="preserve">
     <value>Paused</value>
+  </data>
+  <data name="Protocols: {0}" xml:space="preserve">
+    <value>Protocols: {0}</value>
   </data>
   <data name="Received" xml:space="preserve">
     <value>Received</value>
@@ -109,8 +105,26 @@
   <data name="Selected backend" xml:space="preserve">
     <value>Selected backend</value>
   </data>
+  <data name="Thinking: follow request" xml:space="preserve">
+    <value>Thinking: follow request</value>
+  </data>
+  <data name="Thinking: force {0}" xml:space="preserve">
+    <value>Thinking: force {0}</value>
+  </data>
+  <data name="Thinking: not applicable" xml:space="preserve">
+    <value>Thinking: not applicable</value>
+  </data>
+  <data name="Thinking: unavailable" xml:space="preserve">
+    <value>Thinking: unavailable</value>
+  </data>
+  <data name="This question is no longer available." xml:space="preserve">
+    <value>This question is no longer available.</value>
+  </data>
   <data name="Upstream responded" xml:space="preserve">
     <value>Upstream responded</value>
+  </data>
+  <data name="View full question" xml:space="preserve">
+    <value>View full question</value>
   </data>
   <data name="Waiting for a slot" xml:space="preserve">
     <value>Waiting for a slot</value>
@@ -118,4 +132,5 @@
   <data name="Waiting for upstream" xml:space="preserve">
     <value>Waiting for upstream</value>
   </data>
+
 </root>

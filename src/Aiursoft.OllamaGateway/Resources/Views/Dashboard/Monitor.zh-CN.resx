@@ -18,7 +18,28 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Depth: follow request" xml:space="preserve">
+      <data name="All requests" xml:space="preserve">
+    <value>所有请求</value>
+  </data>
+  <data name="Attempt failed" xml:space="preserve">
+    <value>尝试失败</value>
+  </data>
+  <data name="Busy" xml:space="preserve">
+    <value>繁忙</value>
+  </data>
+  <data name="Cancelled" xml:space="preserve">
+    <value>已取消</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>已完成</value>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>正在连接</value>
+  </data>
+  <data name="Could not load the question." xml:space="preserve">
+    <value>无法加载问题。</value>
+  </data>
+  <data name="Depth: follow request" xml:space="preserve">
     <value>深度：跟随请求</value>
   </data>
   <data name="Depth: force {0}" xml:space="preserve">
@@ -26,6 +47,21 @@
   </data>
   <data name="Embedding requests do not use thinking overrides." xml:space="preserve">
     <value>嵌入请求不使用思考覆盖。</value>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>失败</value>
+  </data>
+  <data name="Follow request" xml:space="preserve">
+    <value>关注请求</value>
+  </data>
+  <data name="Go live" xml:space="preserve">
+    <value>切换至直播</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>直播中</value>
+  </data>
+  <data name="Loading question…" xml:space="preserve">
+    <value>正在加载问题…</value>
   </data>
   <data name="No backend override. The client setting is forwarded or translated; when absent, the upstream default applies." xml:space="preserve">
     <value>无后端覆盖。客户端设置会被转发或转换；若缺失，则使用上游默认值。</value>
@@ -42,54 +78,14 @@
   <data name="Overrides the client setting on each attempt, including same-dialect direct forwarding and cross-dialect translation." xml:space="preserve">
     <value>每次尝试时覆盖客户端设置，包括同方言直接转发和跨方言翻译。</value>
   </data>
-  <data name="Protocols: {0}" xml:space="preserve">
-    <value>协议：{0}</value>
-  </data>
-  <data name="Thinking: follow request" xml:space="preserve">
-    <value>思考：遵循请求</value>
-  </data>
-  <data name="Thinking: force {0}" xml:space="preserve">
-    <value>思考：强制 {0}</value>
-  </data>
-  <data name="Thinking: not applicable" xml:space="preserve">
-    <value>思考：不适用</value>
-  </data>
-  <data name="Thinking: unavailable" xml:space="preserve">
-    <value>思考：不可用</value>
-  </data>
-
-  <data name="All requests" xml:space="preserve">
-    <value>所有请求</value>
-  </data>
-  <data name="Attempt failed" xml:space="preserve">
-    <value>尝试失败</value>
-  </data>
-  <data name="Cancelled" xml:space="preserve">
-    <value>已取消</value>
-  </data>
-  <data name="Completed" xml:space="preserve">
-    <value>已完成</value>
-  </data>
-  <data name="Connecting" xml:space="preserve">
-    <value>正在连接</value>
-  </data>
-  <data name="Failed" xml:space="preserve">
-    <value>失败</value>
-  </data>
-  <data name="Follow request" xml:space="preserve">
-    <value>关注请求</value>
-  </data>
-  <data name="Go live" xml:space="preserve">
-    <value>切换至直播</value>
-  </data>
-  <data name="Live" xml:space="preserve">
-    <value>直播中</value>
-  </data>
   <data name="Pause" xml:space="preserve">
     <value>暂停</value>
   </data>
   <data name="Paused" xml:space="preserve">
     <value>已暂停</value>
+  </data>
+  <data name="Protocols: {0}" xml:space="preserve">
+    <value>协议：{0}</value>
   </data>
   <data name="Received" xml:space="preserve">
     <value>已接收</value>
@@ -109,8 +105,26 @@
   <data name="Selected backend" xml:space="preserve">
     <value>已选择后端</value>
   </data>
+  <data name="Thinking: follow request" xml:space="preserve">
+    <value>思考：遵循请求</value>
+  </data>
+  <data name="Thinking: force {0}" xml:space="preserve">
+    <value>思考：强制 {0}</value>
+  </data>
+  <data name="Thinking: not applicable" xml:space="preserve">
+    <value>思考：不适用</value>
+  </data>
+  <data name="Thinking: unavailable" xml:space="preserve">
+    <value>思考：不可用</value>
+  </data>
+  <data name="This question is no longer available." xml:space="preserve">
+    <value>该问题已不再可用。</value>
+  </data>
   <data name="Upstream responded" xml:space="preserve">
     <value>上游已响应</value>
+  </data>
+  <data name="View full question" xml:space="preserve">
+    <value>查看完整问题</value>
   </data>
   <data name="Waiting for a slot" xml:space="preserve">
     <value>等待可用槽位</value>
@@ -118,16 +132,5 @@
   <data name="Waiting for upstream" xml:space="preserve">
     <value>等待上游</value>
   </data>
-  <data name="View full question" xml:space="preserve">
-    <value>查看完整问题</value>
-  </data>
-  <data name="This question is no longer available." xml:space="preserve">
-    <value>该问题已不再可用。</value>
-  </data>
-  <data name="Could not load the question." xml:space="preserve">
-    <value>无法加载问题。</value>
-  </data>
-  <data name="Loading question…" xml:space="preserve">
-    <value>正在加载问题…</value>
-  </data>
+
 </root>

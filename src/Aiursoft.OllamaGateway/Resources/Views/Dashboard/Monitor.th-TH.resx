@@ -18,7 +18,28 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Depth: follow request" xml:space="preserve">
+      <data name="All requests" xml:space="preserve">
+    <value>คำขอทั้งหมด</value>
+  </data>
+  <data name="Attempt failed" xml:space="preserve">
+    <value>การพยายามไม่สำเร็จ</value>
+  </data>
+  <data name="Busy" xml:space="preserve">
+    <value>ไม่ว่าง</value>
+  </data>
+  <data name="Cancelled" xml:space="preserve">
+    <value>ยกเลิกแล้ว</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>เสร็จสิ้น</value>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>กำลังเชื่อมต่อ</value>
+  </data>
+  <data name="Could not load the question." xml:space="preserve">
+    <value>ไม่สามารถโหลดคำถามได้</value>
+  </data>
+  <data name="Depth: follow request" xml:space="preserve">
     <value>ความลึก: ตามคำขอ</value>
   </data>
   <data name="Depth: force {0}" xml:space="preserve">
@@ -26,6 +47,21 @@
   </data>
   <data name="Embedding requests do not use thinking overrides." xml:space="preserve">
     <value>คำขอฝังตัว (Embedding) ไม่ใช้การกำหนดค่าการคิด (thinking overrides)</value>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>ล้มเหลว</value>
+  </data>
+  <data name="Follow request" xml:space="preserve">
+    <value>ติดตามคำขอ</value>
+  </data>
+  <data name="Go live" xml:space="preserve">
+    <value>เข้าสู่โหมดสด</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>สด</value>
+  </data>
+  <data name="Loading question…" xml:space="preserve">
+    <value>กำลังโหลดคำถาม…</value>
   </data>
   <data name="No backend override. The client setting is forwarded or translated; when absent, the upstream default applies." xml:space="preserve">
     <value>ไม่มีการตั้งค่าฝั่งเซิร์ฟเวอร์ที่ทับซ้อน ค่าการตั้งค่าจากไคลเอนต์จะถูกส่งต่อหรือแปลงภาษา; หากไม่มีการตั้งค่า ค่าเริ่มต้นจากเซิร์ฟเวอร์ต้นทางจะถูกใช้</value>
@@ -42,8 +78,32 @@
   <data name="Overrides the client setting on each attempt, including same-dialect direct forwarding and cross-dialect translation." xml:space="preserve">
     <value>แทนที่การตั้งค่าของไคลเอนต์ใน每次การลอง รวมถึงการส่งต่อโดยตรงภายในสำเนียงเดียวกันและการแปลข้ามสำเนียง</value>
   </data>
+  <data name="Pause" xml:space="preserve">
+    <value>หยุดชั่วคราว</value>
+  </data>
+  <data name="Paused" xml:space="preserve">
+    <value>หยุดชั่วคราว</value>
+  </data>
   <data name="Protocols: {0}" xml:space="preserve">
     <value>โปรโตคอล: {0}</value>
+  </data>
+  <data name="Received" xml:space="preserve">
+    <value>รับแล้ว</value>
+  </data>
+  <data name="Reconnecting" xml:space="preserve">
+    <value>กำลังเชื่อมต่อใหม่</value>
+  </data>
+  <data name="Replay" xml:space="preserve">
+    <value>เล่นซ้ำ</value>
+  </data>
+  <data name="Replay 5 seconds" xml:space="preserve">
+    <value>เล่นซ้ำ 5 วินาที</value>
+  </data>
+  <data name="Returning response" xml:space="preserve">
+    <value>กำลังส่งคำตอบกลับ</value>
+  </data>
+  <data name="Selected backend" xml:space="preserve">
+    <value>แบ็กเอนด์ที่เลือก</value>
   </data>
   <data name="Thinking: follow request" xml:space="preserve">
     <value>การคิด: ตามคำขอ</value>
@@ -56,6 +116,21 @@
   </data>
   <data name="Thinking: unavailable" xml:space="preserve">
     <value>การคิด: ไม่พร้อมใช้งาน</value>
+  </data>
+  <data name="This question is no longer available." xml:space="preserve">
+    <value>คำถามนี้ไม่พร้อมใช้งานอีกต่อไปแล้ว</value>
+  </data>
+  <data name="Upstream responded" xml:space="preserve">
+    <value>อัพสตรีมตอบกลับแล้ว</value>
+  </data>
+  <data name="View full question" xml:space="preserve">
+    <value>ดูคำถามเต็ม</value>
+  </data>
+  <data name="Waiting for a slot" xml:space="preserve">
+    <value>กำลังรอช่องว่าง</value>
+  </data>
+  <data name="Waiting for upstream" xml:space="preserve">
+    <value>กำลังรอ upstream</value>
   </data>
 
 </root>

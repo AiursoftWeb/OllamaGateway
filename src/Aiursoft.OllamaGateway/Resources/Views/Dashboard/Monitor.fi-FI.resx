@@ -18,7 +18,28 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Depth: follow request" xml:space="preserve">
+      <data name="All requests" xml:space="preserve">
+    <value>Kaikki pyynnöt</value>
+  </data>
+  <data name="Attempt failed" xml:space="preserve">
+    <value>Yritys epäonnistui</value>
+  </data>
+  <data name="Busy" xml:space="preserve">
+    <value>Vireä</value>
+  </data>
+  <data name="Cancelled" xml:space="preserve">
+    <value>Peruttu</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Valmis</value>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>Yhteys muodostetaan</value>
+  </data>
+  <data name="Could not load the question." xml:space="preserve">
+    <value>Kysymystä ei voitu ladata.</value>
+  </data>
+  <data name="Depth: follow request" xml:space="preserve">
     <value>Syvyys: seuraa pyyntöä</value>
   </data>
   <data name="Depth: force {0}" xml:space="preserve">
@@ -26,6 +47,21 @@
   </data>
   <data name="Embedding requests do not use thinking overrides." xml:space="preserve">
     <value>Upotuspyyntöissä ei käytetä ajatteluylikirjoituksia.</value>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>Epäonnistui</value>
+  </data>
+  <data name="Follow request" xml:space="preserve">
+    <value>Seuraa pyyntöä</value>
+  </data>
+  <data name="Go live" xml:space="preserve">
+    <value>Siirry suoraan</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>Suora</value>
+  </data>
+  <data name="Loading question…" xml:space="preserve">
+    <value>Ladataan kysymystä…</value>
   </data>
   <data name="No backend override. The client setting is forwarded or translated; when absent, the upstream default applies." xml:space="preserve">
     <value>Ei takaisinpäätteiden ohitusta. Asiakkaan asetus välitetään tai käännetään; jos sitä ei ole, ylävirran oletusarvo sovelletaan.</value>
@@ -42,8 +78,32 @@
   <data name="Overrides the client setting on each attempt, including same-dialect direct forwarding and cross-dialect translation." xml:space="preserve">
     <value>Ylikirjoittaa asiakkaan asetuksen jokaisella yrityksellä, mukaan lukien saman dialektin suora välitys ja eri dialektien välinen käännös.</value>
   </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Tauko</value>
+  </data>
+  <data name="Paused" xml:space="preserve">
+    <value>Keskeytetty</value>
+  </data>
   <data name="Protocols: {0}" xml:space="preserve">
     <value>Protokollat: {0}</value>
+  </data>
+  <data name="Received" xml:space="preserve">
+    <value>Vastaanotettu</value>
+  </data>
+  <data name="Reconnecting" xml:space="preserve">
+    <value>Yhdistetään uudelleen</value>
+  </data>
+  <data name="Replay" xml:space="preserve">
+    <value>Toisto</value>
+  </data>
+  <data name="Replay 5 seconds" xml:space="preserve">
+    <value>Toista 5 sekuntia</value>
+  </data>
+  <data name="Returning response" xml:space="preserve">
+    <value>Vastauksen palautus</value>
+  </data>
+  <data name="Selected backend" xml:space="preserve">
+    <value>Valittu backend</value>
   </data>
   <data name="Thinking: follow request" xml:space="preserve">
     <value>Ajattelu: seuraa pyyntöä</value>
@@ -56,6 +116,21 @@
   </data>
   <data name="Thinking: unavailable" xml:space="preserve">
     <value>Ajattelu: ei käytettävissä</value>
+  </data>
+  <data name="This question is no longer available." xml:space="preserve">
+    <value>Tämä kysymys ei enää ole käytettävissä.</value>
+  </data>
+  <data name="Upstream responded" xml:space="preserve">
+    <value>Ylävirta vastasi</value>
+  </data>
+  <data name="View full question" xml:space="preserve">
+    <value>Näytä koko kysymys</value>
+  </data>
+  <data name="Waiting for a slot" xml:space="preserve">
+    <value>Odottaa paikkaa</value>
+  </data>
+  <data name="Waiting for upstream" xml:space="preserve">
+    <value>Odottaa ylävirtaa</value>
   </data>
 
 </root>

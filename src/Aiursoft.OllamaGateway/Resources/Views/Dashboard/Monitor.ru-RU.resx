@@ -18,7 +18,28 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Depth: follow request" xml:space="preserve">
+      <data name="All requests" xml:space="preserve">
+    <value>Все запросы</value>
+  </data>
+  <data name="Attempt failed" xml:space="preserve">
+    <value>Попытка не удалась</value>
+  </data>
+  <data name="Busy" xml:space="preserve">
+    <value>Занято</value>
+  </data>
+  <data name="Cancelled" xml:space="preserve">
+    <value>Отменено</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Завершено</value>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>Подключение</value>
+  </data>
+  <data name="Could not load the question." xml:space="preserve">
+    <value>Не удалось загрузить вопрос.</value>
+  </data>
+  <data name="Depth: follow request" xml:space="preserve">
     <value>Глубина: следовать запросу</value>
   </data>
   <data name="Depth: force {0}" xml:space="preserve">
@@ -26,6 +47,21 @@
   </data>
   <data name="Embedding requests do not use thinking overrides." xml:space="preserve">
     <value>Запросы эмбеддинга не используют переопределения режима размышления.</value>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>Сбой</value>
+  </data>
+  <data name="Follow request" xml:space="preserve">
+    <value>Следовать за запросом</value>
+  </data>
+  <data name="Go live" xml:space="preserve">
+    <value>Включить прямой эфир</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>Активно</value>
+  </data>
+  <data name="Loading question…" xml:space="preserve">
+    <value>Загрузка вопроса…</value>
   </data>
   <data name="No backend override. The client setting is forwarded or translated; when absent, the upstream default applies." xml:space="preserve">
     <value>Переопределение на стороне бэкенда отсутствует. Настройка клиента передаётся или переводится; если она отсутствует, применяется значение по умолчанию от провайдера.</value>
@@ -42,8 +78,32 @@
   <data name="Overrides the client setting on each attempt, including same-dialect direct forwarding and cross-dialect translation." xml:space="preserve">
     <value>Перекрывает настройку клиента при каждой попытке, включая прямую пересылку в том же диалекте и перевод между диалектами.</value>
   </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Пауза</value>
+  </data>
+  <data name="Paused" xml:space="preserve">
+    <value>Приостановлено</value>
+  </data>
   <data name="Protocols: {0}" xml:space="preserve">
     <value>Протоколы: {0}</value>
+  </data>
+  <data name="Received" xml:space="preserve">
+    <value>Получено</value>
+  </data>
+  <data name="Reconnecting" xml:space="preserve">
+    <value>Переподключение</value>
+  </data>
+  <data name="Replay" xml:space="preserve">
+    <value>Повтор</value>
+  </data>
+  <data name="Replay 5 seconds" xml:space="preserve">
+    <value>Отмотать на 5 секунд</value>
+  </data>
+  <data name="Returning response" xml:space="preserve">
+    <value>Возврат ответа</value>
+  </data>
+  <data name="Selected backend" xml:space="preserve">
+    <value>Выбранный бэкенд</value>
   </data>
   <data name="Thinking: follow request" xml:space="preserve">
     <value>Размышление: по запросу</value>
@@ -56,6 +116,21 @@
   </data>
   <data name="Thinking: unavailable" xml:space="preserve">
     <value>Размышление: недоступно</value>
+  </data>
+  <data name="This question is no longer available." xml:space="preserve">
+    <value>Этот вопрос больше недоступен.</value>
+  </data>
+  <data name="Upstream responded" xml:space="preserve">
+    <value>Ответ получен от источника</value>
+  </data>
+  <data name="View full question" xml:space="preserve">
+    <value>Полный вопрос</value>
+  </data>
+  <data name="Waiting for a slot" xml:space="preserve">
+    <value>Ожидание слота</value>
+  </data>
+  <data name="Waiting for upstream" xml:space="preserve">
+    <value>Ожидание ответа от вышестоящего узла</value>
   </data>
 
 </root>
