@@ -165,6 +165,9 @@
   <data name="All Ollama VM controls apply: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt;. Ollama-only values may therefore be injected even though the client dialect cannot express them." xml:space="preserve">
     <value>모든 Ollama VM 설정이 적용됩니다: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, 그리고 &lt;code&gt;think&lt;/code&gt;. 따라서 클라이언트 인터페이스가 이를 표현할 수 없더라도 Ollama 전용 값이 주입될 수 있습니다.</value>
   </data>
+  <data name="All Ollama VM sampling controls apply. The selected backend can force &lt;code&gt;think&lt;/code&gt; on or off; otherwise the translated client setting applies." xml:space="preserve">
+    <value>모든 Ollama VM 샘플링 컨트롤이 적용됩니다. 선택된 백엔드는 &lt;code&gt;think&lt;/code&gt;를 켜거나 끌 수 있으며, 그렇지 않으면 변환된 클라이언트 설정이 적용됩니다.</value>
+  </data>
   <data name="All dependencies are automatically registered and always available via constructor injection." xml:space="preserve">
     <value>모든 종속성은 자동으로 등록되며 생성자 주입을 통해 항상 사용할 수 있습니다.</value>
   </data>
@@ -260,6 +263,9 @@
   </data>
   <data name="Backend Provider type" xml:space="preserve">
     <value>백엔드 공급자 유형</value>
+  </data>
+  <data name="Backend thinking overrides apply to both same-dialect direct forwarding and cross-dialect translation. An empty override keeps the client setting, or the upstream default when absent." xml:space="preserve">
+    <value>백엔드 추론 오버라이드는 동일 방언 직접 전달과 교차 방언 변환 모두에 적용됩니다. 빈 오버라이드는 클라이언트 설정을 유지하거나, 해당 설정이 없으면 업스트림 기본값을 사용합니다.</value>
   </data>
   <data name="Background Job Processing" xml:space="preserve">
     <value>백그라운드 작업 처리</value>
@@ -1041,6 +1047,9 @@
   <data name="OpenAI content parts → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → boolean &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;." xml:space="preserve">
     <value>OpenAI 콘텐츠 부분 → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → 불리언 &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;.</value>
   </data>
+  <data name="OpenAI content parts → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → named &lt;code&gt;think&lt;/code&gt; level (&lt;code&gt;none&lt;/code&gt; → &lt;code&gt;false&lt;/code&gt;); &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;." xml:space="preserve">
+    <value>OpenAI 콘텐츠 파트 → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → 명명된 &lt;code&gt;think&lt;/code&gt; 레벨 (&lt;code&gt;none&lt;/code&gt; → &lt;code&gt;false&lt;/code&gt;); &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;.</value>
+  </data>
   <data name="OpenAI embedding extensions outside the shared input are not copied into the cross-dialect request or reconstructed response." xml:space="preserve">
     <value>공유 입력 범위를 벗어난 OpenAI 임베딩 확장 기능은 언어 간 요청이나 재구성된 응답에 복사되지 않습니다.</value>
   </data>
@@ -1049,6 +1058,9 @@
   </data>
   <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
     <value>OpenAI 다중 모드 콘텐츠 배열이 추출됩니다: image_url 데이터는 Ollama 이미지 배열로 이동하고, 텍스트는 콘텐츠가 됩니다.</value>
+  </data>
+  <data name="OpenAI target fields &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_tokens&lt;/code&gt; use VM values when set. The selected Ollama backend can override &lt;code&gt;think&lt;/code&gt;; otherwise the client setting is kept." xml:space="preserve">
+    <value>OpenAI 대상 필드 &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;max_tokens&lt;/code&gt;는 설정된 경우 VM 값을 사용합니다. 선택된 Ollama 백엔드는 &lt;code&gt;think&lt;/code&gt;를 재정의할 수 있으며, 그렇지 않으면 클라이언트 설정이 유지됩니다.</value>
   </data>
   <data name="OpenAI target fields &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_tokens&lt;/code&gt; use VM values when set. VM &lt;code&gt;Thinking&lt;/code&gt; overrides the translated client value." xml:space="preserve">
     <value>OpenAI 대상 필드 &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;max_tokens&lt;/code&gt;은(는) 설정 시 VM 값을 사용합니다. VM &lt;code&gt;Thinking&lt;/code&gt;이(가) 변환된 클라이언트 값을 재정의합니다.</value>
@@ -1359,6 +1371,9 @@
   <data name="The request adapter deep-clones the original Responses JSON. &lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt; preserves unknown output Items and SSE event names/data/comments/id/retry without passing the payload through canonical IL." xml:space="preserve">
     <value>요청 어댑터는 원래 Responses JSON을 깊은 복사합니다. &lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt;는 페이로드를 정규화된 IL(canonical IL)을 통해 전달하지 않고 알려지지 않은 출력 항목(Item)과 SSE 이벤트 이름/데이터/댓글(id)/재시도(retry)를 그대로 유지합니다.</value>
   </data>
+  <data name="The selected backend can override thinking. VM NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
+    <value>선택된 백엔드는 thinking을 오버라이드할 수 있습니다. VM의 NumCtx, Temperature, TopP, TopK, NumPredict, RepeatPenalty가 요청을 오버라이드하며, &lt;code&gt;keep_alive&lt;/code&gt;가 없으면 Provider 값을 사용합니다.</value>
+  </data>
   <data name="The template is built for easy deployment. It includes full Docker support, so you can containerize your app and run it anywhere. You can also deploy it directly to IIS, Azure App Service, or any server that supports ASP.NET Core." xml:space="preserve">
     <value>이 템플릿은 손쉬운 배포를 위해 구축되었습니다. 완전한 Docker 지원을 포함하고 있어 앱을 컨테이너화하여 어디서나 실행할 수 있습니다. 또한 IIS, Azure App Service 또는 ASP.NET Core를 지원하는 모든 서버에 직접 배포할 수도 있습니다.</value>
   </data>
@@ -1461,11 +1476,29 @@
   <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other nested Responses fields remain untouched." xml:space="preserve">
     <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;은(는) &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;max_output_tokens&lt;/code&gt;를 덮어씁니다. 다른 중첩된 Responses 필드는 변경되지 않습니다.</value>
   </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. The selected backend overrides &lt;code&gt;reasoning.effort&lt;/code&gt; when configured, including direct forwarding. Other nested Responses fields remain untouched." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;이 &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;max_output_tokens&lt;/code&gt;를 재정의합니다. 구성된 경우 선택된 백엔드가 직접 전달을 포함하여 &lt;code&gt;reasoning.effort&lt;/code&gt;를 재정의합니다. 다른 중첩된 Responses 필드는 변경되지 않습니다.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Chat target controls. The selected backend overrides reasoning effort when configured; otherwise the translated client setting is kept." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;이 Chat 대상 컨트롤을 재정의합니다. 선택된 백엔드는 구성된 경우 추론 노력을 재정의하며, 그렇지 않으면 변환된 클라이언트 설정이 유지됩니다.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Chat target fields. The selected backend overrides reasoning effort when configured; otherwise the translated client setting is kept. Ollama-only DB sampling/context controls do not apply to Chat." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;가 Chat 대상 필드를 재정의합니다. 선택된 백엔드는 구성된 경우 추론 노력을 재정의하며, 그렇지 않으면 변환된 클라이언트 설정이 유지됩니다. Ollama 전용 DB 샘플링/컨텍스트 제어는 Chat에 적용되지 않습니다.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. The selected backend overrides reasoning effort when configured; otherwise the client setting is kept. VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;가 Responses 필드를 덮어씁니다. 구성된 경우 선택된 백엔드가 추론 노력을 덮어쓰고, 그렇지 않으면 클라이언트 설정이 유지됩니다. VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;RepeatPenalty&lt;/code&gt;에는 Responses 대상 필드가 없습니다.</value>
+  </data>
   <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
     <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;은 Responses 필드를 덮어씁니다. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;RepeatPenalty&lt;/code&gt;에는 해당하는 Responses 대상 필드가 없습니다.</value>
   </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. The selected backend overrides reasoning effort when configured; otherwise the client setting is kept. VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;가 Responses 대상 필드를 재정의합니다. 구성된 경우 선택된 백엔드가 추론 노력을 재정의하며, 그렇지 않으면 클라이언트 설정이 유지됩니다. VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, &lt;code&gt;RepeatPenalty&lt;/code&gt;는 Responses 컨트롤이 아닙니다.</value>
+  </data>
   <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
     <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, 및 &lt;code&gt;NumPredict&lt;/code&gt;은 Responses 대상 필드를 덮어씁니다. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, 및 &lt;code&gt;RepeatPenalty&lt;/code&gt;는 Responses 컨트롤이 아닙니다.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override their target fields. The selected backend overrides &lt;code&gt;reasoning_effort&lt;/code&gt; when configured, including direct forwarding. Other client reasoning controls and nested &lt;code&gt;chat_template_kwargs&lt;/code&gt; members are preserved." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, &lt;code&gt;NumPredict&lt;/code&gt;은 대상 필드를 재정의합니다. 선택된 백엔드는 구성된 경우 &lt;code&gt;reasoning_effort&lt;/code&gt;를 재정의하며, 직접 전달도 포함됩니다. 기타 클라이언트 추론 제어 항목 및 중첩된 &lt;code&gt;chat_template_kwargs&lt;/code&gt; 구성원은 유지됩니다.</value>
   </data>
   <data name="VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
     <value>VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict 및 RepeatPenalty가 요청을 덮어씁니다. 누락된 &lt;code&gt;keep_alive&lt;/code&gt;는 Provider 값을 사용합니다.</value>

@@ -165,6 +165,9 @@
   <data name="All Ollama VM controls apply: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt;, and &lt;code&gt;think&lt;/code&gt;. Ollama-only values may therefore be injected even though the client dialect cannot express them." xml:space="preserve">
     <value>Tüm Ollama VM kontrolleri geçerlidir: &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;num_predict&lt;/code&gt;, &lt;code&gt;num_ctx&lt;/code&gt;, &lt;code&gt;repeat_penalty&lt;/code&gt; ve &lt;code&gt;think&lt;/code&gt;. Bu nedenle, istemci diyalekti bunları ifade edemese bile yalnızca Ollama&apos;ya özgü değerler enjekte edilebilir.</value>
   </data>
+  <data name="All Ollama VM sampling controls apply. The selected backend can force &lt;code&gt;think&lt;/code&gt; on or off; otherwise the translated client setting applies." xml:space="preserve">
+    <value>Tüm Ollama VM örneklem denetimleri uygulanır. Seçilen arka uç, &lt;code&gt;think&lt;/code&gt; değerini açık veya kapalı olarak zorlayabilir; aksi takdirde çevrilmiş istemci ayarı uygulanır.</value>
+  </data>
   <data name="All dependencies are automatically registered and always available via constructor injection." xml:space="preserve">
     <value>Tüm bağımlılıklar otomatik olere kaydedilir ve constructor injection yoluyla her zaman kullanılabilir.</value>
   </data>
@@ -260,6 +263,9 @@
   </data>
   <data name="Backend Provider type" xml:space="preserve">
     <value>Arka Uç Sağlayıcı türü</value>
+  </data>
+  <data name="Backend thinking overrides apply to both same-dialect direct forwarding and cross-dialect translation. An empty override keeps the client setting, or the upstream default when absent." xml:space="preserve">
+    <value>Arka uç düşünme geçersiz kılmaları, hem aynı diyalekt doğrudan yönlendirmeye hem de diyalektler arası çevirime uygulanır. Boş bir geçersiz kılma, istemci ayarını korur; ayar yoksa üst akım varsayılanını kullanır.</value>
   </data>
   <data name="Background Job Processing" xml:space="preserve">
     <value>Arka Plan İşlem İşleme</value>
@@ -1038,6 +1044,9 @@
   <data name="OpenAI content parts → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → boolean &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;." xml:space="preserve">
     <value>OpenAI içerik parçaları → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → boolean &lt;code&gt;think&lt;/code&gt;; &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;.</value>
   </data>
+  <data name="OpenAI content parts → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → named &lt;code&gt;think&lt;/code&gt; level (&lt;code&gt;none&lt;/code&gt; → &lt;code&gt;false&lt;/code&gt;); &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;." xml:space="preserve">
+    <value>OpenAI içerik parçaları → Ollama &lt;code&gt;content&lt;/code&gt; + &lt;code&gt;images[]&lt;/code&gt;; &lt;code&gt;max_tokens&lt;/code&gt;/&lt;code&gt;max_completion_tokens&lt;/code&gt; → &lt;code&gt;num_predict&lt;/code&gt;; &lt;code&gt;reasoning_effort&lt;/code&gt; → adlandırılmış &lt;code&gt;think&lt;/code&gt; seviyesi (&lt;code&gt;none&lt;/code&gt; → &lt;code&gt;false&lt;/code&gt;); &lt;code&gt;response_format&lt;/code&gt; → Ollama &lt;code&gt;format&lt;/code&gt;.</value>
+  </data>
   <data name="OpenAI embedding extensions outside the shared input are not copied into the cross-dialect request or reconstructed response." xml:space="preserve">
     <value>Ortak girdinin dışındaki OpenAI gömme (embedding) uzantıları, çapraz diyalekt isteğine veya yeniden oluşturulan yanıtına kopyalanmaz.</value>
   </data>
@@ -1046,6 +1055,9 @@
   </data>
   <data name="OpenAI multimodal content array is extracted: image_url data goes to the Ollama images array, text becomes content." xml:space="preserve">
     <value>OpenAI çok modlu içerik dizisi çıkarılır: image_url verileri Ollama görseller dizisine gider, metin içerik haline gelir.</value>
+  </data>
+  <data name="OpenAI target fields &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_tokens&lt;/code&gt; use VM values when set. The selected Ollama backend can override &lt;code&gt;think&lt;/code&gt;; otherwise the client setting is kept." xml:space="preserve">
+    <value>OpenAI hedef alanları &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; ve &lt;code&gt;max_tokens&lt;/code&gt;, ayarlandığında VM değerlerini kullanır. Seçilen Ollama arka ucu &lt;code&gt;think&lt;/code&gt; değerini geçersiz kılabilir; aksi takdirde istemci ayarı korunur.</value>
   </data>
   <data name="OpenAI target fields &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_tokens&lt;/code&gt; use VM values when set. VM &lt;code&gt;Thinking&lt;/code&gt; overrides the translated client value." xml:space="preserve">
     <value>OpenAI hedef alanları &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; ve &lt;code&gt;max_tokens&lt;/code&gt;, ayarlandığında VM değerlerini kullanır. VM &lt;code&gt;Thinking&lt;/code&gt;, çevrilmiş istemci değerini devre dışı bırakır.</value>
@@ -1356,6 +1368,9 @@
   <data name="The request adapter deep-clones the original Responses JSON. &lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt; preserves unknown output Items and SSE event names/data/comments/id/retry without passing the payload through canonical IL." xml:space="preserve">
     <value>İstek adaptörü, orijinal Responses JSON&apos;unu derin klonlar. &lt;code&gt;OpenAiResponsesWireResponseWriter&lt;/code&gt;, bilinmeyen çıktı Öğelerini ve SSE olay adlarını/verilerini/yorumlarını/id&apos;sini/yeniden denemesini, yükü standart IL&apos;den geçirmeden korur.</value>
   </data>
+  <data name="The selected backend can override thinking. VM NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
+    <value>Seçilen arka uç, düşünmeyi geçersiz kılabilir. VM NumCtx, Temperature, TopP, TopK, NumPredict ve RepeatPenalty isteği geçersiz kılar; eksik &lt;code&gt;keep_alive&lt;/code&gt;, Provider değerini kullanır.</value>
+  </data>
   <data name="The template is built for easy deployment. It includes full Docker support, so you can containerize your app and run it anywhere. You can also deploy it directly to IIS, Azure App Service, or any server that supports ASP.NET Core." xml:space="preserve">
     <value>Şablon, kolay dağıtım için oluşturulmuştur. Tam Docker desteği içerir, böylece uygulamanızı konteynerleştirip her yerde çalıştırabilirsiniz. Ayrıca doğrudan IIS, Azure App Service veya ASP.NET Core destekleyen herhangi bir sunucuya dağıtabilirsiniz.</value>
   </data>
@@ -1458,11 +1473,29 @@
   <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. Other nested Responses fields remain untouched." xml:space="preserve">
     <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; ve &lt;code&gt;NumPredict&lt;/code&gt;, &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; ve &lt;code&gt;max_output_tokens&lt;/code&gt; alanlarını geçersiz kılar. Diğer iç içe Responses alanları değiştirilmeden kalır.</value>
   </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, and &lt;code&gt;max_output_tokens&lt;/code&gt;. The selected backend overrides &lt;code&gt;reasoning.effort&lt;/code&gt; when configured, including direct forwarding. Other nested Responses fields remain untouched." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; ve &lt;code&gt;NumPredict&lt;/code&gt; değerleri, &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; ve &lt;code&gt;max_output_tokens&lt;/code&gt; alanlarını yazar. Seçili arka uç, yapılandırıldığında &lt;code&gt;reasoning.effort&lt;/code&gt; alanını, doğrudan yönlendirme dahil olmak üzere yazar. Diğer iç içe Responses alanları olduğu gibi bırakılır.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Chat target controls. The selected backend overrides reasoning effort when configured; otherwise the translated client setting is kept." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; ve &lt;code&gt;NumPredict&lt;/code&gt;, Chat hedef denetimlerini geçersiz kılar. Seçilen arka uç, yapılandırıldığında akıl yürütme çabasını geçersiz kılar; aksi halde çevrilen istemci ayarı korunur.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Chat target fields. The selected backend overrides reasoning effort when configured; otherwise the translated client setting is kept. Ollama-only DB sampling/context controls do not apply to Chat." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; ve &lt;code&gt;NumPredict&lt;/code&gt; değerleri, Chat hedef alanlarını yazar. Seçilen arka uç yapılandırıldığında akıl yürütme çabasını yazar; aksi halde çevrilmiş istemci ayarı korunur. Sadece Ollama&apos;ya özgü DB örneklem/bağlam kontrolleri Chat için geçerli değildir.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. The selected backend overrides reasoning effort when configured; otherwise the client setting is kept. VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; ve &lt;code&gt;NumPredict&lt;/code&gt; alanları, Responses alanlarını yazar. Yapılandırıldığında seçilen arka uç, akıl yürütme çabasını yazar; aksi halde istemci ayarı korunur. VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt; ve &lt;code&gt;RepeatPenalty&lt;/code&gt; için Responses hedef alanı yoktur.</value>
+  </data>
   <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; have no Responses target field." xml:space="preserve">
     <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; ve &lt;code&gt;NumPredict&lt;/code&gt; alanları, Responses alanlarını geçersiz kılar. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt; ve &lt;code&gt;RepeatPenalty&lt;/code&gt; için Responses hedef alanı yoktur.</value>
   </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. The selected backend overrides reasoning effort when configured; otherwise the client setting is kept. VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; ve &lt;code&gt;NumPredict&lt;/code&gt;, Responses hedef alanlarını devre dışı bırakır. Seçilen arka uç, yapılandırıldığında akıl yürütme çabasını devre dışı bırakır; aksi halde istemci ayarı korunur. VM &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt; ve &lt;code&gt;RepeatPenalty&lt;/code&gt;, Responses denetimleri değildir.</value>
+  </data>
   <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override Responses target fields. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt;, and &lt;code&gt;RepeatPenalty&lt;/code&gt; are not Responses controls." xml:space="preserve">
     <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; ve &lt;code&gt;NumPredict&lt;/code&gt;, Responses hedef alanlarını yazar. VM &lt;code&gt;Thinking&lt;/code&gt;, &lt;code&gt;TopK&lt;/code&gt;, &lt;code&gt;NumCtx&lt;/code&gt; ve &lt;code&gt;RepeatPenalty&lt;/code&gt; Responses denetimleri değildir.</value>
+  </data>
+  <data name="VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt;, and &lt;code&gt;NumPredict&lt;/code&gt; override their target fields. The selected backend overrides &lt;code&gt;reasoning_effort&lt;/code&gt; when configured, including direct forwarding. Other client reasoning controls and nested &lt;code&gt;chat_template_kwargs&lt;/code&gt; members are preserved." xml:space="preserve">
+    <value>VM &lt;code&gt;Temperature&lt;/code&gt;, &lt;code&gt;TopP&lt;/code&gt; ve &lt;code&gt;NumPredict&lt;/code&gt; hedef alanlarını geçersiz kılar. Seçili arka uç, yapılandırıldığında &lt;code&gt;reasoning_effort&lt;/code&gt; değerini, doğrudan yönlendirme dahil olmak üzere geçersiz kılar. Diğer istemci akıl yürütme kontrolleri ve iç içe geçmiş &lt;code&gt;chat_template_kwargs&lt;/code&gt; üyeleri korunur.</value>
   </data>
   <data name="VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict, and RepeatPenalty override the request; missing &lt;code&gt;keep_alive&lt;/code&gt; uses the Provider value." xml:space="preserve">
     <value>VM Thinking, NumCtx, Temperature, TopP, TopK, NumPredict ve RepeatPenalty isteği üst yazar; eksik &lt;code&gt;keep_alive&lt;/code&gt; değeri, Sağlayıcı değerini kullanır.</value>

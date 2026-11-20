@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="A configured override wins over the client on every backend attempt, including same-dialect direct forwarding. Fallback attempts use the newly selected backend&apos;s own settings." xml:space="preserve">
+    <value>Override yang dikonfigurasi menang atas klien pada setiap percobaan backend, termasuk penerusan langsung dialek yang sama. Percobaan fallback menggunakan pengaturan sendiri dari backend yang baru dipilih.</value>
+  </data>
+  <data name="A non-empty value is sent verbatim as reasoning_effort for Chat Completions or reasoning.effort for Responses. An existing chat_template_kwargs.reasoning_effort is also overridden so it cannot take priority over your depth setting. No depth names are translated into booleans." xml:space="preserve">
+    <value>Nilai yang tidak kosong dikirim apa adanya sebagai reasoning_effort untuk Chat Completions atau reasoning.effort untuk Responses. Nilai chat_template_kwargs.reasoning_effort yang sudah ada juga ditimpa sehingga tidak dapat mengungguli pengaturan kedalaman Anda. Nama-nama kedalaman tidak diterjemahkan menjadi boolean.</value>
+  </data>
+  <data name="Backend examples" xml:space="preserve">
+    <value>Contoh backend</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Tutup</value>
+  </data>
+  <data name="Do not override leaves that setting to the client, or to the upstream default when absent. Same-dialect requests retain their original fields; cross-dialect requests use the gateway&apos;s protocol translation." xml:space="preserve">
+    <value>Jangan timpa daun yang mengatur pengalihan ke klien, atau ke default hulu saat tidak ada. Permintaan dengan dialek yang sama mempertahankan bidang aslinya; permintaan lintas dialek menggunakan terjemahan protokol gateway.</value>
+  </data>
+  <data name="For Ollama-native backends, Force on or Force off sends boolean think. For OpenAI Chat or Responses backends, it writes chat_template_kwargs.enable_thinking. Other template arguments are preserved. This is a vLLM-style extension, not a universal OpenAI switch; leave it unconfigured for providers that do not support it." xml:space="preserve">
+    <value>Untuk backend Ollama-native, Force on atau Force off mengirim boolean think. Untuk backend OpenAI Chat atau Responses, ini menulis chat_template_kwargs.enable_thinking. Argumen template lainnya dipertahankan. Ini adalah ekstensi gaya vLLM, bukan saklar OpenAI universal; biarkan tidak dikonfigurasi untuk penyedia yang tidak mendukungnya.</value>
+  </data>
+  <data name="How to configure" xml:space="preserve">
+    <value>Cara mengonfigurasi</value>
+  </data>
+  <data name="Other compatible providers" xml:space="preserve">
+    <value>Penyedia kompatibel lainnya</value>
+  </data>
+  <data name="Reasoning depth" xml:space="preserve">
+    <value>Kedalaman penalaran</value>
+  </data>
+  <data name="Supported depths and whether thinking can be disabled depend on the model and provider. Unsupported extensions may be rejected or ignored. Check the provider&apos;s documentation; the gateway does not infer capabilities from its name." xml:space="preserve">
+    <value>Kedalaman yang didukung dan apakah thinking dapat dinonaktifkan bergantung pada model dan penyedia. Ekstensi yang tidak didukung mungkin ditolak atau diabaikan. Periksa dokumentasi penyedia; gerbang tidak menyimpulkan kemampuan dari namanya.</value>
+  </data>
+  <data name="The switch and depth are independent. With vLLM, an explicit enable_thinking value takes precedence over automatic activation by depth. Avoid conflicting settings such as Force off with a high depth, or Force on with depth {0}. A depth alone does not force thinking on against an explicit client switch." xml:space="preserve">
+    <value>Saklar dan kedalaman bersifat independen. Dengan vLLM, nilai enable_thinking yang eksplisit memiliki prioritas lebih tinggi daripada aktivasi otomatis berdasarkan kedalaman. Hindari pengaturan yang saling bertentangan, seperti Force off dengan kedalaman tinggi, atau Force on dengan kedalaman {0}. Kedalaman saja tidak memaksa berpikir menjadi aktif melawan saklar klien yang eksplisit.</value>
+  </data>
+  <data name="The switch controls enable_thinking independently of depth. Qwen3.8 supports low, medium and xhigh, with xhigh as its default. To keep thinking enabled, select Force on and a supported depth such as xhigh." xml:space="preserve">
+    <value>Sakelar mengontrol enable_thinking secara independen dari kedalaman. Qwen3.8 mendukung low, medium, dan xhigh, dengan xhigh sebagai nilai default-nya. Untuk menjaga agar berpikir tetap aktif, pilih Force on dan kedalaman yang didukung seperti xhigh.</value>
+  </data>
+  <data name="Thinking settings help" xml:space="preserve">
+    <value>Bantuan pengaturan berpikir</value>
+  </data>
+  <data name="Thinking switch" xml:space="preserve">
+    <value>Sakelar Berpikir</value>
+  </data>
+  <data name="Usually leave the switch unconfigured and set only a depth supported by the underlying model, such as high or medium. Do not assume enable_thinking is supported." xml:space="preserve">
+    <value>Biasanya biarkan sakelar tidak dikonfigurasi dan hanya atur kedalaman yang didukung oleh model dasar, seperti tinggi atau sedang. Jangan mengasumsikan bahwa enable_thinking didukung.</value>
+  </data>
+  <data name="Valid values vary by model. These are examples, not a promise that every provider accepts the same controls." xml:space="preserve">
+    <value>Nilai yang valid bervariasi sesuai model. Ini adalah contoh, bukan jaminan bahwa setiap penyedia menerima kontrol yang sama.</value>
+  </data>
+  <data name="What is forwarded or overridden?" xml:space="preserve">
+    <value>Apa yang diteruskan atau ditimpa?</value>
+  </data>
+  <data name="When accessed through an OpenAI-compatible proxy, follow that proxy&apos;s contract. These controls do not generate native Claude thinking/budget fields or Gemini thinking configuration." xml:space="preserve">
+    <value>Ketika diakses melalui proksi yang kompatibel dengan OpenAI, ikuti kontrak proksi tersebut. Kontrol ini tidak menghasilkan field thinking/budget native Claude atau konfigurasi thinking Gemini.</value>
+  </data>
+
+</root>

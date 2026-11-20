@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="A configured override wins over the client on every backend attempt, including same-dialect direct forwarding. Fallback attempts use the newly selected backend&apos;s own settings." xml:space="preserve">
+    <value>設定されたオーバーライドは、クライアントよりも常に優先され、バックエンドへのすべての試行（同一ダイアレクトの直接転送を含む）で有効になります。フォールバック試行では、新しく選択されたバックエンド自身の設定が使用されます。</value>
+  </data>
+  <data name="A non-empty value is sent verbatim as reasoning_effort for Chat Completions or reasoning.effort for Responses. An existing chat_template_kwargs.reasoning_effort is also overridden so it cannot take priority over your depth setting. No depth names are translated into booleans." xml:space="preserve">
+    <value>空でない値は、Chat Completions の reasoning_effort または Responses の reasoning.effort としてそのまま送信されます。既存の chat_template_kwargs.reasoning_effort も上書きされるため、設定した深度よりも優先されることはありません。深度名はブール値に変換されません。</value>
+  </data>
+  <data name="Backend examples" xml:space="preserve">
+    <value>バックエンドの例</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>閉じる</value>
+  </data>
+  <data name="Do not override leaves that setting to the client, or to the upstream default when absent. Same-dialect requests retain their original fields; cross-dialect requests use the gateway&apos;s protocol translation." xml:space="preserve">
+    <value>オーバーライドが設定を残さないようにし、設定がない場合はクライアントまたは上流のデフォルトにフォールバックします。同じダイアレクトの要求は元のフィールドを保持し、異なるダイアレクトの要求はゲートウェイのプロトコル変換を使用します。</value>
+  </data>
+  <data name="For Ollama-native backends, Force on or Force off sends boolean think. For OpenAI Chat or Responses backends, it writes chat_template_kwargs.enable_thinking. Other template arguments are preserved. This is a vLLM-style extension, not a universal OpenAI switch; leave it unconfigured for providers that do not support it." xml:space="preserve">
+    <value>Ollamaネイティブのバックエンドでは、「強制オン」または「強制オフ」は boolean の think を送信します。OpenAI Chat または Responses バックエンドでは、chat_template_kwargs.enable_thinking に書き込みます。その他のテンプレート引数は保持されます。これは vLLM 形式の拡張機能であり、OpenAI 全体の標準的なスイッチではありません。サポートしていないプロバイダーに対しては、設定を無効のままにしてください。</value>
+  </data>
+  <data name="How to configure" xml:space="preserve">
+    <value>設定方法</value>
+  </data>
+  <data name="Other compatible providers" xml:space="preserve">
+    <value>その他の互換プロバイダー</value>
+  </data>
+  <data name="Reasoning depth" xml:space="preserve">
+    <value>推論深度</value>
+  </data>
+  <data name="Supported depths and whether thinking can be disabled depend on the model and provider. Unsupported extensions may be rejected or ignored. Check the provider&apos;s documentation; the gateway does not infer capabilities from its name." xml:space="preserve">
+    <value>サポートされる深度や、思考機能を無効にできるかどうかは、モデルとプロバイダーによって異なります。サポートされていない拡張機能は、拒否または無視される場合があります。プロバイダーのドキュメントを確認してください。ゲートウェイは、名前から機能を推測しません。</value>
+  </data>
+  <data name="The switch and depth are independent. With vLLM, an explicit enable_thinking value takes precedence over automatic activation by depth. Avoid conflicting settings such as Force off with a high depth, or Force on with depth {0}. A depth alone does not force thinking on against an explicit client switch." xml:space="preserve">
+    <value>スイッチと深度は独立しています。vLLMでは、明示的な enable_thinking の値が深度による自動有効化よりも優先されます。「高深度で強制オフ」や「深度 {0} で強制オン」のような矛盾する設定は避けてください。深度だけでは、クライアントの明示的なスイッチに反して思考を強制オンにすることはできません。</value>
+  </data>
+  <data name="The switch controls enable_thinking independently of depth. Qwen3.8 supports low, medium and xhigh, with xhigh as its default. To keep thinking enabled, select Force on and a supported depth such as xhigh." xml:space="preserve">
+    <value>スイッチは深度とは独立して enable_thinking を制御します。Qwen3.8 は low、medium、xhigh をサポートしており、デフォルトは xhigh です。思考を有効に保つには、Force on と xhigh などのサポートされている深度を選択してください。</value>
+  </data>
+  <data name="Thinking settings help" xml:space="preserve">
+    <value>思考設定のヘルプ</value>
+  </data>
+  <data name="Thinking switch" xml:space="preserve">
+    <value>思考スイッチ</value>
+  </data>
+  <data name="Usually leave the switch unconfigured and set only a depth supported by the underlying model, such as high or medium. Do not assume enable_thinking is supported." xml:space="preserve">
+    <value>通常はスイッチを設定せず、high や medium など、基盤モデルがサポートする深度のみを設定してください。enable_thinking がサポートされるとは仮定しないでください。</value>
+  </data>
+  <data name="Valid values vary by model. These are examples, not a promise that every provider accepts the same controls." xml:space="preserve">
+    <value>有効な値はモデルによって異なります。これらは例であり、すべてのプロバイダーが同じ制御を受け入れるという保証ではありません。</value>
+  </data>
+  <data name="What is forwarded or overridden?" xml:space="preserve">
+    <value>何が転送または上書きされるのか？</value>
+  </data>
+  <data name="When accessed through an OpenAI-compatible proxy, follow that proxy&apos;s contract. These controls do not generate native Claude thinking/budget fields or Gemini thinking configuration." xml:space="preserve">
+    <value>OpenAI互換プロキシ経由でアクセスする場合は、そのプロキシの契約に従ってください。これらのコントロールは、ネイティブのClaude thinking/budgetフィールドやGemini thinking設定を生成しません。</value>
+  </data>
+
+</root>
