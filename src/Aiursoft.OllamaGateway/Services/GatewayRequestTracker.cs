@@ -88,7 +88,7 @@ public sealed class GatewayRequestTracker(
         {
             QuestionPreview = Preview(displayQuestion ?? question, out _)
         };
-        trafficJournal.Record(_traffic);
+        trafficJournal.Record(_traffic, displayQuestion ?? question);
         context.Response.OnStarting(() =>
         {
             Move("returning");

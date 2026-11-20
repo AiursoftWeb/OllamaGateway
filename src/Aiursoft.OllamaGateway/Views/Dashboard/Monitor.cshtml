@@ -220,6 +220,9 @@
     <span data-key="completed">@Localizer["Completed"]</span>
     <span data-key="cancelled">@Localizer["Cancelled"]</span>
     <span data-key="failed">@Localizer["Failed"]</span>
+    <span data-key="loadingQuestion">@Localizer["Loading question…"]</span>
+    <span data-key="questionUnavailable">@Localizer["This question is no longer available."]</span>
+    <span data-key="questionLoadFailed">@Localizer["Could not load the question."]</span>
     <span data-key="attemptFailed">@Localizer["Attempt failed"]</span>
 </div>
 
@@ -255,7 +258,8 @@
             <div class="card flex-fill w-100">
                 <div class="card-body">
                     <div id="traffic-controls" class="d-flex flex-wrap align-items-center gap-2 mb-2"
-                         data-feed="@Url.Action("TrafficEvents", "Dashboard")">
+                         data-feed="@Url.Action("TrafficEvents", "Dashboard")"
+                         data-question-url="@Url.Action("TrafficQuestion", "Dashboard")">
                         <span id="traffic-status" class="badge bg-secondary" role="status">@Localizer["Connecting"]</span>
                         <button id="traffic-back" type="button" class="btn btn-sm btn-outline-secondary">@Localizer["Replay 5 seconds"]</button>
                         <button id="traffic-pause" type="button" class="btn btn-sm btn-outline-secondary" aria-pressed="false">@Localizer["Pause"]</button>
@@ -263,6 +267,7 @@
                         <select id="traffic-request" class="form-select form-select-sm w-auto" aria-label="@Localizer["Follow request"]">
                             <option value="">@Localizer["All requests"]</option>
                         </select>
+                        <button id="traffic-question" type="button" class="btn btn-sm btn-outline-secondary" hidden>@Localizer["View full question"]</button>
                     </div>
                     <div id="traffic-detail" class="small mb-2" hidden></div>
                     <pre id="traffic-topology" class="mermaid" style="overflow: auto; min-height: 500px;">
