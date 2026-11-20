@@ -154,15 +154,19 @@ export function startTrafficMonitor(svg) {
             g = document.createElementNS(ns, 'g');
             g.append(document.createElementNS(ns, 'circle'), document.createElementNS(ns, 'text'));
             g.querySelector('circle').setAttribute('r', '6');
-            g.querySelector('text').setAttribute('x', '10');
-            g.querySelector('text').setAttribute('y', '-7');
             layer.append(g);
             groups.set(key, g);
         }
         g.dataset.stage = e.stage;
         g.classList.toggle('followed', selected);
         g.setAttribute('transform', 'translate(' + point.x + ' ' + point.y + ')');
-        g.lastChild.textContent = e.stage === 'queued' ? labels.queued + ' · ' + count : count > 1 ? '×' + count : '';
+        // Place the queue count outside the pool so it cannot cover its header.
+        const text = g.lastChild;
+        const queued = e.stage === 'queued';
+        text.setAttribute('text-anchor', queued ? 'end' : 'start');
+        text.setAttribute('x', queued ? '-10' : '10');
+        text.setAttribute('y', queued ? '4' : '-7');
+        text.textContent = e.stage === 'queued' ? labels.queued + ' · ' + count : count > 1 ? '×' + count : '';
     }
     function updateList(items, events, time) {
         const selected = picker.value;
