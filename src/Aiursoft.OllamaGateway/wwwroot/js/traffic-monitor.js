@@ -166,12 +166,15 @@ export function startTrafficMonitor(svg) {
         layer.setPointerCapture(event.pointerId);
     });
     layer.addEventListener('pointercancel', () => { pressed = null; });
-    layer.addEventListener('click', event => {
+    layer.addEventListener('pointerup', event => {
+        if (!event.isPrimary || event.button !== 0) return;
         const tap = pressed;
         pressed = null;
         if (tap && Math.hypot(event.clientX - tap.x, event.clientY - tap.y) <= 12) showQuestion(tap.id);
-        else if (!event.detail && event.target.closest('[data-request-id]'))
-            showQuestion(event.target.closest('[data-request-id]').dataset.requestId);
+    });
+    layer.addEventListener('click', event => {
+        const marker = event.target.closest('[data-request-id]');
+        if (marker && event.detail === 0) showQuestion(marker.dataset.requestId);
     });
     layer.addEventListener('keydown', event => {
         if (event.key === 'Enter' || event.key === ' ') {
