@@ -2,10 +2,11 @@ using System.Text;
 using System.Text.Json.Nodes;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Models;
+using Aiursoft.OllamaGateway.Services;
 
 namespace Aiursoft.OllamaGateway.Gateway.Chat;
 
-public sealed class OllamaChatWireResponseWriter(RequestLogContext logContext) : IChatWireResponseWriter
+public sealed class OllamaChatWireResponseWriter(GatewayRequestTracker tracker, RequestLogContext logContext) : IChatWireResponseWriter
 {
     public ProtocolDialect Dialect => ProtocolDialect.OllamaNative;
     public BackendProtocol Protocol => BackendProtocol.OllamaNative;
@@ -66,6 +67,7 @@ public sealed class OllamaChatWireResponseWriter(RequestLogContext logContext) :
     private void ObserveChunk(JsonNode chunk, StringBuilder answer, StringBuilder thinking)
     {
         var content = chunk["message"]?["content"]?.ToString();
+        tracker.ObserveAnswer(content);
         if (!string.IsNullOrEmpty(content)) answer.Append(content);
         var reasoning = chunk["message"]?["thinking"]?.ToString()
                         ?? chunk["message"]?["think"]?.ToString();
@@ -92,6 +94,7 @@ public sealed class OllamaChatWireResponseWriter(RequestLogContext logContext) :
             {
                 root["model"] = virtualModel.Name;
                 logContext.Log.Answer = root["message"]?["content"]?.ToString() ?? string.Empty;
+                tracker.ObserveAnswer(logContext.Log.Answer);
                 logContext.Log.Thinking = root["message"]?["thinking"]?.ToString()
                                           ?? root["message"]?["think"]?.ToString()
                                           ?? string.Empty;

@@ -136,7 +136,7 @@ public class ProxyController(
             using var bodyReader = new StreamReader(Request.Body, Encoding.UTF8, leaveOpen: true);
             var rawBody = await bodyReader.ReadToEndAsync(HttpContext.RequestAborted);
             var decodedRequest = chatRequestCompiler.Decode(ProtocolDialect.OllamaNative, rawBody);
-            TrackChatRequest(input, virtualModel);
+            TrackChatRequest(input, virtualModel, decodedRequest.Request.LastUserText);
 
             var result = await backendInvoker.SendAsync(
                 virtualModel,
@@ -213,13 +213,13 @@ public class ProxyController(
 
     private void TrackChatRequest(
         OllamaRequestModel input,
-        VirtualModel virtualModel)
+        VirtualModel virtualModel, string displayQuestion)
     {
         requestTracker.Begin(
             virtualModel,
             input.Messages?.LastOrDefault()?.Content ?? string.Empty,
             input.Messages?.Count ?? 0,
-            User);
+            HttpContext, displayQuestion);
     }
 
     [HttpPost("generate")]
@@ -245,7 +245,7 @@ public class ProxyController(
             var backend = resolution.Backend!;
             if (backend.Provider == null) throw new InvalidOperationException("Resolved backend has no provider.");
 
-            requestTracker.Begin(virtualModel, input.Prompt ?? string.Empty, 1, User);
+            requestTracker.Begin(virtualModel, input.Prompt ?? string.Empty, 1, HttpContext);
 
             // /api/generate is an Ollama-native operation and cannot be translated
             // to either OpenAI endpoint family.
@@ -335,6 +335,7 @@ public class ProxyController(
                                 string? contentStr = chunkNode["response"]?.ToString();
                                 if (!string.IsNullOrEmpty(contentStr))
                                 {
+                                    requestTracker.ObserveAnswer(contentStr);
                                     answerBuilder.Append(contentStr);
                                 }
 
@@ -373,6 +374,7 @@ public class ProxyController(
                             resultNode["model"] = virtualModel.Name;
 
                             logContext.Log.Answer = resultNode["response"]?.ToString() ?? string.Empty;
+                            if (response.IsSuccessStatusCode) requestTracker.ObserveAnswer(logContext.Log.Answer);
                             logContext.Log.PromptTokens = (int)(resultNode["prompt_eval_count"]?.GetValue<long>() ?? 0);
                             logContext.Log.CompletionTokens = (int)(resultNode["eval_count"]?.GetValue<long>() ?? 0);
                             logContext.Log.TotalTokens = logContext.Log.PromptTokens + logContext.Log.CompletionTokens;
@@ -468,7 +470,7 @@ public class ProxyController(
                 virtualModel,
                 inputNode["input"]?.ToString() ?? inputNode["prompt"]?.ToString() ?? string.Empty,
                 1,
-                User);
+                HttpContext);
 
             await embeddingGatewayService.ExecuteAsync(
                 ProtocolDialect.OllamaNative,

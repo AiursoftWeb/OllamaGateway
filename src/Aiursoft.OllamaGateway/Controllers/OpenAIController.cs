@@ -87,7 +87,7 @@ public class OpenAIController : ControllerBase
             if (backend.Provider == null)
                 throw new InvalidOperationException("Resolved backend has no provider.");
 
-            TrackRequest(clientJson, virtualModel);
+            TrackRequest(clientJson, virtualModel, decodedRequest.Request.LastUserText);
             var streaming = decodedRequest.Request.Stream;
             var result = await _backendInvoker.SendAsync(
                 virtualModel,
@@ -159,11 +159,11 @@ public class OpenAIController : ControllerBase
 
     private void TrackRequest(
         JsonObject clientJson,
-        VirtualModel virtualModel)
+        VirtualModel virtualModel, string displayQuestion)
     {
         var messages = clientJson["messages"]?.AsArray();
         var lastQuestion = messages?.LastOrDefault()?["content"]?.ToString() ?? string.Empty;
-        _requestTracker.Begin(virtualModel, lastQuestion, messages?.Count ?? 0, User);
+        _requestTracker.Begin(virtualModel, lastQuestion, messages?.Count ?? 0, HttpContext, displayQuestion);
     }
 
 [HttpPost("/v1/embeddings")]
@@ -203,7 +203,7 @@ public class OpenAIController : ControllerBase
                 virtualModel,
                 clientJson["input"]?.ToString() ?? string.Empty,
                 1,
-                User);
+                HttpContext);
 
             await _embeddingGatewayService.ExecuteAsync(
                 ProtocolDialect.OpenAiChatCompletions,

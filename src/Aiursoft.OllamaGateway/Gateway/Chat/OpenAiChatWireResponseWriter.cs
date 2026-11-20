@@ -3,11 +3,12 @@ using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Models;
+using Aiursoft.OllamaGateway.Services;
 
 namespace Aiursoft.OllamaGateway.Gateway.Chat;
 
 public sealed class OpenAiChatWireResponseWriter(
-    RequestLogContext logContext,
+    GatewayRequestTracker tracker, RequestLogContext logContext,
     ILogger<OpenAiChatWireResponseWriter> logger) : IChatWireResponseWriter
 {
     private static readonly Regex ModelFieldRegex = new(
@@ -89,6 +90,7 @@ public sealed class OpenAiChatWireResponseWriter(
             var deltaToolCalls = chunk["choices"]?[0]?["delta"]?["tool_calls"];
             var finishReason = chunk["choices"]?[0]?["finish_reason"]?.ToString();
 
+            tracker.ObserveAnswer(deltaContent);
             if (!string.IsNullOrEmpty(deltaContent)) answer.Append(deltaContent);
             if (!string.IsNullOrEmpty(deltaReasoning)) thinking.Append(deltaReasoning);
 
@@ -141,6 +143,7 @@ public sealed class OpenAiChatWireResponseWriter(
             var reasoning = root["choices"]?[0]?["message"]?["reasoning_content"]?.ToString() ?? string.Empty;
             var promptTokens = root["usage"]?["prompt_tokens"]?.GetValue<long>() ?? 0;
             var completionTokens = root["usage"]?["completion_tokens"]?.GetValue<long>() ?? 0;
+            tracker.ObserveAnswer(content);
             logContext.Log.Answer = content;
             logContext.Log.Thinking = reasoning;
             logContext.Log.PromptTokens = (int)promptTokens;

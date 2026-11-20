@@ -67,6 +67,7 @@ public class BackendInvoker(
                 break;
 
             attemptedBackendIds.Add(backend.Id);
+            requestTracker.SelectAttempt(backend, i + 1);
 
             var underlyingUrl = backend.Provider.BaseUrl.TrimEnd('/');
 
@@ -75,8 +76,10 @@ public class BackendInvoker(
                 backend.Provider.Id, backend.Provider.MaxParallelism);
             try
             {
-                concurrencySlot = await concurrencyLimiter.AcquireAsync(
+                var acquisition = concurrencyLimiter.AcquireAsync(
                     backend.Provider.Id, backend.Provider.MaxParallelism, clientCancellation);
+                if (!acquisition.IsCompleted) requestTracker.WaitingForSlot();
+                concurrencySlot = await acquisition;
                 logger.LogInformation("[Trace] Concurrency slot acquired for provider {ProviderId}", backend.Provider.Id);
             }
             catch (OperationCanceledException)
@@ -107,6 +110,7 @@ public class BackendInvoker(
                 var stopwatch = System.Diagnostics.Stopwatch.StartNew();
                 var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cts.Token);
                 stopwatch.Stop();
+                requestTracker.UpstreamResponded();
                 logger.LogInformation("[Trace] Backend response received in {Elapsed}ms, status={Status}",
                     stopwatch.ElapsedMilliseconds, (int)response.StatusCode);
                 if (response.IsSuccessStatusCode)
@@ -114,7 +118,11 @@ public class BackendInvoker(
                     modelSelector.ReportSuccess(backend.Id);
                     var actualBackend = backend;
                     response.Content = FailureTrackingContent.Wrap(response.Content,
-                        () => monitor.Failure(actualBackend), clientCancellation,
+                        () =>
+                        {
+                            requestTracker.UpstreamBodyFailed();
+                            monitor.Failure(actualBackend);
+                        }, clientCancellation,
                         requiredCapabilities.HasFlag(GatewayCapability.Streaming)
                             ? request.RequestUri!.AbsolutePath.EndsWith("/responses", StringComparison.Ordinal)
                                 ? BackendProtocol.OpenAiResponses
@@ -131,6 +139,7 @@ public class BackendInvoker(
                     logger.LogWarning("Backend request attempt {Attempt} returned {StatusCode}", i + 1, (int)response.StatusCode);
                     if (i == virtualModel.MaxRetries - 1)
                         return new BackendInvocationResult(response, backend, concurrencySlot);
+                    requestTracker.AttemptFailed();
                     requestTracker.EndBackendAttempt();
                     await concurrencySlot.DisposeAsync();
                     concurrencySlot = null;
@@ -164,6 +173,7 @@ public class BackendInvoker(
                     concurrencySlot = null;
                 }
                 requestTracker.EndBackendAttempt();
+                requestTracker.AttemptFailed();
                 if (ex is HttpRequestException or IOException or OperationCanceledException)
                     monitor.Failure(backend!);
                 modelSelector.ReportFailure(backend!.Id);

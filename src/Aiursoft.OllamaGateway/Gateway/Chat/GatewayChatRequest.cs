@@ -21,6 +21,9 @@ public sealed record GatewayChatRequest(
     GatewayCapability PreferredCapabilities = GatewayCapability.None,
     IReadOnlyDictionary<string, string>? Extensions = null)
 {
+    public string LastUserText => string.Concat(Messages.LastOrDefault(message => message.Role == "user")?
+        .Content.OfType<GatewayTextContent>().Select(part => part.Text) ?? []);
+
     public IReadOnlyDictionary<string, string> Extensions { get; init; } =
         Extensions ?? ReadOnlyDictionary<string, string>.Empty;
 }

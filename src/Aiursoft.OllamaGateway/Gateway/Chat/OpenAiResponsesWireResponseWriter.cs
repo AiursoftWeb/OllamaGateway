@@ -3,6 +3,7 @@ using System.Text.Json.Nodes;
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Gateway.Framing;
 using Aiursoft.OllamaGateway.Models;
+using Aiursoft.OllamaGateway.Services;
 
 namespace Aiursoft.OllamaGateway.Gateway.Chat;
 
@@ -10,7 +11,7 @@ namespace Aiursoft.OllamaGateway.Gateway.Chat;
 /// Same-dialect fast path for Responses. It preserves unknown items and events,
 /// changing only gateway-owned identity fields while observing usage and text.
 /// </summary>
-public sealed class OpenAiResponsesWireResponseWriter(RequestLogContext logContext) : IChatWireResponseWriter
+public sealed class OpenAiResponsesWireResponseWriter(GatewayRequestTracker tracker, RequestLogContext logContext) : IChatWireResponseWriter
 {
     public ProtocolDialect Dialect => ProtocolDialect.OpenAiResponses;
     public BackendProtocol Protocol => BackendProtocol.OpenAiResponses;
@@ -105,6 +106,7 @@ public sealed class OpenAiResponsesWireResponseWriter(RequestLogContext logConte
         }
         ObserveUsage(root["usage"]);
         logContext.Log.Answer = answer.ToString();
+        tracker.ObserveAnswer(logContext.Log.Answer);
         logContext.Log.Thinking = reasoning.ToString();
     }
 
@@ -112,7 +114,11 @@ public sealed class OpenAiResponsesWireResponseWriter(RequestLogContext logConte
     {
         var type = ChatRequestDecoding.StringValue(root["type"]);
         if (type == "response.output_text.delta")
-            answer.Append(ChatRequestDecoding.StringValue(root["delta"]));
+        {
+            var delta = ChatRequestDecoding.StringValue(root["delta"]);
+            tracker.ObserveAnswer(delta);
+            answer.Append(delta);
+        }
         else if (type is "response.reasoning_summary_text.delta" or "response.reasoning_text.delta")
             reasoning.Append(ChatRequestDecoding.StringValue(root["delta"]));
         else if (type == "response.completed")

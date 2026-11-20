@@ -1,7 +1,6 @@
 @model Aiursoft.OllamaGateway.Models.DashboardViewModels.MonitorViewModel
 @using Aiursoft.OllamaGateway.Entities
 @using System.Text
-@using System.Text.RegularExpressions
 @using Aiursoft.OllamaGateway.Gateway
 @using System.Net
 
@@ -14,16 +13,14 @@
         foreach (var backend in vm.VirtualModelBackends)
         {
             var key = (backend.ProviderId, backend.UnderlyingModelName);
-            physicalNodeMap.TryAdd(key, backend);
+            if (!physicalNodeMap.TryGetValue(key, out var existing) || backend.Id < existing.Id)
+                physicalNodeMap[key] = backend;
         }
     }
 
     // Produce a stable, Mermaid-safe node ID for a physical backend.
-    string PhysNodeId(int providerId, string modelName)
-    {
-        var sanitized = Regex.Replace(modelName, @"[^a-zA-Z0-9]", "_");
-        return $"Phys_P{providerId}_{sanitized}";
-    }
+    string PhysNodeId(int providerId, string modelName) =>
+        $"Phys_P{providerId}_B{physicalNodeMap[(providerId, modelName)].Id}";
 
     var routeDetails = new Dictionary<int, string>();
     string MermaidText(string value) => WebUtility.HtmlEncode(value).Replace("&quot;", "#quot;");
@@ -33,14 +30,12 @@
     sb.AppendLine("    %% Define global style classes");
     sb.AppendLine("    classDef gateway fill:#2d3748,stroke:#1a202c,stroke-width:2px,color:#fff,rx:8px,ry:8px;");
     sb.AppendLine("    classDef virtualSvc fill:#4a5568,stroke:#2d3748,stroke-width:2px,color:#fff,rx:5px,ry:5px;");
-    sb.AppendLine("    classDef virtualSvcBusy fill:#b7791f,stroke:#744210,stroke-width:3px,color:#fff,rx:5px,ry:5px;");
     sb.AppendLine("    ");
     sb.AppendLine("    %% Define backend node status colors");
     sb.AppendLine("    classDef ready fill:#38a169,stroke:#276749,stroke-width:2px,color:#fff,rx:15px,ry:15px;");
     sb.AppendLine("    classDef healthy fill:#3182ce,stroke:#2b6cb0,stroke-width:2px,color:#fff,rx:15px,ry:15px;");
     sb.AppendLine("    classDef down fill:#e53e3e,stroke:#c53030,stroke-width:2px,color:#fff,rx:15px,ry:15px;");
     sb.AppendLine("    classDef banned fill:#805ad5,stroke:#553c9a,stroke-width:2px,color:#fff,rx:15px,ry:15px;");
-    sb.AppendLine("    classDef physicalBusy fill:#b7791f,stroke:#744210,stroke-width:3px,color:#fff,rx:15px,ry:15px;");
     sb.AppendLine("    ");
     sb.AppendLine("    classDef algo fill:#edf2f7,stroke:#a0aec0,stroke-width:1px,color:#4a5568,stroke-dasharray: 5 5;");
     sb.AppendLine("    classDef client fill:#f7fafc,stroke:#cbd5e0,stroke-width:2px,color:#2d3748,rx:20px,ry:20px;");
@@ -53,13 +48,14 @@
 
     foreach (var vm in Model.VirtualModels)
     {
-        var isBusy = Model.BusyModels.Contains(vm.Name);
         sb.AppendLine();
         sb.AppendLine($"        subgraph VS_{vm.Id} [{Localizer["Virtual Service"].Value} {vm.Name}]");
-        var svcClass = isBusy ? "virtualSvcBusy" : "virtualSvc";
         var modelType = vm.Type == ModelType.Chat ? Localizer["Chat"].Value : Localizer["Embedding"].Value;
-        var svcLabel = isBusy ? $"🔥 {vm.Name}<br/>({modelType})" : $"📦 {vm.Name}<br/>({modelType})";
-        sb.AppendLine($"            Svc_{vm.Id}(\"{svcLabel}\"):::{svcClass}");
+        var svcLabel = $"📦 {vm.Name}<br/>({modelType})";
+        sb.AppendLine($"            Svc_{vm.Id}(\"{svcLabel}\"):::virtualSvc");
+        sb.AppendLine($"            class Svc_{vm.Id} traffic-Svc_{vm.Id};");
+        if (Model.BusyModels.Contains(vm.Name))
+            sb.AppendLine($"            class Svc_{vm.Id} virtualSvcBusy;");
         var algoStr = vm.SelectionStrategy switch
         {
             SelectionStrategy.PriorityFallback => Localizer["Priority Fallback"].Value,
@@ -68,7 +64,7 @@
             _ => Localizer["Unknown"].Value
         };
         sb.AppendLine($"            Algo_{vm.Id}[\"⚖️ {algoStr}\"]:::algo");
-        sb.AppendLine($"            Svc_{vm.Id} --- Algo_{vm.Id}");
+        sb.AppendLine($"            Svc_{vm.Id} policy_{vm.Id}@--- Algo_{vm.Id}");
         sb.AppendLine("        end");
     }
     sb.AppendLine("    end");
@@ -91,21 +87,22 @@
                 .ToList();
             var banTimes = matchingBackends.Select(b => Model.BackendBanStatuses.GetValueOrDefault(b.Id)).ToList();
             var isBanned = banTimes.Any(t => t.HasValue && t.Value > DateTime.UtcNow);
-            var isBusy = Model.BusyPhysicalModels.Contains((kv.Key.ProviderId, kv.Key.ModelName));
 
-            var statusClass = isBanned ? "banned" : isBusy ? "physicalBusy" : backend.IsReady ? "ready" : (backend.IsHealthy ? "healthy" : "down");
-            var icon = isBanned ? "🚫" : isBusy ? "🔥" : backend.IsReady ? "🟢" : (backend.IsHealthy ? "🔵" : "🔴");
+            var statusClass = isBanned ? "banned" : backend.IsReady ? "ready" : (backend.IsHealthy ? "healthy" : "down");
+            var icon = isBanned ? "🚫" : backend.IsReady ? "🟢" : (backend.IsHealthy ? "🔵" : "🔴");
             var statusText = isBanned
                 ? Localizer["Banned"].Value
-                : isBusy
-                    ? Localizer["Busy"].Value
                     : backend.IsReady
                         ? Localizer["Ready"].Value
                         : backend.IsHealthy
                             ? Localizer["Healthy"].Value
                             : Localizer["Down"].Value;
             
-            sb.AppendLine($"        {nodeId}[(\"{icon} {providerName}<br/>{backend.UnderlyingModelName}<br/>{statusText}\")]:::{statusClass}");
+            var healthLabel = $"<span class='topology-health'>{MermaidText(statusText)}</span>";
+            sb.AppendLine($"        {nodeId}[(\"{icon} {providerName}<br/>{backend.UnderlyingModelName}<br/>{healthLabel}\")]:::{statusClass}");
+            sb.AppendLine($"        class {nodeId} traffic-{nodeId};");
+            if (!isBanned && Model.BusyPhysicalModels.Contains(kv.Key))
+                sb.AppendLine($"        class {nodeId} physicalBusy;");
         }
         sb.AppendLine("    end");
     }
@@ -120,11 +117,11 @@
     }
 
     sb.AppendLine();
-    sb.AppendLine($"    Client ===|\"{Localizer["Entry Traffic"].Value}\"| Gateway");
+    sb.AppendLine($"    Client entry@==>|\"{Localizer["Entry Traffic"].Value}\"| Gateway");
 
     foreach (var vm in Model.VirtualModels)
     {
-        sb.AppendLine($"    Gateway == \"{Localizer["Route"].Value}: {vm.Name}\" ==> Svc_{vm.Id}");
+        sb.AppendLine($"    Gateway route_{vm.Id}@==>|\"{Localizer["Route"].Value}: {vm.Name}\"| Svc_{vm.Id}");
 
         foreach (var backend in vm.VirtualModelBackends)
         {
@@ -196,7 +193,7 @@
             if (depth != null)
                 policyLabel += $"<br/><span class='backend-route-thinking'>{MermaidText(depth)}</span>";
             var label = $"<span class='backend-route backend-route-{backend.Id}'>{MermaidText(actionText)}<br/>{policyLabel}</span>";
-            sb.AppendLine($"    Algo_{vm.Id} -. \"{label}\" .-> {nodeId}");
+            sb.AppendLine($"    Algo_{vm.Id} dispatch_{backend.Id}@-.->|\"{label}\"| {nodeId}");
         }
     }
 
@@ -208,7 +205,33 @@
     <link rel="stylesheet" href="~/styles/monitor.css" asp-append-version="true" />
 }
 
+<div id="traffic-labels" hidden>
+    <span data-key="busy">@Localizer["Busy"]</span>
+    <span data-key="live">@Localizer["Live"]</span>
+    <span data-key="paused">@Localizer["Paused"]</span>
+    <span data-key="reconnecting">@Localizer["Reconnecting"]</span>
+    <span data-key="replay">@Localizer["Replay"]</span>
+    <span data-key="received">@Localizer["Received"]</span>
+    <span data-key="selected">@Localizer["Selected backend"]</span>
+    <span data-key="queued">@Localizer["Waiting for a slot"]</span>
+    <span data-key="sent">@Localizer["Waiting for upstream"]</span>
+    <span data-key="headers">@Localizer["Upstream responded"]</span>
+    <span data-key="returning">@Localizer["Returning response"]</span>
+    <span data-key="completed">@Localizer["Completed"]</span>
+    <span data-key="cancelled">@Localizer["Cancelled"]</span>
+    <span data-key="failed">@Localizer["Failed"]</span>
+    <span data-key="attemptFailed">@Localizer["Attempt failed"]</span>
+</div>
+
 <div id="backend-route-details" hidden>
+    @foreach (var vm in Model.VirtualModels)
+    {
+        <span data-model="@vm.Id">@vm.Name</span>
+        foreach (var backend in vm.VirtualModelBackends)
+        {
+            <span data-route="@backend.Id" data-physical="@PhysNodeId(backend.ProviderId, backend.UnderlyingModelName)">@backend.Provider?.Name / @backend.UnderlyingModelName</span>
+        }
+    }
     @foreach (var (backendId, details) in routeDetails)
     {
         <span data-backend-id="@backendId">@details</span>
@@ -231,6 +254,17 @@
         <div class="col-12 d-flex">
             <div class="card flex-fill w-100">
                 <div class="card-body">
+                    <div id="traffic-controls" class="d-flex flex-wrap align-items-center gap-2 mb-2"
+                         data-feed="@Url.Action("TrafficEvents", "Dashboard")">
+                        <span id="traffic-status" class="badge bg-secondary" role="status">@Localizer["Connecting"]</span>
+                        <button id="traffic-back" type="button" class="btn btn-sm btn-outline-secondary">@Localizer["Replay 5 seconds"]</button>
+                        <button id="traffic-pause" type="button" class="btn btn-sm btn-outline-secondary" aria-pressed="false">@Localizer["Pause"]</button>
+                        <button id="traffic-live" type="button" class="btn btn-sm btn-outline-secondary">@Localizer["Go live"]</button>
+                        <select id="traffic-request" class="form-select form-select-sm w-auto" aria-label="@Localizer["Follow request"]">
+                            <option value="">@Localizer["All requests"]</option>
+                        </select>
+                    </div>
+                    <div id="traffic-detail" class="small mb-2" hidden></div>
                     <pre id="traffic-topology" class="mermaid" style="overflow: auto; min-height: 500px;">
 @mermaidCode
                     </pre>

@@ -79,7 +79,7 @@ public class AnthropicErrorHandlingTests
         context.Request.Body = new MemoryStream();
         context.Response.Body = new MemoryStream();
         var log = new RequestLogContext();
-        var tracker = new GatewayRequestTracker(log, null!, null!);
+        var tracker = new GatewayRequestTracker(log, null!, null!, null!);
         var controller = new AnthropicController(log, NullLogger<AnthropicController>.Instance,
             tracker, null!, null!, new ThrowingCompiler(error), null!)
         {

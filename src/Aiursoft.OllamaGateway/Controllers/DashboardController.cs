@@ -24,6 +24,13 @@ public class DashboardController(
     IModelSelector modelSelector,
     GlobalSettingsService globalSettingsService) : Controller
 {
+    [HttpGet("Dashboard/traffic-events")]
+    public IResult TrafficEvents([FromServices] TrafficJournal journal)
+    {
+        Response.Headers["X-Accel-Buffering"] = "no";
+        return TypedResults.ServerSentEvents(journal.Read(Request.Headers["Last-Event-ID"], HttpContext.RequestAborted));
+    }
+
     [HttpGet("Dashboard/live-inference.ws")]
     [EnforceWebSocket]
     public async Task LiveInferenceSocket()
