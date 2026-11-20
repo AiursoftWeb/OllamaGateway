@@ -1,7 +1,6 @@
 using Aiursoft.OllamaGateway.Entities;
 using Aiursoft.OllamaGateway.Models;
 using Aiursoft.OllamaGateway.Services;
-using Microsoft.AspNetCore.Http;
 
 namespace Aiursoft.OllamaGateway.Tests;
 
