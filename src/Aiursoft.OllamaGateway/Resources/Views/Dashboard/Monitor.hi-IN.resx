@@ -18,7 +18,28 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Depth: follow request" xml:space="preserve">
+      <data name="All requests" xml:space="preserve">
+    <value>सभी अनुरोध</value>
+  </data>
+  <data name="Attempt failed" xml:space="preserve">
+    <value>प्रयास विफल रहा</value>
+  </data>
+  <data name="Busy" xml:space="preserve">
+    <value>व्यस्त</value>
+  </data>
+  <data name="Cancelled" xml:space="preserve">
+    <value>रद्द किया गया</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>पूर्ण</value>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>जोड़ रहे हैं</value>
+  </data>
+  <data name="Could not load the question." xml:space="preserve">
+    <value>प्रश्न लोड नहीं किया जा सका।</value>
+  </data>
+  <data name="Depth: follow request" xml:space="preserve">
     <value>गहराई: अनुरोध का पालन करें</value>
   </data>
   <data name="Depth: force {0}" xml:space="preserve">
@@ -26,6 +47,21 @@
   </data>
   <data name="Embedding requests do not use thinking overrides." xml:space="preserve">
     <value>एम्बेडिंग अनुरोधों में सोच की ओवरराइड का उपयोग नहीं किया जाता है।</value>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>विफल</value>
+  </data>
+  <data name="Follow request" xml:space="preserve">
+    <value>अनुरोध का पालन करें</value>
+  </data>
+  <data name="Go live" xml:space="preserve">
+    <value>लाइव करें</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>लाइव</value>
+  </data>
+  <data name="Loading question…" xml:space="preserve">
+    <value>प्रश्न लोड हो रहा है…</value>
   </data>
   <data name="No backend override. The client setting is forwarded or translated; when absent, the upstream default applies." xml:space="preserve">
     <value>कोई बैकएंड ओवरराइड नहीं। क्लाइंट सेटिंग आगे भेजी या अनुवादित की जाती है; जब अनुपस्थित हो, तो अपस्ट्रीम डिफ़ॉल्ट लागू होता है।</value>
@@ -42,8 +78,32 @@
   <data name="Overrides the client setting on each attempt, including same-dialect direct forwarding and cross-dialect translation." xml:space="preserve">
     <value>प्रत्येक प्रयास पर क्लाइंट सेटिंग को ओवरराइड करता है, जिसमें समान-भाषा प्रत्यक्ष अग्रेषण और क्रॉस-भाषा अनुवाद शामिल हैं।</value>
   </data>
+  <data name="Pause" xml:space="preserve">
+    <value>विराम</value>
+  </data>
+  <data name="Paused" xml:space="preserve">
+    <value>विरामित</value>
+  </data>
   <data name="Protocols: {0}" xml:space="preserve">
     <value>प्रोटोकॉल: {0}</value>
+  </data>
+  <data name="Received" xml:space="preserve">
+    <value>प्राप्त</value>
+  </data>
+  <data name="Reconnecting" xml:space="preserve">
+    <value>पुनः जोड़ रहा है</value>
+  </data>
+  <data name="Replay" xml:space="preserve">
+    <value>पुनर्निर्माण</value>
+  </data>
+  <data name="Replay 5 seconds" xml:space="preserve">
+    <value>5 सेकंड रीप्ले करें</value>
+  </data>
+  <data name="Returning response" xml:space="preserve">
+    <value>प्रतिक्रिया लौटाई जा रही है</value>
+  </data>
+  <data name="Selected backend" xml:space="preserve">
+    <value>चयनित बैकएंड</value>
   </data>
   <data name="Thinking: follow request" xml:space="preserve">
     <value>विचार: अनुरोध का पालन करें</value>
@@ -56,6 +116,21 @@
   </data>
   <data name="Thinking: unavailable" xml:space="preserve">
     <value>सोच: अनुपलब्ध</value>
+  </data>
+  <data name="This question is no longer available." xml:space="preserve">
+    <value>यह प्रश्न अब उपलब्ध नहीं है।</value>
+  </data>
+  <data name="Upstream responded" xml:space="preserve">
+    <value>अपस्ट्रीम ने प्रतिक्रिया दी</value>
+  </data>
+  <data name="View full question" xml:space="preserve">
+    <value>पूरा प्रश्न देखें</value>
+  </data>
+  <data name="Waiting for a slot" xml:space="preserve">
+    <value>स्लॉट की प्रतीक्षा में</value>
+  </data>
+  <data name="Waiting for upstream" xml:space="preserve">
+    <value>अपस्ट्रीम का प्रतीक्षा</value>
   </data>
 
 </root>

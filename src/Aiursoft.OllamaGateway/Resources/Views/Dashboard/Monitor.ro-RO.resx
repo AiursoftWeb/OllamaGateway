@@ -18,7 +18,28 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Depth: follow request" xml:space="preserve">
+      <data name="All requests" xml:space="preserve">
+    <value>Toate cererile</value>
+  </data>
+  <data name="Attempt failed" xml:space="preserve">
+    <value>Încercarea a eșuat</value>
+  </data>
+  <data name="Busy" xml:space="preserve">
+    <value>Ocupat</value>
+  </data>
+  <data name="Cancelled" xml:space="preserve">
+    <value>Anulat</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Finalizat</value>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>Se conectează</value>
+  </data>
+  <data name="Could not load the question." xml:space="preserve">
+    <value>Întrebarea nu a putut fi încărcată.</value>
+  </data>
+  <data name="Depth: follow request" xml:space="preserve">
     <value>Adâncime: urmează cererea</value>
   </data>
   <data name="Depth: force {0}" xml:space="preserve">
@@ -26,6 +47,21 @@
   </data>
   <data name="Embedding requests do not use thinking overrides." xml:space="preserve">
     <value>Cererile de embedding nu folosesc suprascrieri pentru gândire.</value>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>Eșuat</value>
+  </data>
+  <data name="Follow request" xml:space="preserve">
+    <value>Urmărește cererea</value>
+  </data>
+  <data name="Go live" xml:space="preserve">
+    <value>Pornește live</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>În direct</value>
+  </data>
+  <data name="Loading question…" xml:space="preserve">
+    <value>Se încarcă întrebarea…</value>
   </data>
   <data name="No backend override. The client setting is forwarded or translated; when absent, the upstream default applies." xml:space="preserve">
     <value>Fără suprascriere la nivel de backend. Setarea clientului este transferată sau tradusă; când lipsește, se aplică valoarea implicită a serviciului sursă.</value>
@@ -42,8 +78,32 @@
   <data name="Overrides the client setting on each attempt, including same-dialect direct forwarding and cross-dialect translation." xml:space="preserve">
     <value>Suprascrie setarea clientului la fiecare încercare, inclusiv forwardarea directă în același dialect și traducerea între dialecte.</value>
   </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Pauză</value>
+  </data>
+  <data name="Paused" xml:space="preserve">
+    <value>Pauzat</value>
+  </data>
   <data name="Protocols: {0}" xml:space="preserve">
     <value>Protocoale: {0}</value>
+  </data>
+  <data name="Received" xml:space="preserve">
+    <value>Primit</value>
+  </data>
+  <data name="Reconnecting" xml:space="preserve">
+    <value>Se reconectează</value>
+  </data>
+  <data name="Replay" xml:space="preserve">
+    <value>Reproducere</value>
+  </data>
+  <data name="Replay 5 seconds" xml:space="preserve">
+    <value>Redă 5 secunde</value>
+  </data>
+  <data name="Returning response" xml:space="preserve">
+    <value>Se returnează răspunsul</value>
+  </data>
+  <data name="Selected backend" xml:space="preserve">
+    <value>Backend selectat</value>
   </data>
   <data name="Thinking: follow request" xml:space="preserve">
     <value>Gândire: urmați cererea</value>
@@ -56,6 +116,21 @@
   </data>
   <data name="Thinking: unavailable" xml:space="preserve">
     <value>Gândire: indisponibilă</value>
+  </data>
+  <data name="This question is no longer available." xml:space="preserve">
+    <value>Această întrebare nu mai este disponibilă.</value>
+  </data>
+  <data name="Upstream responded" xml:space="preserve">
+    <value>A mont răspuns</value>
+  </data>
+  <data name="View full question" xml:space="preserve">
+    <value>Vizualizează întrebarea completă</value>
+  </data>
+  <data name="Waiting for a slot" xml:space="preserve">
+    <value>În așteptarea unui slot</value>
+  </data>
+  <data name="Waiting for upstream" xml:space="preserve">
+    <value>Așteptare upstream</value>
   </data>
 
 </root>

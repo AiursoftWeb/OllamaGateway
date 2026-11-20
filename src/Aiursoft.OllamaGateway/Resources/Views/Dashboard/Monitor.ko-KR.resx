@@ -18,7 +18,28 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Depth: follow request" xml:space="preserve">
+      <data name="All requests" xml:space="preserve">
+    <value>모든 요청</value>
+  </data>
+  <data name="Attempt failed" xml:space="preserve">
+    <value>시도 실패</value>
+  </data>
+  <data name="Busy" xml:space="preserve">
+    <value>바쁨</value>
+  </data>
+  <data name="Cancelled" xml:space="preserve">
+    <value>취소됨</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>완료됨</value>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>연결 중</value>
+  </data>
+  <data name="Could not load the question." xml:space="preserve">
+    <value>질문을 불러올 수 없습니다.</value>
+  </data>
+  <data name="Depth: follow request" xml:space="preserve">
     <value>깊이: 요청 따르기</value>
   </data>
   <data name="Depth: force {0}" xml:space="preserve">
@@ -26,6 +47,21 @@
   </data>
   <data name="Embedding requests do not use thinking overrides." xml:space="preserve">
     <value>임베딩 요청은 사고 오버라이드를 사용하지 않습니다.</value>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>실패</value>
+  </data>
+  <data name="Follow request" xml:space="preserve">
+    <value>요청 따르기</value>
+  </data>
+  <data name="Go live" xml:space="preserve">
+    <value>실시간 보기</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>실시간</value>
+  </data>
+  <data name="Loading question…" xml:space="preserve">
+    <value>질문 불러오는 중…</value>
   </data>
   <data name="No backend override. The client setting is forwarded or translated; when absent, the upstream default applies." xml:space="preserve">
     <value>백엔드 오버라이드가 없습니다. 클라이언트 설정은 전달되거나 번역되며, 설정이 없으면 업스트림 기본값이 적용됩니다.</value>
@@ -42,8 +78,32 @@
   <data name="Overrides the client setting on each attempt, including same-dialect direct forwarding and cross-dialect translation." xml:space="preserve">
     <value>동일 방언의 직접 전달 및 교차 방언 번역을 포함하여 각 시도 시마다 클라이언트 설정을 덮어씁니다.</value>
   </data>
+  <data name="Pause" xml:space="preserve">
+    <value>일시정지</value>
+  </data>
+  <data name="Paused" xml:space="preserve">
+    <value>일시정지됨</value>
+  </data>
   <data name="Protocols: {0}" xml:space="preserve">
     <value>프로토콜: {0}</value>
+  </data>
+  <data name="Received" xml:space="preserve">
+    <value>수신됨</value>
+  </data>
+  <data name="Reconnecting" xml:space="preserve">
+    <value>재연결 중</value>
+  </data>
+  <data name="Replay" xml:space="preserve">
+    <value>재생</value>
+  </data>
+  <data name="Replay 5 seconds" xml:space="preserve">
+    <value>5초 되감기</value>
+  </data>
+  <data name="Returning response" xml:space="preserve">
+    <value>응답 반환 중</value>
+  </data>
+  <data name="Selected backend" xml:space="preserve">
+    <value>선택된 백엔드</value>
   </data>
   <data name="Thinking: follow request" xml:space="preserve">
     <value>사고: 요청 따름</value>
@@ -56,6 +116,21 @@
   </data>
   <data name="Thinking: unavailable" xml:space="preserve">
     <value>사고: 사용 불가</value>
+  </data>
+  <data name="This question is no longer available." xml:space="preserve">
+    <value>이 질문은 더 이상 사용할 수 없습니다.</value>
+  </data>
+  <data name="Upstream responded" xml:space="preserve">
+    <value>업스트림 응답</value>
+  </data>
+  <data name="View full question" xml:space="preserve">
+    <value>전체 질문 보기</value>
+  </data>
+  <data name="Waiting for a slot" xml:space="preserve">
+    <value>슬롯 대기 중</value>
+  </data>
+  <data name="Waiting for upstream" xml:space="preserve">
+    <value>업스트림 대기 중</value>
   </data>
 
 </root>

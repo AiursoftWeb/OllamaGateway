@@ -18,7 +18,28 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Depth: follow request" xml:space="preserve">
+      <data name="All requests" xml:space="preserve">
+    <value>Alle verzoeken</value>
+  </data>
+  <data name="Attempt failed" xml:space="preserve">
+    <value>Poging mislukt</value>
+  </data>
+  <data name="Busy" xml:space="preserve">
+    <value>Bezig</value>
+  </data>
+  <data name="Cancelled" xml:space="preserve">
+    <value>Geannuleerd</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Voltooid</value>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>Verbinden</value>
+  </data>
+  <data name="Could not load the question." xml:space="preserve">
+    <value>De vraag kon niet worden geladen.</value>
+  </data>
+  <data name="Depth: follow request" xml:space="preserve">
     <value>Diepte: volg aanvraag</value>
   </data>
   <data name="Depth: force {0}" xml:space="preserve">
@@ -26,6 +47,21 @@
   </data>
   <data name="Embedding requests do not use thinking overrides." xml:space="preserve">
     <value>Embeddingverzoeken gebruiken geen overwegingsoverrides.</value>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>Mislukt</value>
+  </data>
+  <data name="Follow request" xml:space="preserve">
+    <value>Volg aanvraag</value>
+  </data>
+  <data name="Go live" xml:space="preserve">
+    <value>Ga live</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>Live</value>
+  </data>
+  <data name="Loading question…" xml:space="preserve">
+    <value>Vraag wordt geladen…</value>
   </data>
   <data name="No backend override. The client setting is forwarded or translated; when absent, the upstream default applies." xml:space="preserve">
     <value>Geen backend-oversturing. De clientinstelling wordt doorgegeven of vertaald; indien afwezig, geldt de upstream-standaard.</value>
@@ -42,8 +78,32 @@
   <data name="Overrides the client setting on each attempt, including same-dialect direct forwarding and cross-dialect translation." xml:space="preserve">
     <value>Overschrijft de clientinstelling bij elke poging, inclusief directe doorverwijzing binnen hetzelfde dialect en vertaling tussen dialecten.</value>
   </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Pauze</value>
+  </data>
+  <data name="Paused" xml:space="preserve">
+    <value>Gepauzeerd</value>
+  </data>
   <data name="Protocols: {0}" xml:space="preserve">
     <value>Protocollen: {0}</value>
+  </data>
+  <data name="Received" xml:space="preserve">
+    <value>Ontvangen</value>
+  </data>
+  <data name="Reconnecting" xml:space="preserve">
+    <value>Opnieuw verbinden</value>
+  </data>
+  <data name="Replay" xml:space="preserve">
+    <value>Replay</value>
+  </data>
+  <data name="Replay 5 seconds" xml:space="preserve">
+    <value>5 seconden terugspoelen</value>
+  </data>
+  <data name="Returning response" xml:space="preserve">
+    <value>Antwoord wordt teruggegeven</value>
+  </data>
+  <data name="Selected backend" xml:space="preserve">
+    <value>Geselecteerde backend</value>
   </data>
   <data name="Thinking: follow request" xml:space="preserve">
     <value>Denken: volg verzoek</value>
@@ -56,6 +116,21 @@
   </data>
   <data name="Thinking: unavailable" xml:space="preserve">
     <value>Denken: niet beschikbaar</value>
+  </data>
+  <data name="This question is no longer available." xml:space="preserve">
+    <value>Deze vraag is niet langer beschikbaar.</value>
+  </data>
+  <data name="Upstream responded" xml:space="preserve">
+    <value>Upstream reageerde</value>
+  </data>
+  <data name="View full question" xml:space="preserve">
+    <value>Volledige vraag weergeven</value>
+  </data>
+  <data name="Waiting for a slot" xml:space="preserve">
+    <value>Wacht op een plek</value>
+  </data>
+  <data name="Waiting for upstream" xml:space="preserve">
+    <value>Wachten op upstream</value>
   </data>
 
 </root>

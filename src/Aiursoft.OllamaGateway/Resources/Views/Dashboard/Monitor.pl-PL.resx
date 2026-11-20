@@ -18,7 +18,28 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Depth: follow request" xml:space="preserve">
+      <data name="All requests" xml:space="preserve">
+    <value>Wszystkie żądania</value>
+  </data>
+  <data name="Attempt failed" xml:space="preserve">
+    <value>Niezrealizowana próba</value>
+  </data>
+  <data name="Busy" xml:space="preserve">
+    <value>Zajęty</value>
+  </data>
+  <data name="Cancelled" xml:space="preserve">
+    <value>Anulowano</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Zakończono</value>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>Łączenie</value>
+  </data>
+  <data name="Could not load the question." xml:space="preserve">
+    <value>Nie udało się wczytać pytania.</value>
+  </data>
+  <data name="Depth: follow request" xml:space="preserve">
     <value>Głębokość: zgodnie z żądaniem</value>
   </data>
   <data name="Depth: force {0}" xml:space="preserve">
@@ -26,6 +47,21 @@
   </data>
   <data name="Embedding requests do not use thinking overrides." xml:space="preserve">
     <value>Żądania embedding nie używają nadpisań myślenia.</value>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>Niepowodzenie</value>
+  </data>
+  <data name="Follow request" xml:space="preserve">
+    <value>Śledź żądanie</value>
+  </data>
+  <data name="Go live" xml:space="preserve">
+    <value>Przejdź na żywo</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>Na żywo</value>
+  </data>
+  <data name="Loading question…" xml:space="preserve">
+    <value>Ładowanie pytania…</value>
   </data>
   <data name="No backend override. The client setting is forwarded or translated; when absent, the upstream default applies." xml:space="preserve">
     <value>Brak nadpisywania przez backend. Ustawienie klienta jest przekazywane dalej lub tłumaczone; w przypadku jego braku obowiązuje wartość domyślna górnego poziomu.</value>
@@ -42,8 +78,32 @@
   <data name="Overrides the client setting on each attempt, including same-dialect direct forwarding and cross-dialect translation." xml:space="preserve">
     <value>Nadpisuje ustawienie klienta przy każdej próbie, w tym bezpośrednie przesyłanie w tym samym dialekcie i tłumaczenie między dialektami.</value>
   </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Wstrzymaj</value>
+  </data>
+  <data name="Paused" xml:space="preserve">
+    <value>Wstrzymano</value>
+  </data>
   <data name="Protocols: {0}" xml:space="preserve">
     <value>Protokoły: {0}</value>
+  </data>
+  <data name="Received" xml:space="preserve">
+    <value>Odebrano</value>
+  </data>
+  <data name="Reconnecting" xml:space="preserve">
+    <value>Łączenie</value>
+  </data>
+  <data name="Replay" xml:space="preserve">
+    <value>Odtwarzanie</value>
+  </data>
+  <data name="Replay 5 seconds" xml:space="preserve">
+    <value>Odtwórz 5 sekund</value>
+  </data>
+  <data name="Returning response" xml:space="preserve">
+    <value>Zwracanie odpowiedzi</value>
+  </data>
+  <data name="Selected backend" xml:space="preserve">
+    <value>Wybrany backend</value>
   </data>
   <data name="Thinking: follow request" xml:space="preserve">
     <value>Myślenie: zgodnie z żądaniem</value>
@@ -56,6 +116,21 @@
   </data>
   <data name="Thinking: unavailable" xml:space="preserve">
     <value>Myślenie: niedostępne</value>
+  </data>
+  <data name="This question is no longer available." xml:space="preserve">
+    <value>To pytanie nie jest już dostępne.</value>
+  </data>
+  <data name="Upstream responded" xml:space="preserve">
+    <value>Górny strumień odpowiedział</value>
+  </data>
+  <data name="View full question" xml:space="preserve">
+    <value>Pokaż pełne pytanie</value>
+  </data>
+  <data name="Waiting for a slot" xml:space="preserve">
+    <value>Oczekiwanie na wolne miejsce</value>
+  </data>
+  <data name="Waiting for upstream" xml:space="preserve">
+    <value>Oczekiwanie na serwer nadrzędny</value>
   </data>
 
 </root>

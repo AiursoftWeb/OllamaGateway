@@ -18,7 +18,28 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Depth: follow request" xml:space="preserve">
+      <data name="All requests" xml:space="preserve">
+    <value>Tất cả các yêu cầu</value>
+  </data>
+  <data name="Attempt failed" xml:space="preserve">
+    <value>Thử nghiệm thất bại</value>
+  </data>
+  <data name="Busy" xml:space="preserve">
+    <value>Bận</value>
+  </data>
+  <data name="Cancelled" xml:space="preserve">
+    <value>Đã hủy</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Hoàn thành</value>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>Đang kết nối</value>
+  </data>
+  <data name="Could not load the question." xml:space="preserve">
+    <value>Không thể tải câu hỏi.</value>
+  </data>
+  <data name="Depth: follow request" xml:space="preserve">
     <value>Độ sâu: theo yêu cầu</value>
   </data>
   <data name="Depth: force {0}" xml:space="preserve">
@@ -26,6 +47,21 @@
   </data>
   <data name="Embedding requests do not use thinking overrides." xml:space="preserve">
     <value>Yêu cầu nhúng không sử dụng ghi đè suy nghĩ.</value>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>Đã thất bại</value>
+  </data>
+  <data name="Follow request" xml:space="preserve">
+    <value>Theo dõi yêu cầu</value>
+  </data>
+  <data name="Go live" xml:space="preserve">
+    <value>Chuyển sang trực tiếp</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>Trực tiếp</value>
+  </data>
+  <data name="Loading question…" xml:space="preserve">
+    <value>Đang tải câu hỏi…</value>
   </data>
   <data name="No backend override. The client setting is forwarded or translated; when absent, the upstream default applies." xml:space="preserve">
     <value>Không có ghi đè phía máy chủ. Cài đặt của client được chuyển tiếp hoặc dịch; khi vắng mặt, giá trị mặc định phía nguồn sẽ được áp dụng.</value>
@@ -42,8 +78,32 @@
   <data name="Overrides the client setting on each attempt, including same-dialect direct forwarding and cross-dialect translation." xml:space="preserve">
     <value>Ghi đè cài đặt của client ở mỗi lần thử, bao gồm chuyển tiếp trực tiếp cùng phương ngữ và dịch thuật chéo phương ngữ.</value>
   </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Tạm dừng</value>
+  </data>
+  <data name="Paused" xml:space="preserve">
+    <value>Tạm dừng</value>
+  </data>
   <data name="Protocols: {0}" xml:space="preserve">
     <value>Giao thức: {0}</value>
+  </data>
+  <data name="Received" xml:space="preserve">
+    <value>Đã nhận</value>
+  </data>
+  <data name="Reconnecting" xml:space="preserve">
+    <value>Đang kết nối lại</value>
+  </data>
+  <data name="Replay" xml:space="preserve">
+    <value>Phát lại</value>
+  </data>
+  <data name="Replay 5 seconds" xml:space="preserve">
+    <value>Phát lại 5 giây</value>
+  </data>
+  <data name="Returning response" xml:space="preserve">
+    <value>Đang trả về phản hồi</value>
+  </data>
+  <data name="Selected backend" xml:space="preserve">
+    <value>Backend đã chọn</value>
   </data>
   <data name="Thinking: follow request" xml:space="preserve">
     <value>Suy luận: theo yêu cầu</value>
@@ -56,6 +116,21 @@
   </data>
   <data name="Thinking: unavailable" xml:space="preserve">
     <value>Suy luận: không khả dụng</value>
+  </data>
+  <data name="This question is no longer available." xml:space="preserve">
+    <value>Câu hỏi này không còn khả dụng.</value>
+  </data>
+  <data name="Upstream responded" xml:space="preserve">
+    <value>Lượng đầu vào đã phản hồi</value>
+  </data>
+  <data name="View full question" xml:space="preserve">
+    <value>Xem câu hỏi đầy đủ</value>
+  </data>
+  <data name="Waiting for a slot" xml:space="preserve">
+    <value>Đang chờ lượt</value>
+  </data>
+  <data name="Waiting for upstream" xml:space="preserve">
+    <value>Đang chờ upstream</value>
   </data>
 
 </root>

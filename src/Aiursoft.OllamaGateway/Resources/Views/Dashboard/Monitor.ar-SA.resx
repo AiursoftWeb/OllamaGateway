@@ -18,7 +18,28 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Depth: follow request" xml:space="preserve">
+      <data name="All requests" xml:space="preserve">
+    <value>جميع الطلبات</value>
+  </data>
+  <data name="Attempt failed" xml:space="preserve">
+    <value>فشل المحاولة</value>
+  </data>
+  <data name="Busy" xml:space="preserve">
+    <value>مشغول</value>
+  </data>
+  <data name="Cancelled" xml:space="preserve">
+    <value>ملغي</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>مكتمل</value>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>جارٍ الاتصال</value>
+  </data>
+  <data name="Could not load the question." xml:space="preserve">
+    <value>تعذر تحميل السؤال.</value>
+  </data>
+  <data name="Depth: follow request" xml:space="preserve">
     <value>العمق: اتباع الطلب</value>
   </data>
   <data name="Depth: force {0}" xml:space="preserve">
@@ -26,6 +47,21 @@
   </data>
   <data name="Embedding requests do not use thinking overrides." xml:space="preserve">
     <value>لا تستخدم طلبات التضمين تجاوزات التفكير.</value>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>فشل</value>
+  </data>
+  <data name="Follow request" xml:space="preserve">
+    <value>متابعة الطلب</value>
+  </data>
+  <data name="Go live" xml:space="preserve">
+    <value>انتقال مباشر</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>مباشر</value>
+  </data>
+  <data name="Loading question…" xml:space="preserve">
+    <value>جارٍ تحميل السؤال…</value>
   </data>
   <data name="No backend override. The client setting is forwarded or translated; when absent, the upstream default applies." xml:space="preserve">
     <value>لا يوجد تجاوز من الخادم الخلفي. يتم تمرير إعداد العميل أو ترجمته؛ وإذا لم يكن موجودًا، تُطبَّق القيمة الافتراضية من المندوب.</value>
@@ -42,8 +78,32 @@
   <data name="Overrides the client setting on each attempt, including same-dialect direct forwarding and cross-dialect translation." xml:space="preserve">
     <value>يتجاوز إعداد العميل في كل محاولة، بما في ذلك التحويل المباشر بنفس اللهجة والترجمة بين اللهجات.</value>
   </data>
+  <data name="Pause" xml:space="preserve">
+    <value>إيقاف مؤقت</value>
+  </data>
+  <data name="Paused" xml:space="preserve">
+    <value>متوقف مؤقتًا</value>
+  </data>
   <data name="Protocols: {0}" xml:space="preserve">
     <value>البروتوكولات: {0}</value>
+  </data>
+  <data name="Received" xml:space="preserve">
+    <value>تم الاستلام</value>
+  </data>
+  <data name="Reconnecting" xml:space="preserve">
+    <value>إعادة الاتصال</value>
+  </data>
+  <data name="Replay" xml:space="preserve">
+    <value>إعادة التشغيل</value>
+  </data>
+  <data name="Replay 5 seconds" xml:space="preserve">
+    <value>إعادة تشغيل 5 ثوانٍ</value>
+  </data>
+  <data name="Returning response" xml:space="preserve">
+    <value>إرجاع الاستجابة</value>
+  </data>
+  <data name="Selected backend" xml:space="preserve">
+    <value>الخادم الخلفي المحدد</value>
   </data>
   <data name="Thinking: follow request" xml:space="preserve">
     <value>التفكير: اتباع الطلب</value>
@@ -56,6 +116,21 @@
   </data>
   <data name="Thinking: unavailable" xml:space="preserve">
     <value>التفكير: غير متاح</value>
+  </data>
+  <data name="This question is no longer available." xml:space="preserve">
+    <value>لم تعد هذه السؤال متاحة.</value>
+  </data>
+  <data name="Upstream responded" xml:space="preserve">
+    <value>استجاب الخادم العلوي</value>
+  </data>
+  <data name="View full question" xml:space="preserve">
+    <value>عرض السؤال الكامل</value>
+  </data>
+  <data name="Waiting for a slot" xml:space="preserve">
+    <value>بانتظار توفر خانة</value>
+  </data>
+  <data name="Waiting for upstream" xml:space="preserve">
+    <value>بانتظار الخادم الأساسي</value>
   </data>
 
 </root>

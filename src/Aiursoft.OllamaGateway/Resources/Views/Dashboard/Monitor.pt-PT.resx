@@ -18,7 +18,28 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Depth: follow request" xml:space="preserve">
+      <data name="All requests" xml:space="preserve">
+    <value>Todos os pedidos</value>
+  </data>
+  <data name="Attempt failed" xml:space="preserve">
+    <value>A tentativa falhou</value>
+  </data>
+  <data name="Busy" xml:space="preserve">
+    <value>Ocupado</value>
+  </data>
+  <data name="Cancelled" xml:space="preserve">
+    <value>Cancelado</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Concluído</value>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>A ligar</value>
+  </data>
+  <data name="Could not load the question." xml:space="preserve">
+    <value>Não foi possível carregar a pergunta.</value>
+  </data>
+  <data name="Depth: follow request" xml:space="preserve">
     <value>Profundidade: seguir pedido</value>
   </data>
   <data name="Depth: force {0}" xml:space="preserve">
@@ -26,6 +47,21 @@
   </data>
   <data name="Embedding requests do not use thinking overrides." xml:space="preserve">
     <value>As solicitações de incorporação não utilizam substituições de raciocínio.</value>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>Falhado</value>
+  </data>
+  <data name="Follow request" xml:space="preserve">
+    <value>Seguir pedido</value>
+  </data>
+  <data name="Go live" xml:space="preserve">
+    <value>Ir para o direto</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>Em direto</value>
+  </data>
+  <data name="Loading question…" xml:space="preserve">
+    <value>A carregar a pergunta…</value>
   </data>
   <data name="No backend override. The client setting is forwarded or translated; when absent, the upstream default applies." xml:space="preserve">
     <value>Sem substituição de backend. A configuração do cliente é encaminhada ou traduzida; quando ausente, aplica-se o valor predefinido a montante.</value>
@@ -42,8 +78,32 @@
   <data name="Overrides the client setting on each attempt, including same-dialect direct forwarding and cross-dialect translation." xml:space="preserve">
     <value>Substitui a definição do cliente em cada tentativa, incluindo o encaminhamento direto do mesmo dialeto e a tradução entre dialetos.</value>
   </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Pausa</value>
+  </data>
+  <data name="Paused" xml:space="preserve">
+    <value>Pausado</value>
+  </data>
   <data name="Protocols: {0}" xml:space="preserve">
     <value>Protocolos: {0}</value>
+  </data>
+  <data name="Received" xml:space="preserve">
+    <value>Recebido</value>
+  </data>
+  <data name="Reconnecting" xml:space="preserve">
+    <value>A reconectar</value>
+  </data>
+  <data name="Replay" xml:space="preserve">
+    <value>Replay</value>
+  </data>
+  <data name="Replay 5 seconds" xml:space="preserve">
+    <value>Reproduzir 5 segundos</value>
+  </data>
+  <data name="Returning response" xml:space="preserve">
+    <value>A devolver a resposta</value>
+  </data>
+  <data name="Selected backend" xml:space="preserve">
+    <value>Backend selecionado</value>
   </data>
   <data name="Thinking: follow request" xml:space="preserve">
     <value>Pensamento: seguir pedido</value>
@@ -56,6 +116,21 @@
   </data>
   <data name="Thinking: unavailable" xml:space="preserve">
     <value>Pensamento: indisponível</value>
+  </data>
+  <data name="This question is no longer available." xml:space="preserve">
+    <value>Esta pergunta já não está disponível.</value>
+  </data>
+  <data name="Upstream responded" xml:space="preserve">
+    <value>A montante respondeu</value>
+  </data>
+  <data name="View full question" xml:space="preserve">
+    <value>Ver pergunta completa</value>
+  </data>
+  <data name="Waiting for a slot" xml:space="preserve">
+    <value>À espera de um slot</value>
+  </data>
+  <data name="Waiting for upstream" xml:space="preserve">
+    <value>À espera do upstream</value>
   </data>
 
 </root>

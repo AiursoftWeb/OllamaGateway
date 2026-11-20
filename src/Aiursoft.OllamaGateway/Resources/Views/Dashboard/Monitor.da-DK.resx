@@ -18,7 +18,28 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Depth: follow request" xml:space="preserve">
+      <data name="All requests" xml:space="preserve">
+    <value>Alle anmodninger</value>
+  </data>
+  <data name="Attempt failed" xml:space="preserve">
+    <value>Forsøg mislykkedes</value>
+  </data>
+  <data name="Busy" xml:space="preserve">
+    <value>Besættet</value>
+  </data>
+  <data name="Cancelled" xml:space="preserve">
+    <value>Annulleret</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Fuldført</value>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>Forbinder</value>
+  </data>
+  <data name="Could not load the question." xml:space="preserve">
+    <value>Kunne ikke indlæse spørgsmålet.</value>
+  </data>
+  <data name="Depth: follow request" xml:space="preserve">
     <value>Dybde: følg anmodning</value>
   </data>
   <data name="Depth: force {0}" xml:space="preserve">
@@ -26,6 +47,21 @@
   </data>
   <data name="Embedding requests do not use thinking overrides." xml:space="preserve">
     <value>Embedding-anmodninger bruger ikke tænkningsoverridinger.</value>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>Fejlet</value>
+  </data>
+  <data name="Follow request" xml:space="preserve">
+    <value>Følg anmodning</value>
+  </data>
+  <data name="Go live" xml:space="preserve">
+    <value>Gå live</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>Live</value>
+  </data>
+  <data name="Loading question…" xml:space="preserve">
+    <value>Indlæser spørgsmål…</value>
   </data>
   <data name="No backend override. The client setting is forwarded or translated; when absent, the upstream default applies." xml:space="preserve">
     <value>Ingen backend-overstyring. Klientsindstillingen videresendes eller oversættes; hvis den er fraværende, gælder opstrøms-standarden.</value>
@@ -42,8 +78,32 @@
   <data name="Overrides the client setting on each attempt, including same-dialect direct forwarding and cross-dialect translation." xml:space="preserve">
     <value>Overskriver klientindstillingen ved hvert forsøg, herunder direkte fremsending i samme dialekt og oversættelse mellem dialekter.</value>
   </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="Paused" xml:space="preserve">
+    <value>Pauset</value>
+  </data>
   <data name="Protocols: {0}" xml:space="preserve">
     <value>Protokoller: {0}</value>
+  </data>
+  <data name="Received" xml:space="preserve">
+    <value>Modtaget</value>
+  </data>
+  <data name="Reconnecting" xml:space="preserve">
+    <value>Genforbinder</value>
+  </data>
+  <data name="Replay" xml:space="preserve">
+    <value>Afspil</value>
+  </data>
+  <data name="Replay 5 seconds" xml:space="preserve">
+    <value>Afspil 5 sekunder</value>
+  </data>
+  <data name="Returning response" xml:space="preserve">
+    <value>Returnerer svar</value>
+  </data>
+  <data name="Selected backend" xml:space="preserve">
+    <value>Valgt backend</value>
   </data>
   <data name="Thinking: follow request" xml:space="preserve">
     <value>Tænkning: følg anmodning</value>
@@ -56,6 +116,21 @@
   </data>
   <data name="Thinking: unavailable" xml:space="preserve">
     <value>Tænkning: utilgængelig</value>
+  </data>
+  <data name="This question is no longer available." xml:space="preserve">
+    <value>Dette spørgsmål er ikke længere tilgængeligt.</value>
+  </data>
+  <data name="Upstream responded" xml:space="preserve">
+    <value>Opstrøms svarede</value>
+  </data>
+  <data name="View full question" xml:space="preserve">
+    <value>Vis fulde spørgsmål</value>
+  </data>
+  <data name="Waiting for a slot" xml:space="preserve">
+    <value>Venter på en plads</value>
+  </data>
+  <data name="Waiting for upstream" xml:space="preserve">
+    <value>Venter på upstream</value>
   </data>
 
 </root>
