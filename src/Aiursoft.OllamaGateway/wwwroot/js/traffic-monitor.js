@@ -6,6 +6,8 @@ export function startTrafficMonitor(svg) {
     const status = document.getElementById('traffic-status');
     const picker = document.getElementById('traffic-request');
     const detail = document.getElementById('traffic-detail');
+    const traceDuration = document.createTextNode('');
+    let displayedTrace = null;
     const pause = document.getElementById('traffic-pause');
     const modelNames = new Map([...document.querySelectorAll('#backend-route-details [data-model]')]
         .map(el => [Number(el.dataset.model), el.textContent]));
@@ -323,10 +325,23 @@ export function startTrafficMonitor(svg) {
             const trace = events.filter(e => e.requestId === selected && e.at <= time && !e.previewUpdate);
             const first = (frozen?.baseline ?? baseline).get(selected);
             if (first && first.at <= time) trace.unshift(first);
-            detail.textContent = trace.map(e => new Date(e.at).toLocaleTimeString() + ' ' + labels[e.stage] +
-                (e.stage === 'selected' ? ' #' + e.attempt + ' · ' + (routes.get(e.backendId)?.textContent ?? e.backendId) : '')).join(' → ');
+            const entries = trace.map(e => [e.at, labels[e.stage] +
+                (e.stage === 'selected' ? ' #' + e.attempt + ' · ' + (routes.get(e.backendId)?.textContent ?? e.backendId) : '')]);
+            const traceKey = JSON.stringify(entries);
+            if (displayedTrace !== traceKey) {
+                displayedTrace = traceKey;
+                const fragment = document.createDocumentFragment();
+                entries.forEach(([at, label], index) => {
+                    if (index > 0) fragment.append(' → ');
+                    const timestamp = document.createElement('span');
+                    timestamp.dataset.utcTime = new Date(at).toISOString();
+                    fragment.append(timestamp, ' ' + label);
+                });
+                detail.replaceChildren(fragment, traceDuration);
+            }
             const last = recent.get(selected);
-            if (!last.finished) detail.textContent += ' · ' + Math.floor(Math.max(0, time - (last.stageAt ?? last.at)) / 1000) + ' s';
+            const duration = last.finished ? '' : ' · ' + Math.floor(Math.max(0, time - (last.stageAt ?? last.at)) / 1000) + ' s';
+            if (traceDuration.data !== duration) traceDuration.data = duration;
         }
     }
 

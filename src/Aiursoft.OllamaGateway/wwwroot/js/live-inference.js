@@ -51,7 +51,6 @@
                 const timeLabel = document.createElement('label');
                 timeLabel.dataset.utcTime = item.lastCompletedAt;
                 timeLabel.className = 'mb-0';
-                timeLabel.textContent = new Date(item.lastCompletedAt).toLocaleString();
                 field('time').append(document.createTextNode(label('last', 'Last at') + ' '), timeLabel);
             }
             fragment.append(row);
