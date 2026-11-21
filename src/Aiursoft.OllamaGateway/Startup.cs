@@ -10,7 +10,6 @@ using Aiursoft.OllamaGateway.MySql;
 using Aiursoft.OllamaGateway.Services.Authentication;
 using Aiursoft.OllamaGateway.Sqlite;
 using Aiursoft.OllamaGateway.Middlewares;
-using Aiursoft.UiStack;
 using Aiursoft.UiStack.Layout;
 using Aiursoft.UiStack.Navigation;
 using Microsoft.AspNetCore.Mvc.Razor;
