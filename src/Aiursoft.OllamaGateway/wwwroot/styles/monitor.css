@@ -35,7 +35,7 @@
 .traffic-markers .marker-halo { fill: var(--traffic-color); opacity: .24; }
 .traffic-markers .marker-dot { fill: var(--traffic-color); stroke: white; stroke-width: 2.5px; }
 .traffic-markers .marker-direction { fill: none; stroke: white; stroke-width: 2.5px; stroke-linecap: round; stroke-linejoin: round; }
-.traffic-markers :is([data-stage="returning"], [data-stage="completed"]) .marker-direction { transform: rotate(180deg); }
+.traffic-markers [data-message="answer"] .marker-direction { transform: rotate(180deg); }
 .traffic-markers .followed .marker-halo { opacity: .55; }
 .traffic-markers .marker-plate { fill: var(--traffic-color); stroke: white; stroke-width: 1.5px; }
 #traffic-topology .marker-caption { fill: white; font: 600 17px system-ui, sans-serif; }

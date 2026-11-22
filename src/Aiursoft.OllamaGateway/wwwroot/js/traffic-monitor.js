@@ -38,6 +38,7 @@ export function startTrafficMonitor(svg) {
     let baseline = new Map();
     let history = [];
     let floor = 0;
+    let lastSequence = 0;
     let offset = 0;
     let frozen = null;
     let connected = false;
@@ -69,13 +70,16 @@ export function startTrafficMonitor(svg) {
         if (batch.baseline) {
             for (const node of svg.querySelectorAll('.virtualSvcBusy, .physicalBusy'))
                 node.classList.remove('virtualSvcBusy', 'physicalBusy');
-            baseline = new Map(batch.baseline.map(e => [e.requestId, e]));
+            baseline = new Map(batch.baseline.map(e => [e.requestId, { ...e, returnStart: e.returningAt }]));
             history = [];
             schedules.clear();
+            lastSequence = 0;
             floor = batch.events[0]?.at ?? batch.serverTime;
             frozen = null;
         }
         for (const e of batch.events) {
+            if (e.sequence <= lastSequence) continue;
+            lastSequence = e.sequence;
             const previous = schedules.get(e.requestId) ?? baseline.get(e.requestId);
             e.previousStage = previous?.stage;
             // A text delta updates the label on the same moving marker.
@@ -88,10 +92,9 @@ export function startTrafficMonitor(svg) {
                     (previous?.drawAt ?? e.at) + (dwell[previous?.stage] ?? 0)));
                 e.stageAt = e.at;
             }
-            if (e.stage === 'completed') {
-                const start = previous?.stage === 'returning' ? previous.drawAt ?? previous.at : e.drawAt;
-                e.returnStart = start + Math.floor((e.drawAt - start) / returnMs) * returnMs;
-            }
+            // Carry one departure through text updates and completion, including a restored baseline.
+            if (e.returningAt != null || e.stage === 'returning' || e.stage === 'completed')
+                e.returnStart = previous?.returnStart ?? (previous?.stage === 'returning' ? previous.at : e.drawAt);
             if (e.finished) schedules.delete(e.requestId);
             else schedules.set(e.requestId, e);
             history.push(e);
@@ -134,37 +137,49 @@ export function startTrafficMonitor(svg) {
     const questionButton = document.getElementById('traffic-question');
     const modal = document.getElementById('liveInferenceFullMessageModal');
     const messageLabels = document.getElementById('live-inference').dataset;
-    let questionLoad;
-    async function showQuestion(requestId) {
-        questionLoad?.abort();
+    let messageLoad;
+    async function showMessage(requestId, kind) {
+        messageLoad?.abort();
         const load = new AbortController();
-        questionLoad = load;
+        messageLoad = load;
         const content = document.getElementById('liveInferenceFullMessageContent');
-        document.getElementById('liveInferenceFullMessageModalLabel').textContent = messageLabels.questionTitle;
-        content.textContent = labels.loadingQuestion;
+        const answer = kind === 'answer';
+        const title = document.getElementById('liveInferenceFullMessageModalLabel');
+        title.textContent = answer ? labels.answer : messageLabels.questionTitle;
+        content.textContent = answer ? labels.loadingAnswer : labels.loadingQuestion;
         for (const route of svg.querySelectorAll('.backend-route[aria-describedby]'))
             bootstrap.Tooltip.getInstance(route)?.hide();
         bootstrap.Modal.getOrCreateInstance(modal).show();
-        const url = new URL(controls.dataset.questionUrl, location.href);
+        const url = new URL(answer ? controls.dataset.answerUrl : controls.dataset.questionUrl, location.href);
         url.searchParams.set('requestId', requestId);
         try {
             const response = await fetch(url, { signal: load.signal });
-            const text = response.ok ? (await response.json() || messageLabels.noContent)
-                : response.status === 404 ? labels.questionUnavailable : labels.questionLoadFailed;
-            if (!load.signal.aborted) content.textContent = text;
+            const data = response.ok ? await response.json() : null;
+            if (load.signal.aborted) return;
+            if (!response.ok) {
+                content.textContent = response.status === 404
+                    ? (answer ? labels.answerUnavailable : labels.questionUnavailable)
+                    : (answer ? labels.answerLoadFailed : labels.questionLoadFailed);
+                return;
+            }
+            if (answer && data.stage !== 'completed') {
+                const state = data.stage === 'returning' ? labels.receiving : labels[data.stage];
+                if (state) title.textContent += ' · ' + state;
+            }
+            content.textContent = (answer ? data.text : data) || messageLabels.noContent;
         } catch {
-            if (!load.signal.aborted) content.textContent = labels.questionLoadFailed;
+            if (!load.signal.aborted) content.textContent = answer ? labels.answerLoadFailed : labels.questionLoadFailed;
         }
     }
-    modal.addEventListener('hide.bs.modal', () => questionLoad?.abort());
-    questionButton.onclick = () => showQuestion(picker.value);
+    modal.addEventListener('hide.bs.modal', () => messageLoad?.abort());
+    questionButton.onclick = () => showMessage(picker.value, 'question');
 
     // Capture the request on contact. A moving or grouped marker can change before release.
     let pressed;
     layer.addEventListener('pointerdown', event => {
         const marker = event.target.closest('[data-request-id]');
         if (!marker || !event.isPrimary || event.button !== 0) return;
-        pressed = { id: marker.dataset.requestId, x: event.clientX, y: event.clientY };
+        pressed = { id: marker.dataset.requestId, kind: marker.dataset.message, x: event.clientX, y: event.clientY };
         layer.setPointerCapture(event.pointerId);
     });
     layer.addEventListener('pointercancel', () => { pressed = null; });
@@ -172,16 +187,16 @@ export function startTrafficMonitor(svg) {
         if (!event.isPrimary || event.button !== 0) return;
         const tap = pressed;
         pressed = null;
-        if (tap && Math.hypot(event.clientX - tap.x, event.clientY - tap.y) <= 12) showQuestion(tap.id);
+        if (tap && Math.hypot(event.clientX - tap.x, event.clientY - tap.y) <= 12) showMessage(tap.id, tap.kind);
     });
     layer.addEventListener('click', event => {
         const marker = event.target.closest('[data-request-id]');
-        if (marker && event.detail === 0) showQuestion(marker.dataset.requestId);
+        if (marker && event.detail === 0) showMessage(marker.dataset.requestId, marker.dataset.message);
     });
     layer.addEventListener('keydown', event => {
         if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();
-            if (!event.repeat) showQuestion(event.target.dataset.requestId);
+            if (!event.repeat) showMessage(event.target.dataset.requestId, event.target.dataset.message);
         }
     });
 
@@ -242,9 +257,9 @@ export function startTrafficMonitor(svg) {
                 return inLayer(rect, { x: box.x + 8, y: box.y + 27 });
             }
         }
-        if (e.stage === 'completed' || e.stage === 'returning') {
+        if (e.returnStart != null) {
             const edges = e.backendId ? [...incoming, dispatch] : incoming;
-            const progress = e.stage === 'completed' ? Math.min(1, (now - e.returnStart) / returnMs) : (age % returnMs) / returnMs;
+            const progress = Math.min(1, Math.max(0, (now - e.returnStart) / returnMs));
             return along(edges, reduced.matches ? 0 : 1 - progress);
         }
         if (e.stage === 'received') return along(incoming, reduced.matches ? 1 : Math.min(1, age / dwell.received));
@@ -252,7 +267,7 @@ export function startTrafficMonitor(svg) {
         return e.backendId ? onPath(dispatch, 1) : onPath(incoming[1], 1);
     }
 
-    function marker(key, e, count, point, selected) {
+    function marker(key, e, count, point, selected, time) {
         let g = groups.get(key);
         if (!g) {
             g = document.createElementNS(ns, 'g');
@@ -281,17 +296,21 @@ export function startTrafficMonitor(svg) {
         }
         g.dataset.stage = e.stage;
         g.dataset.requestId = e.requestId;
-        g.setAttribute('aria-label', questionButton.textContent + ' · ' + e.questionPreview);
         g.classList.toggle('followed', selected);
         g.setAttribute('transform', 'translate(' + point.x + ' ' + point.y + ')');
         const queued = e.stage === 'queued';
-        const returning = e.stage === 'returning' || e.stage === 'completed';
+        const returning = e.returnStart != null;
+        const directionChanged = (g.dataset.message === 'answer') !== returning;
+        g.dataset.message = returning ? 'answer' : 'question';
         const preview = returning ? e.answerPreview : e.questionPreview;
         const countText = queued ? labels.queued + ' · ' + count : count > 1 ? '×' + count : '';
-        const label = [preview, countText].filter(Boolean).join('  ·  ');
+        const stateText = e.stage === 'returning' && (reduced.matches || time >= e.returnStart + returnMs)
+            ? labels.receiving : ['cancelled', 'failed', 'attemptFailed'].includes(e.stage) ? labels[e.stage] : '';
+        const label = [preview, stateText, countText].filter(Boolean).join('  ·  ');
         const badge = g.lastChild;
         const caption = badge.lastChild;
-        if (caption.textContent !== label || !badge.hasAttribute('data-width')) {
+        if (directionChanged || caption.textContent !== label || !badge.hasAttribute('data-width')) {
+            g.setAttribute('aria-label', (returning ? labels.answer : questionButton.textContent) + ' · ' + label);
             caption.textContent = label;
             const width = Math.ceil(caption.getComputedTextLength()) + 20;
             badge.dataset.width = width;
@@ -358,7 +377,7 @@ export function startTrafficMonitor(svg) {
             if (e.at > time) break;
             if (e.drawAt <= time || reduced.matches) {
                 const expires = e.stage === 'completed' && !reduced.matches
-                    ? e.returnStart + returnMs + arrivalHold : e.drawAt + arrivalHold;
+                    ? Math.max(e.drawAt, e.returnStart + returnMs) + arrivalHold : e.drawAt + arrivalHold;
                 if (e.finished && time > expires) displayed.delete(e.requestId);
                 else displayed.set(e.requestId, e);
             }
@@ -388,7 +407,7 @@ export function startTrafficMonitor(svg) {
         const buckets = new Map();
         for (const e of displayed.values()) {
             const key = e.stage === 'queued' ? 'queue-' + e.providerId :
-                e.requestId === picker.value ? e.requestId : [e.stage, e.modelId, e.backendId].join('-');
+                e.requestId;
             const bucket = buckets.get(key);
             if (bucket) {
                 bucket.count++;
@@ -399,7 +418,7 @@ export function startTrafficMonitor(svg) {
         for (const [key, g] of groups) if (!buckets.has(key)) { g.remove(); groups.delete(key); }
         for (const [key, { e, count }] of buckets) {
             const point = position(e, time);
-            if (point) marker(key, e, count, point, e.requestId === picker.value);
+            if (point) marker(key, e, count, point, e.requestId === picker.value, time);
         }
         if (controlsChanged || now - lastList >= 350) {
             trim(clock());
