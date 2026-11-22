@@ -33,7 +33,9 @@ public sealed class GatewayRequestTracker(
 
     public void ObserveAnswer(string? content)
     {
-        if (_traffic == null || _answerPrefixComplete || string.IsNullOrEmpty(content)) return;
+        if (_traffic == null || string.IsNullOrEmpty(content)) return;
+        trafficJournal.AppendAnswer(_traffic.RequestId, content);
+        if (_answerPrefixComplete) return;
         var prefix = Preview(string.Concat(_traffic.AnswerPreview, content), out _answerPrefixComplete);
         if (_traffic.AnswerPreview == prefix) return;
         _traffic = _traffic with { AnswerPreview = prefix };
@@ -91,7 +93,7 @@ public sealed class GatewayRequestTracker(
         trafficJournal.Record(_traffic, displayQuestion ?? question);
         context.Response.OnStarting(() =>
         {
-            Move("returning");
+            if (context.Response.StatusCode < 400) Move("returning");
             return Task.CompletedTask;
         });
     }

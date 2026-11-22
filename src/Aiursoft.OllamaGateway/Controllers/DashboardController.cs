@@ -39,6 +39,14 @@ public class DashboardController(
         return question == null ? NotFound() : Json(question);
     }
 
+    [HttpGet("Dashboard/traffic-answer")]
+    [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+    public IActionResult TrafficAnswer(Guid requestId, [FromServices] TrafficJournal journal)
+    {
+        var answer = journal.GetAnswer(requestId);
+        return answer == null ? NotFound() : Json(answer);
+    }
+
     [HttpGet("Dashboard/live-inference.ws")]
     [EnforceWebSocket]
     public async Task LiveInferenceSocket()

@@ -220,6 +220,11 @@
     <span data-key="completed">@Localizer["Completed"]</span>
     <span data-key="cancelled">@Localizer["Cancelled"]</span>
     <span data-key="failed">@Localizer["Failed"]</span>
+    <span data-key="answer">@Localizer["Answer"]</span>
+    <span data-key="receiving">@Localizer["Receiving"]</span>
+    <span data-key="loadingAnswer">@Localizer["Loading answer…"]</span>
+    <span data-key="answerUnavailable">@Localizer["This answer is no longer available."]</span>
+    <span data-key="answerLoadFailed">@Localizer["Could not load the answer."]</span>
     <span data-key="loadingQuestion">@Localizer["Loading question…"]</span>
     <span data-key="questionUnavailable">@Localizer["This question is no longer available."]</span>
     <span data-key="questionLoadFailed">@Localizer["Could not load the question."]</span>
@@ -259,6 +264,7 @@
                 <div class="card-body">
                     <div id="traffic-controls" class="d-flex flex-wrap align-items-center gap-2 mb-2"
                          data-feed="@Url.Action("TrafficEvents", "Dashboard")"
+                         data-answer-url="@Url.Action("TrafficAnswer", "Dashboard")"
                          data-question-url="@Url.Action("TrafficQuestion", "Dashboard")">
                         <span id="traffic-status" class="badge bg-secondary" role="status">@Localizer["Connecting"]</span>
                         <button id="traffic-back" type="button" class="btn btn-sm btn-outline-secondary">@Localizer["Replay 5 seconds"]</button>
