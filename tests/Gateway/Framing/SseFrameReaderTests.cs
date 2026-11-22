@@ -36,6 +36,18 @@ public class SseFrameReaderTests
     }
 
     [TestMethod]
+    public async Task DistinguishesMissingDataFromExplicitEmptyData()
+    {
+        var frames = await ReadAllAsync(": heartbeat\n\nid: abc\nretry: 1500\n\ndata:\n\n");
+
+        Assert.HasCount(3, frames);
+        Assert.IsFalse(frames[0].HasData);
+        Assert.IsFalse(frames[1].HasData);
+        Assert.IsTrue(frames[2].HasData);
+        Assert.AreEqual(string.Empty, frames[2].Data);
+    }
+
+    [TestMethod]
     public async Task IgnoresInvalidRetryAndNullContainingId()
     {
         var frames = await ReadAllAsync("id: invalid\0id\nretry: later\ndata: ok\n\n");

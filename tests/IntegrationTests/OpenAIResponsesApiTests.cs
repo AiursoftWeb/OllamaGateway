@@ -197,7 +197,7 @@ public class OpenAIResponsesApiTests : TestBase
     }
 
     [TestMethod]
-    public async Task ResponsesToResponses_Streaming_PreservesUnknownEvents()
+    public async Task ResponsesToResponses_Streaming_PreservesControlFramesAndUnknownEvents()
     {
         await ReplaceWithResponsesBackendAsync();
         MockUpstreamState.Handler = (_, _) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
@@ -205,6 +205,11 @@ public class OpenAIResponsesApiTests : TestBase
             Content = new StringContent("""
             event: response.created
             data: {"type":"response.created","response":{"id":"resp_1","object":"response","status":"in_progress","model":"physical-responses","output":[]}}
+
+            : keep-alive
+
+            id: abc
+            retry: 1500
 
             event: response.future_event
             data: {"type":"response.future_event","future_payload":{"kept":true}}
@@ -221,8 +226,10 @@ public class OpenAIResponsesApiTests : TestBase
         var body = await response.Content.ReadAsStringAsync();
 
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        StringAssert.Contains(body, ": keep-alive\n\nid: abc\nretry: 1500\n\nevent: response.future_event\n");
         StringAssert.Contains(body, "event: response.future_event");
         StringAssert.Contains(body, "\"future_payload\":{\"kept\":true}");
+        StringAssert.Contains(body, "event: response.completed\n");
         StringAssert.Contains(body, $"\"model\":\"{VirtualModelName}\"");
         var upstream = JsonNode.Parse(MockUpstreamState.LastRequestBody!);
         Assert.AreEqual(42, upstream?["future_request_field"]?.GetValue<int>());
