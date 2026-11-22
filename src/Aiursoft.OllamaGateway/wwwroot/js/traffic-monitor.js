@@ -70,7 +70,7 @@ export function startTrafficMonitor(svg) {
         if (batch.baseline) {
             for (const node of svg.querySelectorAll('.virtualSvcBusy, .physicalBusy'))
                 node.classList.remove('virtualSvcBusy', 'physicalBusy');
-            baseline = new Map(batch.baseline.map(e => [e.requestId, { ...e, returnStart: e.returningAt }]));
+            baseline = new Map(batch.baseline.map(e => [e.requestId, e]));
             history = [];
             schedules.clear();
             lastSequence = 0;
@@ -82,19 +82,9 @@ export function startTrafficMonitor(svg) {
             lastSequence = e.sequence;
             const previous = schedules.get(e.requestId) ?? baseline.get(e.requestId);
             e.previousStage = previous?.stage;
-            // A text delta updates the label on the same moving marker.
-            e.previewUpdate = previous?.stage === e.stage && previous?.attempt === e.attempt;
-            if (e.previewUpdate) {
-                e.drawAt = previous.drawAt ?? previous.at;
-                e.stageAt = previous.stageAt ?? previous.at;
-            } else {
-                e.drawAt = Math.min(e.at + 4000, Math.max(e.at,
-                    (previous?.drawAt ?? e.at) + (dwell[previous?.stage] ?? 0)));
-                e.stageAt = e.at;
-            }
-            // Carry one departure through text updates and completion, including a restored baseline.
-            if (e.returningAt != null || e.stage === 'returning' || e.stage === 'completed')
-                e.returnStart = previous?.returnStart ?? (previous?.stage === 'returning' ? previous.at : e.drawAt);
+            // Stop any outstanding dispatch animation as soon as a live stream starts.
+            e.drawAt = e.stage === 'processing' ? e.at : Math.min(e.at + 4000, Math.max(e.at,
+                (previous?.drawAt ?? e.at) + (dwell[previous?.stage] ?? 0)));
             if (e.finished) schedules.delete(e.requestId);
             else schedules.set(e.requestId, e);
             history.push(e);
@@ -163,7 +153,7 @@ export function startTrafficMonitor(svg) {
                 return;
             }
             if (answer && data.stage !== 'completed') {
-                const state = data.stage === 'returning' ? labels.receiving : labels[data.stage];
+                const state = labels[data.stage];
                 if (state) title.textContent += ' · ' + state;
             }
             content.textContent = (answer ? data.text : data) || messageLabels.noContent;
@@ -257,9 +247,9 @@ export function startTrafficMonitor(svg) {
                 return inLayer(rect, { x: box.x + 8, y: box.y + 27 });
             }
         }
-        if (e.returnStart != null) {
+        if (e.stage === 'completed') {
             const edges = e.backendId ? [...incoming, dispatch] : incoming;
-            const progress = Math.min(1, Math.max(0, (now - e.returnStart) / returnMs));
+            const progress = Math.min(1, age / returnMs);
             return along(edges, reduced.matches ? 0 : 1 - progress);
         }
         if (e.stage === 'received') return along(incoming, reduced.matches ? 1 : Math.min(1, age / dwell.received));
@@ -267,7 +257,7 @@ export function startTrafficMonitor(svg) {
         return e.backendId ? onPath(dispatch, 1) : onPath(incoming[1], 1);
     }
 
-    function marker(key, e, count, point, selected, time) {
+    function marker(key, e, count, point, selected) {
         let g = groups.get(key);
         if (!g) {
             g = document.createElementNS(ns, 'g');
@@ -299,13 +289,12 @@ export function startTrafficMonitor(svg) {
         g.classList.toggle('followed', selected);
         g.setAttribute('transform', 'translate(' + point.x + ' ' + point.y + ')');
         const queued = e.stage === 'queued';
-        const returning = e.returnStart != null;
+        const returning = e.stage === 'completed';
         const directionChanged = (g.dataset.message === 'answer') !== returning;
         g.dataset.message = returning ? 'answer' : 'question';
         const preview = returning ? e.answerPreview : e.questionPreview;
         const countText = queued ? labels.queued + ' · ' + count : count > 1 ? '×' + count : '';
-        const stateText = e.stage === 'returning' && (reduced.matches || time >= e.returnStart + returnMs)
-            ? labels.receiving : ['cancelled', 'failed', 'attemptFailed'].includes(e.stage) ? labels[e.stage] : '';
+        const stateText = ['cancelled', 'failed', 'attemptFailed'].includes(e.stage) ? labels[e.stage] : '';
         const label = [preview, stateText, countText].filter(Boolean).join('  ·  ');
         const badge = g.lastChild;
         const caption = badge.lastChild;
@@ -341,7 +330,7 @@ export function startTrafficMonitor(svg) {
         detail.hidden = !picker.value;
         questionButton.hidden = !picker.value;
         if (!detail.hidden) {
-            const trace = events.filter(e => e.requestId === selected && e.at <= time && !e.previewUpdate);
+            const trace = events.filter(e => e.requestId === selected && e.at <= time);
             const first = (frozen?.baseline ?? baseline).get(selected);
             if (first && first.at <= time) trace.unshift(first);
             const entries = trace.map(e => [e.at, labels[e.stage] +
@@ -359,7 +348,7 @@ export function startTrafficMonitor(svg) {
                 detail.replaceChildren(fragment, traceDuration);
             }
             const last = recent.get(selected);
-            const duration = last.finished ? '' : ' · ' + Math.floor(Math.max(0, time - (last.stageAt ?? last.at)) / 1000) + ' s';
+            const duration = last.finished ? '' : ' · ' + Math.floor(Math.max(0, time - last.at) / 1000) + ' s';
             if (traceDuration.data !== duration) traceDuration.data = duration;
         }
     }
@@ -377,7 +366,7 @@ export function startTrafficMonitor(svg) {
             if (e.at > time) break;
             if (e.drawAt <= time || reduced.matches) {
                 const expires = e.stage === 'completed' && !reduced.matches
-                    ? Math.max(e.drawAt, e.returnStart + returnMs) + arrivalHold : e.drawAt + arrivalHold;
+                    ? e.drawAt + returnMs + arrivalHold : e.drawAt + arrivalHold;
                 if (e.finished && time > expires) displayed.delete(e.requestId);
                 else displayed.set(e.requestId, e);
             }
@@ -386,7 +375,7 @@ export function startTrafficMonitor(svg) {
         const activeNodes = new Set();
         for (const e of state.values()) {
             activeNodes.add(nodes.get('Svc_' + e.modelId));
-            if (['sent', 'headers', 'returning'].includes(e.stage))
+            if (['sent', 'headers', 'processing'].includes(e.stage))
                 activeNodes.add(nodes.get(routes.get(e.backendId)?.dataset.physical));
         }
         for (const node of highlighted) if (!activeNodes.has(node)) {
@@ -406,6 +395,8 @@ export function startTrafficMonitor(svg) {
         }
         const buckets = new Map();
         for (const e of displayed.values()) {
+            // The busy backend represents work in progress, including the entire response stream.
+            if (['sent', 'headers', 'processing'].includes(e.stage)) continue;
             const key = e.stage === 'queued' ? 'queue-' + e.providerId :
                 e.requestId;
             const bucket = buckets.get(key);
@@ -418,7 +409,7 @@ export function startTrafficMonitor(svg) {
         for (const [key, g] of groups) if (!buckets.has(key)) { g.remove(); groups.delete(key); }
         for (const [key, { e, count }] of buckets) {
             const point = position(e, time);
-            if (point) marker(key, e, count, point, e.requestId === picker.value, time);
+            if (point) marker(key, e, count, point, e.requestId === picker.value);
         }
         if (controlsChanged || now - lastList >= 350) {
             trim(clock());

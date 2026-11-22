@@ -136,7 +136,7 @@ public class ProxyController(
             using var bodyReader = new StreamReader(Request.Body, Encoding.UTF8, leaveOpen: true);
             var rawBody = await bodyReader.ReadToEndAsync(HttpContext.RequestAborted);
             var decodedRequest = chatRequestCompiler.Decode(ProtocolDialect.OllamaNative, rawBody);
-            TrackChatRequest(input, virtualModel, decodedRequest.Request.LastUserText);
+            TrackChatRequest(input, virtualModel, decodedRequest.Request.LastUserText, decodedRequest.Request.Stream);
 
             var result = await backendInvoker.SendAsync(
                 virtualModel,
@@ -213,13 +213,13 @@ public class ProxyController(
 
     private void TrackChatRequest(
         OllamaRequestModel input,
-        VirtualModel virtualModel, string displayQuestion)
+        VirtualModel virtualModel, string displayQuestion, bool streaming)
     {
         requestTracker.Begin(
             virtualModel,
             input.Messages?.LastOrDefault()?.Content ?? string.Empty,
             input.Messages?.Count ?? 0,
-            HttpContext, displayQuestion);
+            HttpContext, displayQuestion, streaming);
     }
 
     [HttpPost("generate")]
@@ -245,7 +245,7 @@ public class ProxyController(
             var backend = resolution.Backend!;
             if (backend.Provider == null) throw new InvalidOperationException("Resolved backend has no provider.");
 
-            requestTracker.Begin(virtualModel, input.Prompt ?? string.Empty, 1, HttpContext);
+            requestTracker.Begin(virtualModel, input.Prompt ?? string.Empty, 1, HttpContext, streaming: input.Stream != false);
 
             // /api/generate is an Ollama-native operation and cannot be translated
             // to either OpenAI endpoint family.

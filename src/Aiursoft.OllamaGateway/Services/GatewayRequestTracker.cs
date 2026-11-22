@@ -19,6 +19,7 @@ public sealed class GatewayRequestTracker(
     private TrafficEvent? _traffic;
     private bool _upstreamBodyFailed;
     private bool _answerPrefixComplete;
+    private string _answerPreview = string.Empty;
     private CancellationToken _aborted;
 
     private static string Preview(string text, out bool complete)
@@ -35,17 +36,14 @@ public sealed class GatewayRequestTracker(
     {
         if (_traffic == null || string.IsNullOrEmpty(content)) return;
         trafficJournal.AppendAnswer(_traffic.RequestId, content);
-        if (_answerPrefixComplete) return;
-        var prefix = Preview(string.Concat(_traffic.AnswerPreview, content), out _answerPrefixComplete);
-        if (_traffic.AnswerPreview == prefix) return;
-        _traffic = _traffic with { AnswerPreview = prefix };
-        if (_traffic.Stage == "returning") trafficJournal.Record(_traffic);
+        if (!_answerPrefixComplete)
+            _answerPreview = Preview(string.Concat(_answerPreview, content), out _answerPrefixComplete);
     }
 
     private void Move(string stage)
     {
         if (_traffic == null) return;
-        _traffic = _traffic with { Stage = stage };
+        _traffic = _traffic with { Stage = stage, AnswerPreview = stage == "completed" ? _answerPreview : string.Empty };
         trafficJournal.Record(_traffic);
     }
 
@@ -65,7 +63,7 @@ public sealed class GatewayRequestTracker(
         VirtualModel virtualModel,
         string question,
         int conversationMessageCount,
-        HttpContext context, string? displayQuestion = null)
+        HttpContext context, string? displayQuestion = null, bool streaming = false)
     {
         if (_activeRequest != null)
             throw new InvalidOperationException("Gateway request tracking has already started.");
@@ -91,9 +89,10 @@ public sealed class GatewayRequestTracker(
             QuestionPreview = Preview(displayQuestion ?? question, out _)
         };
         trafficJournal.Record(_traffic, displayQuestion ?? question);
+        if (!streaming) return;
         context.Response.OnStarting(() =>
         {
-            if (context.Response.StatusCode < 400) Move("returning");
+            if (context.Response.StatusCode < 400) Move("processing");
             return Task.CompletedTask;
         });
     }

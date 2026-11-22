@@ -21,6 +21,7 @@ public class TrafficJournalTests
         tracker.ObserveAnswer(answer + "e");
         tracker.ObserveAnswer("\u0301tail");
         tracker.ObserveAnswer("later");
+        tracker.UpstreamResponded();
         log.Log.Success = true;
         tracker.Complete();
 
@@ -33,6 +34,8 @@ public class TrafficJournalTests
         Assert.IsNotNull(response);
         Assert.AreEqual(answer + "e\u0301taillater", response.Text);
         Assert.AreEqual("completed", response.Stage);
+        Assert.IsTrue(events[..^1].All(e => e.AnswerPreview.Length == 0));
+        Assert.AreEqual("completed", events[^1].Stage);
         Assert.AreEqual(question, events[0].QuestionPreview);
         Assert.AreEqual(string.Empty, events[0].AnswerPreview);
         Assert.AreEqual(answer + "e\u0301", events[^1].AnswerPreview);
@@ -67,12 +70,10 @@ public class TrafficJournalTests
         Assert.AreEqual(3000L, resumed.Current.Data.Events[0].At - arrival.At);
         CollectionAssert.AreEqual(new[] { "attemptFailed", "sent" }, resumed.Current.Data.Events.Select(e => e.Stage).ToArray());
 
-        var returning = request with { Attempt = 2, BackendId = 12, Stage = "returning" };
-        journal.Record(returning);
-        var returnStart = clock.Now.ToUnixTimeMilliseconds();
+        var processing = request with { Attempt = 2, BackendId = 12, Stage = "processing" };
+        journal.Record(processing);
         clock.Advance(TimeSpan.FromSeconds(15));
         journal.AppendAnswer(request.RequestId, "partial response");
-        journal.Record(returning with { AnswerPreview = "partial response" });
 
         var shortRequest = request with { RequestId = Guid.NewGuid() };
         var finished = request with { RequestId = Guid.NewGuid() };
@@ -86,8 +87,8 @@ public class TrafficJournalTests
         var active = reset.Current.Data.Baseline!.Single(e => e.RequestId == request.RequestId);
         Assert.IsNull(journal.GetQuestion(finished.RequestId));
         Assert.IsNull(journal.GetAnswer(finished.RequestId));
-        Assert.AreEqual(returnStart, active.ReturningAt);
-        Assert.AreEqual(new TrafficAnswer("partial response", "returning"), journal.GetAnswer(active.RequestId));
+        Assert.AreEqual(string.Empty, active.AnswerPreview);
+        Assert.AreEqual(new TrafficAnswer("partial response", "processing"), journal.GetAnswer(active.RequestId));
         Assert.AreEqual("still running", journal.GetQuestion(active.RequestId));
         Assert.AreEqual(2, active.Attempt);
         Assert.AreEqual(12, active.BackendId);
