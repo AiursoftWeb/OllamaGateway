@@ -300,6 +300,7 @@ export function startTrafficMonitor(svg) {
         g.setAttribute('transform', 'translate(' + point.x + ' ' + point.y + ')');
         const queued = e.stage === 'queued';
         const returning = e.returnStart != null;
+        const directionChanged = (g.dataset.message === 'answer') !== returning;
         g.dataset.message = returning ? 'answer' : 'question';
         const preview = returning ? e.answerPreview : e.questionPreview;
         const countText = queued ? labels.queued + ' · ' + count : count > 1 ? '×' + count : '';
@@ -308,7 +309,7 @@ export function startTrafficMonitor(svg) {
         const label = [preview, stateText, countText].filter(Boolean).join('  ·  ');
         const badge = g.lastChild;
         const caption = badge.lastChild;
-        if (caption.textContent !== label || !badge.hasAttribute('data-width')) {
+        if (directionChanged || caption.textContent !== label || !badge.hasAttribute('data-width')) {
             g.setAttribute('aria-label', (returning ? labels.answer : questionButton.textContent) + ' · ' + label);
             caption.textContent = label;
             const width = Math.ceil(caption.getComputedTextLength()) + 20;

@@ -41,10 +41,10 @@ public class DashboardController(
 
     [HttpGet("Dashboard/traffic-answer")]
     [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
-    public IActionResult TrafficAnswer(Guid requestId, [FromServices] TrafficJournal journal)
+    public IResult TrafficAnswer(Guid requestId, [FromServices] TrafficJournal journal)
     {
         var answer = journal.GetAnswer(requestId);
-        return answer == null ? NotFound() : Json(answer);
+        return answer == null ? TypedResults.NotFound() : TypedResults.Json(answer, JsonSerializerOptions.Web);
     }
 
     [HttpGet("Dashboard/live-inference.ws")]
