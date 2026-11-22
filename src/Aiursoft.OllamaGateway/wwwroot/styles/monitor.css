@@ -30,7 +30,7 @@
 .traffic-markers > g:focus-visible .marker-dot { stroke: currentColor; stroke-width: 4px; }
 #liveInferenceFullMessageContent { white-space: pre-wrap; overflow-wrap: anywhere; }
 .traffic-markers [data-stage="queued"] { --traffic-color: #9a4c00; }
-.traffic-markers :is([data-stage="returning"], [data-stage="completed"]) { --traffic-color: #00765b; }
+.traffic-markers [data-stage="completed"] { --traffic-color: #00765b; }
 .traffic-markers :is([data-stage="cancelled"], [data-stage="failed"], [data-stage="attemptFailed"]) { --traffic-color: #ac3245; }
 .traffic-markers .marker-halo { fill: var(--traffic-color); opacity: .24; }
 .traffic-markers .marker-dot { fill: var(--traffic-color); stroke: white; stroke-width: 2.5px; }

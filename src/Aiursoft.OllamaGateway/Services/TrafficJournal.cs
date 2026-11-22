@@ -12,8 +12,6 @@ public sealed record TrafficEvent(Guid RequestId, int ModelId, int Attempt, int?
     public string QuestionPreview { get; init; } = string.Empty;
     public string AnswerPreview { get; init; } = string.Empty;
 
-    public long? ReturningAt { get; init; }
-
     public bool Finished => Stage is "completed" or "failed" or "cancelled";
 }
 
@@ -34,7 +32,6 @@ public sealed class TrafficJournal(TimeProvider clock) : ISingletonDependency
     {
         public string Question { get; } = question;
         public StringBuilder Answer { get; } = new();
-        public long? ReturningAt { get; set; }
         public string Stage { get; set; } = "received";
     }
 
@@ -82,11 +79,7 @@ public sealed class TrafficJournal(TimeProvider clock) : ISingletonDependency
                 _details[item.RequestId] = new RequestDetail(question);
             var at = clock.GetUtcNow().ToUnixTimeMilliseconds();
             if (_details.TryGetValue(item.RequestId, out var detail))
-            {
                 detail.Stage = item.Stage;
-                if (item.Stage == "returning") detail.ReturningAt ??= at;
-                item = item with { ReturningAt = detail.ReturningAt };
-            }
             _events[index] = item with { Sequence = ++_sequence, At = at };
             _changed?.TrySetResult();
             _changed = null;
