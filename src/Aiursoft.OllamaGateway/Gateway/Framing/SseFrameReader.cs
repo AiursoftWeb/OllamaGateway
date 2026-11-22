@@ -80,7 +80,7 @@ public static class SseFrameReader
         int? retry,
         IReadOnlyList<string> comments)
     {
-        return new SseFrame(eventType, string.Join('\n', dataLines), id, retry, comments.ToArray());
+        return new SseFrame(eventType, string.Join('\n', dataLines), id, retry, comments.ToArray(), dataLines.Count > 0);
     }
 
     private static string RemoveOptionalLeadingSpace(string value)

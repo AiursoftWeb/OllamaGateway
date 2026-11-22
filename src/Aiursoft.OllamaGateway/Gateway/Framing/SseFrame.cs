@@ -5,4 +5,5 @@ public sealed record SseFrame(
     string Data,
     string? Id,
     int? RetryMilliseconds,
-    IReadOnlyList<string> Comments);
+    IReadOnlyList<string> Comments,
+    bool HasData);

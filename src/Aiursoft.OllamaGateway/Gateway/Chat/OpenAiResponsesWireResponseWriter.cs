@@ -49,7 +49,7 @@ public sealed class OpenAiResponsesWireResponseWriter(GatewayRequestTracker trac
             var data = frame.Data;
             try
             {
-                var root = JsonNode.Parse(data);
+                var root = frame.HasData ? JsonNode.Parse(data) : null;
                 if (root != null)
                 {
                     SetVirtualModel(root, virtualModel.Name);
@@ -70,8 +70,11 @@ public sealed class OpenAiResponsesWireResponseWriter(GatewayRequestTracker trac
                 await context.Response.WriteAsync($"id: {frame.Id}\n", context.RequestAborted);
             if (frame.RetryMilliseconds.HasValue)
                 await context.Response.WriteAsync($"retry: {frame.RetryMilliseconds.Value}\n", context.RequestAborted);
-            foreach (var line in data.Split('\n'))
-                await context.Response.WriteAsync($"data: {line}\n", context.RequestAborted);
+            if (frame.HasData)
+            {
+                foreach (var line in data.Split('\n'))
+                    await context.Response.WriteAsync($"data: {line}\n", context.RequestAborted);
+            }
             await context.Response.WriteAsync("\n", context.RequestAborted);
             await context.Response.Body.FlushAsync(context.RequestAborted);
         }
