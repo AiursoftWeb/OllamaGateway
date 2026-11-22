@@ -29,7 +29,10 @@ public class TrafficJournalTests
         Assert.IsTrue(await reader.MoveNextAsync());
         var events = reader.Current.Data.Events;
         Assert.AreEqual(question + "suffix", journal.GetQuestion(events[0].RequestId));
-        Assert.AreEqual(new TrafficAnswer(answer + "e\u0301taillater", "completed"), journal.GetAnswer(events[0].RequestId));
+        var response = journal.GetAnswer(events[0].RequestId);
+        Assert.IsNotNull(response);
+        Assert.AreEqual(answer + "e\u0301taillater", response.Text);
+        Assert.AreEqual("completed", response.Stage);
         Assert.AreEqual(question, events[0].QuestionPreview);
         Assert.AreEqual(string.Empty, events[0].AnswerPreview);
         Assert.AreEqual(answer + "e\u0301", events[^1].AnswerPreview);
