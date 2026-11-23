@@ -244,6 +244,7 @@ public sealed class BackendMonitoringIntegrationTests : TestBase
         Assert.HasCount(1, incidents.All); Assert.AreEqual("sev3", incidents.All.Single().Level);
         StringAssert.Contains(incidents.All[0].Content!, "Other fallback backends may still be serving traffic");
         StringAssert.Contains(incidents.All[0].Content!, "/Providers/Edit/");
+        StringAssert.Contains(incidents.All[0].InvestigateUrl!, "/Providers/Edit/");
         Assert.IsFalse(incidents.All[0].Content!.Contains(Key, StringComparison.Ordinal));
         for (var i = 6; i < 21; i++) monitor.Failure(backend);
         await service.ExecuteAsync(); Assert.AreEqual("sev2", incidents.All[0].Level);
@@ -398,7 +399,7 @@ public sealed class BackendMonitoringIntegrationTests : TestBase
         {
             CreateCalls++;
             All.Add(new IncidentDetails { IncidentId = Guid.NewGuid(), Version = Guid.NewGuid(), ReportId = request.ReportId,
-                Title = request.Title, Content = request.Content, Level = request.Level, Status = "new", Metadata = request.Metadata!, ReceivedAtUtc = DateTimeOffset.UtcNow });
+                Title = request.Title, Content = request.Content, Level = request.Level, Status = "new", Metadata = request.Metadata!, InvestigateUrl = request.InvestigateUrl, ReceivedAtUtc = DateTimeOffset.UtcNow });
             if (ThrowAfterCreate) throw new HttpRequestException("Synthetic lost response after creation.");
             return Task.FromResult(new CreateIncidentResponse());
         }
