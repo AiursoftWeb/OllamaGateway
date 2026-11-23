@@ -58,12 +58,14 @@ public sealed class BackendMonitoringService(BackendMonitor monitor, BackendMoni
                     if (active.Count == 0)
                     {
                         var title = $"{snapshot.ProviderName} / {snapshot.Key.Model}: backend model unhealthy";
+                        var providerUrl = $"{config.PublicBaseUrl.TrimEnd('/')}/Providers/Edit/{snapshot.Key.ProviderId}";
                         await client.CreateAsync(new CreateIncidentRequest
                         {
                             ReportId = snapshot.NextReportId, Title = title[..Math.Min(title.Length, 200)],
                             Level = rule.Severity, OccurredAtUtc = rule.Kind == "offline"
                                 ? snapshot.OfflineSince!.Value : snapshot.LastFailure ?? clock.GetUtcNow(),
                             Content = Describe(snapshot, rule, config),
+                            InvestigateUrl = providerUrl,
                             Metadata = new JObject { ["source"] = Source, ["modelKey"] = key,
                                 ["provider"] = snapshot.ProviderName, ["model"] = snapshot.Key.Model }
                         });
