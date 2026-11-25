@@ -9,7 +9,8 @@ namespace Aiursoft.OllamaGateway.Gateway.Chat;
 
 /// <summary>
 /// Same-dialect fast path for Responses. It preserves unknown items and events,
-/// normalizing requested reasoning summaries and gateway-owned identity fields.
+/// changing gateway-owned identity fields. Reasoning compatibility requires an
+/// explicit client header; ordinary same-dialect requests remain pass-through.
 /// </summary>
 public sealed class OpenAiResponsesWireResponseWriter(GatewayRequestTracker tracker, RequestLogContext logContext) : IChatWireResponseWriter
 {
@@ -23,7 +24,8 @@ public sealed class OpenAiResponsesWireResponseWriter(GatewayRequestTracker trac
         HttpContext httpContext)
     {
         await using var stream = await upstreamResponse.Content.ReadAsStreamAsync(httpContext.RequestAborted);
-        var summaryRequested = await SummaryRequestedAsync(upstreamResponse, httpContext.RequestAborted);
+        var summaryRequested = httpContext.Request.Headers["X-OllamaGateway-Responses-Compatibility"] == "reasoning-summary" &&
+                               await SummaryRequestedAsync(upstreamResponse, httpContext.RequestAborted);
         if (streaming)
             await WriteStreamingAsync(stream, virtualModel, httpContext, summaryRequested);
         else

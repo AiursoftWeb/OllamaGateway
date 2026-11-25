@@ -283,7 +283,7 @@ public class ChatStreamingTranslationTests
             ["vendor_field"] = "keep"
         };
         using var response = ResponsesWireResponse($"event: {sourceType}\ndata: {source.ToJsonString()}\n\n", true);
-        var context = Context();
+        var context = Context(summaryCompatibility: true);
         var log = new RequestLogContext();
         await new OpenAiResponsesWireResponseWriter(new GatewayRequestTracker(log, null!, null!, null!), log)
             .WriteAsync(response, Model(), true, context);
@@ -299,11 +299,15 @@ public class ChatStreamingTranslationTests
     }
 
     [TestMethod]
-    [DataRow(true, true)]
-    [DataRow(true, false)]
-    [DataRow(false, true)]
-    [DataRow(false, false)]
-    public async Task ResponsesWire_SummaryRetainsRawReasoningAndOpaqueItems(bool streaming, bool requested)
+    [DataRow(true, true, true)]
+    [DataRow(true, false, true)]
+    [DataRow(false, true, true)]
+    [DataRow(false, false, true)]
+    [DataRow(true, true, false)]
+    [DataRow(true, false, false)]
+    [DataRow(false, true, false)]
+    [DataRow(false, false, false)]
+    public async Task ResponsesWire_SummaryRetainsRawReasoningAndOpaqueItems(bool streaming, bool requested, bool compatibility)
     {
         const string json = """
             {"model":"physical","output":[
@@ -313,7 +317,7 @@ public class ChatStreamingTranslationTests
             """;
         var content = streaming ? $"event: response.completed\ndata: {{\"type\":\"response.completed\",\"response\":{JsonNode.Parse(json)!.ToJsonString()}}}\n\n" : json;
         using var response = ResponsesWireResponse(content, requested);
-        var context = Context();
+        var context = Context(summaryCompatibility: compatibility);
         var log = new RequestLogContext();
         await new OpenAiResponsesWireResponseWriter(new GatewayRequestTracker(log, null!, null!, null!), log)
             .WriteAsync(response, Model(), streaming, context);
@@ -325,8 +329,8 @@ public class ChatStreamingTranslationTests
         var item = root["output"]![0]!;
         Assert.AreEqual("checking", item["content"]?[0]?["text"]?.ToString());
         Assert.AreEqual("opaque", item["encrypted_content"]?.ToString());
-        Assert.AreEqual(requested ? 1 : 0, item["summary"]?.AsArray().Count);
-        if (requested) Assert.AreEqual("checking", item["summary"]?[0]?["text"]?.ToString());
+        Assert.AreEqual(requested && compatibility ? 1 : 0, item["summary"]?.AsArray().Count);
+        if (requested && compatibility) Assert.AreEqual("checking", item["summary"]?[0]?["text"]?.ToString());
         Assert.IsTrue(JsonNode.DeepEquals(JsonNode.Parse(json)!["output"]![1], root["output"]![1]));
         Assert.IsTrue(JsonNode.DeepEquals(JsonNode.Parse(json)!["output"]![2], root["output"]![2]));
     }
@@ -339,7 +343,7 @@ public class ChatStreamingTranslationTests
         var type = native ? "response.reasoning_summary_text.delta" : "response.reasoning_text.delta";
         var data = new JsonObject { ["type"] = type, ["delta"] = "checking", ["summary_index"] = 0 };
         using var response = ResponsesWireResponse($"event: {type}\ndata: {data.ToJsonString()}\n\n", native);
-        var context = Context();
+        var context = Context(summaryCompatibility: true);
         var log = new RequestLogContext();
         await new OpenAiResponsesWireResponseWriter(new GatewayRequestTracker(log, null!, null!, null!), log)
             .WriteAsync(response, Model(), true, context);
@@ -357,9 +361,25 @@ public class ChatStreamingTranslationTests
         }
     };
 
-    private static DefaultHttpContext Context()
+    [TestMethod]
+    public async Task ResponsesWire_DefaultPassThroughDoesNotChangeRawReasoningEvents()
+    {
+        const string data = """{"type":"response.reasoning_text.delta","delta":"checking","content_index":0,"vendor_field":"keep"}""";
+        using var response = ResponsesWireResponse($"event: response.reasoning_text.delta\ndata: {data}\n\n", true);
+        var context = Context();
+        var log = new RequestLogContext();
+        await new OpenAiResponsesWireResponseWriter(new GatewayRequestTracker(log, null!, null!, null!), log)
+            .WriteAsync(response, Model(), true, context);
+        var output = await Body(context);
+        StringAssert.Contains(output, "event: response.reasoning_text.delta\n");
+        Assert.IsTrue(JsonNode.DeepEquals(JsonNode.Parse(data), JsonNode.Parse(output.Split('\n').Single(line => line.StartsWith("data: ", StringComparison.Ordinal))[6..])));
+    }
+
+    private static DefaultHttpContext Context(bool summaryCompatibility = false)
     {
         var context = new DefaultHttpContext();
+        if (summaryCompatibility)
+            context.Request.Headers["X-OllamaGateway-Responses-Compatibility"] = "reasoning-summary";
         context.Response.Body = new MemoryStream();
         return context;
     }
