@@ -21,4 +21,8 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Aiursoft.OllamaGateway\Aiursoft.OllamaGateway.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="../src/Aiursoft.OllamaGateway/wwwroot/scripts/uploader.js" TargetPath="wwwroot/scripts/uploader.js" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../src/Aiursoft.OllamaGateway/wwwroot/styles/uploader.css" TargetPath="wwwroot/styles/uploader.css" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
 </Project>
