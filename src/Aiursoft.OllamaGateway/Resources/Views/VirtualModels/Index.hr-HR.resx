@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="Actions" xml:space="preserve">
+    <value>Akcije</value>
+  </data>
+  <data name="Are you sure?" xml:space="preserve">
+    <value>Jeste li sigurni?</value>
+  </data>
+  <data name="Banned" xml:space="preserve">
+    <value>Zabranjeno</value>
+  </data>
+  <data name="Banned (Till" xml:space="preserve">
+    <value>Zabranjeno (do</value>
+  </data>
+  <data name="Circuit breaker has temporarily blocked this backend due to repeated failures. No requests are routed here until the ban expires. Use &quot;Test Connection&quot; on the Provider edit page to manually revive." xml:space="preserve">
+    <value>Sigurnosni prekidač je privremeno blokirao ovaj pozadinski sustav zbog ponovljenih kvarova. Nijedna zahtjev se ne usmjerava ovdje dok kazna ne istekne. Koristite &quot;Test Connection&quot; na stranici za uređivanje davatelja za ručno oživljavanje.</value>
+  </data>
+  <data name="Created" xml:space="preserve">
+    <value>Kreirano</value>
+  </data>
+  <data name="Ctx:" xml:space="preserve">
+    <value>Ctx:</value>
+  </data>
+  <data name="Down" xml:space="preserve">
+    <value>Ispod</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Uredi</value>
+  </data>
+  <data name="Healthy" xml:space="preserve">
+    <value>Zdrav</value>
+  </data>
+  <data name="Manage virtual models that proxy to underlying Ollama models" xml:space="preserve">
+    <value>Upravljajte virtualnim modelima koji posreduju do podnih Ollama modela</value>
+  </data>
+  <data name="Model exists on the provider, but is not currently loaded in memory. Requests ARE routed here — Ollama will automatically load the model on demand (cold start, may take seconds to minutes)." xml:space="preserve">
+    <value>Model postoji na pružatelju, ali trenutno nije učitano u memoriju. Zahtjevi SE usmjeravaju ovdje — Ollama će automatski učitati model po potrebi (hladno pokretanje, može potrajati od nekoliko sekundi do nekoliko minuta).</value>
+  </data>
+  <data name="Model is loaded in GPU VRAM. Requests are routed to this backend and respond instantly." xml:space="preserve">
+    <value>Model je učitana u GPU VRAM. Zahtjevi se usmjeravaju na ovaj pozadinski sustav i odmah dobivaju odgovor.</value>
+  </data>
+  <data name="Model not found on the provider. Requests are NOT routed here. Check that the underlying model name is correct and exists on the provider." xml:space="preserve">
+    <value>Model nije pronađen na pružatelju. Zahtjevi se NE usmjeravaju ovdje. Provjerite je li osnovni naziv modela točan i postoji li na pružatelju.</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Naziv</value>
+  </data>
+  <data name="New Model" xml:space="preserve">
+    <value>Novi model</value>
+  </data>
+  <data name="No models defined yet." xml:space="preserve">
+    <value>Još nije definirano nijedno model.</value>
+  </data>
+  <data name="Open in Chat Playground" xml:space="preserve">
+    <value>Otvori u Chat Playgroundu</value>
+  </data>
+  <data name="Overrides" xml:space="preserve">
+    <value>Prijepisi</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Pružatelj</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Spremno</value>
+  </data>
+  <data name="Status Guide" xml:space="preserve">
+    <value>Vodica o statusu</value>
+  </data>
+  <data name="Temp:" xml:space="preserve">
+    <value>Temp:</value>
+  </data>
+  <data name="Underlying" xml:space="preserve">
+    <value>Podložni</value>
+  </data>
+
+</root>

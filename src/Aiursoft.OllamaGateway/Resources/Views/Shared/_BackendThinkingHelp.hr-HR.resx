@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="A configured override wins over the client on every backend attempt, including same-dialect direct forwarding. Fallback attempts use the newly selected backend&apos;s own settings." xml:space="preserve">
+    <value>Podešena nadgradnja ima prednost nad klijentom pri svakom pokušaju pozadinskog servisa, uključujući i direktno proslijeđivanje istog dijalekta. Pokušaji povratnog rješenja koriste vlastita podešavanja novododijeljenog pozadinskog servisa.</value>
+  </data>
+  <data name="A non-empty value is sent verbatim as reasoning_effort for Chat Completions or reasoning.effort for Responses. An existing chat_template_kwargs.reasoning_effort is also overridden so it cannot take priority over your depth setting. No depth names are translated into booleans." xml:space="preserve">
+    <value>Neprazna vrijnost se šalje doslovno kao reasoning_effort za Chat Completions ili reasoning.effort za Responses. Postojeći chat_template_kwargs.reasoning_effort također se prepisuje kako ne bi imao prioritet nad vašim postavljenim stupnjem. Nazivi stupnjeva se ne pretvaraju u boolevske vrijednosti.</value>
+  </data>
+  <data name="Backend examples" xml:space="preserve">
+    <value>Primjeri pozadinskih sustava</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Zatvori</value>
+  </data>
+  <data name="Do not override leaves that setting to the client, or to the upstream default when absent. Same-dialect requests retain their original fields; cross-dialect requests use the gateway&apos;s protocol translation." xml:space="preserve">
+    <value>Ne prebrisujte lišće koja tu postavku prenose klijentu ili na zadano gornje rješenje kada nedostaje. Zahtjevi istog dijalekta zadržavaju svoja izvorna polja; zahtjevi između dijalekata koriste prijevod protokola vrata.</value>
+  </data>
+  <data name="For Ollama-native backends, Force on or Force off sends boolean think. For OpenAI Chat or Responses backends, it writes chat_template_kwargs.enable_thinking. Other template arguments are preserved. This is a vLLM-style extension, not a universal OpenAI switch; leave it unconfigured for providers that do not support it." xml:space="preserve">
+    <value>Za Ollama-postupne pozadinske sustave, opcija Prisilno uključeno ili Prisilno isključeno šalje booleovu vrijednost think. Za OpenAI Chat ili Responses pozadinske sustave, zapisuje se chat_template_kwargs.enable_thinking. Ostali argumenti predloška se čuvaju. Ovo je prošLLM-stilsko prošširenje, a ne univerzalni OpenAI prekidač; ostavite ga nepodešenim za pružatelje koji ga ne podržavaju.</value>
+  </data>
+  <data name="How to configure" xml:space="preserve">
+    <value>Način konfiguracije</value>
+  </data>
+  <data name="Other compatible providers" xml:space="preserve">
+    <value>Ostati kompatibilni pružatelji</value>
+  </data>
+  <data name="Reasoning depth" xml:space="preserve">
+    <value>Dubina razmišljanja</value>
+  </data>
+  <data name="Supported depths and whether thinking can be disabled depend on the model and provider. Unsupported extensions may be rejected or ignored. Check the provider&apos;s documentation; the gateway does not infer capabilities from its name." xml:space="preserve">
+    <value>Podržane dubine i mogućnost onemogućavanja razmišljanja ovise o modelu i pružatelju usluge. Nepodržane ekstenzije mogu biti odbijene ili ignorirane. Provjerite dokumentaciju pružatelja usluge; posrednik ne zaključuje mogućnosti na temelju svog naziva.</value>
+  </data>
+  <data name="The switch and depth are independent. With vLLM, an explicit enable_thinking value takes precedence over automatic activation by depth. Avoid conflicting settings such as Force off with a high depth, or Force on with depth {0}. A depth alone does not force thinking on against an explicit client switch." xml:space="preserve">
+    <value>Prekidač i dubina su neovisni. Kod vLLM-a, eksplicitna vrijnost enable_thinking ima prednost nad automatskim aktiviranjem putem dubine. Izbjegavajte sukobljene postavke poput Prisilno isključeno s visokom dubinom ili Prisilno uključeno s dubinom {0}. Sama dubina ne prisiljava razmišljanje na protiv eksplicitnog prekidača klijenta.</value>
+  </data>
+  <data name="The switch controls enable_thinking independently of depth. Qwen3.8 supports low, medium and xhigh, with xhigh as its default. To keep thinking enabled, select Force on and a supported depth such as xhigh." xml:space="preserve">
+    <value>Prekidač upravlja enable_thinking neovisno o dubini. Qwen3.8 podržava low, medium i xhigh, pri čemu je xhigh zadano. Da bi razmišljanje ostalo uključeno, odaberite Force on i podržanu dubinu, na primjer xhigh.</value>
+  </data>
+  <data name="Thinking settings help" xml:space="preserve">
+    <value>Pomoć za postavke razmišljanja</value>
+  </data>
+  <data name="Thinking switch" xml:space="preserve">
+    <value>Prekidač razmišljanja</value>
+  </data>
+  <data name="Usually leave the switch unconfigured and set only a depth supported by the underlying model, such as high or medium. Do not assume enable_thinking is supported." xml:space="preserve">
+    <value>Uobičajeno ostavite prekidač nekonfiguriranim i postavite samo dubinu koju podržava temeljni model, poput high ili medium. Ne pretpostavljajte da je enable_thinking podržano.</value>
+  </data>
+  <data name="Valid values vary by model. These are examples, not a promise that every provider accepts the same controls." xml:space="preserve">
+    <value>Valide vrijednosti variraju ovisno o modelu. Ovo su primjeri, a ne obećanje da će svaki pružatelj prihvatiti iste kontrole.</value>
+  </data>
+  <data name="What is forwarded or overridden?" xml:space="preserve">
+    <value>Što se proslijeđuje ili nadjačava?</value>
+  </data>
+  <data name="When accessed through an OpenAI-compatible proxy, follow that proxy&apos;s contract. These controls do not generate native Claude thinking/budget fields or Gemini thinking configuration." xml:space="preserve">
+    <value>Kada se pristupa putem OpenAI-kompatibilnog proxyja, pratite ugovor tog proxyja. Ove kontrole ne generiraju izvorna Claude polja za razmišljanje/budžet niti Gemini postavke za razmišljanje.</value>
+  </data>
+
+</root>

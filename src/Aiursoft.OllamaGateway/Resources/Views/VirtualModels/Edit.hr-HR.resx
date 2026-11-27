@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="-- Select Model --" xml:space="preserve">
+    <value>-- Odaberite model --</value>
+  </data>
+  <data name="-- Select Provider --" xml:space="preserve">
+    <value>-- Odaberite pružatelja --</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Akcije</value>
+  </data>
+  <data name="Add Backend" xml:space="preserve">
+    <value>Dodaj pozadinski sustav</value>
+  </data>
+  <data name="Add New Backend" xml:space="preserve">
+    <value>Dodaj novi backend</value>
+  </data>
+  <data name="Are you sure?" xml:space="preserve">
+    <value>Jeste li sigurni?</value>
+  </data>
+  <data name="Back to List" xml:space="preserve">
+    <value>Natrag na popis</value>
+  </data>
+  <data name="Banned (Till" xml:space="preserve">
+    <value>Zabranjeno (do</value>
+  </data>
+  <data name="Configuration Guide:" xml:space="preserve">
+    <value>Vodilja za konfiguraciju:</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Izbriši</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Onemogućeno</value>
+  </data>
+  <data name="Do not override" xml:space="preserve">
+    <value>Ne predefiniraj</value>
+  </data>
+  <data name="Down" xml:space="preserve">
+    <value>Izvan linije</value>
+  </data>
+  <data name="Edit Virtual Model" xml:space="preserve">
+    <value>Uredi virtualni model</value>
+  </data>
+  <data name="Force off" xml:space="preserve">
+    <value>Prisilno isključi</value>
+  </data>
+  <data name="Force on" xml:space="preserve">
+    <value>Prisilno uključeno</value>
+  </data>
+  <data name="Healthy" xml:space="preserve">
+    <value>Zdrav</value>
+  </data>
+  <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies. SUGGESTED VALUES: small models (≤8B, NVMe SSD) → 60–120s; large models (≥27B or HDD/NAS storage) → 600–1800s; embedding models → 30–60s." xml:space="preserve">
+    <value>Koliko dugo gateway čeka da backend POČNE odgovarati. Ne uključuje čekanje na autentifikaciju, red čekanja za ograničenje brzine ili slotove za istovremene veze. Čim se strimiranje započne, vremensko ograničenje ne vrijedi. PREPORUČENE VRIJEDNOSTI: mali modeli (≤8B, NVMe SSD) → 60–120 s; veliki modeli (≥27B ili HDD/NAS pohrana) → 600–1800 s; modeli za vektorske predstave → 30–60 s.</value>
+  </data>
+  <data name="Manual Unban" xml:space="preserve">
+    <value>Ručno uklanjanje zabrane</value>
+  </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>Maksimalni broj ponavljanja</value>
+  </data>
+  <data name="Model Backends (1:N Support)" xml:space="preserve">
+    <value>Backendi modela (podrška 1:N)</value>
+  </data>
+  <data name="No backends added." xml:space="preserve">
+    <value>Nema dodanih pozadinskih servisa.</value>
+  </data>
+  <data name="Not applicable" xml:space="preserve">
+    <value>Nije primjenjivo</value>
+  </data>
+  <data name="Ollama num_ctx Override" xml:space="preserve">
+    <value>Ollama num_ctx nadopis</value>
+  </data>
+  <data name="Optional Model Overrides" xml:space="preserve">
+    <value>Opcionalna nadgradnja modela</value>
+  </data>
+  <data name="Preferred Backend Protocol" xml:space="preserve">
+    <value>Preferirani protokol pozadinskog sustava</value>
+  </data>
+  <data name="Preferred Protocol" xml:space="preserve">
+    <value>Preferirani protokol</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>Prioritet</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Pružatelj</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Spremno</value>
+  </data>
+  <data name="Reasoning Effort Override" xml:space="preserve">
+    <value>Poništavanje napora razmišljanja</value>
+  </data>
+  <data name="Request Timeout (s)" xml:space="preserve">
+    <value>Vrijeme isteka zahtjeva (s)</value>
+  </data>
+  <data name="Save Changes" xml:space="preserve">
+    <value>Spremi promjene</value>
+  </data>
+  <data name="Save Configuration" xml:space="preserve">
+    <value>Spremi postavke</value>
+  </data>
+  <data name="Selection Strategy" xml:space="preserve">
+    <value>Strategija odabira</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Temperature" xml:space="preserve">
+    <value>Temperatura</value>
+  </data>
+  <data name="Thinking Override" xml:space="preserve">
+    <value>Poništavanje razmišljanja</value>
+  </data>
+  <data name="Thinking settings help" xml:space="preserve">
+    <value>Pomoć za postavke razmišljanja</value>
+  </data>
+  <data name="Toggle this backend?" xml:space="preserve">
+    <value>Prebaciti ovaj backend?</value>
+  </data>
+  <data name="Top K" xml:space="preserve">
+    <value>Top K</value>
+  </data>
+  <data name="Top P" xml:space="preserve">
+    <value>Top P</value>
+  </data>
+  <data name="Underlying" xml:space="preserve">
+    <value>Podložni</value>
+  </data>
+  <data name="Underlying Model" xml:space="preserve">
+    <value>Podložni model</value>
+  </data>
+  <data name="Upstream window size." xml:space="preserve">
+    <value>Veličina uzvodnog prozora.</value>
+  </data>
+  <data name="Use Raw Output" xml:space="preserve">
+    <value>Koristi sirovi izlaz</value>
+  </data>
+  <data name="Used in &apos;Priority Fallback&apos; strategy. Lower numbers (e.g. 0, 1) have higher priority. The system will always try the healthy backend with the lowest priority number first." xml:space="preserve">
+    <value>Koristi se u strategiji &apos;Priority Fallback&apos;. Manji brojevi (npr. 0, 1) imaju višu prioritetnost. Sustav će uvijek prvo pokušati zdrav backend s najnižim brojem prioriteta.</value>
+  </data>
+  <data name="Used in &apos;Weighted Random&apos; strategy. Higher numbers increase the traffic proportion. For example, a backend with weight 10 gets twice as much traffic as one with weight 5." xml:space="preserve">
+    <value>Koristi se u strategiji &apos;Weighted Random&apos;. Veći brojevi povećavaju udio prometa. Na primjer, pozadinski sustav s težinom 10 dobiva dvostruko više prometa od onog s težinom 5.</value>
+  </data>
+  <data name="Virtual Model Configuration" xml:space="preserve">
+    <value>Postavke virtualnog modela</value>
+  </data>
+  <data name="Virtual Model Name" xml:space="preserve">
+    <value>Naziv virtualnog modela</value>
+  </data>
+  <data name="Weight" xml:space="preserve">
+    <value>Težina</value>
+  </data>
+  <data name="When checked, the &apos;raw: true&apos; parameter is sent to the upstream Ollama API. This tells Ollama to NOT apply any chat templates to your prompt. Use this for pure text completion. If unchecked, Ollama will automatically wrap your prompt in the model&apos;s default chat template, treating it as a conversational question." xml:space="preserve">
+    <value>Kada je označeno, parametar &apos;raw: true&apos; se šalje u upstream Ollama API. To Ollami govori da NE primjenjuje nijedne predloške za chat na vaš upit. Koristite ovo za čisto završavanje teksta. Ako nije označeno, Ollama će automatski umotati vaš upit u zadani predložak za chat modela, tretirajući ga kao konverzacijsko pitanje.</value>
+  </data>
+
+</root>

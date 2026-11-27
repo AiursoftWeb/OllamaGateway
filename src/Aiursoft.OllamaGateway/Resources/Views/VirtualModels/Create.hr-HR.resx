@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="-- Select Underlying Model --" xml:space="preserve">
+    <value>-- Odaberite osnovni model --</value>
+  </data>
+  <data name="Back to List" xml:space="preserve">
+    <value>Natrag na popis</value>
+  </data>
+  <data name="Basic Settings" xml:space="preserve">
+    <value>Osnovne postavke</value>
+  </data>
+  <data name="Create Virtual Model" xml:space="preserve">
+    <value>Stvori virtualni model</value>
+  </data>
+  <data name="Do not override" xml:space="preserve">
+    <value>Ne prepiši</value>
+  </data>
+  <data name="Force off" xml:space="preserve">
+    <value>Prisilno isključeno</value>
+  </data>
+  <data name="Force on" xml:space="preserve">
+    <value>Prisilno uključi</value>
+  </data>
+  <data name="Forces the upstream engine to allocate a specific window size." xml:space="preserve">
+    <value>Prisilno dodjeljuje gornjem motoru specifičnu veličinu prozora.</value>
+  </data>
+  <data name="How long the gateway waits for the backend to START responding. Does NOT include auth, rate-limit queue, or concurrency-slot waiting. Once streaming begins, no time limit applies. SUGGESTED VALUES: small models (≤8B, NVMe SSD) → 60–120s; large models (≥27B or HDD/NAS storage) → 600–1800s; embedding models → 30–60s." xml:space="preserve">
+    <value>Koliko dugo gateway čeka da backend POČNE odgovarati. Ne uključuje čekanje na autentikaciju, ograničenje brzine ili slotove za istovremene zahtjeve. Nakon što strujanje počne, vremensko ograničenje se ne primjenjuje. PREPORUČENE VRIJEDNOSTI: mali modeli (≤8B, NVMe SSD) → 60–120 s; veliki modeli (≥27B ili HDD/NAS pohrana) → 600–1800 s; modeli za ugradnje → 30–60 s.</value>
+  </data>
+  <data name="Initial Backend Configuration" xml:space="preserve">
+    <value>Početna konfiguracija pozadinskog sustava</value>
+  </data>
+  <data name="Max Retries" xml:space="preserve">
+    <value>Maksimalni broj ponovnih pokušaja</value>
+  </data>
+  <data name="Ollama num_ctx Override" xml:space="preserve">
+    <value>Ollama num_ctx Override</value>
+  </data>
+  <data name="OpenAI clients use their matching provider protocol when available. This protocol is the fallback for other client dialects." xml:space="preserve">
+    <value>OpenAI klijenti koriste svoj odgovarajući protokol pružatelja kada je dostupan. Ovaj protokol je rezervni protokol za druge klijentske dijekte.</value>
+  </data>
+  <data name="Optional Model Overrides" xml:space="preserve">
+    <value>Izborna nadgradnja modela</value>
+  </data>
+  <data name="Preferred Backend Protocol" xml:space="preserve">
+    <value>Poželjeni protokol pozadinskog sustava</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Pružatelj</value>
+  </data>
+  <data name="Reasoning Effort Override" xml:space="preserve">
+    <value>Poništavanje napora razmišljanja</value>
+  </data>
+  <data name="Repeat Penalty" xml:space="preserve">
+    <value>Kazna za ponavljanje</value>
+  </data>
+  <data name="Request Timeout (s)" xml:space="preserve">
+    <value>Vrijeme isteka zahtjeva (s)</value>
+  </data>
+  <data name="Selection Strategy" xml:space="preserve">
+    <value>Strategija odabira</value>
+  </data>
+  <data name="Temperature" xml:space="preserve">
+    <value>Temperatura</value>
+  </data>
+  <data name="Thinking Override" xml:space="preserve">
+    <value>Poništavanje razmišljanja</value>
+  </data>
+  <data name="Thinking settings help" xml:space="preserve">
+    <value>Pomoć za postavke razmišljanja</value>
+  </data>
+  <data name="Top K" xml:space="preserve">
+    <value>Top K</value>
+  </data>
+  <data name="Top P" xml:space="preserve">
+    <value>Top P</value>
+  </data>
+  <data name="Underlying Model" xml:space="preserve">
+    <value>Podložni model</value>
+  </data>
+  <data name="Use Raw Output" xml:space="preserve">
+    <value>Koristi sirovi izlaz</value>
+  </data>
+  <data name="Virtual Model Name" xml:space="preserve">
+    <value>Naziv virtualnog modela</value>
+  </data>
+  <data name="When checked, the &apos;raw: true&apos; parameter is sent to the upstream Ollama API. This tells Ollama to NOT apply any chat templates to your prompt. Use this for pure text completion. If unchecked, Ollama will automatically wrap your prompt in the model&apos;s default chat template, treating it as a conversational question." xml:space="preserve">
+    <value>Kada je označeno, parametar &apos;raw: true&apos; se šalje u gornji Ollama API. To govori Ollama da NE primjenjuje nijedne predloške za chat na vaš upit. Koristite ovo za čisto dovršavanje teksta. Ako nije označeno, Ollama će automatski umotati vaš upit u zadani predložak za chat modela, tretirajući ga kao razgovorno pitanje.</value>
+  </data>
+  <data name="e.g. MyLlama3:latest" xml:space="preserve">
+    <value>npr. MyLlama3:latest</value>
+  </data>
+
+</root>
