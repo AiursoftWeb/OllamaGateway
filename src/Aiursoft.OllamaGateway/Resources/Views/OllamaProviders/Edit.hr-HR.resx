@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="(Chat Completions)" xml:space="preserve">
+    <value>(Chat Completions)</value>
+  </data>
+  <data name="(Responses)" xml:space="preserve">
+    <value>(Odgovori)</value>
+  </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = neograničeno.</value>
+  </data>
+  <data name="About concurrent requests" xml:space="preserve">
+    <value>O istovremenim zahtjevima</value>
+  </data>
+  <data name="About generation protocols" xml:space="preserve">
+    <value>O protokolima generiranja</value>
+  </data>
+  <data name="About health checks" xml:space="preserve">
+    <value>O provjerama stanja</value>
+  </data>
+  <data name="About model retention" xml:space="preserve">
+    <value>O zadržavanju modela</value>
+  </data>
+  <data name="Advanced Warmup Options" xml:space="preserve">
+    <value>Napredne opcije zagrijavanja</value>
+  </data>
+  <data name="An error occurred. Please check the browser console." xml:space="preserve">
+    <value>Došlo je do pogreške. Provjerite konzolu preglednika.</value>
+  </data>
+  <data name="Back to List" xml:space="preserve">
+    <value>Natrag na popis</value>
+  </data>
+  <data name="Base URL" xml:space="preserve">
+    <value>Osnovni URL</value>
+  </data>
+  <data name="Bearer Token" xml:space="preserve">
+    <value>Bearer Token</value>
+  </data>
+  <data name="Connected! Found {0} models." xml:space="preserve">
+    <value>Povezano! Pronađeno {0} modela.</value>
+  </data>
+  <data name="Connecting..." xml:space="preserve">
+    <value>Povezivanje...</value>
+  </data>
+  <data name="Context size" xml:space="preserve">
+    <value>Veličina konteksta</value>
+  </data>
+  <data name="Ctx" xml:space="preserve">
+    <value>Ctx</value>
+  </data>
+  <data name="Edit Provider" xml:space="preserve">
+    <value>Uredi pružatelja</value>
+  </data>
+  <data name="Embed" xml:space="preserve">
+    <value>Ugradi</value>
+  </data>
+  <data name="Embedding model" xml:space="preserve">
+    <value>Ugrađeni model</value>
+  </data>
+  <data name="Error: " xml:space="preserve">
+    <value>Greška:</value>
+  </data>
+  <data name="Failed to toggle warmup. Please try again." xml:space="preserve">
+    <value>Promjena zagrijavanja nije uspjela. Pokušajte ponovno.</value>
+  </data>
+  <data name="Health Check Timeout (s)" xml:space="preserve">
+    <value>Vrijeme isteka provjere zdravstvenog stanja (s)</value>
+  </data>
+  <data name="Keep" xml:space="preserve">
+    <value>Keep</value>
+  </data>
+  <data name="Keep Alive Policy" xml:space="preserve">
+    <value>Politika zadržavanja aktivnosti</value>
+  </data>
+  <data name="Keeps model weights loaded after the last request. Use 0 to unload immediately or -1 to keep them loaded. Ollama ignores invalid duration formats." xml:space="preserve">
+    <value>Drži težine modela učitane nakon posljednjeg zahtjeva. Koristite 0 za odmah ukidanje ili -1 za trajno zadržavanje učitanih. Ollama ignorira neispravne formate trajanja.</value>
+  </data>
+  <data name="Limits simultaneous requests to this provider. Use 1 to process them one at a time. Waiting for a slot has no timeout and does not use the virtual model response timeout; disconnecting the client cancels the wait." xml:space="preserve">
+    <value>Ograničava istovremene zahtjeve za ovog pružatelja. Koristite 1 za obradu jedan po jedan. Čekanje na slobodno mjesto nema vremensko ograničenje i ne koristi virtualno vremensko ograničenje odgovora modela; prekidanje veze s klijentom otkazuje čekanje.</value>
+  </data>
+  <data name="Matching client protocols are forwarded directly. Other supported requests are translated." xml:space="preserve">
+    <value>Podudarni klijentski protokoli se preusmjeravaju izravno. Ostale podržane zahtjeve se prevode.</value>
+  </data>
+  <data name="Max Concurrent Requests" xml:space="preserve">
+    <value>Maksimalni broj istovremenih zahtjeva</value>
+  </data>
+  <data name="Model" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="No physical models found on this server." xml:space="preserve">
+    <value>Nema pronađenih fizičkih modela na ovom poslužitelju.</value>
+  </data>
+  <data name="Ollama" xml:space="preserve">
+    <value>Ollama</value>
+  </data>
+  <data name="Ollama only; include a unit, e.g. 5m." xml:space="preserve">
+    <value>Samo Ollama; uključite jedinicu, npr. 5m.</value>
+  </data>
+  <data name="OpenAI Compatible" xml:space="preserve">
+    <value>OpenAI kompatibilno</value>
+  </data>
+  <data name="Optional API Key" xml:space="preserve">
+    <value>Opcionalni API ključ</value>
+  </data>
+  <data name="Proactive Model Warmup" xml:space="preserve">
+    <value>Proaktivno zagrijavanje modela</value>
+  </data>
+  <data name="Provider Connection Settings" xml:space="preserve">
+    <value>Postavke povezivanja pružatelja</value>
+  </data>
+  <data name="Provider Name" xml:space="preserve">
+    <value>Naziv pružatelja</value>
+  </data>
+  <data name="Provider Type" xml:space="preserve">
+    <value>Vrsta pružatelja</value>
+  </data>
+  <data name="Save Changes" xml:space="preserve">
+    <value>Spremi promjene</value>
+  </data>
+  <data name="Select physical models that should be proactively kept loaded in this provider&apos;s VRAM. The gateway will periodically ping these models to prevent them from being unloaded." xml:space="preserve">
+    <value>Odaberite fizičke modele koji bi trebali proaktivno ostati učitani u VRAM ovog pružatelja. Posrednička usluga će povremeno slati upite ovim modelima kako bi spriječila njihovo učitavanje.</value>
+  </data>
+  <data name="Supported OpenAI generation protocols" xml:space="preserve">
+    <value>Podržani OpenAI protokoli generiranja</value>
+  </data>
+  <data name="Test Connection" xml:space="preserve">
+    <value>Testiraj povezivanje</value>
+  </data>
+  <data name="These values were inferred from legacy backend settings. Saving this provider makes them explicit." xml:space="preserve">
+    <value>Ove vrijednosti su izvedene iz postavki prethodnog pozadinskog sustava. Spremanjem ovog pružatelja postaju eksplicitne.</value>
+  </data>
+  <data name="Timeout (s)" xml:space="preserve">
+    <value>Vrijeme isteka (s)</value>
+  </data>
+  <data name="Timeout for background model and status checks. Increase it for slow storage." xml:space="preserve">
+    <value>Vrijeme isteka za pozadinske provjere modela i statusa. Povećajte ga za spori sustav za pohranu.</value>
+  </data>
+  <data name="Warmup is not applicable to OpenAI-compatible providers. The upstream service manages model loading automatically." xml:space="preserve">
+    <value>Zagrijavanje nije primjenjivo na OpenAI-kompatibilne pružatelje. Gornja usluga automatski upravlja učitavanjem modela.</value>
+  </data>
+  <data name="Warmup timeout" xml:space="preserve">
+    <value>Vrijeme isteka zagrijavanja</value>
+  </data>
+  <data name="e.g. Local Server" xml:space="preserve">
+    <value>npr. Lokalni poslužitelj</value>
+  </data>
+
+</root>

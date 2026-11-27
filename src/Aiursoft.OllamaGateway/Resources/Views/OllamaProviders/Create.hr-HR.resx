@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="(Chat Completions)" xml:space="preserve">
+    <value>(Chat Completions)</value>
+  </data>
+  <data name="(Responses)" xml:space="preserve">
+    <value>(Responses)</value>
+  </data>
+  <data name="0 = unlimited." xml:space="preserve">
+    <value>0 = neograničeno.</value>
+  </data>
+  <data name="About concurrent requests" xml:space="preserve">
+    <value>O istovremenim zahtjevima</value>
+  </data>
+  <data name="About generation protocols" xml:space="preserve">
+    <value>O protokolima generiranja</value>
+  </data>
+  <data name="About health checks" xml:space="preserve">
+    <value>O provjerama zdravlja</value>
+  </data>
+  <data name="About model retention" xml:space="preserve">
+    <value>O zadržavanju modela</value>
+  </data>
+  <data name="Add Provider" xml:space="preserve">
+    <value>Dodaj pružatelja</value>
+  </data>
+  <data name="Base URL" xml:space="preserve">
+    <value>Osnovni URL</value>
+  </data>
+  <data name="Bearer Token (Optional)" xml:space="preserve">
+    <value>Bearer token (neobavezno)</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Odustani</value>
+  </data>
+  <data name="Health Check Timeout (s)" xml:space="preserve">
+    <value>Vrijeme isteka provjere stanja (s)</value>
+  </data>
+  <data name="Keep Alive Policy" xml:space="preserve">
+    <value>Politika zadržavanja aktivnosti</value>
+  </data>
+  <data name="Keeps model weights loaded after the last request. Use 0 to unload immediately or -1 to keep them loaded. Ollama ignores invalid duration formats." xml:space="preserve">
+    <value>Zadržava težine modela učitane nakon posljednjeg zahtjeva. Koristite 0 za odmah otpuštanje ili -1 za zadržavanje učitanih. Ollama ignora neispravne formate trajanja.</value>
+  </data>
+  <data name="Limits simultaneous requests to this provider. Use 1 to process them one at a time. Waiting for a slot has no timeout and does not use the virtual model response timeout; disconnecting the client cancels the wait." xml:space="preserve">
+    <value>Ograničava istovremene zahtjeve za ovog pružatelja. Koristite 1 za obradu jedan po jedan. Čekanje na slobodno mjesto nema vremensko ograničenje i ne koristi virtualno vremensko ograničenje odgovora modela; prekidanje klijenta otkazuje čekanje.</value>
+  </data>
+  <data name="Matching client protocols are forwarded directly. Other supported requests are translated." xml:space="preserve">
+    <value>Podudarni klijentski protokoli se proslijeđuju izravno. Ostale podržane zahtjeve se prevode.</value>
+  </data>
+  <data name="Max Concurrent Requests" xml:space="preserve">
+    <value>Maksimalni broj istovremenih zahtjeva</value>
+  </data>
+  <data name="Models found:" xml:space="preserve">
+    <value>Pronađeni modeli:</value>
+  </data>
+  <data name="Network error or invalid request." xml:space="preserve">
+    <value>Greška u mreži ili neispravna zahtjev.</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Nijedan</value>
+  </data>
+  <data name="Ollama" xml:space="preserve">
+    <value>Ollama</value>
+  </data>
+  <data name="Ollama only; include a unit, e.g. 5m." xml:space="preserve">
+    <value>Samo Ollama; uključite jedinicu, npr. 5m.</value>
+  </data>
+  <data name="OpenAI Compatible" xml:space="preserve">
+    <value>OpenAI kompatibilno</value>
+  </data>
+  <data name="Please enter a URL first." xml:space="preserve">
+    <value>Prvo unesite URL.</value>
+  </data>
+  <data name="Provider Details" xml:space="preserve">
+    <value>Podaci o pružatelju</value>
+  </data>
+  <data name="Provider Name" xml:space="preserve">
+    <value>Naziv pružatelja</value>
+  </data>
+  <data name="Provider Type" xml:space="preserve">
+    <value>Vrsta pružatelja</value>
+  </data>
+  <data name="Success!" xml:space="preserve">
+    <value>Uspješno!</value>
+  </data>
+  <data name="Successfully connected to the provider." xml:space="preserve">
+    <value>Uspješno povezano s pružateljem.</value>
+  </data>
+  <data name="Supported OpenAI generation protocols" xml:space="preserve">
+    <value>Podržani OpenAI protokoli generiranja</value>
+  </data>
+  <data name="Test Connection" xml:space="preserve">
+    <value>Testiraj povezivanje</value>
+  </data>
+  <data name="Testing..." xml:space="preserve">
+    <value>Testiranje...</value>
+  </data>
+  <data name="Timeout for background model and status checks. Increase it for slow storage." xml:space="preserve">
+    <value>Vrijeme isteka za pozadinske provjere modela i statusa. Povećajte ga za spori spremnik.</value>
+  </data>
+  <data name="e.g. My Local Ollama" xml:space="preserve">
+    <value>npr. Moje lokalno Ollama</value>
+  </data>
+  <data name="e.g. sk-..." xml:space="preserve">
+    <value>npr. sk-...</value>
+  </data>
+
+</root>
