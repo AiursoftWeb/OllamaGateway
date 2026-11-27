@@ -302,6 +302,35 @@ public class ProviderConcurrencyLimiterTests
         // disposal correctly released the semaphore.
     }
 
+    [TestMethod]
+    public async Task SaturatingOneProviderLeavesOtherProvidersAvailable()
+    {
+        var limiter = new ProviderConcurrencyLimiter();
+        using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+        Task<IAsyncDisposable> queued;
+        await using (await limiter.AcquireAsync(1, 1, timeout.Token))
+        {
+            queued = limiter.AcquireAsync(1, 1, timeout.Token);
+            await using (await limiter.AcquireAsync(2, 1, timeout.Token))
+            {
+                Assert.AreEqual(1, limiter.GetActiveCount(2));
+                Assert.AreEqual(0, limiter.GetWaitingCount(2));
+                Assert.AreEqual(1, limiter.GetWaitingCount(1));
+            }
+
+            Assert.IsFalse(queued.IsCompleted);
+            Assert.AreEqual(1, limiter.GetActiveCount(1));
+            Assert.AreEqual(0, limiter.GetActiveCount(2));
+        }
+
+        await using (await queued)
+        {
+            Assert.AreEqual(1, limiter.GetActiveCount(1));
+            Assert.AreEqual(0, limiter.GetWaitingCount(1));
+        }
+        Assert.AreEqual(0, limiter.GetActiveCount(1));
+    }
+
     private static async Task WaitUntilAsync(Func<bool> condition)
     {
         using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
